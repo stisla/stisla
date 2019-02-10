@@ -1,0 +1,108 @@
+.section {
+  position: relative;
+  z-index: 1;
+  > *:first-child {
+    margin-top: -7px;
+  }
+  .section-header {
+    @include shadow;
+    @include card-base;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    h1 {
+      margin-bottom: 0;
+      font-weight: 700;
+      display: inline-block;
+      font-size: 24px;
+      margin-top: 3px;
+      color: color(fontdark);
+    }
+    .section-header-back {
+      margin-right: 15px;
+      .btn {
+        &:hover {
+          background-color: color(primary);
+          color: #fff;
+        }
+      }
+    }
+    .section-header-button {
+      margin-left: 20px;
+    }
+    .section-header-breadcrumb {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      .breadcrumb-item {
+        font-size: 12px;
+      }
+    }
+    .btn {
+      font-size: 12px;
+    }
+  }
+  .section-title {
+    font-size: 18px;
+    color: color(dark);
+    font-weight: 600;
+    position: relative;
+    margin: 30px 0 25px 0;
+    &:before {
+      content: ' ';
+      border-radius: 5px;
+      height: 8px;
+      width: 30px;
+      background-color: color(primary);
+      display: inline-block;
+      float: left;
+      margin-top: 6px;
+      margin-right: 15px;
+    }
+  }
+  .section-title + .section-lead {
+    margin-top: -20px;
+  }
+  .section-lead {
+    margin-left: 45px;
+  }
+}
+
+.main-wrapper-1 {
+  .section {
+    .section-header {
+      margin-left: -30px;
+      margin-right: -30px;
+      margin-top: -10px;
+      border-radius: 0;
+      border-top: 1px solid #f9f9f9;
+      padding-left: 35px;
+      padding-right: 35px;
+    }
+  }
+}
+
+
+@include media-breakpoint-down(xs) {
+  .section {
+    .section-title {
+      font-size: 14px;
+    }
+    .section-header {
+      flex-wrap: wrap;
+      margin-bottom: 20px !important;
+      h1 {
+        font-size: 18px;
+      }
+      .float-right {
+        display: inline-block;
+        width: 100%;
+        margin-top: 15px;
+      }
+      .section-header-breadcrumb {
+        flex-basis: 100%;
+        margin-top: 10px;
+      }
+    }
+  }
+}

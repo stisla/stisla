@@ -1,0 +1,50 @@
+.selectric {
+  @include form-control;
+  min-height: 42px;
+  border-radius: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+  &:hover {
+    @include form-control;
+  }
+  &:focus {
+    @include form-control-focus;
+  }
+  .label {
+    font-size: 13px;
+    background-color: transparent;
+    line-height: 44px;
+    min-height: 42px;
+  }
+  .button {
+    background-color: transparent;
+    line-height: 44px;
+    min-height: 42px;
+  }
+}
+
+.selectric-open .selectric {
+  border-color: color(primary);
+}
+
+.selectric-above .selectric-items, .selectric-below .selectric-items {
+  margin-bottom: 10px;
+}
+
+.selectric-items {
+  @include shadow;
+  border-radius: 3px;
+  background-color: #fff;
+  border: none;
+  li {
+    font-size: 13px;
+    padding: 10px 15px;
+    &:hover {
+      background-color: #f2f2f2;
+    }
+    &.selected, &.highlighted {
+      background-color: color(primary);
+      color: #fff;
+    }
+  }
+}

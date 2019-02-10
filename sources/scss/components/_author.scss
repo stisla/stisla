@@ -1,0 +1,48 @@
+.author-box {
+  .author-box-left {
+    float: left;
+    text-align: center;
+    padding-left: 5px;
+    .btn {
+      padding: 5px 15px;
+      font-size: 12px;
+      border-radius: 30px;
+    }
+  }
+  .author-box-picture {
+    width: 100px;
+    @include shadow;
+  }
+  .author-box-details {
+    margin-left: 135px;
+  }
+  .author-box-name {
+    font-size: 18px;
+    a {
+      font-weight: 600;
+    }
+  }
+  .author-box-job {
+    font-weight: 600;
+    letter-spacing: .5px;
+    font-size: 12px;
+    color: color(fontdark);
+  }
+  .author-box-description {
+    line-height: 26px;
+    margin-top: 15px;
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .author-box {
+    .author-box-left {
+      float: none;
+    }
+    .author-box-details {
+      margin-left: 0;
+      margin-top: 15px;
+      text-align: center;
+    }
+  }
+}

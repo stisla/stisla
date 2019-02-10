@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="./css/chocolat.css" />
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="./js/jquery.chocolat.js"></script>
+        <style>
+            body {
+                text-align: center;
+                font-family: Arial;
+                font-size: 12px;
+            }
+            h2 {
+                padding-top:20px;
+                font-size: 14px;
+                font-weight: normal;
+                border-top:1px solid #eeeeee;
+            }
+            a {
+                border:0;
+                color: #2645FF;
+                text-decoration: none;
+            }
+            .demo {
+
+            }
+        </style>
+        <title>Chocolat — demo</title>
+        <script>
+            $(function(){
+                $('#example0').Chocolat({
+                    imageSize: 'contain'
+                });
+
+                $('#example1').Chocolat({
+                    loop           : true,
+                    imageSize     : 'cover',
+                    overlayOpacity : 0.9
+                });
+
+                $('#example2').Chocolat({
+                    container      : '#container1',
+                    imageSize     : 'contain',
+                    loop           : true,
+                })
+
+                $('#example3').Chocolat({
+                    container      : '#container2',
+                    imageSize     : 'cover',
+                })
+            });
+        </script>
+    </head>
+    <body>
+        <div style="text-align: center;background: #E8E8E8; padding: 10px;margin-bottom: 10px;">
+            <a href="https://github.com/nicolas-t/Chocolat"> Chocolat on github</a>
+        </div>
+
+        <h2>
+           Full window, contain, click the numbers to open:
+        </h2>
+        <div id="example0">
+            <a class="chocolat-image" href="demo-images/5.jpg" title="HO">
+                1
+            </a>
+            <a class="chocolat-image" href="demo-images/6.jpg" title="HAI">
+                2
+            </a>
+            <a class="chocolat-image" href="demo-images/3.jpg" title="IO">
+                3
+            </a>
+        </div>
+
+        <h2>
+            Full window, cover, looping :
+        </h2>
+        <div id="example1">
+            <a class="chocolat-image" href="demo-images/1.jpg" title="foo">
+                C
+            </a>
+            <a class="chocolat-image" href="demo-images/2.jpg" title="bar">
+                D
+            </a>
+        </div>
+
+        <h2>
+            Display in a container, cover, with thumbnails :
+        </h2>
+
+        <div id="example3" data-chocolat-title="set title">
+            <a class="chocolat-image" href="demo-images/3.jpg" title="Rose">
+                <img src="demo-images/3.jpg" style="width:75px; height:50px" alt="">
+            </a>
+            <a class="chocolat-image" href="demo-images/4.jpg" title="Black">
+                <img src="demo-images/4.jpg" style="width:75px; height:50px" alt="">
+            </a>
+            <a class="chocolat-image" href="demo-images/5.jpg" title="Yellow">
+                <img src="demo-images/5.jpg" style="width:75px; height:50px" alt="">
+            </a>
+        </div>
+        <!-- Container (notice the relative width) :  -->
+        <div id="container2" style="width: 80%; max-width:1000px; height: 600px; background: #E0E0E0; margin:auto;"></div>
+
+        <h2>
+            Display in a container, looping :
+        </h2>
+
+        <div id="example2" data-chocolat-title="set title">
+            <a class="chocolat-image" href="demo-images/3.jpg" title="Rose">
+                A
+            </a>
+            <a class="chocolat-image" href="demo-images/4.jpg" title="Black">
+                B
+            </a>
+            <a class="chocolat-image" href="demo-images/5.jpg" title="Yellow">
+                C
+            </a>
+        </div>
+        <!-- Container (notice the relative width) :  -->
+        <div id="container1" style="width: 80%; max-width:1000px; height: 600px; background: #E0E0E0; margin:auto;"></div>
+
+
+        <h2>
+            API use, in container, see code source <br>
+            Open console to have details abouts events
+        </h2>
+
+        <a class="api-open" href="#">Open</a> then try <br>
+        <a class="api-next" href="#">Next</a>
+        <a class="api-prev" href="#">Prev</a>
+        <br>
+        <a class="api-cover" href="#">Enter cover mode</a> /
+        <a class="api-contain" href="#">Enter contain mode</a>
+
+        <br>
+        <br>
+        <a class="api-close" href="#">Close</a>
+        <!-- Container (notice the relative width) :  -->
+        <div id="container3" style="width: 80%; max-width:1000px; height: 600px; background: #E0E0E0; margin:auto;"></div>
+
+        <script>
+            $(function(){
+                var instance = $('#container3').Chocolat({
+                    setTitle : 'set title',
+                    loop: true,
+                    images : [
+                        {src : 'demo-images/1.jpg', title : 'caption 1'},
+                        {src : 'demo-images/6.jpg', title : 'caption 2'},
+                        {src : 'demo-images/8.jpg', title : 'caption 3'},
+                    ],
+                    imageSize : 'contain',
+                    container : '#container3',
+                    afterMarkup: function () {
+                        console.log('afterMarkup hook is called')
+                    },
+                    afterImageLoad: function () {
+                        console.log('afterImageLoad hook is called')
+                    },
+                    afterInitialize: function () {
+                        console.log('afterInitialize hook is called')
+                    },
+                    zoomedPaddingX: function (imgWidth, canvasWidth) {
+                        // add a padding around the zoomed image
+                        // default to 0
+                        return canvasWidth / 4;
+                    },
+                    zoomedPaddingY: function (imgHeight, canvasHeight) {
+                        // add a padding around the zoomed image
+                        // default to 0
+                        return canvasHeight / 4;
+                    }
+                }).data('chocolat');
+
+                $('.api-open').on('click', function(e) {
+                    e.preventDefault()
+
+                    console.log('open start');
+                    var def = instance.api().open()
+
+                    def.done(function(){
+                        console.log('open done');
+                    })
+                })
+                $('.api-close').on('click', function(e) {
+                    e.preventDefault()
+
+                    console.log('close start');
+                    var def = instance.api().close()
+
+                    def.done(function(){
+                        console.log('close done');
+                    })
+                })
+                $('.api-prev').on('click', function(e) {
+                    e.preventDefault()
+
+                    console.log('prev start');
+                    var def = instance.api().prev()
+
+                    def.done(function(){
+                        console.log('prev done');
+                    })
+                })
+                $('.api-next').on('click', function(e) {
+                    e.preventDefault()
+
+                    console.log('next start');
+                    var def = instance.api().next()
+
+                    def.done(function(){
+                        console.log('next done');
+                    })
+                })
+
+                $('.api-cover').on('click', function(e) {
+                    e.preventDefault()
+
+                    console.log('cover mode start')
+                    instance.api().set('imageSize', 'cover')
+                    var def = instance.api().place()
+
+                    def.done(function(){
+                        console.log('cover mode done')
+                    })
+                })
+
+                $('.api-contain').on('click', function(e) {
+                    e.preventDefault()
+
+                    console.log('contain mode start')
+                    instance.api().set('imageSize', 'contain')
+                    var def = instance.api().place()
+
+                    def.done(function(){
+                        console.log('contain mode done')
+                    })
+                })
+            });
+        </script>
+    </body>
+
+</html>

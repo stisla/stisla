@@ -1,0 +1,41 @@
+.page-error {
+  height: 100%;
+  width: 100%;
+  padding-top: 60px;
+  text-align: center;
+  display: table;
+  .page-inner {
+    display: table-cell;
+    width: 100%;
+    vertical-align: middle;
+  }
+  h1 {
+    font-size: 10em;
+    font-weight: 700;
+  }
+  .page-description {
+    font-size: 18px;
+    font-weight: 400;
+    color: color(fontdark);
+  }
+  .page-search {
+    margin: 40px auto;
+    max-width: 100%;
+    width: 350px;
+    .form-control {
+      border-radius: 30px;
+    }
+    .btn {
+      border-radius: 30px;
+      margin-left: 10px;
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .page-error {
+    .page-search {
+      width: 100%;
+    }
+  }
+}

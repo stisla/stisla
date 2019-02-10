@@ -1,0 +1,31 @@
+.hero {
+	border-radius: 3px;
+	padding: 55px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	position: relative;
+	&.hero-bg-image {
+		background-position: center;
+		background-size: cover;
+		&:before {
+			@include overlay(0, rgba(0,0,0,.5));
+			border-radius: 3px;
+		}
+		&.hero-bg-parallax {
+			background-attachment: fixed;
+		}
+	}
+	.hero-inner {
+		position: relative;
+		z-index: 1;
+	}
+	h2 {
+		font-size: 24px;
+	}
+	p {
+		margin-bottom: 0;
+		font-size: 16px;
+		letter-spacing: .3px;
+	}
+}

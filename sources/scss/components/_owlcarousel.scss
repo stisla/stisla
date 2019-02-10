@@ -1,0 +1,15 @@
+.owl-theme {
+  .owl-item {
+    padding: 10px 0;
+  }
+  .owl-dots {
+    margin-top: 20px !important;
+    .owl-dot {
+      &.active {
+        span {
+          background-color: color(primary);
+        }
+      }
+    }
+  }
+}

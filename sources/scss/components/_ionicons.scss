@@ -1,0 +1,35 @@
+.ionicons {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  li {
+    width: calc(100% / 8);
+    font-size: 40px;
+    padding: 40px 20px;
+    list-style: none;
+    text-align: center;
+    border-radius: 3px;
+    position: relative;
+    cursor: pointer;
+    &:hover {
+      opacity: .8;
+    }
+    .icon-name {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      width: 100%;
+      -webkit-transform: translate(-50%, -100%);
+      transform: translate(-50%, -100%);
+      font-family: 'Segoe UI';
+      font-size: 12px;
+      margin-top: 10px;
+      line-height: 22px;
+      background-color: #f9f9f9;
+      border-radius: 3px;
+      padding: 10px;
+      display: none;
+    }
+  }
+}

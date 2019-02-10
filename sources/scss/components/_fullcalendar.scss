@@ -1,0 +1,80 @@
+.fc-toolbar h2 {
+  font-size: 16px;
+  margin-top: 4px;
+}
+
+.fc-view {
+  border-color: #f2f2f2;
+  > table {
+    border-color: #f2f2f2;
+    tr, td {
+      border-color: #f2f2f2;
+    }
+    th {
+      border-color: #f2f2f2;
+      color: color(fontdark) !important;
+      font-weight: 500;
+      padding: 10px;
+    }
+  }
+  color: color(fontdark) !important;
+  font-weight: 500;
+  padding: 10px;
+}
+
+.fc-view-container > .fc-view {
+  padding: 0;
+}
+
+.fc-view {
+  color: #666;
+  text-align: right;
+  > table td {
+    color: #666;
+    text-align: right;
+  }
+}
+
+.fc-unthemed td.fc-today {
+  background-color: #f2f2f2;
+}
+
+.fc button .fc-icon {
+  top: -0.09em;
+}
+
+.fc-basic-view {
+  .fc-day-number, .fc-week-number {
+    padding: 10px;
+  }
+}
+
+.fc-day-grid-event .fc-content {
+  padding: 5px 10px;
+  @include shadow;
+}
+
+tr:first-child > td > .fc-day-grid-event {
+  margin-bottom: 10px;
+}
+
+.fc-state-default {
+  border-radius: 3px;
+  background-color: #f2f2f2;
+  background-image: none;
+  border: none;
+  box-shadow: none;
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+.fc button {
+  height: auto;
+  padding: 10px 15px;
+  text-shadow: none;
+  border-radius: 0;
+  &.fc-state-active {
+    background-color: color(primary);
+    color: #fff;
+  }
+}

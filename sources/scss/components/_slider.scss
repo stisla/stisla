@@ -1,0 +1,48 @@
+.slider {
+  .owl-nav {
+    [class*=owl-] {
+      position: absolute;
+      top: 50%;
+      left: 35px;
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      margin: 0;
+      background-color: #000;
+      border-radius: 50%;
+      color: #fff;
+      width: 40px;
+      height: 40px;
+      line-height: 34px;
+      opacity: .3;
+      &:hover {
+        background-color: #000;
+      }
+    }
+    .owl-next {
+      right: 0;
+      left: initial;
+    }
+  }
+  &:hover .owl-nav [class*=owl-] {
+    opacity: 1;
+  }
+  .slider-caption {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    padding: 10px;
+    .slider-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    .slider-description {
+      line-height: 26px;
+      opacity: .8;
+    }
+  }
+}

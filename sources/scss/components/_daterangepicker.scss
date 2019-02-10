@@ -1,0 +1,28 @@
+.daterangepicker {
+  &.dropdown-menu {
+    width: auto;
+  }
+  .input-mini {
+    padding-left: 28px !important;
+  }
+  .calendar {
+    th, td {
+      padding: 5px;
+      font-size: 12px;
+    }
+  }
+}
+
+.ranges {
+  li {
+    color: color(primary);
+    &:hover,
+    &.active {
+      background-color: color(primary);
+    }
+  }
+}
+
+.daterangepicker td.active, .daterangepicker td.active:hover {
+  background-color: color(primary);
+}

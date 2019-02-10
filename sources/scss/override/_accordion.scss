@@ -1,0 +1,31 @@
+.accordion {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 10px;
+  .accordion-header, .accordion-body {
+    padding: 10px 15px;
+  }
+  .accordion-header {
+    background-color: #f9f9f9;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all .5s;
+    h4 {
+      line-height: 1;
+      margin: 0;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    &:hover {
+      background-color: #f2f2f2;
+    }
+    &[aria-expanded="true"] {
+      @include shadow-lighten(primary);
+      background-color: color(primary);
+      color: #fff;
+    }
+  }
+  .accordion-body {
+    line-height: 24px;
+  }
+}

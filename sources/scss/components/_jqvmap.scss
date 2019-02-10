@@ -1,0 +1,17 @@
+.jqvmap-circle {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  background-color: #fff;
+  border: 3px solid color(primary);
+  border-radius: 50%;
+}
+
+.jqvmap-label {
+  z-index: 889;
+}
+
+.jqvmap-zoomin, .jqvmap-zoomout {
+  height: auto;
+  width: auto;
+}

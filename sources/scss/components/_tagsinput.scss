@@ -1,0 +1,22 @@
+.bootstrap-tagsinput {
+  @include form-control;
+  display: block;
+  height: 46px;
+  box-shadow: none;
+  overflow: auto;
+  input {
+    height: 100%;
+    padding: 0 8px;
+  }
+  .tag {
+    background-color: color(primary);
+    border-radius: 3px;
+    padding: 5px 10px;
+    &:first-child {
+      margin-left: 5px;
+    }
+  }
+  &:focus {
+    @include form-control-focus;
+  }
+}

@@ -1,0 +1,53 @@
+.table {
+  td, &:not(.table-bordered) th {
+    border-top: none;
+  }
+  &:not(.table-sm):not(.table-md):not(.dataTable) td, 
+  &:not(.table-sm):not(.table-md):not(.dataTable) th {
+    padding: 0 25px;
+    height: 60px;
+    vertical-align: middle;
+  }
+  &:not(.table-sm) thead th {
+    border-bottom: none;
+    background-color: rgba(0, 0, 0, 0.04);
+    color: #666;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  &.table-md th,
+  &.table-md td {
+    padding: 10px 15px;
+  }
+  &.table-bordered td,
+  &.table-bordered th {
+    border-color: #f6f6f6;
+  }
+}
+
+.table-links {
+  color: color(fontdark);
+  font-size: 12px;
+  margin-top: 5px;
+  opacity: 0;
+  transition: all .3s;
+  a {
+    color: #666;
+  }
+}
+
+table tr:hover .table-links {
+  opacity: 1;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+@include media-breakpoint-down(xs) {
+  .table-responsive {
+    table {
+      min-width: 800px;
+    }
+  }
+}

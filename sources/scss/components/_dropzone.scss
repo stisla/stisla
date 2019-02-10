@@ -1,0 +1,32 @@
+.dropzone {
+  border: 2px dashed color(primary);
+  min-height: 240px;
+  text-align: center;
+  .dz-message {
+    font-size: 24px;
+    color: color(fontdark);
+    margin: 3.4em;
+  }
+  .dz-preview {
+  	.dz-details {
+	  	padding: 2.2em 1em;
+  	}
+  	.dz-image {
+  		border-radius: 3px;
+  	}
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .dropzone .dz-message {
+    margin: 2em;
+  }
+}
+
+@include media-breakpoint-only(sm) {
+  .dropzone {
+    .dz-message {
+      margin: 2.75em;
+    }
+  }
+}

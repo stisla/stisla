@@ -1,0 +1,78 @@
+body.skin-reverse.sidebar-mini .main-sidebar:after {
+  background-color: #6777ef;
+}
+body.skin-reverse.sidebar-mini .main-sidebar .sidebar-menu li.active > a {
+  background-color: #fff;
+  box-shadow: none;
+  color: #6777ef;
+}
+body.skin-reverse.sidebar-mini .main-sidebar .sidebar-menu li.active ul.dropdown-menu li a,
+body.skin-reverse.sidebar-mini .main-sidebar .sidebar-menu li ul.dropdown-menu li a {
+  background-color: transparent;
+  color: #868e96;
+}
+body.skin-reverse.sidebar-mini .main-sidebar .sidebar-menu li.active ul.dropdown-menu li a:hover,
+body.skin-reverse.sidebar-mini .main-sidebar .sidebar-menu li ul.dropdown-menu li a:hover {
+  background-color: #fcfcfd;
+  color: #191d21;
+}
+body.skin-reverse.sidebar-mini .main-sidebar .sidebar-menu li.active ul.dropdown-menu li.active a,
+body.skin-reverse.sidebar-mini .main-sidebar .sidebar-menu li ul.dropdown-menu li.active a {
+  background-color: transparent !important;
+  color: #6777ef;
+}
+body.skin-reverse .main-sidebar {
+  background-color: #6777ef;
+}
+body.skin-reverse .main-sidebar .sidebar-brand a {
+  color: #fff;
+}
+body.skin-reverse .main-sidebar .sidebar-menu li a {
+  color: #dadefb;
+}
+body.skin-reverse .main-sidebar .sidebar-menu li a:hover {
+  background-color: #6070e5;
+}
+body.skin-reverse .main-sidebar .sidebar-menu li.active a,
+body.skin-reverse .main-sidebar .sidebar-menu li.active a:hover,
+body.skin-reverse .main-sidebar .sidebar-menu li.active ul.dropdown-menu li a:hover,
+body.skin-reverse .main-sidebar .sidebar-menu li.active ul.dropdown-menu li a {
+  background-color: #6070e5;
+}
+body.skin-reverse .main-sidebar .sidebar-menu li.menu-header {
+  color: #afb7ff;
+}
+body.skin-reverse .main-sidebar .sidebar-menu li ul.dropdown-menu li a {
+  color: #dadefb;
+}
+body.skin-reverse .main-sidebar .sidebar-menu li ul.dropdown-menu li a:hover {
+  background-color: #6777ef;
+  color: #fff;
+}
+body.skin-reverse .main-sidebar .sidebar-menu li ul.dropdown-menu li.active a {
+  color: #fff;
+}
+body.skin-reverse .navbar-bg,
+body.skin-reverse .navbar {
+  background-color: #fff;
+}
+body.skin-reverse .navbar-bg .nav-link.nav-link-user,
+body.skin-reverse .navbar-bg .nav-link,
+body.skin-reverse .navbar .nav-link.nav-link-user,
+body.skin-reverse .navbar .nav-link {
+  color: #000;
+}
+body.skin-reverse .navbar-bg .nav-link.nav-link-user:hover,
+body.skin-reverse .navbar-bg .nav-link:hover,
+body.skin-reverse .navbar .nav-link.nav-link-user:hover,
+body.skin-reverse .navbar .nav-link:hover {
+  color: #1a1a1a;
+}
+body.skin-reverse .navbar-bg .form-inline .btn,
+body.skin-reverse .navbar-bg .form-inline .form-control,
+body.skin-reverse .navbar .form-inline .btn,
+body.skin-reverse .navbar .form-inline .form-control {
+  background-color: #f8f9fe;
+}
+
+/*# sourceMappingURL=reverse.css.map */

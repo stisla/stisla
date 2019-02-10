@@ -1,0 +1,6 @@
+[data-tab-group] {
+  display: none;
+  &.active {
+    display: block;
+  }
+}

@@ -1,0 +1,92 @@
+.wizard-steps {
+  display: flex;
+  margin: 0 -10px;
+  margin-bottom: 60px;
+  counter-reset: wizard-counter;
+  .wizard-step {
+    @include card-base;
+    @include shadow(0 4px 8px, rgba(0,0,0,.05));
+    padding: 30px;
+    text-align: center;
+    flex-grow: 1;
+    flex-basis: 0;
+    margin: 0 10px;
+    &:before {
+      counter-increment: wizard-counter;
+      content: counter(wizard-counter);
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 20px;
+      line-height: 21px;
+      font-size: 10px;
+      font-weight: 700;
+      border-radius: 50%;
+      background-color: color(light);
+    }
+    &.wizard-step-active {
+      @include shadow-lighten(primary);
+      background-color: color(primary);
+      color: #fff;
+      &:before {
+        background-color: color(primary);
+        color: #fff;
+      }
+    }
+    &.wizard-step-success {
+      background-color: color(success);
+      color: #fff;
+      &:before {
+        background-color: color(success);
+        color: #fff;
+      }
+    }
+    &.wizard-step-danger {
+      background-color: color(danger);
+      color: #fff;
+      &:before {
+        background-color: color(danger);
+        color: #fff;
+      }
+    }
+    &.wizard-step-warning {
+      background-color: color(warning);
+      color: #fff;
+      &:before {
+        background-color: color(warning);
+        color: #fff;
+      }
+    }
+    &.wizard-step-info {
+      background-color: color(info);
+      color: #fff;
+      &:before {
+        background-color: color(info);
+        color: #fff;
+      }
+    }
+    .wizard-step-icon {
+      .fas, .far, .fab, .fal, .ion {
+        font-size: 34px;
+        margin-bottom: 15px;
+      }
+    }
+    .wizard-step-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .wizard-steps {
+    display: block;
+    .wizard-step {
+      margin-bottom: 50px;
+    }
+  }
+}

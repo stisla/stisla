@@ -1,0 +1,22 @@
+.summary {
+  display: inline-block;
+  width: 100%;
+  .summary-info {
+    background-color: #eaf2f4;
+    padding: 50px 0;
+    text-align: center;
+    border-radius: 3px;
+    h4 {
+      font-weight: 600;
+    }
+  }
+  .summary-item {
+    margin-top: 20px;
+    h6 {
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 5px;
+      margin-bottom: 20px;
+    }
+  }
+}

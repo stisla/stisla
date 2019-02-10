@@ -1,0 +1,9 @@
+.flag-icon {
+  width: 50px;
+  height: 35px;
+  display: inline-block;
+  background-size: 100%;
+  &.flag-icon-shadow {
+  	@include shadow;
+  }
+}

@@ -1,0 +1,329 @@
+.buttons {
+  .btn {
+    @include children-margin;
+  }
+}
+
+.btn {
+  &:focus {
+    box-shadow: none !important;
+    outline: none;
+  }
+  &:active {
+    box-shadow: none !important;
+    outline: none;
+    &:focus {
+      box-shadow: none !important;
+      outline: none;
+    }
+  }
+}
+
+.btn.btn-icon-split i, .dropdown-item.has-icon i {
+  text-align: center;
+  width: 15px;
+  font-size: 15px;
+  float: left;
+  margin-right: 10px;
+}
+
+.btn {
+  &.btn-icon-split {
+    position: relative;
+    i {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 45px;
+      border-radius: 3px 0 0 3px;
+      line-height: 32px;
+    }
+    div {
+      margin-left: 40px;
+    }
+  }
+  &.btn-icon-noflo-splitat {
+    display: table;
+    text-align: right;
+    i {
+      float: none;
+      margin: 0;
+      display: table-cell;
+      vertical-align: middle;
+      width: 30%;
+    }
+    div {
+      display: table-cell;
+      vertical-align: middle;
+      width: 70%;
+      text-align: left;
+      padding-left: 10px;
+    }
+  }
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 24px;
+  padding: .3rem .8rem;
+  letter-spacing: .5px;
+  &:not(.btn-social):not(.btn-social-icon) {
+    &:active, &:focus, &:hover {
+      border-color: transparent !important;
+      background-color: color_lighten(light, 10%);
+    }
+  }
+  > i {
+    margin-left: 0 !important;
+  }
+  &.btn-lg {
+    padding: .55rem 1.5rem;
+    font-size: 12px;
+    &.btn-icon-split {
+      i {
+        line-height: 42px;
+      }
+      div {
+        margin-left: 25px;
+      }
+    }
+  }
+  &.btn-sm {
+    padding: .10rem .4rem;
+    font-size: 12px;
+  }
+  &.btn-icon {
+    .ion, .fas, .far, .fab, .fal {
+      margin-left: 0 !important;
+      font-size: 12px;
+    }
+    &.icon-left {
+      .ion, .fas, .far, .fab, .fal {
+        margin-right: 3px;
+      }    
+    }
+    &.icon-right {
+      .ion, .fas, .far, .fab, .fal {
+        margin-left: 3px !important;
+      }
+    }
+  }
+}
+
+.btn-action {
+  color: #fff !important;
+  line-height: 25px;
+  font-size: 12px;
+  min-width: 35px;
+  min-height: 35px;
+}
+
+.btn-secondary, .btn-secondary.disabled {
+  @include button-shadow(secondary, 7%);
+  background-color: color(secondary);
+  border-color: color(secondary);
+  color: #fff;
+  &:hover, &:focus, &:active {
+    background-color: color_darken(secondary, 5%) !important;
+    color: #fff !important;
+  }
+}
+
+.btn-outline-secondary, .btn-outline-secondary.disabled {
+  &:hover, &:focus, &:active {
+    background-color: color(secondary) !important;
+    color: #fff !important;
+  }
+}
+
+.btn-success, .btn-success.disabled {
+  @include button-shadow(success);
+  background-color: color(success);
+  border-color: color(success);
+  color: #fff;
+  &:hover, &:focus, &:active {
+    background-color: color_darken(success, 5%) !important;
+    color: #fff !important;
+  }
+}
+
+.btn-outline-success, .btn-outline-success.disabled {
+  &:hover, &:focus, &:active {
+    background-color: color(success) !important;
+    color: #fff !important;
+  }
+}
+
+.btn-danger, .btn-danger.disabled {
+  @include button-shadow(danger);
+  background-color: color(danger);
+  border-color: color(danger);
+  color: #fff;
+  &:hover, &:focus, &:active {
+    background-color: color_darken(danger, 13%) !important;
+  }
+}
+
+.btn-outline-danger, .btn-outline-danger.disabled {
+  &:hover, &:focus, &:active {
+    background-color: color_darken(danger, 13%) !important;
+    color: #fff !important;
+  }
+}
+
+.btn-dark, .btn-dark.disabled {
+  @include button-shadow(dark, 40%);
+  background-color: color(dark);
+  border-color: color(dark);
+  color: #fff;
+  &:hover, &:focus, &:active {
+    background-color: color_darken(dark, 20%) !important;
+  }
+}
+
+.btn-outline-dark, .btn-outline-dark.disabled {
+  &:hover, &:focus, &:active {
+    background-color: color_darken(dark, 20%) !important;
+    color: #fff !important;
+  }
+}
+
+.btn-light, .btn-light.disabled {
+  @include button-shadow(light, 1%);
+  background-color: color(light);
+  border-color: color(light);
+  color: color(dark);
+  &:hover, &:focus, &:active {
+    background-color: color_darken(light, 10%) !important;
+  }
+}
+
+.btn-outline-light, .btn-outline-light.disabled {
+  border-color: color(light);
+  color: color(light);
+  &:hover, &:focus, &:active {
+    background-color: color(light) !important;
+    color: #fff !important;
+  }
+}
+
+.btn-warning, .btn-warning.disabled {
+  @include button-shadow(warning);
+  background-color: color(warning);
+  border-color: color(warning);
+  color: #fff;
+  &:hover, &:focus, &:active {
+    background-color: color_darken(warning, 5%) !important;
+    color: #fff !important;
+  }
+}
+
+.btn-outline-warning, .btn-outline-warning.disabled {
+  &:hover, &:focus, &:active {
+    background-color: color(warning) !important;
+    color: #fff !important;
+  }
+}
+
+.btn-info, .btn-info.disabled {
+  @include button-shadow(info);
+  background-color: color(info);
+  border-color: color(info);
+  color: #fff;
+  &:hover, &:focus, &:active {
+    background-color: color_darken(info, 10%) !important;
+  }
+}
+
+.btn-outline-info, .btn-outline-info.disabled {
+  &:hover, &:focus, &:active {
+    background-color: color_darken(info, 10%) !important;
+    color: #fff !important;
+  }
+}
+
+.btn-primary, .btn-primary.disabled {
+  @include button-shadow(primary);
+  background-color: color(primary);
+  border-color: color(primary);
+  &:focus {
+    background-color: color_darken(primary, 10%) !important;
+    &:active {
+      background-color: color_darken(primary, 10%) !important;
+    }
+  }
+  &:active, &:hover {
+    background-color: color_darken(primary, 10%) !important;
+  }
+}
+
+.btn-outline-primary, .btn-outline-primary.disabled {
+  border-color: color(primary);
+  color: color(primary);
+  &:hover, &:focus, &:active {
+    background-color: color(primary) !important;
+    color: #fff;
+  }
+}
+
+.btn-outline-white, .btn-outline-white.disabled {
+  border-color: #fff;
+  color: #fff;
+  &:hover, &:focus, &:active {
+    background-color: #fff;
+    color: color(primary);
+  }
+}
+
+.btn-round {
+  border-radius: 30px;
+  padding-left: 34px;
+  padding-right: 34px;
+}
+
+.btn-social-icon, .btn-social {
+  border: none;
+  border-radius: 3px;
+}
+
+.btn-social-icon {
+  color: #fff !important;
+  padding-left: 18px;
+  padding-right: 18px;
+  > :first-child {
+    font-size: 16px;
+  }
+}
+
+.btn-social {
+  padding: 12px 12px 12px 50px;
+  color: #fff !important;
+  font-weight: 500;
+  > :first-child {
+    width: 55px;
+    line-height: 50px;
+    border-right: none;
+  }
+}
+
+.btn-reddit {
+  color: #000 !important;
+}
+
+.btn-group {
+  .btn {
+    &.active {
+      background-color: color(primary);
+      color: #fff;
+    }
+  }
+}
+
+.btn-progress {
+  position: relative;
+  background-image: url('../img/spinner-white.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30px;
+  color: transparent !important;
+  pointer-events: none;
+}

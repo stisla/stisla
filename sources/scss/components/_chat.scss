@@ -1,0 +1,92 @@
+.chat-box {
+  .chat-content {
+    background-color: #f9f9f9 !important;
+    height: 300px;
+    overflow: hidden;
+    padding-top: 25px !important;
+    .chat-item {
+      &.chat-right {
+        img {
+          float: right;
+        }
+        .chat-details {
+          margin-left: 0;
+          margin-right: 70px;
+          text-align: right;
+          .chat-text {
+            text-align: left;
+            background-color: color(primary);
+            color: #fff;
+          }
+        }
+      }
+      display: inline-block;
+      width: 100%;
+      margin-bottom: 25px;
+      > img {
+        float: left;
+        width: 50px;
+        border-radius: 50%;
+      }
+      .chat-details {
+        margin-left: 70px;
+        .chat-text {
+          @include shadow;
+          background-color: #fff;
+          padding: 10px 15px;
+          border-radius: 3px;
+          width: auto;
+          display: inline-block;
+          font-size: 12px;
+          img {
+            max-width: 100%;
+            margin-bottom: 10px;
+          }
+        }
+      }
+      &.chat-typing .chat-details .chat-text {
+        background-image: url('../img/typing.svg');
+        height: 40px;
+        width: 60px;
+        background-position: center;
+        background-size: 60%;
+        background-repeat: no-repeat;
+      }
+      .chat-details .chat-time {
+        margin-top: 5px;
+        font-size: 12px;
+        font-weight: 500;
+        opacity: .6;
+      }
+    }
+  }
+  .chat-form {
+    padding: 0;
+    position: relative;
+    .form-control {
+      border: none;
+      padding: 15px;
+      height: 50px;
+      padding-right: 70px;
+      font-size: 13px;
+      font-weight: 500;
+      box-shadow: none;
+      outline: none;
+    }
+    .btn {
+      padding: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      right: -5px;
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      @include shadow;
+      i {
+        margin-left: 0;
+      }
+    }
+  }
+}
