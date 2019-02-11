@@ -1,4 +1,8 @@
 # Free Bootstrap Admin Template 
+![GitHub last commit](https://img.shields.io/github/last-commit/stisla/stisla.svg)
+![GitHub repo size in bytes](https://img.shields.io/github/repo-size/badges/shields.svg)
+![License](https://img.shields.io/github/license/stisla/stisla.svg)
+
 Stisla is Free Bootstrap Admin Template and will help you to speed up your project, design your own dashboard UI and the users will love it.
 
 More info: https://getstisla.com
