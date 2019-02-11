@@ -30,8 +30,11 @@ You can find the Stisla road map here: [Stisla Roadmap](https://trello.com/b/M8T
 - [Rails](https://github.com/SunDi3yansyah/stisla-rails)
 
 
+## Contributors
+Stisla is better because of the [contributors](https://github.com/stisla/stisla/graphs/contributors). Thank them too.
+
 ## Contributing
-The contribution guide is still in progress :)
+Want to help Stisla get better? Let's contribute and follow our [contribution guide](https://github.com/stisla/stisla/blob/master/CONTRIBUTING.md).
 
 
 ## License
