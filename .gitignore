@@ -1,0 +1,10 @@
+#ignore folder
+node_modules/
+
+
+#ignore file
+*.txt
+*.lock
+*.log
+*.zip
+*.rar
