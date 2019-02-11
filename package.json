@@ -36,5 +36,8 @@
     "summernote": "^0.8.11",
     "sweetalert": "^2.1.2",
     "weathericons": "^2.1.0"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.0"
   }
 }
