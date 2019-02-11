@@ -45,5 +45,8 @@
     "chart.js": "^2.7.3",
     "gmaps": "^0.4.24",
     "jquery-sparkline": "https://github.com/gwatts/jquery.sparkline"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.0"
   }
 }
