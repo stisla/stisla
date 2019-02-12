@@ -1,6 +1,6 @@
 #ignore folder
 node_modules/
-
+.idea
 
 #ignore file
 *.txt
