@@ -31,9 +31,9 @@
 - [Quick start](#quick-start)
 - [Roadmap](#roadmap)
 - [Integrates](#integrates)
-- [Documentation](#contributors)
+- [Contributors](#contributors)
 - [Contributing](#contributing)
-- [Community](#license)
+- [License](#license)
 
 
 ## Status
