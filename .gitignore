@@ -1,12 +1,36 @@
-#ignore folder
-node_modules/
-/.idea
-/.vscode
-.DS_Store
-
-#ignore file
+# Numerous always-ignore extensions
 *.txt
 *.lock
 *.log
 *.zip
 *.rar
+*.diff
+*.err
+*.orig
+*.rej
+*.swo
+*.swp
+*.vi
+*~
+
+# Folders to ignore
+/node_modules/
+
+# OS or Editor folders
+._*
+.cache
+.DS_Store
+.idea
+.vscode
+.project
+.settings
+.tmproj
+*.esproj
+*.sublime-project
+*.sublime-workspace
+nbproject
+Thumbs.db
+
+# Komodo
+.komodotools
+*.komodoproject
