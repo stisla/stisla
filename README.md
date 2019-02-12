@@ -79,3 +79,8 @@ Want to help Stisla get better? Let's contribute and follow our [contribution gu
 
 ## License
 Stisla is under the [MIT License](LICENSE)
+
+## Supported by BrowserStack
+Thanks to BrowserStack for their support of this open-source project.
+
+[![Browser Stack](https://getstisla.com/svg/Browserstack-logo.svg)]
