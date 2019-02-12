@@ -83,4 +83,4 @@ Stisla is under the [MIT License](LICENSE)
 ## Supported by BrowserStack
 Thanks to BrowserStack for their support of this open-source project.
 
-[![Browser Stack](https://getstisla.com/svg/Browserstack-logo.svg)]
+<img src="https://getstisla.com/svg/Browserstack-logo.svg" alt="BrowserStack">
