@@ -1,6 +1,8 @@
 #ignore folder
 node_modules/
-.idea
+/.idea
+/.vscode
+.DS_Store
 
 #ignore file
 *.txt
