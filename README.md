@@ -34,6 +34,7 @@
 - [Contributors](#contributors)
 - [Contributing](#contributing)
 - [License](#license)
+- [Supported By BrowserStack](#supported-by-browserstack)
 
 
 ## Status
