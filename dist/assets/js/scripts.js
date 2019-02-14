@@ -410,10 +410,12 @@ $(function() {
 
     me.click(function() {
       $(target).collapse('toggle');
-      $(target).on('shown.bs.collapse', function() {
+      $(target).on('shown.bs.collapse', function(e) {
+        e.stopPropagation();
         me.html('<i class="fas fa-minus"></i>');
       });
-      $(target).on('hidden.bs.collapse', function() {
+      $(target).on('hidden.bs.collapse', function(e) {
+        e.stopPropagation();
         me.html('<i class="fas fa-plus"></i>');
       });
       return false;
