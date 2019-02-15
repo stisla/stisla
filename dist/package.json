@@ -1,6 +1,6 @@
 {
-  "name": "Stisla",
-  "version": "2.3.0",
+  "name": "@stisla/dist",
+  "version": "2.2.0",
   "description": "Free Bootstrap Admin Template",
   "main": "index.js",
   "repository": "https://github.com/stisla/stisla",
