@@ -14,6 +14,7 @@ const cssnano = require('cssnano');
 const uglify = require('gulp-uglify-es').default;
 const imagemin = require('gulp-imagemin');
 const imageminMozjpeg = require('imagemin-mozjpeg');
+const nunjucks = require('gulp-nunjucks');
 
 /**
  * Configuration
@@ -221,8 +222,32 @@ function  watchcss(){
   watch('./sources/sass/*.scss', minify);
 }
 
+function template() {
+  return src('pages/index-0.html')
+    .pipe(nunjucks.compile({
+      version: '2.3.0'
+    }, {
+      trimBlocks: true,
+      lstripBlocks: true,
+      filters: {
+        is_active: (str, reg, page) => {
+          reg = new RegExp(reg, 'gm');
+          reg = reg.exec(page);
+          if(reg != null) {
+            return str;
+          }
+        }
+      }
+    }))
+    .pipe(dest('dist'))
+    .pipe(notify({
+      message: 'File <%= file.relative %> compiled successfully'
+    }));
+}
+
 //create folder first
 // exports.folder = folder;
+exports.html = template;
 //then update source
 exports.update = parallel(bundle_main_css, bundle_modules_css, bundle_components_css);
 //minify  IMG SOURCE
