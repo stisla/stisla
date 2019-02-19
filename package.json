@@ -68,5 +68,8 @@
     "nunjucks": "^3.1.7"
   },
   "scripts": {
+    "stisla-start" : "yarn install --production=false",
+    "stisla-dev" : "yarn install --prod",
+    "dev" : "gulp"
   }
 }
