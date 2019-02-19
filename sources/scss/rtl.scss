@@ -1,0 +1,511 @@
+/**
+ * Stisla
+ *
+ * Stisla is a clean & modern HTML5 admin template based on Bootstrap 4.
+ * Stisla will make it easier for you to create your own admin interface.
+ *
+ * @package Stisla
+ * @version 2.3.0
+ * @author  Muhamad Nauval Azhar & Team
+ * @url   https://getstisla.com
+ *
+ */
+
+@font-face {
+  font-family: Vazir;
+  src: url('../fonts/vazir/Vazir.eot');
+  src: url('../fonts/vazir/Vazir.eot?#iefix') format("embedded-opentype"), url('../fonts/vazir/Vazir.woff2') format("woff2"), url('../fonts/vazir/Vazir.woff') format("woff"), url('../fonts/vazir/Vazir.ttf') format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: Vazir;
+  src: url('../fonts/vazir/Vazir-Bold.eot');
+  src: url('../fonts/vazir/Vazir-Bold.eot?#iefix') format("embedded-opentype"), url('../fonts/vazir/Vazir-Bold.woff2') format("woff2"), url('../fonts/vazir/Vazir-Bold.woff') format("woff"), url('../fonts/vazir/Vazir-Bold.ttf') format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: Vazir;
+  src: url('../fonts/vazir/Vazir-Black.eot');
+  src: url('../fonts/vazir/Vazir-Black.eot?#iefix') format("embedded-opentype"), url('../fonts/vazir/Vazir-Black.woff2') format("woff2"), url('../fonts/vazir/Vazir-Black.woff') format("woff"), url('../fonts/vazir/Vazir-Black.ttf') format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: Vazir;
+  src: url('../fonts/vazir/Vazir-Medium.eot');
+  src: url('../fonts/vazir/Vazir-Medium.eot?#iefix') format("embedded-opentype"), url('../fonts/vazir/Vazir-Medium.woff2') format("woff2"), url('../fonts/vazir/Vazir-Medium.woff') format("woff"), url('../fonts/vazir/Vazir-Medium.ttf') format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: Vazir;
+  src: url('../fonts/vazir/Vazir-Light.eot');
+  src: url('../fonts/vazir/Vazir-Light.eot?#iefix') format("embedded-opentype"), url('../fonts/vazir/Vazir-Light.woff2') format("woff2"), url('../fonts/vazir/Vazir-Light.woff') format("woff"), url('../fonts/vazir/Vazir-Light.ttf') format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: Vazir;
+  src: url('../fonts/vazir/Vazir-Thin.eot');
+  src: url('../fonts/vazir/Vazir-Thin.eot?#iefix') format("embedded-opentype"), url('../fonts/vazir/Vazir-Thin.woff2') format("woff2"), url('../fonts/vazir/Vazir-Thin.woff') format("woff"), url('../fonts/vazir/Vazir-Thin.ttf') format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
+
+
+body, html {
+  direction: rtl;
+  font-family: Vazir, Tahoma, Arial;
+}
+
+.ltr {
+  direction: ltr;
+}
+
+.rtl {
+  direction: rtl;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, span, input, textarea, select, option, label {
+  font-family: Vazir, Tahoma, Arial;
+}
+
+.main-sidebar {
+  right: 0;
+  left: auto;
+}
+
+.main-content {
+  padding-right: 280px;
+  padding-left: 30px;
+}
+
+.section .section-header {
+  font: normal normal 24px "IRANSans Bold";
+  div {
+    float: right;
+  }
+}
+
+.navbar-expand-lg .navbar-nav {
+  padding-right: 0px;
+}
+
+body.sidebar-mini .main-sidebar:after {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
+  content: " ";
+  position: fixed;
+  width: 65px;
+  height: 100%;
+  left: auto;
+  right: 0;
+  top: 0;
+  z-index: -1;
+  opacity: 0;
+  animation-name: mini-sidebar;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+}
+
+.dropdown-toggle::after {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: .255em;
+  vertical-align: .255em;
+  content: "";
+  border-top: .3em solid;
+  border-left: .4em solid transparent;
+  border-bottom: 0;
+  border-right: .4em solid transparent;
+  padding: 0px;
+  margin-right: 3px;
+}
+
+.main-sidebar .sidebar-menu li ul.dropdown-menu li a {
+  padding-left: auto !important;
+  padding-right: 65px;
+}
+
+body {
+  &:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-menu li a {
+    padding-left: 0;
+  }
+  &.sidebar-mini .main-sidebar .sidebar-menu > li ul.dropdown-menu {
+    left: auto;
+    right: 65px;
+  }
+  &.layout-2 .main-sidebar .sidebar-menu li a.has-dropdown::after {
+    left: 0;
+    right: auto;
+  }
+  &:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu > li.active > a::before {
+    right: 0;
+  }
+  &.layout-2 {
+    .main-content {
+      padding-top: 107px;
+      padding-right: 30px;
+      padding-left: 0;
+      width: calc(100% - 200px);
+    }
+    .main-sidebar .sidebar-menu li ul.dropdown-menu li a {
+      padding-right: 34px;
+      padding-left: 0;
+    }
+  }
+}
+
+.main-sidebar .sidebar-menu li a.has-dropdown::after {
+  left: 20px;
+  right: auto;
+}
+
+body {
+  &.sidebar-mini {
+    .navbar {
+      right: 65px;
+      left: 0px;
+    }
+    .main-content, .main-footer {
+      padding-right: 90px;
+      padding-left: 30px;
+    }
+  }
+  &.layout-2 .main-footer {
+    margin-right: 230px;
+    width: calc(100% - 230px);
+    padding-right: 20px;
+  }
+}
+
+.main-sidebar .sidebar-menu li {
+  text-align: right;
+}
+
+.navbar {
+  right: 250px;
+  left: 0px;
+}
+
+.progress {
+  direction: ltr;
+}
+
+.btn.btn-icon-split i, .dropdown-item.has-icon i, .btn.btn-icon-split i, .dropdown-item.has-icon i {
+  text-align: center;
+  width: 15px;
+  font-size: 15px;
+  float: right;
+  margin-right: 10px;
+}
+
+.dropdown-list .dropdown-list-icons .dropdown-item .dropdown-item-desc {
+  margin-right: 15px;
+  margin-left: 0;
+}
+
+body.layout-2 .navbar {
+  right: 0;
+}
+
+.main-sidebar .sidebar-menu li a i {
+  float: right;
+  margin-left: 15px !important;
+  text-align: center;
+}
+
+a:not(.btn-social-icon):not(.btn-social):not(.page-link) {
+  .ion, .fas, .far, .fal, .fab {
+    margin: 4px;
+  }
+}
+
+.dropdown-list .dropdown-item {
+  .dropdown-item-avatar {
+    float: right;
+  }
+  .dropdown-item-desc {
+    margin-right: 60px;
+    margin-left: 0;
+  }
+}
+
+.main-sidebar .sidebar-menu li a.has-dropdown::after {
+  float: left;
+}
+
+body.sidebar-gone {
+  .main-sidebar {
+    right: -250px;
+  }
+  .main-content {
+    padding-right: 30px;
+  }
+  .navbar {
+    right: 0;
+  }
+}
+
+.card {
+  &.card-sm-3 .card-icon, &.card-sm-4 .card-icon {
+    float: right;
+    margin-left: 15px;
+    margin-right: 10px;
+  }
+  &.card-sm {
+    .card-icon {
+      float: right;
+      text-align: left;
+      padding-left: 15px;
+    }
+    .card-options {
+      float: left;
+      margin-left: 20px;
+    }
+    .card-wrap {
+      margin-right: 30px;
+      margin-left: 15px;
+    }
+  }
+  &.card-sm-2 .card-icon {
+    left: 20px;
+    right: auto;
+  }
+}
+
+.main-sidebar .sidebar-menu li a .badge {
+  float: left;
+}
+
+.card .card-header h4 + {
+  .card-header-action, .card-header-form {
+    margin-right: auto;
+    margin-left: 0px;
+  }
+  .card-header-action .btn-group .btn:first-child, .card-header-form .btn-group .btn:first-child {
+    border-radius: 0 30px 30px 0 !important;
+  }
+}
+
+.list-unstyled-border li .custom-checkbox {
+  margin-left: 15px;
+  margin-right: 0;
+}
+
+.card {
+  &.card-statistic-1 .card-icon, &.card-statistic-2 .card-icon {
+    float: right;
+  }
+}
+
+.form-group label {
+  font-weight: normal;
+  font-family: Vazir, Tahoma, Arial;
+  letter-spacing: 0;
+}
+
+.dropdown-list .dropdown-header {
+  letter-spacing: 0;
+  overflow: hidden;
+}
+
+.media .media-left {
+  float: left;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.card {
+  &.card-sm-3 .card-header h4, &.card-sm-4 .card-header h4 {
+    letter-spacing: 0;
+    font-family: Vazir, Tahoma, Arial;
+  }
+}
+
+.main-sidebar .sidebar-user .sidebar-user-picture {
+  float: right;
+  margin-left: 10px;
+}
+
+.main-footer {
+  font-family: Vazir, Tahoma, Arial;
+  padding: 20px 280px 20px 30px;
+  font-size: 90%;
+  border-top: solid 1px #EEE;
+  background-color: #FFF;
+  box-shadow: -3px 0px 7px 1px #EEE;
+  margin-bottom: -5px;
+}
+
+body {
+  &.layout-2 .main-footer, &.layout-3 .main-footer {
+    background-color: transparent;
+    box-shadow: none;
+    margin-bottom: -5px;
+  }
+}
+
+.btn.btn-icon-split i, .dropdown-item.has-icon i {
+  font-size: 15px !important;
+  float: right !important;
+  margin: 0px !important;
+  margin-left: 15px !important;
+}
+
+.navbar .form-inline {
+  .search-result::before {
+    right: 34px;
+  }
+  .form-control {
+    padding-right: 20px;
+    padding-left: 0;
+    margin-left: -6px;
+    margin-right: inherit;
+    border-radius: 0 3px 3px 0px;
+  }
+  .btn {
+    border-radius: 3px 0 0 3px;
+    padding: 9px 15px;
+  }
+}
+
+.dropdown-menu-right {
+  left: 0px;
+  right: auto;
+}
+
+.budget-price .budget-price-label {
+  margin-right: 5px;
+}
+
+.section .section-header .section-header-breadcrumb {
+  margin-left: 0px;
+  margin-right: auto;
+}
+
+.breadcrumb-item + .breadcrumb-item {
+  padding-right: .5rem;
+  padding-left: 0;
+  &::before {
+    padding-left: .5rem;
+    padding-right: 0;
+    display: inline-block;
+    color: #6c757d;
+    content: "»";
+  }
+}
+
+.section .section-title::before {
+  float: right;
+  margin-left: 15px;
+  margin-right: 0;
+}
+
+body.layout-3 .navbar.navbar-secondary .navbar-nav > .nav-item {
+  > .nav-link.has-dropdown {
+    &::after {
+      position: absolute;
+      top: 50%;
+      -webkit-transform: translate(0, -50%);
+      transform: translate(0, -50%);
+      font-size: 12px;
+      right: unset;
+      left: -20px;
+    }
+    margin-left: 35px;
+    margin-right: 0;
+  }
+  &.active > .nav-link::before {
+    right: 35px;
+    left: 0;
+  }
+}
+
+.dropdown-menu-left {
+  right: 0;
+  .dropdown-menu-left {
+    right: 100%;
+  }
+}
+
+body.layout-3 .navbar.navbar-secondary .navbar-nav > .nav-item .dropdown-menu .nav-item .nav-link.has-dropdown::after {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  font-size: 12px;
+  right: unset;
+  left: 15px;
+}
+
+.alert-dismissible .close {
+  position: absolute;
+  top: 0;
+  right: unset;
+  left: 0;
+}
+
+.card .card-header h4 + {
+  .card-header-action .btn-group .btn:last-child, .card-header-form .btn-group .btn:last-child {
+    border-radius: 30px 0 0 30px !important;
+  }
+}
+
+.input-group > {
+  .input-group-append {
+    &:last-child > {
+      .btn:not(:last-child):not(.dropdown-toggle), .input-group-text:not(:last-child) {
+        border-radius: 0 5px 5px 0;
+      }
+    }
+    &:not(:last-child) > {
+      .btn, .input-group-text {
+        border-radius: 0 5px 5px 0;
+      }
+    }
+  }
+  .input-group-prepend > {
+    .btn, .input-group-text {
+      border-radius: 0 5px 5px 0;
+    }
+  }
+  .custom-select:not(:first-child), .form-control:not(:first-child) {
+    border-radius: 5px 0 0 5px;
+  }
+}
+
+.card .card-header h4 + {
+  .card-header-action .input-group .form-control, .card-header-form .input-group .form-control {
+    border-radius: 0 30px 30px 0 !important;
+  }
+  .card-header-action .input-group .form-control + .input-group-btn .btn, .card-header-form .input-group .form-control + .input-group-btn .btn {
+    border-radius: 30px 0 0 30px !important;
+  }
+}
+
+.btn-group > {
+  .btn-group:not(:first-child) > .btn, .btn:not(:first-child) {
+    border-radius: 5px 0px 0px 5px;
+  }
+  .btn-group:not(:last-child) > .btn, .btn:not(:last-child):not(.dropdown-toggle) {
+    border-radius: 0px 5px 5px 0px;
+  }
+}
+
+.dropleft .dropdown-toggle::before {
+  margin-left: .255em;
+  margin-right: unset;
+}

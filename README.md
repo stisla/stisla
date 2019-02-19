@@ -39,7 +39,6 @@
 
 ## Status
 
-![GitHub Download Count](https://github-basic-badges.herokuapp.com/downloads/kennedyoliveira/github-basic-badges/total.svg)
 ![GitHub last commit](https://img.shields.io/github/last-commit/stisla/stisla.svg)
 [![GitHub issues](https://img.shields.io/github/issues/stisla/stisla.svg)](https://github.com/stisla/stisla/issues)
 ![GitHub repo size in bytes](https://img.shields.io/github/repo-size/badges/shields.svg)

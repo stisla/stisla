@@ -1,0 +1,9 @@
+{
+  "name": "@stisla/assets",
+  "version": "2.3.0",
+  "description": "Stisla's asset files",
+  "main": "index.js",
+  "repository": "https://github.com/stisla/stisla",
+  "author": "Muhamad Nauval Azhar",
+  "license": "MIT"
+}
