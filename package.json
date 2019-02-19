@@ -54,8 +54,9 @@
     "browser-sync": "^2.26.3",
     "cssnano": "^4.1.8",
     "gulp": "^4.0.0",
+    "gulp-color": "^0.0.2",
     "gulp-concat": "^2.6.1",
-    "gulp-imagemin": "^5.0.3",
+    "gulp-imagemin": "^3.4.0",
     "gulp-notify": "^3.2.0",
     "gulp-nunjucks": "^4.0.0",
     "gulp-plumber": "^1.2.1",
@@ -68,8 +69,9 @@
     "nunjucks": "^3.1.7"
   },
   "scripts": {
-    "stisla-start" : "yarn install --production=false",
-    "stisla-dev" : "yarn install --prod",
-    "dev" : "gulp"
+    "stisla-start": "yarn install --production=false",
+    "stisla-dev": "yarn install --prod",
+    "dist": "gulp dist",
+    "dev": "gulp"
   }
 }
