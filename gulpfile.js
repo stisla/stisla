@@ -223,7 +223,8 @@ function  watchcss(){
 }
 
 function template() {
-  return src('pages/index-0.html')
+  return src('sources/pages/*.html')
+    .pipe(plumber())
     .pipe(nunjucks.compile({
       version: '2.3.0'
     }, {
@@ -239,7 +240,7 @@ function template() {
         }
       }
     }))
-    .pipe(dest('dist'))
+    .pipe(dest('pages'))
     .pipe(notify({
       message: 'File <%= file.relative %> compiled successfully'
     }));
