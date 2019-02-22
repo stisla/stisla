@@ -1,6 +1,12 @@
 "use strict";
 
-(function($, window, i) {
+(function(fn) {
+  if ((typeof(Turbolinks) !== 'undefined') && (Turbolinks)) {
+    document.addEventListener('turbolinks:load', fn)
+  } else {
+    document.addEventListener('DOMContentLoaded', fn);
+  }
+})((function($, window, i) {
   // Bootstrap 4 Modal
   $.fn.fireModal = function(options) {
     var options = $.extend({
@@ -256,5 +262,4 @@
       }, 100);
       chat.onShow.call(this, append_element);
   }
-})(jQuery, this, 0);
-
+})(jQuery, this, 0));

@@ -158,8 +158,16 @@ function watching() {
     server:{
       baseDir: "./"
     },
+    snippetOptions: {
+      rule: {
+        match: /<\/head>/i,
+        fn: function (snippet, match) {
+          return snippet + match;
+        }
+      }
+    },
     startPath: 'pages/index.html',
-    port: 1000
+    port: 8080
   });
 
   /**
