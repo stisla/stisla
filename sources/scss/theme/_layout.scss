@@ -4,9 +4,9 @@
   left: 0;
 }
 
-.main-sidebar, 
-.navbar, 
-.main-content, 
+.main-sidebar,
+.navbar,
+.main-content,
 .main-footer {
   transition: all .5s;
 }
@@ -163,11 +163,11 @@ body.layout-2 {
     flex-wrap: wrap;
     padding: 0 50px;
   }
-  .main-sidebar, 
-  .main-content, 
+  .main-sidebar,
+  .main-content,
   .main-footer {
     flex-shrink: 0;
-    flex-grow: 0;    
+    flex-grow: 0;
   }
   .main-sidebar {
     background-color: transparent;
@@ -589,7 +589,7 @@ body:not(.sidebar-mini) .sidebar-style-2 {
     z-index: 891;
   }
   body.layout-2,
-  body.layout-3 {  
+  body.layout-3 {
     .main-wrapper {
       width: 100%;
       padding: 0;

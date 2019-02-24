@@ -16,16 +16,17 @@ const imagemin = require('gulp-imagemin');
 const imageminMozjpeg = require('imagemin-mozjpeg');
 const nunjucks = require('gulp-nunjucks');
 const color = require('gulp-color');
+const nodePath = require('path');
 
 /**
  * Configuration
  * @type {String}
  */
-var cssDir = './assets/css',
-    jsDir = './assets/js',
-    htmlDir = './sources/pages',
-    sassDir = './sources/scss',
-    imgDir = './assets/img';
+var cssDir = 'assets/css',
+    jsDir = 'assets/js',
+    htmlDir = 'sources/pages',
+    sassDir = 'sources/scss',
+    imgDir = 'assets/img';
 
 /**
  * Helpers
@@ -100,7 +101,7 @@ function _compile_scss(path, onEnd, log=true, ret=false) {
   .pipe(dest(cssDir))
   .pipe(plumber.stop());
 
-  if(ret) return compile_html;
+  if(ret) return compile_scss;
 }
 
 function _log(str, clr) {
@@ -152,11 +153,11 @@ function image() {
 }
 
 function compile_scss() {
-  return _compile_scss(sassDir + '/*.scss', null, false, true);
+  return _compile_scss(sassDir + '/**/*.scss', null, false, true);
 }
 
 function compile_html() {
-  return _compile_html(htmlDir + '/*.html', null, false, true);
+  return _compile_html(htmlDir + '/**/*.html', null, false, true);
 }
 
 function watching() {
@@ -177,13 +178,14 @@ function watching() {
    */
   watch([
     htmlDir + '/**/*.html',
-    sassDir + '/*.scss',
+    sassDir + '/**/*.scss',
     jsDir + '/**/*.js',
-    cssDir + '/**/*.css',
     imgDir + '/**/*.*',
   ]).on('change', (file) => {
+    file = file.replace(/\\/g, nodePath.sep);
+
     if(file.indexOf('.scss') > -1) {
-      _compile_scss(file, () => {
+      _compile_scss(sassDir + '/**/*.scss', () => {
         return browserSync.reload();
       });
     }
@@ -198,7 +200,9 @@ function watching() {
       });
     }
 
-    return browserSync.reload();
+    if(file.indexOf(jsDir) > -1 || file.indexOf(imgDir) > -1) {
+      return browserSync.reload();
+    }
   });
 }
 

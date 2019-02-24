@@ -13,8 +13,24 @@ $colors: (
   body:           #fafdfb,
   font:           #6c757d,
   fontdark:       #34395e,
-  white:          #ffffff
+  white:          #ffffff,
+
+  // Form Control
+  formcontrol_normal_background:    #fdfdff,
+  formcontrol_normal_border:        #e4e6fc,
+  formcontrol_focus_background:     #fefeff,
+  formcontrol_focus_border:         #95a0f4,
+
+  // Shadow
+
+
+  // Utilities
+  section_title_line: #6777ef,
 );
+
+$font_family:   'Nunito', 'Segoe UI', arial;
+$font_weight:   400;
+$font_size:     14px;
 
 $grid-breakpoints: (
   xs: 0,

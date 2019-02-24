@@ -65,9 +65,9 @@
 
 body {
   background-color: color(body);
-  font-size: 14px;
-  font-weight: 400;
-  font-family: 'Nunito', 'Segoe UI', arial;
+  font-size: $font_size;
+  font-weight: $font_weight;
+  font-family: $font_family;
   color: color(font);
 }
 

@@ -1,8 +1,9 @@
 .table {
+  color: inherit;
   td, &:not(.table-bordered) th {
     border-top: none;
   }
-  &:not(.table-sm):not(.table-md):not(.dataTable) td, 
+  &:not(.table-sm):not(.table-md):not(.dataTable) td,
   &:not(.table-sm):not(.table-md):not(.dataTable) th {
     padding: 0 25px;
     height: 60px;
