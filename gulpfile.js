@@ -25,20 +25,21 @@ var cssDir = './assets/css',
     jsDir = './assets/js',
     htmlDir = './sources/pages',
     sassDir = './sources/scss',
-    imgDir = './assets/img/*';
+    imgDir = './assets/img';
 
 /**
  * Helpers
  */
 
-function _compile_html(path, log=true, ret=false) {
+function _compile_html(path, onEnd, log=true, ret=false) {
   if(log)
     _log('[HTML] Compiling:' + path, 'GREEN');
 
   let compile_html = src(path, { base: htmlDir })
   .pipe(plumber())
   .pipe(nunjucks.compile({
-    version: '2.3.0'
+    version: '2.3.0',
+    site_name: 'Stisla'
   },
   /**
    * Nunjucks options
@@ -60,16 +61,21 @@ function _compile_html(path, log=true, ret=false) {
       }
     }
   }))
+  .on('error', console.error.bind(console))
+  .on('end', () => {
+    if(onEnd)
+      onEnd.call(this);
+
+    if(ret) return compile_html;
+
+    if(log)
+      _log('[HTML] Finished', 'GREEN');
+  })
   .pipe(dest('pages'))
   .pipe(plumber.stop());
-
-  if(ret) return compile_html;
-
-  if(log)
-    _log('[HTML] Finished', 'GREEN');
 }
 
-function _compile_scss(path, log=true, ret=false) {
+function _compile_scss(path, onEnd, log=true, ret=false) {
   if(log)
     _log('[SCSS] Compiling:' + path, 'GREEN');
 
@@ -79,6 +85,15 @@ function _compile_scss(path, log=true, ret=false) {
     errorLogToConsole: true
   }))
   .on('error', console.error.bind(console))
+  .on('end', () => {
+    if(onEnd)
+      onEnd.call(this);
+
+    if(ret) return compile_html;
+
+    if(log)
+      _log('[SCSS] Finished', 'GREEN');
+  })
   .pipe(rename({
     dirname: '',
     extname: '.css'
@@ -86,11 +101,6 @@ function _compile_scss(path, log=true, ret=false) {
   .pipe(postcss([autoprefixer()]))
   .pipe(dest(cssDir))
   .pipe(plumber.stop());
-
-  if(ret) return compile_scss;
-
-  if(log)
-    _log('[SCSS] Finished', 'GREEN');
 }
 
 function _log(str, clr) {
@@ -132,7 +142,7 @@ function minify(){
 }
 
 function image() {
-  return src(imgDir)
+  return src(imgDir + '/**/*.*')
   .pipe(plumber())
   .pipe(imagemin([
     imageminMozjpeg({quality: 80})
@@ -142,11 +152,11 @@ function image() {
 }
 
 function compile_scss() {
-  return _compile_scss(sassDir + '/*.scss', false, true);
+  return _compile_scss(sassDir + '/*.scss', null, false, true);
 }
 
 function compile_html() {
-  return _compile_html(htmlDir + '/*.html', false, true);
+  return _compile_html(htmlDir + '/*.html', null, false, true);
 }
 
 function watching() {
@@ -159,22 +169,36 @@ function watching() {
       baseDir: "./"
     },
     startPath: 'pages/index.html',
-    port: 1000
+    port: 8080
   });
 
   /**
    * Watch ${htmlDir}
    */
-  watch([htmlDir + '/*.html', sassDir + '/*.scss']).on('change', (file) => {
+  watch([
+    htmlDir + '/**/*.html',
+    sassDir + '/*.scss',
+    jsDir + '/**/*.js',
+    cssDir + '/**/*.css',
+    imgDir + '/**/*.*',
+  ]).on('change', (file) => {
     if(file.indexOf('.scss') > -1) {
-      _compile_scss(file);
+      _compile_scss(file, () => {
+        return browserSync.reload();
+      });
     }
 
-    if(file.indexOf('.html') > -1) {
-      _compile_html(file);
+    if(file.indexOf('layouts') > -1 && file.indexOf('.html') > -1) {
+      _compile_html(htmlDir + '/*.html', () => {
+        return browserSync.reload();
+      });
+    }else if(file.indexOf('.html') > -1) {
+      _compile_html(file, () => {
+        return browserSync.reload();
+      });
     }
 
-    browserSync.reload();
+    return browserSync.reload();
   });
 }
 
