@@ -66,13 +66,13 @@ function _compile_html(path, onEnd, log=true, ret=false) {
     if(onEnd)
       onEnd.call(this);
 
-    if(ret) return compile_html;
-
     if(log)
       _log('[HTML] Finished', 'GREEN');
   })
   .pipe(dest('pages'))
   .pipe(plumber.stop());
+
+  if(ret) return compile_html;
 }
 
 function _compile_scss(path, onEnd, log=true, ret=false) {
@@ -89,8 +89,6 @@ function _compile_scss(path, onEnd, log=true, ret=false) {
     if(onEnd)
       onEnd.call(this);
 
-    if(ret) return compile_html;
-
     if(log)
       _log('[SCSS] Finished', 'GREEN');
   })
@@ -101,6 +99,8 @@ function _compile_scss(path, onEnd, log=true, ret=false) {
   .pipe(postcss([autoprefixer()]))
   .pipe(dest(cssDir))
   .pipe(plumber.stop());
+
+  if(ret) return compile_html;
 }
 
 function _log(str, clr) {
