@@ -69,7 +69,7 @@ You can find the Stisla road map here: [Stisla Roadmap](https://trello.com/b/M8T
 
 ## Integrates
 - [Rails](https://github.com/SunDi3yansyah/stisla-rails)
-- CodeIgniter (let's contribute)
+- [CodeIgniter](https://github.com/KhidirDotID/stisla-codeigniter)
 - Laravel (let's contribute)
 - Django (let's contribute)
 - and more...
