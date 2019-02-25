@@ -378,7 +378,7 @@ body.layout-3 {
       display: block;
       &.menu-header {
         padding: 3px 15px;
-        color: color_lighten(font, 30%);
+        color: color_lighten(font, 20%);
         font-size: 10px;
         text-transform: uppercase;
         letter-spacing: 1.3px;
@@ -395,7 +395,7 @@ body.layout-3 {
         padding: 0 20px;
         width: 100%;
         letter-spacing: .3px;
-        color: color_lighten(font, 10%);
+        color: color_lighten(font, 5%);
         text-decoration: none;
         .badge {
           float: right;
