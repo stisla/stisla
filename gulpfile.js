@@ -125,23 +125,6 @@ function folder() {
   .pipe(dest('./assets/img'));
 }
 
-function minify(){
-  return src(sassDir)
-  .pipe(plumber())
-  .pipe(sass({
-    errorLogToConsole: true
-  }))
-  .on('error', console.error.bind( console ))
-  .pipe(rename({
-    suffix: '.min'
-  }))
-  .pipe(postcss([autoprefixer(), cssnano()]))
-  .pipe(dest(cssDir))
-  .pipe(notify({
-    message: 'Minify <%= file.relative %> berhasil bos'
-  }));
-}
-
 function image() {
   return src(imgDir + '/**/*.*')
   .pipe(plumber())
@@ -211,9 +194,6 @@ exports.folder = folder;
 
 // Minify images
 exports.image = image;
-
-// Run this command for styling OPs
-exports.minify = minify;
 
 // Compile SCSS
 exports.scss = compile_scss;
