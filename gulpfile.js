@@ -34,7 +34,7 @@ var cssDir = 'assets/css',
 
 function _compile_html(path, onEnd, log=true, ret=false) {
   if(log)
-    _log('[HTML] Compiling:' + path, 'GREEN');
+    _log('[HTML] Compiling: ' + path, 'GREEN');
 
   let compile_html = src(path, { base: htmlDir })
   .pipe(plumber())

@@ -53,7 +53,7 @@
 /* 2. Mixin */
 /* 3. Bootstrap Override */
 /* 3.1 Misc */
-@import url("https://fonts.googleapis.com/css?family=Nunito:400,600,700,800");
+@import url("//fonts.googleapis.com/css?family=Nunito:400,600,700,800");
 .btn:focus,
 .btn:active,
 .btn:active:focus,
