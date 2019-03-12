@@ -1759,7 +1759,7 @@ h6 .badge {
   font-size: 13px; }
 
 .dropdown-menu {
-  box-shadow: 0px 10px 40px 0px rgba(51, 73, 94, 0.15);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.03);
   border: none;
   width: 200px; }
   .dropdown-menu.show {
@@ -1940,7 +1940,7 @@ a.dropdown-item {
   --dark: color(dark); }
 
 body {
-  background-color: #f4f6f9;
+  background-color: #fafdfb;
   font-size: 14px;
   font-weight: 400;
   font-family: "Nunito", "Segoe UI", arial;
