@@ -4,7 +4,7 @@
 }
 
 .dropdown-menu {
-  @include shadow(0 0 30px);
+  @include shadow(0 10px 40px 0, rgba(51, 73, 94, 0.15));
   border: none;
   width: 200px;
   &.show {
