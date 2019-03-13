@@ -1939,6 +1939,9 @@ a.dropdown-item {
   --light: color(light);
   --dark: color(dark); }
 
+body, html {
+  min-height: 100%; }
+
 body {
   background-color: #f4f6f9;
   font-size: 14px;
@@ -2031,6 +2034,9 @@ a.bb {
   font-size: 14px;
   color: #34395e;
   font-weight: 600; }
+
+.text-muted-transparent {
+  color: rgba(255, 255, 255, 0.8); }
 
 .img-shadow {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03); }
@@ -2188,6 +2194,109 @@ pre {
     width: calc(100% / 4); }
   .icon-wrap {
     width: 100%; } }
+
+.background-walk-y {
+  background-repeat: no-repeat;
+  background-position: 0 0%;
+  -webkit-animation-name: backgroundWalkY;
+          animation-name: backgroundWalkY;
+  -webkit-animation-duration: 70s;
+          animation-duration: 70s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+          animation-direction: alternate;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+  background-size: 100%; }
+
+@media (max-width: 1199.98px) {
+  .background-walk-y {
+    background-size: cover; } }
+
+.background-walk-x {
+  background-repeat: no-repeat;
+  background-position: 0 0%;
+  -webkit-animation-name: backgroundWalkX;
+          animation-name: backgroundWalkX;
+  -webkit-animation-duration: 70s;
+          animation-duration: 70s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+          animation-direction: alternate;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear; }
+
+@-webkit-keyframes backgroundWalkY {
+  0% {
+    background-position: 0 0%; }
+  100% {
+    background-position: 0 100%; } }
+
+@keyframes backgroundWalkY {
+  0% {
+    background-position: 0 0%; }
+  100% {
+    background-position: 0 100%; } }
+
+@-webkit-keyframes backgroundWalkX {
+  0% {
+    background-position: 0 0%; }
+  100% {
+    background-position: 100% 0; } }
+
+@keyframes backgroundWalkX {
+  0% {
+    background-position: 0 0%; }
+  100% {
+    background-position: 100% 0; } }
+
+.overlay-gradient-bottom:after {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: false;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 65%, rgba(0, 0, 0, 0.65) 100%);
+  z-index: 1; }
+
+.overlay-gradient-top:after {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: false;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0) 65%, rgba(0, 0, 0, 0.65) 100%);
+  z-index: 1; }
+
+.index-1 {
+  z-index: 1 !important; }
+
+.index-2 {
+  z-index: 2 !important; }
+
+.index-3 {
+  z-index: 3 !important; }
+
+.index-4 {
+  z-index: 4 !important; }
+
+.index-5 {
+  z-index: 5 !important; }
+
+.absolute-bottom-left {
+  position: absolute;
+  left: 0;
+  bottom: 0; }
 
 /* 4.2 Section */
 .section {

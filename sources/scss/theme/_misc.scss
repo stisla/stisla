@@ -12,6 +12,10 @@
   --dark: color(dark);
 }
 
+body, html {
+  min-height: 100%;
+}
+
 body {
   background-color: color(body);
   font-size: $font_size;
@@ -121,6 +125,10 @@ a.bb {
   font-size: 14px;
   color: color(fontdark);
   font-weight: 600;
+}
+
+.text-muted-transparent {
+  color: rgba(255,255,255,.8);
 }
 
 .img-shadow {
@@ -314,4 +322,61 @@ pre {
   .icon-wrap {
     width: 100%;
   }
+}
+
+.background-walk-y {
+  @include background_walk;
+  background-size: 100%;
+}
+
+@include media-breakpoint-down(lg) {
+  .background-walk-y {
+    background-size: cover;
+  }
+}
+
+.background-walk-x {
+  @include background_walk(backgroundWalkX);
+}
+
+@keyframes backgroundWalkY {
+  0% {
+    background-position: 0 0%;
+  }
+  100% {
+    background-position: 0 100%;
+  }
+}
+
+@keyframes backgroundWalkX {
+  0% {
+    background-position: 0 0%;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}
+
+.overlay-gradient-bottom {
+  &:after {
+    @include overlay(1, false, linear-gradient(to bottom, rgba(0, 0, 0, 0) 65%, rgba(0, 0, 0, 0.65) 100%));
+  }
+}
+
+.overlay-gradient-top {
+  &:after {
+    @include overlay(1, false, linear-gradient(to top, rgba(0, 0, 0, 0) 65%, rgba(0, 0, 0, 0.65) 100%));
+  }
+}
+
+.index-1 { z-index: 1 !important; }
+.index-2 { z-index: 2 !important; }
+.index-3 { z-index: 3 !important; }
+.index-4 { z-index: 4 !important; }
+.index-5 { z-index: 5 !important; }
+
+.absolute-bottom-left {
+  position: absolute;
+  left: 0;
+  bottom: 0;
 }

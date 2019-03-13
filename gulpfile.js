@@ -144,6 +144,9 @@ function compile_html() {
 }
 
 function watching() {
+  compile_scss();
+  compile_html();
+
   /**
    * BrowserSync initialization
    * @type {Object}
