@@ -1621,7 +1621,7 @@ h6 .badge {
         display: flex;
         align-items: center; }
         .navbar .form-inline .search-result .search-item a:hover {
-          background-color: #fbfbff; }
+          background-color: #f1f3fe; }
         .navbar .form-inline .search-result .search-item a:not(.search-close) {
           width: 100%; }
         .navbar .form-inline .search-result .search-item a i {

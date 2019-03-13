@@ -113,9 +113,9 @@
           display: flex;
           align-items: center;
           &:hover {
-            background-color: color_lighten(primary, 32%);
+            background-color: color_lighten(primary, 30%);
           }
-          &:not(.search-close) {          
+          &:not(.search-close) {
             width: 100%;
           }
           i {
@@ -242,7 +242,7 @@
   .navbar .form-inline .search-element {
     display: block;
   }
-} 
+}
 @include media-breakpoint-only(md) {
   .collapse {
     position: relative;
@@ -255,7 +255,7 @@
 @media (max-width: 1024px) {
   .nav-collapse {
     position: relative;
-    .navbar-nav {    
+    .navbar-nav {
       @include shadow(0 0 30px);
       position: absolute;
       top: 40px;
