@@ -55,6 +55,7 @@
     h4 {
       font-size: 16px;
       line-height: 28px;
+      color: color(primary);
       padding-right: 10px;
       margin-bottom: 0;
       + .card-header-action,
@@ -178,6 +179,7 @@
       h4 {
         font-size: 40px;
         line-height: 1;
+        color: #fff;
       }
       .card-description {
         margin-top: 5px;

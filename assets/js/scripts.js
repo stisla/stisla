@@ -3,16 +3,20 @@
 // ChartJS
 if(window.Chart) {
   Chart.defaults.global.defaultFontFamily = "'Nunito', 'Segoe UI', 'Arial'";
-  Chart.defaults.global.defaultFontSize = 11;
+  Chart.defaults.global.defaultFontSize = 12;
   Chart.defaults.global.defaultFontStyle = 500;
   Chart.defaults.global.defaultFontColor = "#999";
-  Chart.defaults.global.tooltips.backgroundColor = '#000';
+  Chart.defaults.global.tooltips.backgroundColor = "#000";
+  Chart.defaults.global.tooltips.bodyFontColor = "rgba(255,255,255,.7)";
+  Chart.defaults.global.tooltips.titleMarginBottom = 10;
+  Chart.defaults.global.tooltips.titleFontSize = 14;
   Chart.defaults.global.tooltips.titleFontFamily = "'Nunito', 'Segoe UI', 'Arial'";
   Chart.defaults.global.tooltips.titleFontColor = '#fff';
-  Chart.defaults.global.tooltips.titleFontSize = 20;
-  Chart.defaults.global.tooltips.xPadding = 10;
-  Chart.defaults.global.tooltips.yPadding = 10;
-  Chart.defaults.global.tooltips.cornerRadius = 3;
+  Chart.defaults.global.tooltips.xPadding = 15;
+  Chart.defaults.global.tooltips.yPadding = 15;
+  Chart.defaults.global.tooltips.displayColors = false;
+  Chart.defaults.global.tooltips.intersect = false;
+  Chart.defaults.global.tooltips.mode = 'nearest';
 }
 
 // DropzoneJS
@@ -87,10 +91,33 @@ $(function() {
       $(".main-sidebar .sidebar-menu li a.has-dropdown").off('click').on('click', function() {
         var me = $(this);
 
-        me.parent().find('> .dropdown-menu').slideToggle(500, function() {
+        $('.main-sidebar .sidebar-menu li.active > .dropdown-menu').slideUp(500, function() {
           update_sidebar_nicescroll();
           return false;
         });
+        $('.main-sidebar .sidebar-menu li.active').removeClass('active');
+
+        if(me.parent().hasClass("active")) {
+          me.parent().removeClass('active');
+
+          me.parent().find('> .dropdown-menu').slideUp(500, function() {
+            update_sidebar_nicescroll();
+            return false;
+          });
+        }else{
+          me.parent().addClass('active');
+
+          me.parent().find('> .dropdown-menu').slideDown(500, function() {
+            update_sidebar_nicescroll();
+            return false;
+          });
+        }
+
+        return false;
+      });
+
+      $('.main-sidebar .sidebar-menu li.active > .dropdown-menu').slideDown(500, function() {
+        update_sidebar_nicescroll();
         return false;
       });
     }

@@ -380,3 +380,46 @@ pre {
   left: 0;
   bottom: 0;
 }
+
+.bg-paypal {
+  @include paypal;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg-visa {
+  @include visa;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg-americanexpress {
+  @include americanexpress;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg-dinersclub {
+  @include dinersclub;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg-discover {
+  @include discover;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg-jcb {
+  @include jcb;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg-mastercard {
+  @include mastercard;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+

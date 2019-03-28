@@ -43,28 +43,28 @@
       }
 
       // Modal base template
-      var modal_template = '   <div class="modal'+ (options.animation == true ? ' fade' : '') +'" tabindex="-1" role="dialog" id="'+ id +'">  '  + 
-                 '     <div class="modal-dialog '+options.size+(options.center ? ' modal-dialog-centered' : '')+'" role="document">  '  + 
-                 '       <div class="modal-content">  '  + 
+      var modal_template = '   <div class="modal'+ (options.animation == true ? ' fade' : '') +'" tabindex="-1" role="dialog" id="'+ id +'">  '  +
+                 '     <div class="modal-dialog '+options.size+(options.center ? ' modal-dialog-centered' : '')+'" role="document">  '  +
+                 '       <div class="modal-content">  '  +
                  ((options.header == true) ?
-                 '         <div class="modal-header">  '  + 
-                 '           <h5 class="modal-title">'+ options.title +'</h5>  '  + 
+                 '         <div class="modal-header">  '  +
+                 '           <h5 class="modal-title">'+ options.title +'</h5>  '  +
                  ((options.closeButton == true) ?
-                 '           <button type="button" class="close" data-dismiss="modal" aria-label="Close">  '  + 
-                 '             <span aria-hidden="true">&times;</span>  '  + 
+                 '           <button type="button" class="close" data-dismiss="modal" aria-label="Close">  '  +
+                 '             <span aria-hidden="true">&times;</span>  '  +
                  '           </button>  '
-                 : '') + 
+                 : '') +
                  '         </div>  '
                  : '') +
-                 '         <div class="modal-body">  '  + 
+                 '         <div class="modal-body">  '  +
                  '         </div>  '  +
                  (options.buttons.length > 0 ?
-                 '         <div class="modal-footer">  '  + 
-                 '         </div>  '  
-                 : '')+ 
-                 '       </div>  '  + 
-                 '     </div>  '  + 
-                 '  </div>  ' ; 
+                 '         <div class="modal-footer">  '  +
+                 '         </div>  '
+                 : '')+
+                 '       </div>  '  +
+                 '     </div>  '  +
+                 '  </div>  ' ;
 
       // Convert modal to object
       var modal_template = $(modal_template);
@@ -95,7 +95,7 @@
 
       // add footer body class
       if(options.footerClass) $(modal_template).find('.modal-footer').addClass(options.footerClass);
-      
+
       // execute 'created' callback
       options.created.call(this, modal_template, options);
 
@@ -119,7 +119,7 @@
             if(typeof options.autoFocus == 'boolean')
               modal_form.find('input:eq(0)').focus(); // the first input element will be focused
             // if type of `autoFocus` option is `string` and `autoFocus` option is an HTML element
-            else if(typeof options.autoFocus == 'string' && modal_form.find(options.autoFocus).length) 
+            else if(typeof options.autoFocus == 'string' && modal_form.find(options.autoFocus).length)
               modal_form.find(options.autoFocus).focus(); // find elements and focus on that
           });
         }
@@ -154,7 +154,7 @@
 
       $(document).on("click", '.' + trigger_class, function() {
         $('#' + id).modal(options.modal);
-        
+
         return false;
       });
     });
@@ -203,7 +203,7 @@
   $.cardProgressDismiss = function(card, dismissed) {
     var me = $(card);
     me.removeClass('card-progress');
-    me.find('.card-progress-dismiss').remove();   
+    me.find('.card-progress-dismiss').remove();
     if(dismissed)
       dismissed.call(this, me);
   }
