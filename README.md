@@ -6,14 +6,28 @@
 
 <h1 align="center">Stisla</h1>
 
-<p align="center">
-  Stisla is Free Bootstrap Admin Template and will help you to speed up your project, design your own dashboard UI and the users will love it.
+<p>
+  Stisla is a Free Bootstrap Admin Template which will help you to speed up your project and design your own dashboard UI. Users will love it.
 </p>
+<br>
+<span align="center">
+  
+![GitHub last commit](https://img.shields.io/github/last-commit/stisla/stisla.svg)
+[![GitHub issues](https://img.shields.io/github/issues/stisla/stisla.svg)](https://github.com/stisla/stisla/issues)
+![GitHub repo size in bytes](https://img.shields.io/github/repo-size/badges/shields.svg)
+[![License](https://img.shields.io/github/license/stisla/stisla.svg)](LICENSE)
+![npm version](https://badge.fury.io/js/yarn.svg)
+  
+</span>
+
+<br>
 
 <p align="center">
   <a href="https://getstisla.com">Homepage</a>
   •
   <a href="https://getstisla.com/getting-started">Getting Started</a>
+  •
+  <a href="https://demo.getstisla.com" target="_new">Demo</a>
   •
   <a href="https://getstisla.com/docs">Documentation</a>
   •
@@ -21,6 +35,8 @@
   •
   <a href="https://getstisla.com/support">Issue</a>
 </p>
+
+<br>
 
 [![Stisla Preview](https://camo.githubusercontent.com/2135e0f6544a7286a3412cdc3df32d47fc91b045/68747470733a2f2f692e6962622e636f2f3674646d6358302f323031382d31312d31312d31352d33352d676574737469736c612d636f6d2e706e67)](https://getstisla.com)
 
@@ -35,15 +51,6 @@
 - [Contributing](#contributing)
 - [License](#license)
 - [Supported By BrowserStack](#supported-by-browserstack)
-
-
-## Status
-
-![GitHub last commit](https://img.shields.io/github/last-commit/stisla/stisla.svg)
-[![GitHub issues](https://img.shields.io/github/issues/stisla/stisla.svg)](https://github.com/stisla/stisla/issues)
-![GitHub repo size in bytes](https://img.shields.io/github/repo-size/badges/shields.svg)
-[![License](https://img.shields.io/github/license/stisla/stisla.svg)](LICENSE)
-![npm version](https://badge.fury.io/js/yarn.svg)
 
 
 ## Quick start
