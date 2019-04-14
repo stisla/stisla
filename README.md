@@ -11,13 +11,13 @@
 </p>
 <br>
 <span align="center">
-  
+
 ![GitHub last commit](https://img.shields.io/github/last-commit/stisla/stisla.svg)
 [![GitHub issues](https://img.shields.io/github/issues/stisla/stisla.svg)](https://github.com/stisla/stisla/issues)
 ![GitHub repo size in bytes](https://img.shields.io/github/repo-size/badges/shields.svg)
 [![License](https://img.shields.io/github/license/stisla/stisla.svg)](LICENSE)
 ![npm version](https://badge.fury.io/js/yarn.svg)
-  
+
 </span>
 
 <br>
@@ -77,7 +77,7 @@ You can find the Stisla road map here: [Stisla Roadmap](https://trello.com/b/M8T
 ## Integrates
 - [Rails](https://github.com/SunDi3yansyah/stisla-rails)
 - [CodeIgniter](https://github.com/KhidirDotID/stisla-codeigniter)
-- Laravel (let's contribute)
+- [Laravel](https://github.com/rehmatworks/stisla-laravel)
 - Django (let's contribute)
 - and more...
 
