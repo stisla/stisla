@@ -155,6 +155,10 @@
       $(document).on("click", '.' + trigger_class, function() {
         $('#' + id).modal(options.modal);
 
+        modal.on('hidden.bs.modal', function() {
+          modal.remove();
+        });
+
         return false;
       });
     });

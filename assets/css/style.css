@@ -172,7 +172,7 @@ select.form-control:not([size]):not([multiple]),
   height: 42px; }
 
 textarea.form-control {
-  height: 64px !important; }
+  height: 64px; }
 
 .custom-control {
   line-height: 1.6rem; }
