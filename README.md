@@ -79,6 +79,8 @@ You can find the Stisla road map here: [Stisla Roadmap](https://trello.com/b/M8T
 - [CodeIgniter](https://github.com/KhidirDotID/stisla-codeigniter)
 - [Laravel](https://github.com/rehmatworks/stisla-laravel)
 - [Jekyll](https://github.com/SunDi3yansyah/stisla-jekyll)
+- [YII2](https://github.com/piantgrunger/yii2-stisla)
+
 - Django (let's contribute)
 - and more...
 
