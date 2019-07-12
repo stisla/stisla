@@ -2,14 +2,14 @@
 
 :root {
   /* Colors */
-  --primary: color(primary);
-  --secondary: color(fontdark);
-  --success: color(success);
-  --info: color(info);
-  --warning: color(warning);
-  --danger: color(danger);
-  --light: color(light);
-  --dark: color(dark);
+  --primary:  #{color(primary)};
+  --secondary:  #{color(fontdark)};
+  --success:  #{color(success)};
+  --info:  #{color(info)};
+  --warning:  #{color(warning)};
+  --danger:  #{color(danger)};
+  --light:  #{color(light)};
+  --dark:  #{color(dark)};
 }
 
 body, html {
