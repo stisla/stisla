@@ -310,7 +310,6 @@
     position: absolute;
     top: 50%;
     right: -5px;
-    -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03); }
     .chat-box .chat-form .btn i {
@@ -356,7 +355,6 @@ div.dataTables_wrapper div.dataTables_processing {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
   top: 50% !important;
   left: 50% !important;
-  -webkit-transform: translate(-50%, -50%) !important;
   transform: translate(-50%, -50%) !important;
   margin: 0 !important;
   opacity: 1 !important; }
@@ -599,7 +597,6 @@ tr:first-child > td > .fc-day-grid-event {
       top: 100%;
       left: 50%;
       width: 100%;
-      -webkit-transform: translate(-50%, -100%);
       transform: translate(-50%, -100%);
       font-family: 'Segoe UI';
       font-size: 12px;
@@ -678,7 +675,6 @@ tr:first-child > td > .fc-day-grid-event {
 @media (max-width: 575.98px) {
   .profile-widget .profile-widget-picture {
     left: 50%;
-    -webkit-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
     margin: 40px 0;
     float: none; }
@@ -809,7 +805,6 @@ tr:first-child > td > .fc-day-grid-event {
   position: absolute;
   top: 50%;
   left: 35px;
-  -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   margin: 0;
   background-color: #000;
@@ -1003,7 +998,7 @@ tr:first-child > td > .fc-day-grid-event {
   background-color: #ffa426; }
 
 .toast.toast-success {
-  background-color: #63ed7a; }
+  background-color: #47c363; }
 
 .toast.toast-info {
   background-color: #fff; }
@@ -1512,7 +1507,7 @@ tr:first-child > td > .fc-day-grid-event {
         line-height: 20px;
         border-radius: 50%;
         text-align: center;
-        background-color: #63ed7a;
+        background-color: #47c363;
         color: #fff;
         margin-right: 10px; }
         .pricing .pricing-details .pricing-item .pricing-item-icon i {
@@ -1613,8 +1608,7 @@ tr:first-child > td > .fc-day-grid-event {
     padding: .1rem;
     position: absolute;
     right: 14.64%;
-    -webkit-transform: translate(50%, 50%);
-            transform: translate(50%, 50%);
+    transform: translate(50%, 50%);
     width: 50%;
     z-index: 2; }
   .avatar .avatar-presence {
@@ -1624,8 +1618,7 @@ tr:first-child > td > .fc-day-grid-event {
     padding: .1rem;
     position: absolute;
     right: 14.64%;
-    -webkit-transform: translate(50%, 50%);
-            transform: translate(50%, 50%);
+    transform: translate(50%, 50%);
     width: 50%;
     z-index: 2;
     background: #bcc3ce;
@@ -1634,7 +1627,7 @@ tr:first-child > td > .fc-day-grid-event {
     height: .5em;
     width: .5em; }
     .avatar .avatar-presence.online {
-      background: #63ed7a; }
+      background: #47c363; }
     .avatar .avatar-presence.busy {
       background: #fc544b; }
     .avatar .avatar-presence.away {
@@ -1645,8 +1638,7 @@ tr:first-child > td > .fc-day-grid-event {
     left: 50%;
     position: absolute;
     top: 50%;
-    -webkit-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     z-index: 1; }
 
 /* 1.42 Wizard */
@@ -1674,8 +1666,7 @@ tr:first-child > td > .fc-day-grid-event {
       position: absolute;
       bottom: -40px;
       left: 50%;
-      -webkit-transform: translateX(-50%);
-              transform: translateX(-50%);
+      transform: translateX(-50%);
       width: 20px;
       height: 20px;
       line-height: 21px;
@@ -1691,10 +1682,10 @@ tr:first-child > td > .fc-day-grid-event {
         background-color: #6777ef;
         color: #fff; }
     .wizard-steps .wizard-step.wizard-step-success {
-      background-color: #63ed7a;
+      background-color: #47c363;
       color: #fff; }
       .wizard-steps .wizard-step.wizard-step-success:before {
-        background-color: #63ed7a;
+        background-color: #47c363;
         color: #fff; }
     .wizard-steps .wizard-step.wizard-step-danger {
       background-color: #fc544b;
