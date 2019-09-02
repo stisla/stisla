@@ -1,3 +1,8 @@
+## Hi,
+The creator of this template is looking for part-time UI design/front-end job (:
+
+-----
+
 <p align="center">
   <a href="https://getstisla.com">
     <img src="https://avatars2.githubusercontent.com/u/45754626?s=75&v=4" alt="Stisla logo" width="75" height="75">
@@ -47,6 +52,7 @@
 - [Quick start](#quick-start)
 - [Roadmap](#roadmap)
 - [Integrates](#integrates)
+- [Creator](#creator)
 - [Contributors](#contributors)
 - [Contributing](#contributing)
 - [License](#license)
@@ -84,6 +90,8 @@ You can find the Stisla road map here: [Stisla Roadmap](https://trello.com/b/M8T
 - Django (let's contribute)
 - and more...
 
+## Creator
+Stisla is created by [Nauval](http://nauv.al) ([Twitter](https://twitter.com/mhdnauvalazhar))
 
 ## Contributors
 Stisla is better because of the [contributors](https://github.com/stisla/stisla/graphs/contributors). Thank them too.
