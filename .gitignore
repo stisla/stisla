@@ -1,6 +1,5 @@
 # Numerous always-ignore extensions
 *.txt
-*.lock
 *.log
 *.zip
 *.rar
