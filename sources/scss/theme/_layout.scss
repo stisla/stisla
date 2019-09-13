@@ -112,7 +112,7 @@ body.sidebar-mini {
           li {
             a {
               height: 40px;
-              padding: 0 20px;
+              padding: 0 5px;
               background-color: #fff;
               &.has-dropdown {
                 &:after {
@@ -403,7 +403,7 @@ body.layout-3 {
         display: flex;
         align-items: center;
         height: 50px;
-        padding: 0 20px;
+        padding: 0 5px;
         width: 100%;
         letter-spacing: .3px;
         color: color_lighten(font, 5%);
@@ -415,7 +415,7 @@ body.layout-3 {
         }
         i {
           width: 28px;
-          margin-right: 20px;
+          margin-right: 5px;
           text-align: center;
         }
         span {
@@ -468,8 +468,9 @@ body.layout-3 {
           a {
             color: color_lighten(font, 10%);
             height: 35px;
-            padding-left: 65px;
+            padding-left: 15px;
             font-weight: 400;
+            border-left: 3px solid transparent;
             &:hover {
               color: color(primary);
               background-color: inherit;
@@ -478,6 +479,7 @@ body.layout-3 {
           &.active > a {
             color: color(primary);
             font-weight: 600;
+            border-left: 3px solid;
           }
           a i {
             margin-top: 1px;
@@ -493,7 +495,7 @@ body.layout-3 {
 }
 
 .main-content {
-  padding-left: 280px;
+  padding-left: 230px;
   padding-right: 30px;
   padding-top: 80px;
   width: 100%;
@@ -501,11 +503,13 @@ body.layout-3 {
 }
 
 .main-footer {
-  padding: 20px 30px 20px 280px;
-  margin-top: 40px;
+  padding: 10px 30px 10px 230px;
+  margin-top: 0px;
   color: color(muted);
   border-top: 1px solid color(light);
   display: inline-block;
+  position: unset;
+  bottom: 0;
   width: 100%;
   .footer-left {
     float: left;

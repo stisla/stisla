@@ -998,7 +998,7 @@ tr:first-child > td > .fc-day-grid-event {
   background-color: #ffa426; }
 
 .toast.toast-success {
-  background-color: #47c363; }
+  background-color: #1ab394; }
 
 .toast.toast-info {
   background-color: #fff; }
@@ -1507,7 +1507,7 @@ tr:first-child > td > .fc-day-grid-event {
         line-height: 20px;
         border-radius: 50%;
         text-align: center;
-        background-color: #47c363;
+        background-color: #1ab394;
         color: #fff;
         margin-right: 10px; }
         .pricing .pricing-details .pricing-item .pricing-item-icon i {
@@ -1627,7 +1627,7 @@ tr:first-child > td > .fc-day-grid-event {
     height: .5em;
     width: .5em; }
     .avatar .avatar-presence.online {
-      background: #47c363; }
+      background: #1ab394; }
     .avatar .avatar-presence.busy {
       background: #fc544b; }
     .avatar .avatar-presence.away {
@@ -1682,10 +1682,10 @@ tr:first-child > td > .fc-day-grid-event {
         background-color: #6777ef;
         color: #fff; }
     .wizard-steps .wizard-step.wizard-step-success {
-      background-color: #47c363;
+      background-color: #1ab394;
       color: #fff; }
       .wizard-steps .wizard-step.wizard-step-success:before {
-        background-color: #47c363;
+        background-color: #1ab394;
         color: #fff; }
     .wizard-steps .wizard-step.wizard-step-danger {
       background-color: #fc544b;
