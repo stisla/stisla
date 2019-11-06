@@ -351,6 +351,26 @@ body.layout-3 {
 }
 
 .main-sidebar {
+  overflow-y: auto;
+  color: rgba(66, 66, 66, 0);
+  transition: color 0.3s ease;
+  &:hover {
+    color: rgba(66, 66, 66, 0.8);
+  }
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-clip: content-box;
+    border: 2px solid transparent;
+    border-radius: 7px;
+    box-shadow: inset 0 0 0 10px;
+  }
+  &::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+    display: none;
+  }
   .sidebar-brand {
     display: inline-block;
     width: 100%;

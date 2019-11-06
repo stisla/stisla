@@ -2,8 +2,27 @@
   .chat-content {
     background-color: #f9f9f9 !important;
     height: 300px;
-    overflow: hidden;
+    overflow-y: auto;
     padding-top: 25px !important;
+    color: rgba(66, 66, 66, 0.3);
+    transition: color 0.3s ease;
+    &:hover {
+      color: rgba(66, 66, 66, 0.8);
+    }
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-clip: content-box;
+      border: 2px solid transparent;
+      border-radius: 7px;
+      box-shadow: inset 0 0 0 10px;
+    }
+    &::-webkit-scrollbar-button {
+      width: 0;
+      height: 0;
+      display: none;
+    }
     .chat-item {
       &.chat-right {
         img {
