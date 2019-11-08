@@ -72,6 +72,7 @@
       bottom: 0;
       left: 0;
       width: 100%;
+      background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), color-stop(1%, rgba(0, 0, 0, 0.01)), color-stop(98%, rgba(0, 0, 0, 0.65)), to(rgba(0, 0, 0, 0.65)));
       background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.01) 1%, rgba(0, 0, 0, 0.65) 98%, rgba(0, 0, 0, 0.65) 100%);
       padding: 10px; }
       .article .article-header .article-title h2 {
@@ -244,8 +245,24 @@
 .chat-box .chat-content {
   background-color: #f9f9f9 !important;
   height: 300px;
-  overflow: hidden;
-  padding-top: 25px !important; }
+  overflow-y: auto;
+  padding-top: 25px !important;
+  color: rgba(66, 66, 66, 0.3);
+  -webkit-transition: color 0.3s ease;
+  transition: color 0.3s ease; }
+  .chat-box .chat-content:hover {
+    color: rgba(66, 66, 66, 0.8); }
+  .chat-box .chat-content::-webkit-scrollbar {
+    width: 8px; }
+  .chat-box .chat-content::-webkit-scrollbar-thumb {
+    background-clip: content-box;
+    border: 2px solid transparent;
+    border-radius: 7px;
+    box-shadow: inset 0 0 0 10px; }
+  .chat-box .chat-content::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+    display: none; }
   .chat-box .chat-content .chat-item {
     display: inline-block;
     width: 100%;
@@ -310,6 +327,7 @@
     position: absolute;
     top: 50%;
     right: -5px;
+    -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03); }
     .chat-box .chat-form .btn i {
@@ -355,6 +373,7 @@ div.dataTables_wrapper div.dataTables_processing {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
   top: 50% !important;
   left: 50% !important;
+  -webkit-transform: translate(-50%, -50%) !important;
   transform: translate(-50%, -50%) !important;
   margin: 0 !important;
   opacity: 1 !important; }
@@ -489,6 +508,7 @@ tr:first-child > td > .fc-day-grid-event {
     margin-right: 7px;
     margin-bottom: 7px;
     cursor: pointer;
+    -webkit-transition: all .5s;
     transition: all .5s;
     position: relative; }
     .gallery .gallery-item:hover {
@@ -579,6 +599,7 @@ tr:first-child > td > .fc-day-grid-event {
 .ionicons {
   padding: 0;
   margin: 0;
+  display: -webkit-box;
   display: flex;
   flex-wrap: wrap; }
   .ionicons li {
@@ -597,6 +618,7 @@ tr:first-child > td > .fc-day-grid-event {
       top: 100%;
       left: 50%;
       width: 100%;
+      -webkit-transform: translate(-50%, -100%);
       transform: translate(-50%, -100%);
       font-family: 'Segoe UI';
       font-size: 12px;
@@ -638,6 +660,7 @@ tr:first-child > td > .fc-day-grid-event {
     width: 100%;
     margin-bottom: 10px; }
   .profile-widget .profile-widget-items {
+    display: -webkit-box;
     display: flex;
     position: relative; }
     .profile-widget .profile-widget-items:after {
@@ -649,7 +672,8 @@ tr:first-child > td > .fc-day-grid-event {
       height: 1px;
       background-color: #f2f2f2; }
     .profile-widget .profile-widget-items .profile-widget-item {
-      flex: 1;
+      -webkit-box-flex: 1;
+              flex: 1;
       text-align: center;
       border-right: 1px solid #f2f2f2;
       padding: 10px 0; }
@@ -675,6 +699,7 @@ tr:first-child > td > .fc-day-grid-event {
 @media (max-width: 575.98px) {
   .profile-widget .profile-widget-picture {
     left: 50%;
+    -webkit-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
     margin: 40px 0;
     float: none; }
@@ -805,6 +830,7 @@ tr:first-child > td > .fc-day-grid-event {
   position: absolute;
   top: 50%;
   left: 35px;
+  -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   margin: 0;
   background-color: #000;
@@ -853,10 +879,12 @@ tr:first-child > td > .fc-day-grid-event {
 
 /* 1.22 Statistics */
 .statistic-details {
+  display: -webkit-box;
   display: flex;
   flex-wrap: wrap; }
   .statistic-details .statistic-details-item {
-    flex: 1;
+    -webkit-box-flex: 1;
+            flex: 1;
     padding: 17px 10px;
     text-align: center; }
     .statistic-details .statistic-details-item .detail-chart {
@@ -875,7 +903,8 @@ tr:first-child > td > .fc-day-grid-event {
   .statistic-details {
     flex-wrap: wrap; }
     .statistic-details .statistic-details-item {
-      flex: initial;
+      -webkit-box-flex: initial;
+              flex: initial;
       width: 50%; } }
 
 /* 1.23 Summary */
@@ -1219,6 +1248,7 @@ tr:first-child > td > .fc-day-grid-event {
     font-size: 16px;
     font-weight: 700; }
   .tickets-list .ticket-item .ticket-info {
+    display: -webkit-box;
     display: flex;
     font-size: 12px;
     font-weight: 500;
@@ -1228,6 +1258,7 @@ tr:first-child > td > .fc-day-grid-event {
       margin: 0 10px; }
 
 .tickets {
+  display: -webkit-box;
   display: flex; }
   .tickets .ticket-items {
     width: 30%;
@@ -1238,6 +1269,7 @@ tr:first-child > td > .fc-day-grid-event {
       padding: 25px 15px;
       border-bottom: 1px solid #f9f9f9;
       cursor: pointer;
+      -webkit-transition: all .5s;
       transition: all .5s; }
       .tickets .ticket-items .ticket-item:hover {
         background-color: rgba(63, 82, 227, 0.03); }
@@ -1257,6 +1289,7 @@ tr:first-child > td > .fc-day-grid-event {
           padding: 7px 10px;
           margin-left: 5px; }
       .tickets .ticket-items .ticket-item .ticket-desc {
+        display: -webkit-box;
         display: flex;
         font-size: 11px;
         font-weight: 500;
@@ -1267,6 +1300,7 @@ tr:first-child > td > .fc-day-grid-event {
   .tickets .ticket-content {
     width: 70%; }
     .tickets .ticket-content .ticket-header {
+      display: -webkit-box;
       display: flex; }
       .tickets .ticket-content .ticket-header .ticket-sender-picture {
         width: 50px;
@@ -1280,6 +1314,7 @@ tr:first-child > td > .fc-day-grid-event {
         font-size: 18px;
         font-weight: 700; }
       .tickets .ticket-content .ticket-header .ticket-detail .ticket-info {
+        display: -webkit-box;
         display: flex;
         letter-spacing: .3px;
         font-size: 12px;
@@ -1324,6 +1359,7 @@ tr:first-child > td > .fc-day-grid-event {
     margin: 0 -15px; }
     .tickets .ticket-items {
       width: 100%;
+      display: -webkit-box;
       display: flex;
       flex-wrap: nowrap;
       padding: 0;
@@ -1332,7 +1368,8 @@ tr:first-child > td > .fc-day-grid-event {
       overflow: auto; }
       .tickets .ticket-items .ticket-item {
         flex-basis: 50%;
-        flex-grow: 0;
+        -webkit-box-flex: 0;
+                flex-grow: 0;
         flex-shrink: 0; }
     .tickets .ticket-content {
       margin: 15px;
@@ -1349,10 +1386,12 @@ tr:first-child > td > .fc-day-grid-event {
 
 /* 1.36 Activities */
 .activities {
+  display: -webkit-box;
   display: flex;
   flex-wrap: wrap; }
   .activities .activity {
     width: 100%;
+    display: -webkit-box;
     display: flex;
     position: relative; }
     .activities .activity:before {
@@ -1438,10 +1477,15 @@ tr:first-child > td > .fc-day-grid-event {
 /* 1.38 Empty States */
 .empty-state {
   text-align: center;
+  display: -webkit-box;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
   padding: 40px; }
   .empty-state .empty-state-icon {
     position: relative;
@@ -1499,6 +1543,7 @@ tr:first-child > td > .fc-day-grid-event {
     text-align: left;
     display: inline-block; }
     .pricing .pricing-details .pricing-item {
+      display: -webkit-box;
       display: flex;
       margin-bottom: 15px; }
       .pricing .pricing-details .pricing-item .pricing-item-icon {
@@ -1533,9 +1578,13 @@ tr:first-child > td > .fc-day-grid-event {
 .hero {
   border-radius: 3px;
   padding: 55px;
+  display: -webkit-box;
   display: flex;
-  justify-content: center;
-  flex-direction: column;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
   position: relative; }
   .hero.hero-bg-image {
     background-position: center;
@@ -1608,7 +1657,8 @@ tr:first-child > td > .fc-day-grid-event {
     padding: .1rem;
     position: absolute;
     right: 14.64%;
-    transform: translate(50%, 50%);
+    -webkit-transform: translate(50%, 50%);
+            transform: translate(50%, 50%);
     width: 50%;
     z-index: 2; }
   .avatar .avatar-presence {
@@ -1618,7 +1668,8 @@ tr:first-child > td > .fc-day-grid-event {
     padding: .1rem;
     position: absolute;
     right: 14.64%;
-    transform: translate(50%, 50%);
+    -webkit-transform: translate(50%, 50%);
+            transform: translate(50%, 50%);
     width: 50%;
     z-index: 2;
     background: #bcc3ce;
@@ -1638,11 +1689,13 @@ tr:first-child > td > .fc-day-grid-event {
     left: 50%;
     position: absolute;
     top: 50%;
-    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
     z-index: 1; }
 
 /* 1.42 Wizard */
 .wizard-steps {
+  display: -webkit-box;
   display: flex;
   margin: 0 -10px;
   margin-bottom: 60px;
@@ -1657,7 +1710,8 @@ tr:first-child > td > .fc-day-grid-event {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     padding: 30px;
     text-align: center;
-    flex-grow: 1;
+    -webkit-box-flex: 1;
+            flex-grow: 1;
     flex-basis: 0;
     margin: 0 10px; }
     .wizard-steps .wizard-step:before {
@@ -1666,7 +1720,8 @@ tr:first-child > td > .fc-day-grid-event {
       position: absolute;
       bottom: -40px;
       left: 50%;
-      transform: translateX(-50%);
+      -webkit-transform: translateX(-50%);
+              transform: translateX(-50%);
       width: 20px;
       height: 20px;
       line-height: 21px;

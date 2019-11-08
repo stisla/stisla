@@ -337,6 +337,7 @@ body.layout-3 .navbar.navbar-secondary .navbar-nav > .nav-item > .nav-link.has-d
   body.layout-3 .navbar.navbar-secondary .navbar-nav > .nav-item > .nav-link.has-dropdown::after {
     position: absolute;
     top: 50%;
+    -webkit-transform: translate(0, -50%);
     transform: translate(0, -50%);
     font-size: 12px;
     right: unset;
@@ -354,6 +355,7 @@ body.layout-3 .navbar.navbar-secondary .navbar-nav > .nav-item.active > .nav-lin
 body.layout-3 .navbar.navbar-secondary .navbar-nav > .nav-item .dropdown-menu .nav-item .nav-link.has-dropdown::after {
   position: absolute;
   top: 50%;
+  -webkit-transform: translate(0, -50%);
   transform: translate(0, -50%);
   font-size: 12px;
   right: unset;
