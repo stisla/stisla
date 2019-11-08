@@ -122,9 +122,6 @@ $(function() {
 
     if(!mini) {
       body.removeClass('sidebar-mini');
-      $(".main-sidebar").css({
-        overflow: 'hidden'
-      });
       $(".main-sidebar .sidebar-menu > li > ul .dropdown-title").remove();
       $(".main-sidebar .sidebar-menu > li > a").removeAttr('data-toggle');
       $(".main-sidebar .sidebar-menu > li > a").removeAttr('data-original-title');
