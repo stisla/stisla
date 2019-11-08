@@ -4,20 +4,30 @@
     height: 300px;
     overflow-y: auto;
     padding-top: 25px !important;
+    // chromium & safari
     color: rgba(66, 66, 66, 0.3);
     transition: color 0.3s ease;
+    // mozilla
+    scrollbar-color: transparent transparent;
+    scrollbar-width: thin;
     &:hover {
+      // chromium & safari
       color: rgba(66, 66, 66, 0.8);
+      // mozilla
+      scrollbar-color: #42424245 transparent;
     }
+    // chromium & safari
     &::-webkit-scrollbar {
       width: 8px;
     }
+    // chromium & safari
     &::-webkit-scrollbar-thumb {
       background-clip: content-box;
       border: 2px solid transparent;
       border-radius: 7px;
       box-shadow: inset 0 0 0 10px;
     }
+    // chromium & safari
     &::-webkit-scrollbar-button {
       width: 0;
       height: 0;

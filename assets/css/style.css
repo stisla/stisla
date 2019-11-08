@@ -1914,9 +1914,12 @@ a.dropdown-item {
     overflow-y: auto;
     color: rgba(66, 66, 66, 0.3);
     -webkit-transition: color 0.3s ease;
-    transition: color 0.3s ease; }
+    transition: color 0.3s ease;
+    scrollbar-color: transparent transparent;
+    scrollbar-width: thin; }
     .dropdown-list .dropdown-list-content:hover {
-      color: rgba(66, 66, 66, 0.8); }
+      color: rgba(66, 66, 66, 0.8);
+      scrollbar-color: #42424245 transparent; }
     .dropdown-list .dropdown-list-content:not(.is-end):after {
       content: ' ';
       position: absolute;
@@ -2830,9 +2833,12 @@ body.layout-3 .main-footer {
   overflow-y: auto;
   color: rgba(66, 66, 66, 0);
   -webkit-transition: color 0.3s ease;
-  transition: color 0.3s ease; }
+  transition: color 0.3s ease;
+  scrollbar-color: transparent transparent;
+  scrollbar-width: thin; }
   .main-sidebar:hover {
-    color: rgba(66, 66, 66, 0.8); }
+    color: rgba(66, 66, 66, 0.8);
+    scrollbar-color: #42424245 transparent; }
   .main-sidebar::-webkit-scrollbar {
     width: 8px; }
   .main-sidebar::-webkit-scrollbar-thumb {
