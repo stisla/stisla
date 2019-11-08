@@ -1915,11 +1915,11 @@ a.dropdown-item {
     color: rgba(66, 66, 66, 0.3);
     -webkit-transition: color 0.3s ease;
     transition: color 0.3s ease;
-    scrollbar-color: transparent transparent;
+    scrollbar-color: #42424245 transparent;
     scrollbar-width: thin; }
     .dropdown-list .dropdown-list-content:hover {
       color: rgba(66, 66, 66, 0.8);
-      scrollbar-color: #42424245 transparent; }
+      scrollbar-color: #424242 transparent; }
     .dropdown-list .dropdown-list-content:not(.is-end):after {
       content: ' ';
       position: absolute;

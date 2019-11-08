@@ -8,13 +8,13 @@
     color: rgba(66, 66, 66, 0.3);
     transition: color 0.3s ease;
     // mozilla
-    scrollbar-color: transparent transparent;
+    scrollbar-color: #42424245 transparent;
     scrollbar-width: thin;
     &:hover {
       // chromium & safari
       color: rgba(66, 66, 66, 0.8);
       // mozilla
-      scrollbar-color: #42424245 transparent;
+      scrollbar-color: #424242 transparent;
     }
     // chromium & safari
     &::-webkit-scrollbar {
