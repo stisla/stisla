@@ -8,6 +8,7 @@
     position: static;
   }
   .card-body {
+    @include beautiful-scroller;
     padding-top: 20px;
     padding-bottom: 20px;
     .section-title {
