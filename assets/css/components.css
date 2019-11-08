@@ -243,15 +243,15 @@
 
 /* 1.5 Chat */
 .chat-box .chat-content {
-  background-color: #f9f9f9 !important;
-  height: 300px;
   overflow-y: auto;
-  padding-top: 25px !important;
   color: rgba(66, 66, 66, 0.3);
   -webkit-transition: color 0.3s ease;
   transition: color 0.3s ease;
   scrollbar-color: #42424245 transparent;
-  scrollbar-width: thin; }
+  scrollbar-width: thin;
+  background-color: #f9f9f9 !important;
+  height: 300px;
+  padding-top: 25px !important; }
   .chat-box .chat-content:hover {
     color: rgba(66, 66, 66, 0.8);
     scrollbar-color: #424242 transparent; }

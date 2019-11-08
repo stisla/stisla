@@ -77,6 +77,39 @@
   transition: all .5s;
 }
 
+@mixin beautiful-scroller($min-opacity: 0.3, $max-opacity: 0.8) {
+  overflow-y: auto;
+  // chromium & safari
+  color: rgba(66, 66, 66, $min-opacity);
+  transition: color 0.3s ease;
+  // mozilla
+  scrollbar-color: if($min-opacity == 0, transparent, #42424245) transparent;
+  scrollbar-width: thin;
+  &:hover {
+    // chromium & safari
+    color: rgba(66, 66, 66, $max-opacity);
+    // mozilla    
+    scrollbar-color: if($min-opacity == 0, #42424245, #424242) transparent;
+  }
+  // chromium & safari
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  // chromium & safari
+  &::-webkit-scrollbar-thumb {
+    background-clip: content-box;
+    border: 2px solid transparent;
+    border-radius: 7px;
+    box-shadow: inset 0 0 0 10px;
+  }
+  // chromium & safari
+  &::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+    display: none;
+  }
+}
+
 @mixin main-sidebar($z-index: 880) {
   position: fixed;
   top: 0;
