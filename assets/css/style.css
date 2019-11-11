@@ -635,6 +635,8 @@ select.form-control:not([size]):not([multiple]) {
     -webkit-transition: color 0.3s ease;
     transition: color 0.3s ease;
     scrollbar-color: #42424245 transparent;
+    -webkit-transition: scrollbar-color 0.3s ease;
+    transition: scrollbar-color 0.3s ease;
     scrollbar-width: thin;
     padding-top: 20px;
     padding-bottom: 20px; }
@@ -1935,6 +1937,8 @@ a.dropdown-item {
     -webkit-transition: color 0.3s ease;
     transition: color 0.3s ease;
     scrollbar-color: #42424245 transparent;
+    -webkit-transition: scrollbar-color 0.3s ease;
+    transition: scrollbar-color 0.3s ease;
     scrollbar-width: thin;
     height: 350px; }
     .dropdown-list .dropdown-list-content:hover {
@@ -2097,7 +2101,8 @@ a.bb {
   display: flex;
   -webkit-box-align: center;
           align-items: center;
-  margin-bottom: 3px; }
+  margin-bottom: 3px;
+  color: #34395e; }
   .budget-price .budget-price-square {
     width: 15px;
     height: 3px;
@@ -2855,6 +2860,8 @@ body.layout-3 .main-footer {
   -webkit-transition: color 0.3s ease;
   transition: color 0.3s ease;
   scrollbar-color: transparent transparent;
+  -webkit-transition: scrollbar-color 0.3s ease;
+  transition: scrollbar-color 0.3s ease;
   scrollbar-width: thin; }
   .main-sidebar:hover {
     color: rgba(66, 66, 66, 0.8);

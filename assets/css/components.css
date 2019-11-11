@@ -248,6 +248,8 @@
   -webkit-transition: color 0.3s ease;
   transition: color 0.3s ease;
   scrollbar-color: #42424245 transparent;
+  -webkit-transition: scrollbar-color 0.3s ease;
+  transition: scrollbar-color 0.3s ease;
   scrollbar-width: thin;
   background-color: #f9f9f9 !important;
   height: 300px;

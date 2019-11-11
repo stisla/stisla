@@ -84,6 +84,7 @@
   transition: color 0.3s ease;
   // mozilla
   scrollbar-color: if($min-opacity == 0, transparent, #42424245) transparent;
+  transition: scrollbar-color 0.3s ease;
   scrollbar-width: thin;
   &:hover {
     // chromium & safari
