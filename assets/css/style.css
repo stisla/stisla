@@ -725,7 +725,7 @@ select.form-control:not([size]):not([multiple]) {
   .card.card-primary {
     border-top: 2px solid #6777ef; }
   .card.card-secondary {
-    border-top: 2px solid #34395e; }
+    border-top: 2px solid #cdd3d8; }
   .card.card-success {
     border-top: 2px solid #47c363; }
   .card.card-danger {
@@ -1093,7 +1093,7 @@ table tr:hover .table-links {
   .badge.badge-primary {
     background-color: #6777ef; }
   .badge.badge-secondary {
-    background-color: #34395e; }
+    background-color: #cdd3d8; }
   .badge.badge-success {
     background-color: #47c363; }
   .badge.badge-info {
