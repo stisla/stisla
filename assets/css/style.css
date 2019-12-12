@@ -314,7 +314,6 @@ select.form-control:not([size]):not([multiple]) {
   .selectgroup-button-icon i {
     font-size: 14px; }
 
-.selectgroup-input:focus + .selectgroup-button,
 .selectgroup-input:checked + .selectgroup-button {
   background-color: #6777ef;
   color: #fff;

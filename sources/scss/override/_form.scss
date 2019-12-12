@@ -207,7 +207,6 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .selectgroup-input {
-  &:focus + .selectgroup-button,
   &:checked + .selectgroup-button {
     background-color: color(primary);
     color: #fff;
