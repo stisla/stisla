@@ -15,7 +15,6 @@
 # Folders to ignore
 /node_modules/
 /dist/node_modules/
-/pages/layouts/
 
 # OS or Editor folders
 ._*
