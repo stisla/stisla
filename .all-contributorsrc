@@ -13,6 +13,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "rehmatworks",
+      "name": "Rehmat Alam",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/23554187?v=4",
+      "profile": "https://rehmat.works",
+      "contributions": [
+        "tool"
+      ]
     }
   ],
   "contributorsPerLine": 7,
