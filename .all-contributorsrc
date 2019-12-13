@@ -13,6 +13,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "piantgrunger",
+      "name": "Alfian Naufal",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/15101734?v=4",
+      "profile": "https://alfiannaufal.com",
+      "contributions": [
+        "tool"
+      ]
     }
   ],
   "contributorsPerLine": 7,
