@@ -1,4 +1,7 @@
 ## Hi,
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 The creator of this template is looking for part-time UI design/front-end job (:
 
 -----
@@ -97,6 +100,18 @@ Stisla is created by [Nauval](http://nauv.al) ([Twitter](https://twitter.com/mhd
 ## Contributors
 Stisla is better because of the [contributors](https://github.com/stisla/stisla/graphs/contributors). Thank them too.
 
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="http://iqbalaqaba.github.io"><img src="https://avatars3.githubusercontent.com/u/20835372?v=4" width="100px;" alt=""/><br /><sub><b>Iqbal</b></sub></a><br /><a href="https://github.com/stisla/stisla/commits?author=iqbalaqaba" title="Code">💻</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Contributing
 Want to help Stisla get better? Let's contribute and follow our [contribution guide](https://github.com/stisla/stisla/blob/master/CONTRIBUTING.md).
