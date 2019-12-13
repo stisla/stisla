@@ -1,0 +1,24 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "iqbalaqaba",
+      "name": "Iqbal",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/20835372?v=4",
+      "profile": "http://iqbalaqaba.github.io",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "stisla",
+  "projectOwner": "stisla",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
