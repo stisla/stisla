@@ -13,6 +13,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "polynar",
+      "name": "David Polynar",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1795922?v=4",
+      "profile": "http://david.polynar.hu",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
