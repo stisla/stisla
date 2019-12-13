@@ -13,6 +13,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "cesarlopes",
+      "name": "César Lopes",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1175019?v=4",
+      "profile": "https://github.com/cesarlopes",
+      "contributions": [
+        "design"
+      ]
     }
   ],
   "contributorsPerLine": 7,
