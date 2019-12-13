@@ -1,6 +1,6 @@
 ## Hi,
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 The creator of this template is looking for part-time UI design/front-end job (:
 
@@ -106,6 +106,7 @@ Stisla is better because of the [contributors](https://github.com/stisla/stisla/
 <table>
   <tr>
     <td align="center"><a href="http://iqbalaqaba.github.io"><img src="https://avatars3.githubusercontent.com/u/20835372?v=4" width="100px;" alt=""/><br /><sub><b>Iqbal</b></sub></a><br /><a href="https://github.com/stisla/stisla/commits?author=iqbalaqaba" title="Code">💻</a></td>
+    <td align="center"><a href="https://alfiannaufal.com"><img src="https://avatars1.githubusercontent.com/u/15101734?v=4" width="100px;" alt=""/><br /><sub><b>Alfian Naufal</b></sub></a><br /><a href="#tool-piantgrunger" title="Tools">🔧</a></td>
   </tr>
 </table>
 
