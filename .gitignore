@@ -16,6 +16,7 @@
 /node_modules/
 /dist/node_modules/
 /pages/layouts/
+/pages/
 
 # OS or Editor folders
 ._*
