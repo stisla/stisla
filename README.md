@@ -126,6 +126,7 @@ Stisla is better because of the [contributors](https://github.com/stisla/stisla/
     <td align="center"><a href="http://weibo.com/jkweiyi"><img src="https://avatars1.githubusercontent.com/u/16080182?v=4" width="100px;" alt=""/><br /><sub><b>Jokin</b></sub></a><br /><a href="#design-jokin1999" title="Design">🎨</a></td>
     <td align="center"><a href="http://www.barndev.com"><img src="https://avatars2.githubusercontent.com/u/10700286?v=4" width="100px;" alt=""/><br /><sub><b>Muhammad Ihsan</b></sub></a><br /><a href="https://github.com/stisla/stisla/commits?author=muhammad-ihsan" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/dubnm"><img src="https://avatars3.githubusercontent.com/u/3620552?v=4" width="100px;" alt=""/><br /><sub><b>Trevor</b></sub></a><br /><a href="https://github.com/stisla/stisla/commits?author=dubnm" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/ranzeplay"><img src="https://avatars3.githubusercontent.com/u/43675876?v=4" width="100px;" alt=""/><br /><sub><b>Play_D</b></sub></a><br /><a href="https://github.com/stisla/stisla/commits?author=ranzeplay" title="Documentation">📖</a></td>
   </tr>
 </table>
 
