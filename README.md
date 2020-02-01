@@ -114,6 +114,7 @@ Stisla is better because of the [contributors](https://github.com/stisla/stisla/
     <td align="center"><a href="https://github.com/jenkijo"><img src="https://avatars1.githubusercontent.com/u/32048650?v=4" width="100px;" alt=""/><br /><sub><b>Phong Truong</b></sub></a><br /><a href="#design-jenkijo" title="Design">🎨</a></td>
   </tr>
   <tr>
+    <td align="center"><a href="https://alfiannaufal.com"><img src="https://avatars1.githubusercontent.com/u/15101734?v=4" width="100px;" alt=""/><br /><sub><b>Alfian Naufal</b></sub></a><br /><a href="#tool-piantgrunger" title="Tools">🔧</a></td>
     <td align="center"><a href="http://achmiral.id"><img src="https://avatars0.githubusercontent.com/u/10906059?v=4" width="100px;" alt=""/><br /><sub><b>Miral Achmed</b></sub></a><br /><a href="#content-achmiral" title="Content">🖋</a></td>
     <td align="center"><a href="http://david.polynar.hu"><img src="https://avatars1.githubusercontent.com/u/1795922?v=4" width="100px;" alt=""/><br /><sub><b>David Polynar</b></sub></a><br /><a href="https://github.com/stisla/stisla/commits?author=polynar" title="Code">💻</a></td>
     <td align="center"><a href="http://tarhche.ir"><img src="https://avatars3.githubusercontent.com/u/6291970?v=4" width="100px;" alt=""/><br /><sub><b>mahdikhanzadi</b></sub></a><br /><a href="https://github.com/stisla/stisla/commits?author=khanzadimahdi" title="Code">💻</a></td>
