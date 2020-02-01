@@ -106,6 +106,7 @@ Stisla is better because of the [contributors](https://github.com/stisla/stisla/
 <table>
   <tr>
     <td align="center"><a href="http://iqbalaqaba.github.io"><img src="https://avatars3.githubusercontent.com/u/20835372?v=4" width="100px;" alt=""/><br /><sub><b>Iqbal</b></sub></a><br /><a href="https://github.com/stisla/stisla/commits?author=iqbalaqaba" title="Code">💻</a></td>
+    <td align="center"><a href="https://rehmat.works"><img src="https://avatars2.githubusercontent.com/u/23554187?v=4" width="100px;" alt=""/><br /><sub><b>Rehmat Alam</b></sub></a><br /><a href="#tool-rehmatworks" title="Tools">🔧</a></td>
     <td align="center"><a href="https://github.com/stefanturcanu"><img src="https://avatars0.githubusercontent.com/u/6572745?v=4" width="100px;" alt=""/><br /><sub><b>Stefan Turcanu</b></sub></a><br /><a href="https://github.com/stisla/stisla/commits?author=stefanturcanu" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/mehmetmenengec"><img src="https://avatars2.githubusercontent.com/u/8948335?v=4" width="100px;" alt=""/><br /><sub><b>Mehmet MENENGEÇ</b></sub></a><br /><a href="#design-mehmetmenengec" title="Design">🎨</a></td>
     <td align="center"><a href="https://github.com/lkloon123"><img src="https://avatars2.githubusercontent.com/u/21114981?v=4" width="100px;" alt=""/><br /><sub><b>NeoSon</b></sub></a><br /><a href="#design-lkloon123" title="Design">🎨</a></td>
