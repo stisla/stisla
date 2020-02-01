@@ -122,6 +122,9 @@ Stisla is better because of the [contributors](https://github.com/stisla/stisla/
     <td align="center"><a href="https://medium.com/omarelgabrys-blog/"><img src="https://avatars3.githubusercontent.com/u/9262504?v=4" width="100px;" alt=""/><br /><sub><b>OMAR ELGABRY</b></sub></a><br /><a href="https://github.com/stisla/stisla/commits?author=OmarElGabry" title="Code">💻</a></td>
     <td align="center"><a href="https://sundi3yansyah.com"><img src="https://avatars2.githubusercontent.com/u/3952281?v=4" width="100px;" alt=""/><br /><sub><b>Cahyadi Triyansyah</b></sub></a><br /><a href="https://github.com/stisla/stisla/commits?author=SunDi3yansyah" title="Code">💻</a></td>
   </tr>
+  <tr>
+      <td align="center"><a href="http://weibo.com/jkweiyi"><img src="https://avatars1.githubusercontent.com/u/16080182?v=4" width="100px;" alt=""/><br /><sub><b>Jokin</b></sub></a><br /><a href="#design-jokin1999" title="Design">🎨</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->
