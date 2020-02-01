@@ -21,6 +21,42 @@
       "profile": "http://achmiral.id",
       "contributions": [
         "content"
+      ],
+    },
+    {
+      "login": "polynar",
+      "name": "David Polynar",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1795922?v=4",
+      "profile": "http://david.polynar.hu",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "khanzadimahdi",
+      "name": "mahdikhanzadi",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/6291970?v=4",
+      "profile": "http://tarhche.ir",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "OmarElGabry",
+      "name": "OMAR ELGABRY",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/9262504?v=4",
+      "profile": "https://medium.com/omarelgabrys-blog/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "SunDi3yansyah",
+      "name": "Cahyadi Triyansyah",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/3952281?v=4",
+      "profile": "https://sundi3yansyah.com",
+      "contributions": [
+        "code"
       ]
     }
   ],
