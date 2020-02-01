@@ -15,6 +15,15 @@
       ]
     },
     {
+      "login": "mehmetmenengec",
+      "name": "Mehmet MENENGEÇ",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/8948335?v=4",
+      "profile": "https://github.com/mehmetmenengec",
+      "contributions": [
+        "design"
+      ]
+    },
+    {
       "login": "lkloon123",
       "name": "NeoSon",
       "avatar_url": "https://avatars2.githubusercontent.com/u/21114981?v=4",
@@ -76,7 +85,7 @@
       "contributions": [
         "code"
       ]
-    }
+   }
   ],
   "contributorsPerLine": 7,
   "projectName": "stisla",
