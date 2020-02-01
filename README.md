@@ -127,6 +127,7 @@ Stisla is better because of the [contributors](https://github.com/stisla/stisla/
     <td align="center"><a href="http://www.barndev.com"><img src="https://avatars2.githubusercontent.com/u/10700286?v=4" width="100px;" alt=""/><br /><sub><b>Muhammad Ihsan</b></sub></a><br /><a href="https://github.com/stisla/stisla/commits?author=muhammad-ihsan" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/dubnm"><img src="https://avatars3.githubusercontent.com/u/3620552?v=4" width="100px;" alt=""/><br /><sub><b>Trevor</b></sub></a><br /><a href="https://github.com/stisla/stisla/commits?author=dubnm" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/ranzeplay"><img src="https://avatars3.githubusercontent.com/u/43675876?v=4" width="100px;" alt=""/><br /><sub><b>Play_D</b></sub></a><br /><a href="https://github.com/stisla/stisla/commits?author=ranzeplay" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://rizkyhidayat.id"><img src="https://avatars0.githubusercontent.com/u/25103643?v=4" width="100px;" alt=""/><br /><sub><b>rizkyyangpalsu</b></sub></a><br /><a href="#platform-rizkyyangpalsu" title="Packaging/porting to new platform">📦</a></td>
   </tr>
 </table>
 
