@@ -107,6 +107,8 @@ Stisla is better because of the [contributors](https://github.com/stisla/stisla/
   <tr>
     <td align="center"><a href="http://iqbalaqaba.github.io"><img src="https://avatars3.githubusercontent.com/u/20835372?v=4" width="100px;" alt=""/><br /><sub><b>Iqbal</b></sub></a><br /><a href="https://github.com/stisla/stisla/commits?author=iqbalaqaba" title="Code">💻</a></td>
     <td align="center"><a href="http://tarhche.ir"><img src="https://avatars3.githubusercontent.com/u/6291970?v=4" width="100px;" alt=""/><br /><sub><b>mahdikhanzadi</b></sub></a><br /><a href="https://github.com/stisla/stisla/commits?author=khanzadimahdi" title="Code">💻</a></td>
+    <td align="center"><a href="https://medium.com/omarelgabrys-blog/"><img src="https://avatars3.githubusercontent.com/u/9262504?v=4" width="100px;" alt=""/><br /><sub><b>OMAR ELGABRY</b></sub></a><br /><a href="https://github.com/stisla/stisla/commits?author=OmarElGabry" title="Code">💻</a></td>
+    <td align="center"><a href="https://sundi3yansyah.com"><img src="https://avatars2.githubusercontent.com/u/3952281?v=4" width="100px;" alt=""/><br /><sub><b>Cahyadi Triyansyah</b></sub></a><br /><a href="https://github.com/stisla/stisla/commits?author=SunDi3yansyah" title="Code">💻</a></td>
   </tr>
 </table>
 
