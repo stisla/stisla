@@ -95,7 +95,7 @@ You can find the Stisla road map here: [Stisla Roadmap](https://trello.com/b/M8T
 - and more...
 
 ## Creator
-Stisla is created by [Nauval](http://nauv.al) ([Twitter](https://twitter.com/mhdnauvalazhar))
+Stisla is created by [Nauval](http://nauv.al) ([Twitter](https://twitter.com/mhdnauvalazhar)). [Support](https://www.buymeacoffee.com/mhd) this guy!
 
 ## Contributors
 Stisla is better because of the [contributors](https://github.com/stisla/stisla/graphs/contributors). Thank them too.
