@@ -17,9 +17,7 @@ The creator of this template is looking for part-time UI design/front-end job (:
 <br>
 <span align="center">
 
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-22-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
 ![GitHub last commit](https://img.shields.io/github/last-commit/stisla/stisla.svg)
 ![GitHub repo size in bytes](https://img.shields.io/github/repo-size/badges/shields.svg)
 [![License](https://img.shields.io/github/license/stisla/stisla.svg)](LICENSE)
