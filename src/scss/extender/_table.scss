@@ -1,0 +1,20 @@
+.table {
+  thead th {
+    text-transform: uppercase;
+    letter-spacing: 0.08rem;
+    font-size: $font-size-sm;
+    color: $text-muted;
+  }
+
+  .thead-light {
+    th {
+      background-color: $gray-100;
+    }
+  }
+}
+
+.table-dark {
+  thead th {
+    color: $table-dark-color;
+  }
+}

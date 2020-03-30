@@ -1,0 +1,10 @@
+.avatar {
+	width: $avatar-base;
+	
+	&-sm {
+		width: $avatar-sm;
+	}
+	&-lg {
+		width: $avatar-lg;
+	}
+}

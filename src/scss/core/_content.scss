@@ -1,0 +1,31 @@
+.content {
+	margin-left: $sidebar-width;
+	padding: $content-padding;
+	transition: $transition-base;
+
+}
+
+/**
+ * You can use this class when sidebar has the `sidebar-mini` class
+ */
+.content-width-expand {
+	margin-left: $sidebar-mini-width;
+}
+
+.layout-navbar-absolutely {
+	.content {
+		padding-top: $navbar-height;
+	}
+}
+
+@include media-breakpoint-down(lg) {
+	.content {
+		margin-left: $sidebar-mini-width;
+	}
+}
+
+@include media-breakpoint-down(md) {
+	.content {
+		margin-left: 0;
+	}
+}

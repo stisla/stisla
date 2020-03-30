@@ -1,0 +1,6 @@
+@mixin card-base($bg: $card-bg) {
+	background-color: $bg;
+	word-wrap: break-word;
+	border: $card-border-width solid $card-border-color;
+	@include border-radius($card-border-radius);
+}

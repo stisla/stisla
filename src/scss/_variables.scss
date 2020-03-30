@@ -1,0 +1,164 @@
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700);
+
+$font-family-base: 'Source Sans Pro';
+$headings-font-family: 'Source Sans Pro';
+
+$font-size-base: 1rem;
+$font-size-lg: $font-size-base * 1.15;
+$font-size-sm: $font-size-base * .75;
+
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+
+$primary: #2559e8;
+$secondary: #e8e9eb;
+$success: #28ff69;
+$danger: #ff2853;
+$info: #28b7ff;
+$warning: #ffde28;
+$light: #f8f9fa;
+$dark: #060e26;
+$black: #000;
+$white: #fff;
+$spacer: 1.2rem;
+$border-width: 0;
+$btn-border-radius: .25rem;
+$enable-shadows: true;
+
+$table-border-width: 1px;
+$table-border-color: $gray-200;
+
+$theme-colors: (
+	"primary": $primary,
+	"secondary": $secondary,
+	"success": $success,
+	"danger": $danger,
+	"info": $info,
+	"warning": $warning,
+	"light": $light,
+	"dark": $dark
+);
+
+$body-color: $dark;
+$body-bg: #f4f6f9;
+
+$font-weight-lighter: 200;
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-bold: 600;
+$font-weight-bolder: 700;
+$headings-font-weight: $font-weight-bold;
+
+$navbar-padding-y: 0;
+$navbar-padding-x: 2rem;
+$navbar-nav-link-padding-x: .8rem;
+
+$navbar-dark-color: rgba($white, 1);
+$navbar-dark-hover-color: rgba($white, .7);
+$navbar-dark-active-color: $white;
+$navbar-dark-disabled-color: rgba($white, .5);
+$navbar-dark-toggler-icon-bg: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'><path stroke='#{$navbar-dark-color}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>");
+$navbar-dark-toggler-border-color: rgba($white, .1);
+
+$navbar-light-color: rgba($black, 1);
+$navbar-light-hover-color: $primary;
+$navbar-light-active-color: $primary;
+$navbar-light-disabled-color: rgba($primary, .3);
+$navbar-light-toggler-icon-bg: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'><path stroke='#{$navbar-light-color}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>");
+$navbar-light-toggler-border-color: rgba($primary, .1);
+
+$dropdown-min-width: 12rem;
+$dropdown-item-padding-y: .45rem;
+$dropdown-item-padding-x: 1.8rem;
+
+$card-spacer-y: 1.5rem;
+$card-spacer-x: 2rem;
+
+// stisla
+$box-shadow-smooth:   
+	0 0.7px 2px rgba(0, 0, 0, 0.016),
+	0 2.2px 6.7px rgba(0, 0, 0, 0.024),
+	0 10px 30px rgba(0, 0, 0, 0.04);
+
+$navbar-bg: #fff;
+$navbar-height: 5rem;
+
+$content-padding: 2rem;
+
+$section-padding-y: 1rem;
+$section-padding-x: 2rem;
+
+$sidebar-bg: #0b1325;
+$sidebar-color: rgba($white, .6);
+$sidebar-icon-color: #334063;
+$sidebar-icon-size: 1.3rem;
+$sidebar-icon-space: 1.1rem;
+$sidebar-icon-color-active: lighten($primary, 10%);
+$sidebar-border-color-active: lighten($primary, 10%);
+$sidebar-text-color-active: #fff;
+$sidebar-bg-image-active: linear-gradient(to right, lighten($sidebar-bg, 5%), transparent);
+$sidebar-bg-active: transparent;
+$sidebar-width: 20rem;
+$sidebar-mini-width: 5rem;
+$sidebar-nav-link-padding-y: .8rem;
+$sidebar-nav-link-padding-x: 2.2rem;
+$sidebar-brand-padding-y: 1.2rem;
+$sidebar-brand-padding-x: 2.2rem;
+$sidebar-brand-font-size: 1.6rem;
+$sidebar-brand-bg: $sidebar-bg;
+$sidebar-brand-color: #fff;
+$sidebar-dropdown-menu-space: 2.4rem;
+
+$search-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' class='feather feather-search'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E");
+$search-icon-active: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%232559e8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' class='feather feather-search'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E");
+
+$dropdown-header-color: $gray-500;
+$dropdown-header-padding-y: 1rem;
+$dropdown-padding-y: .5rem;
+
+// avatar config
+$avatar-base: 3rem;
+$avatar-sm: $avatar-base - 1rem;
+$avatar-lg: $avatar-base + 1rem;
+
+// transition
+$transition-duration-base: .2s; 
+
+// SVGs
+$svgs: (
+	sm: 1rem,
+	md: 1.3rem,	
+	lg: 1.6rem
+);
+
+// sizes
+$sizes: (
+	0: 0,
+	1: 0.25rem,
+	2: 0.5rem,
+	3: 0.75rem,
+	4: 1rem,
+	5: 1.25rem,
+	6: 1.5rem,
+	7: 1.75rem,
+	8: 2rem,
+	9: 2.25rem,
+	10: 2.5rem,
+	25: 25%,
+	50: 50%,
+	75: 75%,
+	100: 100%,
+	auto: auto
+);
+
+// footer
+$footer-bg: $white;
+$footer-padding-y: 1.5rem;
+$footer-padding-x: 2rem;

@@ -1,0 +1,3 @@
+@function svg($key: "md") {
+  @return map-get($svgs, $key);
+}

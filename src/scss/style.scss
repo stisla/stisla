@@ -1,0 +1,29 @@
+html {
+  font-size: 14px;
+}
+
+// customization
+@import '_variables';
+
+// use Bootstrap
+@import 'bootstrap';
+
+/**
+ * Stisla
+ */
+@import '_helpers';
+@import '_mixins';
+
+// required
+@import 'perfect-scrollbar/css/perfect-scrollbar';
+@import 'libraries/_perfect-scrollbar.scss';
+
+// sidebar
+@import 'core/_layout';
+@import 'core/_animation';
+@import 'core/_utility';
+@import 'extender/_navbar';
+@import 'extender/_card';
+@import 'extender/_dropdown';
+@import 'extender/_table';
+@import 'components/_avatar';

@@ -1,0 +1,11 @@
+.footer {
+	display: flex;
+	margin-left: -$content-padding;
+	margin-right: -$content-padding;
+	margin-bottom: -$content-padding;
+	padding-top: $footer-padding-y;
+	padding-bottom: $footer-padding-y;
+	padding-left: $footer-padding-x;
+	padding-right: $footer-padding-x;
+	background-color: $footer-bg;
+}

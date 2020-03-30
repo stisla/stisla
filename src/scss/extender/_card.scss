@@ -1,0 +1,27 @@
+.card {
+  box-shadow: $box-shadow-smooth;
+  margin-bottom: 2rem;
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border-bottom: 1px solid $light;
+
+    // standarize font size and more
+    h1, h2, h3, h4, h5, h6 {
+      margin: 0;
+      font-weight: 600;
+      font-size: $h5-font-size;
+    }
+    .card-header-action {
+      margin-left: auto;
+    }
+  }
+
+  @each $color, $value in $theme-colors {
+    &-#{$color} {
+      border-top: 2px solid theme-color($color);
+    }
+  }
+}

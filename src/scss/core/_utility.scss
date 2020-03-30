@@ -1,0 +1,31 @@
+.font-sm {
+	font-size: $font-size-sm !important;
+}
+
+@each $gray, $value in $grays {
+  .bg-gray-#{$gray} {
+  	background-color: gray($gray) !important;
+  }
+}
+
+@each $size, $value in $svgs {
+  .svg-#{$size} {
+  	width: svg($size) !important;
+  }
+}
+
+
+.beep::after {
+	content: '';
+	position: absolute;
+	top: .1rem;
+	right: .4rem;
+	width: .5rem;
+	height: .5rem;
+	background-color: #ffa426;
+	border-radius: 50%;
+	animation: Pulsate 1s ease-out;
+	animation-iteration-count: 1;
+	animation-iteration-count: infinite;
+	opacity: 1;
+}

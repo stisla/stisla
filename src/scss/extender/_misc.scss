@@ -1,0 +1,124 @@
+.btn:focus,
+.btn:active,
+.btn:active:focus,
+.custom-select:focus,
+.form-control:focus {
+  box-shadow: none !important;
+  outline: none;
+}
+
+a {
+  color: color(primary);
+  font-weight: 500;
+  transition: all .5s;
+  -webkit-transition: all .5s;
+  -o-transition: all .5s;
+}
+
+a:not(.btn-social-icon):not(.btn-social):not(.page-link) .ion,
+a:not(.btn-social-icon):not(.btn-social):not(.page-link) .fas,
+a:not(.btn-social-icon):not(.btn-social):not(.page-link) .far,
+a:not(.btn-social-icon):not(.btn-social):not(.page-link) .fal,
+a:not(.btn-social-icon):not(.btn-social):not(.page-link) .fab {
+  margin-left: 4px;
+}
+
+.bg-primary {
+  background-color: color(primary) !important;
+}
+
+.bg-secondary {
+  background-color: color(secondary) !important;
+}
+
+.bg-success {
+  background-color: color(success) !important;
+}
+
+.bg-info {
+  background-color: color(info) !important;
+}
+
+.bg-warning {
+  background-color: color(warning) !important;
+}
+
+.bg-danger {
+  background-color: color(danger) !important;
+}
+
+.bg-light {
+  background-color: color(light) !important;
+}
+
+.bg-dark {
+  background-color: color(dark) !important;
+}
+
+.text-primary, .text-primary-all *, .text-primary-all *:before, .text-primary-all *:after {
+  color: color(primary) !important;
+}
+
+.text-secondary, .text-secondary-all *, .text-secondary-all *:before, .text-secondary-all *:after {
+  color: color(secondary) !important;
+}
+
+.text-success, .text-success-all *, .text-success-all *:before, .text-success-all *:after {
+  color: color(success) !important;
+}
+
+.text-info, .text-info-all *, .text-info-all *:before, .text-info-all *:after {
+  color: color(info) !important;
+}
+
+.text-warning, .text-warning-all *, .text-warning-all *:before, .text-warning-all *:after {
+  color: color(warning) !important;
+}
+
+.text-danger, .text-danger-all *, .text-danger-all *:before, .text-danger-all *:after {
+  color: color(danger) !important;
+}
+
+.text-light, .text-light-all *, .text-light-all *:before, .text-light-all *:after {
+  color: color(light) !important;
+}
+
+.text-white, .text-white-all *, .text-white-all *:before, .text-white-all *:after {
+  color: color(white) !important;
+}
+
+.text-dark, .text-dark-all *, .text-dark-all *:before, .text-dark-all *:after {
+  color: color(dark) !important;
+}
+
+.font-weight-normal {
+  font-weight: 500 !important;
+}
+
+.lead {
+  line-height: 34px;
+}
+
+@include media-breakpoint-down(xs) {
+  .lead {
+    font-size: 17px;
+    line-height: 30px;
+  }
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+}
+
+p, ul:not(.list-unstyled), ol {
+  line-height: 28px;
+}
+
+.shadow {
+  @include shadow;
+}
+
+.text-muted {
+  color: color(muted) !important;
+}

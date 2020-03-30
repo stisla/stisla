@@ -1,0 +1,32 @@
+.dropdown-menu {
+	.dropdown-header {
+		text-transform: uppercase;
+		letter-spacing: 0.08rem;
+		font-weight: 600;
+		padding-top: $dropdown-header-padding-y - $dropdown-padding-y;
+		padding-bottom: $dropdown-header-padding-y;
+
+		&.dropdown-header-lg {
+			font-size: $font-size-base;
+			color: $black;
+			text-transform: none;
+			letter-spacing: normal;
+		}
+	}
+
+	&.dropdown-bordered {
+		.dropdown-item {
+			border-bottom: 1px solid $light;
+		}
+	}
+
+	&.dropdown-menu-user {
+		width: 16rem;
+	}
+
+	@each $color, $value in $theme-colors {
+	  &-#{$color} {
+	  	border-top: 2px solid theme-color($color);
+	  }
+	}
+}

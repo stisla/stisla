@@ -1,0 +1,191 @@
+          <ul id="sidebar-menu" class="sidebar-menu">
+              <li class="nav-item nav-item-dropdown dropdown{{ ' active nav-item-dropdown-active'|is_active('^index(.*)', page)|safe }}">
+                <a href="#" class="nav-link">
+                  <svg class="nav-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                  <span>Dashboard</span>
+                </a>
+                <ul class="sidebar-dropdown-menu">
+                  <li{{ ' class="active"'|is_active('^index-0.html', page)|safe }}><a class="nav-link" href="index-0.html">General Dashboard</a></li>
+                  <li{{ ' class="active"'|is_active('^index.html(.*)', page)|safe }}><a class="nav-link" href="index.html">Ecommerce Dashboard</a></li>
+                </ul>
+              </li>
+              <li class="nav-item-header">Starter</li>
+              <li class="nav-item nav-item-dropdown dropdown{{ ' active nav-item-dropdown-active'|is_active('^layout-(.*)', page)|safe }}">
+                <a href="#" class="nav-link">
+                  <svg class="nav-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layout"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                 <span>Layout</span>
+               </a>
+                <ul class="sidebar-dropdown-menu">
+                  <li{{ ' class="active"'|is_active('^layout-default(.*)', page)|safe }}><a class="nav-link" href="layout-default.html">Default Layout</a></li>
+                  <li{{ ' class="active"'|is_active('^layout-transparent(.*)', page)|safe }}><a class="nav-link" href="layout-transparent.html">Transparent Sidebar</a></li>
+                  <li{{ ' class="active"'|is_active('^layout-top(.*)', page)|safe }}><a class="nav-link" href="layout-top-navigation.html">Top Navigation</a></li>
+                </ul>
+              </li>
+              <li{{ ' class="active"'|is_active('^blank(.*)', page)|safe }}>
+                <a class="nav-link" href="blank.html">
+                  <svg class="nav-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-square"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
+                  <span>Blank Page</span>
+                </a>
+              </li>
+              <li class="nav-item nav-item-dropdown dropdown{{ ' active nav-item-dropdown-active'|is_active('^bootstrap-(.*)', page)|safe }}">
+                <a href="#" class="nav-link">
+                  <svg class="nav-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-box"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                  <span>Bootstrap</span>
+                </a>
+                <ul class="sidebar-dropdown-menu">
+                  <li{{ ' class="active"'|is_active('^bootstrap-alert(.*)', page)|safe }}><a class="nav-link" href="bootstrap-alert.html">Alert</a></li>
+                  <li{{ ' class="active"'|is_active('^bootstrap-badge(.*)', page)|safe }}><a class="nav-link" href="bootstrap-badge.html">Badge</a></li>
+                  <li{{ ' class="active"'|is_active('^bootstrap-breadcrumb(.*)', page)|safe }}><a class="nav-link" href="bootstrap-breadcrumb.html">Breadcrumb</a></li>
+                  <li{{ ' class="active"'|is_active('^bootstrap-buttons(.*)', page)|safe }}><a class="nav-link" href="bootstrap-buttons.html">Buttons</a></li>
+                  <li{{ ' class="active"'|is_active('^bootstrap-card(.*)', page)|safe }}><a class="nav-link" href="bootstrap-card.html">Card</a></li>
+                  <li{{ ' class="active"'|is_active('^bootstrap-carousel(.*)', page)|safe }}><a class="nav-link" href="bootstrap-carousel.html">Carousel</a></li>
+                  <li{{ ' class="active"'|is_active('^bootstrap-collapse(.*)', page)|safe }}><a class="nav-link" href="bootstrap-collapse.html">Collapse</a></li>
+                  <li{{ ' class="active"'|is_active('^bootstrap-dropdown(.*)', page)|safe }}><a class="nav-link" href="bootstrap-dropdown.html">Dropdown</a></li>
+                  <li{{ ' class="active"'|is_active('^bootstrap-form(.*)', page)|safe }}><a class="nav-link" href="bootstrap-form.html">Form</a></li>
+                  <li{{ ' class="active"'|is_active('^bootstrap-list(.*)', page)|safe }}><a class="nav-link" href="bootstrap-list-group.html">List Group</a></li>
+                  <li{{ ' class="active"'|is_active('^bootstrap-media(.*)', page)|safe }}><a class="nav-link" href="bootstrap-media-object.html">Media Object</a></li>
+                  <li{{ ' class="active"'|is_active('^bootstrap-modal(.*)', page)|safe }}><a class="nav-link" href="bootstrap-modal.html">Modal</a></li>
+                  <li{{ ' class="active"'|is_active('^bootstrap-nav.html(.*)', page)|safe }}><a class="nav-link" href="bootstrap-nav.html">Nav</a></li>
+                  <li{{ ' class="active"'|is_active('^bootstrap-navbar(.*)', page)|safe }}><a class="nav-link" href="bootstrap-navbar.html">Navbar</a></li>
+                  <li{{ ' class="active"'|is_active('^bootstrap-pagination(.*)', page)|safe }}><a class="nav-link" href="bootstrap-pagination.html">Pagination</a></li>
+                  <li{{ ' class="active"'|is_active('^bootstrap-popover(.*)', page)|safe }}><a class="nav-link" href="bootstrap-popover.html">Popover</a></li>
+                  <li{{ ' class="active"'|is_active('^bootstrap-progress(.*)', page)|safe }}><a class="nav-link" href="bootstrap-progress.html">Progress</a></li>
+                  <li{{ ' class="active"'|is_active('^bootstrap-table(.*)', page)|safe }}><a class="nav-link" href="bootstrap-table.html">Table</a></li>
+                  <li{{ ' class="active"'|is_active('^bootstrap-tooltip(.*)', page)|safe }}><a class="nav-link" href="bootstrap-tooltip.html">Tooltip</a></li>
+                  <li{{ ' class="active"'|is_active('^bootstrap-typography(.*)', page)|safe }}><a class="nav-link" href="bootstrap-typography.html">Typography</a></li>
+                </ul>
+              </li>
+              <li class="nav-item-header">Stisla</li>
+              <li class="nav-item nav-item-dropdown dropdown{{ ' active nav-item-dropdown-active'|is_active('^components-(.*)', page)|safe }}">
+                <a href="#" class="nav-link">
+                  <svg class="nav-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                  <span>Components</span>
+                </a>
+                <ul class="sidebar-dropdown-menu">
+                  <li{{ ' class="active"'|is_active('^components-article(.*)', page)|safe }}><a class="nav-link" href="components-article.html">Article</a></li>
+                  <li{{ ' class="active"'|is_active('^components-avatar(.*)', page)|safe }}><a class="nav-link beep beep-sidebar" href="components-avatar.html">Avatar</a></li>
+                  <li{{ ' class="active"'|is_active('^components-chat(.*)', page)|safe }}><a class="nav-link" href="components-chat-box.html">Chat Box</a></li>
+                  <li{{ ' class="active"'|is_active('^components-empty-state(.*)', page)|safe }}><a class="nav-link beep beep-sidebar" href="components-empty-state.html">Empty State</a></li>
+                  <li{{ ' class="active"'|is_active('^components-gallery(.*)', page)|safe }}><a class="nav-link" href="components-gallery.html">Gallery</a></li>
+                  <li{{ ' class="active"'|is_active('^components-hero(.*)', page)|safe }}><a class="nav-link beep beep-sidebar" href="components-hero.html">Hero</a></li>
+                  <li{{ ' class="active"'|is_active('^components-multiple(.*)', page)|safe }}><a class="nav-link" href="components-multiple-upload.html">Multiple Upload</a></li>
+                  <li{{ ' class="active"'|is_active('^components-pricing(.*)', page)|safe }}><a class="nav-link beep beep-sidebar" href="components-pricing.html">Pricing</a></li>
+                  <li{{ ' class="active"'|is_active('^components-statistic(.*)', page)|safe }}><a class="nav-link" href="components-statistic.html">Statistic</a></li>
+                  <li{{ ' class="active"'|is_active('^components-tab.html(.*)', page)|safe }}><a class="nav-link" href="components-tab.html">Tab</a></li>
+                  <li{{ ' class="active"'|is_active('^components-table(.*)', page)|safe }}><a class="nav-link" href="components-table.html">Table</a></li>
+                  <li{{ ' class="active"'|is_active('^components-user(.*)', page)|safe }}><a class="nav-link" href="components-user.html">User</a></li>
+                  <li{{ ' class="active"'|is_active('^components-wizard(.*)', page)|safe }}><a class="nav-link beep beep-sidebar" href="components-wizard.html">Wizard</a></li>
+                </ul>
+              </li>
+              <li class="nav-item nav-item-dropdown dropdown{{ ' active nav-item-dropdown-active'|is_active('^forms-(.*)', page)|safe }}">
+                <a href="#" class="nav-link">
+                  <svg class="nav-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                  <span>Forms</span>
+                </a>
+                <ul class="sidebar-dropdown-menu">
+                  <li{{ ' class="active"'|is_active('^forms-advanced(.*)', page)|safe }}><a class="nav-link" href="forms-advanced-form.html">Advanced Form</a></li>
+                  <li{{ ' class="active"'|is_active('^forms-editor(.*)', page)|safe }}><a class="nav-link" href="forms-editor.html">Editor</a></li>
+                  <li{{ ' class="active"'|is_active('^forms-validation(.*)', page)|safe }}><a class="nav-link" href="forms-validation.html">Validation</a></li>
+                </ul>
+              </li>
+              <li class="nav-item nav-item-dropdown dropdown{{ ' active nav-item-dropdown-active'|is_active('^gmaps-(.*)', page)|safe }}">
+                <a href="#" class="nav-link">
+                  <svg class="nav-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map-pin"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  <span>Google Maps</span>
+                </a>
+                <ul class="sidebar-dropdown-menu">
+                  <li{{ ' class="active"'|is_active('^gmaps-advanced-route(.*)', page)|safe }}><a href="gmaps-advanced-route.html">Advanced Route</a></li>
+                  <li{{ ' class="active"'|is_active('^gmaps-draggable-marker(.*)', page)|safe }}><a href="gmaps-draggable-marker.html">Draggable Marker</a></li>
+                  <li{{ ' class="active"'|is_active('^gmaps-geocoding.html(.*)', page)|safe }}><a href="gmaps-geocoding.html">Geocoding</a></li>
+                  <li{{ ' class="active"'|is_active('^gmaps-geolocation.html(.*)', page)|safe }}><a href="gmaps-geolocation.html">Geolocation</a></li>
+                  <li{{ ' class="active"'|is_active('^gmaps-marker.html(.*)', page)|safe }}><a href="gmaps-marker.html">Marker</a></li>
+                  <li{{ ' class="active"'|is_active('^gmaps-multiple-marker(.*)', page)|safe }}><a href="gmaps-multiple-marker.html">Multiple Marker</a></li>
+                  <li{{ ' class="active"'|is_active('^gmaps-route.html(.*)', page)|safe }}><a href="gmaps-route.html">Route</a></li>
+                  <li{{ ' class="active"'|is_active('^gmaps-simple.html(.*)', page)|safe }}><a href="gmaps-simple.html">Simple</a></li>
+                </ul>
+              </li>
+              <li class="nav-item nav-item-dropdown dropdown{{ ' active nav-item-dropdown-active'|is_active('^modules-(.*)', page)|safe }}">
+                <a href="#" class="nav-link">
+                  <svg class="nav-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  <span>Modules</span>
+                </a>
+                <ul class="sidebar-dropdown-menu">
+                  <li{{ ' class="active"'|is_active('^modules-calendar(.*)', page)|safe }}><a class="nav-link" href="modules-calendar.html">Calendar</a></li>
+                  <li{{ ' class="active"'|is_active('^modules-chartjs(.*)', page)|safe }}><a class="nav-link" href="modules-chartjs.html">ChartJS</a></li>
+                  <li{{ ' class="active"'|is_active('^modules-datatables(.*)', page)|safe }}><a class="nav-link" href="modules-datatables.html">DataTables</a></li>
+                  <li{{ ' class="active"'|is_active('^modules-flag(.*)', page)|safe }}><a class="nav-link" href="modules-flag.html">Flag</a></li>
+                  <li{{ ' class="active"'|is_active('^modules-font(.*)', page)|safe }}><a class="nav-link" href="modules-font-awesome.html">Font Awesome</a></li>
+                  <li{{ ' class="active"'|is_active('^modules-ion(.*)', page)|safe }}><a class="nav-link" href="modules-ion-icons.html">Ion Icons</a></li>
+                  <li{{ ' class="active"'|is_active('^modules-owl(.*)', page)|safe }}><a class="nav-link" href="modules-owl-carousel.html">Owl Carousel</a></li>
+                  <li{{ ' class="active"'|is_active('^modules-sparkline(.*)', page)|safe }}><a class="nav-link" href="modules-sparkline.html">Sparkline</a></li>
+                  <li{{ ' class="active"'|is_active('^modules-sweet(.*)', page)|safe }}><a class="nav-link" href="modules-sweet-alert.html">Sweet Alert</a></li>
+                  <li{{ ' class="active"'|is_active('^modules-toastr(.*)', page)|safe }}><a class="nav-link" href="modules-toastr.html">Toastr</a></li>
+                  <li{{ ' class="active"'|is_active('^modules-vector(.*)', page)|safe }}><a class="nav-link" href="modules-vector-map.html">Vector Map</a></li>
+                  <li{{ ' class="active"'|is_active('^modules-weather(.*)', page)|safe }}><a class="nav-link" href="modules-weather-icon.html">Weather Icon</a></li>
+                </ul>
+              </li>
+              <li class="nav-item-header">Pages</li>
+              <li class="nav-item nav-item-dropdown dropdown{{ ' active nav-item-dropdown-active'|is_active('^auth-(.*)', page)|safe }}">
+                <a href="#" class="nav-link">
+                  <svg class="nav-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                  <span>Auth</span>
+                </a>
+                <ul class="sidebar-dropdown-menu">
+                  <li><a class="nav-link" href="auth-forgot-password.html">Forgot Password</a></li>
+                  <li><a class="nav-link" href="auth-login.html">Login</a></li>
+                  <li><a class="nav-link" href="auth-login-2.html">Login 2</a></li>
+                  <li><a class="nav-link" href="auth-register.html">Register</a></li>
+                  <li><a class="nav-link" href="auth-reset-password.html">Reset Password</a></li>
+                </ul>
+              </li>
+              <li class="nav-item nav-item-dropdown dropdown{{ ' active nav-item-dropdown-active'|is_active('^errors-(.*)', page)|safe }}">
+                <a href="#" class="nav-link">
+                  <svg class="nav-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                  <span>Errors</span>
+                </a>
+                <ul class="sidebar-dropdown-menu">
+                  <li{{ ' class="active"'|is_active('^errors-503(.*)', page)|safe }}><a class="nav-link" href="errors-503.html">503</a></li>
+                  <li{{ ' class="active"'|is_active('^errors-403(.*)', page)|safe }}><a class="nav-link" href="errors-403.html">403</a></li>
+                  <li{{ ' class="active"'|is_active('^errors-404(.*)', page)|safe }}><a class="nav-link" href="errors-404.html">404</a></li>
+                  <li{{ ' class="active"'|is_active('^errors-500(.*)', page)|safe }}><a class="nav-link" href="errors-500.html">500</a></li>
+                </ul>
+              </li>
+              <li class="nav-item nav-item-dropdown dropdown{{ ' active nav-item-dropdown-active'|is_active('^features-(.*)', page)|safe }}">
+                <a href="#" class="nav-link">
+                  <svg class="nav-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-maximize"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                  <span>Features</span>
+                </a>
+                <ul class="sidebar-dropdown-menu">
+                  <li{{ ' class="active"'|is_active('^features-activities(.*)', page)|safe }}><a class="nav-link" href="features-activities.html">Activities</a></li>
+                  <li{{ ' class="active"'|is_active('^features-post-create(.*)', page)|safe }}><a class="nav-link" href="features-post-create.html">Post Create</a></li>
+                  <li{{ ' class="active"'|is_active('^features-posts(.*)', page)|safe }}><a class="nav-link" href="features-posts.html">Posts</a></li>
+                  <li{{ ' class="active"'|is_active('^features-profile(.*)', page)|safe }}><a class="nav-link" href="features-profile.html">Profile</a></li>
+                  <li{{ ' class="active"'|is_active('^features-settings(.*)', page)|safe }}><a class="nav-link" href="features-settings.html">Settings</a></li>
+                  <li{{ ' class="active"'|is_active('^features-setting-detail(.*)', page)|safe }}><a class="nav-link" href="features-setting-detail.html">Setting Detail</a></li>
+                  <li{{ ' class="active"'|is_active('^features-tickets(.*)', page)|safe }}><a class="nav-link" href="features-tickets.html">Tickets</a></li>
+                </ul>
+              </li>
+              <li class="nav-item nav-item-dropdown dropdown{{ ' active nav-item-dropdown-active'|is_active('^utilities-(.*)', page)|safe }}">
+                <a href="#" class="nav-link">
+                  <svg class="nav-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                  <span>Utilities</span>
+                </a>
+                <ul class="sidebar-dropdown-menu">
+                  <li><a href="utilities-contact.html">Contact</a></li>
+                  <li{{ ' class="active"'|is_active('^utilities-invoice(.*)', page)|safe }}><a class="nav-link" href="utilities-invoice.html">Invoice</a></li>
+                  <li><a href="utilities-subscribe.html">Subscribe</a></li>
+                </ul>
+              </li>
+              <li{{ ' class="active"'|is_active('^credits(.*)', page)|safe }}>
+                <a class="nav-link" href="credits.html">
+                  <svg class="nav-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-award"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                  <span>Credits</span>
+                </a>
+              </li>
+            </ul>
+
+            <div class="sidebar-only-normal mt-4 mb-4 p-3 ">
+              <a href="https://getstisla.com/docs" class="btn btn-warning btn-lg btn-block btn-icon-split">
+                Documentation
+              </a>
+            </div>

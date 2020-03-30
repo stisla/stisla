@@ -1,0 +1,26 @@
+.section {
+	.section-header {
+		display: flex;
+		align-items: center;
+		margin-left: -$content-padding;
+		margin-right: -$content-padding;
+		padding: $section-padding-y $section-padding-x;
+		box-shadow: $box-shadow-smooth;
+		@include card-base;
+		border-top: 1px solid $light;
+		margin-bottom: $section-padding-y * 2;
+
+		// standarize font size and more
+		h1, h2, h3, h4, h5, h6 {
+			margin: 0;
+			font-size: $h3-font-size;
+			font-weight: 600;
+		}
+	}
+
+	.breadcrumb {
+		margin-left: auto;
+		margin-bottom: 0;
+		background-color: $gray-100;
+	}
+}
