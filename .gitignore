@@ -1,3 +1,43 @@
+<<<<<<< HEAD
 node_modules
 dist
 *.log
+=======
+# Numerous always-ignore extensions
+*.txt
+*.log
+*.zip
+*.rar
+*.diff
+*.err
+*.orig
+*.rej
+*.swo
+*.swp
+*.vi
+*~
+
+# Folders to ignore
+/node_modules/
+/dist/node_modules/
+/pages/layouts/
+
+# OS or Editor folders
+._*
+.cache
+.DS_Store
+.idea
+.vscode
+.project
+.settings
+.tmproj
+*.esproj
+*.sublime-project
+*.sublime-workspace
+nbproject
+Thumbs.db
+
+# Komodo
+.komodotools
+*.komodoproject
+>>>>>>> 17de86944c56fef859034f5c9057c0bdeb9e260f
