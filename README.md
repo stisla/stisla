@@ -1,5 +1,5 @@
 ## Hi,
-The creator of this template is looking for part-time UI design/front-end job (:
+[Nauval](http://twitter.com/mhdnauvalazhar): We working on v3.
 
 -----
 
