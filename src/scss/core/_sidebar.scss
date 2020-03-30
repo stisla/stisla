@@ -54,6 +54,12 @@
 		font-weight: 300;
 		transition: $transition-base;
 
+		&.beep::after {
+			position: relative;
+			right: auto;
+			margin-left: .3rem;
+		}
+
 		span {
 			transition: $transition-base;
 		}

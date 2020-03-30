@@ -4,3 +4,7 @@
 	border: $card-border-width solid $card-border-color;
 	@include border-radius($card-border-radius);
 }
+
+@mixin button-shadow($color) {
+	box-shadow: 0 2px 6px rgba(theme-color($color), .3);
+}

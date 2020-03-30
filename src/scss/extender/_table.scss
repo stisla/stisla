@@ -13,6 +13,17 @@
   }
 }
 
+.table-fit {
+  thead th:first-child,
+  tbody td:first-child {
+    padding-left: $card-spacer-x;
+  }
+  thead th:last-child,
+  tbody td:last-child {
+    padding-right: $card-spacer-x;
+  }
+}
+
 .table-dark {
   thead th {
     color: $table-dark-color;

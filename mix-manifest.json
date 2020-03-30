@@ -32,6 +32,7 @@
     "/dist/js/page/modules-toastr.js": "/dist/js/page/modules-toastr.js",
     "/dist/js/page/modules-vector-map.js": "/dist/js/page/modules-vector-map.js",
     "/dist/js/page/utilities-contact.js": "/dist/js/page/utilities-contact.js",
+    "/dist/js/parts/_breakpoints.js": "/dist/js/parts/_breakpoints.js",
     "/dist/js/parts/sidebar.js": "/dist/js/parts/sidebar.js",
     "/dist/js/scripts.js": "/dist/js/scripts.js",
     "/dist/js/stisla.js": "/dist/js/stisla.js"
