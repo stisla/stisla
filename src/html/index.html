@@ -2,108 +2,38 @@
 {% set page = 'index.html' %}
 {% extends 'layouts/master.html' %}
 
-{% block plugins_css %}
-  <link rel="stylesheet" href="libraries/jqvmap/dist/jqvmap.min.css">
-  <link rel="stylesheet" href="libraries/summernote/dist/summernote-bs4.css">
-  <link rel="stylesheet" href="libraries/owl.carousel/dist/assets/owl.carousel.min.css">
-  <link rel="stylesheet" href="libraries/owl.carousel/dist/assets/owl.theme.default.min.css">
-{% endblock %}
-
 {% block content %}
         <section class="section">
           <div class="section-header">
             <h1>Dashboard</h1>
+
+            <div class="breadcrumb">
+              <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+              <div class="breadcrumb-item">Ecommerce</div>
+            </div>
           </div>
 
-          <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-12">
-              <div class="card card-statistic-2">
-                <div class="card-stats">
-                  <div class="card-stats-title">Order Statistics -
-                    <div class="dropdown d-inline">
-                      <a class="font-weight-600 dropdown-toggle" data-toggle="dropdown" href="#" id="orders-month">August</a>
-                      <ul class="dropdown-menu dropdown-menu-sm">
-                        <li class="dropdown-title">Select Month</li>
-                        <li><a href="#" class="dropdown-item">January</a></li>
-                        <li><a href="#" class="dropdown-item">February</a></li>
-                        <li><a href="#" class="dropdown-item">March</a></li>
-                        <li><a href="#" class="dropdown-item">April</a></li>
-                        <li><a href="#" class="dropdown-item">May</a></li>
-                        <li><a href="#" class="dropdown-item">June</a></li>
-                        <li><a href="#" class="dropdown-item">July</a></li>
-                        <li><a href="#" class="dropdown-item active">August</a></li>
-                        <li><a href="#" class="dropdown-item">September</a></li>
-                        <li><a href="#" class="dropdown-item">October</a></li>
-                        <li><a href="#" class="dropdown-item">November</a></li>
-                        <li><a href="#" class="dropdown-item">December</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="card-stats-items">
-                    <div class="card-stats-item">
-                      <div class="card-stats-item-count">24</div>
-                      <div class="card-stats-item-label">Pending</div>
-                    </div>
-                    <div class="card-stats-item">
-                      <div class="card-stats-item-count">12</div>
-                      <div class="card-stats-item-label">Shipping</div>
-                    </div>
-                    <div class="card-stats-item">
-                      <div class="card-stats-item-count">23</div>
-                      <div class="card-stats-item-label">Completed</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-icon shadow-primary bg-primary">
-                  <i class="fas fa-archive"></i>
-                </div>
-                <div class="card-wrap">
-                  <div class="card-header">
-                    <h4>Total Orders</h4>
-                  </div>
-                  <div class="card-body">
-                    59
-                  </div>
+          <div class="bg-primary rounded mb-4 shadow-smooth text-white overflow-hidden">
+            <div class="row">
+              <div class="col-lg-7">
+                <div class="pl-5 pt-5 pb-5">
+                  <h3>Welcome back, Admin!</h3>
+                  <p class="lead text-white line-height-4">
+                    Since you go, the system received several new orders, new tickets, and other data updates.
+                  </p>
+
+                  <a href="#" class="btn btn-warning mt-3 btn-icon">
+                    Learn More
+                    <svg class="btn-the-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                  </a>
                 </div>
               </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-12">
-              <div class="card card-statistic-2">
-                <div class="card-chart">
-                  <canvas id="balance-chart" height="80"></canvas>
-                </div>
-                <div class="card-icon shadow-primary bg-primary">
-                  <i class="fas fa-dollar-sign"></i>
-                </div>
-                <div class="card-wrap">
-                  <div class="card-header">
-                    <h4>Balance</h4>
-                  </div>
-                  <div class="card-body">
-                    $187,13
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-12">
-              <div class="card card-statistic-2">
-                <div class="card-chart">
-                  <canvas id="sales-chart" height="80"></canvas>
-                </div>
-                <div class="card-icon shadow-primary bg-primary">
-                  <i class="fas fa-shopping-bag"></i>
-                </div>
-                <div class="card-wrap">
-                  <div class="card-header">
-                    <h4>Sales</h4>
-                  </div>
-                  <div class="card-body">
-                    4,732
-                  </div>
-                </div>
+              <div class="col-lg-5">
+                <canvas id="balance-chart" class="mb-n3 position-absolute" height="300"></canvas>
               </div>
             </div>
           </div>
+
           <div class="row">
             <div class="col-lg-8">
               <div class="card">
@@ -111,14 +41,14 @@
                   <h4>Budget vs Sales</h4>
                 </div>
                 <div class="card-body">
-                  <canvas id="myChart" height="158"></canvas>
+                  <canvas id="budget-sales" height="160"></canvas>
                 </div>
               </div>
             </div>
             <div class="col-lg-4">
               <div class="card gradient-bottom">
                 <div class="card-header">
-                  <h4>Top 5 Products</h4>
+                  <h4>Top 4 Products</h4>
                   <div class="card-header-action dropdown">
                     <a href="#" data-toggle="dropdown" class="btn btn-danger btn-shadow-danger dropdown-toggle">Month</a>
                     <ul class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
@@ -130,104 +60,49 @@
                     </ul>
                   </div>
                 </div>
-                <div class="card-body" id="top-5-scroll">
+                <div class="card-body">
                   <ul class="list-unstyled list-unstyled-border">
-                    <li class="media">
-                      <img class="mr-3 rounded" width="55" src="../assets/img/products/product-3-50.png" alt="product">
+                    <li class="media mb-4">
+                      <img class="mr-3 rounded w-14" src="img/products/product-3-50.png" alt="product">
                       <div class="media-body">
-                        <div class="float-right"><div class="font-weight-600 text-muted text-small">86 Sales</div></div>
-                        <div class="media-title">oPhone S9 Limited</div>
-                        <div class="mt-1">
-                          <div class="budget-price">
-                            <div class="budget-price-square bg-primary" data-width="64%"></div>
-                            <div class="budget-price-label">$68,714</div>
-                          </div>
-                          <div class="budget-price">
-                            <div class="budget-price-square bg-danger" data-width="43%"></div>
-                            <div class="budget-price-label">$38,700</div>
-                          </div>
+                        <div class="media-title text-16"><a href="#" class="text-dark">oPhone S9 Limited</a></div>
+                        <div class="mx-n2 mt-1 d-flex align-items-center">
+                          <div class="mx-2 font-weight-bold text-primary">$38,700</div>
+                          <div class="mx-2 text-muted">86 Sales</div>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="media mb-4">
+                      <img class="mr-3 rounded w-14" src="img/products/product-4-50.png" alt="product">
+                      <div class="media-body">
+                        <div class="media-title text-16"><a href="#" class="text-dark">iBook Pro 2020</a></div>
+                        <div class="mx-n2 mt-1 d-flex align-items-center">
+                          <div class="mx-2 font-weight-bold text-primary">$91,455</div>
+                          <div class="mx-2 text-muted">67 Sales</div>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="media mb-4">
+                      <img class="mr-3 rounded w-14" src="img/products/product-1-50.png" alt="product">
+                      <div class="media-body">
+                        <div class="media-title text-16"><a href="#" class="text-dark">Headphone Blitz</a></div>
+                        <div class="mx-n2 mt-1 d-flex align-items-center">
+                          <div class="mx-2 font-weight-bold text-primary">$2,835</div>
+                          <div class="mx-2 text-muted">63 Sales</div>
                         </div>
                       </div>
                     </li>
                     <li class="media">
-                      <img class="mr-3 rounded" width="55" src="../assets/img/products/product-4-50.png" alt="product">
+                      <img class="mr-3 rounded w-14" src="img/products/product-3-50.png" alt="product">
                       <div class="media-body">
-                        <div class="float-right"><div class="font-weight-600 text-muted text-small">67 Sales</div></div>
-                        <div class="media-title">iBook Pro 2018</div>
-                        <div class="mt-1">
-                          <div class="budget-price">
-                            <div class="budget-price-square bg-primary" data-width="84%"></div>
-                            <div class="budget-price-label">$107,133</div>
-                          </div>
-                          <div class="budget-price">
-                            <div class="budget-price-square bg-danger" data-width="60%"></div>
-                            <div class="budget-price-label">$91,455</div>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="media">
-                      <img class="mr-3 rounded" width="55" src="../assets/img/products/product-1-50.png" alt="product">
-                      <div class="media-body">
-                        <div class="float-right"><div class="font-weight-600 text-muted text-small">63 Sales</div></div>
-                        <div class="media-title">Headphone Blitz</div>
-                        <div class="mt-1">
-                          <div class="budget-price">
-                            <div class="budget-price-square bg-primary" data-width="34%"></div>
-                            <div class="budget-price-label">$3,717</div>
-                          </div>
-                          <div class="budget-price">
-                            <div class="budget-price-square bg-danger" data-width="28%"></div>
-                            <div class="budget-price-label">$2,835</div>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="media">
-                      <img class="mr-3 rounded" width="55" src="../assets/img/products/product-3-50.png" alt="product">
-                      <div class="media-body">
-                        <div class="float-right"><div class="font-weight-600 text-muted text-small">28 Sales</div></div>
-                        <div class="media-title">oPhone X Lite</div>
-                        <div class="mt-1">
-                          <div class="budget-price">
-                            <div class="budget-price-square bg-primary" data-width="45%"></div>
-                            <div class="budget-price-label">$13,972</div>
-                          </div>
-                          <div class="budget-price">
-                            <div class="budget-price-square bg-danger" data-width="30%"></div>
-                            <div class="budget-price-label">$9,660</div>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="media">
-                      <img class="mr-3 rounded" width="55" src="../assets/img/products/product-5-50.png" alt="product">
-                      <div class="media-body">
-                        <div class="float-right"><div class="font-weight-600 text-muted text-small">19 Sales</div></div>
-                        <div class="media-title">Old Camera</div>
-                        <div class="mt-1">
-                          <div class="budget-price">
-                            <div class="budget-price-square bg-primary" data-width="35%"></div>
-                            <div class="budget-price-label">$7,391</div>
-                          </div>
-                          <div class="budget-price">
-                            <div class="budget-price-square bg-danger" data-width="28%"></div>
-                            <div class="budget-price-label">$5,472</div>
-                          </div>
+                        <div class="media-title text-16"><a href="#" class="text-dark">oPhone X Lite</a></div>
+                        <div class="mx-n2 mt-1 d-flex align-items-center">
+                          <div class="mx-2 font-weight-bold text-primary">$9,660</div>
+                          <div class="mx-2 text-muted">28 Sales</div>
                         </div>
                       </div>
                     </li>
                   </ul>
-                </div>
-                <div class="card-footer pt-3 d-flex justify-content-center">
-                  <div class="budget-price justify-content-center">
-                    <div class="budget-price-square bg-primary" data-width="20"></div>
-                    <div class="budget-price-label">Selling Price</div>
-                  </div>
-                  <div class="budget-price justify-content-center">
-                    <div class="budget-price-square bg-danger" data-width="20"></div>
-                    <div class="budget-price-label">Budget Price</div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -239,66 +114,39 @@
                   <h4>Best Products</h4>
                 </div>
                 <div class="card-body">
-                  <div class="owl-carousel owl-theme" id="products-carousel">
-                    <div>
-                      <div class="product-item pb-3">
-                        <div class="product-image">
-                          <img alt="image" src="../assets/img/products/product-4-50.png" class="img-fluid">
-                        </div>
-                        <div class="product-details">
-                          <div class="product-name">iBook Pro 2018</div>
-                          <div class="product-review">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                          </div>
+                  <div id="products-carousel" class="owl-carousel owl-theme">
+                    <div class="pb-3">
+                      <div class="mx-2 text-center">
+                        <img alt="image" src="img/products/product-4-50.png" class="img-fluid rounded-lg w-20 mx-auto">
+                        <div class="mt-2">
+                          <div class="text-16 font-weight-bold">iBook Pro</div>
                           <div class="text-muted text-small">67 Sales</div>
-                          <div class="product-cta">
-                            <a href="#" class="btn btn-primary">Detail</a>
+                          <div class="mt-3">
+                            <a href="#" class="btn btn-primary btn-shadow-primary">Detail</a>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div>
-                      <div class="product-item">
-                        <div class="product-image">
-                          <img alt="image" src="../assets/img/products/product-3-50.png" class="img-fluid">
-                        </div>
-                        <div class="product-details">
-                          <div class="product-name">oPhone S9 Limited</div>
-                          <div class="product-review">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half"></i>
-                          </div>
+                    <div class="pb-3">
+                      <div class="mx-2 text-center">
+                        <img alt="image" src="img/products/product-3-50.png" class="img-fluid rounded-lg w-20 mx-auto">
+                        <div class="mt-2">
+                          <div class="text-16 font-weight-bold">oPhone S9</div>
                           <div class="text-muted text-small">86 Sales</div>
-                          <div class="product-cta">
-                            <a href="#" class="btn btn-primary">Detail</a>
+                          <div class="mt-3">
+                            <a href="#" class="btn btn-primary btn-shadow-primary">Detail</a>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div>
-                      <div class="product-item">
-                        <div class="product-image">
-                          <img alt="image" src="../assets/img/products/product-1-50.png" class="img-fluid">
-                        </div>
-                        <div class="product-details">
-                          <div class="product-name">Headphone Blitz</div>
-                          <div class="product-review">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                          </div>
+                    <div class="pb-3">
+                      <div class="mx-2 text-center">
+                        <img alt="image" src="img/products/product-1-50.png" class="img-fluid rounded-lg w-20 mx-auto">
+                        <div class="mt-2">
+                          <div class="text-16 font-weight-bold">Blitz</div>
                           <div class="text-muted text-small">63 Sales</div>
-                          <div class="product-cta">
-                            <a href="#" class="btn btn-primary">Detail</a>
+                          <div class="mt-3">
+                            <a href="#" class="btn btn-primary btn-shadow-primary">Detail</a>
                           </div>
                         </div>
                       </div>
@@ -377,7 +225,10 @@
                 <div class="card-header">
                   <h4>Invoices</h4>
                   <div class="card-header-action">
-                    <a href="#" class="btn btn-danger btn-shadow-danger">View More</a>
+                    <a href="#" class="btn btn-danger btn-shadow-danger btn-icon">
+                      View More
+                      <svg class="btn-the-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
                   </div>
                 </div>
                 <div class="card-body p-0">
@@ -397,7 +248,7 @@
                           <td><a href="#">INV-87239</a></td>
                           <td class="font-weight-600">Kusnadi</td>
                           <td><div class="badge badge-warning">Unpaid</div></td>
-                          <td>July 19, 2018</td>
+                          <td>July 19, 2020</td>
                           <td>
                             <a href="#" class="btn btn-primary btn-shadow-primary btn-block">Detail</a>
                           </td>
@@ -406,7 +257,7 @@
                           <td><a href="#">INV-48574</a></td>
                           <td class="font-weight-600">Hasan Basri</td>
                           <td><div class="badge badge-success">Paid</div></td>
-                          <td>July 21, 2018</td>
+                          <td>July 21, 2020</td>
                           <td>
                             <a href="#" class="btn btn-primary btn-shadow-primary btn-block">Detail</a>
                           </td>
@@ -415,7 +266,7 @@
                           <td><a href="#">INV-76824</a></td>
                           <td class="font-weight-600">Muhamad Nuruzzaki</td>
                           <td><div class="badge badge-warning">Unpaid</div></td>
-                          <td>July 22, 2018</td>
+                          <td>July 22, 2020</td>
                           <td>
                             <a href="#" class="btn btn-primary btn-shadow-primary btn-block">Detail</a>
                           </td>
@@ -424,7 +275,7 @@
                           <td><a href="#">INV-84990</a></td>
                           <td class="font-weight-600">Agung Ardiansyah</td>
                           <td><div class="badge badge-warning">Unpaid</div></td>
-                          <td>July 22, 2018</td>
+                          <td>July 22, 2020</td>
                           <td>
                             <a href="#" class="btn btn-primary btn-shadow-primary btn-block">Detail</a>
                           </td>
@@ -433,7 +284,7 @@
                           <td><a href="#">INV-87320</a></td>
                           <td class="font-weight-600">Ardian Rahardiansyah</td>
                           <td><div class="badge badge-success">Paid</div></td>
-                          <td>July 28, 2018</td>
+                          <td>July 28, 2020</td>
                           <td>
                             <a href="#" class="btn btn-primary btn-shadow-primary btn-block">Detail</a>
                           </td>
@@ -445,49 +296,38 @@
               </div>
             </div>
             <div class="col-md-4">
-              <div class="card card-hero">
-                <div class="card-header">
-                  <div class="card-icon">
-                    <i class="far fa-question-circle"></i>
-                  </div>
-                  <h4>14</h4>
-                  <div class="card-description">Customers need help</div>
+              <div class="card">
+                <div class="px-4 py-4 bg-primary text-white rounded-top">
+                  <a href="features-tickets.html" class="float-right btn btn-warning btn-sm text-base btn-icon">
+                    View All
+                    <svg class="btn-the-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                  </a>
+                  <div class="h1">14</div>
+                  <p class="lead mb-0">Customers need help</p>
                 </div>
                 <div class="card-body p-0">
-                  <div class="tickets-list">
-                    <a href="#" class="ticket-item">
-                      <div class="ticket-title">
-                        <h4>My order hasn't arrived yet</h4>
+                  <div class="d-flex flex-column">
+                    <div class="py-4 px-4 border-bottom border-light">
+                      <h6><a href="#">My order hasn't arrived yet</a></h6>
+                      <div class="d-flex mx-n2">
+                        <div class="mx-2">Laila Tazkiah</div>
+                        <div class="mx-2">1 min ago</div>
                       </div>
-                      <div class="ticket-info">
-                        <div>Laila Tazkiah</div>
-                        <div class="bullet"></div>
-                        <div class="text-primary">1 min ago</div>
+                    </div>
+                    <div class="py-4 px-4 border-bottom border-light">
+                      <h6><a href="#">Please cancel my order</a></h6>
+                      <div class="d-flex mx-n2">
+                        <div class="mx-2">Rizal Fakhri</div>
+                        <div class="mx-2">2 hours ago</div>
                       </div>
-                    </a>
-                    <a href="#" class="ticket-item">
-                      <div class="ticket-title">
-                        <h4>Please cancel my order</h4>
+                    </div>
+                    <div class="py-4 px-4 border-bottom border-light">
+                      <h6><a href="#">Do you see my mother?</a></h6>
+                      <div class="d-flex mx-n2">
+                        <div class="mx-2">Syahdan Ubaidillah</div>
+                        <div class="mx-2">6 hours ago</div>
                       </div>
-                      <div class="ticket-info">
-                        <div>Rizal Fakhri</div>
-                        <div class="bullet"></div>
-                        <div>2 hours ago</div>
-                      </div>
-                    </a>
-                    <a href="#" class="ticket-item">
-                      <div class="ticket-title">
-                        <h4>Do you see my mother?</h4>
-                      </div>
-                      <div class="ticket-info">
-                        <div>Syahdan Ubaidillah</div>
-                        <div class="bullet"></div>
-                        <div>6 hours ago</div>
-                      </div>
-                    </a>
-                    <a href="features-tickets.html" class="ticket-item ticket-more">
-                      View All <i class="fas fa-chevron-right"></i>
-                    </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -496,14 +336,6 @@
         </section>
 {% endblock %}
 
-{% block plugins_js %}
-  <script src="libraries/jquery-sparkline/jquery.sparkline.min.js"></script>
-  <script src="libraries/chart.js/dist/Chart.min.js"></script>
-  <script src="libraries/owl.carousel/dist/owl.carousel.min.js"></script>
-  <script src="libraries/summernote/dist/summernote-bs4.js"></script>
-  <script src="libraries/chocolat/dist/js/jquery.chocolat.min.js"></script>
-{% endblock %}
-
 {% block page_js %}
-  <script src="../assets/js/page/index.js"></script>
+  <script src="js/page/index.js"></script>
 {% endblock %}

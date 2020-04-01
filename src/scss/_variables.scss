@@ -7,6 +7,22 @@ $font-size-base: 1rem;
 $font-size-lg: $font-size-base * 1.15;
 $font-size-sm: $font-size-base * .75;
 
+$h1-font-size: $font-size-base * 2.75;
+$h2-font-size: $font-size-base * 2.25;
+$h3-font-size: $font-size-base * 2;
+$h4-font-size: $font-size-base * 1.75;
+$h5-font-size: $font-size-base * 1.5;
+$h6-font-size: $font-size-base * 1.25;
+
+$input-btn-padding-y: .6rem;
+$input-btn-padding-x: 1.5rem;
+
+$input-btn-padding-y-sm: .3rem;
+$input-btn-padding-x-sm: .8rem;
+
+$input-btn-padding-y-lg: .8rem;
+$input-btn-padding-x-lg: 1.9rem;
+
 $gray-100: #f8f9fa;
 $gray-200: #e9ecef;
 $gray-300: #dee2e6;
@@ -19,7 +35,7 @@ $gray-900: #212529;
 
 $primary: #2559e8;
 $secondary: #e8e9eb;
-$success: #28ff69;
+$success: #12CC84;
 $danger: #ff2853;
 $info: #28b7ff;
 $warning: #ffde28;
@@ -28,9 +44,13 @@ $dark: #060e26;
 $black: #000;
 $white: #fff;
 $spacer: 1.2rem;
-$border-width: 0;
+$border-width: 1px;
 $btn-border-radius: .25rem;
 $enable-shadows: true;
+
+$card-border-width: 0;
+
+$dropdown-border-width: 0;
 
 $table-border-width: 1px;
 $table-border-color: $gray-200;
@@ -92,6 +112,11 @@ $navbar-height: 5rem;
 
 $content-padding: 2rem;
 
+$badge-padding-y: .4em;
+$badge-padding-x: .7em;
+$badge-font-size: $font-size-base;
+$badge-font-weight: 400;
+
 $section-padding-y: 1rem;
 $section-padding-x: 2rem;
 
@@ -151,6 +176,14 @@ $sizes: (
 	8: 2rem,
 	9: 2.25rem,
 	10: 2.5rem,
+	11: 2.75rem,
+	12: 3rem,
+	14: 3.5rem,
+	15: 4rem,
+	16: 4.5rem,
+	18: 5rem,
+	19: 6rem,
+	20: 7rem,
 	25: 25%,
 	50: 50%,
 	75: 75%,
@@ -162,3 +195,18 @@ $sizes: (
 $footer-bg: $white;
 $footer-padding-y: 1.5rem;
 $footer-padding-x: 2rem;
+
+// line height
+$line-height: (
+	none: 1,
+	1: 1.25,
+	2: 1.375,
+	3: 1.5,
+	4: 1.625,
+	5: 2,
+	6: .75rem,
+	7: 1rem,
+	8: 1.25rem,
+	9: 1.5rem,
+	10: 1.75rem,
+);

@@ -2,12 +2,22 @@
  * Shadow
  */
 
- @each $color, $value in $theme-colors {
-   .btn-shadow-#{$color} {
-     @include button-shadow($color);
+@each $color, $value in $theme-colors {
+ .btn-shadow-#{$color} {
+   @include button-shadow($color);
 
-     &:hover {
-      box-shadow: none;
-     }
+   &:hover {
+    box-shadow: none;
    }
  }
+}
+
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+
+  .btn-the-icon {
+    margin-left: .3rem;
+    width: svg('sm');
+  }
+}

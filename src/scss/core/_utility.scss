@@ -14,7 +14,6 @@
   }
 }
 
-
 .beep::after {
 	content: '';
 	position: absolute;
@@ -28,4 +27,26 @@
 	animation-iteration-count: 1;
 	animation-iteration-count: infinite;
 	opacity: 1;
+}
+
+.white-space-normal {
+	white-space: normal;
+}
+
+.text-16 {
+	font-size: 16px;
+}
+
+.text-base {
+	font-size: $font-size-base;
+}
+
+.shadow-smooth {
+	box-shadow: $box-shadow-smooth;
+}
+
+@each $size, $value in $line-height {
+  .line-height-#{$size} {
+  	line-height: map-get($line-height, $size) !important;
+  }
 }

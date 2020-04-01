@@ -1,31 +1,54 @@
 "use strict";
 
-var ctx = document.getElementById("myChart").getContext('2d');
+/**
+ * Import all JS libraries
+ */
+import 'jquery-sparkline';
+
+import 'chart.js';
+import '../libraries/_chartjs.config';
+
+import 'owl.carousel';
+import 'owl.carousel/dist/assets/owl.carousel.min.css';
+import 'owl.carousel/dist/assets/owl.theme.default.min.css';
+
+import 'summernote';
+import 'summernote/dist/summernote-bs4.css';
+
+import 'chocolat';
+
+import 'jqvmap/dist/jqvmap.min.css';
+
+/**
+ * Index.js
+ */
+
+var ctx = document.getElementById("budget-sales").getContext('2d');
 var myChart = new Chart(ctx, {
   type: 'line',
   data: {
     labels: ["January", "February", "March", "April", "May", "June", "July", "August"],
     datasets: [{
       label: 'Sales',
-      data: [3200, 1800, 4305, 3022, 6310, 5120, 5880, 6154],
+      data: [3200, 1800, 4305, 3022, 6310, 5120, 5880, 4154],
       borderWidth: 2,
-      backgroundColor: 'rgba(63,82,227,.8)',
+      backgroundColor: 'rgba(37,89,232,.9)',
       borderWidth: 0,
       borderColor: 'transparent',
       pointBorderWidth: 0,
-      pointRadius: 3.5,
+      pointRadius: 8,
       pointBackgroundColor: 'transparent',
-      pointHoverBackgroundColor: 'rgba(63,82,227,.8)',
+      pointHoverBackgroundColor: 'rgba(37,89,232,.8)',
     },
     {
       label: 'Budget',
-      data: [2207, 3403, 2200, 5025, 2302, 4208, 3880, 4880],
+      data: [2207, 3403, 2200, 5025, 2302, 4208, 3880, 2880],
       borderWidth: 2,
-      backgroundColor: 'rgba(254,86,83,.7)',
+      backgroundColor: 'rgba(255,40,83,.9)',
       borderWidth: 0,
       borderColor: 'transparent',
       pointBorderWidth: 0 ,
-      pointRadius: 3.5,
+      pointRadius: 8,
       pointBackgroundColor: 'transparent',
       pointHoverBackgroundColor: 'rgba(254,86,83,.8)',
     }]
@@ -61,100 +84,46 @@ var myChart = new Chart(ctx, {
 
 var balance_chart = document.getElementById("balance-chart").getContext('2d');
 
-var balance_chart_bg_color = balance_chart.createLinearGradient(0, 0, 0, 70);
-balance_chart_bg_color.addColorStop(0, 'rgba(63,82,227,.2)');
-balance_chart_bg_color.addColorStop(1, 'rgba(63,82,227,0)');
+var gradientGridlines = ctx.createLinearGradient(400, 0, 0, 0);
+gradientGridlines.addColorStop(0, 'rgba(255,255,255,.2)');   
+gradientGridlines.addColorStop(.7, 'rgba(255,255,255,.1)');
+gradientGridlines.addColorStop(1, 'rgba(255,255,255,0)');
 
 var myChart = new Chart(balance_chart, {
-  type: 'line',
+  type: 'bar',
   data: {
-    labels: ['16-07-2018', '17-07-2018', '18-07-2018', '19-07-2018', '20-07-2018', '21-07-2018', '22-07-2018', '23-07-2018', '24-07-2018', '25-07-2018', '26-07-2018', '27-07-2018', '28-07-2018', '29-07-2018', '30-07-2018', '31-07-2018'],
+    labels: [35, 33, 63, 46, 68, 53, 45, 40, 55, 45, 55, 62, 75],
     datasets: [{
       label: 'Balance',
-      data: [50, 61, 80, 50, 72, 52, 60, 41, 30, 45, 70, 40, 93, 63, 50, 62],
-      backgroundColor: balance_chart_bg_color,
+      data: [35, 33, 63, 46, 68, 53, 45, 40, 55, 45, 55, 62, 75],
+      backgroundColor: 'rgba(255,222,40,1)',
       borderWidth: 3,
-      borderColor: 'rgba(63,82,227,1)',
+      borderColor: 'transparent',
       pointBorderWidth: 0,
-      pointBorderColor: 'transparent',
-      pointRadius: 3,
-      pointBackgroundColor: 'transparent',
-      pointHoverBackgroundColor: 'rgba(63,82,227,1)',
+      pointBorderColor: 'rgba(255,222,40,1)',
+      pointRadius: 6,
+      pointBackgroundColor: 'rgba(255,222,40,1)',
+      pointHoverBackgroundColor: 'rgba(255,222,40,1)',
     }]
   },
   options: {
     layout: {
       padding: {
-        bottom: -1,
-        left: -1
+        bottom: 0,
+        left: 0
       }
     },
     legend: {
-      display: false
+      display: false,
     },
     scales: {
       yAxes: [{
         gridLines: {
-          display: false,
+          display: true,
+          zeroLineWidth: 2,
           drawBorder: false,
-        },
-        ticks: {
-          beginAtZero: true,
-          display: false
-        }
-      }],
-      xAxes: [{
-        gridLines: {
-          drawBorder: false,
-          display: false,
-        },
-        ticks: {
-          display: false
-        }
-      }]
-    },
-  }
-});
-
-var sales_chart = document.getElementById("sales-chart").getContext('2d');
-
-var sales_chart_bg_color = sales_chart.createLinearGradient(0, 0, 0, 80);
-balance_chart_bg_color.addColorStop(0, 'rgba(63,82,227,.2)');
-balance_chart_bg_color.addColorStop(1, 'rgba(63,82,227,0)');
-
-var myChart = new Chart(sales_chart, {
-  type: 'line',
-  data: {
-    labels: ['16-07-2018', '17-07-2018', '18-07-2018', '19-07-2018', '20-07-2018', '21-07-2018', '22-07-2018', '23-07-2018', '24-07-2018', '25-07-2018', '26-07-2018', '27-07-2018', '28-07-2018', '29-07-2018', '30-07-2018', '31-07-2018'],
-    datasets: [{
-      label: 'Sales',
-      data: [70, 62, 44, 40, 21, 63, 82, 52, 50, 31, 70, 50, 91, 63, 51, 60],
-      borderWidth: 2,
-      backgroundColor: balance_chart_bg_color,
-      borderWidth: 3,
-      borderColor: 'rgba(63,82,227,1)',
-      pointBorderWidth: 0,
-      pointBorderColor: 'transparent',
-      pointRadius: 3,
-      pointBackgroundColor: 'transparent',
-      pointHoverBackgroundColor: 'rgba(63,82,227,1)',
-    }]
-  },
-  options: {
-    layout: {
-      padding: {
-        bottom: -1,
-        left: -1
-      }
-    },
-    legend: {
-      display: false
-    },
-    scales: {
-      yAxes: [{
-        gridLines: {
-          display: false,
-          drawBorder: false,
+          lineWidth: 2,
+          color: gradientGridlines
         },
         ticks: {
           beginAtZero: true,

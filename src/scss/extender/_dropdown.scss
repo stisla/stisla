@@ -14,6 +14,10 @@
 		}
 	}
 
+	&.dropdown-menu-lg {
+		width: 30rem;
+	}
+
 	&.dropdown-bordered {
 		.dropdown-item {
 			border-bottom: 1px solid $light;
