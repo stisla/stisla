@@ -8,3 +8,30 @@
     line-height: 28px;
   }
 }
+
+ul.nav-tabs {
+  li.nav-item {
+    a.nav-link {
+      i {
+        color: color(primary);
+      }
+      span {
+        display: block;
+        line-height: 60%;
+        i {
+          font-size: 16px!important;
+        }
+      }
+    }
+  }
+}
+
+ul.nav-tabs {
+  li.nav-item {
+    a.nav-link.active {
+      i {
+        color: color(dark);
+      }
+    }
+  }
+}
