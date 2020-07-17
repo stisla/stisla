@@ -682,6 +682,9 @@ tr:first-child > td > .fc-day-grid-event {
     border-top: 1px solid #f2f2f2; } }
 
 /* 1.18 Select2 */
+.select2 {
+  width: 100% !important; }
+
 .select2-container--default .select2-search--dropdown .select2-search__field:focus {
   outline: none;
   box-shadow: none; }
