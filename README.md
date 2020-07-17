@@ -1,8 +1,3 @@
-## Hi,
-[Nauval](http://twitter.com/mhdnauvalazhar): We working on v3.
-
------
-
 <p align="center">
   <a href="https://getstisla.com">
     <img src="https://avatars2.githubusercontent.com/u/45754626?s=75&v=4" alt="Stisla logo" width="75" height="75">
@@ -131,6 +126,8 @@ Stisla is better because of the [contributors](https://github.com/stisla/stisla/
   </tr>
   <tr>
     <td align="center"><a href="https://sundi3yansyah.com"><img src="https://avatars2.githubusercontent.com/u/3952281?v=4" width="100px;" alt=""/><br /><sub><b>Cahyadi Triyansyah</b></sub></a><br /><a href="https://github.com/stisla/stisla/commits?author=SunDi3yansyah" title="Code">💻</a></td>
+    <td align="center"><a href="https://harshal.one"><img src="https://avatars0.githubusercontent.com/u/20720521?s=460&v=4" width="100px;" alt=""/><br /><sub><b>Harshal Parekh</b></sub></a><br /><a href="https://github.com/stisla/stisla/commits?author=Harshal96" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/ppabcd"><img src="https://avatars0.githubusercontent.com/u/7419422?s=460&u=a8afa0f92608d126296e79f2ff0314a8fc794fd1&v=4" width="100px;" alt=""/><br /><sub><b>Reza Juliandri</b></sub></a><br /><a href="https://github.com/stisla/stisla/commits?author=ppabcd" title="Code">💻</a></td>
   </tr>
 </table>
 
