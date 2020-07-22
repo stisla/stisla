@@ -59,10 +59,12 @@
 
 Several quick start options are available:
 
-- [Download the latest release.](https://github.com/stisla/stisla/archive/v2.2.0.zip)
 - Clone the repo: `git clone https://github.com/stisla/stisla.git`
-- Install [npm](https://www.npmjs.com) or [yarn](https://yarnpkg.com) first if you don't have it in your machine
-- Run the `yarn stisla-start` command to start using stisla !
+- Install [yarn](https://yarnpkg.com) first if you don't have it in your machine
+- Run the `yarn` command
+- Done
+
+Or if you're Indonesian, you can watch my video [here](https://www.youtube.com/watch?v=dvnqtOUvGFc)
 
 Read the [Getting started page](https://getstisla.com/docs) for information on the framework contents, templates and examples, and more.
 
