@@ -88,6 +88,9 @@ You can find the Stisla road map here: [Stisla Roadmap](https://trello.com/b/M8T
 
 - Django (let's contribute)
 - and more...
+## Video Tutorials
+here are tutorials for setup in laravel
+[<img src="https://img.youtube.com/vi/6OTZxbjV1NY/0.jpg" width="250">](https://www.youtube.com/playlist?list=PL0wCC44AhrC14hkSMdczlVaZvnD0WSdGv)
 
 ## Creator
 Stisla is created by [Nauval](http://nauv.al) ([Twitter](https://twitter.com/mhdnauvalazhar)). [Support](https://www.buymeacoffee.com/mhd) this guy!
