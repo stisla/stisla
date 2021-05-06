@@ -149,9 +149,12 @@ Want to help Stisla get better? Let's contribute and follow our [contribution gu
 - [app.whatspie.com](https://app.whatspie.com) - Enterprise ready unofficial WhatsApp API and BOT Service, allow you to sending notification to customer using WhatsApp API from your App
 - [kredibel.co.id](https://kredibel.co.id)- Kredibel is a site that can identify whether someone has the potential to commit fraud or not
 
-## Video Tutorials
-here are tutorials for setup in laravel
-[<img src="https://img.youtube.com/vi/6OTZxbjV1NY/0.jpg" width="250">](https://www.youtube.com/playlist?list=PL0wCC44AhrC14hkSMdczlVaZvnD0WSdGv)
+## Tutorials
+- [Stisla Introduction by Nauval](https://www.youtube.com/watch?v=dvnqtOUvGFc) (🇮🇩)
+- [How to setup Stisla in Laravel by Laravel Package Tutorial](https://www.youtube.com/playlist?list=PL0wCC44AhrC14hkSMdczlVaZvnD0WSdGv) (🏴󠁧󠁢󠁥󠁮󠁧󠁿)
+- [Integrate Stisla with Laravel by Mulai Dari NULL](https://www.youtube.com/watch?v=4-kdAxALCPc) (🇮🇩)
+- [Integrate Stisla with CodeIgniter 4 by Juvinal Man](https://www.youtube.com/watch?v=np4LsQNcJbg) (🇮🇩)
+- [Integrate Stisla with CodeIgniter 4 by YukCoding Media](https://www.youtube.com/watch?v=Kre5kJIufhw) (🇮🇩)
 
 ## License
 Stisla is under the [MIT License](LICENSE)
