@@ -60,6 +60,7 @@
 Several quick start options are available:
 
 - Clone the repo: `git clone https://github.com/stisla/stisla.git`
+- Run `cd` to the newly created `/stisla` directory
 - Install [yarn](https://yarnpkg.com) first if you don't have it in your machine
 - Run the `yarn` command
 - Done
