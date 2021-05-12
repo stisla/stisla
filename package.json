@@ -17,7 +17,7 @@
     "chart.js": "^2.7.3",
     "chocolat": "^0.4.21",
     "cleave.js": "^1.4.7",
-    "codemirror": "^5.43.0",
+    "codemirror": "^5.58.2",
     "datatables": "^1.10.18",
     "datatables.net-responsive-bs4": "^2.2.3",
     "datatables.net-select-bs4": "^1.2.7",
