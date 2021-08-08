@@ -15,7 +15,7 @@
 # Folders to ignore
 /node_modules/
 /dist/node_modules/
-/pages/layouts/
+/pages/
 
 # OS or Editor folders
 ._*
@@ -31,6 +31,7 @@
 *.sublime-workspace
 nbproject
 Thumbs.db
+yarn.lock
 
 # Komodo
 .komodotools
