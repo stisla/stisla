@@ -327,3 +327,11 @@
   color: transparent !important;
   pointer-events: none;
 }
+
+.btn-fill{
+  background-color: #94a3b81f;
+  color: rgba(100,116,139,1);
+  &:hover{
+    background-color: #94a3b81f !important;
+  }
+}

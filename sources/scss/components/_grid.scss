@@ -1,0 +1,18 @@
+.grid{
+  display:grid;
+  grid-gap: .75rem;
+  gap: .75rem;
+}
+@for $i from 1 through 12 {
+  .grid-col-#{$i} {
+    grid-template-columns: repeat($i,minmax(0,1fr));
+  }
+}
+
+@media (min-width: 600px) {
+  @for $i from 1 through 12 {
+    .grid-col-sm-#{$i} {
+      grid-template-columns: repeat($i,minmax(0,1fr)) !important;
+    }
+  }
+}

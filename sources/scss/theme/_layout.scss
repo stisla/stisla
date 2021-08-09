@@ -590,7 +590,47 @@ body:not(.sidebar-mini) .sidebar-style-2 {
     }
   }
 }
+$theme: "primary", "info", "warning", "danger", "success", "dark";
+body{
+  @each $i in $theme {
+    &.theme-#{$i}{
+      .settings{
+        @include button-shadow(#{$i});
+        background-color: color(#{$i}) !important;
+        border-color: color(#{$i}) !important;
+      }
+      .settings-container{
+        .card-header{
+          color: color(#{$i}) !important;
+          h4{
+            color: color(#{$i}) !important;
+          }
+        }
+        .card-body{
+          .settings-ring-active{
+            border: 2px solid color(#{$i}) !important;
+          }
+        }
+      }
+      .navbar-bg{
+        background-color: color(#{$i}) !important;
+      }
+      .main-sidebar .sidebar-menu li{
+        ul.dropdown-menu li{
+          color: #78828a !important;
+          &.active a,
+          a:hover{
+            color: color(#{$i}) !important;
+          }
+        }
+        &.active a.has-dropdown{
+          color: color(#{$i}) !important;
+        }
 
+      }
+    }
+  }
+}
 @media (max-width: 1024px) {
   .sidebar-gone-hide {
     display: none !important;
