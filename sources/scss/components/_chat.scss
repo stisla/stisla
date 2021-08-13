@@ -90,3 +90,19 @@
     }
   }
 }
+.dark{
+  .chat-box{
+    .chat-content{
+      .chat-item{
+        .chat-details{
+          .chat-text{
+            background-color:color(darkcard);
+          }
+          .chat-time{
+            color:color(darkcard);
+          }
+        }
+      }
+    }
+  }
+}

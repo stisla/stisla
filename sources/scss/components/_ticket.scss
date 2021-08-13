@@ -140,6 +140,44 @@
   }
 }
 
+.dark{
+  .tickets{
+    .ticket-content{
+      .ticket-header{
+        .ticket-detail{
+          .ticket-info{
+            color: color(darkcolor);
+          }
+        }
+      }
+      .ticket-description{
+        color: color(darkcolor);
+      }
+    }
+    .ticket-items{
+      .ticket-item{
+        .ticket-desc{
+          color: color(darkcolor);
+        }
+      }
+    }
+    .ticket-description{
+      .ticket-form{
+        .note-editable{
+          color: color(darkcolor);
+        }
+      }
+    }
+  }
+  .tickets-list{
+    .ticket-item{
+      .ticket-info{
+        color: color(darkcolor);
+      }
+    }
+  }
+}
+
 
 @include media-breakpoint-only(sm) {
   .tickets {

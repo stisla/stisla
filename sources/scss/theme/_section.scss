@@ -82,6 +82,21 @@
   }
 }
 
+.dark{
+  .section{
+    color: color(darkcolor) !important;
+    .section-header{
+      background-color: color(darkcard);
+      h1{
+        color: white;
+        opacity: 0.8;
+      }
+    }
+    .section-title{
+      color: color(darkcolor) !important;
+    }
+  }
+}
 
 @include media-breakpoint-down(xs) {
   .section {

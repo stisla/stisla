@@ -34,6 +34,14 @@
   }
 }
 
+.dark{
+  .author-box{
+    .author-box-job{
+      color: color(darkcolor);
+    }
+  }
+}
+
 @include media-breakpoint-down(xs) {
   .author-box {
     .author-box-left {

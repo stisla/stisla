@@ -79,3 +79,21 @@
     }
   }
 }
+.dark{
+  .pricing{
+    background-color: color(darkcard);
+    .pricing-title{
+      background-color: color(darkhover);
+    }
+    &.pricing-highlight{
+      .pricing-title{
+        background-color: color(primary);
+      }
+    }
+    .pricing-cta{
+      a{
+        background-color: color(darkhover);
+      }
+    }
+  }
+}

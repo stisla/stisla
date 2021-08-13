@@ -68,3 +68,28 @@
     }
   }
 }
+.dark{
+  .media{
+    .media-title{
+      color: color(white);
+      a{
+        color: color(white);
+        opacity: .8;
+      }
+    }
+    .media-progressbar{
+      .progress-text{
+        color: color(white);
+        opacity: .6;
+      }
+    }
+    .media-items{
+      .media-item{
+        .media-label{
+          color: color(white);
+          opacity:.5;
+        }
+      }
+    }
+  }
+}

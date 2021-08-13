@@ -10,7 +10,7 @@
     font-family: 'weathericons';
     font-size: 20px;
   }
-  .icon-name {}
+  // .icon-name {}
   .icon_unicode {
     width: 100%;
     padding-left: 45px;
@@ -32,4 +32,12 @@
   margin-right: 15px;
   width: 30px;
   text-align: center;
+}
+
+.dark{
+  .icon-wrap{
+    .icon_unicode{
+      color: color(darkborder);
+    }
+  }
 }

@@ -31,7 +31,18 @@
     }
   }
 }
-
+.dark{
+  .invoice{
+    background-color: color(darkcard);
+    @include button-shadow-dark(card);
+    color: color(darkcolor);
+    .invoice-detail-item{
+      .invoice-detail-value{
+        color: color(white);
+      }
+    }
+  }
+}
 @include media-breakpoint-only(md) {
   .table-invoice {
     table {

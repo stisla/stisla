@@ -40,3 +40,26 @@
     line-height: 24px;
   }
 }
+
+.dark {
+  .popover{
+    background-color:color(darkcolor);
+    @include button-shadow-dark(card);
+    color: color(darkcard);
+  }
+  .popover-body{
+    color: color(darkcard);
+  }
+  $list:'top','bottom','left','right';
+  @each $i in $list {
+    .bs-popover-auto[x-placement^=#{$i}],
+    .bs-popover-#{$i}{
+      .arrow{
+        &::after,
+        &::before{
+          border-#{$i}-color:color(darkcolor);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+.dark{
+  .cm-s-duotone-dark{
+    &.CodeMirror{
+      background-color: color(darkbody);
+    }
+    .CodeMirror-gutters{
+      background-color: color(darkhover);
+    }
+    .CodeMirror-linenumber{
+      color: color(darkcolor);
+    }
+  }
+}

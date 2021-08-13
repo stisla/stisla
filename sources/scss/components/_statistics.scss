@@ -21,7 +21,16 @@
     }
   }
 }
-
+.dark{
+  .statistic-details{
+    .statistic-details-item{
+      .detail-name{
+        color: color(white);
+        opacity: 0.8;
+      }
+    }
+  }
+}
 @include media-breakpoint-down(xs) {
   .statistic-details {
     flex-wrap: wrap;

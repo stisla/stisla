@@ -5,3 +5,29 @@
 .tooltip-inner {
   padding: 7px 13px;
 }
+
+.dark {
+  .tooltip{
+    .tooltip-inner{
+      background-color: color(darkcolor);
+      color: color(darkbody);
+    }
+  }
+  .bs-tooltip-auto[x-placement^=top] .arrow::before,
+  .bs-tooltip-top .arrow::before{
+    border-top-color: color(darkcolor);
+  }
+  .bs-tooltip-auto[x-placement^=bottom] .arrow::before,
+  .bs-tooltip-bottom .arrow::before{
+    border-bottom-color: color(darkcolor);
+  }
+  .bs-tooltip-auto[x-placement^=left] .arrow::before,
+  .bs-tooltip-left .arrow::before{
+    border-left-color: color(darkcolor);
+  }
+  .bs-tooltip-auto[x-placement^=right] .arrow::before,
+  .bs-tooltip-right .arrow::before{
+    border-right-color: color(darkcolor);
+  }
+}
+

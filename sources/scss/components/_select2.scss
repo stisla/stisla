@@ -91,3 +91,41 @@
 .select2-results__option {
   padding-right: 10px 15px;
 }
+
+.dark {
+  .select2-container{
+    .select2-selection--multiple,
+    .select2-selection--single{
+      background-color:transparent;
+      border-color: color(darkborder);
+      .select2-selection__rendered{
+        color:color(darkcolor);
+        .select2-selection__choice{
+          background-color:color(darkhover);
+          color: color(darkcolor);
+        }
+      }
+    }
+  }
+  .select2-dropdown{
+    background-color:color(darkcard);
+    border-color: color(darkborder) !important;
+    .select2-search{
+      border-bottom: 1px solid color(darkborder);
+      input{
+        background-color:transparent;
+        border:none;
+        color: color(darkcolor);
+      }
+    }
+    .select2-results{
+      .select2-results__options{
+        .select2-results__option[aria-selected=true],
+        .select2-results__option--highlighted{
+          background-color:color(darkhover);
+          color: color(darkcolor);
+        }
+      }
+    }
+  }
+}

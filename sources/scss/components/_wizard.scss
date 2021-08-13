@@ -81,6 +81,17 @@
     }
   }
 }
+.dark{
+  .wizard-steps{
+    .wizard-step{
+      background-color:color(formcontrol_normal_background_dark);
+      @include button-shadow-dark(card);
+      &.wizard-step-active{
+        background-color:color(darkhover);
+      }
+    }
+  }
+}
 
 @include media-breakpoint-down(xs) {
   .wizard-steps {

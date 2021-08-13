@@ -20,3 +20,13 @@
     @include form-control-focus;
   }
 }
+
+.dark{
+  .bootstrap-tagsinput{
+    background-color:transparent;
+    border-color: color(darkborder);
+    input{
+      color: color(darkcolor);
+    }
+  }
+}

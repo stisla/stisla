@@ -197,6 +197,56 @@ a.dropdown-item {
   }
 }
 
+.dark{
+  .dropdown-menu{
+    background-color:color(darkcard) !important;
+    .dropdown-header{
+      color:color(white) !important;
+      opacity: .8;
+      border-bottom: 1px solid color(darkborder) !important;
+    }
+    .dropdown-title{
+      color:color(white) !important;
+      opacity: .8;
+    }
+    .dropdown-item{
+      color:color(white);
+      opacity: .8;
+      &:hover{
+        background-color:color(darkhover);
+      }
+    }
+  }
+  .dropdown-list{
+    .dropdown-item{
+      border-bottom-color: color(darkborder) !important;
+      &.dropdown-item-unread{
+        background-color: color(darkcard) !important;
+      }
+      .dropdown-item-desc{
+        color: color(white) !important;
+        opacity: .8;
+      }
+      &:not(.dropdown-item-unread){
+        &:focus,
+        &:hover{
+          background-color:color(darkhover) !important;
+          color: color(white) !important;
+          opacity: .8;
+        }
+      }
+
+    }
+    .dropdown-list-content{
+      &:not(.is-end){
+        &:after{
+          background-image: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,.4), rgba(0,0,0,.8));
+        }
+      }
+    }
+  }
+}
+
 @include media-breakpoint-down(xs) {
   .dropdown-list-toggle {
     position: static;

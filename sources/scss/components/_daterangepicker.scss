@@ -26,3 +26,54 @@
 .daterangepicker td.active, .daterangepicker td.active:hover {
   background-color: color(primary);
 }
+
+.dark{
+  .daterangepicker{
+    background-color: color(darkcard);
+    border-color: color(darkborder);
+    color: color(darkcolor);
+    &::before{
+      border-bottom-color: color(darkborder);
+    }
+    &::after{
+      border-bottom-color: color(darkcard);
+    }
+    .calendar-table{
+      background-color:transparent;
+      .prev,
+      .next{
+        span{
+          border-color: color(darkcolor);
+        }
+      }
+    }
+    td,
+    th{
+      &.available{
+        &:hover{
+          background-color:color(darkhover);
+          color: color(white);
+        }
+      }
+    }
+    td.off,
+    td.off.in-range,
+    td.off.start-date,
+    td.off.end-date{
+      background-color: color(darkhover);
+    }
+    select{
+      &.hourselect,
+      &.minuteselect,
+      &.secondselect,
+      &.ampmselect{
+        background-color:transparent;
+        border-color: color(darkborder);
+        color: color(darkcolor);
+      }
+    }
+    .drp-buttons{
+      border-top-color: color(darkborder);
+    }
+  }
+}

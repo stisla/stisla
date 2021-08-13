@@ -423,3 +423,55 @@ pre {
   background-size: cover;
 }
 
+.dark{
+  .gradient-bottom:after{
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8));
+  }
+  .bg-whitesmoke{
+    color: color(fontdark) !important;
+  }
+  .text-job{
+    color: color(white);
+    opacity: 0.8;
+  }
+  .text-time{
+    color: color(white);
+    opacity: .6;
+  }
+
+  ::-webkit-calendar-picker-indicator{
+    filter: invert(.8);
+  }
+  ::-webkit-file-upload-button {
+    background-color: transparent;
+    border: none;
+    color: color(formcontrol_normal_color_dark);
+    border-right: 1px solid color(formcontrol_normal_border_dark);
+    cursor: pointer;
+    padding: 0;
+    position: relative;
+    width: 80px;
+    height: 100%;
+    &:hover{
+      font-weight: bold;
+      color: color(white);
+    }
+  }
+  blockquote{
+    background-color:transparent;
+  }
+
+  .close {
+    color: color(darkcolor);
+  }
+
+  .bg-white{
+    label,
+    div{
+      color: color(font) !important;
+    }
+  }
+  .login-brand{
+    color: color(white);
+  }
+}

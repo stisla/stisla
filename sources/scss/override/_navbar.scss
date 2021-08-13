@@ -202,6 +202,28 @@
   display: flex;
 }
 
+.dark{
+  .navbar{
+    .search-element{
+      .search-result{
+        background-color:color(darkcard) !important;
+        &::before{
+          color:color(darkcard) !important;
+        }
+        .search-item{
+          a{
+            color: color(white);
+            opacity: .8;
+            &:hover{
+              background-color:color(darkhover) !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 @include media-breakpoint-down(xs) {
   body.search-show .navbar .form-inline .search-element {
     display: block;

@@ -119,8 +119,8 @@ select.form-control:not([size]):not([multiple]) {
   background-color: color(primary) !important;
 }
 
-.custom-checkbox-table {
-}
+// .custom-checkbox-table {
+// }
 
 .custom-file-label {
   line-height: 2.2;
@@ -440,4 +440,55 @@ select.form-control:not([size]):not([multiple]) {
   &:checked ~ .colorinput-color:before {
     opacity: 1;
   }
+}
+
+.dark{
+  .form-group{
+    .control-label,
+    label{
+      color: color(darkcolor);
+    }
+  }
+  .form-control,
+  .input-group-text,
+  .custom-select,
+  .custom-file-label,
+  .form-control-plaintext,
+  .selectgroup-button{
+    background-color: color(formcontrol_normal_background_dark);
+    border-color: color(formcontrol_normal_border_dark);
+    color: color(formcontrol_normal_color_dark);
+    &::placeholder{
+      color: color(formcontrol_normal_border_dark);
+    }
+  }
+
+  select{
+    &.custom-select{
+      background-image: color(select_carret_dark);
+    }
+    option{
+      background-color: color(select_option_bakcground_dark);
+      @include button-shadow-dark(card);
+    }
+  }
+
+  input[type="file"]{
+    padding:0 !important;
+  }
+
+  .custom-switch-indicator{
+    background: color(darkbody);
+    border-color: color(darkborder);
+    &::before{
+      background:color(darkcolor);
+    }
+  }
+  .custom-switch-description{
+    color: color(darkcolor);
+  }
+  .custom-switch-input:checked ~ .custom-switch-description{
+    color: color(white);
+  }
+
 }

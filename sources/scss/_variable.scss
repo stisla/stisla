@@ -14,6 +14,30 @@ $colors: (
   font:           #6c757d,
   fontdark:       #34395e,
   white:          #ffffff,
+  ws:             #f7f9f9,
+  wt:             #ffffff,
+
+  // shadow
+  shadow-primary:    		#acb5f6,
+  shadow-secondary:      #e1e5e8,
+  shadow-info:           #82d3f8,
+  shadow-warning:        #ffc473,
+  shadow-danger:         #fd9b96,
+  shadow-success:        #81d694,
+  shadow-light:          #e6ecf1,
+  shadow-dark:       		#728394,
+  shadow-white:       		#e1e5e9,
+
+  // active
+  active-primary:    		#394eea,
+  active-secondary:      #bfc6cd,
+  active-info:           #0da8ee,
+  active-warning:        #ff990d,
+  active-danger:         #fb160a,
+  active-success:        #3bb557,
+  active-light:          #c3d2dc,
+  active-dark:       		black,
+  active-white:       		white,
 
   // Form Control
   formcontrol_normal_background:    #fdfdff,
@@ -23,6 +47,22 @@ $colors: (
 
   // Utilities
   section_title_line: #6777ef,
+
+  //dart color
+  darkbody:         rgba(15,23,42,1),
+  darkcard:         rgba(30,41,59,1),
+  darkhover:         rgba(255,255,255,0.12),
+  darkborder:         rgba(241,245,249,0.2),
+  darkcolor:         rgba(255,255,255,0.8),
+  darkshadow:         rgba(255,255,255,0.2),
+
+  formcontrol_normal_background_dark:rgba(0,0,0,0.05),
+  formcontrol_normal_border_dark:rgba(100,116,139,1),
+  formcontrol_normal_color_dark:rgba(255,255,255,0.8),
+
+  // custom select
+  select_carret_dark : url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3E%3Cpath fill='%23ffffffcc' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E"),
+  select_option_bakcground_dark:#1e293b,
 );
 
 $font_family:   'Nunito', 'Segoe UI', arial;

@@ -57,6 +57,20 @@
   }
 }
 
+.dark{
+  .profile-widget{
+    .profile-widget-items{
+      .profile-widget-item{
+        .profile-widget-item-label{
+          color:color(darkcolor);
+        }
+        .profile-widget-item-value{
+          color: color(white);
+        }
+      }
+    }
+  }
+}
 @include media-breakpoint-down(xs) {
   .profile-widget {
     .profile-widget-picture {

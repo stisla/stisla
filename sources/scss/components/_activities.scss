@@ -50,3 +50,18 @@
     }
   }
 }
+
+.dark{
+  .activities{
+    .activity{
+      .activity-detail{
+        background-color:color(darkcard);
+        color: color(darkcolor);
+        @include button-shadow-dark(card);
+        &::before{
+          color: color(darkcard);
+        }
+      }
+    }
+  }
+}

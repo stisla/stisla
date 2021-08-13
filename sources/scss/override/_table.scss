@@ -45,6 +45,35 @@ table tr:hover .table-links {
   background-color: rgba(0, 0, 0, 0.02);
 }
 
+.dark{
+  .table-links{
+    a{
+      color: color(white);
+      opacity: .6;
+    }
+  }
+
+  .table-striped{
+    tbody{
+      tr{
+        &:nth-of-type(odd){
+          background-color: color(darkhover);
+        }
+      }
+    }
+  }
+  .table-hover{
+    tbody{
+      tr{
+        &:hover{
+          background-color: color(darkhover);
+          color: color(white);
+        }
+      }
+    }
+  }
+}
+
 @include media-breakpoint-down(xs) {
   .table-responsive {
     table {

@@ -31,7 +31,13 @@
     }
   }
 }
-
+.page-error{
+  .page-error{
+    .page-description{
+      color: color(darkcolor);
+    }
+  }
+}
 @include media-breakpoint-down(xs) {
   .page-error {
     .page-search {

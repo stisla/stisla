@@ -50,3 +50,27 @@
     }
   }
 }
+
+.dark{
+  .nav-tabs{
+    .nav-link{
+      &.active{
+        background-color: color(darkhover);
+        color:color(white);
+        opacity: .8;
+        i{
+          color:color(white) !important;
+        }
+      }
+    }
+  }
+  .nav-pills{
+    .nav-item{
+      .nav-link{
+        &:hover{
+          background-color: color(darkhover);
+        }
+      }
+    }
+  }
+}

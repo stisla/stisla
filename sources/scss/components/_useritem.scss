@@ -24,7 +24,15 @@
     }
   }
 }
-
+.dark{
+  .user-item{
+    .user-details{
+      .user-name{
+        color:color(white);
+      }
+    }
+  }
+}
 @include media-breakpoint-down(xs) {
   .user-progress .media, .user-details .media {
     text-align: center;

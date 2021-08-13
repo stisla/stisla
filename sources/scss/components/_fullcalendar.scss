@@ -78,3 +78,47 @@ tr:first-child > td > .fc-day-grid-event {
     color: #fff;
   }
 }
+
+.dark {
+  .fc-state-default{
+    background-color: transparent;
+    color:color(darkcolor);
+    border: 1px solid color(darkborder);
+    &:hover{
+      background-color:color(darkhover);
+    }
+  }
+  .fc-view{
+    table{
+      tr,
+      td{
+        border-color: color(darkborder);
+        color: color(darkcolor);
+      }
+      th{
+        border-color: color(darkborder);
+        color: color(white) !important;
+        font-weight: bold;
+      }
+    }
+  }
+  .fc{
+    .fc-row{
+      .fc-content-skeleton,
+      .fc-helper-skeleton{
+        table,
+        td{
+          background-color:transparent;
+        }
+      }
+    }
+  }
+  .fc-unthemed{
+    td{
+      &.fc-today{
+        background-color:color(darkhover);
+        background: color(darkhover);
+      }
+    }
+  }
+}

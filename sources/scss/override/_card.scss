@@ -358,7 +358,53 @@
     opacity: .9;
   }
 }
-
+.dark{
+  .card{
+    background-color: color(darkcard);
+    @include button-shadow-dark(card);
+    .card-stats-title{
+      background-color: color(darkcard);
+    }
+    .card-header{
+      .form-control{
+        background-color: transparent;
+        color: color(darkcolor);
+        border-color: color(darkborder);
+        border-right: 0;
+        &::placeholder{
+          color: color(white);
+          opacity: .5;
+        }
+      }
+      .input-group{
+        .input-group-btn{
+          .btn{
+            height: 31px;
+            margin-top: 0;
+            padding-top: 3px;
+            padding-top: 3px;
+            border-left: 0;
+            background-color: transparent;
+            box-shadow: none;
+            border-color: color(darkborder);
+            color: color(darkcolor);
+            &:hover,
+            &:focus,
+            &:active{
+              border-color: color(darkborder) !important;
+            }
+          }
+        }
+      }
+    }
+    &.card-statistic-1,
+    &.card-statistic-2{
+      .card-body{
+        color: color(darkcolor);
+      }
+    }
+  }
+}
 @include media-breakpoint-down(xs) {
   .card {
     &.card-large-icons {

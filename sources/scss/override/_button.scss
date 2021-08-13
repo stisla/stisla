@@ -329,9 +329,35 @@
 }
 
 .btn-fill{
-  background-color: #94a3b81f;
-  color: rgba(100,116,139,1);
-  &:hover{
-    background-color: #94a3b81f !important;
+  background-color: color(body);
+  color: color(darkbody);
+  &:not(.btn-social):not(.btn-social-icon){
+    &:hover, &:focus, &:active{
+      border-color: color(darkbody) !important;
+    }
+  }
+}
+
+body.dark{
+  .btn{
+    color: color(darkcolor);
+  }
+  .btn-fill{
+    background-color: color(darkhover);
+    &:not(.btn-social):not(.btn-social-icon){
+      &:hover, &:focus, &:active{
+        background-color: transparent !important;
+      }
+    }
+  }
+  .btn-outline-dark{
+    border-color: color(darkborder);
+  }
+  .btn{
+    &:not(.btn-social):not(.btn-social-icon){
+      &:active, &:focus, &:hover{
+        background-color:color(darkhover);
+      }
+    }
   }
 }

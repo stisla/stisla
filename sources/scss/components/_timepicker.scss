@@ -1,3 +1,28 @@
 .bootstrap-timepicker-widget table td a span {
   margin-left: 0 !important;
 }
+
+.dark{
+  .bootstrap-timepicker-widget{
+    table{
+      td{
+        color: color(darkcolor);
+        a{
+          color: color(darkcolor);
+          &:hover{
+            background-color: color(darkhover);
+            border-color: color(darkborder);
+            color: color(white);
+          }
+        }
+        input{
+          background-color: transparent;
+          border: 1px solid color(darkborder);
+          color: color(darkcolor);
+          min-width: 30px;
+          font-size:14px;
+        }
+      }
+    }
+  }
+}

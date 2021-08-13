@@ -21,6 +21,9 @@
     line-height: 44px;
     min-height: 42px;
   }
+  .selectric-scroll{
+    max-height: 200px;
+  }
 }
 
 .selectric-open .selectric {
@@ -45,6 +48,29 @@
     &.selected, &.highlighted {
       background-color: color(primary);
       color: #fff;
+    }
+  }
+}
+
+.dark{
+  .selectric{
+    background-color: transparent;
+    border-color: color(darkborder);
+    .label{
+      color: color(darkcolor);
+    }
+  }
+  .selectric-items{
+    background-color: color(darkcard);
+    border-color: color(darkborder);
+    @include button-shadow-dark(card);
+    li{
+      color: color(darkcolor);
+      &:hover,
+      &.selected{
+        background-color:color(darkhover);
+        color: color(white);
+      }
     }
   }
 }

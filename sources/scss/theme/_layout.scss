@@ -521,6 +521,13 @@ body.layout-3 {
   margin-bottom: 40px;
 }
 
+// ngedit dari sini
+.cm-s-duotone-dark{
+  .CodeMirror-linenumber{
+    text-align: center;
+  }
+}
+
 // Style
 body:not(.sidebar-mini) .sidebar-style-1 {
   .sidebar-menu {
@@ -590,43 +597,136 @@ body:not(.sidebar-mini) .sidebar-style-2 {
     }
   }
 }
-$theme: "primary", "info", "warning", "danger", "success", "dark";
-body{
-  @each $i in $theme {
-    &.theme-#{$i}{
-      .settings{
-        @include button-shadow(#{$i});
-        background-color: color(#{$i}) !important;
-        border-color: color(#{$i}) !important;
-      }
-      .settings-container{
-        .card-header{
-          color: color(#{$i}) !important;
-          h4{
-            color: color(#{$i}) !important;
-          }
-        }
-        .card-body{
-          .settings-ring-active{
-            border: 2px solid color(#{$i}) !important;
-          }
-        }
-      }
-      .navbar-bg{
-        background-color: color(#{$i}) !important;
-      }
-      .main-sidebar .sidebar-menu li{
-        ul.dropdown-menu li{
-          color: #78828a !important;
-          &.active a,
-          a:hover{
-            color: color(#{$i}) !important;
-          }
-        }
-        &.active a.has-dropdown{
-          color: color(#{$i}) !important;
-        }
 
+body{
+  &.dark{
+    background-color: color(darkbody);
+    color: color(darkcolor) !important;
+    .main-sidebar{
+      background-color: color(darkcard);
+      border-right: 1px solid color(darkborder);
+      .sidebar-brand a{
+        color: color(white);
+        opacity: 1;
+      }
+      .sidebar-menu{
+        padding: 0 15px;
+        .menu-header{
+          padding-left: 0;
+        }
+        li{
+          a{
+            color: color(white);
+            opacity: .8;
+            border-radius: 6px;
+            height: auto;
+            padding: 5px 0 5px 5px;
+            i{
+              margin-right: 10px;
+            }
+            &:hover{
+              background-color:color(darkhover) !important;
+              opacity: 1;
+              margin: 5px 0;
+            }
+
+          }
+          &.active{
+            a{
+              background-color: transparent;
+              opacity: 1;
+            }
+            ul{
+              &.dropdown-menu{
+                background-color: transparent;
+                li{
+                  margin-bottom: 5px;
+                  a{
+                    height: auto;
+                    padding: 5px 0 5px 42px;
+                  }
+                }
+              }
+            }
+          }
+          &:not(.dropdown).active{
+            a{
+              background-color:color(darkhover);
+              opacity: 1;
+              border-radius: 6px;
+              height: auto;
+              padding: 5px 0 5px 5px;
+            }
+          }
+          ul{
+            &.dropdown-menu {
+              li{
+                margin-bottom: 5px;
+                a{
+                  color: color(white);
+                  opacity: .8;
+                  height: auto;
+                  padding: 5px 0 5px 42px;
+                  &:hover{
+                    opacity: 1;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    &.sidebar-mini{
+      .main-sidebar{
+        &:after{
+          background-color: color(darkcard);
+          border-right: 1px solid color(darkborder);
+        }
+        .sidebar-menu{
+          padding: 0;
+          li{
+            ul{
+              &.dropdown-menu{
+                background-color: color(darkcard);
+                left: 64px;
+                border: 1px solid color(darkborder);
+                border-left: none;
+                .dropdown-title{
+                  color: color(white) !important;
+                  opacity: 0.8;
+                  border-bottom: 1px solid color(darkborder);
+                }
+                li{
+                  a{
+                    background-color:color(darkcard);
+                    color:color(white);
+                    opacity: .8;
+                    padding-left: 20px;
+                  }
+                  &.active{
+                    a{
+                      background-color: color(darkhover) !important;
+                    }
+                  }
+                }
+              }
+            }
+            &.active{
+              a{
+                background-color:color(darkhover);
+                box-shadow: none;
+                padding: 10px;
+              }
+            }
+            a:hover{
+              padding: 10px;
+            }
+          }
+          .menu-header{
+            display:none;
+          }
+        }
       }
     }
   }

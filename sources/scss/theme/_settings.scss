@@ -1,3 +1,11 @@
+$theme: "primary" "primary" "darkcolor" "darkcolor",
+        "info" "info" "darkcolor" "darkcolor",
+        "warning" "warning" "darkcolor" "darkcolor",
+        "danger" "danger" "darkcolor" "darkcolor",
+        "success" "success" "darkcolor" "darkcolor",
+        "darkbody" "wt" "darkcolor" "darkcolor",
+        "secondary" "secondary" "darkbody" "darkbody",
+        "ws" "ws" "darkbody" "darkbody";
 .settings{
   position: fixed;
   z-index: 999;
@@ -8,16 +16,11 @@
   width: 40px;
   height: 40px;
   align-items: center;
-  box-shadow: 0 2px 6px #82d3f8;
-  background-color: #3abaf4;
-  border-color: #3abaf4;
-  color: #fff;
   border-bottom-left-radius: 25%;
   border-top-left-radius: 25%;
   cursor: pointer;
   i{
     font-size: 1.25rem!important;
-    color: white;
   }
 }
 .settings-container{
@@ -48,12 +51,169 @@
     transition-property: visibility,margin-left,margin-right,transform,width,max-width,min-width;
   }
   .settings-card{
+    border: 1px solid color(darkbody);
+    border-right: 0;
     .card-header{
-      color: #6777ef !important;
-      border-bottom-color: #cecece !important;
-      h4{
-        color: #6777ef !important;
+      border-bottom-color: color(darkbody);
+    }
+    .card-body{
+      .dropdown-divider{
+        border-color: color(darkbody);
       }
+    }
+  }
+}
+@each $i, $c, $ct, $border in $theme {
+  .theme-#{$i}{
+    .settings{
+      @include button-shadow($i);
+      background-color: color($i) !important;
+      border-color: color($i) !important;
+      i{
+        color: color($ct) !important;
+      }
+    }
+    .settings-container{
+      .card-header{
+        color: color($i) !important;
+        h4{
+          color: color($i) !important;
+        }
+      }
+      .card-body{
+        .settings-ring-active{
+          border: 2px solid color($i) !important;
+        }
+      }
+    }
+    .navbar-bg{
+      background-color: color($i) !important;
+      border-bottom: 1px solid color($border);
+    }
+    .main-sidebar{
+      .sidebar-menu{
+        .menu-header{
+          color: color($i);
+          opacity: 1;
+          font-weight: 600;
+        }
+      }
+    }
+    .navbar{
+      .nav-link{
+        color: color($ct) !important;
+      }
+      .search-element{
+        .form-control{
+          background-color: transparent !important;
+          border: 1px solid color($border) !important;
+          border-right: 0 !important;
+          margin-right: -3px !important;
+          color: color($ct);
+          font-weight: bold;
+          &::placeholder{
+            color: color($ct);
+          }
+        }
+        .btn{
+          min-height: 46px;
+          background-color: transparent !important;
+          border: 1px solid color($border) !important;
+          border-left: 0 !important;
+          color: color($ct);
+          &:hover{
+            border-color: color($border) !important;
+            background-color: color(darkhover) !important;
+          }
+        }
+      }
+      .form-inline{
+        .form-control{
+          background-color: transparent !important;
+          border: 1px solid color($border) !important;
+          border-right: 0 !important;
+          color: color($ct);
+          font-weight: bold;
+          margin-right: 0;
+          &::placeholder{
+            color: color($ct);
+          }
+        }
+        .btn{
+          min-height: 46px;
+          background-color: transparent !important;
+          border: 1px solid color($border) !important;
+          border-left: 0 !important;
+          color: color($ct);
+          &:hover{
+            border-color: color($border) !important;
+            background-color: color(darkhover) !important;
+          }
+        }
+      }
+    }
+    .form-control,
+    .select2-search__field{
+      &:focus{
+        border-color: color($c) !important;
+        caret-color: color($c) !important;
+        color: color(darkcolor) !important;
+      }
+    }
+    &.dark{
+      .settings-container{
+        .card-header{
+          color: color($c) !important;
+          h4{
+            color: color($c) !important;
+          }
+        }
+        .card-body{
+          .settings-ring-active{
+            border: 2px solid color($c) !important;
+          }
+        }
+      }
+      .main-sidebar{
+        .sidebar-menu{
+          .menu-header{
+            color: color($c);
+          }
+        }
+      }
+
+    }
+  }
+}
+.dark{
+  .settings{
+    background-color: color(darkcard);
+    border-color: color(darkborder);
+    color: color(darkcolor);
+    @include button-shadow-dark(card);
+    i{
+      color: color(darkcolor);
+    }
+  }
+  .settings-container{
+    .settings-card{
+      .card-header{
+        color: #6777ef !important;
+        border-bottom-color: #cecece !important;
+        h4{
+          color: #6777ef !important;
+        }
+      }
+      .card-body{
+        .dropdown-divider{
+          border-color: #cecece !important;
+        }
+      }
+    }
+    .btn-fill,
+    .settings-title{
+      color: color(white) !important;
+      opacity: .8;
     }
   }
 }

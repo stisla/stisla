@@ -124,7 +124,22 @@
     }
   }
 }
-
+.dark{
+  .article{
+    background-color:color(darkcard);
+    .article-details{
+      background-color:color(darkcard);
+      p,
+      .article-category{
+        color: color(white);
+        opacity: 0.8;
+        a{
+          color: color(white);
+        }
+      }
+    }
+  }
+}
 @include media-breakpoint-down(xs) {
   .article {
     .article-style-c {

@@ -52,3 +52,12 @@
 .modal-part {
   display: none;
 }
+
+.dark{
+  .modal-content{
+    background-color:color(darkcard);
+    @include button-shadow-dark(card);
+  }
+}
+
+

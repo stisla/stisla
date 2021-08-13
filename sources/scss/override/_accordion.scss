@@ -29,3 +29,14 @@
     line-height: 24px;
   }
 }
+.dark{
+  .accordion{
+    .accordion-header{
+      background-color: color(darkbody);
+      color: color(darkcolor);
+    }
+    .accordion-header[aria-expanded="true"]{
+      background-color: color(primary);
+    }
+  }
+}

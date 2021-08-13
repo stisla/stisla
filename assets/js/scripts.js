@@ -60,7 +60,6 @@ $(function() {
     cursoropacitymax: .8,
     zindex: 892
   }, now_layout_class = null;
-  $("body").niceScroll();
   var sidebar_sticky = function() {
     if($("body").hasClass('layout-2')) {
       $("body.layout-2 #sidebar-wrapper").stick_in_parent({
@@ -612,42 +611,5 @@ $(function() {
         down: 'fas fa-chevron-down'
       }
     });
-  }
-
-  // settings
-  setTheme();
-  $(".settings").click(function() {
-    if ($($(this).data('target')).hasClass('active')) {
-      $($(this).data('target')).removeClass('active');
-    } else {
-      $($(this).data('target')).addClass('active');
-    }
-  })
-  $('.settings-container').click(function(e) {
-    if (!$.inArray('settings-container',e.target.classList)) {
-      $(this).removeClass('active');
-    }
-  });
-  $('.btn-theme').click(function() {
-    var beforeTheme = sessionStorage.getItem('theme');
-    var theme = $(this).data('theme');
-    beforeTheme = beforeTheme ? beforeTheme : 'theme-primary';
-
-    $(this).closest('.grid').find('.settings-ring-active').removeClass('settings-ring-active');
-    $(this).addClass('settings-ring-active');
-
-    $('body').addClass(theme).removeClass(beforeTheme);
-
-    sessionStorage.setItem('theme',theme);
-  })
-
-  function setTheme() {
-    var theme = sessionStorage.getItem('theme');
-    if (theme == null){
-      theme = 'theme-primary';
-      sessionStorage.setItem('theme',theme);
-    };
-    $('body').addClass(theme);
-    $(`.btn-theme[data-theme="${theme}"]`).addClass('settings-ring-active');
   }
 });

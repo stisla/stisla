@@ -64,3 +64,25 @@
   background-color: color(dark);
   color: #fff;
 }
+
+.dark{
+  .list-group-item{
+    background-color: transparent;
+    border-color: color(darkborder);
+    &.active{
+      background-color:color(darkhover);
+      color: color(white);
+    }
+  }
+  .list-group-item-action{
+    color: color(darkcolor);
+    &:hover, &:focus, &:active {
+      background-color: color(darkhover);
+      color: color(white);
+    }
+    &.active{
+      background-color:color(darkhover);
+      color: color(white);
+    }
+  }
+}
