@@ -3305,6 +3305,15 @@ body.dark {
       padding: 10px; }
     body.dark.sidebar-mini .main-sidebar .sidebar-menu .menu-header {
       display: none; }
+  body.dark.layout-3 .navbar.navbar-secondary {
+    background-color: #1e293b;
+    box-shadow: 0 2px 4px -1px #0003, 0 4px 5px 0 #00000024, 0 1px 10px 0 #0000001f; }
+    body.dark.layout-3 .navbar.navbar-secondary .navbar-nav > .nav-item > .nav-link:hover {
+      color: #ffffff !important;
+      font-weight: bold; }
+    body.dark.layout-3 .navbar.navbar-secondary .navbar-nav > .nav-item .dropdown-menu .nav-item:hover > .nav-link {
+      background-color: rgba(255, 255, 255, 0.12) !important;
+      font-weight: bold; }
 
 @media (max-width: 1024px) {
   .sidebar-gone-hide {

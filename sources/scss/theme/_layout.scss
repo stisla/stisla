@@ -729,6 +729,30 @@ body{
         }
       }
     }
+    &.layout-3{
+      .navbar.navbar-secondary{
+        background-color: color(darkcard);
+        @include button-shadow-dark(card);
+        .navbar-nav {
+          > .nav-item {
+            > .nav-link {
+              &:hover {
+                color: color(white) !important;
+                font-weight: bold;
+              }
+            }
+            .dropdown-menu {
+              .nav-item:hover {
+                > .nav-link{
+                  background-color: color(darkhover) !important;
+                  font-weight: bold;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
 @media (max-width: 1024px) {
