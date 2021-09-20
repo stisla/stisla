@@ -39,7 +39,7 @@
     "owl.carousel": "^2.3.4",
     "perfect-scrollbar": "^1.4.0",
     "popper.js": "^1.14.7",
-    "prismjs": "^1.15.0",
+    "prismjs": "^1.25.0",
     "select2": "^4.0.6-rc.1",
     "selectric": "^1.13.0",
     "simpleweather": "^3.1.0",
