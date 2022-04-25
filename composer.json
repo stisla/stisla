@@ -1,0 +1,12 @@
+{
+    "name": "bishwajitcadhikary/stisla",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Stisla"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
