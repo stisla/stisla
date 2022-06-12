@@ -62,7 +62,7 @@
     "gulp-plumber": "^1.2.1",
     "gulp-postcss": "^8.0.0",
     "gulp-rename": "^1.4.0",
-    "gulp-sass": "^4.0.2",
+    "gulp-sass": "^5.1.0",
     "gulp-uglify": "^3.0.1",
     "gulp-uglify-es": "^1.0.4",
     "imagemin-mozjpeg": "^8.0.0",
