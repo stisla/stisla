@@ -27,7 +27,7 @@
     "gmaps": "^0.4.24",
     "ionicons201": "1.0.0",
     "izitoast": "^1.4.0",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "jquery-pwstrength": "https://github.com/matoilic/jquery.pwstrength",
     "jquery-sparkline": "^2.4.0",
     "jquery-ui-dist": "^1.12.1",
