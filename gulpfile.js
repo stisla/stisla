@@ -4,7 +4,7 @@
 const {src, dest, watch, parallel} = require('gulp');
 const notify = require('gulp-notify');
 const browserSync = require('browser-sync').create();
-const sass = require('gulp-sass');
+const sass = require('gulp-sass')(require('sass'));
 const concat = require('gulp-concat');
 const plumber = require('gulp-plumber');
 const rename = require('gulp-rename');

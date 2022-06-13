@@ -66,7 +66,8 @@
     "gulp-uglify": "^3.0.1",
     "gulp-uglify-es": "^1.0.4",
     "imagemin-mozjpeg": "^8.0.0",
-    "nunjucks": "^3.1.7"
+    "nunjucks": "^3.1.7",
+    "sass": "^1.52.3"
   },
   "scripts": {
     "stisla-start": "yarn install --production=false",
