@@ -12,11 +12,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
+
+      - name: Install Dependencies
+        uses: borales/actions-yarn@v3.0.0
+        with:
+          cmd: install # will run `yarn install` command
       
-      - name: Install and Build 🔧
-        run: |
-          npm install
-          npm run dist
+      - name: Build pages
+        uses: borales/actions-yarn@v3.0.0
+        with:
+          cmd: dist
           
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.2.5
