@@ -1,7 +1,7 @@
 /**
  * Imports
  */
-const {src, dest, watch, parallel} = require('gulp');
+const {src, dest, watch, parallel, task} = require('gulp');
 const notify = require('gulp-notify');
 const browserSync = require('browser-sync').create();
 const sass = require('gulp-sass')(require('sass'));
@@ -16,7 +16,9 @@ const imagemin = require('gulp-imagemin');
 const imageminMozjpeg = require('imagemin-mozjpeg');
 const nunjucks = require('gulp-nunjucks');
 const color = require('gulp-color');
+const gulpCopy = require('gulp-copy');
 const nodePath = require('path');
+const replace = require('gulp-replace');
 
 /**
  * Configuration
@@ -70,6 +72,9 @@ function _compile_html(path, onEnd, log=true, ret=false) {
     if(log)
       _log('[HTML] Finished', 'GREEN');
   })
+  .pipe(replace(/<script src="..\/node_modules\/(.*)"/g, '<script src="assets/modules/$1"'))
+  .pipe(replace(/<link rel="stylesheet" href="..\/assets\/(.*)"/g, '<link rel="stylesheet" src="assets/$1"'))
+  .pipe(replace(/<link rel="stylesheet" href="..\/node_modules\/(.*)"/g, '<link rel="stylesheet" src="assets/modules/$1"'))
   .pipe(dest('pages'))
   .pipe(plumber.stop());
 
@@ -133,6 +138,34 @@ function image() {
   ]))
   .pipe(dest(imgDir))
   .pipe(plumber.stop());
+}
+
+function extractModules() {
+  let sourceFiles = [
+    "node_modules/bootstrap-social/**/*",
+    "node_modules/selectric/**/*",
+    "node_modules/chocolat/**/*",
+    "node_modules/jquery-ui-dist/**/*",
+    "node_modules/prismjs/**/*",
+    "node_modules/dropzone/**/*",
+    "node_modules/jqvmap/**/*",
+    "node_modules/flag-icon-css/**/*",
+    "node_modules/chart.js/**/*",
+  ];
+  let destination = "pages/assets/modules/"
+
+  // Extract node_modules dependencies
+  return src(sourceFiles)
+    .pipe(gulpCopy(destination, { prefix: 1 }))
+}
+
+function extractAssets() {
+
+  let assetsSource = ["assets/**/*"]
+  let assetsDestination = "pages/assets/"
+
+  return src(assetsSource)
+    .pipe(gulpCopy(assetsDestination, { prefix: 1 }))
 }
 
 function compile_scss() {
@@ -206,6 +239,8 @@ exports.html = compile_html;
 
 // Dist
 exports.dist = parallel(folder, compile_scss, compile_html);
+
+exports.extract = parallel(extractModules, extractAssets)
 
 // Run this command for dev.
 exports.default = watching;
