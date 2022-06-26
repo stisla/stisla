@@ -2,16 +2,12 @@
  * Imports
  */
 const {src, dest, watch, parallel} = require('gulp');
-const notify = require('gulp-notify');
 const browserSync = require('browser-sync').create();
 const sass = require('gulp-sass')(require('sass'));
-const concat = require('gulp-concat');
 const plumber = require('gulp-plumber');
 const rename = require('gulp-rename');
 const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
-const cssnano = require('cssnano');
-const uglify = require('gulp-uglify-es').default;
 const imagemin = require('gulp-imagemin');
 const imageminMozjpeg = require('imagemin-mozjpeg');
 const nunjucks = require('gulp-nunjucks');
@@ -22,21 +18,25 @@ const nodePath = require('path');
  * Configuration
  * @type {String}
  */
-var cssDir = 'assets/css',
+let cssDir = 'assets/css',
     jsDir = 'assets/js',
-    htmlDir = 'sources/pages',
-    sassDir = 'sources/scss',
+    htmlDir = 'src/pages',
+    scssDir = 'src/scss',
     imgDir = 'assets/img';
+
+let jsPathPattern = '/**/*.js',
+    htmlPathPattern = '/**/*.html',
+    scssPathPattern = '/**/*.scss',
+    imgPathPattern = '/**/*.*';
 
 /**
  * Helpers
  */
-
-function _compile_html(path, onEnd, log=true, ret=false) {
+function _compileToHTML(path, onEnd, log=true, ret=false) {
   if(log)
     _log('[HTML] Compiling: ' + path, 'GREEN');
 
-  let compile_html = src(path, { base: htmlDir })
+  let compileToHTML = src(path, { base: htmlDir })
   .pipe(plumber())
   .pipe(nunjucks.compile({
     version: '2.3.0',
@@ -73,14 +73,14 @@ function _compile_html(path, onEnd, log=true, ret=false) {
   .pipe(dest('pages'))
   .pipe(plumber.stop());
 
-  if(ret) return compile_html;
+  if(ret) return compileToHTML;
 }
 
-function _compile_scss(path, onEnd, log=true, ret=false) {
+function _compileToSCSS(path, onEnd, log=true, ret=false) {
   if(log)
     _log('[SCSS] Compiling:' + path, 'GREEN');
 
-  let compile_scss = src(path)
+  let compileToSCSS = src(path)
   .pipe(plumber())
   .pipe(sass({
     errorLogToConsole: true
@@ -101,7 +101,7 @@ function _compile_scss(path, onEnd, log=true, ret=false) {
   .pipe(dest(cssDir))
   .pipe(plumber.stop());
 
-  if(ret) return compile_scss;
+  if(ret) return compileToSCSS;
 }
 
 function _log(str, clr) {
@@ -116,7 +116,6 @@ function _log(str, clr) {
 /**
  * Execution
  */
-
 function folder() {
   return src('*.*', {read: false})
   .pipe(dest('./assets'))
@@ -126,7 +125,7 @@ function folder() {
 }
 
 function image() {
-  return src(imgDir + '/**/*.*')
+  return src(imgDir + imgPathPattern)
   .pipe(plumber())
   .pipe(imagemin([
     imageminMozjpeg({quality: 80})
@@ -135,17 +134,17 @@ function image() {
   .pipe(plumber.stop());
 }
 
-function compile_scss() {
-  return _compile_scss(sassDir + '/**/*.scss', null, false, true);
+function compileToSCSS() {
+  return _compileToSCSS(scssDir + scssPathPattern, null, false, true);
 }
 
-function compile_html() {
-  return _compile_html(htmlDir + '/**/*.html', null, false, true);
+function compileToHTML() {
+  return _compileToHTML(htmlDir + htmlPathPattern, null, false, true);
 }
 
 function watching() {
-  compile_scss();
-  compile_html();
+  compileToSCSS();
+  compileToHTML();
 
   /**
    * BrowserSync initialization
@@ -163,25 +162,25 @@ function watching() {
    * Watch ${htmlDir}
    */
   watch([
-    htmlDir + '/**/*.html',
-    sassDir + '/**/*.scss',
-    jsDir + '/**/*.js',
-    imgDir + '/**/*.*',
+    htmlDir + htmlPathPattern,
+    scssDir + scssPathPattern,
+    jsDir + jsPathPattern,
+    imgDir + imgPathPattern,
   ]).on('change', (file) => {
     file = file.replace(/\\/g, nodePath.sep);
 
     if(file.indexOf('.scss') > -1) {
-      _compile_scss(sassDir + '/**/*.scss', () => {
+      _compileToSCSS(scssDir + scssPathPattern, () => {
         return browserSync.reload();
       });
     }
 
     if(file.indexOf('layouts') > -1 && file.indexOf('.html') > -1) {
-      _compile_html(htmlDir + '/*.html', () => {
+      _compileToHTML(htmlDir + htmlPathPattern, () => {
         return browserSync.reload();
       });
     }else if(file.indexOf('.html') > -1) {
-      _compile_html(file, () => {
+      _compileToHTML(file, () => {
         return browserSync.reload();
       });
     }
@@ -192,20 +191,11 @@ function watching() {
   });
 }
 
-// Create folder first
-exports.folder = folder;
-
-// Minify images
-exports.image = image;
-
-// Compile SCSS
-exports.scss = compile_scss;
-
-// Compile HTML
-exports.html = compile_html;
-
-// Dist
-exports.dist = parallel(folder, compile_scss, compile_html);
-
-// Run this command for dev.
-exports.default = watching;
+Object.assign(exports, {
+  folder,
+  image,
+  scss: compileToSCSS,
+  html: compileToHTML,
+  dist: parallel(folder, compileToSCSS, compileToHTML),
+  default: watching
+});
