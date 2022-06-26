@@ -58,11 +58,13 @@ Read the [documentation page](https://getstisla.com/docs) for more information o
 
 ## Development Steps
 
-1. Clone the repo: `git clone https://github.com/stisla/stisla.git` to your local path
-2. Make sure you have [yarn](https://yarnpkg.com) installed to your machine
-3. Run the `yarn` command to install production dependencies
-4. Run the `yarn dist` command to build `pages/` directory
-5. Run the `yarn dev` command to start developing
+1. Clone the repo: `git clone https://github.com/stisla/stisla.git` to your local path.
+2. Make sure you have [yarn](https://yarnpkg.com) installed to your machine.
+3. Run the `yarn` command to install development dependencies.
+4. Run the `yarn dist` command to build `pages/` directory.
+5. Run the `yarn dev` command to start developing.
+
+⚠️ For production use, it's recommended to reinstall your packages with `yarn install --prod` after building `/pages` with `yarn dist`.
 
 ## Roadmap
 
