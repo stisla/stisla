@@ -1,10 +1,14 @@
 {
-  "name": "stisla-dev",
-  "version": "1.0.0",
-  "description": "Free Bootstrap Admin Template",
+  "name": "stisla",
+  "version": "2.2.0",
+  "description": "Stisla - Free Bootstrap Admin Template",
   "main": "index.js",
+  "scripts": {
+    "dist": "gulp dist",
+    "dev": "gulp"
+  },
   "repository": "https://github.com/stisla/stisla",
-  "author": "Stisla Team <nauvalazhar2@gmail.com> (https://getstisla.com)",
+  "author": "Nauval Azhar <nauvalazhar2@gmail.com> (https://getstisla.com)",
   "license": "MIT",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.7.2",
@@ -68,11 +72,5 @@
     "imagemin-mozjpeg": "^8.0.0",
     "nunjucks": "^3.1.7",
     "sass": "^1.52.3"
-  },
-  "scripts": {
-    "stisla-start": "yarn install --production=false",
-    "stisla-dev": "yarn install --prod",
-    "dist": "gulp dist",
-    "dev": "gulp"
   }
 }
