@@ -73,8 +73,9 @@ function _compile_html(path, onEnd, log=true, ret=false) {
       _log('[HTML] Finished', 'GREEN');
   })
   .pipe(replace(/<script src="..\/node_modules\/(.*)"/g, '<script src="assets/modules/$1"'))
-  .pipe(replace(/<link rel="stylesheet" href="..\/assets\/(.*)"/g, '<link rel="stylesheet" src="assets/$1"'))
-  .pipe(replace(/<link rel="stylesheet" href="..\/node_modules\/(.*)"/g, '<link rel="stylesheet" src="assets/modules/$1"'))
+  .pipe(replace(/<script src="..\/assets\/(.*)"/g, '<script src="assets/$1"'))
+  .pipe(replace(/<link rel="stylesheet" href="..\/assets\/(.*)"/g, '<link rel="stylesheet" href="assets/$1"'))
+  .pipe(replace(/<link rel="stylesheet" href="..\/node_modules\/(.*)"/g, '<link rel="stylesheet" href="assets/modules/$1"'))
   .pipe(dest('pages'))
   .pipe(plumber.stop());
 
@@ -140,18 +141,25 @@ function image() {
   .pipe(plumber.stop());
 }
 
-function extractModules() {
-  let sourceFiles = [
-    "node_modules/bootstrap-social/**/*",
-    "node_modules/selectric/**/*",
-    "node_modules/chocolat/**/*",
-    "node_modules/jquery-ui-dist/**/*",
-    "node_modules/prismjs/**/*",
-    "node_modules/dropzone/**/*",
-    "node_modules/jqvmap/**/*",
-    "node_modules/flag-icon-css/**/*",
-    "node_modules/chart.js/**/*",
-  ];
+function getModuleList() {
+  
+}
+
+// TODO: extract every used node_modules to pages/assets/modules/{modulename}
+async function extractModules() {
+  let sourceFiles = await getModuleList()
+
+  // let sourceFiles = [
+  //   "node_modules/bootstrap-social/**/*",
+  //   "node_modules/selectric/**/*",
+  //   "node_modules/chocolat/**/*",
+  //   "node_modules/jquery-ui-dist/**/*",
+  //   "node_modules/prismjs/**/*",
+  //   "node_modules/dropzone/**/*",
+  //   "node_modules/jqvmap/**/*",
+  //   "node_modules/flag-icon-css/**/*",
+  //   "node_modules/chart.js/**/*",
+  // ];
   let destination = "pages/assets/modules/"
 
   // Extract node_modules dependencies
