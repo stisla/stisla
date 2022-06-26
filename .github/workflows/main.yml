@@ -3,7 +3,7 @@ name: deploy demo to gh-pages
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [  ]
   
 jobs:
   build:
