@@ -42,7 +42,7 @@
 - [Stisla Community Projects](#stisla-community-projects)
 - [Featured In](#featured-in)
 - [License](#license)
-- [Supported By BrowserStack](#supported-by-browserstack)
+- [Supports](#supports)
 
 ## Quick start
 
