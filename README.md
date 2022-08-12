@@ -80,6 +80,7 @@ You can find the **Stisla** road map here: [Stisla Roadmap](https://trello.com/b
 - [Jekyll](https://github.com/SunDi3yansyah/stisla-jekyll)
 - [YII2](https://github.com/piantgrunger/yii2-stisla)
 - [Django](https://github.com/bimbims125/stisla-django.git)
+- [Flask](https://github.com/antheiz/stisla-flask)
 - **and more...**
 
 ## Featured In
