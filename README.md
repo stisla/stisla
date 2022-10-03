@@ -36,11 +36,15 @@
 
 ## Table of Contents
 
+- [Table of Contents](#table-of-contents)
 - [Quick start](#quick-start)
 - [Development Steps](#development-steps)
 - [Roadmap](#roadmap)
 - [Stisla Community Projects](#stisla-community-projects)
 - [Featured In](#featured-in)
+- [Tutorials](#tutorials)
+  - [Indonesia Community Tutorials](#indonesia-community-tutorials)
+  - [Global Community Tutorials](#global-community-tutorials)
 - [License](#license)
 - [Supports](#supports)
 
@@ -75,6 +79,7 @@ You can find the **Stisla** road map here: [Stisla Roadmap](https://trello.com/b
 - [Rails](https://github.com/SunDi3yansyah/stisla-rails)
 - [CodeIgniter](https://github.com/KhidirDotID/stisla-codeigniter)
 - [Laravel](https://github.com/rehmatworks/stisla-laravel)
+- [Laravel 8 - Stisla](https://github.com/ngodingbang/laravel-stisla-starter)
 - [Laravel 9 - Stisla](https://github.com/edikurniawan-dev/laravel-stisla)
 - [Laravel UI Preset](https://github.com/poteto-dev/laravel-ui-stisla)
 - [Jekyll](https://github.com/SunDi3yansyah/stisla-jekyll)
