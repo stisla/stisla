@@ -329,7 +329,8 @@ $(function() {
 
   // Select2
   if(jQuery().select2) {
-    $(".select2").select2();
+    const select2Opts = $(".select2").data('select2-opts')
+    $(".select2").select2(select2Opts || {});
   }
 
   // Selectric
