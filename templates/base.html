@@ -1,0 +1,79 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+
+
+    <!-- General CSS Files -->
+    <link rel="stylesheet" href="{% static 'modules/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'modules/fontawesome/css/all.min.css' %}">
+
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="{% static 'modules/bootstrap-social/bootstrap-social.css' %}">
+
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components.css' %}">
+    <!-- Start GA -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-94034622-3');
+    </script>
+    <!-- /END GA -->
+</head>
+
+<body>
+
+    {% block content %}
+
+    {% endblock %}
+
+    <!-- General JS Scripts -->
+    <script src="{% static 'modules/jquery.min.js'}"></script>
+    <script src="{% static 'modules/popper.js'}"></script>
+    <script src="{% static 'modules/tooltip.js'}"></script>
+    <script src="{% static 'modules/bootstrap/js/bootstrap.min.js'}"></script>
+    <script src="{% static 'modules/nicescroll/jquery.nicescroll.min.js'}"></script>
+    <script src="{% static 'modules/moment.min.js'}"></script>
+    <script src="{% static 'js/stisla.js'}"></script>
+
+    <!-- JS Libraies -->
+    <script src="{% static 'modules/simple-weather/jquery.simpleWeather.min.js'}"></script>
+    <script src="{% static 'modules/chart.min.js'}"></script>
+    <script src="{% static 'modules/jqvmap/dist/jquery.vmap.min.js'}"></script>
+    <script src="{% static 'modules/jqvmap/dist/maps/jquery.vmap.world.js'}"></script>
+    <script src="{% static 'modules/summernote/summernote-bs4.js'}"></script>
+    <script src="{% static 'modules/chocolat/dist/js/jquery.chocolat.min.js'}"></script>
+
+    <!-- Page Specific JS File -->
+    <script src="{% static 'js/page/index-0.js'}"></script>
+
+    <!-- Template JS File -->
+    <script src="{% static 'js/scripts.js"></script>
+    <script src="{% static 'js/custom.js"></script>
+    <script src="{% static 'modules/jquery.min.js' %}"></script>
+    <script src="{% static 'modules/popper.js' %}"></script>
+    <script src="{% static 'modules/tooltip.js' %}"></script>
+    <script src="{% static 'modules/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'modules/nicescroll/jquery.nicescroll.min.js' %}"></script>
+    <script src="{% static 'modules/moment.min.js' %}"></script>
+    <script src="{% static 'js/stisla.js' %}"></script>
+
+    <!-- JS Libraies -->
+
+    <!-- Page Specific JS File -->
+
+    <!-- Template JS File -->
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+</body>
+
+</html>

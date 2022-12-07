@@ -1,0 +1,130 @@
+"""stisla URL Configuration
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/2.2/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+from django.contrib import admin
+from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+from app.views import *
+from django.views.generic.base import RedirectView
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('auth-login/', auth_login, name='auth_login'),
+    path('auth-forgot-password/', auth_forgot_password,
+         name='auth_forgot_password'),
+    path('auth-register/', auth_register, name='auth_register'),
+    path('auth-reset-password/', auth_reset_password,
+         name='auth_reset_password'),
+    path('blank/', blank, name='blank'),
+    path('bootstrap-alert/', bootstrap_alert, name='bootstrap_alert'),
+    path('bootstrap-badge/', bootstrap_badge, name='bootstrap_badge'),
+    path('bootstrap-breadcrumb/', bootstrap_breadcrumb,
+         name='bootstrap_breadcrumb'),
+    path('bootstrap-buttons/', bootstrap_buttons, name='bootstrap_buttons'),
+    path('bootstrap-card/', bootstrap_card, name='bootstrap_card'),
+    path('bootstrap-carousel/', bootstrap_carousel, name='bootstrap_carousel'),
+    path('bootstrap-collapse/', bootstrap_collapse, name='bootstrap_collapse'),
+    path('bootstrap-dropdown/', bootstrap_dropdown, name='bootstrap_dropdown'),
+    path('bootstrap-form/', bootstrap_form, name='bootstrap_form'),
+    path('bootstrap-list-group/', bootstrap_list_group,
+         name='bootstrap_list_group'),
+    path('bootstrap-media-object/', bootstrap_media_object,
+         name='bootstrap_media_object'),
+    path('bootstrap-modal/', bootstrap_modal, name='bootstrap_modal'),
+    path('bootstrap-nav/', bootstrap_nav, name='bootstrap_nav'),
+    path('bootstrap-navbar/', bootstrap_navbar, name='bootstrap_navbar'),
+    path('bootstrap-pagination/', bootstrap_pagination,
+         name='bootstrap_pagination'),
+    path('bootstrap-popover/', bootstrap_popover, name='bootstrap_popover'),
+    path('bootstrap-progress/', bootstrap_progress, name='bootstrap_progress'),
+    path('bootstrap-table/', bootstrap_table, name='bootstrap_table'),
+    path('bootstrap-tooltip/', bootstrap_tooltip, name='bootstrap_tooltip'),
+    path('bootstrap-typography/', bootstrap_typography,
+         name='bootstrap_typography'),
+    path('components-article/', components_article, name='components_article'),
+    path('components-avatar/', components_avatar, name='components_avatar'),
+    path('components-chat-box/', components_chat_box,
+         name='components_chat_box'),
+    path('components-empty-state/', components_empty_state,
+         name='components_empty_state'),
+    path('components-gallery/', components_gallery, name='components_gallery'),
+    path('components-hero/', components_hero, name='components_hero'),
+    path('components-multiple-upload/', components_multiple_upload,
+         name='components_multiple_upload'),
+    path('components-pricing/', components_pricing, name='components_pricing'),
+    path('components-statistic/', components_statistic,
+         name='components_statistic'),
+    path('components-tab/', components_tab, name='components_tab'),
+    path('components-table/', components_table, name='components_table'),
+    path('components-user/', components_user, name='components_user'),
+    path('components-wizard/', components_wizard, name='components_wizard'),
+    path('credits/', credits, name='credits'),
+    path('errors-403/', errors_403, name='errors_403'),
+    path('errors-404/', errors_404, name='errors_404'),
+    path('errors-500/', errors_500, name='errors_500'),
+    path('errors-503/', errors_503, name='errors_503'),
+    path('features-activities/', features_activities,
+         name='features_activities'),
+    path('features-post-create/', features_post_create,
+         name='features_post_create'),
+    path('features-posts/', features_posts, name='features_posts'),
+    path('features-profile/', features_profile, name='features_profile'),
+    path('features-setting-detail/', features_setting_detail,
+         name='features_setting_detail'),
+    path('features-settings/', features_settings, name='features_settings'),
+    path('features-tickets/', features_tickets, name='features_tickets'),
+    path('forms-advanced-form/', forms_advanced_form,
+         name='forms_advanced_form'),
+    path('forms-editor/', forms_editor, name='forms_editor'),
+    path('forms-validation/', forms_validation, name='forms_validation'),
+    path('gmaps-advanced-route/', gmaps_advanced_route,
+         name='gmaps_advanced_route'),
+    path('gmaps-draggable-marker/', gmaps_draggable_marker,
+         name='gmaps_draggable_marker'),
+    path('gmaps-geocoding/', gmaps_geocoding, name='gmaps_geocoding'),
+    path('gmaps-geolocation/', gmaps_geolocation, name='gmaps_geolocation'),
+    path('gmaps-marker/', gmaps_marker, name='gmaps_marker'),
+    path('gmaps-multiple-marker/', gmaps_multiple_marker,
+         name='gmaps_multiple_marker'),
+    path('gmaps-route/', gmaps_route, name='gmaps_route'),
+    path('gmaps-simple/', gmaps_simple, name='gmaps_simple'),
+    path('index-0/', index_0, name='index_0'),
+    path('index/', index, name='index'),
+    path('layout-top-navigation/', layout_top_navigation,
+         name='layout_top_navigation'),
+    path('layout-transparent/', layout_transparent, name='layout_transparent'),
+    path('modules-calendar/', modules_calendar, name='modules_calendar'),
+    path('modules-chartjs/', modules_chartjs, name='modules_chartjs'),
+    path('modules-datatables/', modules_datatables, name='modules_datatables'),
+    path('modules-flag/', modules_flag, name='modules_flag'),
+    path('modules-font-awesome/', modules_font_awesome,
+         name='modules_font_awesome'),
+    path('modules-ion-icons/', modules_ion_icons, name='modules_ion_icons'),
+    path('modules-owl-carousel/', modules_owl_carousel,
+         name='modules_owl_carousel'),
+    path('modules-sparkline/', modules_sparkline, name='modules_sparkline'),
+    path('modules-sweet-alert/', modules_sweet_alert,
+         name='modules_sweet_alert'),
+    path('modules-toastr/', modules_toastr, name='modules_toastr'),
+    path('modules-vector-map/', modules_vector_map, name='modules_vector_map'),
+    path('modules-weather-icon/', modules_weather_icon,
+         name='modules_weather_icon'),
+    path('utilities-contact/', utilities_contact, name='utilities_contact'),
+    path('utilities-invoice/', utilities_invoice, name='utilities_invoice'),
+    path('utilities-subscribe/', utilities_subscribe,
+         name='utilities_subscribe'),
+    path("", RedirectView.as_view(url="/index/", permanent=False))
+]
