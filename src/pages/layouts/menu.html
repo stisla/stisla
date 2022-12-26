@@ -2,6 +2,8 @@
               <li class="menu-header">Dashboard</li>
               <li{{ ' class="active"'|is_active('^index(.*)', page)|safe }}><a class="nav-link" href="index.html"><i class="fas fa-fire"></i></i> <span>Dashboard</span></a></li>
               <li class="menu-header">Starter</li>
+              <li{{ ' class="active"'|is_active('^proker(.*)', page)|safe }}><a class="nav-link" href="proker.html"><i class="fas fa-briefcase"></i></i> <span>Program Kerja</span></a></li>
+              <li{{ ' class="active"'|is_active('^transaksi(.*)', page)|safe }}><a class="nav-link" href="transactions.html"><i class="fas fa-wallet"></i></i> <span>Transaksi</span></a></li>
               <li class="nav-item dropdown{{ ' active'|is_active('^layout-(.*)', page)|safe }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Layout</span></a>
                 <ul class="dropdown-menu">
