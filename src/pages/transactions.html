@@ -159,7 +159,7 @@
                         <td>Pemindahan dari 2021</td>
                         <td class="text-primary">+ Rp 10,000,000</td>
                         <td><div class="gallery"><div class="gallery-item" data-image="../assets/img/news/img01.jpg"></div></div></td>
-                        <td><button class="btn btn-primary">
+                        <td><button class="btn btn-primary" data-toggle="modal" data-target="#editTransaksi">
                           <i class="far fa-edit"></i></button>
                           <button class="btn btn-danger" data-confirm="Hapus 1 transaksi|Apakah Anda benar-benar ingin menghapus transaksi ini?"" data-confirm-yes="alert('Deleted :)');"><i class="far fa-trash-alt"></i></button>
                         </td>
@@ -173,7 +173,7 @@
                         <td>-</td>
                         <td class="text-danger">- Rp 1,000,000</td>
                         <td><div class="gallery transaction"><div class="gallery-item" data-image="../assets/img/news/img02.jpg"></div></div></td>
-                        <td><button class="btn btn-primary">
+                        <td><button class="btn btn-primary" data-toggle="modal" data-target="#editTransaksi">
                           <i class="far fa-edit"></i></button>
                           <button class="btn btn-danger" data-confirm="Hapus 1 transaksi|Apakah Anda benar-benar ingin menghapus transaksi ini?"" data-confirm-yes="alert('Deleted :)');"><i class="far fa-trash-alt"></i></button>
                         </td>
@@ -258,10 +258,9 @@
 
                   <div class="form-group">
                     <label class="col-form-label text-md-left">Bukti Transaksi*</label>
-                      <div id="image-preview" class="image-preview">
-                        <label for="image-upload" id="image-label">Pilih Berkas</label>
-                        <input type="file" name="image" id="image-upload" />
-                      </div>
+                    <div class="mb-3">
+                      <input class="form-control" type="file" id="formFile">
+                    </div>
                   </div>
 
                 </form>
@@ -293,6 +292,90 @@
               <div class="modal-footer bg-whitesmoke br">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                 <button type="button" class="btn btn-primary">Tambah Transaksi</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="editTransaksi">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Ubah Transaksi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form method="POST">
+                  <div class="form-group">
+                    <label for="tanggal">Tanggal*</label>
+                    <input id="tanggal" type="date" class="form-control" name="tanggal">
+                    <div class="invalid-feedback">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-6">
+                      <label>Dompet*</label>
+                      <select class="form-control selectric">
+                        <option>Bank</option>
+                        <option>Kas</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group col-6">
+                      <label>Jenis Transaksi*</label>
+                      <select class="form-control selectric">
+                        <option>Debet</option>
+                        <option>Kredit</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="transaksi">Transaksi*</label>
+                    <input id="transaksi" type="text" class="form-control" name="transaksi">
+                    <div class="invalid-feedback">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Kategori*</label>
+                    <select class="form-control selectric">
+                      <option>Rutin</option>
+                      <option>Non Rutin</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="keterangan">Keterangan</label>
+                    <input id="keterangan" type="text" class="form-control" name="keterangan">
+                    <div class="invalid-feedback">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="jumlah">Jumlah*</label>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Rp</span>
+                      </div>
+                      <input id="jumlah" type="text" class="form-control" name="jumlah" aria-label="Jumlah (dalam rupiah)">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-form-label text-md-left">Bukti Transaksi*</label>
+                    <div class="mb-3">
+                      <input class="form-control" type="file" id="formFile">
+                    </div>
+                  </div>
+
+                </form>
+              </div>
+              <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-primary">Simpan Perubahan</button>
               </div>
             </div>
           </div>
