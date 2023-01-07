@@ -1,4 +1,5 @@
           <ul class="sidebar-menu">
+<<<<<<< Updated upstream
               <li class="menu-header">Dashboard</li>
               <li class="nav-item dropdown{{ ' active'|is_active('^index(.*)', page)|safe }}">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
@@ -147,3 +148,9 @@
                 <i class="fas fa-rocket"></i> Documentation
               </a>
             </div>
+=======
+              <li{{ ' class="active"'|is_active('^index(.*)', page)|safe }}><a class="nav-link" href="index.html"><i class="fas fa-fire"></i><span>Dashboard</span></a></li>
+              <li{{ ' class="active"'|is_active('^proker(.*)', page)|safe }}><a class="nav-link" href="proker.html"><i class="fas fa-briefcase"></i><span>Program Kerja</span></a></li>
+              <li{{ ' class="active"'|is_active('^transactions(.*)', page)|safe }}><a class="nav-link" href="transactions.html"><i class="fas fa-wallet"></i><span>Transaksi</span></a></li>
+          </ul>
+>>>>>>> Stashed changes
