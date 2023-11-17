@@ -53,7 +53,7 @@
 /* 2. Mixin */
 /* 3. Bootstrap Override */
 /* 3.1 Misc */
-@import url("//fonts.googleapis.com/css?family=Nunito:400,600,700,800");
+@import url("https://fonts.googleapis.com/css?family=Nunito:400,600,700,800");
 .btn:focus,
 .btn:active,
 .btn:active:focus,
@@ -759,10 +759,6 @@ select.form-control:not([size]):not([multiple]) {
 .card .card-header {
   border-bottom-color: #f9f9f9;
   line-height: 30px;
-<<<<<<< HEAD
-=======
-  -ms-grid-row-align: center;
->>>>>>> 732ebe8 (chore: cleanup css)
   align-self: center;
   width: 100%;
   min-height: 70px;
@@ -1102,7 +1098,7 @@ select.form-control:not([size]):not([multiple]) {
     flex-wrap: wrap;
   }
   .card .card-header h4 + .card-header-action,
-.card .card-header h4 + .card-header-form {
+  .card .card-header h4 + .card-header-form {
     flex-grow: 0;
     width: 100%;
     margin-top: 10px;
@@ -2695,10 +2691,8 @@ pre {
   height: 7px;
   background-color: #ffa426;
   border-radius: 50%;
-  -webkit-animation: pulsate 1s ease-out;
-          animation: pulsate 1s ease-out;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
+  animation: pulsate 1s ease-out;
+  animation-iteration-count: infinite;
   opacity: 1;
 }
 .beep.beep-sidebar:after {
@@ -2724,18 +2718,12 @@ pre {
 .background-walk-y {
   background-repeat: no-repeat;
   background-position: 0 0%;
-  -webkit-animation-name: backgroundWalkY;
-          animation-name: backgroundWalkY;
-  -webkit-animation-duration: 70s;
-          animation-duration: 70s;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-  -webkit-animation-direction: alternate;
-          animation-direction: alternate;
-  -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
-  -webkit-animation-timing-function: linear;
-          animation-timing-function: linear;
+  animation-name: backgroundWalkY;
+  animation-duration: 70s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
   background-size: 100%;
 }
 
@@ -2747,27 +2735,12 @@ pre {
 .background-walk-x {
   background-repeat: no-repeat;
   background-position: 0 0%;
-  -webkit-animation-name: backgroundWalkX;
-          animation-name: backgroundWalkX;
-  -webkit-animation-duration: 70s;
-          animation-duration: 70s;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-  -webkit-animation-direction: alternate;
-          animation-direction: alternate;
-  -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
-  -webkit-animation-timing-function: linear;
-          animation-timing-function: linear;
-}
-
-@-webkit-keyframes backgroundWalkY {
-  0% {
-    background-position: 0 0%;
-  }
-  100% {
-    background-position: 0 100%;
-  }
+  animation-name: backgroundWalkX;
+  animation-duration: 70s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
 }
 
 @keyframes backgroundWalkY {
@@ -2776,14 +2749,6 @@ pre {
   }
   100% {
     background-position: 0 100%;
-  }
-}
-@-webkit-keyframes backgroundWalkX {
-  0% {
-    background-position: 0 0%;
-  }
-  100% {
-    background-position: 100% 0;
   }
 }
 @keyframes backgroundWalkX {
@@ -3074,20 +3039,9 @@ body.sidebar-mini .main-sidebar:after {
   top: 0;
   z-index: -1;
   opacity: 0;
-  -webkit-animation-name: mini-sidebar;
-          animation-name: mini-sidebar;
-  -webkit-animation-duration: 1.5s;
-          animation-duration: 1.5s;
-  -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
-}
-@-webkit-keyframes mini-sidebar {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  animation-name: mini-sidebar;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
 }
 @keyframes mini-sidebar {
   from {
@@ -3583,7 +3537,7 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
     z-index: 891;
   }
   body.layout-2 .main-wrapper,
-body.layout-3 .main-wrapper {
+  body.layout-3 .main-wrapper {
     width: 100%;
     padding: 0;
     display: block;
@@ -3615,17 +3569,9 @@ body.layout-3 .main-wrapper {
     background-color: #000;
     opacity: 0;
     z-index: 891;
-    -webkit-animation-name: fadeinbackdrop;
     animation-name: fadeinbackdrop;
-    -webkit-animation-duration: 1s;
     animation-duration: 1s;
-    -webkit-animation-fill-mode: forwards;
     animation-fill-mode: forwards;
-  }
-  @-webkit-keyframes fadeinbackdrop {
-    to {
-      opacity: 0.6;
-    }
   }
   @keyframes fadeinbackdrop {
     to {
@@ -3635,23 +3581,7 @@ body.layout-3 .main-wrapper {
 }
 /* 4.5 Animation */
 .pulsate {
-  -webkit-animation: pulsate 1s ease-out;
-          animation: pulsate 1s ease-out;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
+  animation: pulsate 1s ease-out;
+  animation-iteration-count: infinite;
   opacity: 1;
-}
-
-@-webkit-keyframes pulsate {
-  0% {
-    -webkit-transform: scale(0.1, 0.1);
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    -webkit-transform: scale(1.2, 1.2);
-    opacity: 0;
-  }
 }
