@@ -82,6 +82,7 @@ You can find the **Stisla** road map here: [Stisla Roadmap](https://trello.com/b
 - [Laravel 8 - Stisla](https://github.com/ngodingbang/laravel-stisla-starter)
 - [Laravel 9 - Stisla](https://github.com/edikurniawan-dev/laravel-stisla)
 - [Laravel UI Preset](https://github.com/poteto-dev/laravel-ui-stisla)
+- [Laravel Liveware](https://github.com/rdp77/laravel-stisla)
 - [Jekyll](https://github.com/SunDi3yansyah/stisla-jekyll)
 - [YII2](https://github.com/piantgrunger/yii2-stisla)
 - [Django](https://github.com/bimbims125/stisla-django.git)
