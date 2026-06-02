@@ -1,4 +1,65 @@
-// stisla-full — the everything bundle.
-// Phase 0 placeholder; tokens, core, and components wire in here as they land.
+// Stisla v3 — stisla-full bundle.
+// Follows the canonical Bootstrap "Option B" customization workflow
+// (https://getbootstrap.com/docs/5.3/customize/sass/).
 
-@use 'bootstrap/scss/bootstrap';
+// === Configuration ===
+
+// 1. Bootstrap functions (color manipulation, calc helpers)
+@import 'bootstrap/scss/functions';
+
+// 2. Stisla color primitives — full ramps for blue, sky, yellow, red, green, gray
+@import '../tokens/colors';
+
+// 3. Stisla Bootstrap single-variable overrides
+@import '../tokens/overrides';
+
+// 4. Bootstrap variables (uses our values via !default)
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/variables-dark';
+
+// 5. Stisla map overrides (add `sky`, drop unused BS5 colors)
+@import '../tokens/maps';
+
+// 6. Bootstrap maps, mixins, utilities config
+@import 'bootstrap/scss/maps';
+@import 'bootstrap/scss/mixins';
+@import 'bootstrap/scss/utilities';
+
+// === Layout & components ===
+@import 'bootstrap/scss/root';
+@import 'bootstrap/scss/reboot';
+@import 'bootstrap/scss/type';
+@import 'bootstrap/scss/images';
+@import 'bootstrap/scss/containers';
+@import 'bootstrap/scss/grid';
+@import 'bootstrap/scss/tables';
+@import 'bootstrap/scss/forms';
+@import 'bootstrap/scss/buttons';
+@import 'bootstrap/scss/transitions';
+@import 'bootstrap/scss/dropdown';
+@import 'bootstrap/scss/button-group';
+@import 'bootstrap/scss/nav';
+@import 'bootstrap/scss/navbar';
+@import 'bootstrap/scss/card';
+@import 'bootstrap/scss/accordion';
+@import 'bootstrap/scss/breadcrumb';
+@import 'bootstrap/scss/pagination';
+@import 'bootstrap/scss/badge';
+@import 'bootstrap/scss/alert';
+@import 'bootstrap/scss/progress';
+@import 'bootstrap/scss/list-group';
+@import 'bootstrap/scss/close';
+@import 'bootstrap/scss/toasts';
+@import 'bootstrap/scss/modal';
+@import 'bootstrap/scss/tooltip';
+@import 'bootstrap/scss/popover';
+@import 'bootstrap/scss/carousel';
+@import 'bootstrap/scss/spinners';
+@import 'bootstrap/scss/offcanvas';
+@import 'bootstrap/scss/placeholders';
+
+// === Helpers ===
+@import 'bootstrap/scss/helpers';
+
+// === Utilities API (must come last) ===
+@import 'bootstrap/scss/utilities/api';

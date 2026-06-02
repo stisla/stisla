@@ -1,0 +1,62 @@
+// Stisla v3 — Bootstrap single-variable overrides.
+// Loaded after _colors.scss and BEFORE @import 'bootstrap/scss/variables'.
+// All Bootstrap defaults use !default, so values set here win.
+
+// Sass options
+$enable-shadows: true;
+
+// Theme colors — point each semantic at a specific ramp stop
+$primary:   $blue-600;
+$secondary: $gray-500;
+$success:   $green-500;
+$danger:    $red-500;
+$warning:   $yellow-500;
+$info:      $sky-500;
+$light:     $gray-100;
+$dark:      #23252e;
+
+// Theme-color triplets — pin to specific ramp positions rather than BS5's tint/shade math
+$primary-text-emphasis:    $blue-800;
+$primary-bg-subtle:        $blue-100;
+$primary-border-subtle:    $blue-300;
+
+$secondary-text-emphasis:  $gray-800;
+$secondary-bg-subtle:      $gray-100;
+$secondary-border-subtle:  $gray-300;
+
+$success-text-emphasis:    $green-800;
+$success-bg-subtle:        $green-100;
+$success-border-subtle:    $green-300;
+
+$info-text-emphasis:       $sky-800;
+$info-bg-subtle:           $sky-100;
+$info-border-subtle:       $sky-300;
+
+$warning-text-emphasis:    $yellow-800;
+$warning-bg-subtle:        $yellow-100;
+$warning-border-subtle:    $yellow-300;
+
+$danger-text-emphasis:     $red-800;
+$danger-bg-subtle:         $red-100;
+$danger-border-subtle:     $red-300;
+
+// Body, text, borders
+$body-bg:               #f5f8fe;
+$body-color:            #23252e;
+$body-emphasis-color:   #23252e;
+$body-secondary-color:  #64708b;
+$body-tertiary-color:   #8691aa;
+$body-tertiary-bg:      #f6f7f9;
+$border-color:          #ecedf2;
+
+// Surface fanout — cards, modals, dropdowns, etc. stay pure white on the tinted body
+$card-bg:               #fff;
+$modal-content-bg:      #fff;
+$dropdown-bg:           #fff;
+$list-group-bg:         #fff;
+$popover-bg:            #fff;
+$offcanvas-bg-color:    #fff;
+
+// Disabled — lighter than BS5's default (--bs-secondary-color), matches design's text-disabled
+$nav-link-disabled-color:  $gray-300;
+$btn-link-disabled-color:  $gray-300;

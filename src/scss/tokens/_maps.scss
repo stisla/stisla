@@ -1,0 +1,11 @@
+// Stisla v3 — Bootstrap map overrides.
+// Loaded AFTER @import 'bootstrap/scss/variables' and 'variables-dark',
+// BEFORE @import 'bootstrap/scss/maps'.
+
+// Add `sky` to the named-colors map (so --bs-sky exists at :root).
+// NOT added to $theme-colors: sky is the source for `info`, not its own utility-generating color.
+$colors: map-merge($colors, ("sky": $sky));
+
+// Drop BS5 colors Stisla doesn't ship. Safe — these don't drive any utility classes
+// by default; only --bs-{name} CSS vars at :root.
+$colors: map-remove($colors, "indigo", "purple", "pink", "orange", "teal", "cyan");

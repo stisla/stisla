@@ -6,11 +6,58 @@
 <main class="container py-5">
   <h1 class="display-5 mb-3">Stisla v3</h1>
   <p class="lead text-body-secondary">
-    Phase 0 hello world. Bootstrap 5 loaded via Sass, served by Vite, templated by Nunjucks.
+    Phase 1 — tokens wired through Bootstrap. Try the controls below.
   </p>
-  <div class="d-flex gap-2 mt-4">
-    <button type="button" class="btn btn-primary">Primary</button>
-    <button type="button" class="btn btn-outline-secondary">Secondary</button>
+
+  <div class="d-flex gap-2 align-items-center mb-4">
+    <button id="toggle-theme" type="button" class="btn btn-outline-secondary">Toggle dark</button>
+    <label class="d-inline-flex align-items-center gap-2 ms-2">
+      <span class="small text-body-secondary">Primary</span>
+      <input id="pick-primary" type="color" value="#2563eb" class="form-control form-control-color" />
+    </label>
+    <button id="reset-primary" type="button" class="btn btn-link">reset</button>
   </div>
+
+  <div class="d-flex flex-wrap gap-2 mb-4">
+    <button class="btn btn-primary">Primary</button>
+    <button class="btn btn-secondary">Secondary</button>
+    <button class="btn btn-success">Success</button>
+    <button class="btn btn-danger">Danger</button>
+    <button class="btn btn-warning">Warning</button>
+    <button class="btn btn-info">Info</button>
+    <button class="btn btn-light">Light</button>
+    <button class="btn btn-dark">Dark</button>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Card surface</h5>
+          <p class="card-text text-body-secondary">White card on tinted body — the layered surface effect.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="alert alert-primary mb-0">A primary alert (subtle bg + emphasis text + border)</div>
+    </div>
+    <div class="col-md-4">
+      <div class="alert alert-success mb-0">A success alert</div>
+    </div>
+  </div>
+
+  <script>
+    const html = document.documentElement;
+    document.getElementById('toggle-theme').addEventListener('click', () => {
+      html.dataset.bsTheme = html.dataset.bsTheme === 'dark' ? 'light' : 'dark';
+    });
+    document.getElementById('pick-primary').addEventListener('input', (e) => {
+      html.style.setProperty('--bs-primary', e.target.value);
+    });
+    document.getElementById('reset-primary').addEventListener('click', () => {
+      html.style.removeProperty('--bs-primary');
+      document.getElementById('pick-primary').value = '#2563eb';
+    });
+  </script>
 </main>
 {% endblock %}
