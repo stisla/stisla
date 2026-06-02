@@ -1,11 +1,19 @@
-# Folders to ignore
-/node_modules/
-/dist/node_modules/
-/pages
+# Build output
+/dist/
+/site-dist/
+/.tmp/
+/.vite/
 
-# OS or Editor folders
+# Deps
+/node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS / editor
+.DS_Store
 ._*
 .cache
-.DS_Store
 .idea
 .vscode

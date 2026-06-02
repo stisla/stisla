@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Stisla v3{% endblock %}</title>
+  {% if dev %}
+    <link rel="stylesheet" href="/src/scss/bundles/stisla-full.scss" />
+  {% else %}
+    <link rel="stylesheet" href="/assets/stisla-full.css" />
+  {% endif %}
+</head>
+<body>
+  {% block content %}{% endblock %}
+
+  {% if dev %}
+    <script type="module" src="/src/js/index.js"></script>
+  {% else %}
+    <script src="/assets/stisla.js"></script>
+  {% endif %}
+</body>
+</html>
