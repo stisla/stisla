@@ -29,7 +29,7 @@
     <button class="btn btn-dark">Dark</button>
   </div>
 
-  <div class="row g-3">
+  <div class="row g-3 mb-4">
     <div class="col-md-4">
       <div class="card">
         <div class="card-body">
@@ -46,16 +46,38 @@
     </div>
   </div>
 
+  <h2 class="h5 mb-2">Runtime tinting (responds to picker)</h2>
+  <p class="small text-body-secondary mb-3">
+    Utilities below use <code>var(--bs-primary)</code> / <code>--bs-primary-rgb</code>
+    at runtime, so the picker updates them live. Buttons above are compiled at Sass
+    build time and don't respond — that's a Bootstrap architectural limit.
+  </p>
+  <div class="d-flex flex-wrap gap-3 align-items-center">
+    <span class="badge text-bg-primary">.text-bg-primary</span>
+    <span class="px-3 py-2 bg-primary text-white rounded">.bg-primary</span>
+    <span class="text-primary fw-semibold">.text-primary</span>
+    <span class="px-3 py-2 border border-primary border-2 rounded">.border-primary</span>
+  </div>
+
   <script>
     const html = document.documentElement;
+    const hexToRgb = (hex) => {
+      const v = hex.replace('#', '');
+      const r = parseInt(v.slice(0, 2), 16);
+      const g = parseInt(v.slice(2, 4), 16);
+      const b = parseInt(v.slice(4, 6), 16);
+      return `${r}, ${g}, ${b}`;
+    };
     document.getElementById('toggle-theme').addEventListener('click', () => {
       html.dataset.bsTheme = html.dataset.bsTheme === 'dark' ? 'light' : 'dark';
     });
     document.getElementById('pick-primary').addEventListener('input', (e) => {
       html.style.setProperty('--bs-primary', e.target.value);
+      html.style.setProperty('--bs-primary-rgb', hexToRgb(e.target.value));
     });
     document.getElementById('reset-primary').addEventListener('click', () => {
       html.style.removeProperty('--bs-primary');
+      html.style.removeProperty('--bs-primary-rgb');
       document.getElementById('pick-primary').value = '#2563eb';
     });
   </script>
