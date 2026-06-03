@@ -43,17 +43,6 @@
     {% endcall %}
   </section>
 
-<section class="mb-5">
-    <h2 class="h5 mb-3">Basic</h2>
-    <p class="text-body-secondary mb-3">A card with just <code>.card-body</code>.</p>
-    {% call ui.demo() %}
-    <div class="card" style="width: 18rem;">
-      <div class="card-body">
-        This is some text within a card body.
-      </div>
-    </div>
-    {% endcall %}
-  </section>
   <section class="mb-5">
     <h2 class="h5 mb-3">Images</h2>
     <p class="text-body-secondary mb-3"><code>.card-img-top</code> / <code>.card-img-bottom</code> round their respective corners to match the card's 16px outer radius. <code>.card-img-overlay</code> places content over a <code>.card-img</code>.</p>
@@ -113,7 +102,10 @@
     <p class="text-body-secondary mb-3">The default header is transparent (inherits the card body bg). The footer sits on <code>--bs-surface-alt</code> so the body/footer split reads without a border.</p>
     {% call ui.demo() %}
     <div class="card" style="width: 22rem;">
-      <div class="card-header card-header-alt">Featured</div>
+      <div class="card-header card-header-alt">
+        Featured
+        <button type="button" class="btn btn-secondary btn-sm ms-auto">Action</button>
+      </div>
       <div class="card-body">
         <h5 class="card-title">Special title treatment</h5>
         <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>

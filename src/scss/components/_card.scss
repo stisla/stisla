@@ -27,7 +27,15 @@
 }
 
 .card-header {
+  display: flex;
+  align-items: center;
   border-bottom: 1px solid var(--#{$prefix}card-border-color);
+  min-height: 46px;
+  padding: 0 var(--#{$prefix}card-cap-padding-x);
+}
+
+.card-header-tabs {
+  margin-bottom: -6px;
 }
 
 // Opt the header onto the alt surface to mirror the footer's contrast.
