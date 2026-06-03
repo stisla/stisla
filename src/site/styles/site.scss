@@ -6,21 +6,22 @@
 
 .demo {
   margin-bottom: 1rem;
-  background: var(--bs-card-bg);
+  background: var(--bs-surface);
   border-radius: var(--bs-border-radius-lg);
+  border: 1px solid var(--bs-border-color);
   overflow: hidden;
-  box-shadow:
-    0 20px 25px -5px rgba(0, 0, 0, 0.04),
-    0 10px 10px -5px rgba(0, 0, 0, 0.02);
 }
 
 .demo-preview {
   padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .demo-code {
   border-top: 1px solid var(--bs-border-color);
-  background: var(--bs-card-footer-bg);
+  background: var(--bs-surface-alt);
 }
 
 .demo-code pre {
@@ -38,10 +39,6 @@
   padding: 0;
   font-size: inherit;
   font-family: var(--bs-font-monospace);
-}
-
-[data-bs-theme="dark"] .demo {
-  background: #1e2128;
 }
 
 // === Theme toggle ===

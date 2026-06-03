@@ -9,7 +9,8 @@
 :root,
 [data-bs-theme="light"] {
   --#{$prefix}border-color-subtle: #{$border-color-subtle};
-  --#{$prefix}card-footer-bg: #{$card-footer-bg};
+  --#{$prefix}surface:             #{$surface};
+  --#{$prefix}surface-alt:         #{$surface-alt};
 }
 
 // Dark overrides go through BS5's color-mode mixin (same shape as BS5's own
@@ -18,5 +19,6 @@
 // TODO: replace placeholders when the dark design tokens land.
 @include color-mode(dark, true) {
   --#{$prefix}border-color-subtle: #2a2d35;
-  --#{$prefix}card-footer-bg: #16181d;
+  --#{$prefix}surface:             #1e2128;
+  --#{$prefix}surface-alt:         #16181d;
 }

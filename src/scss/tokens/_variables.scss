@@ -82,7 +82,7 @@ $danger-bg-subtle: $red-100;
 $danger-border-subtle: $red-300;
 
 // Body, text, borders
-$body-bg: #f5f8ff;
+$body-bg: #fff;
 $body-color: #23252e;
 $body-emphasis-color: #23252e;
 $body-secondary-color: #64708b;
@@ -91,14 +91,49 @@ $body-tertiary-bg: #f6f7f9;
 $border-color: #ecedf2;
 $border-color-subtle: #f3f4f7;
 
+// Surfaces — shared two-tone neutrals. Reused by card body / card footer
+// today; modal-bg, dropdown-bg, popover-bg, etc. swap to var(--bs-surface)
+// at runtime as those components are restyled. Promoted out of the old
+// $card-footer-bg carve-out so the two-tone pattern lives at the design-
+// system level, not bound to .card. Emitted as --bs-surface / --bs-surface-alt
+// in tokens/_root.scss.
+$surface: #fff;
+$surface-alt: #f9fafb;
+
 // Surface fanout — cards, modals, dropdowns, etc. stay pure white on the tinted body
-$card-bg: #fff;
-$card-footer-bg: #f9fafb;  // Stisla extension — BS5 only ships $card-cap-bg (header + footer); see tokens/_root.scss
-$modal-content-bg: #fff;
-$dropdown-bg: #fff;
-$list-group-bg: #fff;
-$popover-bg: #fff;
-$offcanvas-bg-color: #fff;
+$card-bg: $surface;
+$modal-content-bg: $surface;
+$dropdown-bg: $surface;
+$list-group-bg: $surface;
+$popover-bg: $surface;
+$offcanvas-bg-color: $surface;
+
+// Cards — 24px body padding, 24/16 cap padding. Borderless: separation reads
+// via surface contrast (card body vs alt-surface footer) + shadow. 16px outer
+// radius. Header bg is transparent so .card-header inherits the card body bg
+// (no third tint between body and footer); use .card-header-alt to opt the
+// header onto the alt surface. Subtitle picks up --bs-secondary-color so the
+// muted treatment is baked in (no .text-body-secondary utility needed).
+$card-spacer-y: 1.25rem;
+$card-spacer-x: 1.25rem;
+$card-cap-padding-y: 0.75rem;
+$card-cap-padding-x: 1.25rem;
+$card-cap-bg: transparent;
+$card-subtitle-color: var(
+  --bs-secondary-color
+); // $prefix isn't defined yet — hardcode the BS5 default ("bs")
+$card-border-width: 1px;
+$card-border-color: rgba(0, 0, 0, 0.075);
+$card-border-radius: 1rem; // 16px (BS5 default = var(--bs-border-radius) = .75rem in our setup)
+$card-box-shadow:
+  0px 1px 3px rgba(0, 0, 0, 0.05),
+  0px 1px 2px rgba(0, 0, 0, 0.03);
+
+$list-group-item-padding-y: 0.5rem;
+$list-group-item-padding-x: 1.25rem;
+
+$nav-tabs-link-active-border-color: $border-color-subtle;
+$nav-tabs-link-hover-border-color: $border-color-subtle;
 
 // Disabled — lighter than BS5's default (--bs-secondary-color), matches design's text-disabled
 $nav-link-disabled-color: $gray-300;
@@ -114,7 +149,7 @@ $btn-padding-x: 0.875rem;
 $btn-padding-y-sm: 0.25rem;
 $btn-padding-x-sm: 0.5rem; // 8px
 $btn-padding-y-lg: 0.5rem;
-$btn-padding-x-lg: 1.5rem; // 24px
+$btn-padding-x-lg: 1.25rem; // 20px
 $btn-box-shadow:
   inset 0 1px 0 rgba(255, 255, 255, 0.15),
   0 1px 3px 0 rgba(0, 0, 0, 0.1),

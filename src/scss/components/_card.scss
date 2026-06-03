@@ -1,18 +1,38 @@
-// Stisla v3 — cards.
-// Phase 2 card restyle proper will land here. For now:
-//   1. opt the footer onto its own runtime var (BS5 ties header + footer to
-//      $card-cap-bg at build time — see tokens/_root.scss);
-//   2. dark-mode the card body bg via BS5's recommended color-mode mixin
-//      (BS5 doesn't ship $card-bg-dark — component bgs are overridden through
-//      the mixin per the 5.3 customize/color-modes docs).
+// Stisla v3 — cards. Most styling rides on BS5 Sass vars set in
+// tokens/_variables.scss; the rules below are the bits BS5 vars can't express.
 
-.card-footer {
-  background-color: var(--#{$prefix}card-footer-bg);
+.card {
+  // Repoint --bs-card-bg at the runtime surface var so theming tools can
+  // swap card / modal / dropdown surfaces in one place. BS5 declares
+  // --bs-card-bg locally on .card from $card-bg at build time; we override
+  // it at runtime to follow --bs-surface (which the color-mode mixin in
+  // tokens/_root.scss flips for dark).
+  --#{$prefix}card-bg: var(--#{$prefix}surface);
+  --#{$prefix}card-img-overlay-padding: var(--#{$prefix}card-spacer-y)
+    var(--#{$prefix}card-spacer-x);
 }
 
-@include color-mode(dark) {
-  .card {
-    // TODO: replace placeholder when dark design tokens land.
-    --#{$prefix}card-bg: #1e2128;
-  }
+// Pin to 16px regardless of which <h*> tag the user picks for .card-title.
+// BS5 doesn't ship $card-title-font-size — title sizing comes from the
+// heading element by default, so we set it here instead of in _variables.
+.card-title {
+  font-size: 1rem;
+}
+
+// Footer sits on the alt surface so the body/footer split reads without a
+// border (the card is borderless — $card-border-width: 0).
+.card-footer {
+  background-color: var(--#{$prefix}surface-alt);
+  border-top: 1px solid var(--#{$prefix}border-color-subtle);
+}
+
+.card-header {
+  border-bottom: 1px solid var(--#{$prefix}card-border-color);
+}
+
+// Opt the header onto the alt surface to mirror the footer's contrast.
+// Composes with .card-header: <div class="card-header card-header-alt">.
+.card-header:has(.nav-tabs),
+.card-header-alt {
+  background-color: var(--#{$prefix}surface-alt);
 }

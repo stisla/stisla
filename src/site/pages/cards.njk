@@ -1,0 +1,355 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Cards — Stisla v3{% endblock %}
+
+{% set img_landscape = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=70" %}
+{% set img_landscape_2 = "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=900&q=70" %}
+{% set img_landscape_3 = "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=70" %}
+{% set img_overlay = "https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=900&q=60" %}
+
+{% block content %}
+<main class="container py-5">
+  <header class="mb-5">
+    <h1 class="h2 mb-2">Cards</h1>
+    <p class="text-body-secondary mb-0 lead">A flexible content container with body, optional header / footer, image, and list-group regions.</p>
+  </header>
+
+  <section class="mb-5">
+    <h2 class="h5 mb-3">Basic</h2>
+    <p class="text-body-secondary mb-3">A card with just <code>.card-body</code>.</p>
+    {% call ui.demo() %}
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        This is some text within a card body.
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section class="mb-5">
+    <h2 class="h5 mb-3">Titles, subtitle, text, links</h2>
+    <p class="text-body-secondary mb-3"><code>.card-title</code> is pinned to 16px regardless of which <code>&lt;h*&gt;</code> tag you pick. <code>.card-subtitle</code> picks up <code>--bs-secondary-color</code> so the muted treatment is baked in — no <code>.text-body-secondary</code> utility needed.</p>
+    {% call ui.demo() %}
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <h6 class="card-subtitle mb-2">Card subtitle</h6>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="card-link">Card link</a>
+        <a href="#" class="card-link">Another link</a>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+<section class="mb-5">
+    <h2 class="h5 mb-3">Basic</h2>
+    <p class="text-body-secondary mb-3">A card with just <code>.card-body</code>.</p>
+    {% call ui.demo() %}
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        This is some text within a card body.
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+  <section class="mb-5">
+    <h2 class="h5 mb-3">Images</h2>
+    <p class="text-body-secondary mb-3"><code>.card-img-top</code> / <code>.card-img-bottom</code> round their respective corners to match the card's 16px outer radius. <code>.card-img-overlay</code> places content over a <code>.card-img</code>.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-3 align-items-start">
+      <div class="card" style="width: 18rem;">
+        <img src="{{ img_landscape }}" class="card-img-top" alt="Mountain landscape" />
+        <div class="card-body">
+          <h5 class="card-title">Image top</h5>
+          <p class="card-text">A wider card with supporting text below.</p>
+          <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+        </div>
+      </div>
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Image bottom</h5>
+          <p class="card-text">A wider card with supporting text below.</p>
+          <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+        </div>
+        <img src="{{ img_landscape_2 }}" class="card-img-bottom" alt="Coastal landscape" />
+      </div>
+      <div class="card text-bg-dark" style="width: 18rem;">
+        <img src="{{ img_overlay }}" class="card-img" alt="Forest path" />
+        <div class="card-img-overlay">
+          <h5 class="card-title">Image overlay</h5>
+          <p class="card-text">A wider card with supporting text below as a natural lead-in.</p>
+          <p class="card-text"><small>Last updated 3 mins ago</small></p>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section class="mb-5">
+    <h2 class="h5 mb-3">Horizontal</h2>
+    <p class="text-body-secondary mb-3">Image left, body right via <code>row g-0</code>. The image uses <code>.rounded-start-3</code> so its left corners match the card's 16px outer radius.</p>
+    {% call ui.demo() %}
+    <div class="card" style="max-width: 540px;">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img src="{{ img_landscape_3 }}" class="img-fluid rounded-start-3 h-100 object-fit-cover" alt="Mountain ridge" />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">A wider card with supporting text below as a natural lead-in to additional content.</p>
+            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section class="mb-5">
+    <h2 class="h5 mb-3">Header + body + footer</h2>
+    <p class="text-body-secondary mb-3">The default header is transparent (inherits the card body bg). The footer sits on <code>--bs-surface-alt</code> so the body/footer split reads without a border.</p>
+    {% call ui.demo() %}
+    <div class="card" style="width: 22rem;">
+      <div class="card-header card-header-alt">Featured</div>
+      <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+      <div class="card-footer">
+        <small class="text-body-secondary">2 days ago</small>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section class="mb-5">
+    <h2 class="h5 mb-3"><code>.card-header-alt</code></h2>
+    <p class="text-body-secondary mb-3">Opt the header onto <code>--bs-surface-alt</code> to mirror the footer's contrast. Composes with <code>.card-header</code> — same padding, same border-radius rules.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-3 align-items-start">
+      <div class="card" style="width: 22rem;">
+        <div class="card-header">Default header</div>
+        <div class="card-body">
+          <p class="card-text mb-0">Header inherits the card body bg.</p>
+        </div>
+      </div>
+      <div class="card" style="width: 22rem;">
+        <div class="card-header card-header-alt">Alt header</div>
+        <div class="card-body">
+          <p class="card-text mb-0">Header sits on <code>--bs-surface-alt</code>.</p>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section class="mb-5">
+    <h2 class="h5 mb-3">Header with nav tabs</h2>
+    {% call ui.demo() %}
+    <div class="card text-center" style="width: 22rem;">
+      <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+          <li class="nav-item"><a class="nav-link active" aria-current="true" href="#">Active</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+          <li class="nav-item"><a class="nav-link disabled" aria-disabled="true">Disabled</a></li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section class="mb-5">
+    <h2 class="h5 mb-3">Header with nav pills</h2>
+    {% call ui.demo() %}
+    <div class="card text-center" style="width: 22rem;">
+      <div class="card-header">
+        <ul class="nav nav-pills card-header-pills">
+          <li class="nav-item"><a class="nav-link active" href="#">Active</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+          <li class="nav-item"><a class="nav-link disabled" aria-disabled="true">Disabled</a></li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section class="mb-5">
+    <h2 class="h5 mb-3">List groups</h2>
+    <p class="text-body-secondary mb-3">Use <code>.list-group-flush</code> so items sit edge-to-edge inside the card. Combine with header and/or footer.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-3 align-items-start">
+      <div class="card" style="width: 18rem;">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">An item</li>
+          <li class="list-group-item">A second item</li>
+          <li class="list-group-item">A third item</li>
+        </ul>
+      </div>
+      <div class="card" style="width: 18rem;">
+        <div class="card-header">Featured</div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">An item</li>
+          <li class="list-group-item">A second item</li>
+          <li class="list-group-item">A third item</li>
+        </ul>
+      </div>
+      <div class="card" style="width: 18rem;">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">An item</li>
+          <li class="list-group-item">A second item</li>
+          <li class="list-group-item">A third item</li>
+        </ul>
+        <div class="card-footer">Card footer</div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section class="mb-5">
+    <h2 class="h5 mb-3">Sizing</h2>
+    <p class="text-body-secondary mb-3">Cards have no built-in width — size them with inline styles (<code>style="width: 18rem"</code>), utility classes (<code>.w-75</code>, <code>.w-50</code>), or grid columns.</p>
+    {% call ui.demo() %}
+    <div>
+      <div class="card mb-3" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">style="width: 18rem"</h5>
+          <p class="card-text mb-0">Inline width.</p>
+        </div>
+      </div>
+      <div class="card w-75 mb-3">
+        <div class="card-body">
+          <h5 class="card-title">.w-75</h5>
+          <p class="card-text mb-0">Utility width.</p>
+        </div>
+      </div>
+      <div class="card w-50">
+        <div class="card-body">
+          <h5 class="card-title">.w-50</h5>
+          <p class="card-text mb-0">Utility width.</p>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+
+    <p class="text-body-secondary mt-4 mb-3">Or use the grid for responsive sizing.</p>
+    {% call ui.demo() %}
+    <div class="row">
+      <div class="col-sm-6 mb-3 mb-sm-0">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Special title treatment</h5>
+            <p class="card-text">With supporting text below as a natural lead-in.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Special title treatment</h5>
+            <p class="card-text">With supporting text below as a natural lead-in.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section class="mb-5">
+    <h2 class="h5 mb-3">Text alignment</h2>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-3 align-items-start">
+      <div class="card" style="width: 16rem;">
+        <div class="card-body">
+          <h5 class="card-title">Default</h5>
+          <p class="card-text">Left aligned.</p>
+        </div>
+      </div>
+      <div class="card text-center" style="width: 16rem;">
+        <div class="card-body">
+          <h5 class="card-title">Center</h5>
+          <p class="card-text">.text-center.</p>
+        </div>
+      </div>
+      <div class="card text-end" style="width: 16rem;">
+        <div class="card-body">
+          <h5 class="card-title">End</h5>
+          <p class="card-text">.text-end.</p>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section class="mb-5">
+    <h2 class="h5 mb-3">Background colors — <code>.text-bg-*</code></h2>
+    <p class="text-body-secondary mb-3">All 8 theme colors. <code>.text-bg-*</code> sets background and contrast text in one shot.</p>
+    {% call ui.demo() %}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+      {% for variant in ["primary", "secondary", "success", "danger", "warning", "info", "light", "dark"] %}
+      <div class="col">
+        <div class="card text-bg-{{ variant }} h-100">
+          <div class="card-header">Header</div>
+          <div class="card-body">
+            <h5 class="card-title text-capitalize">{{ variant }}</h5>
+            <p class="card-text mb-0">Some quick example text.</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endcall %}
+  </section>
+
+  <section class="mb-5">
+    <h2 class="h5 mb-3">Grid cards</h2>
+    <p class="text-body-secondary mb-3"><code>row-cols-md-3 g-4</code> + <code>.h-100</code> for an even-height column layout.</p>
+    {% call ui.demo() %}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <div class="col">
+        <div class="card h-100">
+          <img src="{{ img_landscape }}" class="card-img-top" alt="Mountain landscape" />
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">A longer card with supporting text below as a natural lead-in to additional content.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100">
+          <img src="{{ img_landscape_2 }}" class="card-img-top" alt="Coastal landscape" />
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">A longer card with supporting text. This content is a little bit longer.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100">
+          <img src="{{ img_landscape_3 }}" class="card-img-top" alt="Mountain ridge" />
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">A longer card with supporting text below as a natural lead-in.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+</main>
+{% endblock %}
