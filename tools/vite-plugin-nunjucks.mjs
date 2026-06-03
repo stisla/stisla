@@ -1,7 +1,7 @@
 import nunjucks from 'nunjucks';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
-import { dedent } from './nunjucks-filters.mjs';
+import { dedent, getHighlighter, makeHighlightFilter } from './nunjucks-filters.mjs';
 
 // Dev-only middleware: maps URLs to .njk files under siteRoot,
 // renders them, and lets Vite inject HMR + asset URL rewriting.
@@ -13,6 +13,12 @@ export default function nunjucksDevPlugin({ siteRoot }) {
   });
   env.addGlobal('dev', true);
   env.addFilter('dedent', dedent);
+
+  // Shiki init runs in parallel with Vite startup; we await per-request below
+  // so the first render waits without blocking server boot.
+  const highlighterReady = getHighlighter().then((hl) => {
+    env.addFilter('highlight', makeHighlightFilter(hl));
+  });
 
   return {
     name: 'stisla:nunjucks-dev',
@@ -37,6 +43,7 @@ export default function nunjucksDevPlugin({ siteRoot }) {
           const url = (req.url || '/').split('?')[0];
           if (path.extname(url)) return next(); // let Vite handle assets
 
+          await highlighterReady;
           const candidates = urlToCandidates(url);
           let template = null;
           for (const c of candidates) {

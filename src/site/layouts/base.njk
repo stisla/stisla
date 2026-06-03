@@ -34,7 +34,9 @@
     </button>
   </nav>
 
-  {% block content %}{% endblock %}
+  <main class="container py-5 prose">
+    {% block content %}{% endblock %}
+  </main>
 
   {% if dev %}
     <script type="module" src="/src/js/index.js"></script>

@@ -3,12 +3,16 @@
 // from the framework bundle (--bs-*).
 
 // === Demo viewer ===
+// Layout: framed preview on top, collapsible source below. Source is
+// collapsed by default with a fade-out + "View Code" pill; expanded grows
+// to a fixed max-height with overflow-auto. Light/dark code tokens come
+// from Shiki's dual-theme CSS vars (`--shiki-dark`).
 
 .demo {
   margin-bottom: 1rem;
-  background: var(--bs-surface);
+  background: var(--bs-body-bg);
   border-radius: var(--bs-border-radius-lg);
-  border: 1px solid var(--bs-border-color);
+  border: 1px solid var(--bs-border-color-translucent);
   overflow: hidden;
 }
 
@@ -20,25 +24,87 @@
 }
 
 .demo-code {
-  border-top: 1px solid var(--bs-border-color);
+  position: relative;
+  border-top: 1px solid var(--bs-border-color-translucent);
   background: var(--bs-surface-alt);
 }
 
-.demo-code pre {
-  margin: 0;
-  padding: 1rem 1.5rem;
-  overflow-x: auto;
-  color: inherit;
-  font-size: 0.8125rem;
-  line-height: 1.6;
+// Clip + scroll only apply to "long" demos flagged with [data-demo-code].
+// Short snippets render at their natural height with no toggle.
+.demo-code[data-demo-code] .demo-code-source {
+  max-height: 6rem;
+  overflow: hidden;
+  transition: max-height 0.2s ease;
 }
 
-.demo-code code {
-  color: inherit;
-  background: transparent;
-  padding: 0;
-  font-size: inherit;
+.demo-code[data-demo-code][data-expanded] .demo-code-source {
+  max-height: 24rem;
+  overflow-y: auto;
+}
+
+// Shiki <pre>: drop inline bg so .demo-code's surface shows through.
+// Per-token color comes from Shiki inline styles (light) or --shiki-dark (dark).
+.demo-code .shiki {
+  margin: 0;
+  padding: 1rem 1.25rem;
+  background: transparent !important;
+  font-size: 0.8125rem;
+  line-height: 1.6;
   font-family: var(--bs-font-monospace);
+}
+
+[data-bs-theme="dark"] .demo-code .shiki,
+[data-bs-theme="dark"] .demo-code .shiki span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg, transparent) !important;
+}
+
+// Fade-to-surface overlay at the bottom when collapsed, behind the toggle.
+.demo-code[data-demo-code]:not([data-expanded])::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 4rem;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0),
+    var(--bs-surface-alt) 70%
+  );
+}
+
+.demo-code-toggle {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  bottom: 1rem;
+  transform: translateX(-50%);
+  padding: 0.375rem 0.875rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--bs-body-color);
+  background: var(--bs-surface);
+  border: 1px solid var(--bs-border-color);
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+}
+
+.demo-code-toggle:hover {
+  background: var(--bs-surface-alt);
+}
+
+.demo-code-toggle-hide {
+  display: none;
+}
+
+.demo-code[data-expanded] .demo-code-toggle-show {
+  display: none;
+}
+
+.demo-code[data-expanded] .demo-code-toggle-hide {
+  display: inline;
 }
 
 // === Theme toggle ===
@@ -55,4 +121,101 @@
 
 [data-bs-theme="dark"] .theme-icon-dark {
   display: inline-block;
+}
+
+[data-bs-theme="dark"] .demo-code .shiki,
+[data-bs-theme="dark"] .demo-code .shiki span {
+  background-color: transparent !important;
+}
+
+// === Docs typography (prose) ===
+// Opt in by adding `.prose` to the content wrapper, then use bare <h1>,
+// <h2>, <p>, <code>, etc. Demo frames carry `.not-prose` so the rendered
+// preview and code listing are exempt from these rules.
+//
+// `:where()` keeps specificity at (0,1,0); `:not(.not-prose, .not-prose *)`
+// is the Tailwind-style opt-out gate.
+
+.prose {
+  $opt-out: ":not(.not-prose, .not-prose *)";
+
+  // Block-level section spacing. Section/header gap is owned by prose so
+  // pages can drop the explicit `.mb-5` from every `<section>` / `<header>`.
+  :where(section, header)#{$opt-out} {
+    margin-bottom: 3rem;
+  }
+
+  :where(section, header):last-child#{$opt-out} {
+    margin-bottom: 0;
+  }
+
+  :where(h1)#{$opt-out} {
+    font-size: 1.75rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin: 0 0 0.5rem;
+  }
+
+  :where(h2)#{$opt-out} {
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin: 0 0 0.5rem;
+  }
+
+  :where(h3)#{$opt-out} {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin: 1.5rem 0 0.5rem;
+  }
+
+  :where(p)#{$opt-out} {
+    margin: 0 0 1rem;
+    line-height: 1.6;
+  }
+
+  :where(p.lead)#{$opt-out} {
+    font-size: 1.0625rem;
+    color: var(--bs-secondary-color);
+    margin-bottom: 0;
+  }
+
+  :where(ul, ol)#{$opt-out} {
+    margin: 0 0 1rem;
+    padding-left: 1.25rem;
+    line-height: 1.6;
+  }
+
+  :where(li)#{$opt-out} {
+    margin-bottom: 0.25rem;
+  }
+
+  // Inline code only — Shiki <pre><code> lives inside `.demo` (.not-prose).
+  :where(code)#{$opt-out} {
+    font-family: var(--bs-font-monospace);
+    font-size: 0.875em;
+    padding: 0.125em 0.375em;
+    background: var(--bs-surface-alt);
+    border: 1px solid var(--bs-border-color-translucent);
+    border-radius: 0.25rem;
+    color: var(--bs-body-color);
+  }
+
+  :where(strong, b)#{$opt-out} {
+    font-weight: 600;
+  }
+
+  :where(a)#{$opt-out} {
+    color: var(--bs-primary);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+
+  // Suppress trailing margin on the last element of a block so section
+  // spacing (e.g. <section class="mb-5">) stays predictable.
+  :where(h1, h2, h3, p, ul, ol):last-child#{$opt-out} {
+    margin-bottom: 0;
+  }
 }

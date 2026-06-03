@@ -23,7 +23,7 @@
 // border (the card is borderless — $card-border-width: 0).
 .card-footer {
   background-color: var(--#{$prefix}surface-alt);
-  border-top: 1px solid var(--#{$prefix}border-color-subtle);
+  border-top: 1px solid var(--#{$prefix}card-border-color);
 }
 
 .card-header {
@@ -35,7 +35,14 @@
 }
 
 .card-header-tabs {
-  margin-bottom: -6px;
+  margin-bottom: -7px;
+  &.nav-tabs {
+    --#{$prefix}nav-tabs-link-hover-border-color: transparent;
+  }
+  .nav-link.active {
+    border-color: var(--#{$prefix}card-border-color)
+      var(--#{$prefix}card-border-color) transparent;
+  }
 }
 
 // Opt the header onto the alt surface to mirror the footer's contrast.

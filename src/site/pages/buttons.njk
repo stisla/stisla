@@ -1,17 +1,16 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Buttons — Stisla v3{% endblock %}
+{% block title %}Buttons · Stisla v3{% endblock %}
 
 {% block content %}
-<main class="container py-5">
-  <header class="mb-5">
-    <h1 class="h2 mb-2">Buttons</h1>
-    <p class="text-body-secondary mb-0 lead">A clickable control that triggers an action.</p>
+  <header>
+    <h1>Buttons</h1>
+    <p class="lead">A clickable control that triggers an action.</p>
   </header>
 
-  <section class="mb-5">
-    <h2 class="h5 mb-3">Solid variants</h2>
+  <section>
+    <h2>Solid variants</h2>
     {% call ui.demo() %}
     <div class="d-flex flex-wrap gap-2">
       <button type="button" class="btn btn-primary">Primary</button>
@@ -20,14 +19,12 @@
       <button type="button" class="btn btn-danger">Danger</button>
       <button type="button" class="btn btn-warning">Warning</button>
       <button type="button" class="btn btn-info">Info</button>
-      <button type="button" class="btn btn-light">Light</button>
-      <button type="button" class="btn btn-dark">Dark</button>
     </div>
     {% endcall %}
   </section>
 
-  <section class="mb-5">
-    <h2 class="h5 mb-3">Outline variants</h2>
+  <section>
+    <h2>Outline variants</h2>
     {% call ui.demo() %}
     <div class="d-flex flex-wrap gap-2">
       <button type="button" class="btn btn-outline-primary">Primary</button>
@@ -36,23 +33,94 @@
       <button type="button" class="btn btn-outline-danger">Danger</button>
       <button type="button" class="btn btn-outline-warning">Warning</button>
       <button type="button" class="btn btn-outline-info">Info</button>
-      <button type="button" class="btn btn-outline-light">Light</button>
-      <button type="button" class="btn btn-outline-dark">Dark</button>
     </div>
     {% endcall %}
   </section>
 
-  <section class="mb-5">
-    <h2 class="h5 mb-3">Link button</h2>
-    <p class="text-body-secondary mb-3">No background, no shadow; underline on hover.</p>
+  <section>
+    <h2>Primary + secondary</h2>
+    <p>
+      The canonical pairing for two-action surfaces: filled primary as the
+      lead, outline secondary as the alternative. Secondary's outline is
+      grey-pinned in both themes, calm enough to read as a second-tier
+      action without fighting the primary for attention.
+    </p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-2">
+      <button type="button" class="btn btn-primary">Save changes</button>
+      <button type="button" class="btn btn-outline-secondary">Cancel</button>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Light variants</h2>
+    <p>
+      Soft tinted fill (color at ~12% alpha) with no border. Use for soft
+      emphasis: alert callouts, dismissible chips, secondary toolbar
+      actions. Heavier than ghost, lighter than outline.
+    </p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-2">
+      <button type="button" class="btn btn-light-primary">Primary</button>
+      <button type="button" class="btn btn-light-secondary">Secondary</button>
+      <button type="button" class="btn btn-light-success">Success</button>
+      <button type="button" class="btn btn-light-danger">Danger</button>
+      <button type="button" class="btn btn-light-warning">Warning</button>
+      <button type="button" class="btn btn-light-info">Info</button>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Ghost variants</h2>
+    <p>
+      No chrome at rest → colored text only. Hover paints a soft tint of the
+      color to surface the affordance. Use for low-friction actions: nav
+      items, toolbar controls, dense tables.
+    </p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-2">
+      <button type="button" class="btn btn-ghost-primary">Primary</button>
+      <button type="button" class="btn btn-ghost-secondary">Secondary</button>
+      <button type="button" class="btn btn-ghost-success">Success</button>
+      <button type="button" class="btn btn-ghost-danger">Danger</button>
+      <button type="button" class="btn btn-ghost-warning">Warning</button>
+      <button type="button" class="btn btn-ghost-info">Info</button>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Where are <code>btn-light</code> and <code>btn-dark</code>?</h2>
+    <p>
+      Stisla v3 doesn't restyle BS5's <code>.btn-light</code> or <code>.btn-dark</code>.
+      In practice they fail as semantic categories: <code>.btn-light</code> reads as
+      "barely-visible grey button" on a white surface, and <code>.btn-dark</code> is
+      essentially <code>.btn-primary</code> inverted. BS5's compiled defaults still
+      emit, so existing markup keeps working, just unbranded.
+    </p>
+    <p>
+      Use <code>btn-secondary</code> instead → it's mono and inverts per theme, which
+      is what <code>.btn-dark</code> (light mode) and <code>.btn-light</code> (dark mode)
+      were trying to be. Heads-up on the name collision: the <em>Light variants</em>
+      above (<code>btn-light-primary</code>, <code>btn-light-success</code>, …) are
+      unrelated → same word, different family: per-color soft tints, not the BS5
+      grey button.
+    </p>
+  </section>
+
+  <section>
+    <h2>Link button</h2>
+    <p>No background, no shadow; underline on hover.</p>
     {% call ui.demo() %}
     <button type="button" class="btn btn-link">Link button</button>
     {% endcall %}
   </section>
 
-  <section class="mb-5">
-    <h2 class="h5 mb-3">Sizes</h2>
-    <p class="text-body-secondary mb-3">Heights are pinned at 28 / 36 / 44&nbsp;px regardless of content.</p>
+  <section>
+    <h2>Sizes</h2>
+    <p>Heights are pinned at 28 / 36 / 44&nbsp;px regardless of content.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-wrap gap-2 align-items-center">
       <button type="button" class="btn btn-primary btn-sm">Small</button>
@@ -62,9 +130,9 @@
     {% endcall %}
   </section>
 
-  <section class="mb-5">
-    <h2 class="h5 mb-3">With icon</h2>
-    <p class="text-body-secondary mb-3">
+  <section>
+    <h2>With icon</h2>
+    <p>
       Any icon component drops into <code>.btn</code> via flexbox <code>gap</code>.
       Icons scale with the button's font-size (<code>1em</code>).
     </p>
@@ -82,9 +150,9 @@
     {% endcall %}
   </section>
 
-  <section class="mb-5">
-    <h2 class="h5 mb-3">Icon only</h2>
-    <p class="text-body-secondary mb-3">
+  <section>
+    <h2>Icon only</h2>
+    <p>
       Add <code>.btn-icon</code> for a 1:1 square button. Pair with
       <code>aria-label</code> so the action stays announced.
     </p>
@@ -109,8 +177,8 @@
     {% endcall %}
   </section>
 
-  <section class="mb-5">
-    <h2 class="h5 mb-3">States</h2>
+  <section>
+    <h2>States</h2>
     {% call ui.demo() %}
     <div class="d-flex flex-wrap gap-2 align-items-center">
       <button type="button" class="btn btn-primary active" aria-pressed="true">Active</button>
@@ -120,11 +188,13 @@
     {% endcall %}
   </section>
 
-  <section class="mb-5">
-    <h2 class="h5 mb-3">Loading</h2>
-    <p class="text-body-secondary mb-3">
-      Toggle <code>.btn-loading</code> from JS to hide the label and show a spinner.
-      Click is blocked while the class is applied. Pair with <code>aria-busy="true"</code>.
+  <section>
+    <h2>Loading</h2>
+    <p>
+      Toggle <code>.btn-loading</code> from JS to show a leading spinner. The label
+      stays visible; any leading/trailing icons are hidden so the spinner takes
+      their place. Click is blocked while the class is applied. Pair with
+      <code>aria-busy="true"</code>.
     </p>
     {% call ui.demo() %}
     <div class="d-flex flex-wrap gap-2 align-items-center">
@@ -135,15 +205,31 @@
       <button type="button" class="btn btn-danger btn-icon btn-loading" aria-busy="true" aria-label="Deleting"></button>
     </div>
     {% endcall %}
-    <p class="text-body-secondary small mt-3 mb-2">Click to try (auto-clears after 2s):</p>
+    <p>With icons → the spinner replaces them in place:</p>
     {% call ui.demo() %}
-    <button type="button" class="btn btn-primary" data-demo-loading="2000">Save changes</button>
+    <div class="d-flex flex-wrap gap-2 align-items-center">
+      <button type="button" class="btn btn-primary btn-loading" aria-busy="true">
+        <i data-lucide="plus"></i>
+        Adding
+      </button>
+      <button type="button" class="btn btn-primary btn-loading" aria-busy="true">
+        Continuing
+        <i data-lucide="arrow-right"></i>
+      </button>
+    </div>
+    {% endcall %}
+    <p>Click to try (auto-clears after 2s):</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn-primary" data-demo-loading="2000">
+      <i data-lucide="save"></i>
+      Save changes
+    </button>
     {% endcall %}
   </section>
 
-  <section class="mb-5">
-    <h2 class="h5 mb-3">Toggle</h2>
-    <p class="text-body-secondary mb-3">
+  <section>
+    <h2>Toggle</h2>
+    <p>
       <code>data-bs-toggle="button"</code> flips <code>.active</code> and <code>aria-pressed</code> on click.
     </p>
     {% call ui.demo() %}
@@ -151,9 +237,9 @@
     {% endcall %}
   </section>
 
-  <section class="mb-5">
-    <h2 class="h5 mb-3">Works on any element</h2>
-    <p class="text-body-secondary mb-3">
+  <section>
+    <h2>Works on any element</h2>
+    <p>
       <code>.btn</code> renders the same on <code>&lt;button&gt;</code>, <code>&lt;a&gt;</code>, and form inputs.
     </p>
     {% call ui.demo() %}
@@ -164,5 +250,4 @@
     </div>
     {% endcall %}
   </section>
-</main>
 {% endblock %}

@@ -9,16 +9,17 @@
 :root,
 [data-bs-theme="light"] {
   --#{$prefix}border-color-subtle: #{$border-color-subtle};
-  --#{$prefix}surface:             #{$surface};
-  --#{$prefix}surface-alt:         #{$surface-alt};
+  --#{$prefix}surface: #{$surface};
+  --#{$prefix}surface-alt: #{$surface-alt};
 }
 
 // Dark overrides go through BS5's color-mode mixin (same shape as BS5's own
 // _root.scss). The `$root: true` arg matches BS5's pattern — only meaningful
-// in media-query mode, where it wraps the @content in :root.
-// TODO: replace placeholders when the dark design tokens land.
+// in media-query mode, where it wraps the @content in :root. Sourced from
+// the $*-dark Sass vars in tokens/_variables-dark.scss so the design tokens
+// live in one place (no hardcoded hex here).
 @include color-mode(dark, true) {
-  --#{$prefix}border-color-subtle: #2a2d35;
-  --#{$prefix}surface:             #1e2128;
-  --#{$prefix}surface-alt:         #16181d;
+  --#{$prefix}border-color-subtle: #{$border-color-subtle-dark};
+  --#{$prefix}surface: #{$surface-dark};
+  --#{$prefix}surface-alt: #{$surface-alt-dark};
 }

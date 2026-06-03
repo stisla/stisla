@@ -1,15 +1,14 @@
 {% extends "layouts/base.njk" %}
 
-{% block title %}Stisla v3 — hello world{% endblock %}
+{% block title %}Stisla v3 · hello world{% endblock %}
 
 {% block content %}
-<main class="container py-5">
-  <h1 class="display-5 mb-3">Stisla v3</h1>
-  <p class="lead text-body-secondary">
-    Phase 1 — tokens wired through Bootstrap. Try the controls below.
+  <h1>Stisla v3</h1>
+  <p class="lead">
+    Phase 1 → tokens wired through Bootstrap. Try the controls below.
   </p>
 
-  <div class="d-flex gap-2 align-items-center mb-4">
+  <div class="d-flex gap-2 align-items-center mb-4 mt-4 not-prose">
     <label class="d-inline-flex align-items-center gap-2">
       <span class="small text-body-secondary">Primary</span>
       <input id="pick-primary" type="color" value="#2563eb" class="form-control form-control-color" />
@@ -17,7 +16,7 @@
     <button id="reset-primary" type="button" class="btn btn-link">reset</button>
   </div>
 
-  <div class="d-flex flex-wrap gap-2 mb-4">
+  <div class="d-flex flex-wrap gap-2 mb-4 not-prose">
     <button class="btn btn-primary">Primary</button>
     <button class="btn btn-secondary">Secondary</button>
     <button class="btn btn-success">Success</button>
@@ -28,12 +27,12 @@
     <button class="btn btn-dark">Dark</button>
   </div>
 
-  <div class="row g-3 mb-4">
+  <div class="row g-3 mb-4 not-prose">
     <div class="col-md-4">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Card surface</h5>
-          <p class="card-text text-body-secondary">White card on tinted body — the layered surface effect.</p>
+          <p class="card-text text-body-secondary">White card on tinted body: the layered surface effect.</p>
         </div>
       </div>
     </div>
@@ -45,13 +44,13 @@
     </div>
   </div>
 
-  <h2 class="h5 mb-2">Runtime tinting (responds to picker)</h2>
-  <p class="small text-body-secondary mb-3">
+  <h2>Runtime tinting (responds to picker)</h2>
+  <p>
     Utilities below use <code>var(--bs-primary)</code> / <code>--bs-primary-rgb</code>
     at runtime, so the picker updates them live. Buttons above are compiled at Sass
-    build time and don't respond — that's a Bootstrap architectural limit.
+    build time and don't respond: that's a Bootstrap architectural limit.
   </p>
-  <div class="d-flex flex-wrap gap-3 align-items-center">
+  <div class="d-flex flex-wrap gap-3 align-items-center not-prose">
     <span class="badge text-bg-primary">.text-bg-primary</span>
     <span class="px-3 py-2 bg-primary text-white rounded">.bg-primary</span>
     <span class="text-primary fw-semibold">.text-primary</span>
@@ -77,5 +76,4 @@
       document.getElementById('pick-primary').value = '#2563eb';
     });
   </script>
-</main>
 {% endblock %}

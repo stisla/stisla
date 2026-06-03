@@ -1,7 +1,17 @@
 {#
   Component demo block: framed preview on top, source HTML below.
   Single source of truth via Nunjucks {% call %} — the body is rendered once
-  and shown twice (live + escaped).
+  and shown twice (live + Shiki-highlighted).
+
+  Short snippets render uncollapsed. Snippets longer than COLLAPSE_LINES get
+  the View Code / Hide Code toggle: code clipped with a fade-out gradient
+  until expanded, then capped at max-height with overflow-auto.
+
+  Light/dark token colors come from Shiki's dual-theme CSS vars (--shiki-dark),
+  so theme switching is pure CSS: no JS swap.
+
+  The wrapping `.demo` also carries `.not-prose` so the rendered preview and
+  Shiki code listing are exempt from the site's prose typography rules.
 
   Usage:
     {% import "partials/_demo.njk" as ui %}
@@ -13,8 +23,18 @@
 #}
 {%- macro demo() -%}
 {%- set src = caller() -%}
-<div class="demo">
+{%- set deded = src | dedent -%}
+{%- set collapsible = (deded.split('\n') | length) > 5 -%}
+<div class="demo not-prose">
   <div class="demo-preview">{{ src | safe }}</div>
-  <div class="demo-code"><pre><code>{{ src | dedent | escape }}</code></pre></div>
+  <div class="demo-code"{% if collapsible %} data-demo-code{% endif %}>
+    <div class="demo-code-source">{{ deded | highlight('html') | safe }}</div>
+    {%- if collapsible %}
+    <button type="button" class="demo-code-toggle" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+    {%- endif %}
+  </div>
 </div>
 {%- endmacro -%}

@@ -2,7 +2,7 @@ import nunjucks from 'nunjucks';
 import fg from 'fast-glob';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
-import { dedent } from './nunjucks-filters.mjs';
+import { dedent, getHighlighter, makeHighlightFilter } from './nunjucks-filters.mjs';
 
 const SITE_ROOT = 'src/site';
 const OUT_DIR = 'site-dist';
@@ -13,6 +13,7 @@ const env = nunjucks.configure(SITE_ROOT, {
 });
 env.addGlobal('dev', false);
 env.addFilter('dedent', dedent);
+env.addFilter('highlight', makeHighlightFilter(await getHighlighter()));
 
 await fs.mkdir(OUT_DIR, { recursive: true });
 

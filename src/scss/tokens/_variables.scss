@@ -6,6 +6,12 @@
 // Sass options
 $enable-shadows: true;
 
+// CSS custom property prefix — defined here (BS5 sets it with !default in
+// bootstrap/scss/variables, which runs after this file) so var(--#{$prefix}…)
+// references below resolve without hardcoding "bs-". Trailing hyphen matches
+// BS5's default; references concatenate as --#{$prefix}surface → --bs-surface.
+$prefix: bs-;
+
 // Force white text on vibrant mid-tone variants (success/danger/warning/info).
 // BS5's default 4.5:1 ratio picks black on those; design intent is white.
 // Affects every color-contrast() call: btn-*, text-bg-*, alert-*, badge text.
@@ -47,14 +53,21 @@ $border-radius-lg: 1rem; // 16px
 // AA contrast trade-off is real; document the one-line escape
 // ($success: $green-700; $warning: $yellow-700;) in Phase 5 docs for
 // consumers who need stricter compliance.
+// $light / $dark pinned first so $secondary below can reference $dark.
+$light: $gray-100;
+$dark: #23252e;
 $primary: $blue-600;
-$secondary: $gray-500;
+// Secondary is mono, not grey — tracks the foreground color so outline
+// reads on dark surfaces. Light-mode compile lands here as near-black;
+// dark-mode swap to near-white lives in components/_buttons.scss (the BS5
+// button-variant mixin compiles once with this value). The subtle/emphasis
+// triplet below stays grey-derived; it serves badge/alert subtle surfaces
+// that read fine without inversion.
+$secondary: $dark;
 $success: $green-500;
 $danger: $red-500;
 $warning: $yellow-500;
 $info: $sky-500;
-$light: $gray-100;
-$dark: #23252e;
 
 // Theme-color triplets — pin to specific ramp positions rather than BS5's tint/shade math
 $primary-text-emphasis: $blue-800;
@@ -90,6 +103,11 @@ $body-tertiary-color: #8691aa;
 $body-tertiary-bg: #f6f7f9;
 $border-color: #ecedf2;
 $border-color-subtle: #f3f4f7;
+// Translucent border — shared by card/dropdown/popover/modal/toast (BS5 routes
+// all of those through $card-border-color etc. → var(--bs-border-color-translucent)).
+// Override here so a single token controls every elevated-surface border, and
+// dark cascades automatically via $border-color-translucent-dark.
+$border-color-translucent: rgba(0, 0, 0, 0.075);
 
 // Surfaces — shared two-tone neutrals. Reused by card body / card footer
 // today; modal-bg, dropdown-bg, popover-bg, etc. swap to var(--bs-surface)
@@ -100,13 +118,15 @@ $border-color-subtle: #f3f4f7;
 $surface: #fff;
 $surface-alt: #f9fafb;
 
-// Surface fanout — cards, modals, dropdowns, etc. stay pure white on the tinted body
-$card-bg: $surface;
-$modal-content-bg: $surface;
-$dropdown-bg: $surface;
-$list-group-bg: $surface;
-$popover-bg: $surface;
-$offcanvas-bg-color: $surface;
+// Surface fanout — cards, modals, dropdowns, etc. stay pure white on the tinted body.
+// Reference var(--#{$prefix}surface), not $surface, so dark mode only needs to swap
+// the foundation token in _root.scss; --bs-card-bg / --bs-modal-bg / etc. cascade.
+$card-bg: var(--#{$prefix}surface);
+$modal-content-bg: var(--#{$prefix}surface);
+$dropdown-bg: var(--#{$prefix}surface);
+$list-group-bg: var(--#{$prefix}surface);
+$popover-bg: var(--#{$prefix}surface);
+$offcanvas-bg-color: var(--#{$prefix}surface);
 
 // Cards — 24px body padding, 24/16 cap padding. Borderless: separation reads
 // via surface contrast (card body vs alt-surface footer) + shadow. 16px outer
@@ -119,11 +139,15 @@ $card-spacer-x: 1.25rem;
 $card-cap-padding-y: 0.75rem;
 $card-cap-padding-x: 1.25rem;
 $card-cap-bg: transparent;
-$card-subtitle-color: var(
-  --bs-secondary-color
-); // $prefix isn't defined yet — hardcode the BS5 default ("bs")
+// Chain card-title to --bs-heading-color so any change to $headings-color /
+// $headings-color-dark propagates to card titles (BS5's default is `null`,
+// which falls through to body color — bypassing the heading channel).
+$card-title-color: var(--#{$prefix}heading-color);
+$card-subtitle-color: var(--#{$prefix}secondary-color);
 $card-border-width: 1px;
-$card-border-color: rgba(0, 0, 0, 0.075);
+// $card-border-color intentionally not set — BS5 defaults to
+// var(--bs-border-color-translucent), which we control via $border-color-translucent
+// above; dark mode cascades for free without per-component overrides.
 $card-border-radius: 1rem; // 16px (BS5 default = var(--bs-border-radius) = .75rem in our setup)
 $card-box-shadow:
   0px 1px 3px rgba(0, 0, 0, 0.05),
@@ -132,8 +156,8 @@ $card-box-shadow:
 $list-group-item-padding-y: 0.5rem;
 $list-group-item-padding-x: 1.25rem;
 
-$nav-tabs-link-active-border-color: $border-color-subtle;
-$nav-tabs-link-hover-border-color: $border-color-subtle;
+$nav-tabs-link-active-border-color: var(--#{$prefix}border-color-subtle);
+$nav-tabs-link-hover-border-color: var(--#{$prefix}border-color-subtle);
 
 // Disabled — lighter than BS5's default (--bs-secondary-color), matches design's text-disabled
 $nav-link-disabled-color: $gray-300;

@@ -47,13 +47,12 @@
 }
 
 // Ring effect — recolor the 1px BS5 border to a darker stop of the same ramp.
-// .btn-dark is the exception: its bg is already past gray-900, so the ring
-// goes lighter (gray-800) for visibility against the near-black fill.
+// Secondary opts out (it's mono — bg already lands at $dark, so a darker ring
+// would just be black-on-black). .btn-light / .btn-dark are unstyled —
+// they're soft-retired from the Stisla v3 surface (use btn-secondary for
+// mono needs); BS5's defaults still emit, just unbranded.
 .btn-primary {
   --#{$prefix}btn-border-color: #{$blue-600};
-}
-.btn-secondary {
-  --#{$prefix}btn-border-color: #{$gray-600};
 }
 .btn-success {
   --#{$prefix}btn-border-color: #{$green-600};
@@ -67,46 +66,180 @@
 .btn-info {
   --#{$prefix}btn-border-color: #{$sky-600};
 }
-.btn-light {
-  --#{$prefix}btn-border-color: #{$gray-200};
-}
-.btn-dark {
-  --#{$prefix}btn-border-color: #{$gray-700};
+
+// Mono secondary — filled and outline diverge intentionally:
+//
+//   Filled  = strong inverted mono. Light = $dark on white, dark = near-white
+//             on dark surface. Same pattern as primary's filled (loud), so
+//             pairing primary-filled + secondary-filled reads as two equally
+//             strong CTAs. Use when both actions are genuinely peer-weight.
+//
+//   Outline = calm grey-pinned, Selia-style. Border and text sit in the grey
+//             ramp instead of the fg color, so the variant reads as "quiet
+//             alternative to primary" — the canonical Cancel / second-tier
+//             pairing. Hover fills with a soft grey rather than inverting.
+//
+// Light filled (.btn-secondary, default cascade) needs no override —
+// $secondary = $dark in tokens, BS5's button-variant compiles it correctly.
+// Dark filled flips below via explicit hover/active stops (auto-tint on a
+// near-white bg moves toward pure white = no visible state change).
+.btn-outline-secondary {
+  --#{$prefix}btn-color: #{$gray-700};
+  --#{$prefix}btn-border-color: #{$gray-300};
+  --#{$prefix}btn-hover-color: #{$gray-900};
+  --#{$prefix}btn-hover-bg: #{$gray-100};
+  --#{$prefix}btn-hover-border-color: #{$gray-400};
+  --#{$prefix}btn-focus-shadow-rgb: #{to-rgb($gray-400)};
+  --#{$prefix}btn-active-color: #{$gray-900};
+  --#{$prefix}btn-active-bg: #{$gray-200};
+  --#{$prefix}btn-active-border-color: #{$gray-400};
+  --#{$prefix}btn-disabled-color: #{$gray-500};
+  --#{$prefix}btn-disabled-border-color: #{$gray-300};
 }
 
-// Loading state — toggled via JS (.classList.add('btn-loading')). Text is
-// hidden via transparent color; the spinner uses var(--bs-btn-color)
-// directly so it stays visible per variant.
+@include color-mode(dark) {
+  .btn-secondary {
+    @include button-variant(
+      $background: $body-color-dark,
+      $border: $body-color-dark,
+      $hover-background: $gray-200,
+      $hover-border: $gray-200,
+      $active-background: $gray-300,
+      $active-border: $gray-300
+    );
+  }
+
+  .btn-outline-secondary {
+    --#{$prefix}btn-color: #{$gray-200};
+    --#{$prefix}btn-border-color: #{$gray-700};
+    --#{$prefix}btn-hover-color: #{$gray-100};
+    --#{$prefix}btn-hover-bg: #{$gray-800};
+    --#{$prefix}btn-hover-border-color: #{$gray-600};
+    --#{$prefix}btn-focus-shadow-rgb: #{to-rgb($gray-500)};
+    --#{$prefix}btn-active-color: #{$gray-100};
+    --#{$prefix}btn-active-bg: #{$gray-700};
+    --#{$prefix}btn-active-border-color: #{$gray-600};
+    --#{$prefix}btn-disabled-color: #{$gray-500};
+    --#{$prefix}btn-disabled-border-color: #{$gray-700};
+  }
+}
+
+// Ghost + light variants.
+//
+//   Ghost = no chrome at rest (transparent bg + border, colored text).
+//           Hover paints a soft tint of the color so the affordance shows up
+//           on interaction. Use for low-friction actions in toolbars, nav
+//           items, and dense layouts where outline would feel heavy.
+//
+//   Light = soft tinted fill at rest (color at ~12% alpha, no border, colored
+//           text). Hover deepens to ~20%. Sits between ghost and outline in
+//           emphasis. Use for "soft emphasis" actions — alert callouts,
+//           dismissible chips, secondary toolbar buttons.
+//
+// Both loop over $theme-colors so every brand color gets the variant — same
+// pattern BS5 uses for .btn-outline-#{$color}. Mono secondary in dark mode
+// gets a surgical override below (the compile-time $secondary = $dark resolves
+// to a dark tint that vanishes on a near-black surface).
+@mixin button-ghost-variant($color) {
+  --#{$prefix}btn-color: #{$color};
+  --#{$prefix}btn-bg: transparent;
+  --#{$prefix}btn-border-color: transparent;
+  --#{$prefix}btn-hover-color: #{$color};
+  --#{$prefix}btn-hover-bg: #{rgba($color, 0.1)};
+  --#{$prefix}btn-hover-border-color: transparent;
+  --#{$prefix}btn-focus-shadow-rgb: #{to-rgb($color)};
+  --#{$prefix}btn-active-color: #{$color};
+  --#{$prefix}btn-active-bg: #{rgba($color, 0.16)};
+  --#{$prefix}btn-active-border-color: transparent;
+  --#{$prefix}btn-active-shadow: none;
+  --#{$prefix}btn-disabled-color: #{rgba($color, 0.45)};
+  --#{$prefix}btn-disabled-bg: transparent;
+  --#{$prefix}btn-disabled-border-color: transparent;
+  --#{$prefix}btn-box-shadow: none;
+  --#{$prefix}gradient: none;
+}
+
+@mixin button-light-variant($color) {
+  --#{$prefix}btn-color: #{$color};
+  --#{$prefix}btn-bg: #{rgba($color, 0.12)};
+  --#{$prefix}btn-border-color: transparent;
+  --#{$prefix}btn-hover-color: #{$color};
+  --#{$prefix}btn-hover-bg: #{rgba($color, 0.2)};
+  --#{$prefix}btn-hover-border-color: transparent;
+  --#{$prefix}btn-focus-shadow-rgb: #{to-rgb($color)};
+  --#{$prefix}btn-active-color: #{$color};
+  --#{$prefix}btn-active-bg: #{rgba($color, 0.28)};
+  --#{$prefix}btn-active-border-color: transparent;
+  --#{$prefix}btn-active-shadow: none;
+  --#{$prefix}btn-disabled-color: #{rgba($color, 0.45)};
+  --#{$prefix}btn-disabled-bg: #{rgba($color, 0.06)};
+  --#{$prefix}btn-disabled-border-color: transparent;
+  --#{$prefix}btn-box-shadow: none;
+  --#{$prefix}gradient: none;
+}
+
+// Skip "light" and "dark" — they're soft-retired (see ring section above),
+// and .btn-ghost-light / .btn-light-light read awkwardly anyway. Other
+// BS5 utilities ($theme-colors-driven) still emit them normally.
+@each $color, $value in map-remove($theme-colors, "light", "dark") {
+  .btn-ghost-#{$color} {
+    @include button-ghost-variant($value);
+  }
+  .btn-light-#{$color} {
+    @include button-light-variant($value);
+  }
+}
+
+// Mono secondary in dark mode for ghost/light — compile-time $secondary is
+// $dark, which tints toward black and disappears on the dark surface. Flip
+// to near-white so the variants stay readable.
+@include color-mode(dark) {
+  .btn-ghost-secondary {
+    --#{$prefix}btn-color: #{$gray-200};
+    --#{$prefix}btn-hover-color: #{$gray-100};
+    --#{$prefix}btn-hover-bg: #{rgba($body-color-dark, 0.08)};
+    --#{$prefix}btn-active-color: #{$gray-100};
+    --#{$prefix}btn-active-bg: #{rgba($body-color-dark, 0.14)};
+    --#{$prefix}btn-focus-shadow-rgb: #{to-rgb($gray-500)};
+    --#{$prefix}btn-disabled-color: #{rgba($body-color-dark, 0.35)};
+  }
+
+  .btn-light-secondary {
+    --#{$prefix}btn-color: #{$gray-100};
+    --#{$prefix}btn-bg: #{rgba($body-color-dark, 0.08)};
+    --#{$prefix}btn-hover-color: #{$gray-100};
+    --#{$prefix}btn-hover-bg: #{rgba($body-color-dark, 0.14)};
+    --#{$prefix}btn-active-color: #{$gray-100};
+    --#{$prefix}btn-active-bg: #{rgba($body-color-dark, 0.2)};
+    --#{$prefix}btn-focus-shadow-rgb: #{to-rgb($gray-500)};
+    --#{$prefix}btn-disabled-color: #{rgba($body-color-dark, 0.35)};
+    --#{$prefix}btn-disabled-bg: #{rgba($body-color-dark, 0.04)};
+  }
+}
+
+// Loading state — toggled via JS (.classList.add('btn-loading')). Spinner is
+// a leading flex item via ::before so the label stays visible; any inline
+// leading/trailing icons are hidden so the spinner visually replaces them.
 .btn-loading {
-  color: transparent;
   pointer-events: none;
-  position: relative;
+  cursor: progress;
 }
-// When loading is paired with the disabled attribute (recommended for forms +
-// a11y), BS5's :disabled rule would otherwise reveal the label, dim the
-// spinner to .65 opacity, and nuke the shadow. Restore loading visuals.
-.btn-loading:disabled,
-.btn-loading.disabled,
-fieldset:disabled .btn-loading {
-  color: transparent;
-  opacity: 1;
-  box-shadow: var(--#{$prefix}btn-box-shadow);
+.btn-loading > :is(svg, i) {
+  display: none;
 }
-.btn-loading::after {
+.btn-loading::before {
   content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  display: inline-block;
+  flex-shrink: 0;
   width: 1em;
   height: 1em;
-  margin: -0.5em 0 0 -0.5em;
-  border: 2px solid var(--#{$prefix}btn-color);
+  border: 2px solid currentColor;
   border-right-color: transparent;
   border-radius: 50%;
   animation: stisla-btn-spin 0.75s linear infinite;
 }
 @media (prefers-reduced-motion: reduce) {
-  .btn-loading::after { animation-duration: 3s; }
+  .btn-loading::before { animation-duration: 3s; }
 }
 @keyframes stisla-btn-spin {
   to { transform: rotate(360deg); }

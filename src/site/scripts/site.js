@@ -12,6 +12,23 @@ document.addEventListener("click", (e) => {
   localStorage.setItem("stisla-theme", next);
 });
 
+// data-demo-code-toggle — expand/collapse the closest [data-demo-code] container.
+// Pure presentational toggle: state lives in data-expanded + aria-expanded.
+document.addEventListener("click", (e) => {
+  const target = e.target.closest("[data-demo-code-toggle]");
+  if (!target) return;
+  const container = target.closest("[data-demo-code]");
+  if (!container) return;
+  const expanded = container.hasAttribute("data-expanded");
+  if (expanded) {
+    container.removeAttribute("data-expanded");
+    target.setAttribute("aria-expanded", "false");
+  } else {
+    container.setAttribute("data-expanded", "");
+    target.setAttribute("aria-expanded", "true");
+  }
+});
+
 // data-demo-loading="<ms>" — toggle .btn-loading on click, auto-clear after the given duration.
 // <button class="btn btn-primary" data-demo-loading="2000">Click to save</button>
 document.addEventListener("click", (e) => {

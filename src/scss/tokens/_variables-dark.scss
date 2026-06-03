@@ -2,11 +2,15 @@
 // _variables-dark.scss). Loaded BEFORE @import 'bootstrap/scss/variables-dark'
 // so our $*-dark values win via !default.
 //
-// Empty for now — the dark-theme design tokens haven't landed. BS5's defaults
-// (which reference our overridden $gray-100..900 ramp) currently provide
-// reasonable dark values. When the design tokens arrive, set them here:
+// Naming: dark-theme Sass vars MUST use the -dark suffix. BS5's _root.scss
+// dark block reads $body-bg-dark / $body-color-dark / $border-color-dark / etc.
+// — a bare $body-bg here would be silently ignored. Custom tokens
+// ($surface-dark, $surface-alt-dark, $border-color-subtle-dark) follow the
+// same convention and are consumed by tokens/_root.scss.
 //
-//   $body-bg-dark:                    <hex>;
+// Other BS5 dark vars not yet set (BS5's defaults reference our overridden
+// $gray-100..900 ramp and look reasonable for now):
+//
 //   $body-color-dark:                 <hex>;
 //   $border-color-dark:               <hex>;
 //   $body-secondary-bg-dark:          <hex>;
@@ -16,6 +20,20 @@
 //   $primary-border-subtle-dark:      <hex>;
 //   // ...and so on for secondary/success/info/warning/danger/light/dark
 //
-// For component bgs (card, modal, dropdown) — BS5 doesn't ship $*-dark vars.
-// Override those at component scope via @include color-mode(dark) in the
-// relevant src/scss/components/_<name>.scss file. See _card.scss for an example.
+// For component bgs without BS5 dark hooks (e.g. $card-bg, $modal-content-bg —
+// BS5 has no $card-bg-dark / $modal-content-bg-dark), override via
+// @include color-mode(dark) in the component file (src/scss/components/_<name>.scss).
+
+$body-bg-dark: #0b0c0e;
+// Uniform text color in dark — body cascades to headings ($headings-color-dark
+// defaults to `inherit`) and to card titles (chained via $card-title-color in
+// _variables.scss). One token, full cascade.
+$body-color-dark: #f5f8fe;
+$body-secondary-color-dark: rgba($body-color-dark, 0.75);
+$surface-dark: #121317;
+$surface-alt-dark: #16181d;
+$border-color-subtle-dark: #2a2d35;
+// Translucent border (dark) — cascades to card/dropdown/popover/modal/toast
+// via BS5's var(--bs-border-color-translucent) routing. See $border-color-translucent
+// in _variables.scss.
+$border-color-translucent-dark: rgba(255, 255, 255, 0.07);

@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Cards — Stisla v3{% endblock %}
+{% block title %}Cards · Stisla v3{% endblock %}
 
 {% set img_landscape = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=70" %}
 {% set img_landscape_2 = "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=900&q=70" %}
@@ -9,15 +9,14 @@
 {% set img_overlay = "https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=900&q=60" %}
 
 {% block content %}
-<main class="container py-5">
-  <header class="mb-5">
-    <h1 class="h2 mb-2">Cards</h1>
-    <p class="text-body-secondary mb-0 lead">A flexible content container with body, optional header / footer, image, and list-group regions.</p>
+  <header>
+    <h1>Cards</h1>
+    <p class="lead">A flexible content container with body, optional header / footer, image, and list-group regions.</p>
   </header>
 
-  <section class="mb-5">
-    <h2 class="h5 mb-3">Basic</h2>
-    <p class="text-body-secondary mb-3">A card with just <code>.card-body</code>.</p>
+  <section>
+    <h2>Basic</h2>
+    <p>A card with just <code>.card-body</code>.</p>
     {% call ui.demo() %}
     <div class="card" style="width: 18rem;">
       <div class="card-body">
@@ -27,9 +26,9 @@
     {% endcall %}
   </section>
 
-  <section class="mb-5">
-    <h2 class="h5 mb-3">Titles, subtitle, text, links</h2>
-    <p class="text-body-secondary mb-3"><code>.card-title</code> is pinned to 16px regardless of which <code>&lt;h*&gt;</code> tag you pick. <code>.card-subtitle</code> picks up <code>--bs-secondary-color</code> so the muted treatment is baked in — no <code>.text-body-secondary</code> utility needed.</p>
+  <section>
+    <h2>Titles, subtitle, text, links</h2>
+    <p><code>.card-title</code> is pinned to 16px regardless of which <code>&lt;h*&gt;</code> tag you pick. <code>.card-subtitle</code> picks up <code>--bs-secondary-color</code> so the muted treatment is baked in: no <code>.text-body-secondary</code> utility needed.</p>
     {% call ui.demo() %}
     <div class="card" style="width: 18rem;">
       <div class="card-body">
@@ -43,9 +42,9 @@
     {% endcall %}
   </section>
 
-  <section class="mb-5">
-    <h2 class="h5 mb-3">Images</h2>
-    <p class="text-body-secondary mb-3"><code>.card-img-top</code> / <code>.card-img-bottom</code> round their respective corners to match the card's 16px outer radius. <code>.card-img-overlay</code> places content over a <code>.card-img</code>.</p>
+  <section>
+    <h2>Images</h2>
+    <p><code>.card-img-top</code> / <code>.card-img-bottom</code> round their respective corners to match the card's 16px outer radius. <code>.card-img-overlay</code> places content over a <code>.card-img</code>.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-wrap gap-3 align-items-start">
       <div class="card" style="width: 18rem;">
@@ -76,9 +75,9 @@
     {% endcall %}
   </section>
 
-  <section class="mb-5">
-    <h2 class="h5 mb-3">Horizontal</h2>
-    <p class="text-body-secondary mb-3">Image left, body right via <code>row g-0</code>. The image uses <code>.rounded-start-3</code> so its left corners match the card's 16px outer radius.</p>
+  <section>
+    <h2>Horizontal</h2>
+    <p>Image left, body right via <code>row g-0</code>. The image uses <code>.rounded-start-3</code> so its left corners match the card's 16px outer radius.</p>
     {% call ui.demo() %}
     <div class="card" style="max-width: 540px;">
       <div class="row g-0">
@@ -97,9 +96,9 @@
     {% endcall %}
   </section>
 
-  <section class="mb-5">
-    <h2 class="h5 mb-3">Header + body + footer</h2>
-    <p class="text-body-secondary mb-3">The default header is transparent (inherits the card body bg). The footer sits on <code>--bs-surface-alt</code> so the body/footer split reads without a border.</p>
+  <section>
+    <h2>Header + body + footer</h2>
+    <p>The default header is transparent (inherits the card body bg). The footer sits on <code>--bs-surface-alt</code> so the body/footer split reads without a border.</p>
     {% call ui.demo() %}
     <div class="card" style="width: 22rem;">
       <div class="card-header card-header-alt">
@@ -118,9 +117,9 @@
     {% endcall %}
   </section>
 
-  <section class="mb-5">
-    <h2 class="h5 mb-3"><code>.card-header-alt</code></h2>
-    <p class="text-body-secondary mb-3">Opt the header onto <code>--bs-surface-alt</code> to mirror the footer's contrast. Composes with <code>.card-header</code> — same padding, same border-radius rules.</p>
+  <section>
+    <h2><code>.card-header-alt</code></h2>
+    <p>Opt the header onto <code>--bs-surface-alt</code> to mirror the footer's contrast. Composes with <code>.card-header</code>: same padding, same border-radius rules.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-wrap gap-3 align-items-start">
       <div class="card" style="width: 22rem;">
@@ -139,8 +138,8 @@
     {% endcall %}
   </section>
 
-  <section class="mb-5">
-    <h2 class="h5 mb-3">Header with nav tabs</h2>
+  <section>
+    <h2>Header with nav tabs</h2>
     {% call ui.demo() %}
     <div class="card text-center" style="width: 22rem;">
       <div class="card-header">
@@ -159,8 +158,8 @@
     {% endcall %}
   </section>
 
-  <section class="mb-5">
-    <h2 class="h5 mb-3">Header with nav pills</h2>
+  <section>
+    <h2>Header with nav pills</h2>
     {% call ui.demo() %}
     <div class="card text-center" style="width: 22rem;">
       <div class="card-header">
@@ -179,9 +178,9 @@
     {% endcall %}
   </section>
 
-  <section class="mb-5">
-    <h2 class="h5 mb-3">List groups</h2>
-    <p class="text-body-secondary mb-3">Use <code>.list-group-flush</code> so items sit edge-to-edge inside the card. Combine with header and/or footer.</p>
+  <section>
+    <h2>List groups</h2>
+    <p>Use <code>.list-group-flush</code> so items sit edge-to-edge inside the card. Combine with header and/or footer.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-wrap gap-3 align-items-start">
       <div class="card" style="width: 18rem;">
@@ -211,9 +210,9 @@
     {% endcall %}
   </section>
 
-  <section class="mb-5">
-    <h2 class="h5 mb-3">Sizing</h2>
-    <p class="text-body-secondary mb-3">Cards have no built-in width — size them with inline styles (<code>style="width: 18rem"</code>), utility classes (<code>.w-75</code>, <code>.w-50</code>), or grid columns.</p>
+  <section>
+    <h2>Sizing</h2>
+    <p>Cards have no built-in width. Size them with inline styles (<code>style="width: 18rem"</code>), utility classes (<code>.w-75</code>, <code>.w-50</code>), or grid columns.</p>
     {% call ui.demo() %}
     <div>
       <div class="card mb-3" style="width: 18rem;">
@@ -237,7 +236,7 @@
     </div>
     {% endcall %}
 
-    <p class="text-body-secondary mt-4 mb-3">Or use the grid for responsive sizing.</p>
+    <p>Or use the grid for responsive sizing.</p>
     {% call ui.demo() %}
     <div class="row">
       <div class="col-sm-6 mb-3 mb-sm-0">
@@ -262,8 +261,8 @@
     {% endcall %}
   </section>
 
-  <section class="mb-5">
-    <h2 class="h5 mb-3">Text alignment</h2>
+  <section>
+    <h2>Text alignment</h2>
     {% call ui.demo() %}
     <div class="d-flex flex-wrap gap-3 align-items-start">
       <div class="card" style="width: 16rem;">
@@ -288,9 +287,9 @@
     {% endcall %}
   </section>
 
-  <section class="mb-5">
-    <h2 class="h5 mb-3">Background colors — <code>.text-bg-*</code></h2>
-    <p class="text-body-secondary mb-3">All 8 theme colors. <code>.text-bg-*</code> sets background and contrast text in one shot.</p>
+  <section>
+    <h2>Background colors → <code>.text-bg-*</code></h2>
+    <p>All 8 theme colors. <code>.text-bg-*</code> sets background and contrast text in one shot.</p>
     {% call ui.demo() %}
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
       {% for variant in ["primary", "secondary", "success", "danger", "warning", "info", "light", "dark"] %}
@@ -308,9 +307,9 @@
     {% endcall %}
   </section>
 
-  <section class="mb-5">
-    <h2 class="h5 mb-3">Grid cards</h2>
-    <p class="text-body-secondary mb-3"><code>row-cols-md-3 g-4</code> + <code>.h-100</code> for an even-height column layout.</p>
+  <section>
+    <h2>Grid cards</h2>
+    <p><code>row-cols-md-3 g-4</code> + <code>.h-100</code> for an even-height column layout.</p>
     {% call ui.demo() %}
     <div class="row row-cols-1 row-cols-md-3 g-4">
       <div class="col">
@@ -343,5 +342,4 @@
     </div>
     {% endcall %}
   </section>
-</main>
 {% endblock %}
