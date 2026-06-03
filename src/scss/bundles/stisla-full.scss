@@ -10,8 +10,9 @@
 // 2. Stisla color primitives — full ramps for blue, sky, yellow, red, green, gray
 @import '../tokens/colors';
 
-// 3. Stisla Bootstrap single-variable overrides
-@import '../tokens/overrides';
+// 3. Stisla Sass variable overrides — light + dark, parallels BS5's split
+@import '../tokens/variables';
+@import '../tokens/variables-dark';
 
 // 4. Bootstrap variables (uses our values via !default)
 @import 'bootstrap/scss/variables';
@@ -27,6 +28,7 @@
 
 // === Layout & components ===
 @import 'bootstrap/scss/root';
+@import '../tokens/root';
 @import 'bootstrap/scss/reboot';
 @import 'bootstrap/scss/type';
 @import 'bootstrap/scss/images';
@@ -41,6 +43,7 @@
 @import 'bootstrap/scss/nav';
 @import 'bootstrap/scss/navbar';
 @import 'bootstrap/scss/card';
+@import '../components/card';
 @import 'bootstrap/scss/accordion';
 @import 'bootstrap/scss/breadcrumb';
 @import 'bootstrap/scss/pagination';

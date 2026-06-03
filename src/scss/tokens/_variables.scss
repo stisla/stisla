@@ -1,0 +1,122 @@
+// Stisla v3 — Sass variable overrides for light theme (parallels BS5's
+// _variables.scss). Loaded after _colors.scss and BEFORE
+// @import 'bootstrap/scss/variables'. All Bootstrap defaults use !default,
+// so values set here win. Dark-theme equivalents live in _variables-dark.scss.
+
+// Sass options
+$enable-shadows: true;
+
+// Force white text on vibrant mid-tone variants (success/danger/warning/info).
+// BS5's default 4.5:1 ratio picks black on those; design intent is white.
+// Affects every color-contrast() call: btn-*, text-bg-*, alert-*, badge text.
+// Trade-off: white-on-warning (~2.2:1) and white-on-success (~2.4:1) fail WCAG AA.
+$min-contrast-ratio: 2;
+
+// Typography — design-system level. BS5 derives input/button/heading sizes
+// from these; Inter ships via <link> in src/site/layouts/base.njk.
+$font-family-sans-serif:
+  "Inter",
+  system-ui,
+  -apple-system,
+  "Segoe UI",
+  Roboto,
+  "Helvetica Neue",
+  "Noto Sans",
+  "Liberation Sans",
+  Arial,
+  sans-serif,
+  "Apple Color Emoji",
+  "Segoe UI Emoji",
+  "Segoe UI Symbol",
+  "Noto Color Emoji";
+$font-size-base: 0.875rem; // 14px body baseline (BS5 default is 1rem)
+$font-size-sm: 0.75rem; // 12px — pinned (BS5 auto-derives ~.766rem)
+$font-size-lg: 1rem; // 16px — pinned (BS5 auto-derives ~1.094rem)
+
+// Border radius — design-system level. Cascades to .btn / .card / .modal /
+// .dropdown / etc. via each component's BS5 var chain (e.g. $btn-border-radius
+// reads var(--bs-border-radius)).
+$border-radius-sm: 0.5rem; // 8px
+$border-radius: 0.75rem; // 12px
+$border-radius-lg: 1rem; // 16px
+
+// Theme colors — point each semantic at a specific ramp stop.
+// All semantic hues sit at their bright -500/-600 stop for modern dashboard
+// vibe (Linear / Stripe / Tailwind UI). Paired with $min-contrast-ratio: 2
+// above, this gives white text on every solid variant except .btn-light.
+// AA contrast trade-off is real; document the one-line escape
+// ($success: $green-700; $warning: $yellow-700;) in Phase 5 docs for
+// consumers who need stricter compliance.
+$primary: $blue-600;
+$secondary: $gray-500;
+$success: $green-500;
+$danger: $red-500;
+$warning: $yellow-500;
+$info: $sky-500;
+$light: $gray-100;
+$dark: #23252e;
+
+// Theme-color triplets — pin to specific ramp positions rather than BS5's tint/shade math
+$primary-text-emphasis: $blue-800;
+$primary-bg-subtle: $blue-100;
+$primary-border-subtle: $blue-300;
+
+$secondary-text-emphasis: $gray-800;
+$secondary-bg-subtle: $gray-100;
+$secondary-border-subtle: $gray-300;
+
+$success-text-emphasis: $green-800;
+$success-bg-subtle: $green-100;
+$success-border-subtle: $green-300;
+
+$info-text-emphasis: $sky-800;
+$info-bg-subtle: $sky-100;
+$info-border-subtle: $sky-300;
+
+$warning-text-emphasis: $yellow-800;
+$warning-bg-subtle: $yellow-100;
+$warning-border-subtle: $yellow-300;
+
+$danger-text-emphasis: $red-800;
+$danger-bg-subtle: $red-100;
+$danger-border-subtle: $red-300;
+
+// Body, text, borders
+$body-bg: #f5f8ff;
+$body-color: #23252e;
+$body-emphasis-color: #23252e;
+$body-secondary-color: #64708b;
+$body-tertiary-color: #8691aa;
+$body-tertiary-bg: #f6f7f9;
+$border-color: #ecedf2;
+$border-color-subtle: #f3f4f7;
+
+// Surface fanout — cards, modals, dropdowns, etc. stay pure white on the tinted body
+$card-bg: #fff;
+$card-footer-bg: #f9fafb;  // Stisla extension — BS5 only ships $card-cap-bg (header + footer); see tokens/_root.scss
+$modal-content-bg: #fff;
+$dropdown-bg: #fff;
+$list-group-bg: #fff;
+$popover-bg: #fff;
+$offcanvas-bg-color: #fff;
+
+// Disabled — lighter than BS5's default (--bs-secondary-color), matches design's text-disabled
+$nav-link-disabled-color: $gray-300;
+$btn-link-disabled-color: $gray-300;
+
+// Buttons — exact heights (28/36/44) enforced via min-height in
+// src/scss/components/_buttons.scss. Per-size font-size and radius come
+// from $font-size-{sm,lg} and $border-radius{,-sm,-lg} above.
+$btn-font-weight: 500;
+$btn-line-height: 1; // tighten leading so Inter's asymmetric metrics don't drift text below optical center
+$btn-padding-y: 0.375rem;
+$btn-padding-x: 0.875rem;
+$btn-padding-y-sm: 0.25rem;
+$btn-padding-x-sm: 0.5rem; // 8px
+$btn-padding-y-lg: 0.5rem;
+$btn-padding-x-lg: 1.5rem; // 24px
+$btn-box-shadow:
+  inset 0 1px 0 rgba(255, 255, 255, 0.15),
+  0 1px 3px 0 rgba(0, 0, 0, 0.1),
+  0 1px 2px -1px rgba(0, 0, 0, 0.1);
+$btn-active-box-shadow: none;

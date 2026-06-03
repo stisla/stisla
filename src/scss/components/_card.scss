@@ -1,0 +1,18 @@
+// Stisla v3 — cards.
+// Phase 2 card restyle proper will land here. For now:
+//   1. opt the footer onto its own runtime var (BS5 ties header + footer to
+//      $card-cap-bg at build time — see tokens/_root.scss);
+//   2. dark-mode the card body bg via BS5's recommended color-mode mixin
+//      (BS5 doesn't ship $card-bg-dark — component bgs are overridden through
+//      the mixin per the 5.3 customize/color-modes docs).
+
+.card-footer {
+  background-color: var(--#{$prefix}card-footer-bg);
+}
+
+@include color-mode(dark) {
+  .card {
+    // TODO: replace placeholder when dark design tokens land.
+    --#{$prefix}card-bg: #1e2128;
+  }
+}

@@ -1,0 +1,21 @@
+// Stisla v3 — Sass variable overrides for dark theme (parallels BS5's
+// _variables-dark.scss). Loaded BEFORE @import 'bootstrap/scss/variables-dark'
+// so our $*-dark values win via !default.
+//
+// Empty for now — the dark-theme design tokens haven't landed. BS5's defaults
+// (which reference our overridden $gray-100..900 ramp) currently provide
+// reasonable dark values. When the design tokens arrive, set them here:
+//
+//   $body-bg-dark:                    <hex>;
+//   $body-color-dark:                 <hex>;
+//   $border-color-dark:               <hex>;
+//   $body-secondary-bg-dark:          <hex>;
+//   $body-tertiary-bg-dark:           <hex>;
+//   $primary-text-emphasis-dark:      <hex>;
+//   $primary-bg-subtle-dark:          <hex>;
+//   $primary-border-subtle-dark:      <hex>;
+//   // ...and so on for secondary/success/info/warning/danger/light/dark
+//
+// For component bgs (card, modal, dropdown) — BS5 doesn't ship $*-dark vars.
+// Override those at component scope via @include color-mode(dark) in the
+// relevant src/scss/components/_<name>.scss file. See _card.scss for an example.

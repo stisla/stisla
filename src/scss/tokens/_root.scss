@@ -1,0 +1,22 @@
+// Stisla v3 — :root extensions.
+// Loaded AFTER `bootstrap/scss/root` so BS5 emits its full :root scaffold
+// first; we layer Stisla-specific tokens on top using the same --bs-* naming.
+// Dark-mode values land here too once the design tokens cover dark theme.
+
+// Light defaults: emit at :root so the carve-outs apply even without a
+// data-bs-theme attribute, and at [data-bs-theme="light"] for explicit
+// light scopes — mirrors BS5's own _root.scss pattern.
+:root,
+[data-bs-theme="light"] {
+  --#{$prefix}border-color-subtle: #{$border-color-subtle};
+  --#{$prefix}card-footer-bg: #{$card-footer-bg};
+}
+
+// Dark overrides go through BS5's color-mode mixin (same shape as BS5's own
+// _root.scss). The `$root: true` arg matches BS5's pattern — only meaningful
+// in media-query mode, where it wraps the @content in :root.
+// TODO: replace placeholders when the dark design tokens land.
+@include color-mode(dark, true) {
+  --#{$prefix}border-color-subtle: #2a2d35;
+  --#{$prefix}card-footer-bg: #16181d;
+}
