@@ -1,0 +1,113 @@
+// Stisla v3 — buttons.
+// Rules BS5 vars can't express:
+//   inline-flex + gap so icons sit naturally beside labels;
+//   min-height per size for exact 28/36/44 px heights regardless of content.
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 36px;
+}
+
+.btn-sm {
+  min-height: 28px;
+}
+.btn-lg {
+  min-height: 44px;
+}
+
+// Icons inside buttons scale with font-size and never squish in tight layouts.
+// Targets any inline icon: SVGs (Lucide post-init, Bootstrap Icons, raw SVG)
+// and <i data-lucide> placeholders pre-init.
+.btn :is(svg, i) {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}
+
+// Outline variants are flat — no elevation shadow on a transparent fill.
+[class*="btn-outline-"] {
+  --bs-btn-box-shadow: none;
+}
+
+// Icon-only buttons: 1:1 square at every size.
+// Usage: <button class="btn btn-primary btn-icon"><svg/></button>
+.btn-icon {
+  width: 36px;
+  padding-left: 0;
+  padding-right: 0;
+}
+.btn-icon.btn-sm {
+  width: 28px;
+}
+.btn-icon.btn-lg {
+  width: 44px;
+}
+
+// Ring effect — recolor the 1px BS5 border to a darker stop of the same ramp.
+// .btn-dark is the exception: its bg is already past gray-900, so the ring
+// goes lighter (gray-800) for visibility against the near-black fill.
+.btn-primary {
+  --#{$prefix}btn-border-color: #{$blue-600};
+}
+.btn-secondary {
+  --#{$prefix}btn-border-color: #{$gray-600};
+}
+.btn-success {
+  --#{$prefix}btn-border-color: #{$green-600};
+}
+.btn-danger {
+  --#{$prefix}btn-border-color: #{$red-600};
+}
+.btn-warning {
+  --#{$prefix}btn-border-color: #{$yellow-600};
+}
+.btn-info {
+  --#{$prefix}btn-border-color: #{$sky-600};
+}
+.btn-light {
+  --#{$prefix}btn-border-color: #{$gray-200};
+}
+.btn-dark {
+  --#{$prefix}btn-border-color: #{$gray-700};
+}
+
+// Loading state — toggled via JS (.classList.add('btn-loading')). Text is
+// hidden via transparent color; the spinner uses var(--bs-btn-color)
+// directly so it stays visible per variant.
+.btn-loading {
+  color: transparent;
+  pointer-events: none;
+  position: relative;
+}
+// When loading is paired with the disabled attribute (recommended for forms +
+// a11y), BS5's :disabled rule would otherwise reveal the label, dim the
+// spinner to .65 opacity, and nuke the shadow. Restore loading visuals.
+.btn-loading:disabled,
+.btn-loading.disabled,
+fieldset:disabled .btn-loading {
+  color: transparent;
+  opacity: 1;
+  box-shadow: var(--#{$prefix}btn-box-shadow);
+}
+.btn-loading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1em;
+  height: 1em;
+  margin: -0.5em 0 0 -0.5em;
+  border: 2px solid var(--#{$prefix}btn-color);
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: stisla-btn-spin 0.75s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn-loading::after { animation-duration: 3s; }
+}
+@keyframes stisla-btn-spin {
+  to { transform: rotate(360deg); }
+}

@@ -1,0 +1,168 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Buttons — Stisla v3{% endblock %}
+
+{% block content %}
+<main class="container py-5">
+  <header class="mb-5">
+    <h1 class="h2 mb-2">Buttons</h1>
+    <p class="text-body-secondary mb-0 lead">A clickable control that triggers an action.</p>
+  </header>
+
+  <section class="mb-5">
+    <h2 class="h5 mb-3">Solid variants</h2>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-2">
+      <button type="button" class="btn btn-primary">Primary</button>
+      <button type="button" class="btn btn-secondary">Secondary</button>
+      <button type="button" class="btn btn-success">Success</button>
+      <button type="button" class="btn btn-danger">Danger</button>
+      <button type="button" class="btn btn-warning">Warning</button>
+      <button type="button" class="btn btn-info">Info</button>
+      <button type="button" class="btn btn-light">Light</button>
+      <button type="button" class="btn btn-dark">Dark</button>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section class="mb-5">
+    <h2 class="h5 mb-3">Outline variants</h2>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-2">
+      <button type="button" class="btn btn-outline-primary">Primary</button>
+      <button type="button" class="btn btn-outline-secondary">Secondary</button>
+      <button type="button" class="btn btn-outline-success">Success</button>
+      <button type="button" class="btn btn-outline-danger">Danger</button>
+      <button type="button" class="btn btn-outline-warning">Warning</button>
+      <button type="button" class="btn btn-outline-info">Info</button>
+      <button type="button" class="btn btn-outline-light">Light</button>
+      <button type="button" class="btn btn-outline-dark">Dark</button>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section class="mb-5">
+    <h2 class="h5 mb-3">Link button</h2>
+    <p class="text-body-secondary mb-3">No background, no shadow; underline on hover.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn-link">Link button</button>
+    {% endcall %}
+  </section>
+
+  <section class="mb-5">
+    <h2 class="h5 mb-3">Sizes</h2>
+    <p class="text-body-secondary mb-3">Heights are pinned at 28 / 36 / 44&nbsp;px regardless of content.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-2 align-items-center">
+      <button type="button" class="btn btn-primary btn-sm">Small</button>
+      <button type="button" class="btn btn-primary">Default</button>
+      <button type="button" class="btn btn-primary btn-lg">Large</button>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section class="mb-5">
+    <h2 class="h5 mb-3">With icon</h2>
+    <p class="text-body-secondary mb-3">
+      Any icon component drops into <code>.btn</code> via flexbox <code>gap</code>.
+      Icons scale with the button's font-size (<code>1em</code>).
+    </p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-2 align-items-center">
+      <button type="button" class="btn btn-primary">
+        <i data-lucide="plus"></i>
+        Leading icon
+      </button>
+      <button type="button" class="btn btn-primary">
+        Trailing icon
+        <i data-lucide="arrow-right"></i>
+      </button>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section class="mb-5">
+    <h2 class="h5 mb-3">Icon only</h2>
+    <p class="text-body-secondary mb-3">
+      Add <code>.btn-icon</code> for a 1:1 square button. Pair with
+      <code>aria-label</code> so the action stays announced.
+    </p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-2 align-items-center">
+      <button type="button" class="btn btn-primary btn-icon btn-sm" aria-label="Add">
+        <i data-lucide="plus"></i>
+      </button>
+      <button type="button" class="btn btn-primary btn-icon" aria-label="Add">
+        <i data-lucide="plus"></i>
+      </button>
+      <button type="button" class="btn btn-primary btn-icon btn-lg" aria-label="Add">
+        <i data-lucide="plus"></i>
+      </button>
+      <button type="button" class="btn btn-outline-danger btn-icon" aria-label="Delete">
+        <i data-lucide="trash-2"></i>
+      </button>
+      <button type="button" class="btn btn-outline-secondary btn-icon" aria-label="Edit">
+        <i data-lucide="pencil"></i>
+      </button>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section class="mb-5">
+    <h2 class="h5 mb-3">States</h2>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-2 align-items-center">
+      <button type="button" class="btn btn-primary active" aria-pressed="true">Active</button>
+      <button type="button" class="btn btn-primary" disabled>Disabled button</button>
+      <a href="#" role="button" class="btn btn-primary disabled" aria-disabled="true" tabindex="-1">Disabled link</a>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section class="mb-5">
+    <h2 class="h5 mb-3">Loading</h2>
+    <p class="text-body-secondary mb-3">
+      Toggle <code>.btn-loading</code> from JS to hide the label and show a spinner.
+      Click is blocked while the class is applied. Pair with <code>aria-busy="true"</code>.
+    </p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-2 align-items-center">
+      <button type="button" class="btn btn-primary btn-loading btn-sm" aria-busy="true">Saving</button>
+      <button type="button" class="btn btn-primary btn-loading" aria-busy="true">Saving</button>
+      <button type="button" class="btn btn-primary btn-loading btn-lg" aria-busy="true">Saving</button>
+      <button type="button" class="btn btn-outline-secondary btn-loading" aria-busy="true">Loading</button>
+      <button type="button" class="btn btn-danger btn-icon btn-loading" aria-busy="true" aria-label="Deleting"></button>
+    </div>
+    {% endcall %}
+    <p class="text-body-secondary small mt-3 mb-2">Click to try (auto-clears after 2s):</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn-primary" data-demo-loading="2000">Save changes</button>
+    {% endcall %}
+  </section>
+
+  <section class="mb-5">
+    <h2 class="h5 mb-3">Toggle</h2>
+    <p class="text-body-secondary mb-3">
+      <code>data-bs-toggle="button"</code> flips <code>.active</code> and <code>aria-pressed</code> on click.
+    </p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn-primary" data-bs-toggle="button">Press me</button>
+    {% endcall %}
+  </section>
+
+  <section class="mb-5">
+    <h2 class="h5 mb-3">Works on any element</h2>
+    <p class="text-body-secondary mb-3">
+      <code>.btn</code> renders the same on <code>&lt;button&gt;</code>, <code>&lt;a&gt;</code>, and form inputs.
+    </p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-2 align-items-center">
+      <button type="button" class="btn btn-primary">&lt;button&gt;</button>
+      <a href="#" role="button" class="btn btn-primary">&lt;a&gt;</a>
+      <input type="submit" class="btn btn-primary" value="<input type=submit>" />
+    </div>
+    {% endcall %}
+  </section>
+</main>
+{% endblock %}
