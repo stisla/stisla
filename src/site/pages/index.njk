@@ -10,8 +10,7 @@
   </p>
 
   <div class="d-flex gap-2 align-items-center mb-4">
-    <button id="toggle-theme" type="button" class="btn btn-outline-secondary">Toggle dark</button>
-    <label class="d-inline-flex align-items-center gap-2 ms-2">
+    <label class="d-inline-flex align-items-center gap-2">
       <span class="small text-body-secondary">Primary</span>
       <input id="pick-primary" type="color" value="#2563eb" class="form-control form-control-color" />
     </label>
@@ -68,9 +67,6 @@
       const b = parseInt(v.slice(4, 6), 16);
       return `${r}, ${g}, ${b}`;
     };
-    document.getElementById('toggle-theme').addEventListener('click', () => {
-      html.dataset.bsTheme = html.dataset.bsTheme === 'dark' ? 'light' : 'dark';
-    });
     document.getElementById('pick-primary').addEventListener('input', (e) => {
       html.style.setProperty('--bs-primary', e.target.value);
       html.style.setProperty('--bs-primary-rgb', hexToRgb(e.target.value));

@@ -1,0 +1,20 @@
+{#
+  Component demo block: framed preview on top, source HTML below.
+  Single source of truth via Nunjucks {% call %} — the body is rendered once
+  and shown twice (live + escaped).
+
+  Usage:
+    {% import "partials/_demo.njk" as ui %}
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-2">
+      <button type="button" class="btn btn-primary">Primary</button>
+    </div>
+    {% endcall %}
+#}
+{%- macro demo() -%}
+{%- set src = caller() -%}
+<div class="demo">
+  <div class="demo-preview">{{ src | safe }}</div>
+  <div class="demo-code"><pre><code>{{ src | dedent | escape }}</code></pre></div>
+</div>
+{%- endmacro -%}

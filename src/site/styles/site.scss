@@ -1,0 +1,61 @@
+// Site-only chrome for stisla.dev — never bundled into the framework CSS.
+// Behaviors live alongside in src/site/scripts/site.js. Runtime tokens come
+// from the framework bundle (--bs-*).
+
+// === Demo viewer ===
+
+.demo {
+  margin-bottom: 1rem;
+  background: var(--bs-card-bg);
+  border-radius: var(--bs-border-radius-lg);
+  overflow: hidden;
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.04),
+    0 10px 10px -5px rgba(0, 0, 0, 0.02);
+}
+
+.demo-preview {
+  padding: 1.5rem;
+}
+
+.demo-code {
+  border-top: 1px solid var(--bs-border-color);
+  background: var(--bs-card-footer-bg);
+}
+
+.demo-code pre {
+  margin: 0;
+  padding: 1rem 1.5rem;
+  overflow-x: auto;
+  color: inherit;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+
+.demo-code code {
+  color: inherit;
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  font-family: var(--bs-font-monospace);
+}
+
+[data-bs-theme="dark"] .demo {
+  background: #1e2128;
+}
+
+// === Theme toggle ===
+// Show the icon for the opposite of the current theme — moon means "switch
+// to dark"; sun means "switch to light".
+
+.theme-icon-dark {
+  display: none;
+}
+
+[data-bs-theme="dark"] .theme-icon-light {
+  display: none;
+}
+
+[data-bs-theme="dark"] .theme-icon-dark {
+  display: inline-block;
+}

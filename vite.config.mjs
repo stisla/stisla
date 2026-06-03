@@ -41,6 +41,8 @@ export default defineConfig(({ command }) => {
         input: {
           'stisla-full': 'src/scss/bundles/stisla-full.scss',
           stisla: 'src/js/index.js',
+          site: 'src/site/scripts/site.js',
+          'site-styles': 'src/site/styles/site.scss',
         },
         output: {
           entryFileNames: '[name].js',

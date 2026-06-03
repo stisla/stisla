@@ -3,20 +3,46 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script>
+    // Apply saved theme synchronously to avoid a light-mode flash on dark sessions.
+    (function () {
+      var t = localStorage.getItem('stisla-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.bsTheme = t;
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
   <title>{% block title %}Stisla v3{% endblock %}</title>
   {% if dev %}
     <link rel="stylesheet" href="/src/scss/bundles/stisla-full.scss" />
+    <link rel="stylesheet" href="/src/site/styles/site.scss" />
   {% else %}
     <link rel="stylesheet" href="/assets/stisla-full.css" />
+    <link rel="stylesheet" href="/assets/site-styles.css" />
   {% endif %}
 </head>
 <body>
+  <nav class="d-flex flex-wrap gap-3 align-items-center px-4 py-2 border-bottom small">
+    <strong>Stisla v3</strong>
+    <a href="/" class="text-decoration-none">tokens</a>
+    <a href="/buttons" class="text-decoration-none">buttons</a>
+    <button type="button" class="btn btn-icon btn-sm ms-auto" data-theme-toggle aria-label="Toggle theme">
+      <i data-lucide="moon" class="theme-icon-light"></i>
+      <i data-lucide="sun" class="theme-icon-dark"></i>
+    </button>
+  </nav>
+
   {% block content %}{% endblock %}
 
   {% if dev %}
     <script type="module" src="/src/js/index.js"></script>
+    <script type="module" src="/src/site/scripts/site.js"></script>
   {% else %}
     <script src="/assets/stisla.js"></script>
+    <script src="/assets/site.js"></script>
   {% endif %}
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>lucide.createIcons();</script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 import nunjucks from 'nunjucks';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
+import { dedent } from './nunjucks-filters.mjs';
 
 // Dev-only middleware: maps URLs to .njk files under siteRoot,
 // renders them, and lets Vite inject HMR + asset URL rewriting.
@@ -11,18 +12,25 @@ export default function nunjucksDevPlugin({ siteRoot }) {
     noCache: true,
   });
   env.addGlobal('dev', true);
+  env.addFilter('dedent', dedent);
 
   return {
     name: 'stisla:nunjucks-dev',
     apply: 'serve',
 
     configureServer(server) {
-      server.watcher.add(`${root}/**/*.njk`);
-      server.watcher.on('change', (file) => {
+      // Watch the entire site directory rather than a glob — chokidar's
+      // glob-at-startup model skips files created after the server boots,
+      // which silently breaks HMR for new pages until restart.
+      server.watcher.add(root);
+      const reload = (file) => {
         if (file.endsWith('.njk')) {
           server.ws.send({ type: 'full-reload', path: '*' });
         }
-      });
+      };
+      server.watcher.on('change', reload);
+      server.watcher.on('add', reload);
+      server.watcher.on('unlink', reload);
 
       server.middlewares.use(async (req, res, next) => {
         try {
