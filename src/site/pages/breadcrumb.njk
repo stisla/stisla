@@ -1,0 +1,85 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Breadcrumb · Stisla v3{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Breadcrumb</h1>
+    <p class="lead">A trail of links showing where the user is inside the page hierarchy.</p>
+  </header>
+
+  <section>
+    <h2>Basic</h2>
+    <p>Wrap an ordered list in a <code>&lt;nav&gt;</code>. Mark the current page with <code>.active</code> and <code>aria-current="page"</code>; it takes the full body color while the trail stays muted.</p>
+    {% call ui.demo() %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Library</li>
+      </ol>
+    </nav>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Multiple levels</h2>
+    <p>Any number of crumbs work. The default chevron sits between each item.</p>
+    {% call ui.demo() %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Library</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Data</li>
+      </ol>
+    </nav>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>With icon</h2>
+    <p>Drop a <code>&lt;svg&gt;</code> or <code>&lt;i&gt;</code> inside the link. It inherits the crumb's color and tracks the hover.</p>
+    {% call ui.demo() %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item">
+          <a href="#">
+            <i data-lucide="house"></i>
+            <span>Home</span>
+          </a>
+        </li>
+        <li class="breadcrumb-item"><a href="#">Library</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Data</li>
+      </ol>
+    </nav>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>String divider</h2>
+    <p>Override <code>--bs-breadcrumb-divider</code> on the wrapper to swap the chevron for any string.</p>
+    {% call ui.demo() %}
+    <nav style="--bs-breadcrumb-divider: '/';" aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Library</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Data</li>
+      </ol>
+    </nav>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Embedded SVG divider</h2>
+    <p>Use a URL-encoded SVG to drop in any glyph. The fill color is baked into the SVG, so pick a tone that reads in both themes.</p>
+    {% call ui.demo() %}
+    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M0 4h8M5 1l3 3-3 3' fill='none' stroke='%236c757d' stroke-width='1'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Library</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Data</li>
+      </ol>
+    </nav>
+    {% endcall %}
+  </section>
+{% endblock %}

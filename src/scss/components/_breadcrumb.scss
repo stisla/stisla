@@ -1,0 +1,53 @@
+// Stisla v3 — breadcrumb.
+//
+// BS5 defaults the active crumb to --bs-secondary-color, identical to the
+// trail. We flip the hierarchy: the current page (.active) takes
+// --bs-body-color for full emphasis and the trail uses --bs-secondary-color
+// so the "you are here" crumb stands out. Hovering a trail link brightens
+// it to --bs-body-color too as a soft preview of the destination weight.
+// Underline is stripped (the row already reads as a nav by shape).
+//
+// Default divider is a chevron SVG, scoped as the var() FALLBACK on the
+// content rule rather than as `--bs-breadcrumb-divider` on .breadcrumb.
+// Setting the var on .breadcrumb shadows per-instance overrides on the
+// wrapper (e.g. <nav style="--bs-breadcrumb-divider: '/'">), since custom
+// properties resolve at the element that declares them. Living in the
+// fallback keeps the cascade open: any ancestor that sets the var wins.
+//
+// Parts:
+//   .breadcrumb            list wrapper (BS5)
+//   .breadcrumb-item       trail crumb (BS5, restyled)
+//   .breadcrumb-item.active  current page (BS5, restyled)
+
+.breadcrumb {
+  --#{$prefix}breadcrumb-item-active-color: var(--#{$prefix}body-color);
+}
+
+.breadcrumb-item {
+  color: var(--#{$prefix}secondary-color);
+
+  > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: inherit;
+    text-decoration: none;
+    transition: color 150ms ease;
+
+    &:hover {
+      color: var(--#{$prefix}body-color);
+    }
+  }
+
+  // Leading/trailing icon inside an item — sits at a fixed 16px next to
+  // the text. The ::before divider isn't an element so this rule skips it.
+  :is(svg, i) {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+  }
+
+  + .breadcrumb-item::before {
+    content: var(--#{$prefix}breadcrumb-divider, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E"));
+  }
+}
