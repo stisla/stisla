@@ -1,0 +1,183 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Input group · Stisla v3{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Input group</h1>
+    <p class="lead">An input paired with leading or trailing addons on one continuous surface.</p>
+  </header>
+
+  <section>
+    <h2>Basic</h2>
+    <p>Wrap an addon and an <code>.form-control</code> in <code>.input-group</code>. The addon sits flush against the input on a shared surface.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-column gap-2 w-100" style="max-width: 24rem;">
+      <div class="input-group">
+        <span class="input-group-text">https://</span>
+        <input type="text" class="form-control" placeholder="example.com" />
+      </div>
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="yourname" />
+        <span class="input-group-text">@company.com</span>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Icon</h2>
+    <p>Drop an icon into <code>.input-group-text</code> for a leading or trailing glyph. The addon stays transparent so the icon reads against the wrapper.</p>
+    {% call ui.demo() %}
+    <div class="w-100" style="max-width: 24rem;">
+      <div class="input-group">
+        <span class="input-group-text"><i data-lucide="search"></i></span>
+        <input type="search" class="form-control" placeholder="Search" />
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Sizes</h2>
+    <p>Add <code>.input-group-sm</code> or <code>.input-group-lg</code> on the wrapper to scale every member to 28&nbsp;/&nbsp;36&nbsp;/&nbsp;44&nbsp;px.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-column gap-2 w-100" style="max-width: 24rem;">
+      <div class="input-group input-group-sm">
+        <span class="input-group-text"><i data-lucide="at-sign"></i></span>
+        <input type="text" class="form-control form-control-sm" placeholder="Small" />
+      </div>
+      <div class="input-group">
+        <span class="input-group-text"><i data-lucide="at-sign"></i></span>
+        <input type="text" class="form-control" placeholder="Default" />
+      </div>
+      <div class="input-group input-group-lg">
+        <span class="input-group-text"><i data-lucide="at-sign"></i></span>
+        <input type="text" class="form-control form-control-lg" placeholder="Large" />
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>With button</h2>
+    <p>A button slot keeps its own fill so it reads as the affordance, not chrome. Pair with a leading or trailing input as needed.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-column gap-2 w-100" style="max-width: 24rem;">
+      <div class="input-group">
+        <input type="search" class="form-control" placeholder="Search" />
+        <button type="button" class="btn btn-primary">Go</button>
+      </div>
+      <div class="input-group">
+        <button type="button" class="btn btn-outline-secondary">Copy</button>
+        <input type="text" class="form-control" value="https://stisla.dev/v3" readonly />
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Select</h2>
+    <p>Use a <code>.form-select</code> on its own as the addon. The select sheds its border like any other child; the chevron stays so it still cues a menu.</p>
+    {% call ui.demo() %}
+    <div class="w-100" style="max-width: 24rem;">
+      <div class="input-group">
+        <select class="form-select" aria-label="Currency" style="max-width: 5.5rem;">
+          <option selected>USD</option>
+          <option>EUR</option>
+          <option>GBP</option>
+          <option>JPY</option>
+        </select>
+        <input type="number" class="form-control" placeholder="Amount" />
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Labelled select</h2>
+    <p>Lead with a text or icon addon and let the <code>.form-select</code> stand in for the input. Reads as a labelled chooser, no separate field needed.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-column gap-2 w-100" style="max-width: 24rem;">
+      <div class="input-group">
+        <label class="input-group-text" for="currencyOnly">Currency</label>
+        <select class="form-select" id="currencyOnly">
+          <option selected>USD</option>
+          <option>EUR</option>
+          <option>GBP</option>
+          <option>JPY</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <span class="input-group-text"><i data-lucide="globe"></i></span>
+        <select class="form-select" aria-label="Language">
+          <option selected>English</option>
+          <option>Bahasa Indonesia</option>
+          <option>日本語</option>
+          <option>Deutsch</option>
+        </select>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>With select</h2>
+    <p>Mix a text addon and a select on opposite sides for a labelled, scoped input.</p>
+    {% call ui.demo() %}
+    <div class="w-100" style="max-width: 24rem;">
+      <div class="input-group">
+        <label class="input-group-text" for="amountCurrency">$</label>
+        <input type="number" class="form-control" id="amountCurrency" placeholder="Amount" />
+        <select class="form-select" aria-label="Currency" style="max-width: 5.5rem;">
+          <option selected>USD</option>
+          <option>EUR</option>
+          <option>GBP</option>
+          <option>JPY</option>
+        </select>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Multiple addons</h2>
+    <p>Stack more than one addon on the same side. They share the same surface and read as one phrase.</p>
+    {% call ui.demo() %}
+    <div class="w-100" style="max-width: 24rem;">
+      <div class="input-group">
+        <span class="input-group-text">$</span>
+        <span class="input-group-text">0.00</span>
+        <input type="text" class="form-control" />
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Textarea</h2>
+    <p>A textarea grows past the 36&nbsp;px floor and the wrapper grows with it. Addons hold to their top edge.</p>
+    {% call ui.demo() %}
+    <div class="w-100" style="max-width: 24rem;">
+      <div class="input-group">
+        <span class="input-group-text"><i data-lucide="message-square"></i></span>
+        <textarea class="form-control" rows="3" placeholder="Leave a note"></textarea>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Disabled</h2>
+    <p>Disable the input directly. The wrapper dims with the input via its opacity, no extra class on the group.</p>
+    {% call ui.demo() %}
+    <div class="w-100" style="max-width: 24rem;">
+      <div class="input-group">
+        <span class="input-group-text">https://</span>
+        <input type="text" class="form-control" value="example.com" disabled />
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+{% endblock %}
