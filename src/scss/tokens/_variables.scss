@@ -250,6 +250,14 @@ $form-select-box-shadow: none;
 $form-select-indicator-color: $body-secondary-color;
 $form-select-bg-size: 12px 12px;
 
+// Form checks — bump the input to a fixed 16×16 (BS5's $form-check-input-width
+// default is 1em, which lands at 14px against our 0.875rem body baseline).
+// Padding-start must move from the default Sass expression to a concrete value
+// because BS5 computes `$form-check-input-width + .5em` at build time and Sass
+// errors on mixing rem + em there; 1.5rem keeps the input + ~0.5rem label gap.
+$form-check-input-width: 1rem;
+$form-check-padding-start: 1.5rem;
+
 // Close button — match the default .btn footprint so a standalone .btn-close
 // reads as a peer to .btn / .btn-icon (cards/modals/toasts often mix them in
 // the same header row). $btn-close-width drives both the rendered icon size

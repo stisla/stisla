@@ -1,0 +1,71 @@
+// Stisla v3 — form checks (checkbox, radio, switch, btn-check).
+// Rules BS5 vars can't express:
+//   per-theme bg + border swap (BS5 has no $form-check-input-bg-dark hook —
+//   $form-check-input-bg falls back to $input-bg, our static #f9f9fb);
+//   focus ring (BS5 routes $form-check-input-focus-box-shadow through
+//   $focus-ring-box-shadow, which is a different shape than the soft
+//   transparent-primary ring used on .form-control / .form-select).
+
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.1875rem rgba(var(--#{$prefix}primary-rgb), 0.2);
+}
+
+// Stisla — larger switch variant (44×24). The default 28×16 reads small in
+// standalone settings rows where the switch is the row's primary affordance
+// (label on the left, switch alone on the right). Layout stays on BS5's
+// float-based model: bump padding-left + input dimensions, zero out the
+// margin-top BS5 derives from `($line-height-base - $form-check-input-width) * .5`
+// so the taller input doesn't drop below the label baseline.
+.form-switch.form-switch-lg {
+  min-height: 1.5rem;
+  margin-bottom: 0.5rem;
+  padding-left: 3.25rem;
+
+  .form-check-input {
+    width: 2.75rem;
+    height: 1.5rem;
+    margin-top: 0;
+    margin-left: -3.25rem;
+  }
+
+  &.form-check-reverse {
+    padding-right: 3.25rem;
+    padding-left: 0;
+
+    .form-check-input {
+      margin-right: -3.25rem;
+      margin-left: 0;
+    }
+  }
+}
+
+@include color-mode(dark) {
+  // Scope the bg override to unchecked inputs so the primary fill on :checked
+  // and :indeterminate (set by BS5 via $form-check-input-checked-bg-color) wins.
+  // Border can stay unscoped — :checked sets its own border-color too.
+  .form-check-input:not(:checked):not(:indeterminate) {
+    background-color: $input-bg-dark;
+  }
+  .form-check-input {
+    border-color: $input-border-color-dark;
+    &:focus {
+      border-color: $input-focus-border-color-dark;
+    }
+  }
+  // Unchecked switch — bump the track to a clearly visible mid-grey so the
+  // off-state reads as "off" instead of "disabled". The thumb is already
+  // forced to solid white via $form-switch-color-dark in tokens/_variables-dark.scss.
+  // Extra .form-switch class beats the generic unchecked override above on
+  // specificity.
+  .form-switch .form-check-input:not(:checked):not(:indeterminate) {
+    background-color: $gray-700;
+  }
+  // Keep the thumb white when focus lands on an unchecked switch. BS5's default
+  // .form-switch .form-check-input:focus rule swaps the bg-image to one tinted
+  // with $form-switch-focus-color (= primary), and its dark-mode rule only
+  // restores the white thumb on `:not(:focus)`. Re-apply the dark image so the
+  // off-state thumb stays consistent through the focus transition.
+  .form-switch .form-check-input:not(:checked):focus {
+    --#{$prefix}form-switch-bg: #{escape-svg($form-switch-bg-image-dark)};
+  }
+}

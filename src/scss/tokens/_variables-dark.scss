@@ -60,6 +60,16 @@ $input-focus-border-color-dark: rgba(var(--#{$prefix}primary-rgb), 0.4);
 // BS5 inlines this at Sass build time into the dark SVG data: URL.
 $form-select-indicator-color-dark: $body-secondary-color-dark;
 
+// Switch — solid white thumb on the dark unchecked state (BS5's default
+// rgba($white, .25) is barely visible against our $input-bg-dark and reads as
+// disabled). Inlined into $form-switch-bg-image-dark at Sass build time.
+// Unchecked track bg lives in components/_form-check.scss alongside the rest
+// of the dark-mode form-check rules.
+// Hex literal because $white isn't defined yet at this import point — BS5's
+// _variables.scss (which declares $white) loads AFTER this file. See the
+// load order in src/scss/bundles/stisla-full.scss.
+$form-switch-color-dark: #fff;
+
 // Mirror the light-mode override: chevron stays secondary in both states.
 // BS5 inlines these at Sass build time into the dark SVG data: URLs.
 $accordion-icon-color-dark: $body-secondary-color-dark;
