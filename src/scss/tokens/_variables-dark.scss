@@ -32,6 +32,13 @@ $body-color-dark: #f5f8fe;
 $body-secondary-color-dark: rgba($body-color-dark, 0.75);
 $surface-dark: #121317;
 $surface-alt-dark: #181b20;
+// Accent — neutral interactive surface tier (see $accent-bg in _variables.scss).
+// Solid values, not alpha tints — sits between $surface-alt-dark (#181b20)
+// and $border-color-dark (#23272f). Hover and active currently collapse to the
+// same bg, matching the light-mode pattern. The -color pair cascades via
+// --bs-body-color and needs no dark override.
+$accent-bg-dark: #1d2025;
+$accent-active-bg-dark: $accent-bg-dark;
 $border-color-dark: #23272f;
 $border-color-subtle-dark: #1d1f25;
 // Translucent border (dark) — cascades to card/dropdown/popover/modal/toast

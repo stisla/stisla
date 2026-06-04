@@ -11,6 +11,13 @@
   --#{$prefix}border-color-subtle: #{$border-color-subtle};
   --#{$prefix}surface: #{$surface};
   --#{$prefix}surface-alt: #{$surface-alt};
+  // Accent tier — bg pair is per-theme literals; color pair resolves to
+  // var(--bs-body-color) at use site, so the :root assignment flows into
+  // dark mode automatically without a duplicate in the @color-mode block.
+  --#{$prefix}accent-bg: #{$accent-bg};
+  --#{$prefix}accent-active-bg: #{$accent-active-bg};
+  --#{$prefix}accent-color: #{$accent-color};
+  --#{$prefix}accent-active-color: #{$accent-active-color};
 }
 
 // Dark overrides go through BS5's color-mode mixin (same shape as BS5's own
@@ -22,4 +29,6 @@
   --#{$prefix}border-color-subtle: #{$border-color-subtle-dark};
   --#{$prefix}surface: #{$surface-dark};
   --#{$prefix}surface-alt: #{$surface-alt-dark};
+  --#{$prefix}accent-bg: #{$accent-bg-dark};
+  --#{$prefix}accent-active-bg: #{$accent-active-bg-dark};
 }

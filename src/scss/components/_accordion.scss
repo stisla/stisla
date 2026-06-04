@@ -43,7 +43,7 @@ $accordion-wrapper-padding: 0.25rem;
   }
 
   &:hover:not([aria-expanded="true"]) {
-    background-color: rgba(var(--#{$prefix}emphasis-color-rgb), 0.08);
+    background-color: var(--#{$prefix}accent-bg);
   }
 
   &[aria-expanded="true"] {
@@ -109,7 +109,7 @@ $accordion-wrapper-padding: 0.25rem;
 
     .accordion-button {
       &:hover:not([aria-expanded="true"]) {
-        background-color: rgba(var(--#{$prefix}emphasis-color-rgb), 0.08);
+        background-color: var(--#{$prefix}accent-bg);
       }
 
       &[aria-expanded="true"] {

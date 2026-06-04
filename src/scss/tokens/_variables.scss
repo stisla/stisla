@@ -118,6 +118,23 @@ $border-color-translucent: rgba(0, 0, 0, 0.075);
 $surface: #fff;
 $surface-alt: #f9fafb;
 
+// Accent — neutral interactive surface tier (hover / active on sidebar items,
+// dropdown items, accordion headers, list-group rows, etc.). Distinct from
+// $surface (positional: raised/recessed) — accent is interactional. Two tiers
+// ($accent-bg for hover, $accent-active-bg for selected/pressed/aria-current)
+// that currently collapse to the same value; the split keeps the token surface
+// stable so components can diverge later without touching adopters. Solid
+// values, not alpha tints — alpha composites read dingy over varied
+// backgrounds and don't survive nesting. Dark bg equivalents in
+// tokens/_variables-dark.scss; the -color pair references var(--bs-body-color)
+// so it tracks the theme via BS5's color-mode mixin without a dark duplicate.
+// All four emit as --bs-accent-{bg,color,active-bg,active-color} in
+// tokens/_root.scss.
+$accent-bg: #f0f2f6;
+$accent-active-bg: $accent-bg;
+$accent-color: var(--#{$prefix}body-color);
+$accent-active-color: $accent-color;
+
 // Surface fanout — cards, modals, dropdowns, etc. stay pure white on the tinted body.
 // Reference var(--#{$prefix}surface), not $surface, so dark mode only needs to swap
 // the foundation token in _root.scss; --bs-card-bg / --bs-modal-bg / etc. cascade.
@@ -237,19 +254,13 @@ $sidebar-item-gap: 0.625rem !default; // icon ↔ label
 $sidebar-item-font-size: 0.875rem !default; // 14px
 $sidebar-item-font-weight: 400 !default;
 $sidebar-item-color: var(--#{$prefix}body-color) !default;
-$sidebar-item-color-hover: var(--#{$prefix}emphasis-color) !default;
-$sidebar-item-color-active: var(--#{$prefix}emphasis-color) !default;
-// Alpha tints on --bs-emphasis-color-rgb — cascades to dark automatically
-// (BS5 flips --bs-emphasis-color via the color-mode mixin). One token, two
-// themes, no explicit dark override needed.
-$sidebar-item-bg-hover: rgba(
-  var(--#{$prefix}emphasis-color-rgb),
-  0.06
-) !default;
-$sidebar-item-bg-active: rgba(
-  var(--#{$prefix}emphasis-color-rgb),
-  0.08
-) !default;
+// Routed through the accent tier (--bs-accent-{bg,color,active-bg,active-color}).
+// Component overrides still work — set $sidebar-item-bg-hover etc. before
+// importing this file to opt out of the global accent palette.
+$sidebar-item-color-hover: var(--#{$prefix}accent-color) !default;
+$sidebar-item-color-active: var(--#{$prefix}accent-active-color) !default;
+$sidebar-item-bg-hover: var(--#{$prefix}accent-bg) !default;
+$sidebar-item-bg-active: var(--#{$prefix}accent-active-bg) !default;
 $sidebar-item-icon-size: 1rem !default;
 $sidebar-item-icon-color: var(--#{$prefix}secondary-color) !default;
 // Square = item height so kebab/dot-menu trailing actions line up cleanly.

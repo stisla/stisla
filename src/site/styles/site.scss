@@ -239,8 +239,7 @@ body {
   height: 100vh;
   --bs-sidebar-item-font-size: 0.78125rem;
   --bs-sidebar-item-font-weight: 500;
-  --bs-sidebar-item-bg-active: rgba(var(--bs-secondary-rgb), 0.1);
-  --bs-sidebar-item-color-active: var(--bs-secondary);
+  --bs-sidebar-item-bg-active: #e4e9f1;
 
   .sidebar-item-button {
     display: inline-flex;
@@ -257,6 +256,11 @@ body {
   background: var(--bs-body-bg);
 }
 
-[data-bs-theme="dark"] .site-layout {
-  background: #121417;
+[data-bs-theme="dark"] {
+  .site-layout {
+    background: #121417;
+  }
+  .site-sidebar {
+    --bs-sidebar-item-bg-active: #262a31;
+  }
 }
