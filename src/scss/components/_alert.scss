@@ -1,0 +1,134 @@
+// Stisla v3 — alerts.
+//
+// BS5 ships .alert-{state} as a triplet of Sass-computed solid colors
+// (-bg-subtle / -border-subtle / -text-emphasis). We rewire those to
+// color-mix() over the runtime --bs-{state} tokens so swapping
+// --bs-danger at runtime actually recolors .alert-danger. This is the
+// §3.1 "components don't respond at runtime" caveat, broken on purpose
+// for alerts (single-token theming was the explicit ask).
+//
+// Parts:
+//   .alert                     base (BS5)
+//   .alert-{state}             variant (BS5 modifier, recolored here)
+//   > svg | > i                leading icon, slotless (Selia-style)
+//   .alert-heading             title (BS5, restyled)
+//   .alert-description         body text under heading (new)
+//   .alert-action              trailing slot, right-aligned (new)
+//
+// Padding switches via :has(.alert-description): single-line alerts get
+// a 44px row; alerts with a description get even 16px on both axes.
+
+.alert {
+  // Neutral defaults — match image #15 row 1 (surface bg, neutral border).
+  --#{$prefix}alert-bg: var(--#{$prefix}surface);
+  --#{$prefix}alert-border-color: var(--#{$prefix}border-color);
+  --#{$prefix}alert-color: var(--#{$prefix}body-color);
+  --#{$prefix}alert-icon-color: var(--#{$prefix}secondary-color);
+  --#{$prefix}alert-padding-x: 1rem;
+  --#{$prefix}alert-padding-y: 0.625rem;
+
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  min-height: 2.75rem;
+
+  // Leading icon: any direct <svg> or pre-init <i data-lucide>.
+  // Mirrors the convention in _buttons.scss (handles both lucide states).
+  > :is(svg, i) {
+    width: 1.125rem;
+    height: 1.125rem;
+    flex-shrink: 0;
+    color: var(--#{$prefix}alert-icon-color);
+  }
+}
+
+.alert-heading {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--#{$prefix}emphasis-color);
+}
+
+.alert-description {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--#{$prefix}secondary-color);
+}
+
+.alert-action {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin-left: auto;
+
+  .btn-close {
+    width: 1rem;
+    height: 1rem;
+    padding: 0;
+  }
+}
+
+// Description present → grid layout, 16px both axes, no min-height clamp.
+// Cols: icon (auto) | heading + description (1fr) | action (auto).
+// Icon aligns with the heading row; action centers across both rows.
+.alert:has(.alert-description) {
+  --#{$prefix}alert-padding-y: 1rem;
+
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  column-gap: 0.625rem;
+  row-gap: 0.125rem;
+  align-items: start;
+  min-height: 0;
+
+  > :is(svg, i) {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+  }
+
+  .alert-heading {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .alert-description {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .alert-action {
+    grid-column: 3;
+    grid-row: 1 / -1;
+    align-self: center;
+    margin-left: 0;
+  }
+
+  // No leading icon → heading + description take col 1.
+  &:not(:has(> :is(svg, i))) {
+    grid-template-columns: 1fr auto;
+
+    .alert-heading,
+    .alert-description {
+      grid-column: 1;
+    }
+
+    .alert-action {
+      grid-column: 2;
+    }
+  }
+}
+
+// Per-state recoloring. color-mix() lets runtime --bs-{state} overrides
+// propagate to bg/border/icon. Text stays at --bs-body-color (full solid)
+// since the subtle bg has enough contrast against it in both themes.
+@each $state in map-keys($theme-colors) {
+  .alert-#{$state} {
+    --#{$prefix}alert-bg: #{"color-mix(in srgb, var(--#{$prefix}#{$state}) 7%, transparent)"};
+    --#{$prefix}alert-border-color: #{"color-mix(in srgb, var(--#{$prefix}#{$state}) 40%, transparent)"};
+    --#{$prefix}alert-color: var(--#{$prefix}body-color);
+    --#{$prefix}alert-icon-color: var(--#{$prefix}#{$state});
+  }
+}
