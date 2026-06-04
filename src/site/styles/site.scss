@@ -201,7 +201,7 @@ body {
     background: var(--bs-surface-alt);
     border: 1px solid var(--bs-border-color-translucent);
     border-radius: 0.375rem;
-    color: #c27aff;
+    color: var(--bs-body-color);
   }
 
   :where(strong, b)#{$opt-out} {
