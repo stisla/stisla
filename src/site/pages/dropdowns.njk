@@ -1,0 +1,188 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Dropdowns · Stisla v3{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Dropdowns</h1>
+    <p class="lead">A floating menu of links or actions surfaced from a trigger.</p>
+  </header>
+
+  <section>
+    <h2>Basic</h2>
+    <p>Pair a <code>.dropdown-toggle</code> with a <code>.dropdown-menu</code>, both inside <code>.dropdown</code>. Bootstrap's data API handles open and close.</p>
+    {% call ui.demo() %}
+    <div class="dropdown">
+      <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Actions
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#">Profile</a></li>
+        <li><a class="dropdown-item" href="#">Settings</a></li>
+        <li><a class="dropdown-item" href="#">Sign out</a></li>
+      </ul>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>With icons</h2>
+    <p>Drop a <code>&lt;svg&gt;</code> or <code>&lt;i&gt;</code> as the first child of each item. The icon sits at 16px and inherits the row's color on hover.</p>
+    {% call ui.demo() %}
+    <div class="dropdown">
+      <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Account
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <a class="dropdown-item" href="#">
+            <i data-lucide="user"></i>
+            <span>Profile</span>
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="#">
+            <i data-lucide="settings"></i>
+            <span>Settings</span>
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="#">
+            <i data-lucide="bell"></i>
+            <span>Notifications</span>
+          </a>
+        </li>
+        <li><hr class="dropdown-divider"></li>
+        <li>
+          <a class="dropdown-item" href="#">
+            <i data-lucide="log-out"></i>
+            <span>Sign out</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Headers and dividers</h2>
+    <p>Use <code>.dropdown-header</code> to label a section and <code>.dropdown-divider</code> to separate groups.</p>
+    {% call ui.demo() %}
+    <div class="dropdown">
+      <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Menu
+      </button>
+      <ul class="dropdown-menu">
+        <li><h6 class="dropdown-header">Account</h6></li>
+        <li><a class="dropdown-item" href="#">Profile</a></li>
+        <li><a class="dropdown-item" href="#">Billing</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><h6 class="dropdown-header">Workspace</h6></li>
+        <li><a class="dropdown-item" href="#">Members</a></li>
+        <li><a class="dropdown-item" href="#">Settings</a></li>
+      </ul>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Active and disabled</h2>
+    <p>Mark the current row with <code>.active</code> and unreachable rows with <code>.disabled</code>. Active takes the accent surface; disabled greys out and stops pointer events.</p>
+    {% call ui.demo() %}
+    <div class="dropdown">
+      <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Sort by
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item active" href="#" aria-current="true">Newest first</a></li>
+        <li><a class="dropdown-item" href="#">Oldest first</a></li>
+        <li><a class="dropdown-item" href="#">Alphabetical</a></li>
+        <li><a class="dropdown-item disabled" href="#" aria-disabled="true">By owner (Pro)</a></li>
+      </ul>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Split button</h2>
+    <p>Pair a primary action with a caret-only toggle. Wrap both in <code>.btn-group</code> so they share rounding.</p>
+    {% call ui.demo() %}
+    <div class="btn-group">
+      <button type="button" class="btn btn-primary">Save</button>
+      <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+        <span class="visually-hidden">Toggle dropdown</span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#">Save and continue</a></li>
+        <li><a class="dropdown-item" href="#">Save as draft</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#">Discard changes</a></li>
+      </ul>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Drop direction</h2>
+    <p>Swap <code>.dropdown</code> for <code>.dropup</code>, <code>.dropend</code>, or <code>.dropstart</code> to open the menu above or to the side of the trigger.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-2">
+      <div class="dropup">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Dropup
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Action</a></li>
+          <li><a class="dropdown-item" href="#">Another action</a></li>
+        </ul>
+      </div>
+      <div class="dropend">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Dropend
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Action</a></li>
+          <li><a class="dropdown-item" href="#">Another action</a></li>
+        </ul>
+      </div>
+      <div class="dropstart">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Dropstart
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Action</a></li>
+          <li><a class="dropdown-item" href="#">Another action</a></li>
+        </ul>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Form</h2>
+    <p>Drop a <code>&lt;form&gt;</code> straight into the menu. Pad with utilities and set a min-width to give the fields room.</p>
+    {% call ui.demo() %}
+    <div class="dropdown">
+      <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+        Sign in
+      </button>
+      <form class="dropdown-menu p-3" style="min-width: 18rem">
+        <div class="mb-3">
+          <label for="dropdown-form-email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="dropdown-form-email" placeholder="you@example.com">
+        </div>
+        <div class="mb-3">
+          <label for="dropdown-form-password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="dropdown-form-password">
+        </div>
+        <div class="form-check mb-3">
+          <input type="checkbox" class="form-check-input" id="dropdown-form-remember">
+          <label class="form-check-label" for="dropdown-form-remember">Remember me</label>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Sign in</button>
+      </form>
+    </div>
+    {% endcall %}
+  </section>
+{% endblock %}

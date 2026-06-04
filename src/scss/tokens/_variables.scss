@@ -219,6 +219,23 @@ $btn-box-shadow:
   0 1px 2px -1px rgba(0, 0, 0, 0.1);
 $btn-active-box-shadow: none;
 
+// Dropdown — inset menu with a 4px container padding and 32px rows. Item
+// radius derives from the wrapper in components/_dropdown.scss with the same
+// concentric formula as the accordion (item = wrapper - padding). Hover and
+// active route through the accent tier so the selection treatment matches
+// sidebar / accordion / list-group.
+$dropdown-padding-y: 0.25rem; // 4px container padding
+$dropdown-padding-x: 0.25rem;
+$dropdown-item-padding-y: 0.125rem; // 2px — row height held by min-height in component
+$dropdown-item-padding-x: 0.75rem; // 12px
+$dropdown-border-radius: $border-radius;
+$dropdown-link-color: var(--#{$prefix}body-color);
+$dropdown-link-hover-color: var(--#{$prefix}accent-color);
+$dropdown-link-hover-bg: var(--#{$prefix}accent-bg);
+$dropdown-link-active-color: var(--#{$prefix}accent-active-color);
+$dropdown-link-active-bg: var(--#{$prefix}accent-active-bg);
+$dropdown-header-color: var(--#{$prefix}secondary-color);
+
 // Badges — chip-style at a fixed 22px height. BS5 has no $badge-height var,
 // so the height is held via min-height + padding-y: 0 in components/_badge.scss.
 // Light variants emit there too.

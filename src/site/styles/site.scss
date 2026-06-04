@@ -28,6 +28,15 @@ body {
   position: relative;
 }
 
+// Dropdown demos pop a floating menu out of the trigger. .demo clips overflow
+// to keep its rounded corners clean, so grow the preview enough that an open
+// menu fits between centered trigger and the bottom of the clip. Height tuned
+// to the tallest menu on /dropdowns (with-icons, 5 rows ≈ 155px) under the
+// centered trigger formula: min-height ≥ 2 × (button_half + spacer + menu).
+.demo-preview:has(.dropdown-menu) {
+  min-height: 24rem;
+}
+
 .demo-code {
   position: relative;
   border-top: 1px solid var(--bs-border-color-translucent);

@@ -1,0 +1,63 @@
+// Stisla v3 — dropdown.
+//
+// BS5 ships the menu as edge-to-edge rows inside a rounded wrapper. We
+// restyle the wrapper as an inset chip: 4px padding pulls every item 4px
+// off the outer edge, and item radius derives from the wrapper using the
+// same concentric formula as the accordion:
+//
+//   item_radius = wrapper_radius - wrapper_padding
+//
+// Change $dropdown-border-radius or $dropdown-padding-y in tokens and the
+// rows stay concentric. Row height is held at 32px by min-height (BS5 has
+// no $dropdown-item-height var); padding-y is 2px so the leading icon
+// centers cleanly inside the 32px clear.
+//
+// Parts:
+//   .dropdown / .dropup / .dropend / .dropstart  positioning wrapper (BS5)
+//   .dropdown-toggle                              trigger (BS5)
+//   .dropdown-menu                                container (BS5, restyled)
+//   .dropdown-item                                row (BS5, restyled)
+//   .dropdown-header                              section label (BS5)
+//   .dropdown-divider                             rule between groups (BS5)
+//   > svg | > i                                   leading icon, slotless
+
+.dropdown-menu {
+  // Concentric chip: row radius = wrapper radius - wrapper padding. BS5
+  // reads --bs-dropdown-item-border-radius on every .dropdown-item (with
+  // a 0 fallback), so emitting it here propagates to every row.
+  --#{$prefix}dropdown-item-border-radius: calc(
+    var(--#{$prefix}dropdown-border-radius) - var(
+        --#{$prefix}dropdown-padding-y
+      )
+  );
+  &.show {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2rem;
+  transition: background-color 0.15s ease;
+
+  // Leading icon — direct <svg> or pre-init <i data-lucide>. Fixed at 16px
+  // so rows align regardless of font metrics; color tracks the secondary
+  // channel until the row is hovered/active and inherits the link color.
+  > :is(svg, i) {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    color: var(--#{$prefix}secondary-color);
+  }
+
+  &:hover > :is(svg, i),
+  &:focus > :is(svg, i),
+  &.active > :is(svg, i),
+  &:active > :is(svg, i) {
+    color: inherit;
+  }
+}
