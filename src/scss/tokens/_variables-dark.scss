@@ -46,6 +46,16 @@ $border-color-subtle-dark: #1d1f25;
 // in _variables.scss.
 $border-color-translucent-dark: rgba(255, 255, 255, 0.07);
 
+// Form controls — BS5 has no $input-bg-dark / $input-border-color-dark hooks
+// ($input-bg defaults to var(--bs-body-bg), and the per-mode swap is meant to
+// piggyback on that var). Our input bg is a static value (#f9f9fb light, not
+// $body-bg white), so we need a dedicated dark pair. Stisla-custom -dark vars,
+// consumed by components/_form-control.scss in its @include color-mode(dark)
+// block — same pattern as the $surface-dark / $accent-bg-dark tokens above.
+$input-bg-dark: #121417;
+$input-border-color-dark: #262931;
+$input-focus-border-color-dark: rgba(var(--#{$prefix}primary-rgb), 0.4);
+
 // Mirror the light-mode override: chevron stays secondary in both states.
 // BS5 inlines these at Sass build time into the dark SVG data: URLs.
 $accordion-icon-color-dark: $body-secondary-color-dark;

@@ -14,10 +14,10 @@
     <p>Add <code>data-bs-toggle="collapse"</code> to the trigger and point <code>data-bs-target</code> at the <code>.collapse</code> element. Include <code>aria-expanded</code> and <code>aria-controls</code> so the toggle is reachable.</p>
     {% call ui.demo() %}
     <div class="w-100">
-      <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBasic" aria-expanded="false" aria-controls="collapseBasic">
+      <button class="btn btn-outline-secondary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBasic" aria-expanded="false" aria-controls="collapseBasic">
         Toggle content
       </button>
-      <div class="collapse mt-3" id="collapseBasic">
+      <div class="collapse" id="collapseBasic">
         <div class="card card-body mb-0">
           Be patient toward all that is unsolved in your heart and try to love the questions themselves, like locked rooms and like books written in a very foreign tongue. <cite class="text-body-secondary">Rainer Maria Rilke</cite>
         </div>

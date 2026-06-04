@@ -1,0 +1,86 @@
+// Stisla v3 — form controls.
+// Rules BS5 vars can't express:
+//   exact 28/36/44 heights via min-height (BS5's input height formula
+//   `1.5em + 2 × padding-y + 2 × border` lands at 22/35/42 with our 6/4/8 px
+//   padding-y, so min-height snaps each size to its target);
+//   per-theme bg + border swap (BS5 has no $input-bg-dark / $input-border-color-dark).
+
+.form-control {
+  min-height: 2.25rem;
+}
+
+.form-control-sm {
+  min-height: 1.75rem;
+}
+.form-control-lg {
+  min-height: 2.75rem;
+}
+
+textarea.form-control {
+  height: auto;
+}
+
+// Dim disabled inputs to match the .btn disabled treatment ($btn-disabled-opacity).
+// BS5 explicitly sets opacity: 1 on .form-control:disabled to dodge an iOS
+// over-dim default; we re-introduce a controlled 0.65 so disabled inputs read
+// as disabled at the page level instead of leaning on the subtle $input-disabled-bg
+// shift alone.
+.form-control:disabled {
+  opacity: 0.65;
+}
+
+// Focus — a soft transparent-primary ring around the input. Needed as an
+// explicit rule because $input-box-shadow: none in tokens/_variables.scss
+// makes BS5's chained `box-shadow($input-box-shadow, $input-focus-box-shadow)`
+// collapse to `none` (a literal `none` in the first slot wipes the whole
+// declaration). Border-color → primary cascades from $input-focus-border-color.
+.form-control:focus {
+  box-shadow: 0 0 0 0.1875rem rgba(var(--#{$prefix}primary-rgb), 0.2);
+}
+
+// File inputs — flex row so:
+//   - the file-selector-button stretches to the input's full inner height
+//     (BS5's negative-margin trick lands ~1px short because button content
+//     + padding-y = font × line-height + 2 × padding-y = 21 + 12 = 33, but
+//     the input's inner area is min-height − border = 34);
+//   - the filename text stays vertically centered.
+// padding-block: 0 hands the full vertical run to the button; align-self:
+// stretch fills it; the button's own padding-y (= $input-padding-y) keeps
+// its glyph centered. Filename text picks up the muted secondary color so
+// the button reads as the primary affordance.
+.form-control[type="file"] {
+  display: flex;
+  align-items: center;
+  padding-block: 0;
+  color: var(--#{$prefix}secondary-color);
+}
+
+.form-control[type="file"]::file-selector-button {
+  font-size: 0.75rem;
+  height: 1.375rem;
+  border: 1px solid var(--#{$prefix}border-color);
+  border-radius: 0.5rem;
+  background-color: var(--#{$prefix}gray-100);
+  padding: 0 0.375rem;
+  margin-left: -0.375rem;
+  margin-top: 0.375rem;
+  &:hover {
+    background-color: var(--#{$prefix}accent-bg);
+  }
+}
+
+@include color-mode(dark) {
+  .form-control {
+    background-color: $input-bg-dark;
+    border-color: $input-border-color-dark;
+    &:focus {
+      border-color: $input-focus-border-color-dark;
+    }
+  }
+  .form-control[type="file"]::file-selector-button {
+    background-color: rgba($gray-900, 0.5);
+  }
+  .form-control[type="file"]::file-selector-button:hover {
+    background-color: var(--#{$prefix}accent-bg-dark);
+  }
+}
