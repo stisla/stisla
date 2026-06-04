@@ -238,6 +238,18 @@ $input-border-color: #eaebf0;
 $input-box-shadow: none;
 $input-focus-border-color: rgba(var(--#{$prefix}primary-rgb), 0.6);
 
+// Form selects piggy-back on the input scale ($form-select-* all default to
+// $input-* counterparts), so we only override what BS5 doesn't already pull
+// across: drop the inset shadow so .form-select reads flat like .form-control
+// (BS5 keeps $form-select-box-shadow on $box-shadow-inset even when $input-box-shadow
+// is overridden to none). Chevron gets the muted secondary color and a square
+// 12×12 footprint. Like the accordion icon, the SVG is built at Sass time
+// (BS5 inlines the data URL), so the color tracks $body-secondary-color, not
+// --bs-secondary-color (CSS vars don't resolve inside the data URL).
+$form-select-box-shadow: none;
+$form-select-indicator-color: $body-secondary-color;
+$form-select-bg-size: 12px 12px;
+
 // Close button — match the default .btn footprint so a standalone .btn-close
 // reads as a peer to .btn / .btn-icon (cards/modals/toasts often mix them in
 // the same header row). $btn-close-width drives both the rendered icon size

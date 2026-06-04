@@ -57,6 +57,10 @@ $input-border-color-dark: #262931;
 $input-focus-border-color-dark: rgba(var(--#{$prefix}primary-rgb), 0.4);
 
 // Mirror the light-mode override: chevron stays secondary in both states.
+// BS5 inlines this at Sass build time into the dark SVG data: URL.
+$form-select-indicator-color-dark: $body-secondary-color-dark;
+
+// Mirror the light-mode override: chevron stays secondary in both states.
 // BS5 inlines these at Sass build time into the dark SVG data: URLs.
 $accordion-icon-color-dark: $body-secondary-color-dark;
 $accordion-icon-active-color-dark: $body-secondary-color-dark;

@@ -1,0 +1,141 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Select · Stisla v3{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Select</h1>
+    <p class="lead">A native dropdown for picking from a fixed list of options.</p>
+  </header>
+
+  <section>
+    <h2>Basic</h2>
+    <p>Add <code>.form-select</code> to any <code>&lt;select&gt;</code>. Pair with a <code>&lt;label&gt;</code> tied via <code>for</code>/<code>id</code> so the field is reachable.</p>
+    {% call ui.demo() %}
+    <div class="w-100" style="max-width: 24rem;">
+      <label for="basicSelect" class="form-label">Country</label>
+      <select class="form-select" id="basicSelect">
+        <option selected>Pick one</option>
+        <option value="id">Indonesia</option>
+        <option value="my">Malaysia</option>
+        <option value="sg">Singapore</option>
+      </select>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Sizes</h2>
+    <p>Heights match the form control scale at 28 / 36 / 44&nbsp;px.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-column gap-2 w-100" style="max-width: 24rem;">
+      <select class="form-select form-select-sm" aria-label="Small select">
+        <option selected>Small</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+      </select>
+      <select class="form-select" aria-label="Default select">
+        <option selected>Default</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+      </select>
+      <select class="form-select form-select-lg" aria-label="Large select">
+        <option selected>Large</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+      </select>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Option groups</h2>
+    <p>Wrap related options in <code>&lt;optgroup&gt;</code> to label sections inside the menu.</p>
+    {% call ui.demo() %}
+    <div class="w-100" style="max-width: 24rem;">
+      <label for="groupedSelect" class="form-label">City</label>
+      <select class="form-select" id="groupedSelect">
+        <option selected>Pick one</option>
+        <optgroup label="Indonesia">
+          <option value="jkt">Jakarta</option>
+          <option value="bdg">Bandung</option>
+          <option value="sby">Surabaya</option>
+        </optgroup>
+        <optgroup label="Malaysia">
+          <option value="kul">Kuala Lumpur</option>
+          <option value="pen">Penang</option>
+        </optgroup>
+      </select>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Multiple</h2>
+    <p>Add the <code>multiple</code> attribute to let users select several options. The chevron is dropped and the control grows past the default height to make room for the list.</p>
+    {% call ui.demo() %}
+    <div class="w-100" style="max-width: 24rem;">
+      <label for="multipleSelect" class="form-label">Tags</label>
+      <select class="form-select" id="multipleSelect" multiple aria-label="Multiple select">
+        <option value="bug">Bug</option>
+        <option value="docs" selected>Docs</option>
+        <option value="feat" selected>Feature</option>
+        <option value="qa">QA</option>
+        <option value="perf">Performance</option>
+      </select>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Size attribute</h2>
+    <p>Set <code>size</code> to render a fixed-row list instead of a dropdown. Useful when the option count is small enough to show inline.</p>
+    {% call ui.demo() %}
+    <div class="w-100" style="max-width: 24rem;">
+      <select class="form-select" size="4" aria-label="Size 4 select">
+        <option selected>Pick one</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+        <option value="4">Four</option>
+      </select>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Helper text</h2>
+    <p>Use <code>.form-text</code> below the field for short hints. Wire it to the select with <code>aria-describedby</code> so screen readers announce it.</p>
+    {% call ui.demo() %}
+    <div class="w-100" style="max-width: 24rem;">
+      <label for="planSelect" class="form-label">Plan</label>
+      <select class="form-select" id="planSelect" aria-describedby="planHelp">
+        <option selected>Pick one</option>
+        <option value="free">Free</option>
+        <option value="pro">Pro</option>
+        <option value="team">Team</option>
+      </select>
+      <div id="planHelp" class="form-text">You can change this later from billing.</div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Disabled</h2>
+    <p>Add <code>disabled</code> to block interaction and dim the field. Individual <code>&lt;option&gt;</code> elements take the same attribute.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-column gap-2 w-100" style="max-width: 24rem;">
+      <select class="form-select" disabled aria-label="Disabled select">
+        <option selected>Disabled</option>
+      </select>
+      <select class="form-select" aria-label="Select with disabled option">
+        <option selected>Pick a plan</option>
+        <option value="free">Free</option>
+        <option value="pro" disabled>Pro (sold out)</option>
+        <option value="team">Team</option>
+      </select>
+    </div>
+    {% endcall %}
+  </section>
+{% endblock %}
