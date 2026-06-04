@@ -1,0 +1,220 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Carousel · Stisla v3{% endblock %}
+
+{% set img_slide_1 = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&h=850&q=70" %}
+{% set img_slide_2 = "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&w=1600&h=850&q=70" %}
+{% set img_slide_3 = "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1600&h=850&q=70" %}
+
+{% block content %}
+  <header>
+    <h1>Carousel</h1>
+    <p class="lead">A slideshow that cycles through any content.</p>
+  </header>
+
+  <section>
+    <h2>Slides only</h2>
+    <p>The bare component cycles through <code>.carousel-item</code>s. Mark one as <code>.active</code> to set the starting slide.</p>
+    {% call ui.demo() %}
+    <div id="carouselExampleSlidesOnly" class="carousel slide w-100" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="{{ img_slide_1 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Mountains above the clouds" />
+        </div>
+        <div class="carousel-item">
+          <img src="{{ img_slide_2 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="City skyline at sunset" />
+        </div>
+        <div class="carousel-item">
+          <img src="{{ img_slide_3 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Eiffel Tower at dusk" />
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>With controls</h2>
+    <p>Add <code>.carousel-control-prev</code> and <code>.carousel-control-next</code> with <code>data-bs-target</code> pointing at the carousel. The pair carries <code>.btn .btn-outline-secondary</code> so the chrome tracks the outline-secondary variant, then the component file pins it as a 1:1 circle with a smaller chevron.</p>
+    {% call ui.demo() %}
+    <div id="carouselExampleControls" class="carousel slide w-100">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="{{ img_slide_1 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Mountains above the clouds" />
+        </div>
+        <div class="carousel-item">
+          <img src="{{ img_slide_2 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="City skyline at sunset" />
+        </div>
+        <div class="carousel-item">
+          <img src="{{ img_slide_3 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Eiffel Tower at dusk" />
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>With indicators</h2>
+    <p>The <code>.carousel-indicators</code> row paints a small dot per slide; the active one widens into a pill. Each button needs <code>data-bs-target</code> and <code>data-bs-slide-to</code>.</p>
+    {% call ui.demo() %}
+    <div id="carouselExampleIndicators" class="carousel slide w-100">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="{{ img_slide_1 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Mountains above the clouds" />
+        </div>
+        <div class="carousel-item">
+          <img src="{{ img_slide_2 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="City skyline at sunset" />
+        </div>
+        <div class="carousel-item">
+          <img src="{{ img_slide_3 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Eiffel Tower at dusk" />
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>With captions</h2>
+    <p>Drop a <code>.carousel-caption</code> inside any <code>.carousel-item</code>. It sits at the bottom over the slide.</p>
+    {% call ui.demo() %}
+    <div id="carouselExampleCaptions" class="carousel slide w-100">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="{{ img_slide_1 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Mountains above the clouds" />
+          <div class="carousel-caption">
+            <h5>First slide label</h5>
+            <p>Some representative placeholder content for the first slide.</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="{{ img_slide_2 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="City skyline at sunset" />
+          <div class="carousel-caption">
+            <h5>Second slide label</h5>
+            <p>Some representative placeholder content for the second slide.</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="{{ img_slide_3 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Eiffel Tower at dusk" />
+          <div class="carousel-caption">
+            <h5>Third slide label</h5>
+            <p>Some representative placeholder content for the third slide.</p>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Crossfade</h2>
+    <p>Add <code>.carousel-fade</code> on the wrapper to crossfade between slides instead of sliding.</p>
+    {% call ui.demo() %}
+    <div id="carouselExampleFade" class="carousel slide carousel-fade w-100" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="{{ img_slide_1 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Mountains above the clouds" />
+        </div>
+        <div class="carousel-item">
+          <img src="{{ img_slide_2 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="City skyline at sunset" />
+        </div>
+        <div class="carousel-item">
+          <img src="{{ img_slide_3 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Eiffel Tower at dusk" />
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Individual interval</h2>
+    <p>Override the cycle time per slide with <code>data-bs-interval</code>. Slides without it fall back to the carousel default of 5 seconds.</p>
+    {% call ui.demo() %}
+    <div id="carouselExampleInterval" class="carousel slide w-100" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="10000">
+          <img src="{{ img_slide_1 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Mountains above the clouds" />
+        </div>
+        <div class="carousel-item" data-bs-interval="2000">
+          <img src="{{ img_slide_2 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="City skyline at sunset" />
+        </div>
+        <div class="carousel-item">
+          <img src="{{ img_slide_3 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Eiffel Tower at dusk" />
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Disable touch swiping</h2>
+    <p>Add <code>data-bs-touch="false"</code> to opt out of touch gestures on touchscreens. Mouse and keyboard still work.</p>
+    {% call ui.demo() %}
+    <div id="carouselExampleNoTouch" class="carousel slide w-100" data-bs-touch="false">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="{{ img_slide_1 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Mountains above the clouds" />
+        </div>
+        <div class="carousel-item">
+          <img src="{{ img_slide_2 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="City skyline at sunset" />
+        </div>
+        <div class="carousel-item">
+          <img src="{{ img_slide_3 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Eiffel Tower at dusk" />
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleNoTouch" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleNoTouch" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    {% endcall %}
+  </section>
+{% endblock %}

@@ -228,6 +228,7 @@ $dropdown-padding-y: 0.25rem; // 4px container padding
 $dropdown-padding-x: 0.25rem;
 $dropdown-item-padding-y: 0.125rem; // 2px — row height held by min-height in component
 $dropdown-item-padding-x: 0.75rem; // 12px
+$dropdown-border-color: var(--#{$prefix}border-color);
 $dropdown-border-radius: $border-radius;
 $dropdown-link-color: var(--#{$prefix}body-color);
 $dropdown-link-hover-color: var(--#{$prefix}accent-color);
@@ -244,6 +245,28 @@ $badge-padding-x: 0.5rem;
 $badge-font-size: 0.75rem;
 $badge-font-weight: 400;
 $badge-border-radius: 0.375rem;
+
+// Carousel — convert BS5's full-height invisible controls into 36px circled
+// buttons in the secondary-outline chrome (component file owns the bg/border
+// + hover), and reshape indicators from white horizontal bars into a small-dot
+// row with a pill-shaped active marker that reads on light surfaces. The
+// chevron SVG bakes $carousel-control-color at Sass build time; dark mode
+// flips it via the BS5 default $carousel-control-icon-filter-dark
+// (invert(1) grayscale(100)). $carousel-control-width also drives the side
+// margin of .carousel-indicators in BS5, so 36px keeps the dot row clear of
+// the control circles. Hit-area-height goes to 0 because BS5's transparent
+// top/bottom border trick can't coexist with a circular indicator (border-box
+// gets non-square, breaks the round shape); we accept the smaller hit area.
+$carousel-control-color: $light;
+$carousel-control-width: 2.25rem;
+$carousel-control-opacity: 1;
+$carousel-control-hover-opacity: 1;
+$carousel-control-icon-width: 1rem;
+$carousel-indicator-width: 0.375rem;
+$carousel-indicator-height: 0.375rem;
+$carousel-indicator-spacer: 0.1875rem;
+$carousel-indicator-hit-area-height: 0;
+$carousel-indicator-active-bg: $body-color;
 
 // Sidebar — Stisla-original component (BS5 ships no sidebar). The
 // component is a layout-agnostic panel: no fixed positioning, no width,

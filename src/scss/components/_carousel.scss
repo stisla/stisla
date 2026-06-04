@@ -1,0 +1,96 @@
+// Stisla v3 — carousel.
+//
+// BS5 ships the prev/next as full-height invisible click zones with a white
+// chevron baked into a background SVG. The demo markup adds
+// `.btn .btn-outline-secondary` to the same buttons so the chrome (bg, border,
+// hover, focus, dark mode) tracks the outline-secondary variant via the
+// --bs-btn-* CSS vars. We then pin them as 36px circles centered on the slide
+// edge and route those vars through BS5's `background: none; border: 0;` reset.
+//
+// The chevron color is baked at Sass build time via $carousel-control-color
+// (= body color); the dark-mode invert filter that BS5 emits on
+// --bs-carousel-control-icon-filter would also invert the .btn-outline-secondary
+// bg and border, so we move that filter from the wrapper down to the inner icon.
+//
+// Indicators flip from BS5's white horizontal bars into a small-dot row with
+// a pill-shaped active marker. Inactives stay dim via BS5's default opacity
+// (.5 → 1 on .active); the active widens from 6px to 20px on transition.
+// Tokens for size, spacing, color, and hit-area=0 live in tokens/_variables;
+// only the shape/width/transition lives here.
+//
+// Parts:
+//   .carousel                            positioning wrapper (BS5)
+//   .carousel-inner                      slide track (BS5)
+//   .carousel-item                       slide (BS5)
+//   .carousel-control-{prev,next}        navigation button (BS5, restyled; pair with .btn .btn-outline-secondary)
+//   .carousel-control-{prev,next}-icon   chevron glyph (BS5; filter applied here)
+//   .carousel-indicators                 pagination row (BS5)
+//   .carousel-indicators [data-bs-target]   dot / active pill (BS5, restyled)
+//   .carousel-caption                    slide caption (BS5)
+
+.carousel-item {
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  top: 50%;
+  bottom: auto;
+  height: 2.25rem;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  filter: none;
+  background-color: var(--#{$prefix}dark);
+  color: var(--#{$prefix}light);
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+
+  &:hover,
+  &:active,
+  &:focus {
+    background-color: var(--#{$prefix}dark);
+  }
+}
+
+.carousel-control-prev {
+  left: 0.75rem;
+}
+.carousel-control-next {
+  right: 0.75rem;
+}
+
+// One border-radius rule covers both shapes: 999px on a 6×6 inactive renders
+// a circle; the same rule on a 20×6 active renders a pill. Width transitions
+// so toggling .active glides between the two.
+.carousel-indicators [data-bs-target] {
+  border-radius: 999px;
+  transition:
+    width 0.2s ease,
+    opacity 0.15s ease;
+}
+
+.carousel-indicators .active {
+  width: 1.25rem;
+}
+
+.carousel-caption {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: left;
+  padding: 1.5rem 1.5rem;
+  background-image: linear-gradient(
+    to bottom,
+    transparent,
+    #{rgba($dark, 0.6)}
+  );
+  color: var(--#{$prefix}light);
+
+  p:last-of-type {
+    margin-bottom: 0;
+  }
+}
