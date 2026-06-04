@@ -31,9 +31,15 @@ $body-bg-dark: #0b0c0e;
 $body-color-dark: #f5f8fe;
 $body-secondary-color-dark: rgba($body-color-dark, 0.75);
 $surface-dark: #121317;
-$surface-alt-dark: #16181d;
-$border-color-subtle-dark: #2a2d35;
+$surface-alt-dark: #181b20;
+$border-color-dark: #23272f;
+$border-color-subtle-dark: #1d1f25;
 // Translucent border (dark) — cascades to card/dropdown/popover/modal/toast
 // via BS5's var(--bs-border-color-translucent) routing. See $border-color-translucent
 // in _variables.scss.
 $border-color-translucent-dark: rgba(255, 255, 255, 0.07);
+
+// Mirror the light-mode override: chevron stays secondary in both states.
+// BS5 inlines these at Sass build time into the dark SVG data: URLs.
+$accordion-icon-color-dark: $body-secondary-color-dark;
+$accordion-icon-active-color-dark: $body-secondary-color-dark;

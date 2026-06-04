@@ -23,20 +23,14 @@
   {% endif %}
 </head>
 <body>
-  <nav class="d-flex flex-wrap gap-3 align-items-center px-4 py-2 border-bottom small">
-    <strong>Stisla v3</strong>
-    <a href="/" class="text-decoration-none">tokens</a>
-    <a href="/buttons" class="text-decoration-none">buttons</a>
-    <a href="/cards" class="text-decoration-none">cards</a>
-    <button type="button" class="btn btn-icon btn-sm ms-auto" data-theme-toggle aria-label="Toggle theme">
-      <i data-lucide="moon" class="theme-icon-light"></i>
-      <i data-lucide="sun" class="theme-icon-dark"></i>
-    </button>
-  </nav>
-
-  <main class="container py-5 prose">
-    {% block content %}{% endblock %}
-  </main>
+  <div class="site-layout">
+    {% include "partials/_site-sidebar.njk" %}
+    <main class="site-main">
+      <div class="main-container prose">
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+  </div>
 
   {% if dev %}
     <script type="module" src="/src/js/index.js"></script>

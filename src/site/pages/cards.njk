@@ -55,14 +55,6 @@
           <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
         </div>
       </div>
-      <div class="card" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">Image bottom</h5>
-          <p class="card-text">A wider card with supporting text below.</p>
-          <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-        </div>
-        <img src="{{ img_landscape_2 }}" class="card-img-bottom" alt="Coastal landscape" />
-      </div>
       <div class="card text-bg-dark" style="width: 18rem;">
         <img src="{{ img_overlay }}" class="card-img" alt="Forest path" />
         <div class="card-img-overlay">
@@ -118,17 +110,17 @@
   </section>
 
   <section>
-    <h2><code>.card-header-alt</code></h2>
+    <h2>Card Header Alternative</h2>
     <p>Opt the header onto <code>--bs-surface-alt</code> to mirror the footer's contrast. Composes with <code>.card-header</code>: same padding, same border-radius rules.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-wrap gap-3 align-items-start">
-      <div class="card" style="width: 22rem;">
+      <div class="card">
         <div class="card-header">Default header</div>
         <div class="card-body">
           <p class="card-text mb-0">Header inherits the card body bg.</p>
         </div>
       </div>
-      <div class="card" style="width: 22rem;">
+      <div class="card">
         <div class="card-header card-header-alt">Alt header</div>
         <div class="card-body">
           <p class="card-text mb-0">Header sits on <code>--bs-surface-alt</code>.</p>
@@ -182,15 +174,15 @@
     <h2>List groups</h2>
     <p>Use <code>.list-group-flush</code> so items sit edge-to-edge inside the card. Combine with header and/or footer.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-3 align-items-start">
-      <div class="card" style="width: 18rem;">
+    <div class="d-flex flex-wrap gap-3 align-items-start w-100">
+      <div class="card flex-grow-1">
         <ul class="list-group list-group-flush">
           <li class="list-group-item">An item</li>
           <li class="list-group-item">A second item</li>
           <li class="list-group-item">A third item</li>
         </ul>
       </div>
-      <div class="card" style="width: 18rem;">
+      <div class="card flex-grow-1">
         <div class="card-header">Featured</div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">An item</li>
@@ -198,7 +190,7 @@
           <li class="list-group-item">A third item</li>
         </ul>
       </div>
-      <div class="card" style="width: 18rem;">
+      <div class="card flex-grow-1">
         <ul class="list-group list-group-flush">
           <li class="list-group-item">An item</li>
           <li class="list-group-item">A second item</li>
@@ -264,20 +256,20 @@
   <section>
     <h2>Text alignment</h2>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-3 align-items-start">
-      <div class="card" style="width: 16rem;">
+    <div class="d-flex flex-wrap gap-3 align-items-start w-100">
+      <div class="card flex-grow-1">
         <div class="card-body">
           <h5 class="card-title">Default</h5>
           <p class="card-text">Left aligned.</p>
         </div>
       </div>
-      <div class="card text-center" style="width: 16rem;">
+      <div class="card text-center flex-grow-1">
         <div class="card-body">
           <h5 class="card-title">Center</h5>
           <p class="card-text">.text-center.</p>
         </div>
       </div>
-      <div class="card text-end" style="width: 16rem;">
+      <div class="card text-end flex-grow-1">
         <div class="card-body">
           <h5 class="card-title">End</h5>
           <p class="card-text">.text-end.</p>

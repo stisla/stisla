@@ -8,6 +8,10 @@
 // to a fixed max-height with overflow-auto. Light/dark code tokens come
 // from Shiki's dual-theme CSS vars (`--shiki-dark`).
 
+body {
+  font-smooth: antialiased;
+}
+
 .demo {
   margin-bottom: 1rem;
   background: var(--bs-body-bg);
@@ -21,6 +25,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .demo-code {
@@ -64,12 +69,12 @@
   content: "";
   position: absolute;
   inset: auto 0 0 0;
-  height: 4rem;
+  height: 6rem;
   pointer-events: none;
   background: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0),
-    var(--bs-surface-alt) 70%
+    var(--bs-surface-alt)
   );
 }
 
@@ -77,22 +82,8 @@
   position: absolute;
   z-index: 1;
   left: 50%;
-  bottom: 1rem;
+  bottom: 6px;
   transform: translateX(-50%);
-  padding: 0.375rem 0.875rem;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  line-height: 1.4;
-  color: var(--bs-body-color);
-  background: var(--bs-surface);
-  border: 1px solid var(--bs-border-color);
-  border-radius: 999px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  cursor: pointer;
-}
-
-.demo-code-toggle:hover {
-  background: var(--bs-surface-alt);
 }
 
 .demo-code-toggle-hide {
@@ -174,6 +165,7 @@
   :where(p)#{$opt-out} {
     margin: 0 0 1rem;
     line-height: 1.6;
+    color: var(--bs-secondary-color);
   }
 
   :where(p.lead)#{$opt-out} {
@@ -200,7 +192,7 @@
     background: var(--bs-surface-alt);
     border: 1px solid var(--bs-border-color-translucent);
     border-radius: 0.25rem;
-    color: var(--bs-body-color);
+    color: #c27aff;
   }
 
   :where(strong, b)#{$opt-out} {
@@ -218,4 +210,53 @@
   :where(h1, h2, h3, p, ul, ol):last-child#{$opt-out} {
     margin-bottom: 0;
   }
+}
+
+.main-container {
+  max-width: 48rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-inline: 1.5rem;
+}
+
+// === Site shell: sidebar + main column ===
+// Sidebar is sticky-fixed at the viewport's left edge; main scrolls. The
+// `min-width: 0` on .site-main keeps long preformatted blocks (Shiki <pre>)
+// from blowing out the flex track and forcing a horizontal page scroll.
+
+.site-layout {
+  display: flex;
+  align-items: stretch;
+  min-height: 100vh;
+  background: #f5f7fa;
+}
+
+.site-sidebar {
+  position: sticky;
+  top: 0;
+  flex-shrink: 0;
+  width: 15rem;
+  height: 100vh;
+  --bs-sidebar-item-font-size: 0.78125rem;
+  --bs-sidebar-item-font-weight: 500;
+  --bs-sidebar-item-bg-active: rgba(var(--bs-secondary-rgb), 0.1);
+  --bs-sidebar-item-color-active: var(--bs-secondary);
+
+  .sidebar-item-button {
+    display: inline-flex;
+    width: auto;
+  }
+}
+
+.site-main {
+  flex-grow: 1;
+  min-width: 0;
+  padding: 5rem 0;
+  border-left: 1px solid var(--bs-border-color-subtle);
+  border-radius: 2rem 0 0 2rem;
+  background: var(--bs-body-bg);
+}
+
+[data-bs-theme="dark"] .site-layout {
+  background: #121417;
 }

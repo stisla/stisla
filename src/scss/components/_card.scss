@@ -51,3 +51,7 @@
 .card-header-alt {
   background-color: var(--#{$prefix}surface-alt);
 }
+
+.card .list-group .list-group-item {
+  --#{$prefix}list-group-border-color: var(--#{$prefix}card-border-color);
+}

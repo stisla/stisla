@@ -156,6 +156,28 @@ $card-box-shadow:
 $list-group-item-padding-y: 0.5rem;
 $list-group-item-padding-x: 1.25rem;
 
+// Accordion — items render as individually rounded chips inset 4px from the
+// wrapper edge (root-level padding + gap live in components/_accordion.scss
+// since BS5 doesn't expose them as vars). 16/20 button + body padding comes
+// from BS5's $accordion-padding-y/x defaults; no override needed. Active
+// state lifts to a 15% primary alpha tint with full primary text/chevron.
+// The .accordion-flush variant in the component file resets all of this for
+// the plain edge-to-edge look.
+$accordion-border-radius: $border-radius-lg;
+$accordion-button-active-bg: transparent;
+$accordion-button-active-color: inherit;
+$accordion-icon-width: 0.875rem;
+$accordion-padding-x: 0.75rem;
+$accordion-padding-y: 0.5rem;
+// Chevron stays quiet in both states — active state now signals via
+// surface-alt bg + bottom-border divider (see components/_accordion.scss),
+// not icon color. SVG embeds these at Sass build time (the data: URL
+// doesn't resolve runtime vars), so the chevron tracks $body-secondary-color,
+// not --bs-secondary-color. Documented BS5 limit; mirrors how button
+// variants compile (see V3.md §3.1).
+$accordion-icon-color: $body-secondary-color;
+$accordion-icon-active-color: $body-secondary-color;
+
 $nav-tabs-link-active-border-color: var(--#{$prefix}border-color-subtle);
 $nav-tabs-link-hover-border-color: var(--#{$prefix}border-color-subtle);
 
@@ -179,3 +201,89 @@ $btn-box-shadow:
   0 1px 3px 0 rgba(0, 0, 0, 0.1),
   0 1px 2px -1px rgba(0, 0, 0, 0.1);
 $btn-active-box-shadow: none;
+
+// Sidebar — Stisla-original component (BS5 ships no sidebar). The
+// component is a layout-agnostic panel: no fixed positioning, no width,
+// no default background. Vars emit at the .sidebar selector (mirrors
+// BS5's component-scoped --bs-card-* / --bs-modal-* pattern); the
+// .sidebar-sm / .sidebar-lg modifiers override only the deltas. Sub-menu
+// expand uses BS5's native .collapse — no Stisla JS. Rail/mini mode is a
+// CSS hook (.sidebar.is-collapsed) — the layout owns the width swap.
+$sidebar-bg: transparent !default;
+$sidebar-color: var(--#{$prefix}body-color) !default;
+$sidebar-border-color: var(--#{$prefix}border-color) !default;
+// Logo sits a stop heavier than body text by default for brand presence.
+// Surfaced as its own var so brand-recolor demos can paint it to match
+// the panel without disturbing $sidebar-color (general text).
+$sidebar-logo-color: var(--#{$prefix}emphasis-color) !default;
+// Logo icon is a notch larger than nav icons so the brand mark reads
+// heavier in expanded mode. Surfaced as a var so a) consumers can rebrand
+// without hand-editing the rule, and b) the rail-mode centering math can
+// derive the icon-axis offset from it (otherwise overriding the logo size
+// would put the rail-centered icon off-axis).
+$sidebar-logo-icon-size: 1.5rem !default;
+$sidebar-padding-y: 1rem !default; // 16
+$sidebar-padding-x: 1rem !default; // 16
+$sidebar-gap: 1rem !default; // header ↔ content ↔ footer
+$sidebar-border-radius: $border-radius-lg !default;
+
+// 32 / 36 / 40 height scale (sm / default / lg) — matches button cadence
+// at the dense end (btn-sm = 28, btn = 36) without ever exceeding btn-lg = 44.
+$sidebar-item-min-height: 2.25rem !default; // 36
+$sidebar-item-padding-y: 0.5rem !default;
+$sidebar-item-padding-x: 0.625rem !default; // 10
+$sidebar-item-radius: $border-radius !default;
+$sidebar-item-gap: 0.625rem !default; // icon ↔ label
+$sidebar-item-font-size: 0.875rem !default; // 14px
+$sidebar-item-font-weight: 400 !default;
+$sidebar-item-color: var(--#{$prefix}body-color) !default;
+$sidebar-item-color-hover: var(--#{$prefix}emphasis-color) !default;
+$sidebar-item-color-active: var(--#{$prefix}emphasis-color) !default;
+// Alpha tints on --bs-emphasis-color-rgb — cascades to dark automatically
+// (BS5 flips --bs-emphasis-color via the color-mode mixin). One token, two
+// themes, no explicit dark override needed.
+$sidebar-item-bg-hover: rgba(
+  var(--#{$prefix}emphasis-color-rgb),
+  0.06
+) !default;
+$sidebar-item-bg-active: rgba(
+  var(--#{$prefix}emphasis-color-rgb),
+  0.08
+) !default;
+$sidebar-item-icon-size: 1rem !default;
+$sidebar-item-icon-color: var(--#{$prefix}secondary-color) !default;
+// Square = item height so kebab/dot-menu trailing actions line up cleanly.
+$sidebar-item-action-size: $sidebar-item-min-height !default;
+
+$sidebar-group-gap: 1rem !default; // between adjacent .sidebar-group
+$sidebar-group-title-font-size: 0.75rem !default; // 12
+$sidebar-group-title-font-weight: 400 !default;
+$sidebar-group-title-color: var(--#{$prefix}secondary-color) !default;
+
+$sidebar-submenu-border-color: var(--#{$prefix}border-color) !default;
+$sidebar-submenu-padding-start: 0.5rem !default;
+// Aligns the submenu guide-line with the parent item's icon center
+// ($sidebar-padding-x + half of $sidebar-item-icon-size). Tuned visually.
+$sidebar-submenu-margin-start: 1.125rem !default; // 18
+
+// Size deltas — only the vars that change land on the modifier classes;
+// everything else inherits the default scale. Matches the .btn-sm/.btn-lg
+// pattern (min-height-only override) in components/_buttons.scss.
+//
+// Note: the outer panel padding ($sidebar-padding-y/x) stays fixed across
+// every size. Modifiers only touch what's INSIDE — item min-height, item
+// padding, group gap. That keeps the header/content/footer outer gutters
+// visually consistent at any size, and is what the rail-width recipe
+// derives from: rail = item-min-height + 2 × sidebar-padding-x.
+$sidebar-sm-item-min-height: 2rem !default; // 32
+$sidebar-sm-item-padding-y: 0.375rem !default;
+// 0.5rem keeps the icon centered in the sm 32px-square rail button —
+// (32 − 16) / 2 = 8. (default's 0.625rem solves the same equation for
+// 36; lg's 0.75rem for 40.)
+$sidebar-sm-item-padding-x: 0.5rem !default;
+$sidebar-sm-group-gap: 0.875rem !default;
+
+$sidebar-lg-item-min-height: 2.5rem !default; // 40
+$sidebar-lg-item-padding-y: 0.5rem !default;
+$sidebar-lg-item-padding-x: 0.75rem !default;
+$sidebar-lg-group-gap: 1.125rem !default;

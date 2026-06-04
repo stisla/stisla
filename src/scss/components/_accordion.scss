@@ -1,0 +1,130 @@
+// Stisla v3 — accordion. BS5 stacks items as a single bordered block; we
+// restyle them as individually rounded chips inset 4px from the wrapper,
+// with a 4px gap between items. The flush variant strips the chip styling
+// back to plain edge-to-edge rows (matches BS5's flush convention).
+
+// Wrapper inset for the chip layout. Drives the .accordion padding AND
+// the calc()s that derive the item / button radii — concentric corners
+// require inner = outer - padding (- border-width for the next layer in).
+// Change this single value and every nested corner stays concentric.
+$accordion-wrapper-padding: 0.25rem;
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: $accordion-wrapper-padding;
+  padding: $accordion-wrapper-padding;
+  border: var(--#{$prefix}accordion-border-width) solid
+    var(--#{$prefix}accordion-border-color);
+  border-radius: var(--#{$prefix}accordion-border-radius);
+
+  // Repoint BS5's inner-border-radius var so the button + collapse corners
+  // (which reference it via our rules below) land concentric to the chip
+  // inset, not flush to the outer wrapper. Formula:
+  //   button_radius = outer - wrapper_padding - item_border_width
+  // Everything downstream that reads --bs-accordion-inner-border-radius
+  // picks this up automatically — no per-rule calc().
+  --#{$prefix}accordion-inner-border-radius: calc(
+    var(--#{$prefix}accordion-border-radius) -
+      #{$accordion-wrapper-padding} - var(--#{$prefix}accordion-border-width)
+  );
+}
+
+.accordion-button {
+  font-weight: 500;
+  height: 2.25rem;
+  border-bottom: 1px solid transparent;
+
+  // BS5 paints an inset border-bottom inside the active button to mark the
+  // header/body split. The tint background already signals "active" inside
+  // a rounded chip, so the line just reads as visual noise — drop it.
+  &:not(.collapsed) {
+    box-shadow: none;
+  }
+
+  &:hover:not([aria-expanded="true"]) {
+    background-color: rgba(var(--#{$prefix}emphasis-color-rgb), 0.08);
+  }
+
+  &[aria-expanded="true"] {
+    border-bottom-color: var(--#{$prefix}accordion-border-color);
+  }
+}
+
+.accordion-item {
+  // Concentric chip: item radius = outer (wrapper) radius - wrapper padding.
+  // BS5 sets the item to the OUTER value, fine for its stacked-block layout
+  // where items reach the wrapper edge; in our inset-chip layout the item
+  // sits 4px inside, so its visible radius shrinks by the same 4px to keep
+  // corners concentric with the wrapper.
+  border-radius: calc(
+    var(--#{$prefix}accordion-border-radius) - #{$accordion-wrapper-padding}
+  );
+
+  border-color: transparent;
+
+  &:has(.accordion-button:not(.collapsed)) {
+    background-color: var(--#{$prefix}surface-alt);
+    border-color: var(--#{$prefix}border-color);
+
+    &:not(:first-of-type) {
+      border-top: inherit;
+    }
+  }
+
+  // Button corners follow the chip: top always rounded; bottom only when
+  // collapsed (an expanded body sits flush against the button bottom).
+  > .accordion-header .accordion-button {
+    border-top-left-radius: var(--#{$prefix}accordion-inner-border-radius);
+    border-top-right-radius: var(--#{$prefix}accordion-inner-border-radius);
+
+    &.collapsed {
+      border-bottom-left-radius: var(--#{$prefix}accordion-inner-border-radius);
+      border-bottom-right-radius: var(
+        --#{$prefix}accordion-inner-border-radius
+      );
+    }
+  }
+
+  > .accordion-collapse {
+    border-bottom-left-radius: var(--#{$prefix}accordion-inner-border-radius);
+    border-bottom-right-radius: var(--#{$prefix}accordion-inner-border-radius);
+  }
+}
+
+// Flush — plain edge-to-edge rows with a single divider between items.
+// Reverts the chip layout: no wrapper padding, no per-item radius, no
+// active tint. BS5's own .accordion-flush rules already zero the button
+// and collapse radii via a higher-specificity selector, so we only need
+// to handle the bits Stisla adds on top.
+.accordion-flush {
+  padding: 0;
+  gap: 0;
+  border-color: transparent;
+  --#{$prefix}accordion-btn-padding-x: 1rem;
+
+  > .accordion-item {
+    border-top: 0;
+    background-color: transparent !important;
+
+    .accordion-button {
+      &:hover:not([aria-expanded="true"]) {
+        background-color: rgba(var(--#{$prefix}emphasis-color-rgb), 0.08);
+      }
+
+      &[aria-expanded="true"] {
+        border-bottom-color: transparent;
+      }
+    }
+
+    &:not(:last-child) {
+      border-bottom: var(--#{$prefix}accordion-border-width) solid
+        var(--#{$prefix}accordion-border-color);
+    }
+
+    > .accordion-header .accordion-button {
+      --#{$prefix}accordion-active-bg: transparent;
+      --#{$prefix}accordion-active-color: var(--#{$prefix}body-color);
+    }
+  }
+}

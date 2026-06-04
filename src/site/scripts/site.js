@@ -1,6 +1,19 @@
 // Site-only behaviors for stisla.dev demos. Not part of the framework bundle.
 // Pattern: declarative `data-demo-*` attributes; one event-delegated handler per behavior.
 
+// Site-sidebar active-state — mark the link whose pathname matches the
+// current URL with aria-current="page". Done in JS (not Nunjucks) so the
+// menu lives in one partial without needing a per-page key plumbed through.
+(function markActiveSidebarItem() {
+  const here = window.location.pathname.replace(/\/$/, "") || "/";
+  document
+    .querySelectorAll(".site-sidebar a.sidebar-item-button")
+    .forEach((link) => {
+      const href = (link.getAttribute("href") || "").replace(/\/$/, "") || "/";
+      if (href === here) link.setAttribute("aria-current", "page");
+    });
+})();
+
 // data-theme-toggle — flip [data-bs-theme] on <html>, persist to localStorage.
 // FOUC prevention runs synchronously in base.njk's <head>.
 document.addEventListener("click", (e) => {
