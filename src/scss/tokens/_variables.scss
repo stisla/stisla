@@ -219,6 +219,15 @@ $btn-box-shadow:
   0 1px 2px -1px rgba(0, 0, 0, 0.1);
 $btn-active-box-shadow: none;
 
+// Badges — chip-style at a fixed 22px height. BS5 has no $badge-height var,
+// so the height is held via min-height + padding-y: 0 in components/_badge.scss.
+// Light variants emit there too.
+$badge-padding-y: 0;
+$badge-padding-x: 0.5rem;
+$badge-font-size: 0.75rem;
+$badge-font-weight: 400;
+$badge-border-radius: 0.375rem;
+
 // Sidebar — Stisla-original component (BS5 ships no sidebar). The
 // component is a layout-agnostic panel: no fixed positioning, no width,
 // no default background. Vars emit at the .sidebar selector (mirrors

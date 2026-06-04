@@ -1,0 +1,117 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Badge · Stisla v3{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Badge</h1>
+    <p class="lead">A compact label for counts, statuses, and tags.</p>
+  </header>
+
+  <section>
+    <h2>Variants</h2>
+    <p>Pair <code>.badge</code> with a <code>.text-bg-{state}</code> utility for the solid filled chip.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-2">
+      <span class="badge text-bg-primary">Primary</span>
+      <span class="badge text-bg-secondary">Secondary</span>
+      <span class="badge text-bg-success">Success</span>
+      <span class="badge text-bg-danger">Danger</span>
+      <span class="badge text-bg-warning">Warning</span>
+      <span class="badge text-bg-info">Info</span>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Light</h2>
+    <p>Use <code>.badge-light-{state}</code> for a soft tinted chip. The background sits at 15% of the variant color and the text holds the solid color.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-2">
+      <span class="badge badge-light-primary">Primary</span>
+      <span class="badge badge-light-secondary">Secondary</span>
+      <span class="badge badge-light-success">Success</span>
+      <span class="badge badge-light-danger">Danger</span>
+      <span class="badge badge-light-warning">Warning</span>
+      <span class="badge badge-light-info">Info</span>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>With icon</h2>
+    <p>Drop a direct <code>&lt;svg&gt;</code> or <code>&lt;i&gt;</code> child. The icon picks up the text color and scales to the badge's font size.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-2">
+      <span class="badge badge-light-success">
+        <i data-lucide="check"></i>
+        Active
+      </span>
+      <span class="badge badge-light-warning">
+        <i data-lucide="clock"></i>
+        Pending
+      </span>
+      <span class="badge badge-light-danger">
+        <i data-lucide="x"></i>
+        Failed
+      </span>
+      <span class="badge text-bg-primary">
+        <i data-lucide="star"></i>
+        Featured
+      </span>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Loading</h2>
+    <p>Slot a Bootstrap <code>.spinner-border</code> in to signal in-flight work. It inherits the badge's text color and shrinks to the same metric as an icon.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-2">
+      <span class="badge badge-light-primary">
+        <span class="spinner-border" role="status" aria-hidden="true"></span>
+        Syncing
+      </span>
+      <span class="badge badge-light-secondary">
+        <span class="spinner-border" role="status" aria-hidden="true"></span>
+        Loading
+      </span>
+      <span class="badge text-bg-info">
+        <span class="spinner-border" role="status" aria-hidden="true"></span>
+        Uploading
+      </span>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Pill</h2>
+    <p>Add <code>.rounded-pill</code> for a fully rounded shape.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-2">
+      <span class="badge rounded-pill text-bg-primary">Primary</span>
+      <span class="badge rounded-pill text-bg-success">Success</span>
+      <span class="badge rounded-pill badge-light-warning">Warning</span>
+      <span class="badge rounded-pill badge-light-info">Info</span>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>In buttons</h2>
+    <p>Drop a badge inside a button for a count or status. Combine with a <code>.btn-icon</code> for a notification dot.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-2 align-items-center">
+      <button type="button" class="btn btn-primary">
+        Inbox
+        <span class="badge text-bg-light">4</span>
+      </button>
+      <button type="button" class="btn btn-outline-secondary">
+        Notifications
+        <span class="badge text-bg-danger">12</span>
+      </button>
+    </div>
+    {% endcall %}
+  </section>
+{% endblock %}

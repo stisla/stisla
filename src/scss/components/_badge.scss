@@ -1,0 +1,61 @@
+// Stisla v3 — badges.
+// BS5 sizes the badge through padding alone; a fixed 22px chip needs an
+// inline-flex + min-height rule that lives here. Solid color variants still
+// come from BS5's .text-bg-{state} (or .bg-{state}) utilities. Light tinted
+// variants (15% bg over the solid color text) emit below.
+//
+// Parts:
+//   .badge                base (BS5)
+//   .text-bg-{state}      solid filled (BS5 utility, unchanged)
+//   .badge-light-{state}  soft tint (new — color at 15% bg, solid color text)
+//   > svg | > i           leading or trailing icon, scales to 1em
+//   .spinner-border       loading state, scales to 1em via spinner CSS vars
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-height: 1.25rem;
+  line-height: 1;
+}
+
+.badge :is(svg, i) {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}
+
+// Spinner inside a badge: shrink to 1em so it sits on the label baseline and
+// thin out the ring so the 0.25em default doesn't read as a donut at 12px.
+.badge :is(.spinner-border, .spinner-grow) {
+  --#{$prefix}spinner-width: 1em;
+  --#{$prefix}spinner-height: 1em;
+  --#{$prefix}spinner-vertical-align: 0;
+}
+.badge .spinner-border {
+  --#{$prefix}spinner-border-width: 1.5px;
+}
+
+// Light variant — color at 15% bg, solid color text. Mirrors the
+// .btn-light-* mixin in components/_buttons.scss (skip light/dark — emitting
+// .badge-light-light reads awkwardly and BS5's .text-bg-* still covers them).
+@mixin badge-light-variant($color) {
+  --#{$prefix}badge-color: #{$color};
+  background-color: #{rgba($color, 0.15)};
+}
+
+@each $color, $value in map-remove($theme-colors, "light", "dark") {
+  .badge-light-#{$color} {
+    @include badge-light-variant($value);
+  }
+}
+
+// Mono secondary compiles to near-black; on a dark surface the tint and the
+// text both vanish. Repaint to the dark-mode foreground (matches the dark
+// override for .btn-light-secondary in components/_buttons.scss).
+@include color-mode(dark) {
+  .badge-light-secondary {
+    --#{$prefix}badge-color: #{$body-color-dark};
+    background-color: #{rgba($body-color-dark, 0.15)};
+  }
+}
