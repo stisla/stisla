@@ -1,0 +1,34 @@
+// Stisla v3 — button group.
+//
+// Our buttons carry their own elevation ($btn-box-shadow = drop shadow +
+// top inset gleam). Three buttons stacked edge-to-edge in a group then
+// paint three separate "cards" instead of one chip. Lift the drop shadow
+// to the wrapper and strip the per-button shadow on members so the group
+// reads as a single elevated control with BS5's outer-only radius.
+//
+// Outline groups stay flat — same opt-out we already apply to standalone
+// outline buttons (transparent fill + a 1px ring shouldn't sit on a drop
+// shadow). The :has() check covers any outline variant in the group.
+//
+// .btn-toolbar gets a small default gap so multiple groups in a row
+// breathe without needing utility classes per usage.
+
+.btn-group,
+.btn-group-vertical {
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px -1px rgba(0, 0, 0, 0.1);
+
+  > .btn {
+    --#{$prefix}btn-box-shadow: none;
+  }
+}
+
+.btn-group:has(> [class*="btn-outline-"]),
+.btn-group-vertical:has(> [class*="btn-outline-"]) {
+  box-shadow: none;
+}
+
+.btn-toolbar {
+  gap: 0.5rem;
+}
