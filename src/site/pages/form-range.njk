@@ -1,0 +1,55 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Range · Stisla v3{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Range</h1>
+    <p class="lead">A slider for picking a numeric value from a continuous span.</p>
+  </header>
+
+  <section>
+    <h2>Basic</h2>
+    <p>Add <code>.form-range</code> to an <code>&lt;input type="range"&gt;</code>. Pair with a <code>&lt;label&gt;</code> tied via <code>for</code>/<code>id</code> so the field is reachable.</p>
+    {% call ui.demo() %}
+    <div class="w-100" style="max-width: 24rem;">
+      <label for="basicRange" class="form-label">Volume</label>
+      <input type="range" class="form-range" id="basicRange" />
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Min and max</h2>
+    <p>Set <code>min</code> and <code>max</code> to bound the slider. Defaults to <code>0</code>–<code>100</code>.</p>
+    {% call ui.demo() %}
+    <div class="w-100" style="max-width: 24rem;">
+      <label for="minMaxRange" class="form-label">Year</label>
+      <input type="range" class="form-range" min="2000" max="2030" value="2026" id="minMaxRange" />
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Steps</h2>
+    <p>Add <code>step</code> to snap the thumb to fixed increments. Drop it (or use <code>any</code>) for fully continuous movement.</p>
+    {% call ui.demo() %}
+    <div class="w-100" style="max-width: 24rem;">
+      <label for="stepRange" class="form-label">Rating</label>
+      <input type="range" class="form-range" min="0" max="5" step="0.5" value="3" id="stepRange" />
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Disabled</h2>
+    <p>Add the <code>disabled</code> attribute to dim the track and thumb and block interaction.</p>
+    {% call ui.demo() %}
+    <div class="w-100" style="max-width: 24rem;">
+      <label for="disabledRange" class="form-label">Volume</label>
+      <input type="range" class="form-range" id="disabledRange" disabled />
+    </div>
+    {% endcall %}
+  </section>
+{% endblock %}
