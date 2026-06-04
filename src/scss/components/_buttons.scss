@@ -67,6 +67,12 @@
   --#{$prefix}btn-border-color: #{$sky-600};
 }
 
+@each $color, $value in map-remove($theme-colors, "secondary") {
+  .btn-outline-#{$color} {
+    --#{$prefix}btn-bg: #{rgba($value, 0.03)};
+  }
+}
+
 // Mono secondary — filled and outline diverge intentionally:
 //
 //   Filled  = strong inverted mono. Light = $dark on white, dark = near-white
@@ -84,17 +90,18 @@
 // Dark filled flips below via explicit hover/active stops (auto-tint on a
 // near-white bg moves toward pure white = no visible state change).
 .btn-outline-secondary {
-  --#{$prefix}btn-color: #{$gray-700};
-  --#{$prefix}btn-border-color: #{$gray-300};
-  --#{$prefix}btn-hover-color: #{$gray-900};
-  --#{$prefix}btn-hover-bg: #{$gray-100};
-  --#{$prefix}btn-hover-border-color: #{$gray-400};
+  --#{$prefix}btn-color: #{$body-color};
+  --#{$prefix}btn-bg: #{rgba($gray-900, 0.03)};
+  --#{$prefix}btn-border-color: #{$border-color};
+  --#{$prefix}btn-hover-color: #{$body-color};
+  --#{$prefix}btn-hover-bg: #{$accent-bg};
+  --#{$prefix}btn-hover-border-color: #{$border-color};
   --#{$prefix}btn-focus-shadow-rgb: #{to-rgb($gray-400)};
-  --#{$prefix}btn-active-color: #{$gray-900};
-  --#{$prefix}btn-active-bg: #{$gray-200};
-  --#{$prefix}btn-active-border-color: #{$gray-400};
-  --#{$prefix}btn-disabled-color: #{$gray-500};
-  --#{$prefix}btn-disabled-border-color: #{$gray-300};
+  --#{$prefix}btn-active-color: #{$body-color};
+  --#{$prefix}btn-active-bg: #{darken($accent-active-bg, 1%)};
+  --#{$prefix}btn-active-border-color: #{$border-color};
+  --#{$prefix}btn-disabled-color: #{$body-color};
+  --#{$prefix}btn-disabled-border-color: #{$border-color};
 }
 
 @include color-mode(dark) {
@@ -110,17 +117,24 @@
   }
 
   .btn-outline-secondary {
-    --#{$prefix}btn-color: #{$gray-200};
-    --#{$prefix}btn-border-color: #{$gray-700};
-    --#{$prefix}btn-hover-color: #{$gray-100};
-    --#{$prefix}btn-hover-bg: #{$gray-800};
-    --#{$prefix}btn-hover-border-color: #{$gray-600};
+    --#{$prefix}btn-color: #{$body-color-dark};
+    --#{$prefix}btn-bg: #{rgba($gray-800, 0.15)};
+    --#{$prefix}btn-border-color: #{$border-color-dark};
+    --#{$prefix}btn-hover-color: #{$body-color-dark};
+    --#{$prefix}btn-hover-bg: #{$accent-bg-dark};
+    --#{$prefix}btn-hover-border-color: #{$border-color-dark};
     --#{$prefix}btn-focus-shadow-rgb: #{to-rgb($gray-500)};
-    --#{$prefix}btn-active-color: #{$gray-100};
-    --#{$prefix}btn-active-bg: #{$gray-700};
-    --#{$prefix}btn-active-border-color: #{$gray-600};
-    --#{$prefix}btn-disabled-color: #{$gray-500};
-    --#{$prefix}btn-disabled-border-color: #{$gray-700};
+    --#{$prefix}btn-active-color: #{$body-color-dark};
+    --#{$prefix}btn-active-bg: #{lighten($accent-active-bg-dark, 2%)};
+    --#{$prefix}btn-active-border-color: #{$border-color-dark};
+    --#{$prefix}btn-disabled-color: #{$body-color-dark};
+    --#{$prefix}btn-disabled-border-color: #{$border-color-dark};
+  }
+
+  @each $color, $value in map-remove($theme-colors, "secondary") {
+    .btn-outline-#{$color} {
+      --#{$prefix}btn-bg: #{rgba($value, 0.1)};
+    }
   }
 }
 
@@ -239,8 +253,12 @@
   animation: stisla-btn-spin 0.75s linear infinite;
 }
 @media (prefers-reduced-motion: reduce) {
-  .btn-loading::before { animation-duration: 3s; }
+  .btn-loading::before {
+    animation-duration: 3s;
+  }
 }
 @keyframes stisla-btn-spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }

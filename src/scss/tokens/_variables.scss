@@ -219,6 +219,17 @@ $btn-box-shadow:
   0 1px 2px -1px rgba(0, 0, 0, 0.1);
 $btn-active-box-shadow: none;
 
+// Close button — match the default .btn footprint so a standalone .btn-close
+// reads as a peer to .btn / .btn-icon (cards/modals/toasts often mix them in
+// the same header row). $btn-close-width drives both the rendered icon size
+// AND the background-size on the SVG (BS5 sets `center / $btn-close-width auto`
+// in _close.scss); 1rem lands the glyph at the icon scale we use elsewhere
+// (badge / breadcrumb / sidebar / alert icons). Padding then fills the rest:
+// box-sizing is content-box, so 1rem + 2 × 0.625rem = 2.25rem = .btn height.
+// $btn-close-height / $btn-close-padding-y inherit from these via BS5 defaults.
+$btn-close-width: 1rem;
+$btn-close-padding-x: 0.625rem;
+
 // Dropdown — inset menu with a 4px container padding and 32px rows. Item
 // radius derives from the wrapper in components/_dropdown.scss with the same
 // concentric formula as the accordion (item = wrapper - padding). Hover and

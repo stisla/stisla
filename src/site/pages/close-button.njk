@@ -1,0 +1,51 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Close button · Stisla v3{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Close button</h1>
+    <p class="lead">A generic dismiss control for alerts, modals, toasts, and any panel that can be closed.</p>
+  </header>
+
+  <section>
+    <h2>Basic</h2>
+    <p>Drop a <code>&lt;button class="btn-close"&gt;</code> on its own. The footprint matches the default <code>.btn</code>, so it sits cleanly in a card header or toolbar next to other buttons.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn-close" aria-label="Close"></button>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Disabled</h2>
+    <p>Add the <code>disabled</code> attribute (or <code>.disabled</code> on an anchor) to dim and block interaction.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn-close" aria-label="Close" disabled></button>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>On a dark surface</h2>
+    <p>Use <code>.btn-close-white</code> when the button sits on a colored or dark background and the default glyph is too low contrast. The glyph also auto-inverts in the page's dark theme.</p>
+    {% call ui.demo() %}
+    <div class="p-3 rounded text-bg-dark d-inline-block">
+      <button type="button" class="btn-close btn-close-white" aria-label="Close"></button>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>With dismiss</h2>
+    <p>Pair with <code>data-bs-dismiss</code> to hook Bootstrap's native dismiss JS for alerts, modals, offcanvases, and toasts. The button works in any container that Bootstrap can dismiss.</p>
+    {% call ui.demo() %}
+    <div class="alert alert-success fade show w-100 mb-0">
+      <i data-lucide="check-circle"></i>
+      <div>Saved.</div>
+      <div class="alert-action">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+{% endblock %}
