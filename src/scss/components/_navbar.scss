@@ -1,0 +1,107 @@
+// Stisla v3 — navbar.
+//
+// BS5 ships .navbar links with no background and rgba-emphasis text. We
+// keep the ghost stance and paint a soft accent chip on hover so the
+// cursor target reads without committing to a permanent pill. Padding is
+// 8px both axes at the expand breakpoint (padding-y from BS5's
+// $nav-link-padding-y, padding-x from $navbar-nav-link-padding-x in
+// tokens/_variables.scss); chip radius derives from the design-system
+// $border-radius-sm so it visually pairs with .btn-sm trailing actions.
+//
+// Hover, .active (current page), and .show (open dropdown toggle) all share
+// the accent chip so the selected row reads at the same weight as the cursor
+// target. Text color stays --bs-body-color across all three via the
+// $navbar-*-color overrides in tokens/_variables.scss.
+//
+// Parts:
+//   .navbar              outer bar (BS5)
+//   .navbar-brand        wordmark / logo slot (BS5)
+//   .navbar-nav          link list (BS5)
+//   .nav-link            row (BS5, ghost + hover/active chip)
+//   .navbar-toggler      hamburger for sm/md collapse (BS5)
+//   .navbar-collapse     collapsing wrapper (BS5)
+
+.navbar-nav .nav-link,
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  height: 2.25rem;
+  line-height: 1;
+}
+
+.navbar-nav .nav-link {
+  border-radius: var(--#{$prefix}border-radius-sm);
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+
+  &:hover,
+  &:focus,
+  &.active,
+  &.show {
+    background-color: var(--#{$prefix}accent-bg);
+  }
+}
+
+.navbar-nav {
+  gap: 4px;
+  // BS5 pins --bs-nav-link-padding-x to 0 inside .navbar-nav for the
+  // collapsed (column) layout, then the .navbar-expand-* rules set padding-x
+  // to var(--bs-navbar-nav-link-padding-x) only above the breakpoint. That
+  // leaves mobile links flush and the hover chip clings to the bar edge.
+  // Route the inherited var to the navbar value so column and row share
+  // the same horizontal inset.
+  --#{$prefix}nav-link-padding-x: var(--#{$prefix}navbar-nav-link-padding-x);
+}
+
+// Column-mode bleed. In collapsed layout the stacked links should reach
+// further toward the bar's outer edge while still leaving a small gutter
+// inside the rounded border. The bleed lives on .navbar-collapse, NOT on
+// .navbar-nav: BS5 puts `overflow: hidden` on .collapsing during the height
+// animation, so anything extending past .navbar-collapse's box (e.g. a
+// nav-link's hover chip via negative margin) would be clipped mid-fold.
+// Pulling .navbar-collapse itself wider means its content stays inside its
+// own clip box. -8px (matching the nav-link's column-mode padding-x) lands
+// the chip's inner text at navbar-padding-x = brand-text-left for clean
+// vertical alignment with the brand.
+//
+// Mirrors BS5's .navbar-expand-* loop with media-breakpoint-down so each
+// variant scopes the bleed to its own collapse window; .navbar-expand (no
+// infix, never collapses) is skipped.
+@each $breakpoint in map-keys($grid-breakpoints) {
+  $next: breakpoint-next($breakpoint, $grid-breakpoints);
+  $infix: breakpoint-infix($next, $grid-breakpoints);
+
+  @if $next {
+    .navbar-expand#{$infix} {
+      @include media-breakpoint-down($next) {
+        .navbar-collapse {
+          margin-inline: -0.5rem;
+          // Gutter between the brand/toggler row and the stacked menu.
+          // Lives as margin-top (NOT row-gap on .navbar or padding-top here)
+          // because the BS5 collapse animates `height`, not box position:
+          // margin-top sits constant outside the height box throughout the
+          // fold, so the element grows downward cleanly from its parked
+          // offset. row-gap and padding-top both shift layout in the same
+          // frame as the .collapse → .collapsing class swap, which reads as
+          // a jump at the start and end of the transition.
+          margin-top: 0.375rem;
+        }
+        .navbar-nav {
+          --#{$prefix}nav-link-padding-x: 0.5rem;
+        }
+      }
+    }
+  }
+}
+
+.navbar-toggler {
+  height: 2.25rem;
+  width: 2.25rem;
+  padding: 0;
+}
+
+.navbar-toggler-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}

@@ -1,0 +1,147 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Navbar · Stisla v3{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Navbar</h1>
+    <p class="lead">A top bar with a brand mark and a row of nav links.</p>
+  </header>
+
+  <section>
+    <h2>Basic</h2>
+    <p>Wrap a <code>.navbar-brand</code> and a <code>.navbar-nav</code> in <code>.navbar.navbar-expand-lg</code>. The <code>.navbar-toggler</code> + <code>.navbar-collapse</code> pair folds the menu below the expand breakpoint; resize the preview to a small width to see it fold.</p>
+    {% call ui.demo() %}
+    <nav class="navbar navbar-expand-lg border rounded w-100">
+      <a class="navbar-brand" href="#">Acme</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarBasic" aria-controls="navbarBasic" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarBasic">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Features</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+        </ul>
+      </div>
+    </nav>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>With dropdown</h2>
+    <p>Drop a <code>.dropdown</code> into the nav list. The toggle uses <code>.nav-link.dropdown-toggle</code> so it shares the same ghost chip as the siblings.</p>
+    {% call ui.demo() %}
+    <nav class="navbar navbar-expand-lg border rounded w-100">
+      <a class="navbar-brand" href="#">Acme</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDropdown" aria-controls="navbarDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Features</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Resources
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Docs</a></li>
+              <li><a class="dropdown-item" href="#">Changelog</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Support</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Active and disabled</h2>
+    <p>Mark the current page with <code>.active</code> and unreachable links with <code>.disabled</code>. Active takes the emphasis color; disabled greys out and stops pointer events.</p>
+    {% call ui.demo() %}
+    <nav class="navbar navbar-expand-lg border rounded w-100">
+      <a class="navbar-brand" href="#">Acme</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarStates" aria-controls="navbarStates" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarStates">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="#">Overview</a></li>
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Reports</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Settings</a></li>
+          <li class="nav-item"><a class="nav-link disabled" aria-disabled="true">Billing</a></li>
+        </ul>
+      </div>
+    </nav>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>With search</h2>
+    <p>Drop a <code>&lt;form&gt;</code> after the nav list and use <code>.me-auto</code> on the list to push the form to the trailing edge.</p>
+    {% call ui.demo() %}
+    <nav class="navbar navbar-expand-lg border rounded w-100">
+      <a class="navbar-brand" href="#">Acme</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSearch" aria-controls="navbarSearch" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSearch">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Features</a></li>
+        </ul>
+        <form class="d-flex gap-2 ms-0 ms-lg-4" role="search">
+          <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>With text</h2>
+    <p>Use <code>.navbar-text</code> for non-interactive copy like a status pill or a workspace name on the trailing edge.</p>
+    {% call ui.demo() %}
+    <nav class="navbar navbar-expand-lg border rounded w-100">
+      <a class="navbar-brand" href="#">Acme</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <span class="navbar-text d-inline-flex align-items-center ms-auto">
+          <span class="bg-success rounded-circle d-inline-block me-2" style="width: 6px; height: 6px;"></span>
+          All systems normal
+        </span>
+      </div>
+    </nav>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Container</h2>
+    <p>Drop a <code>.container</code> or <code>.container-fluid</code> as the bar's direct child to align its contents with a matching container in the page body. The bar still spans full width; only the inner row clamps to the container's gutter.</p>
+    {% call ui.demo() %}
+    <nav class="navbar navbar-expand-lg border rounded w-100">
+      <div class="container">
+        <a class="navbar-brand" href="#">Acme</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContainer" aria-controls="navbarContainer" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContainer">
+          <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Features</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    {% endcall %}
+  </section>
+{% endblock %}

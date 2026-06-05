@@ -243,6 +243,26 @@ $modal-transition: transform 0.15s ease-out;
 $nav-tabs-link-active-border-color: var(--#{$prefix}border-color-subtle);
 $nav-tabs-link-hover-border-color: var(--#{$prefix}border-color-subtle);
 
+// Navbar — 12px y / 16px x outer cadence, 8px square padding on link items.
+// Link padding-y inherits BS5's $nav-link-padding-y default (0.5rem = 8px),
+// so setting padding-x to 0.5rem here lands an even 8px box on both axes
+// once the bar enters row layout at the expand breakpoint. Ghost stance +
+// hover chip (accent-bg) lives in components/_navbar.scss.
+$navbar-brand-font-size: 0.875rem;
+$navbar-padding-y: 0.5rem;
+$navbar-padding-x: 1rem;
+$navbar-nav-link-padding-x: 0.75rem;
+$navbar-nav-link-padding-y: 0.75rem;
+// Link color pinned to --bs-body-color across all three states so links read
+// at full text weight (BS5's defaults dim to 65/80/100% of emphasis, which
+// reads washed-out against our two-tone surfaces). var(--bs-body-color)
+// already swaps per data-bs-theme via BS5's color-mode mixin, so the dark
+// pair in _variables-dark.scss mirrors the same reference.
+$navbar-light-color: var(--#{$prefix}body-color);
+$navbar-light-hover-color: var(--#{$prefix}body-color);
+$navbar-light-active-color: var(--#{$prefix}body-color);
+$navbar-light-toggler-border-color: var(--#{$prefix}border-color);
+
 // Disabled — lighter than BS5's default (--bs-secondary-color), matches design's text-disabled
 $nav-link-disabled-color: $gray-300;
 $btn-link-disabled-color: $gray-300;

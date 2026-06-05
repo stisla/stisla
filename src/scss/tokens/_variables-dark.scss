@@ -84,3 +84,19 @@ $form-switch-color-dark: #fff;
 // BS5 inlines these at Sass build time into the dark SVG data: URLs.
 $accordion-icon-color-dark: $body-secondary-color-dark;
 $accordion-icon-active-color-dark: $body-secondary-color-dark;
+
+// Navbar — mirror the light-mode pin to var(--bs-body-color). The CSS var
+// already resolves to the dark body color under data-bs-theme="dark", but
+// BS5's _navbar.scss redeclares --bs-navbar-* under .navbar-dark using these
+// dark Sass vars, so we set them too to keep the explicit dark navbar path
+// matching the auto-cascading default.
+//
+// $navbar-dark-icon-color is the exception: it feeds the toggler SVG's
+// stroke attribute inside a data: URL that BS5 inlines at Sass build time.
+// Data URLs don't resolve CSS vars, so this MUST be a Sass-time hex.
+// $body-color-dark is the value --bs-body-color would resolve to in dark
+// mode anyway, so the icon tracks the rest of the dark text color.
+$navbar-dark-color: var(--#{$prefix}body-color);
+$navbar-dark-hover-color: var(--#{$prefix}body-color);
+$navbar-dark-active-color: var(--#{$prefix}body-color);
+$navbar-dark-icon-color: $body-color-dark;
