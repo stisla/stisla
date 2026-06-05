@@ -305,6 +305,38 @@ $navbar-light-hover-color: var(--#{$prefix}body-color);
 $navbar-light-active-color: var(--#{$prefix}body-color);
 $navbar-light-toggler-border-color: var(--#{$prefix}border-color);
 
+// Pagination — a flat rail of standalone chips, not BS5's bordered conjoined
+// row. Borders strip to 0 across every state; bg goes transparent at rest and
+// fills with $accent-bg on hover, focus, and .active so a selected page reads
+// the same as a hover dwell (the chips are toggleable, not destinations).
+// Text color tracks --bs-body-color across every state, matching the
+// navbar/sidebar/nav-pills treatment. $pagination-margin-start: 0 disables
+// BS5's negative-margin border-overlap and trips its @else branch so every
+// .page-link picks up the full $pagination-border-radius (BS5's default only
+// rounds first/last). The 4px gap between chips lives on .pagination in
+// components/_pagination.scss. Padding cadence matches the button scale at
+// every size; only -lg needs an override (BS5 ships 0.75/1.5rem; buttons land
+// at 0.5/1rem). Per-size heights (28/36/44 px) are enforced via min-height
+// in the component file since BS5's padding-only formula falls short.
+$pagination-color: var(--#{$prefix}body-color);
+$pagination-bg: transparent;
+$pagination-border-width: 0;
+$pagination-border-color: transparent;
+$pagination-margin-start: 0;
+$pagination-hover-color: var(--#{$prefix}body-color);
+$pagination-hover-bg: var(--#{$prefix}accent-bg);
+$pagination-hover-border-color: transparent;
+$pagination-focus-color: var(--#{$prefix}body-color);
+$pagination-focus-bg: var(--#{$prefix}accent-bg);
+$pagination-active-color: var(--#{$prefix}body-color);
+$pagination-active-bg: var(--#{$prefix}accent-active-bg);
+$pagination-active-border-color: transparent;
+$pagination-disabled-color: var(--#{$prefix}secondary-color);
+$pagination-disabled-bg: transparent;
+$pagination-disabled-border-color: transparent;
+$pagination-padding-y-lg: 0.5rem;
+$pagination-padding-x-lg: 1rem;
+
 // Disabled — lighter than BS5's default (--bs-secondary-color), matches design's text-disabled
 $nav-link-disabled-color: $gray-300;
 $btn-link-disabled-color: $gray-300;

@@ -1,0 +1,48 @@
+// Stisla v3 — pagination.
+//
+// Most of the visual flip from BS5's bordered conjoined row to a flat rail
+// of standalone chips is set at the Sass-var level in tokens/_variables.scss
+// (transparent bg + border, accent-bg fills on hover/focus/.active, text on
+// --bs-body-color, margin-start 0 to round every chip). This file holds the
+// rules that BS5 vars can't express: a 4px gap between chips, the flex
+// layout on .page-link so labels and icons sit on the optical baseline,
+// and per-size min-width/min-height that match the button scale
+// (28 / 36 / 44 px). Single-glyph chips ("1", "2", "3") land as squares
+// at the matching height; chips with longer labels (Previous, Next) grow
+// from the padding. BS5's padding-only formula falls a few pixels short
+// of the button cadence at every size, so min-height pins the final
+// height the same way it does in components/_buttons.scss.
+//
+// Hover and .active both land on --bs-accent-bg by design — a selected page
+// reads the same as a hover dwell because the chips are toggleable, not
+// destinations. Dark mode rides --bs-accent-bg / --bs-body-color and needs
+// no per-mode override.
+
+.pagination {
+  gap: 0.25rem;
+}
+
+.page-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+}
+
+.pagination-sm .page-link {
+  min-width: 1.75rem;
+  min-height: 1.75rem;
+}
+.pagination-lg .page-link {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+}
+
+// Icons inside a page link — scale with font-size and never squish.
+.page-link :is(svg, i) {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}
