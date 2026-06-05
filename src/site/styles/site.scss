@@ -55,9 +55,9 @@ body {
   overflow-y: auto;
 }
 
-// Shiki <pre>: drop inline bg so .demo-code's surface shows through.
+// Shiki <pre>: drop inline bg so the demo surface shows through.
 // Per-token color comes from Shiki inline styles (light) or --shiki-dark (dark).
-.demo-code .shiki {
+.demo .shiki {
   margin: 0;
   padding: 1rem 1.25rem;
   background: transparent !important;
@@ -66,10 +66,21 @@ body {
   font-family: var(--bs-font-monospace);
 }
 
-[data-bs-theme="dark"] .demo-code .shiki,
-[data-bs-theme="dark"] .demo-code .shiki span {
+[data-bs-theme="dark"] .demo .shiki,
+[data-bs-theme="dark"] .demo .shiki span {
   color: var(--shiki-dark) !important;
   background-color: var(--shiki-dark-bg, transparent) !important;
+}
+
+// Standalone code blocks (ui.code): optional filename/label header above the
+// snippet. Mirrors the editor-tab look so the snippet reads as a file excerpt.
+.demo-code-title {
+  padding: 0.5rem 1rem;
+  font-family: var(--bs-font-monospace);
+  font-size: 0.75rem;
+  color: var(--bs-secondary-color);
+  background: var(--bs-surface-alt);
+  border-bottom: 1px solid var(--bs-border-color-translucent);
 }
 
 // Fade-to-surface overlay at the bottom when collapsed, behind the toggle.
@@ -122,8 +133,8 @@ body {
   display: inline-block;
 }
 
-[data-bs-theme="dark"] .demo-code .shiki,
-[data-bs-theme="dark"] .demo-code .shiki span {
+[data-bs-theme="dark"] .demo .shiki,
+[data-bs-theme="dark"] .demo .shiki span {
   background-color: transparent !important;
 }
 

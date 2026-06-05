@@ -38,3 +38,26 @@
   </div>
 </div>
 {%- endmacro -%}
+
+{#
+  Standalone code block: no live preview, no collapse toggle. Use for snippets
+  that show example JS, config, or markup that wouldn't render meaningfully on
+  the page (API calls, build config, etc.). Optional `title` shows a filename
+  or label bar above the code; `lang` picks the Shiki grammar (default html).
+
+  Usage:
+    {% call ui.code(lang='js', title='site.js') %}
+    const spy = Stisla.bs.ScrollSpy.getInstance(el);
+    spy.refresh();
+    {% endcall %}
+#}
+{%- macro code(lang='html', title=null) -%}
+{%- set src = caller() -%}
+{%- set deded = src | dedent -%}
+<div class="demo demo-standalone not-prose">
+  {%- if title %}
+  <div class="demo-code-title">{{ title }}</div>
+  {%- endif %}
+  <div class="demo-code-source">{{ deded | highlight(lang) | safe }}</div>
+</div>
+{%- endmacro -%}
