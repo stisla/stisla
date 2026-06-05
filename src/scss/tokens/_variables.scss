@@ -170,6 +170,13 @@ $card-box-shadow:
   0px 1px 3px rgba(0, 0, 0, 0.05),
   0px 1px 2px rgba(0, 0, 0, 0.03);
 
+// Progress — slimmer bar (6px). BS5's 1rem default reads as a "graph row";
+// 6px lands closer to the modern dashboard bar (file upload meter, password
+// strength) where the bar is a secondary indicator under a label and percent.
+// Color, bg, and radius keep BS5 defaults (the radius inherits the global
+// --bs-border-radius cascade so the bar matches the rest of the system).
+$progress-height: 0.375rem;
+
 // List group — neutral rows on the surface tier. Hover / pressed / .active
 // all route through the accent palette so list-group rows match sidebar +
 // dropdown + accordion-flush selection treatment instead of BS5's solid

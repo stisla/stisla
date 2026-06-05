@@ -1,0 +1,143 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Progress · Stisla v3{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Progress</h1>
+    <p class="lead">A horizontal bar that fills as work completes.</p>
+  </header>
+
+  <section>
+    <h2>Example</h2>
+    <p>Pair the bar with a label and a percentage on the row above. The label states the action; the percentage on the trailing edge sits in <code>.text-body-secondary</code> so the eye reads the action first.</p>
+    {% call ui.demo() %}
+    <div class="w-100">
+      <div class="d-flex justify-content-between mb-1">
+        <span class="fw-medium">Uploading</span>
+        <span class="text-body-secondary">100%</span>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Upload" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar" style="width: 100%"></div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Basic</h2>
+    <p>Wrap the bar in <code>.progress</code> and place a single <code>.progress-bar</code> inside. The wrapper carries <code>role="progressbar"</code> and the <code>aria-valuenow / aria-valuemin / aria-valuemax</code> attributes; the inner element just paints the fill via <code>width</code>.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-column gap-3 w-100">
+      <div class="progress" role="progressbar" aria-label="Zero" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar" style="width: 0%"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Quarter" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar" style="width: 25%"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Half" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar" style="width: 50%"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Three quarters" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar" style="width: 75%"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Full" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar" style="width: 100%"></div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Labels</h2>
+    <p>Drop text inside <code>.progress-bar</code> to render the value on the fill. The default bar is too thin to fit a label legibly, so bump the height with <code>--bs-progress-height</code> when you need one inline.</p>
+    {% call ui.demo() %}
+    <div class="progress w-100" role="progressbar" aria-label="With label" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100" style="--bs-progress-height: 1.25rem;">
+      <div class="progress-bar" style="width: 42%">42%</div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Height</h2>
+    <p>Override <code>--bs-progress-height</code> on a single <code>.progress</code> to size that instance, or set it on a parent to size a group.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-column gap-3 w-100">
+      <div class="progress" role="progressbar" aria-label="Tall" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="--bs-progress-height: 1rem;">
+        <div class="progress-bar" style="width: 70%"></div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Backgrounds</h2>
+    <p>Recolor the fill with any <code>.bg-*</code> utility on <code>.progress-bar</code>. The track stays on <code>--bs-secondary-bg</code> so the contrast holds in both themes.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-column w-100 gap-3">
+      <div class="progress" role="progressbar" aria-label="Primary" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar" style="width: 60%"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Success" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar bg-success" style="width: 60%"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Danger" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar bg-danger" style="width: 60%"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Warning" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar bg-warning" style="width: 60%"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Info" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar bg-info" style="width: 60%"></div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Multiple bars</h2>
+    <p>Use <code>.progress-stacked</code> to compose several <code>.progress</code> rows into one track. Each segment carries its own width and ARIA values.</p>
+    {% call ui.demo() %}
+    <div class="progress-stacked w-100">
+      <div class="progress" role="progressbar" aria-label="Synced" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
+        <div class="progress-bar"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="In progress" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%">
+        <div class="progress-bar bg-success"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Queued" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+        <div class="progress-bar bg-info"></div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Striped</h2>
+    <p>Add <code>.progress-bar-striped</code> for a diagonal stripe pattern rendered as a gradient. The stripes follow the bar color.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-column gap-3 w-100">
+      <div class="progress" role="progressbar" aria-label="Striped primary" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="--bs-progress-height: 0.75rem;">
+        <div class="progress-bar progress-bar-striped" style="width: 60%"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Striped success" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="--bs-progress-height: 0.75rem;">
+        <div class="progress-bar progress-bar-striped bg-success" style="width: 60%"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Striped danger" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="--bs-progress-height: 0.75rem;">
+        <div class="progress-bar progress-bar-striped bg-danger" style="width: 60%"></div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Animated stripes</h2>
+    <p>Chain <code>.progress-bar-animated</code> after <code>.progress-bar-striped</code> to scroll the stripes from right to left. <code>prefers-reduced-motion</code> turns the animation off.</p>
+    {% call ui.demo() %}
+    <div class="progress w-100" role="progressbar" aria-label="Animated" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="--bs-progress-height: 0.75rem;">
+      <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 75%"></div>
+    </div>
+    {% endcall %}
+  </section>
+{% endblock %}
