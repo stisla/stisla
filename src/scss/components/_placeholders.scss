@@ -1,0 +1,7 @@
+// Soften the raw Bootstrap bar: a hint of corner radius and breathing room
+// between bars when they wrap onto multiple lines. Buttons opt out so they
+// keep .btn's own radius and rely on flex/gap utilities for spacing.
+.placeholder:not(.btn) {
+  border-radius: var(--#{$prefix}border-radius-sm);
+  margin-bottom: 0.375rem;
+}
