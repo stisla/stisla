@@ -1,0 +1,27 @@
+// Stisla v3 — popover.
+// Strips BS5's filled-header treatment (tinted bg + bottom border) so the
+// title reads as the first line of the popover content, not a separate band.
+// Padding moves off the header/body blocks and onto .popover itself so the
+// title and body share one consistent 16px frame.
+//
+// Border-color bumps from --bs-border-color-translucent (the elevated-surface
+// default) to solid --bs-border-color. BS5 draws the arrow as two CSS-border
+// triangles offset by the popover border-width, so the outline thickness on
+// the slanted sides is sub-pixel: the translucent token is too faint at that
+// size to trace the arrow, especially in dark mode. $popover-bg is already
+// pointed at --bs-surface via the surface fanout in tokens/_variables.scss.
+
+.popover {
+  --#{$prefix}popover-header-bg: transparent;
+  --#{$prefix}popover-header-padding-y: 0;
+  --#{$prefix}popover-header-padding-x: 0;
+  --#{$prefix}popover-body-padding-y: 0;
+  --#{$prefix}popover-body-padding-x: 0;
+  --#{$prefix}popover-border-color: var(--#{$prefix}border-color);
+  padding: 1rem;
+}
+
+.popover-header {
+  margin-bottom: 0.25rem;
+  border-bottom: 0;
+}

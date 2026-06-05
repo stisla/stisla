@@ -42,6 +42,17 @@ document.addEventListener("click", (e) => {
   }
 });
 
+// Auto-init Bootstrap popovers. BS5 ships popovers opt-in (Popper is heavy
+// to mount on every node), so demos that use [data-bs-toggle="popover"]
+// rely on this scan. Same applies to tooltips when those pages land.
+(function initPopovers() {
+  const Popover = window.Stisla?.bs?.Popover;
+  if (!Popover) return;
+  document
+    .querySelectorAll('[data-bs-toggle="popover"]')
+    .forEach((el) => new Popover(el));
+})();
+
 // data-demo-loading="<ms>" — toggle .btn-loading on click, auto-clear after the given duration.
 // <button class="btn btn-primary" data-demo-loading="2000">Click to save</button>
 document.addEventListener("click", (e) => {
