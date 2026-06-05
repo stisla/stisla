@@ -240,8 +240,33 @@ $modal-fade-transform: scale(0.96);
 $modal-show-transform: scale(1);
 $modal-transition: transform 0.15s ease-out;
 
-$nav-tabs-link-active-border-color: var(--#{$prefix}border-color-subtle);
-$nav-tabs-link-hover-border-color: var(--#{$prefix}border-color-subtle);
+// Navs (base + tabs + pills + underline). Link color is pinned to
+// body-color across every state so in-content nav strips read at full
+// text weight on both surfaces, parity with the navbar/sidebar/list-
+// group treatment. BS5 defaults route .nav-link to --bs-link-color
+// (primary) and the active variants to --bs-emphasis-color, which both
+// read off-tone against our two-tone surfaces. Pills also repoint the
+// active background to --bs-accent-bg so selection matches the chip
+// language used by navbar / dropdown / list-group; the hover chip lives
+// in components/_nav.scss (BS5 paints nothing on pill hover by default).
+$nav-link-color: var(--#{$prefix}body-color);
+$nav-link-hover-color: var(--#{$prefix}body-color);
+$nav-tabs-link-active-color: var(--#{$prefix}body-color);
+// 3-value border-color shorthand: top / left-right / bottom. Bottom
+// resolves at runtime to --bs-nav-tabs-link-active-bg (BS5 default =
+// --bs-body-bg), seating the active tab into the page below the strip
+// — BS5's intended look. The single-value form would paint a visible
+// underline beneath active and break the seat. The Sass var
+// $nav-tabs-link-active-bg can't be referenced here because BS5's
+// variables.scss loads after this file; the CSS custom property is
+// always available at runtime.
+$nav-tabs-link-active-border-color: var(--#{$prefix}border-color)
+  var(--#{$prefix}border-color)
+  var(--#{$prefix}nav-tabs-link-active-bg);
+$nav-tabs-link-hover-border-color: var(--#{$prefix}border-color);
+$nav-pills-link-active-color: var(--#{$prefix}body-color);
+$nav-pills-link-active-bg: var(--#{$prefix}accent-bg);
+$nav-underline-link-active-color: var(--#{$prefix}body-color);
 
 // Navbar — 12px y / 16px x outer cadence, 8px square padding on link items.
 // Link padding-y inherits BS5's $nav-link-padding-y default (0.5rem = 8px),

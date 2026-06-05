@@ -1,0 +1,110 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Navs · Stisla v3{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Navs</h1>
+    <p class="lead">A row of links for in-content navigation.</p>
+  </header>
+
+  <section>
+    <h2>Basic</h2>
+    <p>Wrap a list of <code>.nav-item</code> in <code>.nav</code>. Mark the current page with <code>.active</code> and unreachable links with <code>.disabled</code>. Link color stays the body text color across normal, hover, and active.</p>
+    {% call ui.demo() %}
+    <ul class="nav">
+      <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Active</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Another</a></li>
+      <li class="nav-item"><a class="nav-link disabled" aria-disabled="true">Disabled</a></li>
+    </ul>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Vertical</h2>
+    <p>Add <code>.flex-column</code> to stack the items. Pair with a breakpoint variant like <code>.flex-sm-column</code> to stack only below a width.</p>
+    {% call ui.demo() %}
+    <ul class="nav flex-column" style="max-width: 12rem;">
+      <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Active</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Another</a></li>
+      <li class="nav-item"><a class="nav-link disabled" aria-disabled="true">Disabled</a></li>
+    </ul>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Tabs</h2>
+    <p>Add <code>.nav-tabs</code> for a bordered card-style row. The active tab seats into the surface below; this variant is the static markup, jump to <a href="/tabs">Tabs</a> for the JS toggle that swaps content.</p>
+    {% call ui.demo() %}
+    <ul class="nav nav-tabs">
+      <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Active</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Another</a></li>
+      <li class="nav-item"><a class="nav-link disabled" aria-disabled="true">Disabled</a></li>
+    </ul>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Pills</h2>
+    <p>Add <code>.nav-pills</code> to give each row a filled background on hover and active. The chip uses the accent surface, matching the navbar and dropdown selection language.</p>
+    {% call ui.demo() %}
+    <ul class="nav nav-pills">
+      <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Active</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Another</a></li>
+      <li class="nav-item"><a class="nav-link disabled" aria-disabled="true">Disabled</a></li>
+    </ul>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Underline</h2>
+    <p>Add <code>.nav-underline</code> for a flat row with an underline marker on the active item.</p>
+    {% call ui.demo() %}
+    <ul class="nav nav-underline">
+      <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Active</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Another</a></li>
+      <li class="nav-item"><a class="nav-link disabled" aria-disabled="true">Disabled</a></li>
+    </ul>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Fill</h2>
+    <p>Add <code>.nav-fill</code> so each item takes proportional space. Items keep their natural widths but share the available row.</p>
+    {% call ui.demo() %}
+    <ul class="nav nav-pills nav-fill">
+      <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Active</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Much longer nav link</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+      <li class="nav-item"><a class="nav-link disabled" aria-disabled="true">Disabled</a></li>
+    </ul>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>With dropdown</h2>
+    <p>Wrap a <code>.dropdown</code> in a <code>.nav-item</code> and use <code>.nav-link.dropdown-toggle</code> for the trigger, same pattern as the navbar.</p>
+    {% call ui.demo() %}
+    <ul class="nav nav-pills">
+      <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Active</a></li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Dropdown</a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Action</a></li>
+          <li><a class="dropdown-item" href="#">Another action</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#">Separated link</a></li>
+        </ul>
+      </li>
+      <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+      <li class="nav-item"><a class="nav-link disabled" aria-disabled="true">Disabled</a></li>
+    </ul>
+    {% endcall %}
+  </section>
+{% endblock %}

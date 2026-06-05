@@ -1,0 +1,46 @@
+// Stisla v3 — navs (base + tabs + pills + underline).
+//
+// In-content navigation rows. The top-of-page .navbar lives in its own
+// file; this one styles the plain .nav row and the pill variant.
+//
+// Link color is pinned to --bs-body-color across every state via the
+// $nav-* overrides in tokens/_variables.scss, which is enough for
+// .nav-tabs (BS5 paints selection via border-color) and .nav-underline
+// (BS5 paints selection via border-bottom). Plain .nav and .nav-pills
+// also borrow the navbar's chip: a 36px flex-centered row with
+// accent-bg on hover/active so in-content strips read at the same
+// weight as the top bar. The chip is scoped via :not() so it doesn't
+// leak into tabs/underline and round their corners or override their
+// gap (nav-underline ships its own 1rem gap).
+//
+// Parts:
+//   .nav             outer row (BS5)
+//   .nav-link        link cell (BS5)
+//   .nav-tabs        bordered tab strip (BS5, untouched)
+//   .nav-pills       pill-style tab strip (BS5 + chip)
+//   .nav-underline   underline-indicator strip (BS5, untouched)
+//   .tab-content     JS tab-pane container (BS5)
+
+.nav:not(.nav-tabs):not(.nav-underline) {
+  gap: 4px;
+
+  // Match navbar's link cell: flex-centered at a fixed 36px row so icon
+  // and text glyphs sit on the optical baseline regardless of inherited
+  // line-height. Setting height via padding would leave the inline
+  // default line-height free to expand the box in prose contexts;
+  // `line-height: 1` pins it.
+  .nav-link {
+    display: flex;
+    align-items: center;
+    height: 2.25rem;
+    line-height: 1;
+    border-radius: var(--#{$prefix}border-radius-sm);
+
+    &:hover,
+    &:focus,
+    &.active,
+    &.show {
+      background-color: var(--#{$prefix}accent-bg);
+    }
+  }
+}
