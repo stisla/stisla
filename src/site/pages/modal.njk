@@ -1,0 +1,364 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Modal · Stisla v3{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Modal</h1>
+    <p class="lead">An overlay dialog for confirmations, focused tasks, and quick captures.</p>
+  </header>
+
+  <section>
+    <h2>Basic</h2>
+    <p>A trigger opens the modal via <code>data-bs-toggle="modal"</code> and <code>data-bs-target</code>. Inside the dialog: an optional <code>.modal-header</code> with the title, a <code>.modal-body</code> for content, and an optional <code>.modal-footer</code> for actions. The dismiss control is <code>.modal-close</code>, a floating frosted pill that sits inside <code>.modal-content</code> so it works whether or not a header is present.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalBasic">
+      Open modal
+    </button>
+
+    <div class="modal fade" id="modalBasic" tabindex="-1" aria-labelledby="modalBasicLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <button type="button" class="modal-close" data-bs-dismiss="modal" aria-label="Close">
+            <i data-lucide="x"></i>
+          </button>
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalBasicLabel">Invite a teammate</h5>
+          </div>
+          <div class="modal-body">
+            <p class="mb-0">Send a workspace invite. They'll get an email with a link to join and pick a role on first sign-in.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-ghost-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Send invite</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Sizes</h2>
+    <p>Add <code>.modal-sm</code>, <code>.modal-lg</code>, or <code>.modal-xl</code> on the <code>.modal-dialog</code> to swap widths. Default sits at the middle of the scale. For an edge-bleeding layout use <code>.modal-fullscreen</code>; for a viewport-filling card with breathing room override <code>--bs-modal-width</code> and <code>--bs-modal-margin</code> on the dialog.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-2">
+      <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalSm">Small</button>
+      <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalDefault">Default</button>
+      <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalLg">Large</button>
+      <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalXl">Extra large</button>
+      <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalAlmostFs">Almost fullscreen</button>
+      <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalFs">Fullscreen</button>
+    </div>
+
+    <div class="modal fade" id="modalSm" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+          <button type="button" class="modal-close" data-bs-dismiss="modal" aria-label="Close"><i data-lucide="x"></i></button>
+          <div class="modal-header">
+            <h5 class="modal-title">Small</h5>
+          </div>
+          <div class="modal-body">
+            <p class="mb-0">Compact dialog for short confirmations.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modalDefault" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <button type="button" class="modal-close" data-bs-dismiss="modal" aria-label="Close"><i data-lucide="x"></i></button>
+          <div class="modal-header">
+            <h5 class="modal-title">Default</h5>
+          </div>
+          <div class="modal-body">
+            <p class="mb-0">The default width works for most forms and message dialogs.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modalLg" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <button type="button" class="modal-close" data-bs-dismiss="modal" aria-label="Close"><i data-lucide="x"></i></button>
+          <div class="modal-header">
+            <h5 class="modal-title">Large</h5>
+          </div>
+          <div class="modal-body">
+            <p class="mb-0">Roomier for two-column forms or a primary panel with side details.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modalXl" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+          <button type="button" class="modal-close" data-bs-dismiss="modal" aria-label="Close"><i data-lucide="x"></i></button>
+          <div class="modal-header">
+            <h5 class="modal-title">Extra large</h5>
+          </div>
+          <div class="modal-body">
+            <p class="mb-0">Maxes out at the widest preset. Use for dense layouts that need more horizontal room than <code>.modal-lg</code> allows.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modalAlmostFs" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" style="--bs-modal-width: calc(100vw - 5rem); --bs-modal-margin: 2.5rem; height: calc(100% - 5rem);">
+        <div class="modal-content h-100">
+          <button type="button" class="modal-close" data-bs-dismiss="modal" aria-label="Close"><i data-lucide="x"></i></button>
+          <div class="modal-header">
+            <h5 class="modal-title">Almost fullscreen</h5>
+          </div>
+          <div class="modal-body">
+            <p class="mb-0">Fills the viewport but keeps a margin, so the rounded corners and the page behind still read.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modalFs" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+          <button type="button" class="modal-close" data-bs-dismiss="modal" aria-label="Close"><i data-lucide="x"></i></button>
+          <div class="modal-header">
+            <h5 class="modal-title">Fullscreen</h5>
+          </div>
+          <div class="modal-body">
+            <p class="mb-0">Edge-to-edge with no margin or rounded corners. Useful for immersive workflows on mobile or media viewers on desktop.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Positioning</h2>
+    <p>The dialog sticks to the top by default. Add <code>.modal-dialog-centered</code> to pin it vertically center, or <code>.modal-dialog-bottom</code> to anchor it to the lower edge. <code>.modal-dialog-top</code> is available for templates that toggle position at runtime.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-2">
+      <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalTop">Top</button>
+      <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalCenter">Center</button>
+      <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalBottom">Bottom</button>
+    </div>
+
+    <div class="modal fade" id="modalTop" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-top">
+        <div class="modal-content">
+          <button type="button" class="modal-close" data-bs-dismiss="modal" aria-label="Close"><i data-lucide="x"></i></button>
+          <div class="modal-header">
+            <h5 class="modal-title">Pinned to top</h5>
+          </div>
+          <div class="modal-body">
+            <p class="mb-0">Reads as a notification surface that drops in from above.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <button type="button" class="modal-close" data-bs-dismiss="modal" aria-label="Close"><i data-lucide="x"></i></button>
+          <div class="modal-header">
+            <h5 class="modal-title">Centered</h5>
+          </div>
+          <div class="modal-body">
+            <p class="mb-0">The standard choice for confirmations and focused tasks.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modalBottom" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-bottom">
+        <div class="modal-content">
+          <button type="button" class="modal-close" data-bs-dismiss="modal" aria-label="Close"><i data-lucide="x"></i></button>
+          <div class="modal-header">
+            <h5 class="modal-title">Pinned to bottom</h5>
+          </div>
+          <div class="modal-body">
+            <p class="mb-0">Reads as a sheet on mobile, an action drawer on desktop.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Scrollable</h2>
+    <p>Add <code>.modal-dialog-scrollable</code> to cap the dialog at the viewport and let the body scroll while the header and footer stay put.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalScroll">
+      Read terms
+    </button>
+
+    <div class="modal fade" id="modalScroll" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+          <button type="button" class="modal-close" data-bs-dismiss="modal" aria-label="Close"><i data-lucide="x"></i></button>
+          <div class="modal-header">
+            <h5 class="modal-title">Terms of service</h5>
+          </div>
+          <div class="modal-body">
+            <p>Welcome. By using this service you agree to the terms below. Please read carefully before continuing.</p>
+            <p>You may use the service for any lawful purpose. You may not use it to do harm, to interfere with other users, or to break the law where you live or where our servers run.</p>
+            <p>We collect the minimum data needed to deliver the product. We don't sell it, we don't share it with advertisers, and we delete it when you ask.</p>
+            <p>You own the content you put in. We get a limited license to store, process, and display it back to you and to anyone you've shared it with.</p>
+            <p>The service is provided as-is. We work hard to keep it up, but we can't promise zero downtime. If something breaks and costs you money, our liability is capped at what you've paid us in the last twelve months.</p>
+            <p>We may update these terms. If we do, we'll tell you in-app and give you a chance to read the new version before it takes effect.</p>
+            <p>Questions go to <a href="#" class="link-primary">support@example.com</a>. We try to respond within one business day.</p>
+            <p>Last updated 12 May 2026.</p>
+            <p class="mb-0">Thanks for being here.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-ghost-secondary" data-bs-dismiss="modal">Decline</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Accept</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Static backdrop</h2>
+    <p>Set <code>data-bs-backdrop="static"</code> and <code>data-bs-keyboard="false"</code> to force a deliberate dismiss. Click outside or hit escape and the dialog wobbles but stays open.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalStatic">
+      Set a password
+    </button>
+
+    <div class="modal fade" id="modalStatic" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Choose a password</h5>
+          </div>
+          <div class="modal-body">
+            <label for="staticPwd" class="form-label">New password</label>
+            <input type="password" class="form-control" id="staticPwd" autocomplete="new-password">
+            <div class="form-text">At least twelve characters. Mix letters, numbers, and a symbol.</div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-ghost-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save password</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Media hero</h2>
+    <p>Drop the <code>.modal-header</code> when the leading row is media. The floating close still sits at the top right and reads cleanly against the image.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFloating">
+      Open
+    </button>
+
+    <div class="modal fade" id="modalFloating" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <button type="button" class="modal-close" data-bs-dismiss="modal" aria-label="Close">
+            <i data-lucide="x"></i>
+          </button>
+          <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80" alt="" class="img-fluid rounded-top">
+          <div class="modal-body">
+            <h5 class="mb-2">Autumn release</h5>
+            <p class="mb-0 text-body-secondary">A round-up of what's new this season, with notes on what's still in flight.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Lightbox</h2>
+    <p>Strip the modal chrome with <code>.bg-transparent</code>, <code>.border-0</code>, and <code>.shadow-none</code> on <code>.modal-content</code> to turn the dialog into a frame for media. The blurred backdrop and the floating <code>.modal-close</code> carry the affordance.</p>
+    {% call ui.demo() %}
+    <a href="#" class="d-inline-block" data-bs-toggle="modal" data-bs-target="#modalLightbox" style="cursor: zoom-in;">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt="" class="rounded" width="240" height="160" style="object-fit: cover;">
+    </a>
+
+    <div class="modal fade" id="modalLightbox" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content bg-transparent border-0 shadow-none">
+          <button type="button" class="modal-close" data-bs-dismiss="modal" aria-label="Close">
+            <i data-lucide="x"></i>
+          </button>
+          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=2000&q=85" alt="" class="img-fluid rounded" style="max-height: calc(100vh - 5rem); object-fit: contain;">
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Confirmation</h2>
+    <p>An alert dialog pattern for destructive actions. A tinted icon sets the tone, the heading names the action, the description explains the consequence, and the two buttons offer cancel and confirm.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalConfirm">
+      Delete workspace
+    </button>
+
+    <div class="modal fade" id="modalConfirm" tabindex="-1" aria-labelledby="modalConfirmLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+          <button type="button" class="modal-close" data-bs-dismiss="modal" aria-label="Close"><i data-lucide="x"></i></button>
+          <div class="modal-body text-center pt-4">
+            <span class="icon-box icon-box-danger mb-3" style="--bs-icon-box-size: 3rem; --bs-icon-box-icon-size: 1.25rem; --bs-icon-box-border-radius: 50%;">
+              <i data-lucide="trash-2"></i>
+            </span>
+            <h5 class="mb-1" id="modalConfirmLabel">Delete this workspace?</h5>
+            <p class="text-body-secondary mb-0">This removes every project, file, and member. The action can't be undone.</p>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="button" class="btn btn-ghost-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Success</h2>
+    <p>A celebratory state for the end of a flow. The icon sits on top, the heading and description fill the middle, and a single block button takes the user to the next step.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalSuccess">
+      Submit order
+    </button>
+
+    <div class="modal fade" id="modalSuccess" tabindex="-1" aria-labelledby="modalSuccessLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+          <button type="button" class="modal-close" data-bs-dismiss="modal" aria-label="Close">
+            <i data-lucide="x"></i>
+          </button>
+          <div class="modal-body text-center pt-4">
+            <span class="icon-box icon-box-success mb-3" style="--bs-icon-box-size: 3.5rem; --bs-icon-box-icon-size: 1.5rem; --bs-icon-box-border-radius: 50%;">
+              <i data-lucide="check"></i>
+            </span>
+            <h5 class="mb-1" id="modalSuccessLabel">Order placed</h5>
+            <p class="text-body-secondary mb-0">We've emailed the receipt and a tracking link. Delivery lands in two to three business days.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success w-100" data-bs-dismiss="modal">View order</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+{% endblock %}

@@ -1,0 +1,62 @@
+// Stisla v3 — icon box.
+// Square tinted container for a single icon. BS5 ships nothing equivalent;
+// the closest neighbour is .badge-light-{state}, which this mirrors at a
+// fixed 36×36 footprint with a 18px icon inside.
+//
+// Parts:
+//   .icon-box                 base (sizing + layout, no color)
+//   .icon-box-{state}         tinted variant (15% color bg, 100% color icon)
+//   > svg | > i               leading icon — width/height pinned via CSS vars
+//
+// Shape utilities (.rounded-circle / .rounded-pill / .rounded-0) compose;
+// no per-shape modifier ships.
+
+.icon-box {
+  --#{$prefix}icon-box-size: 2.25rem;
+  --#{$prefix}icon-box-icon-size: 1.125rem;
+  --#{$prefix}icon-box-border-radius: #{$border-radius-sm};
+  --#{$prefix}icon-box-bg: transparent;
+  --#{$prefix}icon-box-color: inherit;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--#{$prefix}icon-box-size);
+  height: var(--#{$prefix}icon-box-size);
+  border-radius: var(--#{$prefix}icon-box-border-radius);
+  background-color: var(--#{$prefix}icon-box-bg);
+  color: var(--#{$prefix}icon-box-color);
+}
+
+// Icon stays at the box's icon-size token regardless of the surrounding
+// font-size. Mirrors the convention in _buttons.scss (handles SVG + the
+// pre-init <i data-lucide> state).
+.icon-box :is(svg, i) {
+  width: var(--#{$prefix}icon-box-icon-size);
+  height: var(--#{$prefix}icon-box-icon-size);
+  flex-shrink: 0;
+}
+
+// Tinted variant — color at 15% bg, solid color icon. Mirrors the
+// .badge-light-* mixin in components/_badge.scss.
+@mixin icon-box-variant($color) {
+  --#{$prefix}icon-box-bg: #{rgba($color, 0.15)};
+  --#{$prefix}icon-box-color: #{$color};
+}
+
+@each $color, $value in map-remove($theme-colors, "light", "dark") {
+  .icon-box-#{$color} {
+    @include icon-box-variant($value);
+  }
+}
+
+// Mono secondary compiles to near-black; on a dark surface the tint and the
+// icon both vanish. Repaint to the dark-mode foreground (matches the dark
+// override for .badge-light-secondary in components/_badge.scss).
+@include color-mode(dark) {
+  .icon-box-secondary {
+    --#{$prefix}icon-box-bg: #{rgba($body-color-dark, 0.15)};
+    --#{$prefix}icon-box-color: #{$body-color-dark};
+  }
+}

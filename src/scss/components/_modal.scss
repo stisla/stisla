@@ -1,0 +1,126 @@
+// Stisla v3 — modal.
+// Polishes BS5's dialog into the v3 visual cadence:
+//   1. Backdrop blurs the page behind a translucent rgba dim. BS5's default
+//      fades a flat #000 by toggling element opacity, which dilutes
+//      backdrop-filter — the dim has to live on the bg alpha and opacity
+//      stays at 1 (set in tokens/_variables.scss).
+//   2. Header drops its border and bottom padding so the title reads as the
+//      first row of the body run, not a separate band.
+//   3. Title pinned to 18px regardless of which heading tag wraps it.
+//   4. .modal-dialog-top / .modal-dialog-bottom round out BS5's positioning
+//      set (which only ships .modal-dialog-centered).
+//   5. .modal-close — a floating dark circle dismiss control. Used on every
+//      modal in this system (not just header-less ones), so it sits as a
+//      sibling of .modal-header inside .modal-content.
+
+.modal-backdrop {
+  // backdrop-filter is independent of opacity and only reads the painted
+  // area, so the blur strength stays full as long as the element itself sits
+  // at opacity 1 (handled via $modal-backdrop-opacity in _variables.scss).
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+// Header is now a padding-and-title row, no border, no bottom pad. The title
+// hugs the body directly; the footer keeps the seam at the bottom.
+.modal-header {
+  padding-bottom: 0;
+}
+
+// Footer y padding pinned to 14px (subtract half the footer-gap so the visual
+// edge-to-button distance matches; BS5 builds the row as
+// `padding = modal-padding - gap/2` + children carry `margin = gap/2`).
+// BS5 ships no $modal-footer-padding-y Sass hook, so override the CSS property
+// directly. x padding stays on the BS5 derivation (= 1.25rem effective).
+.modal-footer {
+  padding-top: calc(0.875rem - var(--#{$prefix}modal-footer-gap) * 0.5);
+  padding-bottom: calc(0.875rem - var(--#{$prefix}modal-footer-gap) * 0.5);
+}
+
+// Pin the title size so an <h5> and an <h4> wrapper look identical. BS5
+// lets the heading tag drive font-size which makes modal titles drift
+// depending on heading scale.
+.modal-title {
+  font-size: 1.125rem; // 18px
+}
+
+// BS5 ships .modal-dialog-centered only. Top is the default position so the
+// class is symmetry (matches .text-{start,center,end} muscle memory and lets
+// templates that switch position at runtime keep one class set).
+.modal-dialog-top {
+  display: flex;
+  align-items: flex-start;
+}
+
+.modal-dialog-bottom {
+  display: flex;
+  align-items: flex-end;
+  min-height: calc(100% - var(--#{$prefix}modal-margin) * 2);
+}
+
+// Floating dismiss control. Lives inside .modal-content as a sibling of the
+// header so it sits above every layer (image hero, header row, body) and
+// reads on any background — surface white, tinted card, or a photo.
+//
+// Light mode runs solid dark for contrast against the white surface; dark
+// mode flips to a light translucent chip so it reads against the deep
+// $surface-dark. Both states surfaced as CSS vars so a one-off (over a
+// photo, on a hero panel) can rebrand without re-declaring the rule.
+.modal-close {
+  --#{$prefix}modal-close-bg: rgba(0, 0, 0, 0.55);
+  --#{$prefix}modal-close-bg-hover: rgba(0, 0, 0, 0.7);
+  --#{$prefix}modal-close-color: rgba(255, 255, 255, 0.92);
+  --#{$prefix}modal-close-color-hover: #fff;
+
+  position: absolute;
+  top: 0.75rem;
+  inset-inline-end: 0.75rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  color: var(--#{$prefix}modal-close-color);
+  background-color: var(--#{$prefix}modal-close-bg);
+  border: 0;
+  border-radius: 50%;
+  // Blur whatever sits directly behind the pill so it reads as a chip
+  // floating on top of the content, not a flat dot painted onto it.
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition:
+    background-color 0.15s ease-in-out,
+    color 0.15s ease-in-out;
+
+  &:hover {
+    color: var(--#{$prefix}modal-close-color-hover);
+    background-color: var(--#{$prefix}modal-close-bg-hover);
+  }
+
+  &:focus-visible {
+    outline: 0;
+    color: var(--#{$prefix}modal-close-color-hover);
+    background-color: var(--#{$prefix}modal-close-bg-hover);
+    box-shadow: 0 0 0 0.1875rem rgba(var(--#{$prefix}primary-rgb), 0.4);
+  }
+
+  > svg,
+  > i {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+}
+
+// Solid dark on light surface vanishes once the surface itself is dark.
+// Swap to a light translucent chip — same frosted-glass affordance, inverted
+// luminance.
+@include color-mode(dark) {
+  .modal-close {
+    --#{$prefix}modal-close-bg: rgba(255, 255, 255, 0.1);
+    --#{$prefix}modal-close-bg-hover: rgba(255, 255, 255, 0.18);
+    --#{$prefix}modal-close-color: rgba(255, 255, 255, 0.85);
+    --#{$prefix}modal-close-color-hover: #fff;
+  }
+}

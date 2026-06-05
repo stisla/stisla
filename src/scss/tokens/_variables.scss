@@ -176,7 +176,7 @@ $card-box-shadow:
 // primary block. Border on the .active row stays neutral (BS5 defaults it to
 // the active-bg, which would paint a primary stripe on every selected row).
 // $list-group-bg → --bs-surface is set earlier in the surface fanout block.
-$list-group-item-padding-y: 0.5rem;
+$list-group-item-padding-y: 0.75rem;
 $list-group-item-padding-x: 1.25rem;
 $list-group-hover-bg: var(--#{$prefix}accent-bg);
 $list-group-active-color: var(--#{$prefix}accent-active-color);
@@ -208,6 +208,37 @@ $accordion-padding-y: 0.5rem;
 // variants compile (see V3.md §3.1).
 $accordion-icon-color: $body-secondary-color;
 $accordion-icon-active-color: $body-secondary-color;
+
+// Modal — premium dialog cadence: 24px body padding, 20/24 header pad so the
+// header text aligns with the body's left edge. Header border drops to 0 and
+// padding-bottom collapses (in components/_modal.scss) so the title reads as
+// part of the body run. Footer tints to --bs-surface-alt and keeps its top
+// border, mirroring the card body/footer two-tone we use elsewhere.
+//
+// Backdrop is a translucent rgba (NOT BS5's #000 + opacity) plus a 12px
+// backdrop-filter blur in components/_modal.scss. The split matters: opacity
+// on the element dilutes backdrop-filter, so the dim has to live on the bg
+// alpha and the element opacity has to stay at 1.
+//
+// $modal-content-bg → --bs-surface is set earlier in the surface fanout block.
+$modal-inner-padding: 1.5rem;
+$modal-header-padding-y: 1.25rem;
+$modal-header-padding-x: 1.5rem;
+$modal-header-border-width: 0;
+// BS5 cascades $modal-footer-border-width from $modal-header-border-width, so
+// zeroing the header also kills the footer divider. Pin it back to 1px so the
+// surface-alt footer keeps its seam against the body.
+$modal-footer-border-width: var(--#{$prefix}border-width);
+$modal-footer-bg: var(--#{$prefix}surface-alt);
+$modal-backdrop-bg: rgba(0, 0, 0, 0.55);
+$modal-backdrop-opacity: 1;
+// Replace BS5's slide-from-above (translateY -50px → 0) with a scale ramp
+// from 96% to 100%. Reads as the dialog "popping in" rather than dropping in,
+// matches the iOS / Linear style we use elsewhere, and shaves 100ms off the
+// duration so dismiss feels snappy.
+$modal-fade-transform: scale(0.96);
+$modal-show-transform: scale(1);
+$modal-transition: transform 0.15s ease-out;
 
 $nav-tabs-link-active-border-color: var(--#{$prefix}border-color-subtle);
 $nav-tabs-link-hover-border-color: var(--#{$prefix}border-color-subtle);

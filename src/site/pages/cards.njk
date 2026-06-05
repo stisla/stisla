@@ -298,40 +298,4 @@
     </div>
     {% endcall %}
   </section>
-
-  <section>
-    <h2>Grid cards</h2>
-    <p><code>row-cols-md-3 g-4</code> + <code>.h-100</code> for an even-height column layout.</p>
-    {% call ui.demo() %}
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-      <div class="col">
-        <div class="card h-100">
-          <img src="{{ img_landscape }}" class="card-img-top" alt="Mountain landscape" />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">A longer card with supporting text below as a natural lead-in to additional content.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card h-100">
-          <img src="{{ img_landscape_2 }}" class="card-img-top" alt="Coastal landscape" />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">A longer card with supporting text. This content is a little bit longer.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card h-100">
-          <img src="{{ img_landscape_3 }}" class="card-img-top" alt="Mountain ridge" />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">A longer card with supporting text below as a natural lead-in.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    {% endcall %}
-  </section>
 {% endblock %}
