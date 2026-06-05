@@ -1,0 +1,36 @@
+// Stisla v3 — list group.
+// Most of the customization lives on BS5 Sass vars (see tokens/_variables.scss
+// list-group block). The rules below cover what those vars can't reach:
+// a focus ring that matches .form-control / .form-select / .accordion-button,
+// and a leading-icon convention that pins direct <svg>/<i> children to 16px so
+// rows align regardless of icon-pack default size (same as .dropdown-item).
+//
+// Parts:
+//   .list-group              wrapper (BS5)
+//   .list-group-item         row (BS5, restyled via vars)
+//   .list-group-item-action  interactive row — <a> or <button> (BS5)
+//   .list-group-flush        edge-to-edge variant (BS5)
+//   > svg | > i              leading icon, slotless
+
+.list-group-item-action:focus-visible {
+  z-index: 1; // match BS5's hover/focus z-index so the ring sits over siblings
+  outline: 0;
+  box-shadow: 0 0 0 0.1875rem rgba(var(--#{$prefix}primary-rgb), 0.2);
+}
+
+// Leading icon — direct <svg> or pre-init <i data-lucide>. 16px so rows
+// align across icon packs; color tracks the secondary channel until the
+// row is hovered/active and inherits the link color.
+.list-group-item > :is(svg, i):first-child {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  color: var(--#{$prefix}secondary-color);
+}
+
+.list-group-item-action:hover > :is(svg, i):first-child,
+.list-group-item-action:focus > :is(svg, i):first-child,
+.list-group-item.active > :is(svg, i):first-child,
+.list-group-item-action:active > :is(svg, i):first-child {
+  color: inherit;
+}

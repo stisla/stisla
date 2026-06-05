@@ -1,0 +1,307 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}List group · Stisla v3{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>List group</h1>
+    <p class="lead">A flexible stack of rows on a shared rounded surface. Use it for navigation, settings, contact lists, payment methods, or any vertical run of similar items.</p>
+  </header>
+
+  <section>
+    <h2>Basic</h2>
+    <p>A <code>.list-group</code> with plain <code>.list-group-item</code> rows. Each row sits on the surface tier and shares borders with its neighbors.</p>
+    {% call ui.demo() %}
+    <ul class="list-group" style="max-width: 24rem;">
+      <li class="list-group-item">Cras justo odio</li>
+      <li class="list-group-item">Dapibus ac facilisis in</li>
+      <li class="list-group-item">Morbi leo risus</li>
+      <li class="list-group-item">Porta ac consectetur ac</li>
+      <li class="list-group-item">Vestibulum at eros</li>
+    </ul>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Active and disabled</h2>
+    <p>Mark the current item with <code>.active</code> and unreachable items with <code>.disabled</code>. Active takes the accent surface; disabled greys out and stops pointer events.</p>
+    {% call ui.demo() %}
+    <ul class="list-group" style="max-width: 24rem;">
+      <li class="list-group-item active" aria-current="true">An active item</li>
+      <li class="list-group-item">A second item</li>
+      <li class="list-group-item">A third item</li>
+      <li class="list-group-item disabled" aria-disabled="true">A disabled item</li>
+    </ul>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Links and buttons</h2>
+    <p>Swap <code>&lt;li&gt;</code> for <code>&lt;a&gt;</code> or <code>&lt;button&gt;</code> and add <code>.list-group-item-action</code> to make rows interactive. Hover and focus light up; <code>.active</code> sticks.</p>
+    {% call ui.demo() %}
+    <div class="list-group" style="max-width: 24rem;">
+      <a href="#" class="list-group-item list-group-item-action active" aria-current="true">The current link</a>
+      <a href="#" class="list-group-item list-group-item-action">A second link</a>
+      <a href="#" class="list-group-item list-group-item-action">A third link</a>
+      <a href="#" class="list-group-item list-group-item-action disabled" aria-disabled="true">A disabled link</a>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Flush</h2>
+    <p>Add <code>.list-group-flush</code> to drop the wrapper border and radius. Rows sit edge-to-edge with a single divider between them — useful inside cards or panels.</p>
+    {% call ui.demo() %}
+    <ul class="list-group list-group-flush" style="max-width: 24rem;">
+      <li class="list-group-item">An item</li>
+      <li class="list-group-item">A second item</li>
+      <li class="list-group-item">A third item</li>
+      <li class="list-group-item">A fourth item</li>
+    </ul>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Numbered</h2>
+    <p>Drop <code>.list-group-numbered</code> on the wrapper and use an <code>&lt;ol&gt;</code>. Bootstrap stamps the counter; nest another numbered list and the counter cascades.</p>
+    {% call ui.demo() %}
+    <ol class="list-group list-group-numbered" style="max-width: 24rem;">
+      <li class="list-group-item">Pour a flat white</li>
+      <li class="list-group-item">Open the laptop</li>
+      <li class="list-group-item">Ship something</li>
+    </ol>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Horizontal</h2>
+    <p>Use <code>.list-group-horizontal</code> to lay rows side by side instead of stacked. Add a breakpoint suffix (<code>-md</code>, <code>-lg</code>, …) to switch at a given width.</p>
+    {% call ui.demo() %}
+    <ul class="list-group list-group-horizontal">
+      <li class="list-group-item">First</li>
+      <li class="list-group-item">Second</li>
+      <li class="list-group-item">Third</li>
+    </ul>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>With badge</h2>
+    <p>Push a count or status to the trailing edge with <code>d-flex justify-content-between</code> and a <code>.badge</code>. Reads as a counter row.</p>
+    {% call ui.demo() %}
+    <ul class="list-group" style="max-width: 24rem;">
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        Inbox
+        <span class="badge text-bg-primary">14</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        Drafts
+        <span class="badge badge-light-secondary">2</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        Spam
+        <span class="badge badge-light-secondary">0</span>
+      </li>
+    </ul>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Contextual variants</h2>
+    <p>Tint a row with <code>.list-group-item-{state}</code> for status messaging. Same five semantic states as alerts.</p>
+    {% call ui.demo() %}
+    <ul class="list-group" style="max-width: 24rem;">
+      <li class="list-group-item">A neutral item</li>
+      <li class="list-group-item list-group-item-primary">A primary item</li>
+      <li class="list-group-item list-group-item-success">A success item</li>
+      <li class="list-group-item list-group-item-info">An info item</li>
+      <li class="list-group-item list-group-item-warning">A warning item</li>
+      <li class="list-group-item list-group-item-danger">A danger item</li>
+    </ul>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Custom content</h2>
+    <p>A row can hold whatever you need: a title, a subhead, a timestamp. Lean on <code>d-flex</code>, <code>gap-*</code>, and the type utilities to lay it out.</p>
+    {% call ui.demo() %}
+    <div class="list-group" style="max-width: 32rem;">
+      <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+        <div class="d-flex w-100 justify-content-between">
+          <h6 class="mb-1">List group item heading</h6>
+          <small>3 days ago</small>
+        </div>
+        <p class="mb-1">Some placeholder content in a paragraph.</p>
+        <small>And some small print.</small>
+      </a>
+      <a href="#" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+          <h6 class="mb-1">List group item heading</h6>
+          <small class="text-body-secondary">3 days ago</small>
+        </div>
+        <p class="mb-1">Some placeholder content in a paragraph.</p>
+        <small class="text-body-secondary">And some muted small print.</small>
+      </a>
+      <a href="#" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+          <h6 class="mb-1">List group item heading</h6>
+          <small class="text-body-secondary">3 days ago</small>
+        </div>
+        <p class="mb-1">Some placeholder content in a paragraph.</p>
+        <small class="text-body-secondary">And some muted small print.</small>
+      </a>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Contacts</h2>
+    <p>Compose a chat-style contact row from an avatar, a two-line label, and a trailing timestamp + unread counter. Each row is a <code>.list-group-item-action</code> so the whole strip is clickable.</p>
+    {% call ui.demo() %}
+    <div class="list-group" style="max-width: 32rem;">
+      <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+        <img src="https://i.pravatar.cc/80?img=12" alt="" width="40" height="40" class="rounded-circle flex-shrink-0">
+        <div class="flex-grow-1" style="min-width: 0;">
+          <div class="fw-medium">Mariam Saidova</div>
+          <div class="text-body-secondary text-truncate small">Sure, I'll push the branch in a few minutes — just running the tests one more time…</div>
+        </div>
+        <div class="d-flex flex-column align-items-end gap-1 flex-shrink-0">
+          <small class="text-body-secondary">12:04</small>
+          <span class="badge text-bg-primary rounded-pill">3</span>
+        </div>
+      </a>
+      <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+        <img src="https://i.pravatar.cc/80?img=33" alt="" width="40" height="40" class="rounded-circle flex-shrink-0">
+        <div class="flex-grow-1" style="min-width: 0;">
+          <div class="fw-medium">Hideo Tanaka</div>
+          <div class="text-body-secondary text-truncate small">Design review notes are in the Figma comments. Let me know what you think.</div>
+        </div>
+        <div class="d-flex flex-column align-items-end gap-1 flex-shrink-0">
+          <small class="text-body-secondary">11:47</small>
+          <span class="badge text-bg-primary rounded-pill">1</span>
+        </div>
+      </a>
+      <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+        <img src="https://i.pravatar.cc/80?img=47" alt="" width="40" height="40" class="rounded-circle flex-shrink-0">
+        <div class="flex-grow-1" style="min-width: 0;">
+          <div class="fw-medium">Priya Ramanathan</div>
+          <div class="text-body-secondary text-truncate small">Coffee tomorrow? 9am at the usual place.</div>
+        </div>
+        <small class="text-body-secondary flex-shrink-0">Yesterday</small>
+      </a>
+      <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+        <img src="https://i.pravatar.cc/80?img=58" alt="" width="40" height="40" class="rounded-circle flex-shrink-0">
+        <div class="flex-grow-1" style="min-width: 0;">
+          <div class="fw-medium">Tomás Reyes</div>
+          <div class="text-body-secondary text-truncate small">You: sounds good, let's do it.</div>
+        </div>
+        <small class="text-body-secondary flex-shrink-0">Mon</small>
+      </a>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Settings</h2>
+    <p>Use <code>.list-group-flush</code> inside a <code>.card</code> for a settings panel. Each row pairs a label and helper text with the matching control — switch, select, or input — at the trailing edge.</p>
+    {% call ui.demo() %}
+    <div class="card" style="max-width: 36rem;">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Notifications</h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item d-flex align-items-center gap-3 py-3">
+          <div class="flex-grow-1">
+            <label class="form-check-label fw-medium d-block" for="settingsEmail">Email digest</label>
+            <small class="text-body-secondary">A weekly summary of activity across your projects.</small>
+          </div>
+          <div class="form-check form-switch form-switch-lg m-0 flex-shrink-0">
+            <input class="form-check-input" type="checkbox" role="switch" id="settingsEmail" checked>
+          </div>
+        </li>
+        <li class="list-group-item d-flex align-items-center gap-3 py-3">
+          <div class="flex-grow-1">
+            <label class="form-check-label fw-medium d-block" for="settingsPush">Push notifications</label>
+            <small class="text-body-secondary">Get a ping on this device when someone mentions you.</small>
+          </div>
+          <div class="form-check form-switch form-switch-lg m-0 flex-shrink-0">
+            <input class="form-check-input" type="checkbox" role="switch" id="settingsPush">
+          </div>
+        </li>
+        <li class="list-group-item d-flex align-items-center gap-3 py-3">
+          <div class="flex-grow-1">
+            <label class="form-label fw-medium mb-0" for="settingsLanguage">Language</label>
+            <small class="text-body-secondary d-block">Used across the app and outgoing emails.</small>
+          </div>
+          <select class="form-select form-select-sm flex-shrink-0" id="settingsLanguage" style="max-width: 10rem;">
+            <option selected>English</option>
+            <option>Bahasa Indonesia</option>
+            <option>日本語</option>
+            <option>Deutsch</option>
+          </select>
+        </li>
+        <li class="list-group-item d-flex align-items-center gap-3 py-3">
+          <div class="flex-grow-1">
+            <label class="form-label fw-medium mb-0" for="settingsHandle">Public handle</label>
+            <small class="text-body-secondary d-block">Shown on your profile and in mentions.</small>
+          </div>
+          <input type="text" class="form-control form-control-sm flex-shrink-0" id="settingsHandle" value="nauval" style="max-width: 10rem;">
+        </li>
+        <li class="list-group-item d-flex align-items-center gap-3 py-3">
+          <div class="flex-grow-1">
+            <div class="fw-medium">Delete workspace</div>
+            <small class="text-body-secondary">This permanently removes everything. Cannot be undone.</small>
+          </div>
+          <button type="button" class="btn btn-outline-danger btn-sm flex-shrink-0">Delete</button>
+        </li>
+      </ul>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Payment methods</h2>
+    <p>Stack saved cards as rows with a brand mark, last-4 digits, expiry, and a default toggle. The default switch promotes the active card so the trailing edge stays uncluttered.</p>
+    {% call ui.demo() %}
+    <div class="list-group" style="max-width: 36rem;">
+      <div class="list-group-item d-flex align-items-center gap-3 py-3">
+        <div class="flex-grow-1">
+          <div class="fw-medium">Visa ending in 4242</div>
+          <small class="text-body-secondary">Expires 08 / 2028</small>
+        </div>
+        <div class="form-check form-switch form-switch-lg m-0 flex-shrink-0">
+          <input class="form-check-input" type="checkbox" role="switch" id="payDefault1" checked aria-label="Default for billing">
+        </div>
+      </div>
+      <div class="list-group-item d-flex align-items-center gap-3 py-3">
+        <div class="flex-grow-1">
+          <div class="fw-medium">Mastercard ending in 0119</div>
+          <small class="text-body-secondary">Expires 03 / 2027</small>
+        </div>
+        <div class="form-check form-switch form-switch-lg m-0 flex-shrink-0">
+          <input class="form-check-input" type="checkbox" role="switch" id="payDefault2" aria-label="Default for billing">
+        </div>
+      </div>
+      <div class="list-group-item d-flex align-items-center gap-3 py-3">
+        <div class="flex-grow-1">
+          <div class="fw-medium">Bank transfer · BCA</div>
+          <small class="text-body-secondary">Account ····3084</small>
+        </div>
+        <div class="form-check form-switch form-switch-lg m-0 flex-shrink-0">
+          <input class="form-check-input" type="checkbox" role="switch" id="payDefault3" aria-label="Default for billing">
+        </div>
+      </div>
+      <div class="list-group-item d-flex align-items-center gap-3 py-3">
+        <div class="flex-grow-1">
+          <div class="fw-medium">Wallet credit</div>
+          <small class="text-body-secondary">$128.40 available</small>
+        </div>
+        <div class="form-check form-switch form-switch-lg m-0 flex-shrink-0">
+          <input class="form-check-input" type="checkbox" role="switch" id="payDefault4" aria-label="Use wallet first">
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+{% endblock %}

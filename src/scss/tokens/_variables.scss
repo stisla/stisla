@@ -170,8 +170,22 @@ $card-box-shadow:
   0px 1px 3px rgba(0, 0, 0, 0.05),
   0px 1px 2px rgba(0, 0, 0, 0.03);
 
+// List group — neutral rows on the surface tier. Hover / pressed / .active
+// all route through the accent palette so list-group rows match sidebar +
+// dropdown + accordion-flush selection treatment instead of BS5's solid
+// primary block. Border on the .active row stays neutral (BS5 defaults it to
+// the active-bg, which would paint a primary stripe on every selected row).
+// $list-group-bg → --bs-surface is set earlier in the surface fanout block.
 $list-group-item-padding-y: 0.5rem;
 $list-group-item-padding-x: 1.25rem;
+$list-group-hover-bg: var(--#{$prefix}accent-bg);
+$list-group-active-color: var(--#{$prefix}accent-active-color);
+$list-group-active-bg: var(--#{$prefix}accent-active-bg);
+$list-group-active-border-color: var(--#{$prefix}border-color);
+$list-group-action-color: var(--#{$prefix}body-color);
+$list-group-action-hover-color: var(--#{$prefix}accent-color);
+$list-group-action-active-color: var(--#{$prefix}accent-active-color);
+$list-group-action-active-bg: var(--#{$prefix}accent-active-bg);
 
 // Accordion — items render as individually rounded chips inset 4px from the
 // wrapper edge (root-level padding + gap live in components/_accordion.scss
