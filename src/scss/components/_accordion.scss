@@ -102,6 +102,7 @@ $accordion-wrapper-padding: 0.25rem;
   gap: 0;
   border-color: transparent;
   --#{$prefix}accordion-btn-padding-x: 1rem;
+  --#{$prefix}accordion-body-padding-x: 1rem;
 
   > .accordion-item {
     border-top: 0;

@@ -173,7 +173,7 @@ body {
 
   :where(p)#{$opt-out} {
     margin: 0 0 1rem;
-    line-height: 1.6;
+    line-height: 1.7;
     color: var(--bs-secondary-color);
   }
 
@@ -244,7 +244,7 @@ body {
   position: sticky;
   top: 0;
   flex-shrink: 0;
-  width: 15rem;
+  width: 16rem;
   height: 100vh;
   --bs-sidebar-item-font-size: 0.78125rem;
   --bs-sidebar-item-font-weight: 500;

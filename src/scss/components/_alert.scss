@@ -79,7 +79,7 @@
   display: grid;
   grid-template-columns: auto 1fr auto;
   column-gap: 0.625rem;
-  row-gap: 0.125rem;
+  row-gap: 0;
   align-items: start;
   min-height: 0;
 
@@ -89,9 +89,13 @@
     align-self: center;
   }
 
+  // Tight heading row (line-height: 1) collapses the row to the em-box so the
+  // icon's center lands on the heading's cap. Description keeps line-height
+  // 1.5 below, providing the visual gap without row-gap.
   .alert-heading {
     grid-column: 2;
     grid-row: 1;
+    line-height: 1;
   }
 
   .alert-description {
@@ -101,7 +105,9 @@
 
   .alert-action {
     grid-column: 3;
-    grid-row: 1 / -1;
+    // `1 / -1` would only span row 1 here — there are no explicit rows, so -1
+    // resolves to the last explicit line (= 2). `span 2` covers both auto rows.
+    grid-row: 1 / span 2;
     align-self: center;
     margin-left: 0;
   }
