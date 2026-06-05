@@ -240,6 +240,23 @@ $modal-fade-transform: scale(0.96);
 $modal-show-transform: scale(1);
 $modal-transition: transform 0.15s ease-out;
 
+// Offcanvas — edge-attached sheet that shares the modal cadence. Padding
+// pinned to the modal-body rhythm (24px both axes) so a form drops into
+// either container without re-laying. Border stays at 1px so BS5's
+// positional border rules paint a hairline seam on the page-facing edge
+// (right for .offcanvas-start, left for .offcanvas-end, bottom for top,
+// top for bottom). Backdrop mirrors the modal split (rgba bg, opacity 1)
+// so the 12px blur in components/_offcanvas.scss reads at full strength.
+//
+// $offcanvas-bg-color → --bs-surface is set earlier in the surface fanout block.
+$offcanvas-padding-y: 1.5rem;
+$offcanvas-padding-x: 1.5rem;
+$offcanvas-backdrop-bg: rgba(0, 0, 0, 0.55);
+$offcanvas-backdrop-opacity: 1;
+$offcanvas-box-shadow:
+  0px 8px 24px rgba(0, 0, 0, 0.08),
+  0px 2px 6px rgba(0, 0, 0, 0.04);
+
 // Navs (base + tabs + pills + underline). Link color is pinned to
 // body-color across every state so in-content nav strips read at full
 // text weight on both surfaces, parity with the navbar/sidebar/list-

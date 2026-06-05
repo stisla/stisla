@@ -1,0 +1,398 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Offcanvas · Stisla v3{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Offcanvas</h1>
+    <p class="lead">An edge-attached sheet for side panels, drawers, and quick captures.</p>
+  </header>
+
+  <section>
+    <h2>Basic</h2>
+    <p>A trigger opens the offcanvas via <code>data-bs-toggle="offcanvas"</code> and <code>data-bs-target</code>. Inside the panel: an optional <code>.offcanvas-header</code> with the title, an <code>.offcanvas-body</code> for content, and an optional <code>.offcanvas-footer</code> for sticky actions. The dismiss control is <code>.offcanvas-close</code>, a ghost icon button that sits at the trailing edge of the header row.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBasic">
+      New task
+    </button>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasBasic" aria-labelledby="offcanvasBasicLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasBasicLabel">New task</h5>
+        <button type="button" class="offcanvas-close" data-bs-dismiss="offcanvas" aria-label="Close">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <div class="offcanvas-body">
+        <div class="mb-3">
+          <label for="taskTitle" class="form-label">Title</label>
+          <input type="text" class="form-control" id="taskTitle" placeholder="Write the launch announcement">
+        </div>
+        <div class="mb-3">
+          <label for="taskDesc" class="form-label">Description</label>
+          <textarea class="form-control" id="taskDesc" rows="4" placeholder="Anything the assignee should know before they start."></textarea>
+        </div>
+        <div class="row g-3">
+          <div class="col-6">
+            <label for="taskDue" class="form-label">Due</label>
+            <input type="date" class="form-control" id="taskDue">
+          </div>
+          <div class="col-6">
+            <label for="taskPriority" class="form-label">Priority</label>
+            <select class="form-select" id="taskPriority">
+              <option>Low</option>
+              <option selected>Medium</option>
+              <option>High</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="offcanvas-footer">
+        <button type="button" class="btn btn-ghost-secondary" data-bs-dismiss="offcanvas">Cancel</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="offcanvas">Create task</button>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Placements</h2>
+    <p>Four placement classes anchor the sheet to a screen edge. <code>.offcanvas-start</code> slides in from the left, <code>.offcanvas-end</code> from the right, <code>.offcanvas-top</code> from above, and <code>.offcanvas-bottom</code> from below. Width is fixed for start and end, height is fixed for top and bottom.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-2">
+      <button type="button" class="btn btn-outline-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasStart">Start</button>
+      <button type="button" class="btn btn-outline-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasEnd">End</button>
+      <button type="button" class="btn btn-outline-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop">Top</button>
+      <button type="button" class="btn btn-outline-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom">Bottom</button>
+    </div>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasStart">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Account</h5>
+        <button type="button" class="offcanvas-close" data-bs-dismiss="offcanvas" aria-label="Close"><i data-lucide="x"></i></button>
+      </div>
+      <div class="offcanvas-body p-0">
+        <ul class="list-group list-group-flush" style="--bs-list-group-border-color: var(--bs-border-color-subtle);">
+          <li class="list-group-item d-flex align-items-center gap-3">
+            <span class="icon-box icon-box-primary"><i data-lucide="user"></i></span>
+            <div class="flex-grow-1">
+              <div class="fw-medium">Profile</div>
+              <div class="small text-body-secondary">Name, avatar, bio</div>
+            </div>
+            <i data-lucide="chevron-right" width="18" class="text-body-secondary"></i>
+          </li>
+          <li class="list-group-item d-flex align-items-center gap-3">
+            <span class="icon-box icon-box-info"><i data-lucide="bell"></i></span>
+            <div class="flex-grow-1">
+              <div class="fw-medium">Notifications</div>
+              <div class="small text-body-secondary">Email, push, digest</div>
+            </div>
+            <i data-lucide="chevron-right" width="18" class="text-body-secondary"></i>
+          </li>
+          <li class="list-group-item d-flex align-items-center gap-3">
+            <span class="icon-box icon-box-warning"><i data-lucide="credit-card"></i></span>
+            <div class="flex-grow-1">
+              <div class="fw-medium">Billing</div>
+              <div class="small text-body-secondary">Plan, invoices, payment method</div>
+            </div>
+            <i data-lucide="chevron-right" width="18" class="text-body-secondary"></i>
+          </li>
+          <li class="list-group-item d-flex align-items-center gap-3">
+            <span class="icon-box icon-box-secondary"><i data-lucide="shield"></i></span>
+            <div class="flex-grow-1">
+              <div class="fw-medium">Security</div>
+              <div class="small text-body-secondary">Password, 2FA, sessions</div>
+            </div>
+            <i data-lucide="chevron-right" width="18" class="text-body-secondary"></i>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEnd">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Notifications</h5>
+        <button type="button" class="offcanvas-close" data-bs-dismiss="offcanvas" aria-label="Close"><i data-lucide="x"></i></button>
+      </div>
+      <div class="offcanvas-body">
+        <div class="d-flex gap-3 mb-3 pb-3 border-bottom">
+          <span class="icon-box icon-box-success rounded-circle flex-shrink-0"><i data-lucide="check"></i></span>
+          <div>
+            <div class="fw-medium">Deploy finished</div>
+            <p class="text-body-secondary mb-1 small">Build #2147 shipped to production in 4m 12s.</p>
+            <span class="small text-body-secondary">2 minutes ago</span>
+          </div>
+        </div>
+        <div class="d-flex gap-3 mb-3 pb-3 border-bottom">
+          <span class="icon-box icon-box-info rounded-circle flex-shrink-0"><i data-lucide="message-square"></i></span>
+          <div>
+            <div class="fw-medium">Amelia replied</div>
+            <p class="text-body-secondary mb-1 small">"Let's pair on the cart bug tomorrow morning."</p>
+            <span class="small text-body-secondary">12 minutes ago</span>
+          </div>
+        </div>
+        <div class="d-flex gap-3">
+          <span class="icon-box icon-box-warning rounded-circle flex-shrink-0"><i data-lucide="alert-triangle"></i></span>
+          <div>
+            <div class="fw-medium">Disk above 80%</div>
+            <p class="text-body-secondary mb-1 small">db-primary-2 is at 84% used. Consider expanding the volume.</p>
+            <span class="small text-body-secondary">35 minutes ago</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" style="--bs-offcanvas-height: 16rem;">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">What's new in June</h5>
+        <button type="button" class="offcanvas-close" data-bs-dismiss="offcanvas" aria-label="Close"><i data-lucide="x"></i></button>
+      </div>
+      <div class="offcanvas-body">
+        <div class="row g-3">
+          <div class="col-md-4">
+            <span class="badge badge-light-primary mb-2">New</span>
+            <div class="fw-medium mb-1">Bulk reassign</div>
+            <p class="text-body-secondary small mb-0">Move many tasks to a new owner in one go from the board view.</p>
+          </div>
+          <div class="col-md-4">
+            <span class="badge badge-light-success mb-2">Improved</span>
+            <div class="fw-medium mb-1">Faster search</div>
+            <p class="text-body-secondary small mb-0">Workspace search now returns results in under 100ms for most queries.</p>
+          </div>
+          <div class="col-md-4">
+            <span class="badge badge-light-warning mb-2">Fixed</span>
+            <div class="fw-medium mb-1">Recurring task DST</div>
+            <p class="text-body-secondary small mb-0">Recurring tasks no longer drift by an hour around daylight saving.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" style="--bs-offcanvas-height: 14rem;">
+      <div class="offcanvas-header">
+        <div class="mx-auto w-100 d-flex align-items-center" style="max-width: 30rem">
+          <h5 class="offcanvas-title">Share this report</h5>
+          <button type="button" class="offcanvas-close ms-auto" data-bs-dismiss="offcanvas" aria-label="Close"><i data-lucide="x"></i></button>
+        </div>
+      </div>
+      <div class="offcanvas-body">
+        <div class="mx-auto w-100" style="max-width: 30rem">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" value="https://app.example.com/r/q3-revenue" readonly>
+            <button class="btn btn-outline-secondary" type="button">Copy link</button>
+          </div>
+          <div class="d-flex flex-wrap gap-2">
+            <button type="button" class="btn btn-outline-secondary"><i data-lucide="mail"></i>Email</button>
+            <button type="button" class="btn btn-outline-secondary"><i data-lucide="message-circle"></i>Slack</button>
+            <button type="button" class="btn btn-outline-secondary"><i data-lucide="download"></i>Download PDF</button>
+            <button type="button" class="btn btn-outline-secondary"><i data-lucide="printer"></i>Print</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Body scrolling</h2>
+    <p>Set <code>data-bs-scroll="true"</code> to let the page behind keep scrolling while the sheet is open. Useful for an activity feed or a reference panel that supports the main task instead of interrupting it.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasActivity">
+      Open activity
+    </button>
+
+    <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasActivity">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Activity</h5>
+        <button type="button" class="offcanvas-close" data-bs-dismiss="offcanvas" aria-label="Close"><i data-lucide="x"></i></button>
+      </div>
+      <div class="offcanvas-body">
+        <ol class="list-unstyled mb-0">
+          <li class="d-flex gap-3 mb-3">
+            <div class="icon-box icon-box-primary rounded-circle flex-shrink-0" style="--bs-icon-box-size: 2rem; --bs-icon-box-icon-size: 0.875rem;"><i data-lucide="git-commit"></i></div>
+            <div>
+              <div><span class="fw-medium">Amelia</span> pushed 3 commits to <code>main</code></div>
+              <span class="small text-body-secondary">9:42 AM</span>
+            </div>
+          </li>
+          <li class="d-flex gap-3 mb-3">
+            <div class="icon-box icon-box-success rounded-circle flex-shrink-0" style="--bs-icon-box-size: 2rem; --bs-icon-box-icon-size: 0.875rem;"><i data-lucide="check"></i></div>
+            <div>
+              <div><span class="fw-medium">Jonas</span> completed "Audit checkout copy"</div>
+              <span class="small text-body-secondary">9:31 AM</span>
+            </div>
+          </li>
+          <li class="d-flex gap-3 mb-3">
+            <div class="icon-box icon-box-info rounded-circle flex-shrink-0" style="--bs-icon-box-size: 2rem; --bs-icon-box-icon-size: 0.875rem;"><i data-lucide="message-square"></i></div>
+            <div>
+              <div><span class="fw-medium">Priya</span> commented on "Onboarding redesign"</div>
+              <p class="text-body-secondary mb-1 small">"Step 3 looks good. The empty state on step 4 still needs a copy pass."</p>
+              <span class="small text-body-secondary">9:18 AM</span>
+            </div>
+          </li>
+          <li class="d-flex gap-3 mb-3">
+            <div class="icon-box icon-box-warning rounded-circle flex-shrink-0" style="--bs-icon-box-size: 2rem; --bs-icon-box-icon-size: 0.875rem;"><i data-lucide="user-plus"></i></div>
+            <div>
+              <div><span class="fw-medium">Lena</span> joined the workspace</div>
+              <span class="small text-body-secondary">Yesterday</span>
+            </div>
+          </li>
+          <li class="d-flex gap-3 mb-3">
+            <div class="icon-box icon-box-secondary rounded-circle flex-shrink-0" style="--bs-icon-box-size: 2rem; --bs-icon-box-icon-size: 0.875rem;"><i data-lucide="folder-plus"></i></div>
+            <div>
+              <div><span class="fw-medium">Marcus</span> created the project "Q3 marketing"</div>
+              <span class="small text-body-secondary">Yesterday</span>
+            </div>
+          </li>
+          <li class="d-flex gap-3">
+            <div class="icon-box icon-box-danger rounded-circle flex-shrink-0" style="--bs-icon-box-size: 2rem; --bs-icon-box-icon-size: 0.875rem;"><i data-lucide="alert-circle"></i></div>
+            <div>
+              <div>Build #2143 failed on <code>release/v2</code></div>
+              <span class="small text-body-secondary">Yesterday</span>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Static backdrop</h2>
+    <p>Set <code>data-bs-backdrop="static"</code> and <code>data-bs-keyboard="false"</code> to force a deliberate dismiss. Use this when the sheet must be completed before the user moves on, like a setup flow or a required confirmation.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSetup">
+      Finish setup
+    </button>
+
+    <div class="offcanvas offcanvas-end" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" id="offcanvasSetup">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Finish your profile</h5>
+      </div>
+      <div class="offcanvas-body">
+        <p class="text-body-secondary">A few details so teammates know who they're working with.</p>
+        <div class="mb-3">
+          <label for="setupName" class="form-label">Full name</label>
+          <input type="text" class="form-control" id="setupName" value="Nauval Azhar">
+        </div>
+        <div class="mb-3">
+          <label for="setupRole" class="form-label">Role</label>
+          <select class="form-select" id="setupRole">
+            <option>Engineering</option>
+            <option selected>Design</option>
+            <option>Product</option>
+            <option>Operations</option>
+          </select>
+        </div>
+        <div class="mb-0">
+          <label for="setupTimezone" class="form-label">Timezone</label>
+          <select class="form-select" id="setupTimezone">
+            <option>UTC−05:00 New York</option>
+            <option>UTC+00:00 London</option>
+            <option selected>UTC+07:00 Jakarta</option>
+            <option>UTC+09:00 Tokyo</option>
+          </select>
+        </div>
+      </div>
+      <div class="offcanvas-footer">
+        <button type="button" class="btn btn-primary w-100" data-bs-dismiss="offcanvas">Save and continue</button>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>No backdrop</h2>
+    <p>Set <code>data-bs-backdrop="false"</code> to drop the dim entirely so the sheet sits alongside the main content. The page stays fully interactive, which suits filter panels and inspector strips that the user wants to keep open while they read or click around.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilters">
+      <i data-lucide="filter" class="me-2"></i>Filters
+    </button>
+
+    <div class="offcanvas offcanvas-start" data-bs-backdrop="false" data-bs-scroll="true" tabindex="-1" id="offcanvasFilters">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Filters</h5>
+        <button type="button" class="offcanvas-close" data-bs-dismiss="offcanvas" aria-label="Close"><i data-lucide="x"></i></button>
+      </div>
+      <div class="offcanvas-body">
+        <div class="mb-4">
+          <div class="fw-medium mb-2">Status</div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="fStatusOpen" checked>
+            <label class="form-check-label" for="fStatusOpen">Open</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="fStatusProgress" checked>
+            <label class="form-check-label" for="fStatusProgress">In progress</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="fStatusReview">
+            <label class="form-check-label" for="fStatusReview">In review</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="fStatusDone">
+            <label class="form-check-label" for="fStatusDone">Done</label>
+          </div>
+        </div>
+        <div class="mb-4">
+          <div class="fw-medium mb-2">Priority</div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="fPriorityHigh" checked>
+            <label class="form-check-label" for="fPriorityHigh">High</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="fPriorityMed">
+            <label class="form-check-label" for="fPriorityMed">Medium</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="fPriorityLow">
+            <label class="form-check-label" for="fPriorityLow">Low</label>
+          </div>
+        </div>
+        <div class="mb-0">
+          <label for="fAssignee" class="form-label fw-medium">Assignee</label>
+          <select class="form-select" id="fAssignee">
+            <option selected>Anyone</option>
+            <option>Me</option>
+            <option>Amelia</option>
+            <option>Jonas</option>
+            <option>Priya</option>
+          </select>
+        </div>
+      </div>
+      <div class="offcanvas-footer">
+        <button type="button" class="btn btn-ghost-secondary" data-bs-dismiss="offcanvas">Reset</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="offcanvas">Apply filters</button>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Responsive</h2>
+    <p>Add <code>.offcanvas-{sm|md|lg|xl|xxl}</code> to make the sheet collapse only below the named breakpoint. Above it the markup renders inline in place, so the same template carries a drawer on mobile and an inline panel on desktop. Pair the trigger with <code>.d-{breakpoint}-none</code> so it hides once the layout goes inline.</p>
+    <p>Resize the window to see the switch. The demo uses <code>.offcanvas-lg</code>, so below the <code>lg</code> breakpoint the Menu button opens a drawer; at <code>lg</code> and up the section list renders inline.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn-outline-secondary d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive">
+      <i data-lucide="menu" class="me-2"></i>Menu
+    </button>
+
+    <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="offcanvasResponsive">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Sections</h5>
+        <button type="button" class="offcanvas-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasResponsive" aria-label="Close"><i data-lucide="x"></i></button>
+      </div>
+      <div class="offcanvas-body p-lg-0">
+        <ul class="nav nav-pills flex-column gap-1">
+          <li class="nav-item"><a class="nav-link active" href="#">Overview</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Tasks</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Files</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Members</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Settings</a></li>
+        </ul>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+{% endblock %}

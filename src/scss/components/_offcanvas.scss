@@ -1,0 +1,83 @@
+// Stisla v3 — offcanvas.
+// Shares the modal cadence on header padding, backdrop blur, and pinned
+// title size, but the dismiss control is different. Modal floats a dark
+// chip so it can sit over a media hero with no header; offcanvas always
+// has a header (the panel is anchored to a screen edge, the title is the
+// affordance), so .offcanvas-close sits inline at the end of that row as
+// a quiet ghost icon button — same muscle memory as the navbar/sidebar
+// hover chips.
+
+.offcanvas-backdrop {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.offcanvas-header {
+  padding-bottom: 0;
+
+  // Push the close to the trailing edge of the header row regardless of
+  // what the title wraps in. Works whether the header's first child is the
+  // title directly or a wrapper (e.g. a centered column for offcanvas-bottom).
+  .offcanvas-close {
+    margin-inline-start: auto;
+  }
+}
+
+.offcanvas-title {
+  font-size: 1.125rem; // 18px
+}
+
+// Footer band. Tints to --bs-surface-alt with a top border so the seam reads
+// against the body, parity with the modal footer two-tone.
+.offcanvas-footer {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  background-color: var(--#{$prefix}surface-alt);
+  border-top: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color);
+}
+
+// Ghost icon button. Color and hover chip both ride theme tokens
+// (--bs-body-secondary-color, --bs-accent-bg), so dark mode tracks
+// automatically — no @include color-mode(dark) override needed.
+.offcanvas-close {
+  --#{$prefix}offcanvas-close-color: var(--#{$prefix}body-secondary-color);
+  --#{$prefix}offcanvas-close-color-hover: var(--#{$prefix}body-color);
+  --#{$prefix}offcanvas-close-bg-hover: var(--#{$prefix}accent-bg);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  color: var(--#{$prefix}offcanvas-close-color);
+  background-color: transparent;
+  border: 0;
+  border-radius: 50%;
+  transition:
+    background-color 0.15s ease-in-out,
+    color 0.15s ease-in-out;
+
+  &:hover {
+    color: var(--#{$prefix}offcanvas-close-color-hover);
+    background-color: var(--#{$prefix}offcanvas-close-bg-hover);
+  }
+
+  &:focus-visible {
+    outline: 0;
+    color: var(--#{$prefix}offcanvas-close-color-hover);
+    background-color: var(--#{$prefix}offcanvas-close-bg-hover);
+    box-shadow: 0 0 0 0.1875rem rgba(var(--#{$prefix}primary-rgb), 0.4);
+  }
+
+  > svg,
+  > i {
+    width: 1rem;
+    height: 1rem;
+  }
+}
