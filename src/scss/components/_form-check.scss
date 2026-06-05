@@ -52,6 +52,17 @@
       border-color: $input-focus-border-color-dark;
     }
   }
+
+  // Same cascade reason as _form-control.scss: re-state validation borders
+  // so the generic dark border above doesn't wipe them.
+  .was-validated .form-check-input:valid,
+  .form-check-input.is-valid {
+    border-color: var(--#{$prefix}form-valid-border-color);
+  }
+  .was-validated .form-check-input:invalid,
+  .form-check-input.is-invalid {
+    border-color: var(--#{$prefix}form-invalid-border-color);
+  }
   // Unchecked switch — bump the track to a clearly visible mid-grey so the
   // off-state reads as "off" instead of "disabled". The thumb is already
   // forced to solid white via $form-switch-color-dark in tokens/_variables-dark.scss.

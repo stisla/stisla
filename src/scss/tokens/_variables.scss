@@ -250,6 +250,13 @@ $form-select-box-shadow: none;
 $form-select-indicator-color: $body-secondary-color;
 $form-select-bg-size: 12px 12px;
 
+// Validation — swap BS5's stock checkmark glyph for the Lucide `check` icon
+// so the valid state reads with the same hand as the rest of the site's iconography.
+// Color references $success directly because $form-feedback-icon-valid-color
+// (BS5's usual hook) is declared in bootstrap/scss/variables, which loads
+// after this file. escape-svg() at the use site URL-encodes the # in the hex.
+$form-feedback-icon-valid: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='#{$success}' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>");
+
 // Form checks — bump the input to a fixed 16×16 (BS5's $form-check-input-width
 // default is 1em, which lands at 14px against our 0.875rem body baseline).
 // Padding-start must move from the default Sass expression to a concrete value

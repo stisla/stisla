@@ -77,6 +77,20 @@ textarea.form-control {
       border-color: $input-focus-border-color-dark;
     }
   }
+
+  // The generic dark border-color above ties with BS5's
+  // `.form-control.is-{valid,invalid}` rule on specificity (0,2,0) but lives
+  // later in the bundle, so it wins the cascade and wipes the validation
+  // ring. Re-state validation borders here so they survive.
+  .was-validated .form-control:valid,
+  .form-control.is-valid {
+    border-color: var(--#{$prefix}form-valid-border-color);
+  }
+  .was-validated .form-control:invalid,
+  .form-control.is-invalid {
+    border-color: var(--#{$prefix}form-invalid-border-color);
+  }
+
   .form-control[type="file"]::file-selector-button {
     background-color: rgba($gray-900, 0.5);
   }

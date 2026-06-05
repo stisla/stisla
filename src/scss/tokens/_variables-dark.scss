@@ -60,6 +60,16 @@ $input-focus-border-color-dark: rgba(var(--#{$prefix}primary-rgb), 0.4);
 // BS5 inlines this at Sass build time into the dark SVG data: URL.
 $form-select-indicator-color-dark: $body-secondary-color-dark;
 
+// Validation — pin to the same hues as light mode. BS5 ships
+// $form-{valid,invalid}-color-dark = $green-300 / $red-300, which read as
+// pastel against our deep $body-bg-dark and lose the urgency that the
+// state is meant to carry. Use the same $green-500 / $red-500 we use in
+// light so the ring and feedback color match across themes.
+$form-valid-color-dark: $success;
+$form-valid-border-color-dark: $success;
+$form-invalid-color-dark: $danger;
+$form-invalid-border-color-dark: $danger;
+
 // Switch — solid white thumb on the dark unchecked state (BS5's default
 // rgba($white, .25) is barely visible against our $input-bg-dark and reads as
 // disabled). Inlined into $form-switch-bg-image-dark at Sass build time.

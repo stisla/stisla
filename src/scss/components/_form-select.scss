@@ -43,4 +43,15 @@ select.form-select[size]:not([size="1"]) {
       border-color: $input-focus-border-color-dark;
     }
   }
+
+  // Same cascade reason as _form-control.scss: re-state validation borders
+  // so the generic dark border above doesn't wipe them.
+  .was-validated .form-select:valid,
+  .form-select.is-valid {
+    border-color: var(--#{$prefix}form-valid-border-color);
+  }
+  .was-validated .form-select:invalid,
+  .form-select.is-invalid {
+    border-color: var(--#{$prefix}form-invalid-border-color);
+  }
 }
