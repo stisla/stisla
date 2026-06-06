@@ -39,6 +39,23 @@ $font-size-base: 0.875rem; // 14px body baseline (BS5 default is 1rem)
 $font-size-sm: 0.75rem; // 12px — pinned (BS5 auto-derives ~.766rem)
 $font-size-lg: 1rem; // 16px — pinned (BS5 auto-derives ~1.094rem)
 
+// Inline <mark> and <code>. BS5 ships mark on $yellow-100 + body color, and
+// code on $pink. Both feel off-brand against the cool palette; repoint to the
+// blue ramp so highlighted prose and inline code track the primary family.
+// Emits --bs-code-color which the docs prose rule references so .prose code
+// stays in sync without a second override.
+$mark-bg: $blue-100;
+$code-color: $blue-600;
+
+// Inline <kbd>. BS5 ships kbd as a dark chip (body-color bg, body-bg text);
+// override to a neutral light chip. $kbd-border-color is a Stisla-custom token
+// (BS5 has no $kbd-border-color hook); border + drop shadow are applied in
+// components/_kbd.scss. Dark pair in _variables-dark.scss, consumed by the
+// @include color-mode(dark) block in the same component file.
+$kbd-bg: #e5e7eb;
+$kbd-color: #23252e; // matches $body-color
+$kbd-border-color: #ced2d9;
+
 // Border radius — design-system level. Cascades to .btn / .card / .modal /
 // .dropdown / etc. via each component's BS5 var chain (e.g. $btn-border-radius
 // reads var(--bs-border-radius)).

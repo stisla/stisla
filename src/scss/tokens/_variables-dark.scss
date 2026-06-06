@@ -29,6 +29,19 @@ $body-bg-dark: #0b0c0e;
 // defaults to `inherit`) and to card titles (chained via $card-title-color in
 // _variables.scss). One token, full cascade.
 $body-color-dark: #f5f8fe;
+
+// Inline <mark>. BS5's dark default is a warm amber that clashes with the
+// light-mode $blue-100 override in _variables.scss. Track the blue ramp here
+// too. Color pin documents the contrast pairing against the dark bg.
+$mark-bg-dark: $blue-900;
+$mark-color-dark: $body-color-dark;
+
+// Inline <kbd> dark pair. $kbd-color-dark and $kbd-border-color-dark are
+// Stisla-custom tokens (BS5 has no $kbd-color-dark / $kbd-border-color hooks),
+// consumed by components/_kbd.scss in its @include color-mode(dark) block.
+$kbd-bg-dark: #2a2f37;
+$kbd-color-dark: $body-color-dark;
+$kbd-border-color-dark: #3c434e;
 $body-secondary-color-dark: rgba($body-color-dark, 0.75);
 $surface-dark: #121317;
 $surface-alt-dark: #181b20;

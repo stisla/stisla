@@ -1,0 +1,20 @@
+// Stisla v3 — <kbd>.
+// BS5's stock `kbd` rule (in scss/_type.scss) paints kbd as a dark inverted
+// chip and ships no border or shadow. We override the bg/color via $kbd-bg /
+// $kbd-color in tokens/_variables.scss; this file adds the hairline border and
+// a 1px soft drop shadow so kbd reads like a key cap. Dark mode swaps the
+// three colors via @include color-mode(dark) since BS5 exposes no $kbd-*-dark
+// Sass hooks.
+
+kbd {
+  border: 1px solid $kbd-border-color;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+@include color-mode(dark) {
+  kbd {
+    background-color: $kbd-bg-dark;
+    color: $kbd-color-dark;
+    border-color: $kbd-border-color-dark;
+  }
+}

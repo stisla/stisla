@@ -1,0 +1,196 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Typography · Stisla v3{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Typography</h1>
+    <p class="lead">Headings, body text, lists, and the utilities that compose them into readable copy.</p>
+  </header>
+
+  <section>
+    <h2>Headings</h2>
+    <p>Six levels rendered with Bootstrap's default scale against the 14px baseline. Heading weight stays consistent across the scale; size carries the hierarchy.</p>
+    {% call ui.demo() %}
+    <div>
+      <h1>Heading one</h1>
+      <h2>Heading two</h2>
+      <h3>Heading three</h3>
+      <h4>Heading four</h4>
+      <h5>Heading five</h5>
+      <h6 class="mb-0">Heading six</h6>
+    </div>
+    {% endcall %}
+    <p>Use <code>.h1</code> through <code>.h6</code> when you want the heading look on a different element without changing the semantics.</p>
+    {% call ui.demo() %}
+    <p class="h3 m-0">A paragraph styled as an h3.</p>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Display</h2>
+    <p>For hero titles and marketing pages. Heavier weight, tighter leading, sized larger than the regular heading scale.</p>
+    {% call ui.demo() %}
+    <div>
+      <p class="display-1">Display 1</p>
+      <p class="display-2">Display 2</p>
+      <p class="display-3">Display 3</p>
+      <p class="display-4">Display 4</p>
+      <p class="display-5">Display 5</p>
+      <p class="display-6 mb-0">Display 6</p>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Lead</h2>
+    <p>Add <code>.lead</code> to the first paragraph under a title for a slightly larger, lighter intro.</p>
+    {% call ui.demo() %}
+    <div>
+      <h3>The cache layer</h3>
+      <p class="lead m-0">A tiered cache backed by Redis with per-tenant eviction and a write-through fallback to Postgres for cold reads.</p>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Inline elements</h2>
+    <p>Common HTML inline tags pick up sensible defaults so plain markup reads correctly without extra classes.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-column gap-2">
+      <p class="m-0"><strong>Bold</strong> with <code>&lt;strong&gt;</code> and <em>italic</em> with <code>&lt;em&gt;</code>.</p>
+      <p class="m-0"><mark>Highlighted</mark> with <code>&lt;mark&gt;</code>.</p>
+      <p class="m-0">A <small>smaller fine-print line</small> with <code>&lt;small&gt;</code>.</p>
+      <p class="m-0">Press <kbd>⌘</kbd> + <kbd>K</kbd> to open search.</p>
+      <p class="m-0"><abbr title="HyperText Markup Language">HTML</abbr> abbreviates with <code>&lt;abbr title&gt;</code>.</p>
+      <p class="m-0">Inline <code>code</code> uses the <code>&lt;code&gt;</code> element.</p>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Weight</h2>
+    <p>Five steps via <code>.fw-{name}</code>. Inter ships at 400, 500, 600, and 700, so <code>.fw-light</code> falls back to the nearest available weight.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-column gap-1">
+      <p class="fw-light m-0">Light weight (.fw-light)</p>
+      <p class="fw-normal m-0">Normal weight (.fw-normal)</p>
+      <p class="fw-medium m-0">Medium weight (.fw-medium)</p>
+      <p class="fw-semibold m-0">Semibold weight (.fw-semibold)</p>
+      <p class="fw-bold m-0">Bold weight (.fw-bold)</p>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Size</h2>
+    <p>Six step utility scale via <code>.fs-1</code> through <code>.fs-6</code>, sharing values with the heading scale so a utility-sized paragraph matches its equivalent heading.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-column gap-1">
+      <p class="fs-1 m-0">.fs-1</p>
+      <p class="fs-2 m-0">.fs-2</p>
+      <p class="fs-3 m-0">.fs-3</p>
+      <p class="fs-4 m-0">.fs-4</p>
+      <p class="fs-5 m-0">.fs-5</p>
+      <p class="fs-6 m-0">.fs-6</p>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Color</h2>
+    <p>Neutral text hierarchy lives on <code>.text-body</code>, <code>.text-body-secondary</code>, and <code>.text-body-tertiary</code>. The brand state utilities map onto the theme palette.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-column gap-1">
+      <p class="text-body m-0">Primary body text (.text-body)</p>
+      <p class="text-body-secondary m-0">Supporting copy and labels (.text-body-secondary)</p>
+      <p class="text-body-tertiary m-0">Quiet meta text (.text-body-tertiary)</p>
+      <p class="text-primary m-0">.text-primary</p>
+      <p class="text-success m-0">.text-success</p>
+      <p class="text-danger m-0">.text-danger</p>
+      <p class="text-warning m-0">.text-warning</p>
+      <p class="text-info m-0">.text-info</p>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Lists</h2>
+    <p>Default <code>&lt;ul&gt;</code> and <code>&lt;ol&gt;</code> render with markers and indent. Use <code>.list-unstyled</code> to strip both, or <code>.list-inline</code> to lay items out in a row.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-column gap-3">
+      <ul class="m-0">
+        <li>Unordered first</li>
+        <li>Unordered second</li>
+        <li>Unordered third</li>
+      </ul>
+      <ol class="m-0">
+        <li>Ordered first</li>
+        <li>Ordered second</li>
+        <li>Ordered third</li>
+      </ol>
+      <ul class="list-unstyled m-0">
+        <li>No marker, no indent</li>
+        <li>Stacks like a plain block</li>
+      </ul>
+      <ul class="list-inline m-0">
+        <li class="list-inline-item">Inline</li>
+        <li class="list-inline-item">Inline</li>
+        <li class="list-inline-item">Inline</li>
+      </ul>
+    </div>
+    {% endcall %}
+    <p>Description lists pair a term with its description. Add <code>.row</code> on the <code>&lt;dl&gt;</code> for a responsive two-column grid.</p>
+    {% call ui.demo() %}
+    <dl class="row m-0">
+      <dt class="col-sm-3">Provider</dt>
+      <dd class="col-sm-9">AWS, in the eu-west-1 region.</dd>
+      <dt class="col-sm-3">Runtime</dt>
+      <dd class="col-sm-9">Node 20 on the Lambda ARM tier.</dd>
+      <dt class="col-sm-3">Memory</dt>
+      <dd class="col-sm-9 mb-0">512 MB cold, scales to 2 GB on demand.</dd>
+    </dl>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Blockquote</h2>
+    <p>Wrap pulled copy in <code>&lt;blockquote class="blockquote"&gt;</code>. Pair with a <code>&lt;footer class="blockquote-footer"&gt;</code> for attribution.</p>
+    {% call ui.demo() %}
+    <figure class="m-0">
+      <blockquote class="blockquote">
+        <p class="m-0">Make the common case fast and the uncommon case correct.</p>
+      </blockquote>
+      <figcaption class="blockquote-footer mt-2 mb-0">
+        Butler Lampson in <cite title="Hints for Computer System Design">Hints for Computer System Design</cite>
+      </figcaption>
+    </figure>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>In context</h2>
+    <p>Headings, prose, code, lists, and quotes drop into the same flow without any wrapper class. This demo composes the pieces above into a short article.</p>
+    {% call ui.demo() %}
+    <article style="max-width: 36rem;" class="lh-lg">
+      <p class="text-body-secondary small mb-2">June 4, 2026 · Engineering</p>
+      <h2>Shipping a 14px baseline</h2>
+      <p class="lead">Why we dropped the body text by 2 pixels and what changed downstream.</p>
+      <p>The framework used to render body copy at <code>16px</code>, which is the Bootstrap default. That reads fine on a marketing page but feels heavy in a dashboard where every row counts. We took the baseline to <code>14px</code> and let the heading scale follow.</p>
+      <h3>What moved</h3>
+      <p>Every component that derives its sizing from <code>$font-size-base</code> shrank by about an eighth. That includes buttons, inputs, badges, and table cells. The grid stayed where it was, so column layouts kept their place.</p>
+      <ul>
+        <li>Headings dropped proportionally, since the scale multiplies the base.</li>
+        <li>Form controls held their pixel heights through <code>min-height</code>, so dense forms kept their rhythm.</li>
+        <li>Icons sized in <code>em</code> tracked the new baseline for free.</li>
+      </ul>
+      <blockquote class="blockquote">
+        <p class="m-0">The line you set as the baseline is the line every screen rounds to.</p>
+      </blockquote>
+      <h3>What stayed</h3>
+      <p>Inter loads at 400, 500, 600, and 700. The display weights live on the same family, so a hero title and a body paragraph share their letterforms. Press <kbd>?</kbd> on any docs page to see the rest of the shortcuts.</p>
+    </article>
+    {% endcall %}
+  </section>
+{% endblock %}
