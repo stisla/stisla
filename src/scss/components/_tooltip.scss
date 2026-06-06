@@ -1,0 +1,18 @@
+// Stisla v3 — tooltip.
+// Inverted by default and the invert is BS5's own behavior, not a Stisla
+// override. $tooltip-bg defaults to var(--bs-emphasis-color) and $tooltip-color
+// to var(--bs-body-bg), so the tooltip surface flips with [data-bs-theme]:
+// near-black on light, near-white on dark. We just tighten the visuals on top.
+//
+// Padding goes to 8px both axes (BS5 ships 4/8). Radius drops to
+// --bs-border-radius-sm (8px) so the chip reads as a small floating label, not
+// a card. Opacity goes to 1 — the BS5 .9 default softens the invert into a
+// washed grey that loses the high-contrast read.
+
+.tooltip {
+  --#{$prefix}tooltip-padding-y: 0.5rem;
+  --#{$prefix}tooltip-padding-x: 0.5rem;
+  --#{$prefix}tooltip-border-radius: var(--#{$prefix}border-radius-sm);
+  --#{$prefix}tooltip-opacity: 1;
+  --#{$prefix}tooltip-max-width: 240px;
+}

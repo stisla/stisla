@@ -42,15 +42,23 @@ document.addEventListener("click", (e) => {
   }
 });
 
-// Auto-init Bootstrap popovers. BS5 ships popovers opt-in (Popper is heavy
-// to mount on every node), so demos that use [data-bs-toggle="popover"]
-// rely on this scan. Same applies to tooltips when those pages land.
+// Auto-init Bootstrap popovers + tooltips. BS5 ships both opt-in (Popper is
+// heavy to mount on every node), so demos that use [data-bs-toggle="popover"]
+// or [data-bs-toggle="tooltip"] rely on this scan.
 (function initPopovers() {
   const Popover = window.Stisla?.bs?.Popover;
   if (!Popover) return;
   document
     .querySelectorAll('[data-bs-toggle="popover"]')
     .forEach((el) => new Popover(el));
+})();
+
+(function initTooltips() {
+  const Tooltip = window.Stisla?.bs?.Tooltip;
+  if (!Tooltip) return;
+  document
+    .querySelectorAll('[data-bs-toggle="tooltip"]')
+    .forEach((el) => new Tooltip(el));
 })();
 
 // data-demo-loading="<ms>" — toggle .btn-loading on click, auto-clear after the given duration.
