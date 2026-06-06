@@ -37,6 +37,16 @@ body {
   min-height: 24rem;
 }
 
+// Tables span the preview width. .demo-preview centers via flex, which
+// shrink-fits children, so .table's width: 100% collapses to content. Force
+// the table (and the wrappers it lives inside on /tables — .table-responsive
+// and the table-in-a-card recipe) to fill the preview.
+.demo-preview > .table,
+.demo-preview > .table-responsive,
+.demo-preview > .card:has(> .table, > .table-responsive) {
+  width: 100%;
+}
+
 .demo-code {
   position: relative;
   border-top: 1px solid var(--bs-border-color-translucent);

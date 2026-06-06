@@ -1,0 +1,81 @@
+// Stisla v3 — tables. The only structural override is edge padding: the
+// first and last column cells bump to 1.25rem so a .table sits flush inside
+// a .card with its left/right cells lined up against the 20px card body
+// gutter. Inner cells, sizes, variants, striping, hover, and the responsive
+// wrapper all stay BS5 stock — driven by $table-cell-padding-{x,y} in
+// tokens/_variables.scss.
+
+.table {
+  // stylelint-disable selector-max-universal
+  > :not(caption) > * > :first-child {
+    padding-left: 1.25rem;
+  }
+  > :not(caption) > * > :last-child {
+    padding-right: 1.25rem;
+  }
+  // stylelint-enable selector-max-universal
+}
+
+// Header — drops to 0.75rem and muted so the thead reads as a label row,
+// not body text. font-size inherits via thead; color routes through
+// --bs-table-color so BS5's per-cell `color: var(--bs-table-color-state, …)`
+// chain picks it up (setting color directly on thead loses to the per-cell
+// rule's higher specificity).
+.table > thead {
+  font-size: 0.75rem;
+  --#{$prefix}table-color: var(--#{$prefix}secondary-color);
+}
+
+// .table-header-alt — apply on <thead> to opt the header onto --bs-surface-alt.
+// Same two-tone language as .card-header-alt / .card-footer. Sets
+// --bs-table-bg on the thead so every <th> picks it up via BS5's per-cell
+// `background-color: var(--bs-table-bg)` rule, without needing a more
+// specific selector per cell.
+.table-header-alt {
+  --#{$prefix}table-bg: var(--#{$prefix}surface-alt);
+}
+
+// Color variants — repaint BS5's solid pastel fills as transparent tints.
+// BS5's $table-variants compile via shift-color() into opaque pastel hex
+// values, which read as flat blocks of color and stay too bright over the
+// dark surface in dark mode. Overriding --bs-table-bg with rgba over a
+// theme-aware -rgb token reads as an accent at the same intensity in both
+// modes; --bs-table-color points at --bs-emphasis-color so text contrast
+// tracks the active theme (BS5's color-contrast() bakes a build-time hex
+// against the light $body-bg, which inverts wrong in dark). Border tracks
+// the variant at 20% so the row edge still reads. Light and dark variants
+// keep BS5's solid treatment — a 10% tint of $gray-100 / $dark would
+// disappear into the body bg.
+@each $variant in (primary, success, info, warning, danger) {
+  .table-#{$variant} {
+    --#{$prefix}table-bg: rgba(var(--#{$prefix}#{$variant}-rgb), 0.1);
+    --#{$prefix}table-color: var(--#{$prefix}emphasis-color);
+    --#{$prefix}table-border-color: rgba(var(--#{$prefix}#{$variant}-rgb), 0.2);
+  }
+}
+
+// Secondary is mono ($secondary = $dark; see tokens/_variables.scss), so it
+// has no semantic hue. Route the tint through --bs-emphasis-color-rgb so it
+// tracks the foreground per theme instead of locking to near-black.
+.table-secondary {
+  --#{$prefix}table-bg: rgba(var(--#{$prefix}emphasis-color-rgb), 0.06);
+  --#{$prefix}table-color: var(--#{$prefix}emphasis-color);
+  --#{$prefix}table-border-color: rgba(var(--#{$prefix}emphasis-color-rgb), 0.12);
+}
+
+// Table as the last child of a .card — clip the card so the table's square
+// bottom cells get carved by the card's rounded corners instead of bleeding
+// past them. Per-cell border-radius can't do this: BS5 sets `border-collapse:
+// collapse` in reboot and collapsed cells ignore border-radius. The :has()
+// scope keeps unrelated cards (dropdowns, popovers escaping a card body)
+// outside this clip. Also drop the last row's bottom border so it doesn't
+// double with the card's outer border. `> :last-child` picks up whichever
+// of <tbody> / <tfoot> closes the table, so a table with a footer is handled.
+.card:has(> .table:last-child),
+.card:has(> .table-responsive:last-child) {
+  overflow: hidden;
+}
+
+.card > .table:last-child > :last-child > tr:last-child > * {
+  border-bottom-width: 0;
+}

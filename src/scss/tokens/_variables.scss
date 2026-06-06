@@ -170,6 +170,24 @@ $card-box-shadow:
   0px 1px 3px rgba(0, 0, 0, 0.05),
   0px 1px 2px rgba(0, 0, 0, 0.03);
 
+// Tables — bump inner cell padding from BS5's 0.5rem to 0.75rem (12px y/x) so
+// rows breathe at dashboard density. First/last column cells then jump again
+// to 1.25rem in components/_table.scss, lining the edges up with the 20px
+// card body gutter so a table drops into a .card flush. Header weight drops
+// from browser-default bold (700) to 500 so the thead reads as a label row
+// rather than a heavy block.
+$table-cell-padding-y: 0.75rem;
+$table-cell-padding-x: 0.75rem;
+$table-th-font-weight: 500;
+// Active row routes through the accent tier so .table-active matches the
+// selection treatment used by sidebar / dropdown / list-group instead of
+// BS5's 10% emphasis-rgb tint. Color tracks --bs-accent-active-color (which
+// references --bs-body-color) so contrast follows the theme. Hover stays on
+// BS5's stock $table-hover-bg so selection reads a step stronger than dwell.
+$table-active-bg: var(--#{$prefix}accent-active-bg);
+$table-active-color: var(--#{$prefix}accent-active-color);
+$table-hover-bg: var(--#{$prefix}accent-bg);
+
 // Progress — slimmer bar (6px). BS5's 1rem default reads as a "graph row";
 // 6px lands closer to the modern dashboard bar (file upload meter, password
 // strength) where the bar is a secondary indicator under a label and percent.
@@ -285,8 +303,7 @@ $nav-tabs-link-active-color: var(--#{$prefix}body-color);
 // variables.scss loads after this file; the CSS custom property is
 // always available at runtime.
 $nav-tabs-link-active-border-color: var(--#{$prefix}border-color)
-  var(--#{$prefix}border-color)
-  var(--#{$prefix}nav-tabs-link-active-bg);
+  var(--#{$prefix}border-color) var(--#{$prefix}nav-tabs-link-active-bg);
 $nav-tabs-link-hover-border-color: var(--#{$prefix}border-color);
 $nav-pills-link-active-color: var(--#{$prefix}body-color);
 $nav-pills-link-active-bg: var(--#{$prefix}accent-bg);
