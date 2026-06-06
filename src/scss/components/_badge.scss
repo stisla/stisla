@@ -19,8 +19,7 @@
   line-height: 1;
 }
 
-.badge :is(svg, i),
-.badge [class^="spinner"] {
+.badge :is(svg, i) {
   width: 1em;
   height: 1em;
   flex-shrink: 0;
@@ -29,8 +28,8 @@
 // Spinner inside a badge: shrink to 1em so it sits on the label baseline and
 // thin out the ring so the 0.25em default doesn't read as a donut at 12px.
 .badge :is(.spinner-border, .spinner-grow) {
-  --#{$prefix}spinner-width: 1em;
-  --#{$prefix}spinner-height: 1em;
+  --#{$prefix}spinner-width: 0.625rem;
+  --#{$prefix}spinner-height: 0.625rem;
   --#{$prefix}spinner-vertical-align: 0;
 }
 .badge .spinner-border {
@@ -45,9 +44,21 @@
   background-color: #{rgba($color, 0.15)};
 }
 
+@mixin badge-outline-variant($color) {
+  --#{$prefix}badge-color: #{$color};
+  background-color: #{rgba($color, 0.15)};
+  border: 1px solid $color;
+}
+
 @each $color, $value in map-remove($theme-colors, "light", "dark") {
   .badge-light-#{$color} {
     @include badge-light-variant($value);
+  }
+}
+
+@each $color, $value in map-remove($theme-colors, "light", "dark") {
+  .badge-outline-#{$color} {
+    @include badge-outline-variant($value);
   }
 }
 
@@ -58,5 +69,10 @@
   .badge-light-secondary {
     --#{$prefix}badge-color: #{$body-color-dark};
     background-color: #{rgba($body-color-dark, 0.15)};
+  }
+  .badge-outline-secondary {
+    --#{$prefix}badge-color: #{$body-color-dark};
+    background-color: #{rgba($body-color-dark, 0.15)};
+    border-color: $gray-600;
   }
 }

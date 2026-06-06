@@ -26,7 +26,7 @@
 
   <section>
     <h2>Light</h2>
-    <p>Use <code>.badge-light-{state}</code> for a soft tinted chip. The background sits at 15% of the variant color and the text holds the solid color.</p>
+    <p>Use <code>.badge-light-{state}</code> for a soft tinted chip.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-wrap gap-2">
       <span class="badge badge-light-primary">Primary</span>
@@ -35,6 +35,21 @@
       <span class="badge badge-light-danger">Danger</span>
       <span class="badge badge-light-warning">Warning</span>
       <span class="badge badge-light-info">Info</span>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Outline</h2>
+    <p>Use <code>.badge-outline-{state}</code> for a soft tinted chip with border.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap gap-2">
+      <span class="badge badge-outline-primary">Primary</span>
+      <span class="badge badge-outline-secondary">Secondary</span>
+      <span class="badge badge-outline-success">Success</span>
+      <span class="badge badge-outline-danger">Danger</span>
+      <span class="badge badge-outline-warning">Warning</span>
+      <span class="badge badge-outline-info">Info</span>
     </div>
     {% endcall %}
   </section>
