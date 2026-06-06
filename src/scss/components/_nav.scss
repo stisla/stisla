@@ -43,4 +43,43 @@
       background-color: var(--#{$prefix}accent-bg);
     }
   }
+
+  &.nav-pills-alt {
+    display: inline-flex;
+    background-color: var(--#{$prefix}surface-alt);
+    border-radius: $border-radius;
+    height: 2.25rem;
+    padding: 0.125rem;
+    gap: 2px;
+    border: 1px solid var(--#{$prefix}border-color);
+
+    .nav-link {
+      height: 100%;
+      padding-block: 0;
+      padding-inline: 0.75rem;
+      border-radius: calc($border-radius - 0.125rem);
+      &:not(.active) {
+        color: var(--#{$prefix}secondary-color);
+      }
+      &.active {
+        background-color: var(--#{$prefix}body-bg);
+        box-shadow: var(--#{$prefix}box-shadow-sm);
+      }
+    }
+  }
+}
+
+@include color-mode(dark) {
+  .nav:not(.nav-tabs):not(.nav-underline).nav-pills-alt .nav-link.active {
+    background-color: var(--#{$prefix}accent-bg);
+  }
+}
+
+.nav-underline .nav-link {
+  &.active {
+    font-weight: normal;
+  }
+  &:not(.active) {
+    color: var(--#{$prefix}secondary-color);
+  }
 }
