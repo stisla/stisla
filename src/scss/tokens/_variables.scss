@@ -527,7 +527,7 @@ $sidebar-logo-color: var(--#{$prefix}emphasis-color) !default;
 $sidebar-logo-icon-size: 1.5rem !default;
 $sidebar-padding-y: 1rem !default; // 16
 $sidebar-padding-x: 1rem !default; // 16
-$sidebar-gap: 1rem !default; // header ↔ content ↔ footer
+$sidebar-gap: 1.25rem !default; // header ↔ content ↔ footer
 $sidebar-border-radius: $border-radius-lg !default;
 
 // 32 / 36 / 40 height scale (sm / default / lg) — matches button cadence
@@ -536,7 +536,7 @@ $sidebar-item-min-height: 2.25rem !default; // 36
 $sidebar-item-padding-y: 0.5rem !default;
 $sidebar-item-padding-x: 0.625rem !default; // 10
 $sidebar-item-radius: $border-radius !default;
-$sidebar-item-gap: 0.625rem !default; // icon ↔ label
+$sidebar-item-gap: 1rem !default; // icon ↔ label
 $sidebar-item-font-size: 0.875rem !default; // 14px
 $sidebar-item-font-weight: 400 !default;
 $sidebar-item-color: var(--#{$prefix}body-color) !default;
