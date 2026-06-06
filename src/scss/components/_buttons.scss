@@ -104,21 +104,58 @@
   --#{$prefix}btn-disabled-border-color: #{$border-color};
 }
 
+.btn-secondary {
+  --#{$prefix}btn-bg: #e2e4e9;
+  --#{$prefix}btn-color: var(--#{$prefix}body-color);
+  --#{$prefix}btn-border-color: #d4d7dd;
+  --#{$prefix}btn-hover-color: #{$body-color};
+  --#{$prefix}btn-hover-bg: #{$accent-bg};
+  --#{$prefix}btn-hover-border-color: #d4d7dd;
+  --#{$prefix}btn-focus-shadow-rgb: #{to-rgb($gray-500)};
+  --#{$prefix}btn-active-color: #{$body-color};
+  --#{$prefix}btn-active-bg: #e2e4e9;
+  --#{$prefix}btn-active-border-color: #d4d7dd;
+  --#{$prefix}btn-disabled-color: #{$body-color};
+  --#{$prefix}btn-disabled-border-color: #{$border-color};
+}
+
+.btn-tertiary {
+  @include button-variant(
+    $background: $body-color,
+    $border: $border-color,
+    $hover-background: lighten($accent-bg-dark, 20%),
+    $hover-border: $border-color,
+    $active-background: $body-color,
+    $active-border: $border-color
+  );
+}
+
 @include color-mode(dark) {
   .btn-secondary {
     @include button-variant(
+      $background: #2d3139,
+      $border: #1d2025,
+      $hover-background: $accent-bg-dark,
+      $hover-border: #1d2025,
+      $active-background: #2d3139,
+      $active-border: #1d2025
+    );
+  }
+
+  .btn-tertiary {
+    @include button-variant(
       $background: $body-color-dark,
-      $border: $body-color-dark,
-      $hover-background: $gray-200,
-      $hover-border: $gray-200,
-      $active-background: $gray-300,
-      $active-border: $gray-300
+      $border: $border-color-dark,
+      $hover-background: darken($accent-bg, 10%),
+      $hover-border: $border-color-dark,
+      $active-background: $body-color-dark,
+      $active-border: $border-color-dark
     );
   }
 
   .btn-outline-secondary {
     --#{$prefix}btn-color: #{$body-color-dark};
-    --#{$prefix}btn-bg: #{rgba($gray-800, 0.15)};
+    --#{$prefix}btn-bg: rgba(29, 32, 37, 0.5);
     --#{$prefix}btn-border-color: #{$border-color-dark};
     --#{$prefix}btn-hover-color: #{$body-color-dark};
     --#{$prefix}btn-hover-bg: #{$accent-bg-dark};
@@ -195,12 +232,19 @@
 // Skip "light" and "dark" — they're soft-retired (see ring section above),
 // and .btn-ghost-light / .btn-light-light read awkwardly anyway. Other
 // BS5 utilities ($theme-colors-driven) still emit them normally.
+.btn-ghost {
+  @include button-ghost-variant($accent-bg);
+}
 @each $color, $value in map-remove($theme-colors, "light", "dark") {
   .btn-ghost-#{$color} {
     @include button-ghost-variant($value);
   }
   .btn-light-#{$color} {
     @include button-light-variant($value);
+  }
+
+  .btn-ghost {
+    @include button-ghost-variant($accent-bg-dark);
   }
 }
 
