@@ -13,7 +13,10 @@
     <h2>Basic</h2>
     <p>Use <code>.alert</code> on its own for a neutral message.</p>
     {% call ui.demo() %}
-    <div class="alert w-100">Some neutral message here.</div>
+    <div class="alert w-100">
+      <i data-lucide="info"></i>
+      Some neutral message here.
+    </div>
     {% endcall %}
   </section>
 
@@ -23,10 +26,6 @@
     {% call ui.demo() %}
     <div class="d-flex flex-column gap-2 w-100">
       <div class="alert">
-        <i data-lucide="info"></i>
-        <div>Some neutral message here.</div>
-      </div>
-      <div class="alert alert-secondary">
         <i data-lucide="info"></i>
         <div>Some neutral message here.</div>
       </div>
@@ -95,7 +94,7 @@
 
     <p>Without an icon the heading and description take the leading column.</p>
     {% call ui.demo() %}
-    <div class="alert alert-secondary w-100">
+    <div class="alert w-100">
       <div class="alert-heading">No icon</div>
       <div class="alert-description">The icon column collapses when no <code>&lt;svg&gt;</code> / <code>&lt;i&gt;</code> child is present.</div>
     </div>
@@ -140,7 +139,7 @@
 
   <section>
     <h2>Dismissible</h2>
-    <p>Put a <code>.btn-close</code> with <code>data-bs-dismiss="alert"</code> inside <code>.alert-action</code>. Bootstrap's dismiss JS still fires and the close sits in flow next to any other action. Skip the <code>.alert-dismissible</code> class. Its absolute positioning isn't needed here.</p>
+    <p>Put a <code>.btn-close</code> with <code>data-bsdismiss="alert"</code> inside <code>.alert-action</code>. Bootstrap's dismiss JS still fires and the close sits in flow next to any other action. Skip the <code>.alert-dismissible</code> class. Its absolute positioning isn't needed here.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-column gap-2 w-100">
       <div class="alert alert-success fade show">
