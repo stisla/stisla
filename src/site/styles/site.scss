@@ -75,12 +75,9 @@ body {
 // Standalone code blocks (ui.code): optional filename/label header above the
 // snippet. Mirrors the editor-tab look so the snippet reads as a file excerpt.
 .demo-code-title {
-  padding: 0.5rem 1rem;
-  font-family: var(--bs-font-monospace);
+  padding: 1rem 1.25rem 0;
   font-size: 0.75rem;
   color: var(--bs-secondary-color);
-  background: var(--bs-surface-alt);
-  border-bottom: 1px solid var(--bs-border-color-translucent);
 }
 
 // Fade-to-surface overlay at the bottom when collapsed, behind the toggle.

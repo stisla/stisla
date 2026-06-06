@@ -262,3 +262,18 @@
     transform: rotate(360deg);
   }
 }
+
+// Flush — pull a button by its own horizontal padding so the label text lines
+// up with the container's content edge instead of the button frame. Use on
+// ghost / link-style buttons inside a content row (e.g. .toast-action,
+// .alert-action, list rows) when the label needs to align with the body text
+// above or below it. Reads --bs-btn-padding-x so .btn-sm / .btn-lg adjust
+// automatically. Skip on filled / outline variants where the visible edge is
+// the frame itself.
+.btn-flush-start {
+  margin-inline-start: calc(-1 * var(--#{$prefix}btn-padding-x));
+}
+
+.btn-flush-end {
+  margin-inline-end: calc(-1 * var(--#{$prefix}btn-padding-x));
+}

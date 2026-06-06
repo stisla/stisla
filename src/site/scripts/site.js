@@ -61,6 +61,19 @@ document.addEventListener("click", (e) => {
     .forEach((el) => new Tooltip(el));
 })();
 
+// data-demo-toast="<selector>" — show a Bootstrap toast on click. The value is
+// a CSS selector pointing at the target .toast element.
+// <button class="btn btn-primary" data-demo-toast="#welcome-toast">Show toast</button>
+document.addEventListener("click", (e) => {
+  const target = e.target.closest("[data-demo-toast]");
+  if (!target) return;
+  const el = document.querySelector(target.dataset.demoToast);
+  if (!el) return;
+  const Toast = window.Stisla?.bs?.Toast;
+  if (!Toast) return;
+  Toast.getOrCreateInstance(el, { autohide: true, delay: 4000 }).show();
+});
+
 // data-demo-loading="<ms>" — toggle .btn-loading on click, auto-clear after the given duration.
 // <button class="btn btn-primary" data-demo-loading="2000">Click to save</button>
 document.addEventListener("click", (e) => {

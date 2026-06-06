@@ -1,0 +1,102 @@
+// Stisla v3 — toast.
+// Strips BS5's per-block padding (header + body) and consolidates the frame to
+// a single 16px pad on .toast itself. The header border drops, so the title
+// reads as the first line of the toast content instead of a banded sub-header.
+// Border radius lifts to --bs-border-radius-lg so the toast sits at the same
+// elevation tier as cards and dropdowns. Surface bg routes through --bs-surface
+// (set in the surface fanout in tokens/_variables.scss).
+//
+// Layout is a 2-column grid: content stack (col 1, 1fr) | close (col 2, auto).
+// .toast-header carries the leading icon or image + title + optional timestamp
+// as a flex row. .toast-body and .toast-action stack below in col 1 at the
+// root's left padding edge. .btn-close lives as a DIRECT child of .toast (not
+// nested inside .toast-header) so it occupies its own grid cell at the top-
+// right corner regardless of header content.
+//
+// Parts:
+//   .toast                  base (BS5)
+//   .toast-header           leading + title flex row (BS5, restyled)
+//     > svg | i | img         leading slot (any first child works)
+//   .toast-body             description (BS5, padding stripped)
+//   .toast-action           trailing action row (new)
+//   > .btn-close            top-right dismiss (direct child of .toast)
+
+.toast {
+  // Zero the BS5 vars that drive .toast-header / .toast-body padding so the
+  // 16px frame moves to .toast itself.
+  --#{$prefix}toast-padding-x: 0;
+  --#{$prefix}toast-padding-y: 0;
+  --#{$prefix}toast-border-radius: var(--#{$prefix}border-radius-lg);
+  --#{$prefix}toast-bg: var(--#{$prefix}surface);
+  --#{$prefix}toast-border-color: var(--#{$prefix}border-color);
+  --#{$prefix}toast-color: var(--#{$prefix}body-color);
+  --#{$prefix}toast-header-color: var(--#{$prefix}emphasis-color);
+  --#{$prefix}toast-header-bg: transparent;
+  --#{$prefix}toast-header-border-color: transparent;
+
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 0.75rem;
+  row-gap: 0.375rem;
+}
+
+.toast-header {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  border-bottom: 0;
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--#{$prefix}toast-header-color);
+
+  // Default leading-icon sizing (mirrors _alert.scss). Images, icon-boxes, and
+  // anything custom skip these constraints and size themselves.
+  > :is(svg, i) {
+    width: 1.125rem;
+    height: 1.125rem;
+    flex-shrink: 0;
+    color: var(--#{$prefix}secondary-color);
+  }
+
+  // Images keep their natural size from width/height attrs or utilities and
+  // don't flex-shrink.
+  > img {
+    flex-shrink: 0;
+  }
+}
+
+.toast-body {
+  grid-column: 1;
+  grid-row: 2;
+  color: var(--#{$prefix}secondary-color);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.toast-action {
+  grid-column: 1;
+  grid-row: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+// Close lives as a direct child of .toast so it gets its own grid cell at the
+// top-right corner. Vertically centered against the header row.
+.toast > .btn-close {
+  grid-column: 2;
+  grid-row: 1;
+  width: 0.875rem;
+  height: 0.875rem;
+  padding: 0;
+  margin: 0;
+  align-self: center;
+  justify-self: end;
+}
