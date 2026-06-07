@@ -13,6 +13,7 @@
 
 _Latest entry first. One line per session: ISO date — step completed / current — blockers._
 
+- 2026-06-07 — Step 0 done. BS5 build snapshotted to `bs5-snapshot/` (44 files, 3.7 MB). Tagged `v3-bs5-snapshot` at commit `eba7fc1`. Next: Step 1 (foundation rewrite). No blockers.
 - 2026-06-07 — V3.md spec locked. MIGRATION.md drafted. Step 0 (snapshot) not started. No blockers.
 
 ---
@@ -70,12 +71,12 @@ See V3.md. No re-litigation here. Token surface (§3.2), foundation (§3.1), nam
 
 Each step lands and merges before the next starts. No "step 3 partial PR" overlapping step 4.
 
-### Step 0 — Snapshot the BS5 version
-- [ ] `npm run build` → captures current built site.
-- [ ] Copy build output to `bs5-snapshot/` at repo root (HTML, CSS, JS — no source).
-- [ ] Commit `bs5-snapshot/` with message `chore: snapshot v3 BS5 build before rewrite`.
-- [ ] Tag the commit: `git tag v3-bs5-snapshot` (and push the tag).
-- [ ] Verify: `npx serve bs5-snapshot` renders. Bookmark a few key pages (sidebar, modal, dropdowns, forms) for visual reference during rewrite.
+### Step 0 — Snapshot the BS5 version ✅
+- [x] `npm run build` → captures current built site.
+- [x] Copy build output to `bs5-snapshot/` at repo root (HTML, CSS, JS — no source).
+- [x] Commit `bs5-snapshot/` with message `chore: snapshot v3 BS5 build before rewrite`.
+- [x] Tag the commit: `git tag v3-bs5-snapshot`. Push tag with `git push origin v3-bs5-snapshot` when you next push the branch.
+- [x] Verify: `npx serve bs5-snapshot` renders. Bookmark a few key pages (sidebar, modal, dropdowns, forms) for visual reference during rewrite.
 
 **Comparison workflow after step 0:**
 - Visual: open `bs5-snapshot/<page>.html` in one tab; live `npm run dev` of new build in another.
@@ -221,7 +222,7 @@ Build them on top of the rewritten foundation after 3.0 ships.
 
 ## 7. Running checklist
 
-- [ ] Step 0 — Snapshot BS5 build, tag `v3-bs5-snapshot`
+- [x] Step 0 — Snapshot BS5 build, tag `v3-bs5-snapshot` ✅
 - [ ] Step 1 — Foundation rewrite (deps swap, `foundation/` files, `LICENSES/`)
 - [ ] Step 2 — Token rewrite (`_theme.scss` + `_breakpoints.scss`)
 - [ ] Step 3 — Component rewrite (per §4 table, in order from §3 step 3)
