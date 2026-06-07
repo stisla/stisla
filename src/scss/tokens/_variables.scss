@@ -309,6 +309,7 @@ $offcanvas-box-shadow:
 // language used by navbar / dropdown / list-group; the hover chip lives
 // in components/_nav.scss (BS5 paints nothing on pill hover by default).
 $nav-link-color: var(--#{$prefix}body-color);
+$nav-link-font-weight: 500;
 $nav-link-hover-color: var(--#{$prefix}body-color);
 $nav-tabs-link-active-color: var(--#{$prefix}body-color);
 // 3-value border-color shorthand: top / left-right / bottom. Bottom
@@ -527,7 +528,7 @@ $sidebar-logo-color: var(--#{$prefix}emphasis-color) !default;
 $sidebar-logo-icon-size: 1.5rem !default;
 $sidebar-padding-y: 1rem !default; // 16
 $sidebar-padding-x: 1rem !default; // 16
-$sidebar-gap: 1.25rem !default; // header ↔ content ↔ footer
+$sidebar-gap: 1rem !default; // header ↔ content ↔ footer
 $sidebar-border-radius: $border-radius-lg !default;
 
 // 32 / 36 / 40 height scale (sm / default / lg) — matches button cadence
@@ -584,3 +585,53 @@ $sidebar-lg-item-min-height: 2.5rem !default; // 40
 $sidebar-lg-item-padding-y: 0.5rem !default;
 $sidebar-lg-item-padding-x: 0.75rem !default;
 $sidebar-lg-group-gap: 1.125rem !default;
+
+// App shell — Stisla-original layout component. Positions a .sidebar + a
+// .app-shell-main column, owns the sidebar width (the .sidebar component
+// stays width-agnostic per its own design notes), and exposes two state
+// hooks: .is-sidebar-collapsed (desktop rail) and .is-sidebar-visible
+// (mobile drawer).
+$app-shell-bg: var(--#{$prefix}body-bg) !default;
+$app-shell-color: var(--#{$prefix}body-color) !default;
+$app-shell-main-bg: var(--#{$prefix}body-bg) !default;
+$app-shell-main-color: var(--#{$prefix}body-color) !default;
+$app-shell-sidebar-width: 16rem !default;
+// Rail width matches the sidebar's natural recipe at the default scale:
+//   sidebar-item-min-height (36) + 2 × sidebar-padding-x (16) = 68 = 4.25rem.
+// The sidebar's own .is-collapsed visuals are tuned for this exact width.
+$app-shell-sidebar-width-collapsed: 4.25rem !default;
+// Breakpoint at which the desktop sidebar swaps to a mobile drawer. Pin to
+// the same breakpoint the navbar uses (.navbar-expand-lg) so the navbar
+// toggler and the sidebar drawer come and go together.
+$app-shell-mobile-breakpoint: lg !default;
+// Backdrop tint behind the mobile drawer. Static rgba (not via color-mix
+// over body-bg) so it stays a visible darken in both light and dark modes.
+$app-shell-backdrop-bg: rgba(0, 0, 0, 0.4) !default;
+// Mobile drawer paint. The sidebar's own $sidebar-bg defaults to transparent
+// (the desktop layout supplies the shell bg behind it). When the sidebar
+// floats over content as a drawer, transparency leaks the underlying text
+// through — this var paints the drawer opaque. Default to body-bg so the
+// drawer matches the surface theme; consumers override per-shell when they
+// want a tinted drawer.
+$app-shell-sidebar-mobile-bg: var(--#{$prefix}body-bg) !default;
+// Drop shadow cast to the right of the drawer (away from the screen edge).
+// Custom horizontal cast (not $box-shadow-lg's vertical drop) reads better
+// for a side-entering panel.
+$app-shell-sidebar-mobile-shadow: 0.25rem 0 1.5rem rgba(0, 0, 0, 0.18) !default;
+// Width / transform animation cadence. Single var so the desktop width
+// swap and the mobile slide-in share one timing curve.
+$app-shell-transition-duration: 0.2s !default;
+
+// Page — Stisla-original structural component for what goes inside <main>.
+// A flex-column wrapper that owns vertical rhythm via gap; .page-header,
+// .page-section, and the section-header pair carry zero outer margin so
+// changing one var here shifts every page in the project at once.
+$page-section-gap: 1.5rem !default; // .page → between page-header and sections, and between sections
+$page-header-gap: 1rem !default; // .page-header → between title block and actions slot
+$page-header-action-gap: 0.5rem !default; // .page-header-action → between buttons
+$page-section-inner-gap: 1rem !default; // .page-section → between section-header and section content
+$page-section-header-gap: 0.75rem !default; // .page-section-header → between title and actions
+// .page-section-title default ≈ BS5 h5 so consumers can drop the recurring
+// .h5 utility from every section title.
+$page-section-title-font-size: 1.125rem !default;
+$page-section-title-font-weight: 600 !default;

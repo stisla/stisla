@@ -42,25 +42,6 @@ document.addEventListener("click", (e) => {
   }
 });
 
-// Auto-init Bootstrap popovers + tooltips. BS5 ships both opt-in (Popper is
-// heavy to mount on every node), so demos that use [data-bs-toggle="popover"]
-// or [data-bs-toggle="tooltip"] rely on this scan.
-(function initPopovers() {
-  const Popover = window.Stisla?.bs?.Popover;
-  if (!Popover) return;
-  document
-    .querySelectorAll('[data-bs-toggle="popover"]')
-    .forEach((el) => new Popover(el));
-})();
-
-(function initTooltips() {
-  const Tooltip = window.Stisla?.bs?.Tooltip;
-  if (!Tooltip) return;
-  document
-    .querySelectorAll('[data-bs-toggle="tooltip"]')
-    .forEach((el) => new Tooltip(el));
-})();
-
 // data-demo-toast="<selector>" — show a Bootstrap toast on click. The value is
 // a CSS selector pointing at the target .toast element.
 // <button class="btn btn-primary" data-demo-toast="#welcome-toast">Show toast</button>

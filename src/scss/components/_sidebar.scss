@@ -67,10 +67,6 @@
   // that clips outlines).
   color: var(--#{$prefix}sidebar-color);
   background-color: var(--#{$prefix}sidebar-bg);
-
-  &.sidebar-sm {
-    --#{$prefix}sidebar-group-gap: 2rem;
-  }
 }
 
 // Header / footer sit at the panel ends. Footer pinned via margin-top:auto

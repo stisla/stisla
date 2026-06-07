@@ -1,0 +1,252 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}App shell · Stisla v3{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>App shell</h1>
+    <p class="lead">A layout that positions Stisla's <code>.sidebar</code> next to a main content column.</p>
+  </header>
+
+  <section>
+    <h2>Basic</h2>
+    <p><code>.app-shell</code> wraps a <code>.sidebar</code> and an <code>.app-shell-main</code>. The shell sets the sidebar's width via <code>--bs-app-shell-sidebar-width</code> (default 16rem), and main fills the rest with <code>flex-grow: 1</code>.</p>
+    {% call ui.demo() %}
+    <div class="app-shell border rounded overflow-hidden w-100" style="min-height: 0; transform: translate(0); height: 22rem;">
+      <aside class="sidebar border-end">
+        <header class="sidebar-header">
+          <a class="sidebar-logo" href="#"><i data-lucide="hexagon"></i><span>Acme</span></a>
+        </header>
+        <div class="sidebar-content">
+          <nav class="sidebar-menu">
+            <div class="sidebar-group">
+              <ul class="sidebar-list">
+                <li class="sidebar-item"><a class="sidebar-item-button" href="#" aria-current="page"><i data-lucide="home"></i>Dashboard</a></li>
+                <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="bar-chart-3"></i>Reports</a></li>
+                <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="users"></i>Customers</a></li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </aside>
+      <main class="app-shell-main p-4">
+        <h3 class="h5">Dashboard</h3>
+        <p class="text-body-secondary mb-0">Page content goes here.</p>
+      </main>
+    </div>
+    {% endcall %}
+    <p>The demo overrides the shell's height for preview purposes. In production, drop the inline style and the default <code>min-height: 100vh</code> fills the viewport.</p>
+  </section>
+
+  <section>
+    <h2>With top navbar</h2>
+    <p>Add a direct <code>.navbar</code> child to the shell and wrap the sidebar + main pair in <code>.app-shell-body</code>. The shell auto-detects this shape via <code>:has()</code> and switches to flex-column. No modifier class needed.</p>
+    {% call ui.demo() %}
+    <div class="app-shell border rounded overflow-hidden w-100" style="min-height: 0; transform: translate(0); height: 24rem;">
+      <nav class="navbar navbar-expand-lg border-bottom px-3">
+        <a class="navbar-brand" href="#">Acme</a>
+        <div class="ms-auto d-flex align-items-center gap-2">
+          <button type="button" class="btn btn-icon btn-ghost-secondary btn-sm rounded-circle" aria-label="Notifications"><i data-lucide="bell"></i></button>
+          <button type="button" class="btn btn-icon btn-ghost-secondary btn-sm rounded-circle" aria-label="Account"><i data-lucide="user"></i></button>
+        </div>
+      </nav>
+      <div class="app-shell-body">
+        <aside class="sidebar border-end">
+          <div class="sidebar-content">
+            <nav class="sidebar-menu">
+              <div class="sidebar-group">
+                <ul class="sidebar-list">
+                  <li class="sidebar-item"><a class="sidebar-item-button" href="#" aria-current="page"><i data-lucide="home"></i>Dashboard</a></li>
+                  <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="bar-chart-3"></i>Reports</a></li>
+                  <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="users"></i>Customers</a></li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </aside>
+        <main class="app-shell-main p-4">
+          <h3 class="h5">Dashboard</h3>
+          <p class="text-body-secondary mb-0">Page content goes here.</p>
+        </main>
+      </div>
+    </div>
+    {% endcall %}
+
+    <h3>Navbar inside the main column</h3>
+    <p>To keep the sidebar at the full page height with its own brand, leave the shell as a flex-row and put the navbar inside <code>.app-shell-main</code>. The navbar never extends across the sidebar.</p>
+    {% call ui.demo() %}
+    <div class="app-shell border rounded overflow-hidden w-100" style="min-height: 0; transform: translate(0); height: 24rem;">
+      <aside class="sidebar border-end">
+        <header class="sidebar-header">
+          <a class="sidebar-logo" href="#"><i data-lucide="hexagon"></i><span>Acme</span></a>
+        </header>
+        <div class="sidebar-content">
+          <nav class="sidebar-menu">
+            <div class="sidebar-group">
+              <ul class="sidebar-list">
+                <li class="sidebar-item"><a class="sidebar-item-button" href="#" aria-current="page"><i data-lucide="home"></i>Dashboard</a></li>
+                <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="bar-chart-3"></i>Reports</a></li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </aside>
+      <main class="app-shell-main">
+        <nav class="navbar navbar-expand-lg border-bottom px-3">
+          <form class="d-flex" role="search">
+            <input class="form-control form-control-sm" type="search" placeholder="Search" aria-label="Search">
+          </form>
+          <div class="ms-auto"><button type="button" class="btn btn-icon btn-ghost-secondary btn-sm rounded-circle" aria-label="Account"><i data-lucide="user"></i></button></div>
+        </nav>
+        <div class="p-4 flex-grow-1">
+          <h3 class="h5">Dashboard</h3>
+          <p class="text-body-secondary mb-0">Page content goes here.</p>
+        </div>
+      </main>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>With footer</h2>
+    <p>Drop a <code>&lt;footer&gt;</code> at the end of <code>.app-shell-main</code>. Main is already a flex column, so <code>mt-auto</code> on the footer pushes it to the bottom even when content is short.</p>
+    {% call ui.demo() %}
+    <div class="app-shell border rounded overflow-hidden w-100" style="min-height: 0; transform: translate(0); height: 22rem;">
+      <aside class="sidebar border-end">
+        <header class="sidebar-header">
+          <a class="sidebar-logo" href="#"><i data-lucide="hexagon"></i><span>Acme</span></a>
+        </header>
+        <div class="sidebar-content">
+          <nav class="sidebar-menu">
+            <div class="sidebar-group">
+              <ul class="sidebar-list">
+                <li class="sidebar-item"><a class="sidebar-item-button" href="#" aria-current="page"><i data-lucide="home"></i>Dashboard</a></li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </aside>
+      <main class="app-shell-main">
+        <div class="p-4">
+          <h3 class="h5">Dashboard</h3>
+          <p class="text-body-secondary mb-0">Page content goes here.</p>
+        </div>
+        <footer class="mt-auto border-top px-4 py-3 text-body-secondary small">
+          &copy; 2026 Acme. Built with Stisla.
+        </footer>
+      </main>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Sticky sidebar</h2>
+    <p>The shell defaults to <code>min-height: 100vh</code>. When the page is taller than the viewport, the window scrolls and the sidebar scrolls with it. To pin the sidebar to the viewport top, add four inline styles to <code>.sidebar</code>.</p>
+    {% call ui.code() %}
+    <div class="app-shell">
+      <aside class="sidebar" style="
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        align-self: flex-start;
+      ">
+        <!-- … -->
+      </aside>
+      <main class="app-shell-main">
+        <!-- long content here; the window scrolls, the sidebar stays put -->
+      </main>
+    </div>
+    {% endcall %}
+    <p>For a Gmail-style locked shell (no window scroll, main is the scroll container), use <code>height: 100vh; overflow: hidden</code> on the shell and <code>overflow: auto</code> on main. Both patterns are opt-in via inline style, and the shell stays unopinionated.</p>
+  </section>
+
+  <section>
+    <h2>Desktop collapse (rail)</h2>
+    <p>Add <code>.is-sidebar-collapsed</code> to <code>.app-shell</code> to swap the sidebar to its narrow rail width (<code>--bs-app-shell-sidebar-width-collapsed</code>, default 4.25rem). Pair it with <code>.is-collapsed</code> on the sidebar itself for the rail visuals. Labels fade out, icons stay centered. Any button can wire the toggle with <code>data-app-shell-toggle="collapse"</code>.</p>
+    {% call ui.demo() %}
+    <div class="app-shell border rounded overflow-hidden w-100" style="min-height: 0; transform: translate(0); height: 24rem;">
+      <aside class="sidebar border-end">
+        <header class="sidebar-header">
+          <a class="sidebar-logo" href="#"><i data-lucide="hexagon"></i><span>Acme</span></a>
+        </header>
+        <div class="sidebar-content">
+          <nav class="sidebar-menu">
+            <div class="sidebar-group">
+              <ul class="sidebar-list">
+                <li class="sidebar-item"><a class="sidebar-item-button" href="#" aria-current="page"><i data-lucide="home"></i>Dashboard</a></li>
+                <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="bar-chart-3"></i>Reports</a></li>
+                <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="users"></i>Customers</a></li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </aside>
+      <main class="app-shell-main">
+        <nav class="navbar navbar-expand-lg border-bottom px-3">
+          <button class="btn btn-icon btn-ghost-secondary btn-sm" type="button" data-app-shell-toggle="collapse" aria-label="Toggle sidebar">
+            <i data-lucide="panel-left"></i>
+          </button>
+        </nav>
+        <div class="p-4 flex-grow-1">
+          <p class="text-body-secondary mb-0">Click the icon in the navbar to collapse the sidebar to a rail.</p>
+        </div>
+      </main>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Mobile drawer</h2>
+    <p>Below the <code>lg</code> breakpoint, the sidebar leaves the flex flow and sits fixed off-screen. Setting <code>.is-sidebar-visible</code> on the shell slides it in and shows a backdrop. Any button can flip the class with <code>data-app-shell-toggle="visibility"</code>.</p>
+    {% call ui.demo() %}
+    <div class="app-shell border rounded overflow-hidden w-100" style="min-height: 0; transform: translate(0); height: 22rem;">
+      <aside class="sidebar border-end">
+        <header class="sidebar-header">
+          <a class="sidebar-logo" href="#"><i data-lucide="hexagon"></i><span>Acme</span></a>
+        </header>
+        <div class="sidebar-content">
+          <nav class="sidebar-menu">
+            <div class="sidebar-group">
+              <ul class="sidebar-list">
+                <li class="sidebar-item"><a class="sidebar-item-button" href="#" aria-current="page"><i data-lucide="home"></i>Dashboard</a></li>
+                <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="bar-chart-3"></i>Reports</a></li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </aside>
+      <main class="app-shell-main">
+        <nav class="navbar navbar-expand-lg border-bottom px-3">
+          <button class="btn btn-icon btn-ghost-secondary btn-sm d-lg-none" type="button" data-app-shell-toggle="visibility" aria-label="Open sidebar">
+            <i data-lucide="menu"></i>
+          </button>
+          <span class="navbar-brand ms-2">Acme</span>
+        </nav>
+        <div class="p-4 flex-grow-1">
+          <p class="text-body-secondary mb-0">Resize the browser below the <code>lg</code> breakpoint and tap the menu icon. A backdrop covers the rest of the shell while open; tap anywhere outside the sidebar to dismiss.</p>
+        </div>
+      </main>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Theming</h2>
+    <p>Component vars override at any <code>.app-shell</code> instance. The shell's outer wrapper and the main column each have their own bg + text vars, and the sidebar carries its own <code>--bs-sidebar-bg</code> separately.</p>
+    {% call ui.code() %}
+    <div class="app-shell" style="
+      --bs-app-shell-bg: #f5f7fa;
+      --bs-app-shell-main-bg: #ffffff;
+    ">
+      <aside class="sidebar" style="--bs-sidebar-bg: transparent;">
+        <!-- … -->
+      </aside>
+      <main class="app-shell-main">
+        <!-- … -->
+      </main>
+    </div>
+    {% endcall %}
+    <p>Available shell vars: <code>--bs-app-shell-bg</code>, <code>--bs-app-shell-color</code>, <code>--bs-app-shell-main-bg</code>, <code>--bs-app-shell-main-color</code>, <code>--bs-app-shell-sidebar-width</code>, <code>--bs-app-shell-sidebar-width-collapsed</code>, <code>--bs-app-shell-backdrop-bg</code>, <code>--bs-app-shell-transition-duration</code>.</p>
+  </section>
+{% endblock %}

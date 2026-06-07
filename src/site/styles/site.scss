@@ -218,7 +218,7 @@ body {
     background: var(--bs-surface-alt);
     border: 1px solid var(--bs-border-color-translucent);
     border-radius: 0.375rem;
-    color: var(--bs-code-color);
+    color: var(--bs-body-color);
   }
 
   :where(strong, b)#{$opt-out} {
@@ -270,6 +270,10 @@ body {
   .sidebar-item-button {
     display: inline-flex;
     width: auto;
+  }
+
+  &.sidebar-sm {
+    --bs-sidebar-group-gap: 2rem;
   }
 }
 

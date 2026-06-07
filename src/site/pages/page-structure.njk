@@ -1,0 +1,201 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Page structure · Stisla v3{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Page structure</h1>
+    <p class="lead">The structural component for what goes inside <code>&lt;main&gt;</code>.</p>
+  </header>
+
+  <section>
+    <h2>The page wrapper</h2>
+    <p><code>.page</code> is a flex-column that owns the gap between its children via <code>--bs-page-section-gap</code> (default 1.5rem). The header and each section carry no outer margin themselves.</p>
+    {% call ui.demo() %}
+    <div class="page p-4 border rounded bg-body w-100">
+      <header class="page-header">
+        <div class="page-header-title">
+          <h1 class="h3 mb-0">Customers</h1>
+        </div>
+      </header>
+      <section class="page-section">
+        <p class="text-body-secondary mb-0">First section content.</p>
+      </section>
+      <section class="page-section">
+        <p class="text-body-secondary mb-0">Second section content.</p>
+      </section>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Page header</h2>
+    <p><code>.page-header</code> is a flex row with a <code>.page-header-title</code> slot on the leading edge and a <code>.page-header-action</code> slot on the trailing edge. Both slots are passthrough. Title takes an h1 with an optional subtitle, actions takes any buttons.</p>
+    {% call ui.demo() %}
+    <div class="page p-4 border rounded bg-body w-100">
+      <header class="page-header">
+        <div class="page-header-title">
+          <h1 class="h3 mb-1">Customers</h1>
+          <p class="text-body-secondary mb-0">All accounts in this workspace.</p>
+        </div>
+        <div class="page-header-action">
+          <button type="button" class="btn btn-outline-secondary"><i data-lucide="download" class="me-1"></i>Export</button>
+          <button type="button" class="btn btn-primary"><i data-lucide="plus" class="me-1"></i>Add customer</button>
+        </div>
+      </header>
+    </div>
+    {% endcall %}
+
+    <h3>Without actions</h3>
+    <p>Drop the actions slot. The title block sits alone.</p>
+    {% call ui.demo() %}
+    <div class="page p-4 border rounded bg-body w-100">
+      <header class="page-header">
+        <div class="page-header-title">
+          <h1 class="h3 mb-1">Settings</h1>
+          <p class="text-body-secondary mb-0">Manage your account, billing, and integrations.</p>
+        </div>
+      </header>
+    </div>
+    {% endcall %}
+
+    <h3>Wraps on narrow widths</h3>
+    <p>The header is <code>flex-wrap: wrap</code>. When the viewport gets too narrow for the title and actions to share a row, the actions drop below.</p>
+    {% call ui.code() %}
+    <header class="page-header">
+      <div class="page-header-title">
+        <h1 class="h3 mb-1">Customers</h1>
+        <p class="text-body-secondary mb-0">All accounts in this workspace.</p>
+      </div>
+      <div class="page-header-action">
+        <button type="button" class="btn btn-primary">Add customer</button>
+      </div>
+    </header>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Sections</h2>
+    <p><code>.page-section</code> is a flex-column for each block inside the page. The <code>.page</code> parent supplies the gap <em>between</em> sections, and each section supplies its own inner gap via <code>--bs-page-section-inner-gap</code>.</p>
+    {% call ui.demo() %}
+    <div class="page p-4 border rounded bg-body w-100">
+      <section class="page-section">
+        <h2 class="page-section-title">Overview</h2>
+        <p class="text-body-secondary mb-0">Headline stats and the period selector live here.</p>
+      </section>
+      <section class="page-section">
+        <h2 class="page-section-title">Recent activity</h2>
+        <p class="text-body-secondary mb-0">A timeline of the last events on this account.</p>
+      </section>
+      <section class="page-section">
+        <h2 class="page-section-title">Quick actions</h2>
+        <p class="text-body-secondary mb-0">Shortcuts to the most-used flows.</p>
+      </section>
+    </div>
+    {% endcall %}
+
+    <h3>With section header + actions</h3>
+    <p>For sections that need an action row of their own, wrap the title in <code>.page-section-header</code> and reuse <code>.page-header-action</code> as the slot. Same recipe at a tighter scale.</p>
+    {% call ui.demo() %}
+    <div class="page p-4 border rounded bg-body w-100">
+      <section class="page-section">
+        <header class="page-section-header">
+          <h2 class="page-section-title">Active customers</h2>
+          <div class="page-header-action">
+            <button type="button" class="btn btn-sm btn-outline-secondary">Filter</button>
+            <button type="button" class="btn btn-sm btn-primary">Invite</button>
+          </div>
+        </header>
+        <p class="text-body-secondary mb-0">1,284 accounts.</p>
+      </section>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Breadcrumb placement</h2>
+    <p>Put the breadcrumb as the first child of <code>.page</code>, above <code>.page-header</code>. It inherits the page's gap automatically.</p>
+    {% call ui.demo() %}
+    <div class="page p-4 border rounded bg-body w-100">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+          <li class="breadcrumb-item"><a href="#">Reports</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Monthly</li>
+        </ol>
+      </nav>
+      <header class="page-header">
+        <div class="page-header-title">
+          <h1 class="h3 mb-0">Monthly</h1>
+        </div>
+      </header>
+    </div>
+    {% endcall %}
+    <p>Skip the breadcrumb on top-level pages where it would only show one crumb.</p>
+  </section>
+
+  <section>
+    <h2>Content width</h2>
+    <p><code>.page</code> is unopinionated about width. Wrap it (or set its own classes) to clamp the content column.</p>
+    <ul>
+      <li><strong>Full width</strong> (<code>.container-fluid</code> or no container) for dashboards, tables, anything dense.</li>
+      <li><strong>Breakpoint-clamped</strong> (<code>.container</code>) for marketing pages, or anything that should match Bootstrap's standard column widths.</li>
+      <li><strong>Custom max-width</strong> (40 to 60rem) for settings forms, articles, anything text-heavy where long lines hurt readability.</li>
+    </ul>
+    {% call ui.code() %}
+    <!-- Full width -->
+    <main class="app-shell-main">
+      <div class="page container-fluid p-4">...</div>
+    </main>
+
+    <!-- Breakpoint-clamped -->
+    <main class="app-shell-main">
+      <div class="page container py-4">...</div>
+    </main>
+
+    <!-- Custom narrow column for reading -->
+    <main class="app-shell-main">
+      <div class="page mx-auto p-4" style="max-width: 48rem;">...</div>
+    </main>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Putting it together</h2>
+    <p>Breadcrumb, page header, sections, and a section with its own header, all inside one <code>.page</code> that supplies the rhythm.</p>
+    {% call ui.demo() %}
+    <div class="page p-4 border rounded bg-body w-100">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Customers</li>
+        </ol>
+      </nav>
+      <header class="page-header">
+        <div class="page-header-title">
+          <h1 class="h3 mb-1">Customers</h1>
+          <p class="text-body-secondary mb-0">All accounts in this workspace.</p>
+        </div>
+        <div class="page-header-action">
+          <button type="button" class="btn btn-outline-secondary"><i data-lucide="download" class="me-1"></i>Export</button>
+          <button type="button" class="btn btn-primary"><i data-lucide="plus" class="me-1"></i>Add customer</button>
+        </div>
+      </header>
+      <section class="page-section">
+        <header class="page-section-header">
+          <h2 class="page-section-title">Active</h2>
+          <div class="page-header-action">
+            <button type="button" class="btn btn-sm btn-outline-secondary">Filter</button>
+          </div>
+        </header>
+        <p class="text-body-secondary mb-0">1,284 customers.</p>
+      </section>
+      <section class="page-section">
+        <h2 class="page-section-title">Inactive</h2>
+        <p class="text-body-secondary mb-0">312 customers.</p>
+      </section>
+    </div>
+    {% endcall %}
+  </section>
+{% endblock %}

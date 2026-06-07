@@ -1,0 +1,104 @@
+// Stisla v3 — page. Stisla-original structural component (BS5 ships none).
+//
+// Design choices:
+//   • Layout owns the rhythm, children carry zero margin. .page is a
+//     flex-column with `gap`; .page-header / .page-section / .page-
+//     section-header all have margin: 0. Change --bs-page-section-gap
+//     once and every page in the project shifts together — no find-
+//     and-replace through demo files.
+//   • Header pattern (title + actions) shared by two scales. .page-
+//     header and .page-section-header are the same flex recipe at a
+//     larger and smaller cadence; .page-header-action is the same
+//     class in both contexts so consumers don't carry a duplicate
+//     .page-section-action name.
+//   • Title slots are passthrough. .page-header-title and the bare
+//     heading inside .page-section-header take whatever heading + sub-
+//     title combo the consumer hands in; the component doesn't style
+//     the inner h1/h2 beyond .page-section-title's defaults.
+//   • .page-section-title defaults to BS5's h5 cadence (1.125rem / 600)
+//     so consumers can drop the recurring .h5 utility from every section
+//     heading. Override with a larger heading utility if needed.
+//   • No JS — pure CSS structural component.
+
+.page {
+  --#{$prefix}page-section-gap: #{$page-section-gap};
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--#{$prefix}page-section-gap);
+}
+
+// Page header — flex row with the title block on the leading edge and an
+// optional actions slot on the trailing edge. justify-content: space-
+// between is a fallback for the "two direct children, no .page-header-
+// title wrapper" case; when the title block is present and grows, its
+// flex: 1 1 auto pushes the actions to the end anyway. flex-wrap lets
+// the actions slot drop to a new row on narrow widths instead of
+// overflowing the container.
+.page-header {
+  --#{$prefix}page-header-gap: #{$page-header-gap};
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--#{$prefix}page-header-gap);
+}
+
+// Title slot — flex: 1 1 auto with min-width: 0 so a long title can
+// wrap to multiple lines inside its column instead of forcing the
+// actions off-screen. Inner h1 + subtitle stack naturally as block
+// elements.
+.page-header-title {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+// Actions slot — shared between .page-header and .page-section-header.
+// flex-shrink: 0 keeps multi-button rows from squishing; if the title
+// gets too wide, the parent header's flex-wrap drops actions to the
+// next row.
+.page-header-action {
+  --#{$prefix}page-header-action-gap: #{$page-header-action-gap};
+
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--#{$prefix}page-header-action-gap);
+}
+
+// Page section — mini-layout for each block within a page. Flex-column
+// with its own inner gap so a section-header sits above content with
+// consistent breathing room. No outer margin — the .page parent owns
+// the rhythm between sections.
+.page-section {
+  --#{$prefix}page-section-inner-gap: #{$page-section-inner-gap};
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--#{$prefix}page-section-inner-gap);
+}
+
+// Section header — mini page-header at a tighter scale. Same recipe;
+// shares the .page-header-action slot for symmetry.
+.page-section-header {
+  --#{$prefix}page-section-header-gap: #{$page-section-header-gap};
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--#{$prefix}page-section-header-gap);
+}
+
+// Section title — opinionated cadence (h5-equivalent) so the recurring
+// .h5 utility can go. margin: 0 because the .page-section parent's gap
+// owns the spacing below.
+.page-section-title {
+  --#{$prefix}page-section-title-font-size: #{$page-section-title-font-size};
+  --#{$prefix}page-section-title-font-weight: #{$page-section-title-font-weight};
+
+  margin: 0;
+  font-size: var(--#{$prefix}page-section-title-font-size);
+  font-weight: var(--#{$prefix}page-section-title-font-weight);
+  line-height: 1.4;
+}
