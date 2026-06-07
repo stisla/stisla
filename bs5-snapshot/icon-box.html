@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script>
+    // Apply saved theme synchronously to avoid a light-mode flash on dark sessions.
+    (function () {
+      var t = localStorage.getItem('stisla-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.bsTheme = t;
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+  <title>Icon box · Stisla v3</title>
+  
+    <link rel="stylesheet" href="/assets/stisla-full.css" />
+    <link rel="stylesheet" href="/assets/site-styles.css" />
+  
+</head>
+<body>
+  <div class="site-layout">
+    
+<aside class="site-sidebar sidebar sidebar-sm">
+  <header class="sidebar-header">
+    <a class="sidebar-logo" href="/">
+      <span>Stisla</span>
+    </a>
+    <button type="button" class="btn btn-icon btn-ghost-secondary btn-sm rounded-circle ms-auto" data-theme-toggle aria-label="Toggle theme" style="margin-right: -0.25rem">
+      <i data-lucide="moon" class="theme-icon-light"></i>
+      <i data-lucide="sun" class="theme-icon-dark"></i>
+    </button>
+  </header>
+
+  <div class="sidebar-content">
+    <nav class="sidebar-menu">
+
+      <div class="sidebar-group">
+        <span class="sidebar-group-title">Prologue</span>
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/introduction"><span>Introduction</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/installation"><span>Installation</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/customization"><span>Customization</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-group">
+        <span class="sidebar-group-title">Foundation</span>
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/typography"><span>Typography</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/app-shell"><span>App shell</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/page-structure"><span>Page structure</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-group">
+        <span class="sidebar-group-title">Forms</span>
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/form-control"><span>Form control</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/select"><span>Select</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/checks-radios"><span>Checks &amp; radios</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/form-range"><span>Range</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/input-group"><span>Input group</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/validation"><span>Validation</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-group">
+        <span class="sidebar-group-title">Components</span>
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/accordion"><span>Accordion</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/alerts"><span>Alerts</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/badge"><span>Badge</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/breadcrumb"><span>Breadcrumb</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/buttons"><span>Buttons</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/button-group"><span>Button group</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/cards"><span>Card</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/carousel"><span>Carousel</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/close-button"><span>Close button</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/collapse"><span>Collapse</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/dropdowns"><span>Dropdowns</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/icon-box"><span>Icon box</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/images"><span>Images</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/list-group"><span>List group</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/modal"><span>Modal</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/navbar"><span>Navbar</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/navs"><span>Navs</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/offcanvas"><span>Offcanvas</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/pagination"><span>Pagination</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/placeholders"><span>Placeholders</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/popovers"><span>Popovers</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/progress"><span>Progress</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/scrollspy"><span>Scrollspy</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/sidebar"><span>Sidebar</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/spinners"><span>Spinners</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/tables"><span>Tables</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/tabs"><span>Tabs</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/toasts"><span>Toasts</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/tooltips"><span>Tooltips</span></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <footer class="sidebar-footer">
+    <ul class="sidebar-list">
+      <li class="sidebar-item">
+        <a class="sidebar-item-button" href="https://github.com/stisla/stisla" target="_blank" rel="noopener noreferrer">
+          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          <span>GitHub</span>
+        </a>
+      </li>
+    </ul>
+  </footer>
+</aside>
+
+    <main class="site-main">
+      <div class="main-container prose">
+        
+  <header>
+    <h1>Icon box</h1>
+    <p class="lead">A square, tinted container for a single icon.</p>
+  </header>
+
+  <section>
+    <h2>Variants</h2>
+    <p>Pair <code>.icon-box</code> with <code>.icon-box-{state}</code> for a tint in the matching brand color. The background sits at 15% and the icon holds the solid color.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="d-flex flex-wrap gap-2">
+      <span class="icon-box icon-box-primary"><i data-lucide="zap"></i></span>
+      <span class="icon-box icon-box-secondary"><i data-lucide="settings"></i></span>
+      <span class="icon-box icon-box-success"><i data-lucide="check"></i></span>
+      <span class="icon-box icon-box-danger"><i data-lucide="alert-triangle"></i></span>
+      <span class="icon-box icon-box-warning"><i data-lucide="clock"></i></span>
+      <span class="icon-box icon-box-info"><i data-lucide="info"></i></span>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"d-flex flex-wrap gap-2"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"icon-box icon-box-primary"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-lucide</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"zap"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"icon-box icon-box-secondary"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-lucide</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"settings"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"icon-box icon-box-success"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-lucide</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"check"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"icon-box icon-box-danger"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-lucide</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"alert-triangle"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"icon-box icon-box-warning"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-lucide</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"clock"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"icon-box icon-box-info"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-lucide</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"info"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Shape</h2>
+    <p>Stack Bootstrap's rounded utilities on top to switch shape without redefining anything. Use <code>.rounded-circle</code> for a circle or <code>.rounded-0</code> for a hard square.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="d-flex flex-wrap gap-2 align-items-center">
+      <span class="icon-box icon-box-primary"><i data-lucide="bell"></i></span>
+      <span class="icon-box icon-box-primary rounded-circle"><i data-lucide="bell"></i></span>
+      <span class="icon-box icon-box-primary rounded-0"><i data-lucide="bell"></i></span>
+    </div>
+    </div>
+  <div class="demo-code">
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"d-flex flex-wrap gap-2 align-items-center"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"icon-box icon-box-primary"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-lucide</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"bell"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"icon-box icon-box-primary rounded-circle"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-lucide</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"bell"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"icon-box icon-box-primary rounded-0"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-lucide</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"bell"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>In a row</h2>
+    <p>Reads well as a leading element next to a title and supporting copy.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="card">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item d-flex align-items-center gap-3">
+          <span class="icon-box icon-box-success"><i data-lucide="hard-drive"></i></span>
+          <div class="flex-grow-1">
+            <div class="fw-medium">Backups</div>
+            <div class="small text-body-secondary">Daily snapshot completed</div>
+          </div>
+          <span class="badge badge-light-success">On</span>
+        </li>
+        <li class="list-group-item d-flex align-items-center gap-3">
+          <span class="icon-box icon-box-warning"><i data-lucide="bell"></i></span>
+          <div class="flex-grow-1">
+            <div class="fw-medium">Alerts</div>
+            <div class="small text-body-secondary">Two services need attention</div>
+          </div>
+          <span class="badge badge-light-warning">2</span>
+        </li>
+        <li class="list-group-item d-flex align-items-center gap-3">
+          <span class="icon-box icon-box-danger"><i data-lucide="shield-off"></i></span>
+          <div class="flex-grow-1">
+            <div class="fw-medium">Firewall</div>
+            <div class="small text-body-secondary">Disabled by an admin</div>
+          </div>
+          <span class="badge badge-light-danger">Off</span>
+        </li>
+      </ul>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"card"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">ul</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"list-group list-group-flush"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">li</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"list-group-item d-flex align-items-center gap-3"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"icon-box icon-box-success"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-lucide</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"hard-drive"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"flex-grow-1"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"fw-medium"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Backups&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"small text-body-secondary"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Daily snapshot completed&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"badge badge-light-success"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>On&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">li</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">li</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"list-group-item d-flex align-items-center gap-3"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"icon-box icon-box-warning"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-lucide</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"bell"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"flex-grow-1"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"fw-medium"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Alerts&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"small text-body-secondary"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Two services need attention&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"badge badge-light-warning"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>2&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">li</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">li</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"list-group-item d-flex align-items-center gap-3"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"icon-box icon-box-danger"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-lucide</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"shield-off"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"flex-grow-1"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"fw-medium"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Firewall&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"small text-body-secondary"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Disabled by an admin&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"badge badge-light-danger"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Off&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">li</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">ul</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Custom color</h2>
+    <p>Override <code>--bs-icon-box-bg</code> and <code>--bs-icon-box-color</code> inline for one-off tints that sit outside the theme palette.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="d-flex flex-wrap gap-2">
+      <span class="icon-box" style="--bs-icon-box-bg: rgba(168, 85, 247, 0.15); --bs-icon-box-color: #a855f7;">
+        <i data-lucide="sparkles"></i>
+      </span>
+      <span class="icon-box" style="--bs-icon-box-bg: rgba(236, 72, 153, 0.15); --bs-icon-box-color: #ec4899;">
+        <i data-lucide="heart"></i>
+      </span>
+      <span class="icon-box" style="--bs-icon-box-bg: rgba(20, 184, 166, 0.15); --bs-icon-box-color: #14b8a6;">
+        <i data-lucide="leaf"></i>
+      </span>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"d-flex flex-wrap gap-2"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"icon-box"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"--bs-icon-box-bg: rgba(168, 85, 247, 0.15); --bs-icon-box-color: #a855f7;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-lucide</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"sparkles"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"icon-box"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"--bs-icon-box-bg: rgba(236, 72, 153, 0.15); --bs-icon-box-color: #ec4899;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-lucide</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"heart"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"icon-box"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"--bs-icon-box-bg: rgba(20, 184, 166, 0.15); --bs-icon-box-color: #14b8a6;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-lucide</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"leaf"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+      </div>
+    </main>
+  </div>
+
+  
+    <script src="/assets/stisla.js"></script>
+    <script src="/assets/site.js"></script>
+  
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

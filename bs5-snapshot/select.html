@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script>
+    // Apply saved theme synchronously to avoid a light-mode flash on dark sessions.
+    (function () {
+      var t = localStorage.getItem('stisla-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.bsTheme = t;
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+  <title>Select · Stisla v3</title>
+  
+    <link rel="stylesheet" href="/assets/stisla-full.css" />
+    <link rel="stylesheet" href="/assets/site-styles.css" />
+  
+</head>
+<body>
+  <div class="site-layout">
+    
+<aside class="site-sidebar sidebar sidebar-sm">
+  <header class="sidebar-header">
+    <a class="sidebar-logo" href="/">
+      <span>Stisla</span>
+    </a>
+    <button type="button" class="btn btn-icon btn-ghost-secondary btn-sm rounded-circle ms-auto" data-theme-toggle aria-label="Toggle theme" style="margin-right: -0.25rem">
+      <i data-lucide="moon" class="theme-icon-light"></i>
+      <i data-lucide="sun" class="theme-icon-dark"></i>
+    </button>
+  </header>
+
+  <div class="sidebar-content">
+    <nav class="sidebar-menu">
+
+      <div class="sidebar-group">
+        <span class="sidebar-group-title">Prologue</span>
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/introduction"><span>Introduction</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/installation"><span>Installation</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/customization"><span>Customization</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-group">
+        <span class="sidebar-group-title">Foundation</span>
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/typography"><span>Typography</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/app-shell"><span>App shell</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/page-structure"><span>Page structure</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-group">
+        <span class="sidebar-group-title">Forms</span>
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/form-control"><span>Form control</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/select"><span>Select</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/checks-radios"><span>Checks &amp; radios</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/form-range"><span>Range</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/input-group"><span>Input group</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/validation"><span>Validation</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-group">
+        <span class="sidebar-group-title">Components</span>
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/accordion"><span>Accordion</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/alerts"><span>Alerts</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/badge"><span>Badge</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/breadcrumb"><span>Breadcrumb</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/buttons"><span>Buttons</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/button-group"><span>Button group</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/cards"><span>Card</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/carousel"><span>Carousel</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/close-button"><span>Close button</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/collapse"><span>Collapse</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/dropdowns"><span>Dropdowns</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/icon-box"><span>Icon box</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/images"><span>Images</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/list-group"><span>List group</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/modal"><span>Modal</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/navbar"><span>Navbar</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/navs"><span>Navs</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/offcanvas"><span>Offcanvas</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/pagination"><span>Pagination</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/placeholders"><span>Placeholders</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/popovers"><span>Popovers</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/progress"><span>Progress</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/scrollspy"><span>Scrollspy</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/sidebar"><span>Sidebar</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/spinners"><span>Spinners</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/tables"><span>Tables</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/tabs"><span>Tabs</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/toasts"><span>Toasts</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/tooltips"><span>Tooltips</span></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <footer class="sidebar-footer">
+    <ul class="sidebar-list">
+      <li class="sidebar-item">
+        <a class="sidebar-item-button" href="https://github.com/stisla/stisla" target="_blank" rel="noopener noreferrer">
+          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          <span>GitHub</span>
+        </a>
+      </li>
+    </ul>
+  </footer>
+</aside>
+
+    <main class="site-main">
+      <div class="main-container prose">
+        
+  <header>
+    <h1>Select</h1>
+    <p class="lead">A native dropdown for picking from a fixed list of options.</p>
+  </header>
+
+  <section>
+    <h2>Basic</h2>
+    <p>Add <code>.form-select</code> to any <code>&lt;select&gt;</code>. Pair with a <code>&lt;label&gt;</code> tied via <code>for</code>/<code>id</code> so the field is reachable.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="w-100" style="max-width: 24rem;">
+      <label for="basicSelect" class="form-label">Country</label>
+      <select class="form-select" id="basicSelect">
+        <option selected>Pick one</option>
+        <option value="id">Indonesia</option>
+        <option value="my">Malaysia</option>
+        <option value="sg">Singapore</option>
+      </select>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"w-100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"max-width: 24rem;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"basicSelect"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-label"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Country&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">select</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-select"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"basicSelect"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> selected</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Pick one&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"id"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Indonesia&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"my"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Malaysia&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"sg"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Singapore&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">select</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Sizes</h2>
+    <p>Heights match the form control scale at 28 / 36 / 44&nbsp;px.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="d-flex flex-column gap-2 w-100" style="max-width: 24rem;">
+      <select class="form-select form-select-sm" aria-label="Small select">
+        <option selected>Small</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+      </select>
+      <select class="form-select" aria-label="Default select">
+        <option selected>Default</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+      </select>
+      <select class="form-select form-select-lg" aria-label="Large select">
+        <option selected>Large</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+      </select>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"d-flex flex-column gap-2 w-100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"max-width: 24rem;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">select</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-select form-select-sm"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Small select"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> selected</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Small&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"1"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>One&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"2"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Two&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">select</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">select</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-select"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Default select"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> selected</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Default&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"1"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>One&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"2"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Two&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">select</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">select</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-select form-select-lg"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Large select"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> selected</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Large&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"1"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>One&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"2"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Two&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">select</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Option groups</h2>
+    <p>Wrap related options in <code>&lt;optgroup&gt;</code> to label sections inside the menu.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="w-100" style="max-width: 24rem;">
+      <label for="groupedSelect" class="form-label">City</label>
+      <select class="form-select" id="groupedSelect">
+        <option selected>Pick one</option>
+        <optgroup label="Indonesia">
+          <option value="jkt">Jakarta</option>
+          <option value="bdg">Bandung</option>
+          <option value="sby">Surabaya</option>
+        </optgroup>
+        <optgroup label="Malaysia">
+          <option value="kul">Kuala Lumpur</option>
+          <option value="pen">Penang</option>
+        </optgroup>
+      </select>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"w-100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"max-width: 24rem;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"groupedSelect"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-label"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>City&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">select</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-select"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"groupedSelect"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> selected</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Pick one&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">optgroup</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Indonesia"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"jkt"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Jakarta&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"bdg"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Bandung&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"sby"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Surabaya&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">optgroup</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">optgroup</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Malaysia"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"kul"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Kuala Lumpur&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"pen"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Penang&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">optgroup</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">select</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Multiple</h2>
+    <p>Add the <code>multiple</code> attribute to let users select several options. The chevron is dropped and the control grows past the default height to make room for the list.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="w-100" style="max-width: 24rem;">
+      <label for="multipleSelect" class="form-label">Tags</label>
+      <select class="form-select" id="multipleSelect" multiple aria-label="Multiple select">
+        <option value="bug">Bug</option>
+        <option value="docs" selected>Docs</option>
+        <option value="feat" selected>Feature</option>
+        <option value="qa">QA</option>
+        <option value="perf">Performance</option>
+      </select>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"w-100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"max-width: 24rem;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"multipleSelect"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-label"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Tags&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">select</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-select"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"multipleSelect"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> multiple</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Multiple select"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"bug"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Bug&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"docs"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> selected</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Docs&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"feat"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> selected</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Feature&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"qa"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>QA&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"perf"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Performance&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">select</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Size attribute</h2>
+    <p>Set <code>size</code> to render a fixed-row list instead of a dropdown. Useful when the option count is small enough to show inline.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="w-100" style="max-width: 24rem;">
+      <select class="form-select" size="4" aria-label="Size 4 select">
+        <option selected>Pick one</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+        <option value="4">Four</option>
+      </select>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"w-100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"max-width: 24rem;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">select</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-select"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> size</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"4"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Size 4 select"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> selected</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Pick one&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"1"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>One&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"2"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Two&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"3"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Three&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"4"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Four&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">select</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Helper text</h2>
+    <p>Use <code>.form-text</code> below the field for short hints. Wire it to the select with <code>aria-describedby</code> so screen readers announce it.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="w-100" style="max-width: 24rem;">
+      <label for="planSelect" class="form-label">Plan</label>
+      <select class="form-select" id="planSelect" aria-describedby="planHelp">
+        <option selected>Pick one</option>
+        <option value="free">Free</option>
+        <option value="pro">Pro</option>
+        <option value="team">Team</option>
+      </select>
+      <div id="planHelp" class="form-text">You can change this later from billing.</div>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"w-100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"max-width: 24rem;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"planSelect"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-label"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Plan&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">select</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-select"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"planSelect"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-describedby</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"planHelp"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> selected</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Pick one&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"free"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Free&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"pro"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Pro&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"team"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Team&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">select</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"planHelp"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-text"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>You can change this later from billing.&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Disabled</h2>
+    <p>Add <code>disabled</code> to block interaction and dim the field. Individual <code>&lt;option&gt;</code> elements take the same attribute.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="d-flex flex-column gap-2 w-100" style="max-width: 24rem;">
+      <select class="form-select" disabled aria-label="Disabled select">
+        <option selected>Disabled</option>
+      </select>
+      <select class="form-select" aria-label="Select with disabled option">
+        <option selected>Pick a plan</option>
+        <option value="free">Free</option>
+        <option value="pro" disabled>Pro (sold out)</option>
+        <option value="team">Team</option>
+      </select>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"d-flex flex-column gap-2 w-100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"max-width: 24rem;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">select</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-select"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> disabled</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Disabled select"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> selected</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Disabled&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">select</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">select</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-select"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Select with disabled option"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> selected</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Pick a plan&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"free"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Free&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"pro"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> disabled</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Pro (sold out)&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"team"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Team&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">option</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">select</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+      </div>
+    </main>
+  </div>
+
+  
+    <script src="/assets/stisla.js"></script>
+    <script src="/assets/site.js"></script>
+  
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

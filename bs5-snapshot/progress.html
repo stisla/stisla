@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script>
+    // Apply saved theme synchronously to avoid a light-mode flash on dark sessions.
+    (function () {
+      var t = localStorage.getItem('stisla-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.bsTheme = t;
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+  <title>Progress · Stisla v3</title>
+  
+    <link rel="stylesheet" href="/assets/stisla-full.css" />
+    <link rel="stylesheet" href="/assets/site-styles.css" />
+  
+</head>
+<body>
+  <div class="site-layout">
+    
+<aside class="site-sidebar sidebar sidebar-sm">
+  <header class="sidebar-header">
+    <a class="sidebar-logo" href="/">
+      <span>Stisla</span>
+    </a>
+    <button type="button" class="btn btn-icon btn-ghost-secondary btn-sm rounded-circle ms-auto" data-theme-toggle aria-label="Toggle theme" style="margin-right: -0.25rem">
+      <i data-lucide="moon" class="theme-icon-light"></i>
+      <i data-lucide="sun" class="theme-icon-dark"></i>
+    </button>
+  </header>
+
+  <div class="sidebar-content">
+    <nav class="sidebar-menu">
+
+      <div class="sidebar-group">
+        <span class="sidebar-group-title">Prologue</span>
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/introduction"><span>Introduction</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/installation"><span>Installation</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/customization"><span>Customization</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-group">
+        <span class="sidebar-group-title">Foundation</span>
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/typography"><span>Typography</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/app-shell"><span>App shell</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/page-structure"><span>Page structure</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-group">
+        <span class="sidebar-group-title">Forms</span>
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/form-control"><span>Form control</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/select"><span>Select</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/checks-radios"><span>Checks &amp; radios</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/form-range"><span>Range</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/input-group"><span>Input group</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/validation"><span>Validation</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-group">
+        <span class="sidebar-group-title">Components</span>
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/accordion"><span>Accordion</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/alerts"><span>Alerts</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/badge"><span>Badge</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/breadcrumb"><span>Breadcrumb</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/buttons"><span>Buttons</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/button-group"><span>Button group</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/cards"><span>Card</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/carousel"><span>Carousel</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/close-button"><span>Close button</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/collapse"><span>Collapse</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/dropdowns"><span>Dropdowns</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/icon-box"><span>Icon box</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/images"><span>Images</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/list-group"><span>List group</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/modal"><span>Modal</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/navbar"><span>Navbar</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/navs"><span>Navs</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/offcanvas"><span>Offcanvas</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/pagination"><span>Pagination</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/placeholders"><span>Placeholders</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/popovers"><span>Popovers</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/progress"><span>Progress</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/scrollspy"><span>Scrollspy</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/sidebar"><span>Sidebar</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/spinners"><span>Spinners</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/tables"><span>Tables</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/tabs"><span>Tabs</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/toasts"><span>Toasts</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/tooltips"><span>Tooltips</span></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <footer class="sidebar-footer">
+    <ul class="sidebar-list">
+      <li class="sidebar-item">
+        <a class="sidebar-item-button" href="https://github.com/stisla/stisla" target="_blank" rel="noopener noreferrer">
+          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          <span>GitHub</span>
+        </a>
+      </li>
+    </ul>
+  </footer>
+</aside>
+
+    <main class="site-main">
+      <div class="main-container prose">
+        
+  <header>
+    <h1>Progress</h1>
+    <p class="lead">A horizontal bar that fills as work completes.</p>
+  </header>
+
+  <section>
+    <h2>Example</h2>
+    <p>Pair the bar with a label and a percentage on the row above. The label states the action; the percentage on the trailing edge sits in <code>.text-body-secondary</code> so the eye reads the action first.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="w-100">
+      <div class="d-flex justify-content-between mb-1">
+        <span class="fw-medium">Uploading</span>
+        <span class="text-body-secondary">100%</span>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Upload" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar" style="width: 100%"></div>
+      </div>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"w-100"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"d-flex justify-content-between mb-1"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"fw-medium"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Uploading&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"text-body-secondary"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>100%&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progressbar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Upload"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuenow</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemin</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"0"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemax</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"100"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress-bar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"width: 100%"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Basic</h2>
+    <p>Wrap the bar in <code>.progress</code> and place a single <code>.progress-bar</code> inside. The wrapper carries <code>role="progressbar"</code> and the <code>aria-valuenow / aria-valuemin / aria-valuemax</code> attributes; the inner element just paints the fill via <code>width</code>.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="d-flex flex-column gap-3 w-100">
+      <div class="progress" role="progressbar" aria-label="Zero" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar" style="width: 0%"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Quarter" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar" style="width: 25%"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Half" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar" style="width: 50%"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Three quarters" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar" style="width: 75%"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Full" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar" style="width: 100%"></div>
+      </div>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"d-flex flex-column gap-3 w-100"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progressbar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Zero"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuenow</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"0"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemin</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"0"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemax</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"100"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress-bar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"width: 0%"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progressbar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Quarter"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuenow</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"25"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemin</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"0"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemax</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"100"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress-bar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"width: 25%"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progressbar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Half"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuenow</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"50"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemin</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"0"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemax</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"100"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress-bar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"width: 50%"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progressbar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Three quarters"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuenow</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"75"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemin</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"0"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemax</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"100"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress-bar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"width: 75%"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progressbar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Full"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuenow</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemin</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"0"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemax</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"100"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress-bar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"width: 100%"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Labels</h2>
+    <p>Drop text inside <code>.progress-bar</code> to render the value on the fill. The default bar is too thin to fit a label legibly, so bump the height with <code>--bs-progress-height</code> when you need one inline.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="progress w-100" role="progressbar" aria-label="With label" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100" style="--bs-progress-height: 1.25rem;">
+      <div class="progress-bar" style="width: 42%">42%</div>
+    </div>
+    </div>
+  <div class="demo-code">
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress w-100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progressbar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"With label"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuenow</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"42"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemin</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"0"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemax</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"--bs-progress-height: 1.25rem;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress-bar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"width: 42%"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>42%&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Height</h2>
+    <p>Override <code>--bs-progress-height</code> on a single <code>.progress</code> to size that instance, or set it on a parent to size a group.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="d-flex flex-column gap-3 w-100">
+      <div class="progress" role="progressbar" aria-label="Tall" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="--bs-progress-height: 1rem;">
+        <div class="progress-bar" style="width: 70%"></div>
+      </div>
+    </div>
+    </div>
+  <div class="demo-code">
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"d-flex flex-column gap-3 w-100"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progressbar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Tall"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuenow</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"70"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemin</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"0"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemax</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"--bs-progress-height: 1rem;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress-bar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"width: 70%"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Backgrounds</h2>
+    <p>Recolor the fill with any <code>.bg-*</code> utility on <code>.progress-bar</code>. The track stays on <code>--bs-secondary-bg</code> so the contrast holds in both themes.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="d-flex flex-column w-100 gap-3">
+      <div class="progress" role="progressbar" aria-label="Primary" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar" style="width: 60%"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Success" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar bg-success" style="width: 60%"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Danger" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar bg-danger" style="width: 60%"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Warning" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar bg-warning" style="width: 60%"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Info" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar bg-info" style="width: 60%"></div>
+      </div>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"d-flex flex-column w-100 gap-3"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progressbar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Primary"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuenow</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"60"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemin</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"0"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemax</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"100"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress-bar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"width: 60%"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progressbar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Success"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuenow</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"60"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemin</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"0"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemax</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"100"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress-bar bg-success"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"width: 60%"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progressbar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Danger"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuenow</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"60"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemin</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"0"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemax</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"100"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress-bar bg-danger"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"width: 60%"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progressbar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Warning"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuenow</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"60"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemin</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"0"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemax</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"100"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress-bar bg-warning"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"width: 60%"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progressbar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Info"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuenow</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"60"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemin</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"0"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemax</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"100"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress-bar bg-info"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"width: 60%"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Multiple bars</h2>
+    <p>Use <code>.progress-stacked</code> to compose several <code>.progress</code> rows into one track. Each segment carries its own width and ARIA values.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="progress-stacked w-100">
+      <div class="progress" role="progressbar" aria-label="Synced" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
+        <div class="progress-bar"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="In progress" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%">
+        <div class="progress-bar bg-success"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Queued" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+        <div class="progress-bar bg-info"></div>
+      </div>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress-stacked w-100"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progressbar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Synced"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuenow</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"15"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemin</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"0"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemax</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"width: 15%"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress-bar"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progressbar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"In progress"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuenow</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"30"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemin</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"0"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemax</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"width: 30%"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress-bar bg-success"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progressbar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Queued"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuenow</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"20"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemin</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"0"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemax</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"width: 20%"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress-bar bg-info"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Striped</h2>
+    <p>Add <code>.progress-bar-striped</code> for a diagonal stripe pattern rendered as a gradient. The stripes follow the bar color.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="d-flex flex-column gap-3 w-100">
+      <div class="progress" role="progressbar" aria-label="Striped primary" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="--bs-progress-height: 0.75rem;">
+        <div class="progress-bar progress-bar-striped" style="width: 60%"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Striped success" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="--bs-progress-height: 0.75rem;">
+        <div class="progress-bar progress-bar-striped bg-success" style="width: 60%"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Striped danger" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="--bs-progress-height: 0.75rem;">
+        <div class="progress-bar progress-bar-striped bg-danger" style="width: 60%"></div>
+      </div>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"d-flex flex-column gap-3 w-100"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progressbar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Striped primary"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuenow</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"60"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemin</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"0"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemax</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"--bs-progress-height: 0.75rem;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress-bar progress-bar-striped"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"width: 60%"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progressbar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Striped success"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuenow</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"60"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemin</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"0"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemax</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"--bs-progress-height: 0.75rem;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress-bar progress-bar-striped bg-success"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"width: 60%"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progressbar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Striped danger"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuenow</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"60"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemin</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"0"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemax</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"--bs-progress-height: 0.75rem;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress-bar progress-bar-striped bg-danger"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"width: 60%"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Animated stripes</h2>
+    <p>Chain <code>.progress-bar-animated</code> after <code>.progress-bar-striped</code> to scroll the stripes from right to left. <code>prefers-reduced-motion</code> turns the animation off.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="progress w-100" role="progressbar" aria-label="Animated" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="--bs-progress-height: 0.75rem;">
+      <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 75%"></div>
+    </div>
+    </div>
+  <div class="demo-code">
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress w-100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progressbar"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Animated"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuenow</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"75"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemin</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"0"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-valuemax</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"--bs-progress-height: 0.75rem;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"progress-bar progress-bar-striped progress-bar-animated"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"width: 75%"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+  </div>
+</div>
+  </section>
+
+      </div>
+    </main>
+  </div>
+
+  
+    <script src="/assets/stisla.js"></script>
+    <script src="/assets/site.js"></script>
+  
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

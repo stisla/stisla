@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script>
+    // Apply saved theme synchronously to avoid a light-mode flash on dark sessions.
+    (function () {
+      var t = localStorage.getItem('stisla-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.bsTheme = t;
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+  <title>Checks & radios · Stisla v3</title>
+  
+    <link rel="stylesheet" href="/assets/stisla-full.css" />
+    <link rel="stylesheet" href="/assets/site-styles.css" />
+  
+</head>
+<body>
+  <div class="site-layout">
+    
+<aside class="site-sidebar sidebar sidebar-sm">
+  <header class="sidebar-header">
+    <a class="sidebar-logo" href="/">
+      <span>Stisla</span>
+    </a>
+    <button type="button" class="btn btn-icon btn-ghost-secondary btn-sm rounded-circle ms-auto" data-theme-toggle aria-label="Toggle theme" style="margin-right: -0.25rem">
+      <i data-lucide="moon" class="theme-icon-light"></i>
+      <i data-lucide="sun" class="theme-icon-dark"></i>
+    </button>
+  </header>
+
+  <div class="sidebar-content">
+    <nav class="sidebar-menu">
+
+      <div class="sidebar-group">
+        <span class="sidebar-group-title">Prologue</span>
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/introduction"><span>Introduction</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/installation"><span>Installation</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/customization"><span>Customization</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-group">
+        <span class="sidebar-group-title">Foundation</span>
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/typography"><span>Typography</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/app-shell"><span>App shell</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/page-structure"><span>Page structure</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-group">
+        <span class="sidebar-group-title">Forms</span>
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/form-control"><span>Form control</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/select"><span>Select</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/checks-radios"><span>Checks &amp; radios</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/form-range"><span>Range</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/input-group"><span>Input group</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/validation"><span>Validation</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-group">
+        <span class="sidebar-group-title">Components</span>
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/accordion"><span>Accordion</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/alerts"><span>Alerts</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/badge"><span>Badge</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/breadcrumb"><span>Breadcrumb</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/buttons"><span>Buttons</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/button-group"><span>Button group</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/cards"><span>Card</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/carousel"><span>Carousel</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/close-button"><span>Close button</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/collapse"><span>Collapse</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/dropdowns"><span>Dropdowns</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/icon-box"><span>Icon box</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/images"><span>Images</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/list-group"><span>List group</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/modal"><span>Modal</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/navbar"><span>Navbar</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/navs"><span>Navs</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/offcanvas"><span>Offcanvas</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/pagination"><span>Pagination</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/placeholders"><span>Placeholders</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/popovers"><span>Popovers</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/progress"><span>Progress</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/scrollspy"><span>Scrollspy</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/sidebar"><span>Sidebar</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/spinners"><span>Spinners</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/tables"><span>Tables</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/tabs"><span>Tabs</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/toasts"><span>Toasts</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/tooltips"><span>Tooltips</span></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <footer class="sidebar-footer">
+    <ul class="sidebar-list">
+      <li class="sidebar-item">
+        <a class="sidebar-item-button" href="https://github.com/stisla/stisla" target="_blank" rel="noopener noreferrer">
+          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          <span>GitHub</span>
+        </a>
+      </li>
+    </ul>
+  </footer>
+</aside>
+
+    <main class="site-main">
+      <div class="main-container prose">
+        
+  <header>
+    <h1>Checks &amp; radios</h1>
+    <p class="lead">Checkboxes, radios, and switches for choosing one or more options.</p>
+  </header>
+
+  <section>
+    <h2>Checkbox</h2>
+    <p>Wrap an <code>&lt;input type="checkbox"&gt;</code> in <code>.form-check</code> and pair it with a <code>.form-check-label</code> tied via <code>for</code>/<code>id</code>.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="w-100" style="max-width: 24rem;">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="defaultCheck" />
+        <label class="form-check-label" for="defaultCheck">Default checkbox</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="checkedCheck" checked />
+        <label class="form-check-label" for="checkedCheck">Checked by default</label>
+      </div>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"w-100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"max-width: 24rem;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-input"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkbox"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"defaultCheck"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-label"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"defaultCheck"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Default checkbox&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-input"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkbox"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkedCheck"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> checked</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-label"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkedCheck"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Checked by default&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Radio</h2>
+    <p>Group radios by giving them a shared <code>name</code>. The browser handles single-selection within the group.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="w-100" style="max-width: 24rem;">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="defaultRadio" id="defaultRadio1" checked />
+        <label class="form-check-label" for="defaultRadio1">First option</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="defaultRadio" id="defaultRadio2" />
+        <label class="form-check-label" for="defaultRadio2">Second option</label>
+      </div>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"w-100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"max-width: 24rem;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-input"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"radio"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> name</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"defaultRadio"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"defaultRadio1"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> checked</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-label"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"defaultRadio1"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>First option&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-input"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"radio"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> name</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"defaultRadio"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"defaultRadio2"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-label"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"defaultRadio2"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Second option&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Inline</h2>
+    <p>Add <code>.form-check-inline</code> to line items up on the same row.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="inlineCheck1" />
+        <label class="form-check-label" for="inlineCheck1">One</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="inlineCheck2" />
+        <label class="form-check-label" for="inlineCheck2">Two</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="inlineCheck3" />
+        <label class="form-check-label" for="inlineCheck3">Three</label>
+      </div>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check form-check-inline"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-input"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkbox"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"inlineCheck1"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-label"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"inlineCheck1"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>One&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check form-check-inline"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-input"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkbox"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"inlineCheck2"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-label"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"inlineCheck2"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Two&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check form-check-inline"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-input"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkbox"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"inlineCheck3"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-label"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"inlineCheck3"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Three&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Switch</h2>
+    <p>Add <code>.form-switch</code> alongside <code>.form-check</code> to render a checkbox as a toggle.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="w-100" style="max-width: 24rem;">
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="defaultSwitch" />
+        <label class="form-check-label" for="defaultSwitch">Notifications</label>
+      </div>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="checkedSwitch" checked />
+        <label class="form-check-label" for="checkedSwitch">Auto-update</label>
+      </div>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"w-100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"max-width: 24rem;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check form-switch"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-input"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkbox"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"switch"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"defaultSwitch"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-label"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"defaultSwitch"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Notifications&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check form-switch"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-input"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkbox"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"switch"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkedSwitch"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> checked</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-label"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkedSwitch"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Auto-update&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Large switch</h2>
+    <p>Add <code>.form-switch-lg</code> for a 44×24 variant. Better suited to standalone settings rows where the switch is the row's primary affordance.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="w-100" style="max-width: 24rem;">
+      <div class="form-check form-switch form-switch-lg">
+        <input class="form-check-input" type="checkbox" role="switch" id="lgSwitch" />
+        <label class="form-check-label" for="lgSwitch">Notifications</label>
+      </div>
+      <div class="form-check form-switch form-switch-lg">
+        <input class="form-check-input" type="checkbox" role="switch" id="lgSwitchOn" checked />
+        <label class="form-check-label" for="lgSwitchOn">Auto-update</label>
+      </div>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"w-100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"max-width: 24rem;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check form-switch form-switch-lg"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-input"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkbox"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"switch"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"lgSwitch"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-label"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"lgSwitch"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Notifications&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check form-switch form-switch-lg"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-input"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkbox"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"switch"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"lgSwitchOn"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> checked</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-label"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"lgSwitchOn"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Auto-update&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Settings row</h2>
+    <p>Drop the switch into a flex row to put the label on the left and the affordance on the right. The <code>.form-check</code> wrapper stays single-purpose; row layout lives on the outer container.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="w-100" style="max-width: 24rem;">
+      <div class="d-flex align-items-center justify-content-between py-2">
+        <label class="form-check-label" for="settingEmail">Email notifications</label>
+        <div class="form-check form-switch form-switch-lg p-0 m-0">
+          <input class="form-check-input m-0" type="checkbox" role="switch" id="settingEmail" checked />
+        </div>
+      </div>
+      <div class="d-flex align-items-center justify-content-between py-2">
+        <label class="form-check-label" for="settingPush">Push notifications</label>
+        <div class="form-check form-switch form-switch-lg p-0 m-0">
+          <input class="form-check-input m-0" type="checkbox" role="switch" id="settingPush" />
+        </div>
+      </div>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"w-100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"max-width: 24rem;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"d-flex align-items-center justify-content-between py-2"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-label"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"settingEmail"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Email notifications&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check form-switch form-switch-lg p-0 m-0"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-input m-0"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkbox"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"switch"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"settingEmail"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> checked</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"d-flex align-items-center justify-content-between py-2"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-label"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"settingPush"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Push notifications&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check form-switch form-switch-lg p-0 m-0"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-input m-0"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkbox"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"switch"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"settingPush"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Indeterminate</h2>
+    <p>The indeterminate state is set from script — there's no HTML attribute for it. Useful as a parent of a partially-selected group.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="w-100" style="max-width: 24rem;">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="indeterminateCheck" />
+        <label class="form-check-label" for="indeterminateCheck">Select all</label>
+      </div>
+      <script>
+        document.getElementById('indeterminateCheck').indeterminate = true;
+      </script>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"w-100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"max-width: 24rem;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-input"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkbox"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"indeterminateCheck"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-label"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"indeterminateCheck"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Select all&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">script</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    document.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">getElementById</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">'indeterminateCheck'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">).indeterminate </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> true</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">script</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Reverse</h2>
+    <p>Add <code>.form-check-reverse</code> to flip the label to the start and the input to the end.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="w-100" style="max-width: 24rem;">
+      <div class="form-check form-check-reverse">
+        <input class="form-check-input" type="checkbox" id="reverseCheck" />
+        <label class="form-check-label" for="reverseCheck">Reversed checkbox</label>
+      </div>
+      <div class="form-check form-check-reverse form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="reverseSwitch" checked />
+        <label class="form-check-label" for="reverseSwitch">Reversed switch</label>
+      </div>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"w-100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"max-width: 24rem;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check form-check-reverse"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-input"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkbox"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"reverseCheck"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-label"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"reverseCheck"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Reversed checkbox&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check form-check-reverse form-switch"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-input"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkbox"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"switch"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"reverseSwitch"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> checked</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-label"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"reverseSwitch"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Reversed switch&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Disabled</h2>
+    <p>Add <code>disabled</code> to dim the input and its label, and block interaction.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="w-100" style="max-width: 24rem;">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="disabledCheck" disabled />
+        <label class="form-check-label" for="disabledCheck">Disabled checkbox</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="disabledCheckedCheck" checked disabled />
+        <label class="form-check-label" for="disabledCheckedCheck">Disabled, checked</label>
+      </div>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="disabledSwitch" checked disabled />
+        <label class="form-check-label" for="disabledSwitch">Disabled switch</label>
+      </div>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"w-100"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> style</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"max-width: 24rem;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-input"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkbox"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"disabledCheck"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> disabled</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-label"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"disabledCheck"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Disabled checkbox&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-input"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkbox"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"disabledCheckedCheck"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> checked</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> disabled</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-label"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"disabledCheckedCheck"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Disabled, checked&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check form-switch"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-input"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkbox"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"switch"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"disabledSwitch"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> checked</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> disabled</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-label"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"disabledSwitch"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Disabled switch&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Toggle buttons</h2>
+    <p>Pair <code>.btn-check</code> with a sibling <code>.btn</code> label to render a checkbox or radio as a button. The input stays visually hidden but reachable by keyboard.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="d-flex flex-column gap-3">
+      <div>
+        <input type="checkbox" class="btn-check" id="toggleCheck" autocomplete="off" />
+        <label class="btn btn-outline-primary" for="toggleCheck">Single toggle</label>
+      </div>
+      <div>
+        <input type="radio" class="btn-check" name="toggleRadio" id="toggleRadio1" autocomplete="off" checked />
+        <label class="btn btn-outline-primary" for="toggleRadio1">Day</label>
+        <input type="radio" class="btn-check" name="toggleRadio" id="toggleRadio2" autocomplete="off" />
+        <label class="btn btn-outline-primary" for="toggleRadio2">Week</label>
+        <input type="radio" class="btn-check" name="toggleRadio" id="toggleRadio3" autocomplete="off" />
+        <label class="btn btn-outline-primary" for="toggleRadio3">Month</label>
+      </div>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"d-flex flex-column gap-3"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkbox"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn-check"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toggleCheck"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> autocomplete</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"off"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn btn-outline-primary"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toggleCheck"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Single toggle&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"radio"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn-check"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> name</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toggleRadio"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toggleRadio1"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> autocomplete</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"off"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> checked</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn btn-outline-primary"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toggleRadio1"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Day&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"radio"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn-check"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> name</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toggleRadio"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toggleRadio2"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> autocomplete</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"off"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn btn-outline-primary"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toggleRadio2"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Week&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"radio"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn-check"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> name</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toggleRadio"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toggleRadio3"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> autocomplete</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"off"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn btn-outline-primary"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> for</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toggleRadio3"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Month&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Without labels</h2>
+    <p>Drop the <code>.form-check</code> wrapper to use a bare <code>.form-check-input</code>. Always pair with an <code>aria-label</code> for accessibility.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="d-flex align-items-center gap-3">
+      <input class="form-check-input" type="checkbox" aria-label="Bare checkbox" />
+      <input class="form-check-input" type="radio" aria-label="Bare radio" checked />
+      <input class="form-check-input" type="checkbox" role="switch" aria-label="Bare switch" checked />
+    </div>
+    </div>
+  <div class="demo-code">
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"d-flex align-items-center gap-3"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-input"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkbox"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Bare checkbox"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-input"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"radio"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Bare radio"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> checked</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">input</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"form-check-input"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"checkbox"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"switch"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Bare switch"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> checked</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+  </div>
+</div>
+  </section>
+
+      </div>
+    </main>
+  </div>
+
+  
+    <script src="/assets/stisla.js"></script>
+    <script src="/assets/site.js"></script>
+  
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

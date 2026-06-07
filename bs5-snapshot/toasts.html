@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script>
+    // Apply saved theme synchronously to avoid a light-mode flash on dark sessions.
+    (function () {
+      var t = localStorage.getItem('stisla-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.bsTheme = t;
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+  <title>Toasts · Stisla v3</title>
+  
+    <link rel="stylesheet" href="/assets/stisla-full.css" />
+    <link rel="stylesheet" href="/assets/site-styles.css" />
+  
+</head>
+<body>
+  <div class="site-layout">
+    
+<aside class="site-sidebar sidebar sidebar-sm">
+  <header class="sidebar-header">
+    <a class="sidebar-logo" href="/">
+      <span>Stisla</span>
+    </a>
+    <button type="button" class="btn btn-icon btn-ghost-secondary btn-sm rounded-circle ms-auto" data-theme-toggle aria-label="Toggle theme" style="margin-right: -0.25rem">
+      <i data-lucide="moon" class="theme-icon-light"></i>
+      <i data-lucide="sun" class="theme-icon-dark"></i>
+    </button>
+  </header>
+
+  <div class="sidebar-content">
+    <nav class="sidebar-menu">
+
+      <div class="sidebar-group">
+        <span class="sidebar-group-title">Prologue</span>
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/introduction"><span>Introduction</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/installation"><span>Installation</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/customization"><span>Customization</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-group">
+        <span class="sidebar-group-title">Foundation</span>
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/typography"><span>Typography</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/app-shell"><span>App shell</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/page-structure"><span>Page structure</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-group">
+        <span class="sidebar-group-title">Forms</span>
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/form-control"><span>Form control</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/select"><span>Select</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/checks-radios"><span>Checks &amp; radios</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/form-range"><span>Range</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/input-group"><span>Input group</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/validation"><span>Validation</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-group">
+        <span class="sidebar-group-title">Components</span>
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/accordion"><span>Accordion</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/alerts"><span>Alerts</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/badge"><span>Badge</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/breadcrumb"><span>Breadcrumb</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/buttons"><span>Buttons</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/button-group"><span>Button group</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/cards"><span>Card</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/carousel"><span>Carousel</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/close-button"><span>Close button</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/collapse"><span>Collapse</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/dropdowns"><span>Dropdowns</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/icon-box"><span>Icon box</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/images"><span>Images</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/list-group"><span>List group</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/modal"><span>Modal</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/navbar"><span>Navbar</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/navs"><span>Navs</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/offcanvas"><span>Offcanvas</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/pagination"><span>Pagination</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/placeholders"><span>Placeholders</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/popovers"><span>Popovers</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/progress"><span>Progress</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/scrollspy"><span>Scrollspy</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/sidebar"><span>Sidebar</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/spinners"><span>Spinners</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/tables"><span>Tables</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/tabs"><span>Tabs</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/toasts"><span>Toasts</span></a></li>
+          <li class="sidebar-item"><a class="sidebar-item-button" href="/tooltips"><span>Tooltips</span></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <footer class="sidebar-footer">
+    <ul class="sidebar-list">
+      <li class="sidebar-item">
+        <a class="sidebar-item-button" href="https://github.com/stisla/stisla" target="_blank" rel="noopener noreferrer">
+          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          <span>GitHub</span>
+        </a>
+      </li>
+    </ul>
+  </footer>
+</aside>
+
+    <main class="site-main">
+      <div class="main-container prose">
+        
+  <header>
+    <h1>Toasts</h1>
+    <p class="lead">A non-blocking notification panel.</p>
+  </header>
+
+  <section>
+    <h2>Basic</h2>
+    <p>A toast is a small surface with a title and a body message. Keep <code>.show</code> for static demos, the framework JS handles it once you trigger a real toast.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="toast show" role="alert" aria-live="polite" aria-atomic="true">
+      <div class="toast-header">
+        Workspace saved
+      </div>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      <div class="toast-body">Your changes to billing details have been written and synced.</div>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast show"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"alert"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-live</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"polite"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-atomic</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"true"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-header"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    Workspace saved</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"button"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn-close"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-bs-dismiss</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Close"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-body"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Your changes to billing details have been written and synced.&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Anatomy</h2>
+    <p>Padding lives on <code>.toast</code> itself, so the header band and body padding from Bootstrap drop to zero. The layout is a 2-column grid. Col 1 stacks <code>.toast-header</code>, <code>.toast-body</code>, and <code>.toast-action</code>. Col 2 holds <code>.btn-close</code> as a direct child of <code>.toast</code> so it sits in its own cell at the top-right corner.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="toast show" role="alert" aria-live="polite" aria-atomic="true">
+      <div class="toast-header">
+        <i data-lucide="shield-check"></i>
+        Two-factor enabled
+      </div>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      <div class="toast-body">Logins to this workspace now require a code from your authenticator app.</div>
+      <div class="toast-action gap-3">
+        <a href="#" class="link-body-emphasis text-decoration-none">Dismiss</a>
+        <a href="#" class="text-decoration-none">Manage devices</a>
+      </div>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast show"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"alert"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-live</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"polite"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-atomic</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"true"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-header"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-lucide</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"shield-check"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    Two-factor enabled</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"button"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn-close"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-bs-dismiss</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Close"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-body"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Logins to this workspace now require a code from your authenticator app.&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-action gap-3"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">a</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> href</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"link-body-emphasis text-decoration-none"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Dismiss&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">a</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">a</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> href</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"text-decoration-none"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Manage devices&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">a</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Leading icon</h2>
+    <p>Drop an <code>&lt;svg&gt;</code> or <code>&lt;i&gt;</code> as the first child of <code>.toast-header</code>. Use a color utility to cue the message state without tinting the whole surface.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="d-flex flex-column gap-2">
+      <div class="toast show" role="status" aria-live="polite" aria-atomic="true">
+        <div class="toast-header">
+          <i data-lucide="check-circle-2" class="text-success"></i>
+          Invoice sent
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        <div class="toast-body">We emailed the May invoice to billing@acme.co.</div>
+      </div>
+      <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <i data-lucide="x-circle" class="text-danger"></i>
+          Couldn't upload
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        <div class="toast-body">Network dropped halfway through. Reconnect and try again.</div>
+      </div>
+      <div class="toast show" role="status" aria-live="polite" aria-atomic="true">
+        <div class="toast-header">
+          <i data-lucide="triangle-alert" class="text-warning"></i>
+          Storage almost full
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        <div class="toast-body">You're at 94% of the workspace quota. Archive old exports to free space.</div>
+      </div>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"d-flex flex-column gap-2"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast show"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"status"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-live</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"polite"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-atomic</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"true"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-header"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-lucide</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"check-circle-2"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"text-success"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      Invoice sent</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"button"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn-close"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-bs-dismiss</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Close"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-body"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>We emailed the May invoice to billing@acme.co.&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast show"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"alert"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-live</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"assertive"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-atomic</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"true"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-header"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-lucide</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"x-circle"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"text-danger"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      Couldn't upload</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"button"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn-close"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-bs-dismiss</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Close"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-body"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Network dropped halfway through. Reconnect and try again.&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast show"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"status"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-live</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"polite"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-atomic</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"true"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-header"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-lucide</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"triangle-alert"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"text-warning"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      Storage almost full</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"button"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn-close"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-bs-dismiss</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Close"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-body"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>You're at 94% of the workspace quota. Archive old exports to free space.&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Leading image</h2>
+    <p>Swap the icon for an <code>&lt;img&gt;</code> when the source is a person or product. The image keeps its natural size, so reach for <code>.rounded-circle</code> and a width attribute to shape it.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="toast show" role="status" aria-live="polite" aria-atomic="true">
+      <div class="toast-header">
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=facearea&facepad=2.5&w=120&h=120&q=80" alt="" class="rounded-circle" width="28" height="28" />
+        Maya Singh
+        <span class="text-body-tertiary fw-normal">10 mins ago</span>
+      </div>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      <div class="toast-body">Shared "Q3 roadmap" with you. You have edit access to the document.</div>
+      <div class="toast-action gap-3">
+        <a href="#" class="link-body-emphasis text-decoration-none">Dismiss</a>
+        <a href="#" class="text-decoration-none">Open file</a>
+      </div>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast show"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"status"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-live</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"polite"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-atomic</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"true"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-header"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">img</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> src</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&#x26;fit=facearea&#x26;facepad=2.5&#x26;w=120&#x26;h=120&#x26;q=80"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> alt</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">""</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"rounded-circle"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> width</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"28"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> height</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"28"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    Maya Singh</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"text-body-tertiary fw-normal"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>10 mins ago&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"button"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn-close"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-bs-dismiss</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Close"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-body"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Shared "Q3 roadmap" with you. You have edit access to the document.&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-action gap-3"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">a</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> href</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"link-body-emphasis text-decoration-none"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Dismiss&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">a</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">a</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> href</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"text-decoration-none"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Open file&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">a</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Action row</h2>
+    <p>Add <code>.toast-action</code> below the body for inline links or buttons. The row sits at the root's left padding edge, aligned with the leading slot above. For ghost buttons, add <code>.btn-flush-start</code> so the label text lines up with the body above instead of the button frame.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="d-flex flex-column gap-2">
+      <div class="toast show" role="status" aria-live="polite" aria-atomic="true">
+        <div class="toast-header">
+          <i data-lucide="user-plus" class="text-primary"></i>
+          Sara Lin invited you
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        <div class="toast-body">You've been added to the Q3 Roadmap workspace as an editor.</div>
+        <div class="toast-action">
+          <button type="button" class="btn btn-sm btn-ghost-secondary btn-flush-start">Decline</button>
+          <button type="button" class="btn btn-sm btn-primary">Accept</button>
+        </div>
+      </div>
+      <div class="toast show" role="status" aria-live="polite" aria-atomic="true">
+        <div class="toast-header">
+          <i data-lucide="trash-2"></i>
+          Project moved to trash
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        <div class="toast-body">"Redesign" will be deleted in 30 days.</div>
+        <div class="toast-action">
+          <button type="button" class="btn btn-sm btn-outline-secondary">Undo</button>
+        </div>
+      </div>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"d-flex flex-column gap-2"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast show"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"status"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-live</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"polite"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-atomic</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"true"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-header"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-lucide</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"user-plus"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"text-primary"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      Sara Lin invited you</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"button"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn-close"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-bs-dismiss</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Close"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-body"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>You've been added to the Q3 Roadmap workspace as an editor.&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-action"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"button"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn btn-sm btn-ghost-secondary btn-flush-start"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Decline&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"button"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn btn-sm btn-primary"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Accept&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast show"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"status"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-live</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"polite"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-atomic</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"true"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-header"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-lucide</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"trash-2"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      Project moved to trash</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"button"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn-close"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-bs-dismiss</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Close"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-body"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>"Redesign" will be deleted in 30 days.&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-action"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"button"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn btn-sm btn-outline-secondary"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Undo&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Stacked container</h2>
+    <p>Wrap several toasts in <code>.toast-container</code> to stack them. Pair with positioning utilities (<code>.position-fixed</code>, <code>.top-0</code>, <code>.end-0</code>) when you mount it on the page.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="toast-container position-static p-0">
+      <div class="toast show" role="status" aria-live="polite" aria-atomic="true">
+        <div class="toast-header">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=facearea&facepad=2.5&w=120&h=120&q=80" alt="" class="rounded-circle" width="28" height="28" />
+          Mateo Reyes
+          <span class="text-body-tertiary fw-normal">just now</span>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        <div class="toast-body">Started a follow-up thread on the auth migration. Tagged you.</div>
+      </div>
+      <div class="toast show" role="status" aria-live="polite" aria-atomic="true">
+        <div class="toast-header">
+          <i data-lucide="bell" class="text-primary"></i>
+          Daily summary ready
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        <div class="toast-body">12 tickets closed, 4 opened, 2 awaiting your review.</div>
+      </div>
+      <div class="toast show" role="status" aria-live="polite" aria-atomic="true">
+        <div class="toast-header">
+          <i data-lucide="check-circle-2" class="text-success"></i>
+          Deploy succeeded
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        <div class="toast-body">api v1.42.0 is live on production.</div>
+      </div>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-container position-static p-0"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast show"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"status"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-live</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"polite"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-atomic</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"true"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-header"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">img</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> src</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&#x26;fit=facearea&#x26;facepad=2.5&#x26;w=120&#x26;h=120&#x26;q=80"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> alt</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">""</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"rounded-circle"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> width</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"28"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> height</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"28"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      Mateo Reyes</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"text-body-tertiary fw-normal"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>just now&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">span</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"button"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn-close"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-bs-dismiss</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Close"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-body"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Started a follow-up thread on the auth migration. Tagged you.&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast show"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"status"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-live</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"polite"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-atomic</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"true"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-header"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-lucide</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"bell"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"text-primary"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      Daily summary ready</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"button"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn-close"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-bs-dismiss</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Close"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-body"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>12 tickets closed, 4 opened, 2 awaiting your review.&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast show"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"status"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-live</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"polite"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-atomic</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"true"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-header"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-lucide</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"check-circle-2"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"text-success"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      Deploy succeeded</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"button"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn-close"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-bs-dismiss</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Close"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-body"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>api v1.42.0 is live on production.&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Without leading slot</h2>
+    <p>The leading slot is optional. Drop it and the header reads as a plain title row.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <div class="toast show" role="status" aria-live="polite" aria-atomic="true">
+      <div class="toast-header">
+        Saved as draft
+      </div>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      <div class="toast-body">Your post is private until you publish it.</div>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast show"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"status"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-live</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"polite"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-atomic</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"true"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-header"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    Saved as draft</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"button"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn-close"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-bs-dismiss</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Close"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-body"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Your post is private until you publish it.&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section>
+    <h2>Trigger</h2>
+    <p>Bootstrap ships the toast as opt-in JS. Mount the markup once inside a <code>.toast-container</code>, then call <code>.show()</code> on the instance to reveal it. The container fixes the toast to a corner of the viewport.</p>
+    <div class="demo not-prose">
+  <div class="demo-preview">
+    <button type="button" class="btn btn-primary" data-demo-toast="#trigger-toast">Show toast</button>
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+      <div class="toast fade" id="trigger-toast" role="status" aria-live="polite" aria-atomic="true">
+        <div class="toast-header">
+          <i data-lucide="link" class="text-success"></i>
+          Link copied
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        <div class="toast-body">Anyone with the link can view the page.</div>
+      </div>
+    </div>
+    </div>
+  <div class="demo-code" data-demo-code>
+    <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"button"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn btn-primary"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-demo-toast</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"#trigger-toast"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Show toast&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-container position-fixed top-0 end-0 p-3"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast fade"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> id</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"trigger-toast"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> role</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"status"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-live</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"polite"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-atomic</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"true"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-header"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-lucide</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"link"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"text-success"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">i</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">      Link copied</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"button"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"btn-close"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> data-bs-dismiss</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast"</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> aria-label</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Close"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">button</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    &#x3C;</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="color:#24292E;--shiki-dark:#E1E4E8">=</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"toast-body"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">>Anyone with the link can view the page.&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  &#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">&#x3C;/</span><span style="color:#22863A;--shiki-dark:#85E89D">div</span><span style="color:#24292E;--shiki-dark:#E1E4E8">></span></span></code></pre></div>
+    <button type="button" class="demo-code-toggle btn btn-sm btn-ghost-secondary" data-demo-code-toggle aria-expanded="false">
+      <span class="demo-code-toggle-show">View Code</span>
+      <span class="demo-code-toggle-hide">Hide Code</span>
+    </button>
+  </div>
+</div>
+
+    <p>The button above uses a site-only <code>data-demo-toast</code> attribute to fire the toast. In your own code, grab the element and call the API directly.</p>
+    <div class="demo demo-standalone not-prose">
+  <div class="demo-code-title">trigger.js</div>
+  <div class="demo-code-source"><pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> el</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">querySelector</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">'#trigger-toast'</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">const</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> toast</span><span style="color:#D73A49;--shiki-dark:#F97583"> =</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> Stisla.bs.Toast.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">getOrCreateInstance</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(el, {</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  autohide: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">true</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  delay: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">4000</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">});</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">toast.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">show</span><span style="color:#24292E;--shiki-dark:#E1E4E8">();</span></span></code></pre></div>
+</div>
+  </section>
+
+      </div>
+    </main>
+  </div>
+
+  
+    <script src="/assets/stisla.js"></script>
+    <script src="/assets/site.js"></script>
+  
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>
