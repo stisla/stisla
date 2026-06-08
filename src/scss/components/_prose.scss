@@ -222,14 +222,26 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
   }
 
   // === Table ===
-  // Reading-table look: header underline, generous row padding, no zebra
-  // or hover. The .table component is for dashboards; prose tables are
-  // for reading. Different jobs, different defaults — same vocabulary.
+  // Reading-table look: framed by an outer border + radius, header
+  // underline, generous row padding, no zebra or hover. The .table
+  // component is for dashboards; prose tables are for reading. Different
+  // jobs, different defaults — same vocabulary.
+  //
+  // border-collapse: separate (Preflight defaults to collapse) so the
+  // outer border-radius doesn't fight cell borders at the corners.
+  // overflow: hidden clips any nested cell backgrounds to the rounded
+  // outer shape so consumer-added `thead { background: … }` stays inside
+  // the frame.
   :where(table)#{$skip} {
     margin-block: calc(2em * var(--st-density));
     width: 100%;
     font-size: 0.875em;
     line-height: 1.5;
+    border: 1px solid var(--st-border);
+    border-radius: var(--st-radius);
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
   }
 
   :where(th, td)#{$skip} {
