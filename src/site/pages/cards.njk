@@ -123,23 +123,24 @@
   </section>
 
   <section>
-    <h2>Bordered</h2>
+    <h2>Flat</h2>
     <p>
-      <code>.card--bordered</code> drops the shadow and adds a one-pixel
-      border. Use when the card needs to read as a frame rather than a
-      raised surface.
+      Cards carry a one-pixel border by default so they read as cards
+      with or without elevation. <code>.card--flat</code> drops the
+      shadow when the card should read as a frame rather than a raised
+      surface.
     </p>
     {% call ui.demo() %}
     <div class="demo-row demo-row--top demo-row--gap-md">
       <div class="card" style="width: 18rem;">
         <div class="card__body">
           <h5 class="card__title">Default</h5>
-          <p class="card__text">Shadow elevation.</p>
+          <p class="card__text">Border and shadow elevation.</p>
         </div>
       </div>
-      <div class="card card--bordered" style="width: 18rem;">
+      <div class="card card--flat" style="width: 18rem;">
         <div class="card__body">
-          <h5 class="card__title">Bordered</h5>
+          <h5 class="card__title">Flat</h5>
           <p class="card__text">Border, no shadow.</p>
         </div>
       </div>

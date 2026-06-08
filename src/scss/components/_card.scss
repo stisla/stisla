@@ -2,7 +2,7 @@
 //
 // BEM: .card (root) + parts (__header / __body / __footer / __title /
 // __subtitle / __text / __link / __image / __overlay). Variants stay
-// flat on the root (.card--bordered).
+// flat on the root (.card--flat).
 //
 // Tokens: --st-surface (bg), --st-border, --st-card-radius → --st-radius,
 // --st-card-shadow → --st-shadow, padding × var(--st-density).
@@ -13,7 +13,7 @@
   --card-shadow:    var(--st-card-shadow, var(--st-shadow));
   --card-bg:        var(--st-surface);
   --card-color:     var(--st-foreground);
-  --card-border:    1px solid transparent;
+  --card-border:    1px solid var(--st-border);
 
   position: relative;
   display: flex;
@@ -29,8 +29,9 @@
   overflow: hidden;
 }
 
-.card--bordered {
-  --card-border: 1px solid var(--st-border);
+// Drop the shadow so the card reads as a frame rather than a raised
+// surface. The border stays on by default.
+.card--flat {
   --card-shadow: none;
 }
 
@@ -55,7 +56,7 @@
 }
 
 .card__footer {
-  padding: var(--card-padding);
+  padding: calc(0.75rem * var(--st-density)) var(--card-padding);
   background: var(--st-surface-2);
   border-top: 1px solid var(--st-border);
 }
