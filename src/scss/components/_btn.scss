@@ -23,11 +23,10 @@
 
 .btn {
   --btn-radius:       var(--st-btn-radius, var(--st-radius));
-  --btn-padding-y:    calc(0.5rem  * var(--st-density));
+  --btn-height:       2.25rem;                                       // 36
   --btn-padding-x:    calc(0.75rem * var(--st-density));
   --btn-font-size:    0.875rem;
   --btn-font-weight:  500;
-  --btn-min-height:   2.25rem;
 
   // Derive the rest bg from --btn-tone. Tones with a non-matching bg
   // (neutral fills with --st-neutral, not its tone) override below.
@@ -35,30 +34,41 @@
 
   // Universal rim + bevel. Border derives from --btn-tone so every
   // filled tone (shipped or one-off via --btn-tone override) gets a
-  // matching darker edge. The inset top highlight reads as a soft bevel
-  // on colored fills and is invisible on near-white fills. Shape
-  // modifiers override both.
+  // matching darker edge. --btn-bevel is the inset top highlight that
+  // reads as a soft bevel on colored fills and is invisible on
+  // near-white fills. Set --btn-bevel: none on :root for a flat look,
+  // or override per-tone. Shape modifiers (outline/ghost/soft) null it.
   --btn-border-color: color-mix(in oklch, var(--btn-tone) 85%, black);
+  --btn-bevel:        inset 0 1px 0 rgba(255, 255, 255, 0.15);
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  min-height: var(--btn-min-height);
-  padding: var(--btn-padding-y) var(--btn-padding-x);
+  // Hard height × density. Single-line button — padding-block: 0 lets
+  // native vertical centering handle the label. --st-density now
+  // genuinely compresses buttons (not just their padding); .btn--wrap
+  // opts out for multi-line cases (height: auto + min-height floor).
+  height: calc(var(--btn-height) * var(--st-density));
+  padding: 0 var(--btn-padding-x);
   font-family: inherit;
   font-size: var(--btn-font-size);
   font-weight: var(--btn-font-weight);
-  line-height: 1.2;
+  line-height: 1;
   color: var(--btn-color);
   background: var(--btn-bg);
   border: 1px solid var(--btn-border-color);
   border-radius: var(--btn-radius);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  box-shadow: var(--btn-bevel);
   cursor: pointer;
   user-select: none;
   text-decoration: none;
+  // Single-line by contract. Over-constrained widths truncate with an
+  // ellipsis rather than wrapping into a multi-line box that breaks the
+  // hard-height shape. .btn--wrap is the documented multi-line opt-out.
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   transition: background-color .12s ease, border-color .12s ease,
               color .12s ease, box-shadow .12s ease;
 
@@ -100,34 +110,51 @@
 
 // === Sizes ============================================================
 // Each size pulls its own --st-radius-{sm,lg} derived sibling so corner
-// scaling tracks --st-radius proportionally. .btn--icon-round overrides
-// --btn-radius directly and ignores the size-derived value.
+// scaling tracks --st-radius proportionally. Heights are literal rem
+// values so the calc(* var(--st-density)) on the base resolves cleanly.
+// .btn--icon-round overrides --btn-radius directly.
 .btn--sm {
-  --btn-radius:     var(--st-btn-radius, var(--st-radius-sm));
-  --btn-padding-y:  calc(0.375rem * var(--st-density));
-  --btn-padding-x:  calc(0.625rem * var(--st-density));
-  --btn-font-size:  0.8125rem;
-  --btn-min-height: 1.75rem;
+  --btn-radius:    var(--st-btn-radius, var(--st-radius-sm));
+  --btn-height:    1.75rem;                                       // 28
+  --btn-padding-x: calc(0.625rem * var(--st-density));
+  --btn-font-size: 0.8125rem;
 }
 .btn--lg {
-  --btn-radius:     var(--st-btn-radius, var(--st-radius-lg));
-  --btn-padding-y:  calc(0.625rem * var(--st-density));
-  --btn-padding-x:  calc(1rem     * var(--st-density));
-  --btn-font-size:  1rem;
-  --btn-min-height: 2.75rem;
+  --btn-radius:    var(--st-btn-radius, var(--st-radius-lg));
+  --btn-height:    2.75rem;                                       // 44
+  --btn-padding-x: calc(1rem * var(--st-density));
+  --btn-font-size: 1rem;
 }
 
 // === Icon shapes ======================================================
-// Square at every size. Width tracks --btn-min-height so .btn--icon-only
-// composes with .btn--sm / .btn--lg.
+// Square at every size. Width tracks the same density-multiplied height
+// the base sets, so .btn--icon-only composes with .btn--sm / .btn--lg
+// and stays square through every --st-density value.
 .btn--icon-only {
   --btn-padding-x: 0;
-  width: var(--btn-min-height);
+  width: calc(var(--btn-height) * var(--st-density));
 }
 
 // Opt out of --st-radius for a circular silhouette.
 .btn--icon-round {
   border-radius: 9999px;
+}
+
+// === Wrap =============================================================
+// Opt out of the single-line contract. Restores height: auto + a
+// min-height floor + vertical padding + normal wrapping, so a wide
+// button can grow into a multi-line label without breaking. Use
+// sparingly — multi-line buttons are usually a content-design smell.
+// Typical case: a full-width form-submit with a small helper line
+// inside the button. Pair with .btn--lg for breathing room.
+.btn--wrap {
+  height: auto;
+  min-height: calc(var(--btn-height) * var(--st-density));
+  padding-block: calc(0.375rem * var(--st-density));
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  line-height: 1.25;
 }
 
 // === Tone modifiers — filled defaults =================================
@@ -199,7 +226,7 @@
   --btn-bg:           transparent;
   --btn-color:        var(--btn-tone);
   --btn-border-color: var(--btn-tone);
-  box-shadow: none;
+  --btn-bevel:        none;
 
   &:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) 14%, transparent); }
   &:active,
@@ -211,7 +238,7 @@
   --btn-bg:           transparent;
   --btn-color:        var(--btn-tone);
   --btn-border-color: transparent;
-  box-shadow: none;
+  --btn-bevel:        none;
 
   &:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) 18%, transparent); }
   &:active,
@@ -223,7 +250,7 @@
   --btn-bg:           color-mix(in oklch, var(--btn-tone) 12%, transparent);
   --btn-color:        var(--btn-tone);
   --btn-border-color: transparent;
-  box-shadow: none;
+  --btn-bevel:        none;
 
   &:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) 20%, transparent); }
   &:active,
@@ -240,13 +267,13 @@
   &:hover  { --btn-bg: var(--st-accent); }
   &:active,
   &[aria-pressed="true"],
-  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--st-foreground) 12%, var(--st-background)); }
+  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--st-accent) 92%, var(--st-foreground)); }
 }
 .btn--ghost.btn--neutral {
   &:hover  { --btn-bg: var(--st-accent); }
   &:active,
   &[aria-pressed="true"],
-  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--st-foreground) 12%, var(--st-background)); }
+  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--st-accent) 92%, var(--st-foreground)); }
 }
 
 // === Loading ==========================================================

@@ -23,8 +23,11 @@
   --spinner-duration: 0.75s;
 
   display: inline-block;
-  width: var(--spinner-size);
-  height: var(--spinner-size);
+  // Density multiplier matches .btn / .form-control / .icon-box — a
+  // compact dashboard compresses spinners too instead of leaving them
+  // floating at default size next to shrunk controls.
+  width:  calc(var(--spinner-size) * var(--st-density));
+  height: calc(var(--spinner-size) * var(--st-density));
   vertical-align: -0.125em;
   color: inherit;
   border: var(--spinner-width) solid currentColor;
