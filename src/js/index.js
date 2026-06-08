@@ -1,19 +1,15 @@
 // Stisla public JS entry.
 //
-// Phase 0 + framework auto-init. Phase 3 will formalize the
-// class+destroy+events contract; until then this file hosts simple
-// declarative handlers — same shape as Bootstrap's data-bs-* scanners —
-// so consumers get working framework behavior now and a non-breaking
-// upgrade later.
-
-import * as bs from 'bootstrap';
+// Step 2 status: BS5 is gone. Popover + Tooltip auto-init lived here
+// during the BS5 era; Step 4 reintroduces them via @floating-ui/dom +
+// the Stisla.JS contract (class + destroy + custom events, V3.md §3.7).
+// Until then, popover/tooltip markup renders inert.
 
 export const Stisla = {
   version: '3.0.0-alpha.0',
-  bs,
   init() {
-    // Declarative re-scan API lands in Phase 3. Today the handlers below
-    // auto-attach at module load.
+    // Declarative re-scan API lands in Step 4. Today the handler below
+    // auto-attaches at module load.
   },
 };
 
@@ -28,16 +24,6 @@ if (typeof window !== 'undefined') {
 // of <body> or inside DOMContentLoaded.
 
 if (typeof document !== 'undefined') {
-  // Popover + Tooltip — BS5 ships both opt-in (Popper is heavy to mount
-  // on every node). Stisla auto-scans markup so [data-bs-toggle="popover"]
-  // and [data-bs-toggle="tooltip"] light up without a manual init call.
-  document.querySelectorAll('[data-bs-toggle="popover"]').forEach((el) => {
-    new bs.Popover(el);
-  });
-  document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach((el) => {
-    new bs.Tooltip(el);
-  });
-
   // App shell — data-app-shell-toggle="collapse|visibility" flips the
   // matching state class on the closest .app-shell. "collapse" also
   // flips .is-collapsed on the descendant .sidebar so its internal

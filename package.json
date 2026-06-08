@@ -16,8 +16,6 @@
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.6",
-    "@popperjs/core": "^2.11.8",
-    "bootstrap": "^5.3.3",
     "embla-carousel": "^8.6.0",
     "focus-trap": "^8.2.1",
     "tabbable": "^6.4.0"
