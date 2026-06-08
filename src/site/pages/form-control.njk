@@ -6,14 +6,14 @@
 {% block content %}
   <header>
     <h1>Form control</h1>
-    <p class="lead">A single-line text input for collecting short user input.</p>
+    <p class="lead">A single class for every text-like form field — inputs, selects, textareas. The shape is identical across all three; the element decides the behavior.</p>
   </header>
 
   <section>
     <h2>Basic</h2>
-    <p>Add <code>.form-control</code> to any <code>&lt;input&gt;</code>. Pair with a <code>&lt;label&gt;</code> tied via <code>for</code>/<code>id</code> so the field is reachable.</p>
+    <p>Add <code>.form-control</code> to any <code>&lt;input&gt;</code>. Pair with a <code>&lt;label&gt;</code> tied via <code>for</code>/<code>id</code> so the field is reachable. The same class works on <code>&lt;select&gt;</code> (see <a href="/select">/select</a>) and <code>&lt;textarea&gt;</code> below.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
+    <div style="max-width: 24rem;">
       <label for="basicInput" class="form-label">Email</label>
       <input type="email" class="form-control" id="basicInput" placeholder="you@example.com" />
     </div>
@@ -24,19 +24,19 @@
     <h2>Sizes</h2>
     <p>Heights are pinned at 28 / 36 / 44&nbsp;px to match the button scale.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-column gap-2 w-100" style="max-width: 24rem;">
-      <input type="text" class="form-control form-control-sm" placeholder="Small" />
+    <div class="demo-stack" style="max-width: 24rem;">
+      <input type="text" class="form-control form-control--sm" placeholder="Small" />
       <input type="text" class="form-control" placeholder="Default" />
-      <input type="text" class="form-control form-control-lg" placeholder="Large" />
+      <input type="text" class="form-control form-control--lg" placeholder="Large" />
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>Textarea</h2>
-    <p>The same class works on <code>&lt;textarea&gt;</code> with multi-line leading restored. Height grows with content past the 36&nbsp;px floor.</p>
+    <p>The same class works on <code>&lt;textarea&gt;</code>. The min-height clamp drops so the <code>rows</code> attribute and content drive the height. The textarea handle is vertical-only — width tracks the parent.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
+    <div style="max-width: 24rem;">
       <label for="basicTextarea" class="form-label">Notes</label>
       <textarea class="form-control" id="basicTextarea" rows="3" placeholder="Anything else we should know?"></textarea>
     </div>
@@ -45,9 +45,9 @@
 
   <section>
     <h2>Input types</h2>
-    <p>The class applies to every text-like input: <code>text</code>, <code>email</code>, <code>password</code>, <code>number</code>, <code>search</code>, <code>tel</code>, <code>url</code>, <code>date</code>, <code>time</code>, <code>color</code>.</p>
+    <p>The class applies to every text-like input: <code>text</code>, <code>email</code>, <code>password</code>, <code>number</code>, <code>search</code>, <code>tel</code>, <code>url</code>, <code>date</code>, <code>time</code>.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-column gap-2 w-100" style="max-width: 24rem;">
+    <div class="demo-stack" style="max-width: 24rem;">
       <input type="email" class="form-control" placeholder="email" />
       <input type="password" class="form-control" placeholder="password" value="hunter2" />
       <input type="number" class="form-control" placeholder="number" />
@@ -61,7 +61,7 @@
     <h2>Helper text</h2>
     <p>Use <code>.form-text</code> below the input for short hints. Wire it to the input with <code>aria-describedby</code> so screen readers announce it.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
+    <div style="max-width: 24rem;">
       <label for="passwordInput" class="form-label">Password</label>
       <input type="password" class="form-control" id="passwordInput" aria-describedby="passwordHelp" />
       <div id="passwordHelp" class="form-text">At least 8 characters, one number.</div>
@@ -70,10 +70,35 @@
   </section>
 
   <section>
-    <h2>Disabled &amp; readonly</h2>
-    <p><code>disabled</code> blocks interaction and dims the field. <code>readonly</code> keeps the value reachable for copy but rejects edits.</p>
+    <h2>Validation</h2>
+    <p>Mark a field as invalid with <code>aria-invalid="true"</code>. Pair with <code>.form-text--error</code> tied via <code>aria-describedby</code> so the error reaches assistive tech. This is the canonical hook for server-rendered errors — Django, Rails, Laravel render the attribute, and the border + message paint themselves. Native validation (<code>required</code>, <code>type="email"</code>) also kicks in via <code>:user-invalid</code> after the user interacts.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-column gap-2 w-100" style="max-width: 24rem;">
+    <div class="demo-stack" style="max-width: 24rem;">
+      <div>
+        <label for="invalidEmail" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="invalidEmail"
+          value="not-an-email"
+          aria-invalid="true"
+          aria-describedby="invalidEmailError" />
+        <div id="invalidEmailError" class="form-text form-text--error">Please enter a valid email address.</div>
+      </div>
+      <div>
+        <label for="nativeRequired" class="form-label">Required (try submitting empty)</label>
+        <input type="email" class="form-control" id="nativeRequired" required placeholder="you@example.com" />
+        <div class="form-text">Lights up red after a failed submit via <code>:user-invalid</code>.</div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Disabled &amp; readonly</h2>
+    <p><code>disabled</code> blocks interaction and dims the field. <code>readonly</code> keeps the value reachable for copy but rejects edits — the bg shifts a tier to signal "selectable, not editable".</p>
+    {% call ui.demo() %}
+    <div class="demo-stack" style="max-width: 24rem;">
       <input type="text" class="form-control" value="Disabled" disabled />
       <input type="text" class="form-control" value="Readonly" readonly />
     </div>
@@ -82,20 +107,31 @@
 
   <section>
     <h2>Plain text</h2>
-    <p>Swap <code>.form-control</code> for <code>.form-control-plaintext</code> to render a readonly value as bare text — no border, no background, but it still aligns with neighboring inputs in a form row.</p>
+    <p>Swap <code>.form-control</code> for <code>.form-control--plaintext</code> to render a readonly value as bare text — no border, no background, but it still aligns with neighboring inputs in a form row. Pair with <code>readonly</code> on the input.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
+    <div style="max-width: 24rem;">
       <label for="plainEmail" class="form-label">Email</label>
-      <input type="email" readonly class="form-control-plaintext" id="plainEmail" value="you@example.com" />
+      <input type="email" readonly class="form-control--plaintext" id="plainEmail" value="you@example.com" />
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Color picker</h2>
+    <p>Add <code>.form-control--color</code> to an <code>&lt;input type="color"&gt;</code>. The native swatch wears the field's inner radius (outer minus padding, V3.md §3.4) so the chip and the frame share a center.</p>
+    {% call ui.demo() %}
+    <div class="demo-row">
+      <label for="brandColor" class="form-label" style="margin-bottom: 0;">Brand</label>
+      <input type="color" class="form-control form-control--color" id="brandColor" value="#3b82f6" />
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>File input</h2>
-    <p>The same class styles <code>type="file"</code>, including the browser's selector button.</p>
+    <p>The same class styles <code>type="file"</code>. The selector button stretches to the field's inner height and reads as the primary affordance; the filename trails after it.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
+    <div style="max-width: 24rem;">
       <label for="fileInput" class="form-label">Upload</label>
       <input type="file" class="form-control" id="fileInput" />
     </div>

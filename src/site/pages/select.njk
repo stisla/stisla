@@ -6,16 +6,16 @@
 {% block content %}
   <header>
     <h1>Select</h1>
-    <p class="lead">A native dropdown for picking from a fixed list of options.</p>
+    <p class="lead">A native dropdown for picking from a fixed list of options. Same <code>.form-control</code> class as the rest of the form family — the chevron and appearance reset layer on via the native <code>&lt;select&gt;</code> element.</p>
   </header>
 
   <section>
     <h2>Basic</h2>
-    <p>Add <code>.form-select</code> to any <code>&lt;select&gt;</code>. Pair with a <code>&lt;label&gt;</code> tied via <code>for</code>/<code>id</code> so the field is reachable.</p>
+    <p>Add <code>.form-control</code> to any <code>&lt;select&gt;</code>. Pair with a <code>&lt;label&gt;</code> tied via <code>for</code>/<code>id</code> so the field is reachable.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
+    <div style="max-width: 24rem;">
       <label for="basicSelect" class="form-label">Country</label>
-      <select class="form-select" id="basicSelect">
+      <select class="form-control" id="basicSelect">
         <option selected>Pick one</option>
         <option value="id">Indonesia</option>
         <option value="my">Malaysia</option>
@@ -29,18 +29,18 @@
     <h2>Sizes</h2>
     <p>Heights match the form control scale at 28 / 36 / 44&nbsp;px.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-column gap-2 w-100" style="max-width: 24rem;">
-      <select class="form-select form-select-sm" aria-label="Small select">
+    <div class="demo-stack" style="max-width: 24rem;">
+      <select class="form-control form-control--sm" aria-label="Small select">
         <option selected>Small</option>
         <option value="1">One</option>
         <option value="2">Two</option>
       </select>
-      <select class="form-select" aria-label="Default select">
+      <select class="form-control" aria-label="Default select">
         <option selected>Default</option>
         <option value="1">One</option>
         <option value="2">Two</option>
       </select>
-      <select class="form-select form-select-lg" aria-label="Large select">
+      <select class="form-control form-control--lg" aria-label="Large select">
         <option selected>Large</option>
         <option value="1">One</option>
         <option value="2">Two</option>
@@ -53,9 +53,9 @@
     <h2>Option groups</h2>
     <p>Wrap related options in <code>&lt;optgroup&gt;</code> to label sections inside the menu.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
+    <div style="max-width: 24rem;">
       <label for="groupedSelect" class="form-label">City</label>
-      <select class="form-select" id="groupedSelect">
+      <select class="form-control" id="groupedSelect">
         <option selected>Pick one</option>
         <optgroup label="Indonesia">
           <option value="jkt">Jakarta</option>
@@ -73,11 +73,11 @@
 
   <section>
     <h2>Multiple</h2>
-    <p>Add the <code>multiple</code> attribute to let users select several options. The chevron is dropped and the control grows past the default height to make room for the list.</p>
+    <p>Add the <code>multiple</code> attribute to let users select several options. The chevron drops and the control grows past the default height to render the list inline.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
+    <div style="max-width: 24rem;">
       <label for="multipleSelect" class="form-label">Tags</label>
-      <select class="form-select" id="multipleSelect" multiple aria-label="Multiple select">
+      <select class="form-control" id="multipleSelect" multiple aria-label="Multiple select">
         <option value="bug">Bug</option>
         <option value="docs" selected>Docs</option>
         <option value="feat" selected>Feature</option>
@@ -92,8 +92,8 @@
     <h2>Size attribute</h2>
     <p>Set <code>size</code> to render a fixed-row list instead of a dropdown. Useful when the option count is small enough to show inline.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
-      <select class="form-select" size="4" aria-label="Size 4 select">
+    <div style="max-width: 24rem;">
+      <select class="form-control" size="4" aria-label="Size 4 select">
         <option selected>Pick one</option>
         <option value="1">One</option>
         <option value="2">Two</option>
@@ -108,9 +108,9 @@
     <h2>Helper text</h2>
     <p>Use <code>.form-text</code> below the field for short hints. Wire it to the select with <code>aria-describedby</code> so screen readers announce it.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
+    <div style="max-width: 24rem;">
       <label for="planSelect" class="form-label">Plan</label>
-      <select class="form-select" id="planSelect" aria-describedby="planHelp">
+      <select class="form-control" id="planSelect" aria-describedby="planHelp">
         <option selected>Pick one</option>
         <option value="free">Free</option>
         <option value="pro">Pro</option>
@@ -125,11 +125,11 @@
     <h2>Disabled</h2>
     <p>Add <code>disabled</code> to block interaction and dim the field. Individual <code>&lt;option&gt;</code> elements take the same attribute.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-column gap-2 w-100" style="max-width: 24rem;">
-      <select class="form-select" disabled aria-label="Disabled select">
+    <div class="demo-stack" style="max-width: 24rem;">
+      <select class="form-control" disabled aria-label="Disabled select">
         <option selected>Disabled</option>
       </select>
-      <select class="form-select" aria-label="Select with disabled option">
+      <select class="form-control" aria-label="Select with disabled option">
         <option selected>Pick a plan</option>
         <option value="free">Free</option>
         <option value="pro" disabled>Pro (sold out)</option>
