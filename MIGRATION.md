@@ -9,6 +9,12 @@
 
 ---
 
+Prompt for each session:
+
+"Let's continue the v3 migration. Read V3.md + MIGRATION.md, check git, and tell me what step we're on and what to do next."
+
+---
+
 ## Status
 
 _Latest entry first. One line per session: ISO date — step completed / current — blockers._
@@ -49,15 +55,15 @@ That's it. Don't pre-load assumptions; the agent re-derives state from the docs 
 
 ## 1. What exists today (BS5 v3, the thing we're migrating)
 
-| Surface | Counts | Notes |
-| --- | --- | --- |
-| `src/scss/components/` | 30 files (~100 KB) | Largest: `_sidebar.scss` 22 K, `_buttons.scss` 11 K, `_app-shell.scss` 6 K. `_progress.scss` is 0 B (placeholder). |
-| `src/scss/tokens/` | 5 files (~50 KB) | `_colors.scss`, `_maps.scss`, `_root.scss`, `_variables.scss`, `_variables-dark.scss` — all tightly coupled to BS5. |
-| `src/scss/bundles/` | `stisla-full.scss` | Canonical BS5 customization workflow with Stisla overlays. |
-| `src/js/` | `index.js` (2.7 K) | Re-exports `bootstrap`, auto-inits Popover/Tooltip, app-shell handlers. |
-| `src/site/pages/` | 40 njk demos | All use BS5 class hooks (`.fade`, `.show`), `data-bs-toggle`, `data-bs-target`. |
-| `package.json` | `bootstrap: ^5.3.3` | Plus none of the new deps yet. |
-| Foundation files | — | `foundation/` directory doesn't exist; build pipeline relies on `@import 'bootstrap/scss/reboot'` etc. |
+| Surface                | Counts              | Notes                                                                                                               |
+| ---------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `src/scss/components/` | 30 files (~100 KB)  | Largest: `_sidebar.scss` 22 K, `_buttons.scss` 11 K, `_app-shell.scss` 6 K. `_progress.scss` is 0 B (placeholder).  |
+| `src/scss/tokens/`     | 5 files (~50 KB)    | `_colors.scss`, `_maps.scss`, `_root.scss`, `_variables.scss`, `_variables-dark.scss` — all tightly coupled to BS5. |
+| `src/scss/bundles/`    | `stisla-full.scss`  | Canonical BS5 customization workflow with Stisla overlays.                                                          |
+| `src/js/`              | `index.js` (2.7 K)  | Re-exports `bootstrap`, auto-inits Popover/Tooltip, app-shell handlers.                                             |
+| `src/site/pages/`      | 40 njk demos        | All use BS5 class hooks (`.fade`, `.show`), `data-bs-toggle`, `data-bs-target`.                                     |
+| `package.json`         | `bootstrap: ^5.3.3` | Plus none of the new deps yet.                                                                                      |
+| Foundation files       | —                   | `foundation/` directory doesn't exist; build pipeline relies on `@import 'bootstrap/scss/reboot'` etc.              |
 
 ---
 
@@ -72,6 +78,7 @@ See V3.md. No re-litigation here. Token surface (§3.2), foundation (§3.1), nam
 Each step lands and merges before the next starts. No "step 3 partial PR" overlapping step 4.
 
 ### Step 0 — Snapshot the BS5 version ✅
+
 - [x] `npm run build` → captures current built site.
 - [x] Copy build output to `bs5-snapshot/` at repo root (HTML, CSS, JS — no source).
 - [x] Commit `bs5-snapshot/` with message `chore: snapshot v3 BS5 build before rewrite`.
@@ -79,11 +86,13 @@ Each step lands and merges before the next starts. No "step 3 partial PR" overla
 - [x] Verify: `npx serve bs5-snapshot` renders. Bookmark a few key pages (sidebar, modal, dropdowns, forms) for visual reference during rewrite.
 
 **Comparison workflow after step 0:**
+
 - Visual: open `bs5-snapshot/<page>.html` in one tab; live `npm run dev` of new build in another.
 - Source: `git show v3-bs5-snapshot:src/scss/components/_btn.scss` next to your new `_btn.scss` in a split editor pane.
 - Run-the-old-thing: `git worktree add ../stisla-bs5 v3-bs5-snapshot` for a parallel checkout if needed.
 
 ### Step 1 — Foundation rewrite (no visible UI change)
+
 - [ ] Install deps: `@floating-ui/dom`, `focus-trap`, `tabbable`, `embla-carousel`. Vendor `modern-normalize.css` (don't depend on the package; copy the file).
 - [ ] Remove `bootstrap` from `package.json`.
 - [ ] Create `src/scss/foundation/` with:
@@ -96,6 +105,7 @@ Each step lands and merges before the next starts. No "step 3 partial PR" overla
 - [ ] Verify: site still builds (component files break — that's fine, fixed in step 2/3); a spot-check `index.njk` renders with the new reboot/grid.
 
 ### Step 2 — Token rewrite
+
 - [ ] Delete `tokens/_colors.scss`, `_maps.scss`, `_root.scss`, `_variables.scss`, `_variables-dark.scss`.
 - [ ] Create `tokens/_theme.scss` — 28 OKLCH tokens, light + dark blocks. Single source of truth for color literals.
 - [ ] Create `tokens/_breakpoints.scss` — `$breakpoints` Sass map + `media-up/down/between` mixins (or move from `foundation/_breakpoints.scss` and re-export — pick one location).
@@ -103,9 +113,11 @@ Each step lands and merges before the next starts. No "step 3 partial PR" overla
 - [ ] All component files break here. That's intentional — fixed in step 3.
 
 ### Step 3 — Component rewrite (per-component, in dependency order)
+
 See §4 disposition table for action per component.
 
 Build order respects token + foundation dependencies:
+
 1. **Tokens proof:** btn + card (V3.md Phase 1 architecture proof). Done before any other component.
 2. **Surface family:** alert, badge, icon-box, kbd, spinner, placeholders (all use intent + surface tokens).
 3. **Form family:** form-control, form-select, form-check, input-group (largest cluster; do as one block).
@@ -116,6 +128,7 @@ Build order respects token + foundation dependencies:
 Per-component PRs land independently after the token rewrite (step 2) merges. Each PR updates the SCSS + the matching `.njk` demo page.
 
 ### Step 4 — JS rewrite (interleaved with step 3 JS-coordinated components)
+
 - [ ] `src/js/components/` directory created.
 - [ ] `Stisla.init()` declarative scanner (`[data-stisla-*]` attrs → instantiate matching class).
 - [ ] Modal: `inert` on siblings + `focus-trap` + `data-state="open"` toggling + custom events.
@@ -131,6 +144,7 @@ Per-component PRs land independently after the token rewrite (step 2) merges. Ea
 - [ ] Replace `import * as bs from 'bootstrap'` and all `data-bs-*` scanners in `index.js`.
 
 ### Step 5 — Demo pages (`src/site/pages/`)
+
 - [ ] Class name pass: `.btn-primary` → `.btn--primary`, `.modal-dialog` stays, `.modal-content` becomes `.modal__inner` (TBD per-component during step 3 rewrite).
 - [ ] State attribute pass: `.fade.show` → `[data-state="open"]`. `.collapse.show` → `[data-state="open"]` or `<details open>`.
 - [ ] Toggle attribute pass: `data-bs-toggle="modal"` → `data-stisla-toggle="modal"`. `data-bs-target` → `data-stisla-target`. Per-component conventions defined during step 3.
@@ -139,6 +153,7 @@ Per-component PRs land independently after the token rewrite (step 2) merges. Ea
 - [ ] Add customization smoke-test page: brutalist preset, soft preset, dense preset, violet primary preset, warm-tinted neutrals preset — all via root token overrides only.
 
 ### Step 6 — Cleanup + 3.0.0-beta.1
+
 - [ ] Remove `bs5-snapshot/` dir? Or keep until 3.0.0 final? Decision: keep until final; comparison value is still real during beta.
 - [ ] Update README, CHANGELOG.
 - [ ] Update `.github/workflows/authors.yml` (V3.md §5 known break).
@@ -150,43 +165,44 @@ Per-component PRs land independently after the token rewrite (step 2) merges. Ea
 ## 4. Per-component disposition
 
 Action key:
+
 - **port** — visual + behavior carry over with minimal change; just retoken and BEM-rename
 - **rewrite** — start fresh on the v3 model; old file is reference only
 - **write** — file is empty or doesn't exist; build from scratch
 - **delete** — component family cut
 
-| Component | Size | Action | Notes |
-| --- | --- | --- | --- |
-| accordion | 4.5 K | rewrite | BS5 collapse JS dependency; new height-transition impl or native `<details>` |
-| alert | 4.1 K | rewrite | color-mix on `--st-*` intents; new BEM (`__icon`, `__heading`, `__description`, `__action`) |
-| app-shell | 6.1 K | port | Stisla original; low BS5 coupling. Retoken + BEM verify |
-| badge | 2.5 K | rewrite | color-mix variant model; opt-out of radius (pill) |
-| breadcrumb | 1.9 K | port | Mostly clean; retoken |
-| button-group | 1.1 K | rewrite | Now also serves as tabs/segmented control with `data-state="active"`. Expanded scope |
-| buttons | 11.2 K | rewrite | Largest BS5 override pile (button-variant mixin); v3 BEM + color-mix from scratch |
-| card | 1.9 K | rewrite | Surface tokens; BEM (`__header`, `__body`, `__footer`) |
-| carousel | 3.0 K | rewrite | Now wraps Embla; styling minimal |
-| dropdown | 2.2 K | rewrite | Floating UI + `[data-state="open"]` + `[data-highlighted]` |
-| form-check | 3.2 K | rewrite | Native `<input>` styling; cross-browser pass |
-| form-control | 3.4 K | rewrite | Hairiest BS5 forms override pile; v3 base + `:focus-visible` ring |
-| form-select | 1.8 K | rewrite | Native select first; custom-select is a Phase 7 component |
-| icon-box | 2.2 K | port | Stisla original; retoken |
-| input-group | 3.6 K | rewrite | Adopts new form-control tokens |
-| kbd | 670 B | port | Tiny; retoken |
-| list-group | 1.5 K | rewrite | `[data-state="active"]`; accent (hover) + highlight (active) |
-| modal | 4.7 K | rewrite | New JS impl (focus-trap + inert + `[data-state="open"]`) |
-| nav | 2.6 K | **delete** | Family cut. See V3.md §4 Phase 2 |
-| navbar | 4.0 K | port | Stisla original; retoken |
-| offcanvas | 2.5 K | rewrite | Same primitives as modal |
-| page | 4.0 K | port | Stisla original |
-| pagination | 1.6 K | rewrite | `[data-state="active"]` for current page |
-| placeholders | 328 B | port | Tiny |
-| popover | 1.1 K | rewrite | Floating UI |
-| progress | 0 B | **write** | File is empty. Build from scratch |
-| sidebar | 22.1 K | rewrite | Largest file. Many custom features (collapse, sub-menus, footer). Core logic carries; tokens + state attrs are the new surface |
-| table | 3.7 K | rewrite | Surface tokens; hover/highlight on rows |
-| toast | 3.2 K | rewrite | New JS impl |
-| tooltip | 856 B | rewrite | Floating UI |
+| Component    | Size   | Action     | Notes                                                                                                                          |
+| ------------ | ------ | ---------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| accordion    | 4.5 K  | rewrite    | BS5 collapse JS dependency; new height-transition impl or native `<details>`                                                   |
+| alert        | 4.1 K  | rewrite    | color-mix on `--st-*` intents; new BEM (`__icon`, `__heading`, `__description`, `__action`)                                    |
+| app-shell    | 6.1 K  | port       | Stisla original; low BS5 coupling. Retoken + BEM verify                                                                        |
+| badge        | 2.5 K  | rewrite    | color-mix variant model; opt-out of radius (pill)                                                                              |
+| breadcrumb   | 1.9 K  | port       | Mostly clean; retoken                                                                                                          |
+| button-group | 1.1 K  | rewrite    | Now also serves as tabs/segmented control with `data-state="active"`. Expanded scope                                           |
+| buttons      | 11.2 K | rewrite    | Largest BS5 override pile (button-variant mixin); v3 BEM + color-mix from scratch                                              |
+| card         | 1.9 K  | rewrite    | Surface tokens; BEM (`__header`, `__body`, `__footer`)                                                                         |
+| carousel     | 3.0 K  | rewrite    | Now wraps Embla; styling minimal                                                                                               |
+| dropdown     | 2.2 K  | rewrite    | Floating UI + `[data-state="open"]` + `[data-highlighted]`                                                                     |
+| form-check   | 3.2 K  | rewrite    | Native `<input>` styling; cross-browser pass                                                                                   |
+| form-control | 3.4 K  | rewrite    | Hairiest BS5 forms override pile; v3 base + `:focus-visible` ring                                                              |
+| form-select  | 1.8 K  | rewrite    | Native select first; custom-select is a Phase 7 component                                                                      |
+| icon-box     | 2.2 K  | port       | Stisla original; retoken                                                                                                       |
+| input-group  | 3.6 K  | rewrite    | Adopts new form-control tokens                                                                                                 |
+| kbd          | 670 B  | port       | Tiny; retoken                                                                                                                  |
+| list-group   | 1.5 K  | rewrite    | `[data-state="active"]`; accent (hover) + highlight (active)                                                                   |
+| modal        | 4.7 K  | rewrite    | New JS impl (focus-trap + inert + `[data-state="open"]`)                                                                       |
+| nav          | 2.6 K  | **delete** | Family cut. See V3.md §4 Phase 2                                                                                               |
+| navbar       | 4.0 K  | port       | Stisla original; retoken                                                                                                       |
+| offcanvas    | 2.5 K  | rewrite    | Same primitives as modal                                                                                                       |
+| page         | 4.0 K  | port       | Stisla original                                                                                                                |
+| pagination   | 1.6 K  | rewrite    | `[data-state="active"]` for current page                                                                                       |
+| placeholders | 328 B  | port       | Tiny                                                                                                                           |
+| popover      | 1.1 K  | rewrite    | Floating UI                                                                                                                    |
+| progress     | 0 B    | **write**  | File is empty. Build from scratch                                                                                              |
+| sidebar      | 22.1 K | rewrite    | Largest file. Many custom features (collapse, sub-menus, footer). Core logic carries; tokens + state attrs are the new surface |
+| table        | 3.7 K  | rewrite    | Surface tokens; hover/highlight on rows                                                                                        |
+| toast        | 3.2 K  | rewrite    | New JS impl                                                                                                                    |
+| tooltip      | 856 B  | rewrite    | Floating UI                                                                                                                    |
 
 Demo pages (`src/site/pages/`) follow the matching component PR. Pages that exist without a backing component (e.g. typography, images) are port-only.
 
