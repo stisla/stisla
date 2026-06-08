@@ -3,25 +3,35 @@
 // Tiny helpers that don't deserve their own file. Breakpoint mixins live
 // in _breakpoints.scss.
 
-// Color-mode selector wrapper. Matches the BS5 [data-bs-theme] attribute
-// convention (selector only, not a BS5 dependency) so consumers can keep
-// their existing theme toggle wiring.
+// Color-mode selector wrapper.
+//
+// Stisla supports two selector conventions for theme switching:
+//   - `[data-theme="dark"]` attribute on any element (typically <html>)
+//   - `.dark` class on any element (typical of class-based switchers in
+//     React/Vue projects with localStorage + className toggling)
+// Light theme is the default at :root; an explicit `[data-theme="light"]`
+// is supported for nested light scopes inside a dark page.
+//
+// Consumers who want a different selector (e.g. `[data-color-mode=dark]`)
+// can re-emit the same declarations in a higher @layer.
+//
+// Mirrors BS5's color-mode mixin shape: emits descendant selectors that
+// work the same way whether called at root or nested inside a component.
+// The $root arg is accepted for API parity with BS5 (some token files
+// still pass it) but ignored — the descendant pattern works in both modes.
 //
 // Usage:
-//   .alert {
-//     background: var(--st-surface);
-//     @include color-mode(dark) {
-//       background: var(--st-surface-2);
-//     }
+//   @include color-mode(dark) {
+//     .alert { background: var(--st-surface-2); }
 //   }
 @mixin color-mode($mode: light, $root: false) {
-  @if $root {
-    [data-bs-theme='#{$mode}'] {
+  @if $mode == 'dark' {
+    [data-theme='dark'],
+    .dark {
       @content;
     }
   } @else {
-    &[data-bs-theme='#{$mode}'],
-    [data-bs-theme='#{$mode}'] & {
+    [data-theme='#{$mode}'] {
       @content;
     }
   }

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-bs-theme="light">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,7 +7,7 @@
     // Apply saved theme synchronously to avoid a light-mode flash on dark sessions.
     (function () {
       var t = localStorage.getItem('stisla-theme');
-      if (t === 'dark' || t === 'light') document.documentElement.dataset.bsTheme = t;
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
     })();
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />

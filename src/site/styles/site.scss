@@ -76,8 +76,8 @@ body {
   font-family: var(--bs-font-monospace);
 }
 
-[data-bs-theme="dark"] .demo .shiki,
-[data-bs-theme="dark"] .demo .shiki span {
+[data-theme="dark"] .demo .shiki,
+[data-theme="dark"] .demo .shiki span {
   color: var(--shiki-dark) !important;
   background-color: var(--shiki-dark-bg, transparent) !important;
 }
@@ -132,16 +132,16 @@ body {
   display: none;
 }
 
-[data-bs-theme="dark"] .theme-icon-light {
+[data-theme="dark"] .theme-icon-light {
   display: none;
 }
 
-[data-bs-theme="dark"] .theme-icon-dark {
+[data-theme="dark"] .theme-icon-dark {
   display: inline-block;
 }
 
-[data-bs-theme="dark"] .demo .shiki,
-[data-bs-theme="dark"] .demo .shiki span {
+[data-theme="dark"] .demo .shiki,
+[data-theme="dark"] .demo .shiki span {
   background-color: transparent !important;
 }
 
@@ -286,7 +286,7 @@ body {
   background: var(--bs-body-bg);
 }
 
-[data-bs-theme="dark"] {
+[data-theme="dark"] {
   .site-layout {
     background: #121417;
   }

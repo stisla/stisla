@@ -4,10 +4,10 @@
 // Dark-mode values land here too once the design tokens cover dark theme.
 
 // Light defaults: emit at :root so the carve-outs apply even without a
-// data-bs-theme attribute, and at [data-bs-theme="light"] for explicit
-// light scopes — mirrors BS5's own _root.scss pattern.
+// data-theme attribute, and at [data-theme="light"] for explicit light
+// scopes nested inside a dark page.
 :root,
-[data-bs-theme="light"] {
+[data-theme="light"] {
   --#{$prefix}border-color-subtle: #{$border-color-subtle};
   --#{$prefix}surface: #{$surface};
   --#{$prefix}surface-alt: #{$surface-alt};

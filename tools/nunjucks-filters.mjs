@@ -3,7 +3,7 @@
 import { createHighlighter } from 'shiki';
 
 // Shiki: build-time syntax highlighting. Dual-theme output uses CSS variables
-// (`--shiki-dark`), so light/dark switching is pure CSS via [data-bs-theme].
+// (`--shiki-dark`), so light/dark switching is pure CSS via [data-theme].
 // `createHighlighter` is async, but the returned `codeToHtml` is sync — so
 // we await once at module load and expose a sync filter for Nunjucks.
 const HL_THEMES = { light: 'github-light', dark: 'github-dark' };

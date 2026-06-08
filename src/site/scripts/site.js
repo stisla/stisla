@@ -14,14 +14,14 @@
     });
 })();
 
-// data-theme-toggle — flip [data-bs-theme] on <html>, persist to localStorage.
+// data-theme-toggle — flip [data-theme] on <html>, persist to localStorage.
 // FOUC prevention runs synchronously in base.njk's <head>.
 document.addEventListener("click", (e) => {
   const target = e.target.closest("[data-theme-toggle]");
   if (!target) return;
   const html = document.documentElement;
-  const next = html.dataset.bsTheme === "dark" ? "light" : "dark";
-  html.dataset.bsTheme = next;
+  const next = html.dataset.theme === "dark" ? "light" : "dark";
+  html.dataset.theme = next;
   localStorage.setItem("stisla-theme", next);
 });
 
