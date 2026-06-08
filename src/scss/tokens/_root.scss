@@ -20,12 +20,11 @@
   --#{$prefix}accent-active-color: #{$accent-active-color};
 }
 
-// Dark overrides go through BS5's color-mode mixin (same shape as BS5's own
-// _root.scss). The `$root: true` arg matches BS5's pattern — only meaningful
-// in media-query mode, where it wraps the @content in :root. Sourced from
-// the $*-dark Sass vars in tokens/_variables-dark.scss so the design tokens
-// live in one place (no hardcoded hex here).
-@include color-mode(dark, true) {
+// Dark overrides go through the Stisla color-mode mixin
+// (foundation/_mixins.scss), which emits [data-theme="dark"], .dark.
+// Sourced from the $*-dark Sass vars in tokens/_variables-dark.scss so the
+// design tokens live in one place (no hardcoded hex here).
+@include color-mode(dark) {
   --#{$prefix}border-color-subtle: #{$border-color-subtle-dark};
   --#{$prefix}surface: #{$surface-dark};
   --#{$prefix}surface-alt: #{$surface-alt-dark};

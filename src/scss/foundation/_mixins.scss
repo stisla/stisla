@@ -15,16 +15,20 @@
 // Consumers who want a different selector (e.g. `[data-color-mode=dark]`)
 // can re-emit the same declarations in a higher @layer.
 //
-// Mirrors BS5's color-mode mixin shape: emits descendant selectors that
-// work the same way whether called at root or nested inside a component.
-// The $root arg is accepted for API parity with BS5 (some token files
-// still pass it) but ignored — the descendant pattern works in both modes.
+// $root exists only to match BS5's mixin signature. We load this file
+// after `bootstrap/scss/mixins`, intentionally shadowing BS5's own
+// color-mode so its `_root.scss` dark block flips on our selectors —
+// which means BS5 internals (_root, _carousel, _close) call us with
+// `color-mode(dark, true)` and the second arg must be accepted. The
+// param is ignored: only the attribute-mode behavior makes sense once
+// the call site is responsible for whether to nest under :root or not.
+// When BS5 leaves the bundle in Step 2, drop the param.
 //
 // Usage:
 //   @include color-mode(dark) {
 //     .alert { background: var(--st-surface-2); }
 //   }
-@mixin color-mode($mode: light, $root: false) {
+@mixin color-mode($mode, $root: false) {
   @if $mode == 'dark' {
     [data-theme='dark'],
     .dark {
