@@ -182,19 +182,60 @@ body {
   display: inline-block;
 }
 
-// === Docs typography (prose) ===
-// Opt in by adding `.prose` to the content wrapper, then use bare <h1>,
-// <h2>, <p>, <code>, etc. Demo frames carry `.not-prose` so the rendered
-// preview and code listing are exempt from these rules.
+// === Docs typography (prose) — site-context overrides only ===
+// The framework's `.prose` (components/_prose.scss) provides the base
+// treatment for every page (base.njk wraps content in
+// `.main-container.prose`). This block tightens the rhythm for the
+// reference-doc feel the site wants — shorter headings, muted body
+// paragraphs, structured section spacing. Demonstrates the
+// cascade-customization pattern the framework supports (any consumer
+// can do the same on their own `.context.prose` selector).
 //
-// `:where()` keeps specificity at (0,1,0); `:not(.not-prose, .not-prose *)`
-// is the Tailwind-style opt-out gate.
+// `:where()` keeps specificity matched to the framework's element rules;
+// `:not(.not-prose, .not-prose *)` opts out inside demo viewers.
 
-.prose {
+.main-container.prose {
   $opt-out: ":not(.not-prose, .not-prose *)";
 
-  // Block-level section spacing. Section/header gap is owned by prose so
-  // pages can drop the explicit `.mb-5` from every `<section>` / `<header>`.
+  // Quieter reading rhythm for reference docs.
+  line-height: 1.7;
+
+  // Tighter docs headings — fixed rem (not em) so they don't scale with
+  // prose font-size, and reduced top margins so sections own their own
+  // spacing instead of headings owning it.
+  :where(h1)#{$opt-out} {
+    font-size: 1.75rem;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin: 0 0 0.5rem;
+  }
+
+  :where(h2)#{$opt-out} {
+    font-size: 1.125rem;
+    line-height: 1.4;
+    margin: 0 0 0.5rem;
+  }
+
+  :where(h3)#{$opt-out} {
+    font-size: 1rem;
+    line-height: 1.4;
+    margin: 1.5rem 0 0.5rem;
+  }
+
+  // Muted body color for docs paragraphs — page chrome stays quiet so
+  // demos pop. `.lead` keeps muted too (slightly larger intro paragraph).
+  :where(p)#{$opt-out} {
+    color: var(--st-muted-foreground);
+    margin: 0 0 1rem;
+  }
+
+  :where(.lead)#{$opt-out} {
+    font-size: 1.0625rem;
+    color: var(--st-muted-foreground);
+    margin-bottom: 0;
+  }
+
+  // Page structure: <section> / <header> own the inter-section spacing.
   :where(section, header)#{$opt-out} {
     margin-bottom: 3rem;
   }
@@ -203,73 +244,8 @@ body {
     margin-bottom: 0;
   }
 
-  :where(h1)#{$opt-out} {
-    font-size: 1.75rem;
-    font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-    margin: 0 0 0.5rem;
-  }
-
-  :where(h2)#{$opt-out} {
-    font-size: 1.125rem;
-    font-weight: 600;
-    line-height: 1.4;
-    margin: 0 0 0.5rem;
-  }
-
-  :where(h3)#{$opt-out} {
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1.4;
-    margin: 1.5rem 0 0.5rem;
-  }
-
-  :where(p)#{$opt-out} {
-    margin: 0 0 1rem;
-    line-height: 1.7;
-    color: var(--st-muted-foreground);
-  }
-
-  :where(p.lead)#{$opt-out} {
-    font-size: 1.0625rem;
-    color: var(--st-muted-foreground);
-    margin-bottom: 0;
-  }
-
-  :where(ul, ol)#{$opt-out} {
-    margin: 0 0 1rem;
-    padding-left: 1.25rem;
-    line-height: 1.6;
-  }
-
-  :where(li)#{$opt-out} {
-    margin-bottom: 0.25rem;
-  }
-
-  // Inline code only — Shiki <pre><code> lives inside `.demo` (.not-prose).
-  :where(code)#{$opt-out} {
-    font-family: var(--st-font-mono);
-    font-size: 0.875em;
-    padding: 0.125em 0.375em;
-    background: var(--st-surface-2);
-    border: 1px solid var(--st-border);
-    border-radius: 0.375rem;
-    color: var(--st-foreground);
-  }
-
-  :where(strong, b)#{$opt-out} {
-    font-weight: 600;
-  }
-
-  :where(a)#{$opt-out} {
-    color: var(--st-primary);
-    text-decoration-thickness: 1px;
-    text-underline-offset: 2px;
-  }
-
-  // Suppress trailing margin on the last element of a block so section
-  // spacing (e.g. <section class="mb-5">) stays predictable.
+  // Suppress trailing margin on the last element inside a section so
+  // section spacing stays predictable.
   :where(h1, h2, h3, p, ul, ol):last-child#{$opt-out} {
     margin-bottom: 0;
   }

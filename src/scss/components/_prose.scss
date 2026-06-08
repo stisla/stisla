@@ -9,6 +9,19 @@
 // .prose is a *treatment*, not a layout box — the parent decides width.
 // Pattern: <article style="max-width: 65ch"><div class="prose">…</div></article>
 //
+// Page-wrapper usage. .prose works as a whole-page wrapper too (the
+// stisla.dev docs do exactly this on .main-container.prose). Demo viewers
+// and any other subtree that wants to escape prose styling carry the
+// .not-prose class — every prose rule is gated `:not(.not-prose, .not-prose *)`.
+// Caveat: a nested .prose inside .not-prose can't reactivate (the opt-out
+// gate trips on the inner elements too). For demos that themselves are
+// prose content, use `{% call ui.demo(prose=true) %}` — that drops
+// .not-prose from the demo viewer so the nested .prose works.
+//
+// Selectors use `:where()` to keep specificity at (0,1,0) on element
+// rules. Consumers override with plain `.context.prose h2 { … }` at
+// (0,2,1) and win cleanly without `!important`.
+//
 // Customization (5 knobs at the root of .prose; component nested
 // overrides happen via the cascade — e.g. .prose { --st-kbd-padding-y: … }
 // retunes the kbd component without inventing new prose vars):
@@ -24,7 +37,9 @@
 // literal × var(--st-density) per V3.md §3.4 — no spacing ramp.
 //
 // Spec: V3.md §3.4 (component-scoped vars), §3.6 (.prose is the block;
-// element rules target raw HTML descendants).
+// element rules target raw HTML descendants with `.not-prose` opt-out).
+
+$skip: ":not(:where(.not-prose, .not-prose *))";
 
 .prose {
   --st-prose-line-height:    1.625;
@@ -40,48 +55,43 @@
   // em-based so the whole block scales with parent font-size. Same numeric
   // scale as .h1–.h6 utilities, different unit + different margin rhythm
   // (prose owns the rhythm; the utility is spacing-neutral for app UI).
-  > h1, > h2, > h3, > h4, > h5, > h6 {
+  :where(h1, h2, h3, h4, h5, h6)#{$skip} {
     color: var(--st-prose-headings-color);
     font-weight: 600;
     line-height: 1.25;
   }
 
-  > h1 { font-size: 2em;     margin-top: 0;                                 margin-bottom: calc(0.8em * var(--st-density)); }
-  > h2 { font-size: 1.5em;   margin-top: calc(2em   * var(--st-density));   margin-bottom: calc(0.8em * var(--st-density)); }
-  > h3 { font-size: 1.25em;  margin-top: calc(1.6em * var(--st-density));   margin-bottom: calc(0.6em * var(--st-density)); }
-  > h4 { font-size: 1.125em; margin-top: calc(1.5em * var(--st-density));   margin-bottom: calc(0.5em * var(--st-density)); }
-  > h5 { font-size: 1em;     margin-top: calc(1.5em * var(--st-density));   margin-bottom: calc(0.5em * var(--st-density)); }
-  > h6 { font-size: 0.875em; margin-top: calc(1.5em * var(--st-density));   margin-bottom: calc(0.5em * var(--st-density)); }
-
-  // Flush start/end: first/last children lose their outer margins so
-  // .prose snaps to the parent's box without bleeding whitespace.
-  > :first-child { margin-top: 0; }
-  > :last-child  { margin-bottom: 0; }
+  :where(h1)#{$skip} { font-size: 2em;     margin-top: 0;                                 margin-bottom: calc(0.8em * var(--st-density)); }
+  :where(h2)#{$skip} { font-size: 1.5em;   margin-top: calc(2em   * var(--st-density));   margin-bottom: calc(0.8em * var(--st-density)); }
+  :where(h3)#{$skip} { font-size: 1.25em;  margin-top: calc(1.6em * var(--st-density));   margin-bottom: calc(0.6em * var(--st-density)); }
+  :where(h4)#{$skip} { font-size: 1.125em; margin-top: calc(1.5em * var(--st-density));   margin-bottom: calc(0.5em * var(--st-density)); }
+  :where(h5)#{$skip} { font-size: 1em;     margin-top: calc(1.5em * var(--st-density));   margin-bottom: calc(0.5em * var(--st-density)); }
+  :where(h6)#{$skip} { font-size: 0.875em; margin-top: calc(1.5em * var(--st-density));   margin-bottom: calc(0.5em * var(--st-density)); }
 
   // === Paragraphs ===
-  > p {
+  :where(p)#{$skip} {
     margin-top: 0;
     margin-bottom: calc(1.25em * var(--st-density));
   }
 
   // === Lead ===
   // First paragraph after a heading often reads as a lead; opt-in via class.
-  // Larger + muted opening for long-form intros (matches /typography
-  // .lead-on-prose pattern from Tailwind Typography).
-  > .lead {
+  // Larger + muted opening for long-form intros (matches Tailwind Typography
+  // .lead-on-prose pattern).
+  :where(.lead)#{$skip} {
     font-size: 1.125em;
     color: var(--st-muted-foreground);
   }
 
   // === Inline semantics ===
-  // Restore visual treatment that reboot strips. Inside prose these tags
+  // Restore visual treatment that Reboot strips. Inside prose these tags
   // should self-style — they're semantic *and* visual.
-  strong, b { font-weight: 600; }
-  em, i     { font-style: italic; }
-  small     { font-size: 0.875em; }
+  :where(strong, b)#{$skip} { font-weight: 600; }
+  :where(em, i)#{$skip}     { font-style: italic; }
+  :where(small)#{$skip}     { font-size: 0.875em; }
 
   // === Links ===
-  a {
+  :where(a)#{$skip} {
     color: var(--st-prose-link-color);
     text-decoration: underline;
     text-underline-offset: 2px;
@@ -95,62 +105,62 @@
   // === Lists ===
   // Restore markers + indent. Nested level switches marker shape (disc →
   // circle → square) to read as a depth hierarchy.
-  > ul, > ol {
+  :where(ul, ol)#{$skip} {
     margin-top: 0;
     margin-bottom: calc(1.25em * var(--st-density));
     padding-left: 1.5em;
-
-    li {
-      margin-block: calc(0.5em * var(--st-density));
-    }
-    li::marker {
-      color: var(--st-prose-marker-color);
-    }
   }
 
-  > ul { list-style: disc; }
-  > ol { list-style: decimal; }
+  :where(ul)#{$skip} { list-style: disc; }
+  :where(ol)#{$skip} { list-style: decimal; }
 
-  ul ul, ol ol, ul ol, ol ul       { list-style: circle; }
-  ul ul ul, ol ol ol               { list-style: square; }
+  :where(ul ul, ol ol, ul ol, ol ul)#{$skip}   { list-style: circle; }
+  :where(ul ul ul, ol ol ol)#{$skip}           { list-style: square; }
+
+  :where(li)#{$skip} {
+    margin-block: calc(0.5em * var(--st-density));
+  }
+  :where(li)#{$skip}::marker {
+    color: var(--st-prose-marker-color);
+  }
 
   // Description lists.
-  > dl {
+  :where(dl)#{$skip} {
     margin-top: 0;
     margin-bottom: calc(1.25em * var(--st-density));
   }
-  > dl dt {
+  :where(dt)#{$skip} {
     font-weight: 600;
     margin-top: calc(1em * var(--st-density));
   }
-  > dl dd {
+  :where(dd)#{$skip} {
     margin-top: calc(0.25em * var(--st-density));
     padding-left: 1.5em;
   }
 
   // === Blockquote ===
-  > blockquote {
+  :where(blockquote)#{$skip} {
     margin-block: calc(1.6em * var(--st-density));
     padding-left: 1em;
     border-left: 3px solid var(--st-prose-quote-border);
     color: var(--st-muted-foreground);
     font-style: italic;
-
-    // Inner <p> reverts to inherit so blockquote owns its own rhythm.
-    p { margin: 0; }
-    p + p { margin-top: calc(0.75em * var(--st-density)); }
   }
 
+  // Inner <p> reverts to inherit so blockquote owns its own rhythm.
+  :where(blockquote p)#{$skip} { margin: 0; }
+  :where(blockquote p + p)#{$skip} { margin-top: calc(0.75em * var(--st-density)); }
+
   // === HR ===
-  > hr {
+  :where(hr)#{$skip} {
     margin-block: calc(3em * var(--st-density));
     border-top: 1px solid var(--st-border);
   }
 
   // === Inline code (chip) ===
   // Outside <pre>, code reads as a tinted token in flowing text. Inside
-  // <pre> (block code), code resets to bare mono — see > pre below.
-  :not(pre) > code {
+  // <pre> (block code), code resets to bare mono — see :where(pre) below.
+  :where(:not(pre) > code)#{$skip} {
     font-family: var(--st-font-mono);
     font-size: 0.875em;
     padding: 0.125em 0.375em;
@@ -161,7 +171,7 @@
   }
 
   // === Pre / code block ===
-  > pre {
+  :where(pre)#{$skip} {
     margin-block: calc(1.6em * var(--st-density));
     padding: calc(1em * var(--st-density));
     overflow-x: auto;
@@ -172,15 +182,15 @@
     border: 1px solid var(--st-border);
     border-radius: var(--st-radius);
     color: var(--st-foreground);
+  }
 
-    // <pre> > <code>: bare mono, no chip styling (pre owns the frame).
-    code {
-      background: none;
-      border: 0;
-      padding: 0;
-      font-size: 1em;
-      color: inherit;
-    }
+  // <pre> > <code>: bare mono, no chip styling (pre owns the frame).
+  :where(pre code)#{$skip} {
+    background: none;
+    border: 0;
+    padding: 0;
+    font-size: 1em;
+    color: inherit;
   }
 
   // === Kbd ===
@@ -191,21 +201,20 @@
   // invented for nested components (V3.md §3.4 lesson).
 
   // === Images / figures ===
-  > img,
-  > figure {
+  :where(img, figure)#{$skip} {
     margin-block: calc(2em * var(--st-density));
   }
 
-  > img {
+  :where(img)#{$skip} {
     border-radius: var(--st-radius);
   }
 
-  > figure > img {
+  :where(figure img)#{$skip} {
     margin-block: 0;
     border-radius: var(--st-radius);
   }
 
-  > figure > figcaption {
+  :where(figure figcaption)#{$skip} {
     margin-top: calc(0.75em * var(--st-density));
     font-size: 0.875em;
     color: var(--st-muted-foreground);
@@ -216,25 +225,25 @@
   // Reading-table look: header underline, generous row padding, no zebra
   // or hover. The .table component is for dashboards; prose tables are
   // for reading. Different jobs, different defaults — same vocabulary.
-  > table {
+  :where(table)#{$skip} {
     margin-block: calc(2em * var(--st-density));
     width: 100%;
     font-size: 0.875em;
     line-height: 1.5;
+  }
 
-    th, td {
-      padding: calc(0.75em * var(--st-density)) calc(1em * var(--st-density));
-      text-align: start;
-      vertical-align: top;
-    }
+  :where(th, td)#{$skip} {
+    padding: calc(0.75em * var(--st-density)) calc(1em * var(--st-density));
+    text-align: start;
+    vertical-align: top;
+  }
 
-    thead th {
-      font-weight: 600;
-      border-bottom: 1px solid var(--st-border);
-    }
+  :where(thead th)#{$skip} {
+    font-weight: 600;
+    border-bottom: 1px solid var(--st-border);
+  }
 
-    tbody tr + tr td {
-      border-top: 1px solid color-mix(in oklch, var(--st-border) 50%, transparent);
-    }
+  :where(tbody tr + tr td)#{$skip} {
+    border-top: 1px solid color-mix(in oklch, var(--st-border) 50%, transparent);
   }
 }

@@ -10,8 +10,12 @@
   Light/dark token colors come from Shiki's dual-theme CSS vars (--shiki-dark),
   so theme switching is pure CSS: no JS swap.
 
-  The wrapping `.demo` also carries `.not-prose` so the rendered preview and
-  Shiki code listing are exempt from the site's prose typography rules.
+  The wrapping `.demo` carries `.not-prose` so the rendered preview and
+  Shiki code listing are exempt from prose typography rules (the page
+  wrapper is `.main-container.prose`, and component demos are not prose
+  content). Pass `prose=true` for demos whose preview IS prose content
+  (e.g. the .prose article showcase on /typography); that drops
+  `.not-prose` so the inner content picks up framework prose styling.
 
   Usage:
     {% import "partials/_demo.njk" as ui %}
@@ -21,11 +25,11 @@
     </div>
     {% endcall %}
 #}
-{%- macro demo() -%}
+{%- macro demo(prose=false) -%}
 {%- set src = caller() -%}
 {%- set deded = src | dedent -%}
 {%- set collapsible = (deded.split('\n') | length) > 5 -%}
-<div class="demo not-prose">
+<div class="demo{% if not prose %} not-prose{% endif %}">
   <div class="demo-preview">{{ src | safe }}</div>
   <div class="demo-code"{% if collapsible %} data-demo-code{% endif %}>
     <div class="demo-code-source">{{ deded | highlight('html') | safe }}</div>

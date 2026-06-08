@@ -7,9 +7,11 @@
   <header>
     <h1>Typography</h1>
     <p class="lead">Headings, display scale, and the long-form treatment for article content.</p>
-    <p>Stisla has two typographic contexts. The pattern classes on this page — <code>.h1</code>–<code>.h6</code>, <code>.lead</code>, <code>.display-*</code> — are for app UI: card titles, page section labels, dashboard headers. You control spacing. For article or CMS content where the typography owns its rhythm, jump to <a class="link" href="#prose">long-form content</a>.</p>
-    <p>Single-property text utilities (<code>.fw-*</code>, <code>.fs-*</code>, <code>.text-*</code>, <code>.lh-*</code>) live with the rest of the text utilities, not on this page.</p>
   </header>
+
+  <section>
+    <p>Stisla has two typographic contexts. The pattern classes on this page — <code>.h1</code>–<code>.h6</code>, <code>.lead</code>, <code>.display-*</code> — are for app UI: card titles, page section labels, dashboard headers. You control spacing. For article or CMS content where the typography owns its rhythm, jump to <a class="link" href="#prose">long-form content</a>.</p>
+  </section>
 
   <section>
     <h2>Headings</h2>
@@ -61,7 +63,7 @@
     <p>Wrap article or CMS content in <code>.prose</code>. It restores the reading typography that the foundation reboot strips &mdash; heading scale and rhythm, paragraph margins, list markers, blockquote treatment, inline code chip, tables, figure captions. Everything an article needs and nothing a dashboard does.</p>
     <p>The parent decides width. <code>.prose</code> is a typographic treatment, not a layout box.</p>
     <p>The article below exercises every element <code>.prose</code> styles &mdash; headings, lead, paragraphs with inline <code>&lt;a&gt;</code>/<code>&lt;strong&gt;</code>/<code>&lt;em&gt;</code>/<code>&lt;code&gt;</code>/<code>&lt;kbd&gt;</code>/<code>&lt;small&gt;</code>, unordered + ordered + description lists, blockquote, inline code chip, pre/code block, image, figure with caption, table, and horizontal rule.</p>
-    {% call ui.demo() %}
+    {% call ui.demo(prose=true) %}
     <article style="max-width: 36rem;">
       <div class="prose">
         <p class="text-muted-foreground small">June 4, 2026 &middot; Engineering &middot; 6 min read</p>
