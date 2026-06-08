@@ -56,6 +56,13 @@
 }
 
 .card__footer {
+  // Flex breaks the inline strut leak: inline children (a bare <span>,
+  // <small>, etc.) get a fresh formatting context as flex items, so their
+  // own line-height takes effect instead of the body's 1.5 dictating the
+  // line-box. Aligns gap behavior with .card__header too.
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   padding: calc(0.75rem * var(--st-density)) var(--card-padding);
   background: var(--st-surface-2);
   border-top: 1px solid var(--st-border);
