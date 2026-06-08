@@ -1,6 +1,8 @@
 // Stisla v3 — stisla-full bundle.
-// Follows the canonical Bootstrap "Option B" customization workflow
-// (https://getbootstrap.com/docs/5.3/customize/sass/).
+//
+// Step 1 status: foundation rewrite. Reboot, grid, and containers now load
+// from src/scss/foundation/. Tokens and components are still on the BS5
+// var/mixin surface — they get rewritten in Step 2 and Step 3.
 
 // === Configuration ===
 
@@ -26,15 +28,23 @@
 @import 'bootstrap/scss/mixins';
 @import 'bootstrap/scss/utilities';
 
+// 7. Stisla foundation — loaded after BS5 mixins so the Stisla media-up/down
+//    + media-breakpoint-* shim wins over BS5's mixin definitions. The shim
+//    keeps component files compiling until each one moves to media-up/down
+//    in Step 3.
+@import '../foundation/breakpoints';
+@import '../foundation/mixins';
+
 // === Layout & components ===
 @import 'bootstrap/scss/root';
 @import '../tokens/root';
-@import 'bootstrap/scss/reboot';
+@import '../foundation/normalize';
+@import '../foundation/reboot';
 @import 'bootstrap/scss/type';
 @import '../components/kbd';
 @import 'bootstrap/scss/images';
-@import 'bootstrap/scss/containers';
-@import 'bootstrap/scss/grid';
+@import '../foundation/containers';
+@import '../foundation/grid';
 @import 'bootstrap/scss/tables';
 @import '../components/table';
 @import 'bootstrap/scss/forms';

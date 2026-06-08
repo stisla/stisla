@@ -1,0 +1,121 @@
+// Stisla v3 — breakpoint mixins (Sass-only; media queries can't read CSS vars).
+//
+// Forked from Bootstrap 5.3 (MIT):
+//   bootstrap/scss/mixins/_breakpoints.scss
+//   https://github.com/twbs/bootstrap/blob/v5.3.3/scss/mixins/_breakpoints.scss
+// See LICENSES/bootstrap-MIT.txt.
+//
+// Changes from upstream:
+// - Mixin names renamed: media-breakpoint-up/down/between/only -> media-up/down/between/only.
+// - $grid-breakpoints arg renamed to $breakpoints (matches V3.md token surface naming).
+// - Sass-internal functions kept under the bs-aligned names (breakpoint-next/min/max/infix)
+//   because foundation/_grid.scss + _containers.scss still call them; they're not public API.
+// - The 0.02px Safari workaround on -max queries is preserved verbatim.
+
+// Default breakpoint map. Components/utilities can pass a custom map.
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+) !default;
+
+// Name of the next breakpoint, or null for the last breakpoint.
+@function breakpoint-next($name, $breakpoints: $breakpoints, $breakpoint-names: map-keys($breakpoints)) {
+  $n: index($breakpoint-names, $name);
+  @if not $n {
+    @error 'breakpoint `#{$name}` not found in `#{$breakpoints}`';
+  }
+  @return if($n < length($breakpoint-names), nth($breakpoint-names, $n + 1), null);
+}
+
+// Minimum breakpoint width. Null for the smallest (first) breakpoint.
+@function breakpoint-min($name, $breakpoints: $breakpoints) {
+  $min: map-get($breakpoints, $name);
+  @return if($min != 0, $min, null);
+}
+
+// Maximum breakpoint width.
+// Reduced by 0.02px to work around `min-`/`max-` rounding on fractional widths.
+// https://www.w3.org/TR/mediaqueries-4/#mq-min-max
+// https://bugs.webkit.org/show_bug.cgi?id=178261
+@function breakpoint-max($name, $breakpoints: $breakpoints) {
+  $max: map-get($breakpoints, $name);
+  @return if($max and $max > 0, $max - .02, null);
+}
+
+// Blank string for the smallest breakpoint, otherwise "-name". Used to emit
+// responsive class suffixes (e.g. .col-md-6).
+@function breakpoint-infix($name, $breakpoints: $breakpoints) {
+  @return if(breakpoint-min($name, $breakpoints) == null, '', '-#{$name}');
+}
+
+// Media at or above the named breakpoint.
+@mixin media-up($name, $breakpoints: $breakpoints) {
+  $min: breakpoint-min($name, $breakpoints);
+  @if $min {
+    @media (min-width: $min) { @content; }
+  } @else {
+    @content;
+  }
+}
+
+// Media at or below the named breakpoint.
+@mixin media-down($name, $breakpoints: $breakpoints) {
+  $max: breakpoint-max($name, $breakpoints);
+  @if $max {
+    @media (max-width: $max) { @content; }
+  } @else {
+    @content;
+  }
+}
+
+// Media spanning two breakpoint names (inclusive of $lower, exclusive of the
+// next breakpoint above $upper).
+@mixin media-between($lower, $upper, $breakpoints: $breakpoints) {
+  $min: breakpoint-min($lower, $breakpoints);
+  $max: breakpoint-max($upper, $breakpoints);
+
+  @if $min != null and $max != null {
+    @media (min-width: $min) and (max-width: $max) { @content; }
+  } @else if $max == null {
+    @include media-up($lower, $breakpoints) { @content; }
+  } @else if $min == null {
+    @include media-down($upper, $breakpoints) { @content; }
+  }
+}
+
+// Media that matches only the named breakpoint (no min for smallest, no max
+// for largest).
+@mixin media-only($name, $breakpoints: $breakpoints) {
+  $min: breakpoint-min($name, $breakpoints);
+  $next: breakpoint-next($name, $breakpoints);
+  $max: breakpoint-max($next, $breakpoints);
+
+  @if $min != null and $max != null {
+    @media (min-width: $min) and (max-width: $max) { @content; }
+  } @else if $max == null {
+    @include media-up($name, $breakpoints) { @content; }
+  } @else if $min == null {
+    @include media-down($next, $breakpoints) { @content; }
+  }
+}
+
+// Step-1 compatibility shims. Existing component files still call
+// media-breakpoint-up/down with the BS5 name + the BS5 $grid-breakpoints
+// global. Aliases keep them building until Step 3 rewrites each component.
+// Delete this block when the last `media-breakpoint-*` reference is gone.
+@mixin media-breakpoint-up($name, $breakpoints: $breakpoints) {
+  @include media-up($name, $breakpoints) { @content; }
+}
+@mixin media-breakpoint-down($name, $breakpoints: $breakpoints) {
+  @include media-down($name, $breakpoints) { @content; }
+}
+@mixin media-breakpoint-between($lower, $upper, $breakpoints: $breakpoints) {
+  @include media-between($lower, $upper, $breakpoints) { @content; }
+}
+@mixin media-breakpoint-only($name, $breakpoints: $breakpoints) {
+  @include media-only($name, $breakpoints) { @content; }
+}

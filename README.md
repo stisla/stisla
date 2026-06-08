@@ -84,7 +84,20 @@ You can find the **Stisla** road map here: [Stisla Roadmap](https://trello.com/b
 
 ## License
 
-**Stisla** is licensed under the [MIT License](LICENSE)
+**Stisla** is licensed under the [MIT License](LICENSE).
+
+### Third-party notices
+
+Stisla v3 includes code adapted from the following MIT-licensed projects.
+Full license texts live under [`LICENSES/`](LICENSES/).
+
+- **Bootstrap 5.3** ([twbs/bootstrap](https://github.com/twbs/bootstrap), MIT) —
+  `src/scss/foundation/_grid.scss`, `_containers.scss`, `_breakpoints.scss`
+  are forks of `bootstrap/scss/_grid.scss`, `_containers.scss`, and
+  `mixins/_breakpoints.scss`. See [`LICENSES/bootstrap-MIT.txt`](LICENSES/bootstrap-MIT.txt).
+- **modern-normalize 3.0.1** ([sindresorhus/modern-normalize](https://github.com/sindresorhus/modern-normalize), MIT) —
+  vendored verbatim into `src/scss/foundation/_normalize.scss`.
+  See [`LICENSES/modern-normalize-MIT.txt`](LICENSES/modern-normalize-MIT.txt).
 
 ---
 

@@ -1,7 +1,7 @@
 {
   "name": "stisla",
   "version": "3.0.0-alpha.0",
-  "description": "Stisla v3 — CSS-first admin framework built on Bootstrap 5",
+  "description": "Stisla v3 — CSS-first admin framework. Design spec + vanilla implementation.",
   "license": "MIT",
   "author": "Nauval Azhar <nauvalazhar2@gmail.com> (https://stisla.dev)",
   "homepage": "https://stisla.dev",
@@ -15,8 +15,12 @@
     "preview": "vite preview --outDir site-dist"
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.7.6",
     "@popperjs/core": "^2.11.8",
-    "bootstrap": "^5.3.3"
+    "bootstrap": "^5.3.3",
+    "embla-carousel": "^8.6.0",
+    "focus-trap": "^8.2.1",
+    "tabbable": "^6.4.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",

@@ -1,0 +1,77 @@
+// Stisla v3 — .container / .container-fluid / .container-{bp}.
+//
+// Forked from Bootstrap 5.3 (MIT):
+//   bootstrap/scss/_containers.scss
+//   bootstrap/scss/mixins/_container.scss
+//   https://github.com/twbs/bootstrap/tree/v5.3.3/scss
+// See LICENSES/bootstrap-MIT.txt.
+//
+// Changes from upstream:
+// - --bs-gutter-x renamed to --st-grid-gutter-x. --bs-gutter-y dropped
+//   (containers don't use vertical gutter).
+// - $enable-container-classes branch dropped — classes always emit.
+// - make-container mixin inlined.
+// - $grid-breakpoints arg renamed $breakpoints (matches _breakpoints.scss).
+//
+// Depends on foundation/_breakpoints.scss (breakpoint-infix + media-up) and
+// foundation/_grid.scss ($grid-gutter-width).
+
+// === Container configuration ===============================================
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1320px,
+) !default;
+
+$container-padding-x: $grid-gutter-width !default;
+
+// === Mixin =================================================================
+
+@mixin make-container($gutter: $container-padding-x) {
+  --st-grid-gutter-x: #{$gutter};
+  width: 100%;
+  padding-right: calc(var(--st-grid-gutter-x) * 0.5);
+  padding-left: calc(var(--st-grid-gutter-x) * 0.5);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+// === Emits =================================================================
+
+.container,
+.container-fluid {
+  @include make-container();
+}
+
+// Per-breakpoint containers (.container-sm, .container-md, ...) stay 100%
+// wide below their breakpoint and pin to a max-width at and above it.
+@each $breakpoint, $container-max-width in $container-max-widths {
+  .container-#{$breakpoint} {
+    @extend .container-fluid;
+  }
+
+  @include media-up($breakpoint, $breakpoints) {
+    %responsive-container-#{$breakpoint} {
+      max-width: $container-max-width;
+    }
+
+    // Extend each breakpoint at or below the current one so .container,
+    // .container-sm, ..., .container-#{$breakpoint} all hit the same width.
+    $extend-breakpoint: true;
+
+    @each $name, $width in $breakpoints {
+      @if ($extend-breakpoint) {
+        .container#{breakpoint-infix($name, $breakpoints)} {
+          @extend %responsive-container-#{$breakpoint};
+        }
+
+        @if ($breakpoint == $name) {
+          $extend-breakpoint: false;
+        }
+      }
+    }
+  }
+}

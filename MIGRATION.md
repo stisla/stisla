@@ -19,6 +19,7 @@ Prompt for each session:
 
 _Latest entry first. One line per session: ISO date — step completed / current — blockers._
 
+- 2026-06-08 — Step 1 done. `src/scss/foundation/` lands with normalize, reboot, grid, containers, breakpoints, mixins. `LICENSES/` carries BS5 + modern-normalize MIT text. Bundle swap leaves the BS5 reboot/grid/containers behind. Reboot temporarily falls back `var(--st-X, var(--bs-Y))` until tokens land in Step 2. **Scope shift:** `bootstrap` dep removal moved to Step 2 (tokens/* and components/* still reference BS5 vars and mixins — pulling the dep now would un-build the bundle). Next: Step 2 (token rewrite). No blockers.
 - 2026-06-07 — Step 0 done. BS5 build snapshotted to `bs5-snapshot/` (44 files, 3.7 MB). Tagged `v3-bs5-snapshot` at commit `eba7fc1`. Next: Step 1 (foundation rewrite). No blockers.
 - 2026-06-07 — V3.md spec locked. MIGRATION.md drafted. Step 0 (snapshot) not started. No blockers.
 
@@ -91,18 +92,18 @@ Each step lands and merges before the next starts. No "step 3 partial PR" overla
 - Source: `git show v3-bs5-snapshot:src/scss/components/_btn.scss` next to your new `_btn.scss` in a split editor pane.
 - Run-the-old-thing: `git worktree add ../stisla-bs5 v3-bs5-snapshot` for a parallel checkout if needed.
 
-### Step 1 — Foundation rewrite (no visible UI change)
+### Step 1 — Foundation rewrite (no visible UI change) ✅
 
-- [ ] Install deps: `@floating-ui/dom`, `focus-trap`, `tabbable`, `embla-carousel`. Vendor `modern-normalize.css` (don't depend on the package; copy the file).
-- [ ] Remove `bootstrap` from `package.json`.
-- [ ] Create `src/scss/foundation/` with:
-  - `_normalize.scss` — vendored modern-normalize
-  - `_reboot.scss` — Stisla opinions (~30 lines, reads `--st-*`)
-  - `_grid.scss` + `_containers.scss` — forked from BS5 (`bootstrap/scss/_grid.scss`, `_containers.scss`, `mixins/_grid.scss`). Rename gutter vars to `--st-grid-gutter-*`. Strip RTL, `_root` emits, deprecated `.no-gutters`, `$enable-cssgrid` branch.
-  - `_breakpoints.scss` — forked from `bootstrap/scss/mixins/_breakpoints.scss`. Rename `media-breakpoint-up` → `media-up`, etc.
-  - `_mixins.scss` — `color-mode` helper (~3 lines) + any other tiny helpers.
-- [ ] Add `LICENSES/bootstrap-MIT.txt` (full BS5 MIT text). Add credit header to each forked file. Add NOTICE line to README.
-- [ ] Verify: site still builds (component files break — that's fine, fixed in step 2/3); a spot-check `index.njk` renders with the new reboot/grid.
+- [x] Install deps: `@floating-ui/dom@1.7.6`, `focus-trap@8.2.1`, `tabbable@6.4.0`, `embla-carousel@8.6.0`. Vendor `modern-normalize@3.0.1` (don't depend on the package; copy the file).
+- [ ] ~~Remove `bootstrap` from `package.json`.~~ **Moved to Step 2.** Tokens (`tokens/_variables.scss`) and components (`components/_app-shell.scss`, `_navbar.scss`) still reference BS5 vars (`$grid-breakpoints`) and the `bootstrap/scss/*` import chain in `stisla-full.scss` is the source of those vars. Removing `bootstrap` now un-builds the bundle. Step 2 (token rewrite) replaces the var surface and pulls the dep then.
+- [x] Create `src/scss/foundation/` with:
+  - `_normalize.scss` — vendored modern-normalize 3.0.1
+  - `_reboot.scss` — Stisla opinions (~50 lines). Reads `--st-*` with `var(--bs-Y)` fallbacks so the visible baseline matches pre-rewrite; fallbacks drop in Step 2.
+  - `_grid.scss` + `_containers.scss` — forked from BS5. `--bs-gutter-*` renamed to `--st-grid-gutter-*`. RTL flips, `_root` emits, `.no-gutters`, `$enable-cssgrid` stripped. Mixins inlined (no separate `mixins/_grid.scss`).
+  - `_breakpoints.scss` — forked from `bootstrap/scss/mixins/_breakpoints.scss`. `media-breakpoint-up/down/between/only` renamed to `media-up/down/between/only`. **Shim** at the bottom re-exports the old names so existing component files keep building until Step 3.
+  - `_mixins.scss` — `color-mode` helper.
+- [x] Add `LICENSES/bootstrap-MIT.txt` (full BS5 MIT text) + `LICENSES/modern-normalize-MIT.txt`. Each forked foundation file carries a credit header. README NOTICE block lists both.
+- [x] Verify: `npm run build` is green. `stisla-full.css` 283 KB / 38 KB gz. modern-normalize banner present in output, `--st-grid-gutter-x` emits 44×, zero `--bs-gutter-x` in foundation-emitted CSS, `.container-{sm..xxl}` + `.col-md-{1..12}` all emit. 39 static pages render via `npm run build:site`.
 
 ### Step 2 — Token rewrite
 
@@ -239,8 +240,8 @@ Build them on top of the rewritten foundation after 3.0 ships.
 ## 7. Running checklist
 
 - [x] Step 0 — Snapshot BS5 build, tag `v3-bs5-snapshot` ✅
-- [ ] Step 1 — Foundation rewrite (deps swap, `foundation/` files, `LICENSES/`)
-- [ ] Step 2 — Token rewrite (`_theme.scss` + `_breakpoints.scss`)
+- [x] Step 1 — Foundation rewrite (deps swap, `foundation/` files, `LICENSES/`) ✅
+- [ ] Step 2 — Token rewrite (`_theme.scss` + `_breakpoints.scss`) + remove `bootstrap` dep + drop `--bs-Y` fallbacks from `foundation/_reboot.scss`
 - [ ] Step 3 — Component rewrite (per §4 table, in order from §3 step 3)
 - [ ] Step 4 — JS rewrite (interleaved with step 3 JS-coordinated components)
 - [ ] Step 5 — Demo pages (.njk class + attr + delete pass)

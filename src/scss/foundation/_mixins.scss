@@ -1,0 +1,28 @@
+// Stisla v3 — foundation mixins.
+//
+// Tiny helpers that don't deserve their own file. Breakpoint mixins live
+// in _breakpoints.scss.
+
+// Color-mode selector wrapper. Matches the BS5 [data-bs-theme] attribute
+// convention (selector only, not a BS5 dependency) so consumers can keep
+// their existing theme toggle wiring.
+//
+// Usage:
+//   .alert {
+//     background: var(--st-surface);
+//     @include color-mode(dark) {
+//       background: var(--st-surface-2);
+//     }
+//   }
+@mixin color-mode($mode: light, $root: false) {
+  @if $root {
+    [data-bs-theme='#{$mode}'] {
+      @content;
+    }
+  } @else {
+    &[data-bs-theme='#{$mode}'],
+    [data-bs-theme='#{$mode}'] & {
+      @content;
+    }
+  }
+}

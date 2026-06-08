@@ -1,0 +1,158 @@
+// Stisla v3 — flex grid (rows, columns, gutters, row-cols, offsets).
+//
+// Forked from Bootstrap 5.3 (MIT):
+//   bootstrap/scss/_grid.scss
+//   bootstrap/scss/mixins/_grid.scss
+//   https://github.com/twbs/bootstrap/tree/v5.3.3/scss
+// See LICENSES/bootstrap-MIT.txt.
+//
+// Changes from upstream:
+// - --bs-* gutter custom properties renamed to --st-grid-gutter-x/y.
+// - $prefix removed (was `bs-`); the :root --bs-breakpoint-* emits dropped.
+// - $enable-cssgrid branch dropped — Stisla grid is flex-only.
+// - $enable-grid-classes branch dropped — classes always emit.
+// - RTL margin-flip helpers dropped (RTL out of scope for 3.0).
+// - Deprecated .no-gutters removed.
+// - $grid-breakpoints arg renamed $breakpoints (matches _breakpoints.scss).
+// - divide() helper replaced with math.div.
+// - row/col mixins inlined into this file (no separate mixins/_grid file).
+//
+// Depends on foundation/_breakpoints.scss being loaded first (uses
+// breakpoint-infix + media-up).
+
+@use 'sass:math';
+
+// === Grid configuration ====================================================
+
+$grid-columns: 12 !default;
+$grid-row-columns: 6 !default;
+$grid-gutter-width: 1.5rem !default;
+
+// Gutter ramp surfaced as .g-* / .gx-* / .gy-* utilities.
+$gutters: (
+  0: 0,
+  1: 0.25rem,
+  2: 0.5rem,
+  3: 1rem,
+  4: 1.5rem,
+  5: 3rem,
+) !default;
+
+// === Mixins ================================================================
+
+@mixin make-row($gutter: $grid-gutter-width) {
+  --st-grid-gutter-x: #{$gutter};
+  --st-grid-gutter-y: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(-1 * var(--st-grid-gutter-y));
+  margin-right: calc(-0.5 * var(--st-grid-gutter-x));
+  margin-left: calc(-0.5 * var(--st-grid-gutter-x));
+}
+
+@mixin make-col-ready() {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
+  padding-right: calc(var(--st-grid-gutter-x) * 0.5);
+  padding-left: calc(var(--st-grid-gutter-x) * 0.5);
+  margin-top: var(--st-grid-gutter-y);
+}
+
+@mixin make-col($size: false, $columns: $grid-columns) {
+  @if $size {
+    flex: 0 0 auto;
+    width: math.percentage(math.div($size, $columns));
+  } @else {
+    flex: 1 1 0;
+    max-width: 100%;
+  }
+}
+
+@mixin make-col-auto() {
+  flex: 0 0 auto;
+  width: auto;
+}
+
+@mixin make-col-offset($size, $columns: $grid-columns) {
+  $num: math.div($size, $columns);
+  margin-left: if($num == 0, 0, math.percentage($num));
+}
+
+@mixin row-cols($count) {
+  > * {
+    flex: 0 0 auto;
+    width: math.percentage(math.div(1, $count));
+  }
+}
+
+@mixin make-grid-columns($columns: $grid-columns, $gutter: $grid-gutter-width, $breakpoints: $breakpoints) {
+  @each $breakpoint in map-keys($breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $breakpoints);
+
+    @include media-up($breakpoint, $breakpoints) {
+      .col#{$infix} {
+        flex: 1 0 0;
+      }
+
+      .row-cols#{$infix}-auto > * {
+        @include make-col-auto();
+      }
+
+      @if $grid-row-columns > 0 {
+        @for $i from 1 through $grid-row-columns {
+          .row-cols#{$infix}-#{$i} {
+            @include row-cols($i);
+          }
+        }
+      }
+
+      .col#{$infix}-auto {
+        @include make-col-auto();
+      }
+
+      @if $columns > 0 {
+        @for $i from 1 through $columns {
+          .col#{$infix}-#{$i} {
+            @include make-col($i, $columns);
+          }
+        }
+
+        // $columns - 1 because offsetting by a full row isn't possible.
+        @for $i from 0 through ($columns - 1) {
+          @if not ($infix == '' and $i == 0) { // Avoid emitting useless .offset-0
+            .offset#{$infix}-#{$i} {
+              @include make-col-offset($i, $columns);
+            }
+          }
+        }
+      }
+
+      // Per-breakpoint gutter utilities (.g-*, .gx-*, .gy-*).
+      @each $key, $value in $gutters {
+        .g#{$infix}-#{$key},
+        .gx#{$infix}-#{$key} {
+          --st-grid-gutter-x: #{$value};
+        }
+
+        .g#{$infix}-#{$key},
+        .gy#{$infix}-#{$key} {
+          --st-grid-gutter-y: #{$value};
+        }
+      }
+    }
+  }
+}
+
+// === Emits =================================================================
+
+.row {
+  @include make-row();
+
+  > * {
+    @include make-col-ready();
+  }
+}
+
+@include make-grid-columns();

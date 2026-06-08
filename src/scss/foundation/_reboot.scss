@@ -1,0 +1,97 @@
+// Stisla v3 — reboot.
+//
+// Thin opinionated layer on top of foundation/_normalize.scss. Reads only
+// --st-* tokens; no literals, no BS5 vars at the surface. The full BS5
+// reboot (~280 lines of table/form resets, etc.) is intentionally not
+// ported — component files handle those concerns when needed.
+//
+// Spec: V3.md §3.1.
+//
+// === Step 1 transition note ===
+// The --st-* tokens land in Step 2 (token rewrite). For Step 1, each
+// var(--st-X) carries a var(--bs-Y) fallback so the visible baseline
+// matches the pre-rewrite site. Step 2 drops the fallback half once
+// tokens/_theme.scss ships.
+
+html {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body {
+  font-family: var(--st-font-sans, var(--bs-body-font-family));
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--st-foreground, var(--bs-body-color));
+  background-color: var(--st-background, var(--bs-body-bg));
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--st-foreground, var(--bs-heading-color, inherit));
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+mark {
+  padding: 0.1875em;
+  background-color: var(--st-highlight, var(--bs-highlight-bg));
+}
+
+a {
+  color: var(--st-primary, var(--bs-link-color));
+  text-decoration: underline;
+
+  &:hover {
+    color: var(--bs-link-hover-color);
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--st-ring, var(--bs-primary));
+  outline-offset: 2px;
+}
+
+hr {
+  margin: 1rem 0;
+  border: 0;
+  border-top: 1px solid var(--st-border, var(--bs-border-color));
+  opacity: 1;
+}
+
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block;
+  max-width: 100%;
+}
+
+img,
+video {
+  height: auto;
+}
+
+[hidden] {
+  display: none !important;
+}
