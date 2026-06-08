@@ -21,6 +21,21 @@
 .text-danger            { color: var(--st-danger)            !important; }
 .text-info              { color: var(--st-info)              !important; }
 
+// === Link ===
+// Reboot strips <a> color + underline globally; .link is the opt-back-in
+// for inline links in app UI prose (demo explainers, helper text,
+// "see X" cross-references). Long-form content uses .prose, which
+// auto-styles every <a> inside it.
+.link {
+  color: var(--st-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+.link:hover {
+  color: color-mix(in oklch, var(--st-primary) 80%, black);
+}
+
 // === Weight ===
 // Inter ships at 400, 500, 600, and 700. .fw-light degrades to the
 // nearest available weight at the browser's discretion.

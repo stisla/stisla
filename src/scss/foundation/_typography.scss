@@ -1,13 +1,17 @@
-// Stisla v3 — typography helpers.
+// Stisla v3 — typography patterns.
 //
-// Lives in @layer foundation alongside _reboot.scss. These are not
-// utilities — they're typographic patterns (heading-as-class, lead
-// paragraph, display scale, list/blockquote presentations) that any
-// component or page composes with.
+// Lives in @layer foundation alongside _reboot.scss. These are typographic
+// patterns — heading-as-class, lead, display scale — that any component or
+// page composes with. Utilities (.fw-*, .fs-*, .text-*) live in
+// utilities/_text.scss; long-form treatment (.prose) lives in
+// components/_prose.scss. Lists and blockquotes don't get utility classes
+// in v3 — reboot strips them globally, .prose restores for long-form, and
+// app UI composes from flex/gap.
 //
 // Sizes are literals, not tokens (V3.md §3.4 discipline argument:
 // no `--st-font-size-*` ramp at root). Heading-class sizes mirror the
-// h1..h6 element scale in _reboot.scss exactly.
+// h1–h6 scale that lived in the BS5-era reboot 1:1, so a .h2 utility
+// matches v2 visual rhythm at the 14px baseline.
 
 // === Heading classes ===
 // Use when you want the heading look on a different element without
@@ -63,41 +67,3 @@
 .display-4 { font-size: 3.5rem; } // 56
 .display-5 { font-size: 3rem;   } // 48
 .display-6 { font-size: 2.5rem; } // 40
-
-// === Lists ===
-// Strip markers + indent. For nav-like vertical or row layouts.
-.list-unstyled {
-  padding-left: 0;
-  list-style: none;
-}
-
-.list-inline {
-  padding-left: 0;
-  list-style: none;
-}
-
-.list-inline-item {
-  display: inline-block;
-
-  &:not(:last-child) {
-    margin-right: 0.5rem;
-  }
-}
-
-// === Blockquote ===
-// Bigger leading text with optional footer for attribution.
-.blockquote {
-  margin-bottom: 1rem;
-  font-size: 1.125rem;
-}
-
-.blockquote-footer {
-  margin-top: -0.5rem;
-  margin-bottom: 1rem;
-  font-size: 0.875em;
-  color: var(--st-muted-foreground);
-
-  &::before {
-    content: "\2014\00A0"; // em-dash, nbsp
-  }
-}

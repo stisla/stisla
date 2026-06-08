@@ -1,0 +1,240 @@
+// Stisla v3 — prose.
+//
+// Long-form typographic treatment for article / CMS / markdown content.
+// Reboot strips visual defaults from every HTML element globally; .prose
+// restores them inside its scope. Headings, paragraphs, lists, quotes,
+// inline code chip, kbd, tables, images, hr, strong/em/small all get
+// reading-context defaults here.
+//
+// .prose is a *treatment*, not a layout box — the parent decides width.
+// Pattern: <article style="max-width: 65ch"><div class="prose">…</div></article>
+//
+// Customization (5 knobs at the root of .prose; component nested
+// overrides happen via the cascade — e.g. .prose { --st-kbd-padding-y: … }
+// retunes the kbd component without inventing new prose vars):
+//
+//   --st-prose-line-height     1.625                          Reading leading
+//   --st-prose-link-color      var(--st-primary)              Inline link color
+//   --st-prose-marker-color    var(--st-muted-foreground)     List bullets / numbers
+//   --st-prose-quote-border    var(--st-border)               Blockquote left rule
+//   --st-prose-headings-color  var(--st-foreground)           Heading color
+//
+// Internal scale is em-based so the whole block scales with the parent's
+// font-size if a consumer wants larger prose text. Block margins are
+// literal × var(--st-density) per V3.md §3.4 — no spacing ramp.
+//
+// Spec: V3.md §3.4 (component-scoped vars), §3.6 (.prose is the block;
+// element rules target raw HTML descendants).
+
+.prose {
+  --st-prose-line-height:    1.625;
+  --st-prose-link-color:     var(--st-primary);
+  --st-prose-marker-color:   var(--st-muted-foreground);
+  --st-prose-quote-border:   var(--st-border);
+  --st-prose-headings-color: var(--st-foreground);
+
+  color: var(--st-foreground);
+  line-height: var(--st-prose-line-height);
+
+  // === Headings ===
+  // em-based so the whole block scales with parent font-size. Same numeric
+  // scale as .h1–.h6 utilities, different unit + different margin rhythm
+  // (prose owns the rhythm; the utility is spacing-neutral for app UI).
+  > h1, > h2, > h3, > h4, > h5, > h6 {
+    color: var(--st-prose-headings-color);
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  > h1 { font-size: 2em;     margin-top: 0;                                 margin-bottom: calc(0.8em * var(--st-density)); }
+  > h2 { font-size: 1.5em;   margin-top: calc(2em   * var(--st-density));   margin-bottom: calc(0.8em * var(--st-density)); }
+  > h3 { font-size: 1.25em;  margin-top: calc(1.6em * var(--st-density));   margin-bottom: calc(0.6em * var(--st-density)); }
+  > h4 { font-size: 1.125em; margin-top: calc(1.5em * var(--st-density));   margin-bottom: calc(0.5em * var(--st-density)); }
+  > h5 { font-size: 1em;     margin-top: calc(1.5em * var(--st-density));   margin-bottom: calc(0.5em * var(--st-density)); }
+  > h6 { font-size: 0.875em; margin-top: calc(1.5em * var(--st-density));   margin-bottom: calc(0.5em * var(--st-density)); }
+
+  // Flush start/end: first/last children lose their outer margins so
+  // .prose snaps to the parent's box without bleeding whitespace.
+  > :first-child { margin-top: 0; }
+  > :last-child  { margin-bottom: 0; }
+
+  // === Paragraphs ===
+  > p {
+    margin-top: 0;
+    margin-bottom: calc(1.25em * var(--st-density));
+  }
+
+  // === Lead ===
+  // First paragraph after a heading often reads as a lead; opt-in via class.
+  // Larger + muted opening for long-form intros (matches /typography
+  // .lead-on-prose pattern from Tailwind Typography).
+  > .lead {
+    font-size: 1.125em;
+    color: var(--st-muted-foreground);
+  }
+
+  // === Inline semantics ===
+  // Restore visual treatment that reboot strips. Inside prose these tags
+  // should self-style — they're semantic *and* visual.
+  strong, b { font-weight: 600; }
+  em, i     { font-style: italic; }
+  small     { font-size: 0.875em; }
+
+  // === Links ===
+  a {
+    color: var(--st-prose-link-color);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 1px;
+
+    &:hover {
+      color: color-mix(in oklch, var(--st-prose-link-color) 80%, black);
+    }
+  }
+
+  // === Lists ===
+  // Restore markers + indent. Nested level switches marker shape (disc →
+  // circle → square) to read as a depth hierarchy.
+  > ul, > ol {
+    margin-top: 0;
+    margin-bottom: calc(1.25em * var(--st-density));
+    padding-left: 1.5em;
+
+    li {
+      margin-block: calc(0.5em * var(--st-density));
+    }
+    li::marker {
+      color: var(--st-prose-marker-color);
+    }
+  }
+
+  > ul { list-style: disc; }
+  > ol { list-style: decimal; }
+
+  ul ul, ol ol, ul ol, ol ul       { list-style: circle; }
+  ul ul ul, ol ol ol               { list-style: square; }
+
+  // Description lists.
+  > dl {
+    margin-top: 0;
+    margin-bottom: calc(1.25em * var(--st-density));
+  }
+  > dl dt {
+    font-weight: 600;
+    margin-top: calc(1em * var(--st-density));
+  }
+  > dl dd {
+    margin-top: calc(0.25em * var(--st-density));
+    padding-left: 1.5em;
+  }
+
+  // === Blockquote ===
+  > blockquote {
+    margin-block: calc(1.6em * var(--st-density));
+    padding-left: 1em;
+    border-left: 3px solid var(--st-prose-quote-border);
+    color: var(--st-muted-foreground);
+    font-style: italic;
+
+    // Inner <p> reverts to inherit so blockquote owns its own rhythm.
+    p { margin: 0; }
+    p + p { margin-top: calc(0.75em * var(--st-density)); }
+  }
+
+  // === HR ===
+  > hr {
+    margin-block: calc(3em * var(--st-density));
+    border-top: 1px solid var(--st-border);
+  }
+
+  // === Inline code (chip) ===
+  // Outside <pre>, code reads as a tinted token in flowing text. Inside
+  // <pre> (block code), code resets to bare mono — see > pre below.
+  :not(pre) > code {
+    font-family: var(--st-font-mono);
+    font-size: 0.875em;
+    padding: 0.125em 0.375em;
+    background: var(--st-surface-2);
+    border: 1px solid var(--st-border);
+    border-radius: 0.375rem;
+    color: var(--st-foreground);
+  }
+
+  // === Pre / code block ===
+  > pre {
+    margin-block: calc(1.6em * var(--st-density));
+    padding: calc(1em * var(--st-density));
+    overflow-x: auto;
+    font-family: var(--st-font-mono);
+    font-size: 0.875em;
+    line-height: 1.5;
+    background: var(--st-surface-2);
+    border: 1px solid var(--st-border);
+    border-radius: var(--st-radius);
+    color: var(--st-foreground);
+
+    // <pre> > <code>: bare mono, no chip styling (pre owns the frame).
+    code {
+      background: none;
+      border: 0;
+      padding: 0;
+      font-size: 1em;
+      color: inherit;
+    }
+  }
+
+  // === Kbd ===
+  // Cascade-only — the kbd component reads its own --st-kbd-* vars. If a
+  // consumer wants a larger kbd inside prose, they set:
+  //   .prose { --st-kbd-padding-y: 0.25rem; }
+  // and the kbd component picks it up via the cascade. No prose vars
+  // invented for nested components (V3.md §3.4 lesson).
+
+  // === Images / figures ===
+  > img,
+  > figure {
+    margin-block: calc(2em * var(--st-density));
+  }
+
+  > img {
+    border-radius: var(--st-radius);
+  }
+
+  > figure > img {
+    margin-block: 0;
+    border-radius: var(--st-radius);
+  }
+
+  > figure > figcaption {
+    margin-top: calc(0.75em * var(--st-density));
+    font-size: 0.875em;
+    color: var(--st-muted-foreground);
+    text-align: center;
+  }
+
+  // === Table ===
+  // Reading-table look: header underline, generous row padding, no zebra
+  // or hover. The .table component is for dashboards; prose tables are
+  // for reading. Different jobs, different defaults — same vocabulary.
+  > table {
+    margin-block: calc(2em * var(--st-density));
+    width: 100%;
+    font-size: 0.875em;
+    line-height: 1.5;
+
+    th, td {
+      padding: calc(0.75em * var(--st-density)) calc(1em * var(--st-density));
+      text-align: start;
+      vertical-align: top;
+    }
+
+    thead th {
+      font-weight: 600;
+      border-bottom: 1px solid var(--st-border);
+    }
+
+    tbody tr + tr td {
+      border-top: 1px solid color-mix(in oklch, var(--st-border) 50%, transparent);
+    }
+  }
+}
