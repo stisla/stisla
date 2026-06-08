@@ -1,107 +1,76 @@
 // Stisla v3 — stisla-full bundle.
 //
-// Step 1 status: foundation rewrite. Reboot, grid, and containers now load
-// from src/scss/foundation/. Tokens and components are still on the BS5
-// var/mixin surface — they get rewritten in Step 2 and Step 3.
+// Step 2 status: token rewrite. BS5 SCSS is gone from the bundle.
+// Components are commented out — they're rewritten one-by-one in Step 3
+// and each PR uncomments its line as it lands.
+//
+// Layer order (V3.md §3): foundation -> theme -> components -> utilities.
+// Sass @import inlines content at compile time, so the @layer wrappers
+// below place each inlined file inside the named layer.
 
-// === Configuration ===
+// Cascade layer order. Authored once; layer mentions below stack into
+// the same order at runtime regardless of source order.
+@layer foundation, theme, components, utilities;
 
-// 1. Bootstrap functions (color manipulation, calc helpers)
-@import 'bootstrap/scss/functions';
-
-// 2. Stisla color primitives — full ramps for blue, sky, yellow, red, green, gray
-@import '../tokens/colors';
-
-// 3. Stisla Sass variable overrides — light + dark, parallels BS5's split
-@import '../tokens/variables';
-@import '../tokens/variables-dark';
-
-// 4. Bootstrap variables (uses our values via !default)
-@import 'bootstrap/scss/variables';
-@import 'bootstrap/scss/variables-dark';
-
-// 5. Stisla map overrides (add `sky`, drop unused BS5 colors)
-@import '../tokens/maps';
-
-// 6. Bootstrap maps, mixins, utilities config
-@import 'bootstrap/scss/maps';
-@import 'bootstrap/scss/mixins';
-@import 'bootstrap/scss/utilities';
-
-// 7. Stisla foundation — loaded after BS5 mixins so the Stisla media-up/down
-//    + media-breakpoint-* shim wins over BS5's mixin definitions. The shim
-//    keeps component files compiling until each one moves to media-up/down
-//    in Step 3.
-@import '../foundation/breakpoints';
+// Sass-only files (mixins + breakpoint helpers). Must load outside any
+// @layer so the symbols are in scope when foundation/components compile.
+@import '../tokens/breakpoints';
 @import '../foundation/mixins';
 
-// === Layout & components ===
-@import 'bootstrap/scss/root';
-@import '../tokens/root';
-@import '../foundation/normalize';
-@import '../foundation/reboot';
-@import 'bootstrap/scss/type';
-@import '../components/kbd';
-@import 'bootstrap/scss/images';
-@import '../foundation/containers';
-@import '../foundation/grid';
-@import 'bootstrap/scss/tables';
-@import '../components/table';
-@import 'bootstrap/scss/forms';
-@import '../components/form-control';
-@import '../components/form-select';
-@import '../components/form-check';
-@import '../components/input-group';
-@import 'bootstrap/scss/buttons';
-@import '../components/buttons';
-@import 'bootstrap/scss/transitions';
-@import 'bootstrap/scss/dropdown';
-@import '../components/dropdown';
-@import 'bootstrap/scss/button-group';
-@import '../components/button-group';
-@import 'bootstrap/scss/nav';
-@import '../components/nav';
-@import 'bootstrap/scss/navbar';
-@import '../components/navbar';
-@import 'bootstrap/scss/card';
-@import '../components/card';
-@import '../components/sidebar';
-@import '../components/app-shell';
-@import '../components/page';
-@import 'bootstrap/scss/accordion';
-@import '../components/accordion';
-@import 'bootstrap/scss/breadcrumb';
-@import '../components/breadcrumb';
-@import 'bootstrap/scss/pagination';
-@import '../components/pagination';
-@import 'bootstrap/scss/badge';
-@import '../components/badge';
-@import 'bootstrap/scss/alert';
-@import '../components/alert';
-@import '../components/icon-box';
-@import 'bootstrap/scss/progress';
-@import '../components/progress';
-@import 'bootstrap/scss/list-group';
-@import '../components/list-group';
-@import 'bootstrap/scss/close';
-@import 'bootstrap/scss/toasts';
-@import '../components/toast';
-@import 'bootstrap/scss/modal';
-@import '../components/modal';
-@import 'bootstrap/scss/tooltip';
-@import '../components/tooltip';
-@import 'bootstrap/scss/popover';
-@import '../components/popover';
-@import 'bootstrap/scss/carousel';
-@import '../components/carousel';
-@import 'bootstrap/scss/spinners';
-@import 'bootstrap/scss/offcanvas';
-@import '../components/offcanvas';
-@import 'bootstrap/scss/placeholders';
-@import '../components/placeholders';
+// === Foundation ========================================================
+@layer foundation {
+  @import '../foundation/normalize';
+  @import '../foundation/reboot';
+  @import '../foundation/grid';
+  @import '../foundation/containers';
+}
 
-// === Helpers ===
-@import 'bootstrap/scss/helpers';
+// === Theme tokens ======================================================
+@layer theme {
+  @import '../tokens/theme';
+}
 
-// === Utilities API (must come last) ===
-@import 'bootstrap/scss/utilities/api';
+// === Components ========================================================
+// Every component below is BS5-coupled (reads $prefix / --bs-* / BS5
+// Sass vars). Step 3 rewrites each on the v3 model (BEM + --st-* +
+// color-mix); the PR that lands the rewrite also uncomments its import.
+//
+// Order preserves the Step 1 sequence so re-enabling is mechanical.
+@layer components {
+  // @import '../components/kbd';
+  // @import '../components/table';
+  // @import '../components/form-control';
+  // @import '../components/form-select';
+  // @import '../components/form-check';
+  // @import '../components/input-group';
+  // @import '../components/buttons';
+  // @import '../components/dropdown';
+  // @import '../components/button-group';
+  // @import '../components/nav';
+  // @import '../components/navbar';
+  // @import '../components/card';
+  // @import '../components/sidebar';
+  // @import '../components/app-shell';
+  // @import '../components/page';
+  // @import '../components/accordion';
+  // @import '../components/breadcrumb';
+  // @import '../components/pagination';
+  // @import '../components/badge';
+  // @import '../components/alert';
+  // @import '../components/icon-box';
+  // @import '../components/progress';
+  // @import '../components/list-group';
+  // @import '../components/toast';
+  // @import '../components/modal';
+  // @import '../components/tooltip';
+  // @import '../components/popover';
+  // @import '../components/carousel';
+  // @import '../components/offcanvas';
+  // @import '../components/placeholders';
+}
+
+// === Utilities =========================================================
+// Hand-written utility set lands in Phase 1 (V3.md §5 open question).
+@layer utilities {
+  // @import '../utilities/…';
+}
