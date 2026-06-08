@@ -1,7 +1,78 @@
-// Soften the raw Bootstrap bar: a hint of corner radius and breathing room
-// between bars when they wrap onto multiple lines. Buttons opt out so they
-// keep .btn's own radius and rely on flex/gap utilities for spacing.
-.placeholder:not(.btn) {
-  border-radius: var(--#{$prefix}border-radius-sm);
+// Stisla v3 — placeholders.
+//
+// Skeleton stand-in for content that hasn't loaded yet. Apply
+// .placeholder to any inline element and size it via a width utility
+// or inline style.
+//
+//   <p class="text-muted-foreground" aria-hidden="true">
+//     <span class="placeholder" style="width: 60%"></span>
+//   </p>
+//
+// Fill is currentColor at low opacity — wrap the placeholder tree in
+// .text-muted-foreground so bars sit on a muted gray instead of the
+// high-contrast body color. Any .text-{intent} utility recolors too.
+//
+// Animations: wrap a group in .placeholder--glow for a pulse, or
+// .placeholder--wave for a left-to-right shimmer.
+
+.placeholder {
+  --placeholder-opacity:  0.5;
+  --placeholder-radius:   var(--st-placeholder-radius, var(--st-radius-sm));
+  --placeholder-height:   1em;
+
+  display: inline-block;
+  min-height: var(--placeholder-height);
+  vertical-align: middle;
+  cursor: wait;
+  background: currentColor;
+  opacity: var(--placeholder-opacity);
+  border-radius: var(--placeholder-radius);
   margin-bottom: 0.375rem;
+}
+
+// .btn carries its own radius and spacing — opt out of placeholder's
+// shape overrides when the placeholder lands on a button (disabled
+// loading-state button).
+.placeholder.btn {
+  border-radius: var(--btn-radius);
+  margin-bottom: 0;
+}
+
+// === Sizes ============================================================
+.placeholder--xs { --placeholder-height: 0.5em;  }
+.placeholder--sm { --placeholder-height: 0.75em; }
+.placeholder--lg { --placeholder-height: 1.5em;  }
+
+// === Animations =======================================================
+// Both wrappers target descendant .placeholder so the animation runs
+// across a group. Reduced motion stops them entirely — a paused
+// placeholder still reads as "not loaded yet" because of the bar shape
+// itself; the animation is decoration, not signal.
+
+.placeholder--glow .placeholder {
+  animation: st-placeholder-glow 2s ease-in-out infinite;
+}
+
+.placeholder--wave {
+  mask-image: linear-gradient(
+    130deg,
+    #000 55%,
+    rgba(0, 0, 0, 0.65) 75%,
+    #000 95%
+  );
+  mask-size: 200% 100%;
+  animation: st-placeholder-wave 2s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .placeholder--glow .placeholder,
+  .placeholder--wave { animation: none; }
+}
+
+@keyframes st-placeholder-glow {
+  50% { opacity: 0.2; }
+}
+
+@keyframes st-placeholder-wave {
+  100% { mask-position: -200% 0%; }
 }

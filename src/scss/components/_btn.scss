@@ -191,9 +191,10 @@
 
 // Tint percentages tuned for visibility against the darker page bg.
 // Lower values (8% / 10%) read fine in light mode where white shines
-// through but vanish on dark surfaces; 14% / 18% / 22% / 26% give a
-// perceivable step in both modes without competing with the tone-
-// colored border (outline) or label (ghost).
+// through but vanish on dark surfaces; 12–28% give a perceivable step
+// in both modes without competing with the tone-colored border
+// (outline) or label (ghost). Shape names match .badge--soft for
+// cross-component consistency — soft is the only filled-tinted shape.
 .btn--outline {
   --btn-bg:           transparent;
   --btn-color:        var(--btn-tone);
@@ -218,7 +219,7 @@
   &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--btn-tone) 26%, transparent); }
 }
 
-.btn--light {
+.btn--soft {
   --btn-bg:           color-mix(in oklch, var(--btn-tone) 12%, transparent);
   --btn-color:        var(--btn-tone);
   --btn-border-color: transparent;

@@ -11,33 +11,29 @@
 
   <section>
     <h2>Example</h2>
-    <p>The same card in two states. The loading card mirrors the real card's layout so nothing jumps when content arrives. Wrap the skeleton tree in <code>.text-body-secondary</code> so the bars sit on a muted gray instead of the high-contrast body color.</p>
+    <p>The same card in two states. The loading card mirrors the real card's layout so nothing jumps when content arrives. Wrap the skeleton tree in <code>.text-muted-foreground</code> so bars sit on a muted gray instead of the high-contrast body color.</p>
     {% call ui.demo() %}
-    <div class="row g-3 w-100">
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Quarterly review</h5>
-            <p class="card-text">Wraps up the metrics, customer wins, and what's queued for next quarter.</p>
-            <a href="#" class="btn btn-primary">Open report</a>
-          </div>
+    <div class="demo-grid">
+      <div class="card">
+        <div class="card__body">
+          <h5 class="card__title">Quarterly review</h5>
+          <p class="card__text">Wraps up the metrics, customer wins, and what's queued for next quarter.</p>
+          <a href="#" class="btn btn--primary">Open report</a>
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="card" aria-hidden="true">
-          <div class="card-body text-body-secondary">
-            <h5 class="card-title placeholder-glow">
-              <span class="placeholder col-6"></span>
-            </h5>
-            <p class="card-text placeholder-glow">
-              <span class="placeholder col-7"></span>
-              <span class="placeholder col-4"></span>
-              <span class="placeholder col-4"></span>
-              <span class="placeholder col-6"></span>
-              <span class="placeholder col-8"></span>
-            </p>
-            <a class="btn btn-primary disabled placeholder col-4" aria-disabled="true"></a>
-          </div>
+      <div class="card" aria-hidden="true">
+        <div class="card__body text-muted-foreground">
+          <h5 class="card__title placeholder--glow">
+            <span class="placeholder" style="width: 50%"></span>
+          </h5>
+          <p class="card__text placeholder--glow">
+            <span class="placeholder" style="width: 60%"></span>
+            <span class="placeholder" style="width: 30%"></span>
+            <span class="placeholder" style="width: 30%"></span>
+            <span class="placeholder" style="width: 50%"></span>
+            <span class="placeholder" style="width: 70%"></span>
+          </p>
+          <span class="btn btn--primary placeholder" aria-disabled="true" style="width: 6rem"></span>
         </div>
       </div>
     </div>
@@ -46,66 +42,54 @@
 
   <section>
     <h2>Basic</h2>
-    <p>Apply <code>.placeholder</code> to any inline element and give it a width via a grid column or sizing utility. The bar fills with the current text color at low opacity and shows a wait cursor.</p>
+    <p>Apply <code>.placeholder</code> to any inline element and size it via an inline style. The bar fills with the current text color at half opacity and shows a wait cursor.</p>
     {% call ui.demo() %}
-    <p class="w-100 mb-0 text-body-secondary" aria-hidden="true">
-      <span class="placeholder col-6"></span>
+    <p class="text-muted-foreground" aria-hidden="true" style="margin: 0;">
+      <span class="placeholder" style="width: 50%"></span>
     </p>
     {% endcall %}
   </section>
 
   <section>
-    <h2>Widths</h2>
-    <p>Use grid column utilities (<code>.col-*</code>) or width utilities (<code>.w-25</code>, <code>.w-50</code>, <code>.w-75</code>, <code>.w-100</code>) to size each bar.</p>
-    {% call ui.demo() %}
-    <div class="w-100 text-body-secondary" aria-hidden="true">
-      <span class="placeholder col-6"></span>
-      <span class="placeholder w-75"></span>
-      <span class="placeholder" style="width: 25%;"></span>
-    </div>
-    {% endcall %}
-  </section>
-
-  <section>
     <h2>Sizes</h2>
-    <p>Three height modifiers sit alongside the default. <code>.placeholder-xs</code> and <code>.placeholder-sm</code> trim the bar for inline captions; <code>.placeholder-lg</code> bulks it up for headings.</p>
+    <p>Three height modifiers sit alongside the default. <code>.placeholder--xs</code> and <code>.placeholder--sm</code> trim the bar for inline captions; <code>.placeholder--lg</code> bulks it up for headings.</p>
     {% call ui.demo() %}
-    <div class="w-100 text-body-secondary" aria-hidden="true">
-      <span class="placeholder col-12 placeholder-lg"></span>
-      <span class="placeholder col-12"></span>
-      <span class="placeholder col-12 placeholder-sm"></span>
-      <span class="placeholder col-12 placeholder-xs"></span>
+    <div class="text-muted-foreground" aria-hidden="true">
+      <span class="placeholder placeholder--lg" style="width: 100%"></span>
+      <span class="placeholder" style="width: 100%"></span>
+      <span class="placeholder placeholder--sm" style="width: 100%"></span>
+      <span class="placeholder placeholder--xs" style="width: 100%"></span>
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>Colors</h2>
-    <p>Recolor with any <code>.bg-*</code> utility. The default picks up the current text color; wrap in <code>.text-body-secondary</code> for the muted gray used everywhere else on this page.</p>
+    <p>Recolor with any <code>.text-*</code> utility. The default picks up the current text color; wrap in <code>.text-muted-foreground</code> for the muted gray used everywhere else on this page.</p>
     {% call ui.demo() %}
-    <div class="w-100" aria-hidden="true">
-      <span class="placeholder col-12 text-body-secondary"></span>
-      <span class="placeholder col-12 bg-primary"></span>
-      <span class="placeholder col-12 bg-success"></span>
-      <span class="placeholder col-12 bg-danger"></span>
-      <span class="placeholder col-12 bg-warning"></span>
-      <span class="placeholder col-12 bg-info"></span>
+    <div aria-hidden="true">
+      <span class="placeholder text-muted-foreground" style="width: 100%"></span>
+      <span class="placeholder text-primary" style="width: 100%"></span>
+      <span class="placeholder text-success" style="width: 100%"></span>
+      <span class="placeholder text-danger" style="width: 100%"></span>
+      <span class="placeholder text-warning" style="width: 100%"></span>
+      <span class="placeholder text-info" style="width: 100%"></span>
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>Animation</h2>
-    <p>Wrap a group in <code>.placeholder-glow</code> for the pulsing opacity loop, or <code>.placeholder-wave</code> for a shimmer that sweeps across the bars.</p>
+    <p>Wrap a group in <code>.placeholder--glow</code> for a pulsing opacity loop, or <code>.placeholder--wave</code> for a shimmer that sweeps left to right.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-column gap-3 w-100 text-body-secondary" aria-hidden="true">
-      <p class="placeholder-glow mb-0">
-        <span class="placeholder col-12"></span>
-        <span class="placeholder col-8"></span>
+    <div class="demo-stack text-muted-foreground" aria-hidden="true">
+      <p class="placeholder--glow" style="margin: 0;">
+        <span class="placeholder" style="width: 100%"></span>
+        <span class="placeholder" style="width: 70%"></span>
       </p>
-      <p class="placeholder-wave mb-0">
-        <span class="placeholder col-12"></span>
-        <span class="placeholder col-8"></span>
+      <p class="placeholder--wave" style="margin: 0;">
+        <span class="placeholder" style="width: 100%"></span>
+        <span class="placeholder" style="width: 70%"></span>
       </p>
     </div>
     {% endcall %}
@@ -113,11 +97,11 @@
 
   <section>
     <h2>Buttons</h2>
-    <p>Apply <code>.placeholder</code> to a <code>.btn</code> to render a disabled, unlabeled stand-in. Mirror the variant of the real button so the swap is seamless.</p>
+    <p>Apply <code>.placeholder</code> to a <code>.btn</code> to render an unlabeled stand-in. Mirror the variant of the real button so the swap is seamless.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2 w-100">
-      <a class="btn btn-primary disabled placeholder col-3" aria-disabled="true"></a>
-      <a class="btn btn-outline-secondary disabled placeholder col-2" aria-disabled="true"></a>
+    <div class="demo-row">
+      <span class="btn btn--primary placeholder" aria-disabled="true" style="width: 6rem"></span>
+      <span class="btn btn--outline btn--neutral placeholder" aria-disabled="true" style="width: 4rem"></span>
     </div>
     {% endcall %}
   </section>

@@ -11,71 +11,73 @@
 
   <section>
     <h2>Border</h2>
-    <p>The default. Use <code>.spinner-border</code> with <code>role="status"</code> and a visually hidden label so screen readers announce the loading state.</p>
+    <p>The default. Use <code>.spinner</code> with <code>role="status"</code> and a visually hidden label so screen readers announce the loading state.</p>
     {% call ui.demo() %}
-    <div class="spinner-border" role="status">
-      <span class="visually-hidden">Loading...</span>
+    <div class="spinner" role="status">
+      <span class="visually-hidden">Loading…</span>
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>Grow</h2>
-    <p>Swap to <code>.spinner-grow</code> for a pulsing dot. Same markup, same a11y story.</p>
+    <p>Add <code>.spinner--grow</code> for a pulsing dot. Same markup, same a11y story.</p>
     {% call ui.demo() %}
-    <div class="spinner-grow" role="status">
-      <span class="visually-hidden">Loading...</span>
+    <div class="spinner spinner--grow" role="status">
+      <span class="visually-hidden">Loading…</span>
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>Colors</h2>
-    <p>Both spinners inherit from <code>currentcolor</code>, so any <code>.text-*</code> utility recolors them.</p>
+    <p>Both spinners inherit from <code>currentColor</code>, so any <code>.text-*</code> utility recolors them.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-3 align-items-center">
-      <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
-      <div class="spinner-border text-success" role="status"><span class="visually-hidden">Loading...</span></div>
-      <div class="spinner-border text-danger" role="status"><span class="visually-hidden">Loading...</span></div>
-      <div class="spinner-border text-warning" role="status"><span class="visually-hidden">Loading...</span></div>
-      <div class="spinner-border text-info" role="status"><span class="visually-hidden">Loading...</span></div>
-      <div class="spinner-border text-body-secondary" role="status"><span class="visually-hidden">Loading...</span></div>
+    <div class="demo-row">
+      <div class="spinner text-primary" role="status"><span class="visually-hidden">Loading…</span></div>
+      <div class="spinner text-success" role="status"><span class="visually-hidden">Loading…</span></div>
+      <div class="spinner text-danger" role="status"><span class="visually-hidden">Loading…</span></div>
+      <div class="spinner text-warning" role="status"><span class="visually-hidden">Loading…</span></div>
+      <div class="spinner text-info" role="status"><span class="visually-hidden">Loading…</span></div>
+      <div class="spinner text-muted-foreground" role="status"><span class="visually-hidden">Loading…</span></div>
     </div>
     {% endcall %}
 
     <p>The grow variant takes the same utilities.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-3 align-items-center">
-      <div class="spinner-grow text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
-      <div class="spinner-grow text-success" role="status"><span class="visually-hidden">Loading...</span></div>
-      <div class="spinner-grow text-danger" role="status"><span class="visually-hidden">Loading...</span></div>
-      <div class="spinner-grow text-warning" role="status"><span class="visually-hidden">Loading...</span></div>
-      <div class="spinner-grow text-info" role="status"><span class="visually-hidden">Loading...</span></div>
-      <div class="spinner-grow text-body-secondary" role="status"><span class="visually-hidden">Loading...</span></div>
+    <div class="demo-row">
+      <div class="spinner spinner--grow text-primary" role="status"><span class="visually-hidden">Loading…</span></div>
+      <div class="spinner spinner--grow text-success" role="status"><span class="visually-hidden">Loading…</span></div>
+      <div class="spinner spinner--grow text-danger" role="status"><span class="visually-hidden">Loading…</span></div>
+      <div class="spinner spinner--grow text-warning" role="status"><span class="visually-hidden">Loading…</span></div>
+      <div class="spinner spinner--grow text-info" role="status"><span class="visually-hidden">Loading…</span></div>
+      <div class="spinner spinner--grow text-muted-foreground" role="status"><span class="visually-hidden">Loading…</span></div>
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>Sizes</h2>
-    <p>Add <code>.spinner-border-sm</code> or <code>.spinner-grow-sm</code> for the compact size used inside buttons and badges.</p>
+    <p>Add <code>.spinner--sm</code> for the compact size used inside buttons and badges, or <code>.spinner--lg</code> for an empty-state hero.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-3 align-items-center">
-      <div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>
-      <div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div>
-      <div class="spinner-grow" role="status"><span class="visually-hidden">Loading...</span></div>
-      <div class="spinner-grow spinner-grow-sm" role="status"><span class="visually-hidden">Loading...</span></div>
+    <div class="demo-row">
+      <div class="spinner spinner--sm" role="status"><span class="visually-hidden">Loading…</span></div>
+      <div class="spinner" role="status"><span class="visually-hidden">Loading…</span></div>
+      <div class="spinner spinner--lg" role="status"><span class="visually-hidden">Loading…</span></div>
+      <div class="spinner spinner--grow spinner--sm" role="status"><span class="visually-hidden">Loading…</span></div>
+      <div class="spinner spinner--grow" role="status"><span class="visually-hidden">Loading…</span></div>
+      <div class="spinner spinner--grow spinner--lg" role="status"><span class="visually-hidden">Loading…</span></div>
     </div>
     {% endcall %}
 
-    <p>For one-off sizes, override the <code>--bs-spinner-width</code> and <code>--bs-spinner-height</code> CSS variables inline.</p>
+    <p>For one-off sizes, override <code>--spinner-size</code> inline.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-3 align-items-center">
-      <div class="spinner-border" role="status" style="--bs-spinner-width: 3rem; --bs-spinner-height: 3rem;">
-        <span class="visually-hidden">Loading...</span>
+    <div class="demo-row">
+      <div class="spinner" role="status" style="--spinner-size: 3rem; --spinner-width: 4px;">
+        <span class="visually-hidden">Loading…</span>
       </div>
-      <div class="spinner-grow" role="status" style="--bs-spinner-width: 3rem; --bs-spinner-height: 3rem;">
-        <span class="visually-hidden">Loading...</span>
+      <div class="spinner spinner--grow" role="status" style="--spinner-size: 3rem;">
+        <span class="visually-hidden">Loading…</span>
       </div>
     </div>
     {% endcall %}
@@ -83,10 +85,10 @@
 
   <section>
     <h2>Alignment</h2>
-    <p>Spinners are inline-block, so flex and margin utilities place them like any other inline element. Use <code>.ms-auto</code> to push one to the trailing edge of a flex row.</p>
+    <p>Spinners are inline-block, so flex and margin utilities place them like any other inline element.</p>
     {% call ui.demo() %}
-    <div class="d-flex align-items-center">
-      <div class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></div>
+    <div class="demo-row">
+      <div class="spinner spinner--sm" role="status" aria-hidden="true"></div>
       <span>Syncing inbox</span>
     </div>
     {% endcall %}
@@ -94,9 +96,9 @@
     <p>Center one inside a card or empty state by wrapping it in a flex container.</p>
     {% call ui.demo() %}
     <div class="card w-100">
-      <div class="card-body d-flex justify-content-center py-5">
-        <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Loading...</span>
+      <div class="card__body" style="display: flex; justify-content: center; padding-block: 2.5rem;">
+        <div class="spinner spinner--lg text-primary" role="status">
+          <span class="visually-hidden">Loading…</span>
         </div>
       </div>
     </div>
@@ -105,24 +107,26 @@
 
   <section>
     <h2>In buttons</h2>
-    <p>Drop a small spinner inside a <code>.btn</code> to mark it as busy. Keep the label visible so the action stays readable.</p>
+    <p>For the canonical icon-aware loading state, use <code>.is-loading</code> on the button itself. It swaps any leading or trailing icon for the spinner without shifting the label. See <a href="/buttons">Buttons</a>.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
-      <button type="button" class="btn btn-primary" disabled>
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        Loading
-      </button>
-      <button type="button" class="btn btn-primary" disabled>
-        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-        Loading
-      </button>
-      <button type="button" class="btn btn-outline-secondary" disabled>
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        Saving
-      </button>
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary is-loading" aria-busy="true">Saving</button>
+      <button type="button" class="btn btn--outline btn--neutral is-loading" aria-busy="true">Loading</button>
     </div>
     {% endcall %}
 
-    <p>For the canonical icon-aware loading state, use <code>.btn-loading</code> instead. It swaps any leading or trailing icon for the spinner without shifting the label. See <a href="/buttons">Buttons</a>.</p>
+    <p>For a standalone spinner inside a button (separate from <code>.is-loading</code>), slot <code>.spinner.spinner--sm</code> as a leading element.</p>
+    {% call ui.demo() %}
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary" disabled>
+        <span class="spinner spinner--sm" role="status" aria-hidden="true"></span>
+        Loading
+      </button>
+      <button type="button" class="btn btn--primary" disabled>
+        <span class="spinner spinner--grow spinner--sm" role="status" aria-hidden="true"></span>
+        Loading
+      </button>
+    </div>
+    {% endcall %}
   </section>
 {% endblock %}

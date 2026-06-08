@@ -1,62 +1,64 @@
-// Stisla v3 — icon box.
-// Square tinted container for a single icon. BS5 ships nothing equivalent;
-// the closest neighbour is .badge-light-{state}, which this mirrors at a
-// fixed 36×36 footprint with a 18px icon inside.
+// Stisla v3 — icon-box.
 //
-// Parts:
-//   .icon-box                 base (sizing + layout, no color)
-//   .icon-box-{state}         tinted variant (15% color bg, 100% color icon)
-//   > svg | > i               leading icon — width/height pinned via CSS vars
+// Square tinted container for a single icon (Stisla original). Intent
+// modifiers compose flat:
 //
-// Shape utilities (.rounded-circle / .rounded-pill / .rounded-0) compose;
-// no per-shape modifier ships.
+//   <span class="icon-box"><i data-lucide="zap"></i></span>            neutral
+//   <span class="icon-box icon-box--primary">…</span>                  primary
+//   <span class="icon-box icon-box--primary icon-box--round">…</span>  circle
+//
+// The 15% tint mirrors .badge--soft. Different name because icon-box has
+// its own intrinsic sizing (36×36 by default) and exists in a different
+// place in the page hierarchy.
 
 .icon-box {
-  --#{$prefix}icon-box-size: 2.25rem;
-  --#{$prefix}icon-box-icon-size: 1.125rem;
-  --#{$prefix}icon-box-border-radius: #{$border-radius-sm};
-  --#{$prefix}icon-box-bg: transparent;
-  --#{$prefix}icon-box-color: inherit;
+  --icon-box-size:        calc(2.25rem * var(--st-density));
+  --icon-box-icon-size:   1.125rem;
+  --icon-box-radius:      var(--st-icon-box-radius, var(--st-radius-sm));
+  --icon-box-tone:        var(--st-muted-foreground);
+  --icon-box-bg:          color-mix(in oklch, var(--icon-box-tone) 15%, transparent);
+  --icon-box-color:       var(--icon-box-tone);
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: var(--#{$prefix}icon-box-size);
-  height: var(--#{$prefix}icon-box-size);
-  border-radius: var(--#{$prefix}icon-box-border-radius);
-  background-color: var(--#{$prefix}icon-box-bg);
-  color: var(--#{$prefix}icon-box-color);
+  width: var(--icon-box-size);
+  height: var(--icon-box-size);
+  color: var(--icon-box-color);
+  background: var(--icon-box-bg);
+  border-radius: var(--icon-box-radius);
 }
 
-// Icon stays at the box's icon-size token regardless of the surrounding
-// font-size. Mirrors the convention in _buttons.scss (handles SVG + the
-// pre-init <i data-lucide> state).
+// Icon stays at --icon-box-icon-size regardless of surrounding font-size.
 .icon-box :is(svg, i) {
-  width: var(--#{$prefix}icon-box-icon-size);
-  height: var(--#{$prefix}icon-box-icon-size);
+  width: var(--icon-box-icon-size);
+  height: var(--icon-box-icon-size);
   flex-shrink: 0;
 }
 
-// Tinted variant — color at 15% bg, solid color icon. Mirrors the
-// .badge-light-* mixin in components/_badge.scss.
-@mixin icon-box-variant($color) {
-  --#{$prefix}icon-box-bg: #{rgba($color, 0.15)};
-  --#{$prefix}icon-box-color: #{$color};
+// === Intent modifiers =================================================
+// Override --icon-box-tone; bg + color both re-resolve from the new tone.
+@mixin icon-box-intent($token) {
+  --icon-box-tone: var(--st-#{$token});
 }
 
-@each $color, $value in map-remove($theme-colors, "light", "dark") {
-  .icon-box-#{$color} {
-    @include icon-box-variant($value);
-  }
-}
+.icon-box--primary { @include icon-box-intent(primary); }
+.icon-box--success { @include icon-box-intent(success); }
+.icon-box--warning { @include icon-box-intent(warning); }
+.icon-box--danger  { @include icon-box-intent(danger);  }
+.icon-box--info    { @include icon-box-intent(info);    }
 
-// Mono secondary compiles to near-black; on a dark surface the tint and the
-// icon both vanish. Repaint to the dark-mode foreground (matches the dark
-// override for .badge-light-secondary in components/_badge.scss).
-@include color-mode(dark) {
-  .icon-box-secondary {
-    --#{$prefix}icon-box-bg: #{rgba($body-color-dark, 0.15)};
-    --#{$prefix}icon-box-color: #{$body-color-dark};
-  }
+// === Shape modifiers ==================================================
+.icon-box--round  { border-radius: 9999px; }
+.icon-box--square { border-radius: 0;      }
+
+// === Size modifiers ===================================================
+.icon-box--sm {
+  --icon-box-size:      calc(1.75rem * var(--st-density));
+  --icon-box-icon-size: 0.875rem;
+}
+.icon-box--lg {
+  --icon-box-size:      calc(3rem * var(--st-density));
+  --icon-box-icon-size: 1.5rem;
 }

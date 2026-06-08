@@ -1,20 +1,39 @@
 // Stisla v3 — <kbd>.
-// BS5's stock `kbd` rule (in scss/_type.scss) paints kbd as a dark inverted
-// chip and ships no border or shadow. We override the bg/color via $kbd-bg /
-// $kbd-color in tokens/_variables.scss; this file adds the hairline border and
-// a 1px soft drop shadow so kbd reads like a key cap. Dark mode swaps the
-// three colors via @include color-mode(dark) since BS5 exposes no $kbd-*-dark
-// Sass hooks.
+//
+// Styles the native element directly — every <kbd> picks up the chip
+// styling without a class. Padding numbers match V3.md §3.4 (2 × density
+// vertical, 6 × density horizontal). Mono family reads from the
+// --st-font-mono token (V3.md §3.2).
+//
+// Sits in the rest tier of the interactional trio (--st-neutral fill,
+// --st-neutral-foreground text, --st-border rim). Same fill weight as
+// .btn--neutral and input-group addons.
 
 kbd {
-  border: 1px solid $kbd-border-color;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --kbd-padding-y: calc(0.125rem * var(--st-density));
+  --kbd-padding-x: calc(0.375rem * var(--st-density));
+  --kbd-radius:    var(--st-kbd-radius, var(--st-radius-sm));
+
+  display: inline-block;
+  padding: var(--kbd-padding-y) var(--kbd-padding-x);
+  font-family: var(--st-font-mono);
+  font-size: 0.8125em;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--st-neutral-foreground);
+  background: var(--st-neutral);
+  border: 1px solid var(--st-border);
+  border-radius: var(--kbd-radius);
+  // Tiny ambient shadow so the chip reads as a key cap and not a tag.
+  box-shadow: 0 1px 0 var(--st-border);
 }
 
-@include color-mode(dark) {
-  kbd {
-    background-color: $kbd-bg-dark;
-    color: $kbd-color-dark;
-    border-color: $kbd-border-color-dark;
-  }
+// Nested <kbd> (e.g. <kbd><kbd>⌘</kbd><kbd>K</kbd></kbd>) loses the
+// outer chrome so the inner caps don't get a double border.
+kbd kbd {
+  padding: 0;
+  font-size: 1em;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }

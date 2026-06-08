@@ -1,78 +1,78 @@
-// Stisla v3 — badges.
-// BS5 sizes the badge through padding alone; a fixed 22px chip needs an
-// inline-flex + min-height rule that lives here. Solid color variants still
-// come from BS5's .text-bg-{state} (or .bg-{state}) utilities. Light tinted
-// variants (15% bg over the solid color text) emit below.
+// Stisla v3 — badge.
 //
-// Parts:
-//   .badge                base (BS5)
-//   .text-bg-{state}      solid filled (BS5 utility, unchanged)
-//   .badge-light-{state}  soft tint (new — color at 15% bg, solid color text)
-//   > svg | > i           leading or trailing icon, scales to 1em
-//   .spinner-border       loading state, scales to 1em via spinner CSS vars
+// BEM: .badge (base, neutral filled) + intent modifiers + .badge--soft
+// shape modifier. Compose flat at the root (V3.md §3.6):
+//
+//   <span class="badge">Default</span>                        neutral filled
+//   <span class="badge badge--primary">Primary</span>         primary filled
+//   <span class="badge badge--soft badge--primary">…</span>   primary soft tint
+//
+// Pill is the default shape; .badge opts out of --st-radius (V3.md §3.4
+// — pill is intentional). Override --badge-radius if a square chip is
+// needed for a one-off; project-scope a class if it happens three+ times.
+//
+// Sizing is intrinsic to the content (line-height clamp + padding ×
+// density). No --sm / --lg modifiers — badges rarely need them. Inside
+// a .btn the badge auto-shrinks via the parent's font-size cascade.
 
 .badge {
+  --badge-radius:       9999px;
+  --badge-min-height:   calc(1.375rem * var(--st-density));
+  --badge-padding-y:    calc(0.125rem * var(--st-density));
+  --badge-padding-x:    calc(0.5rem   * var(--st-density));
+  --badge-font-size:    0.75rem;
+  --badge-font-weight:  500;
+  // Default tone for the soft fallback (intent-less .badge--soft). Intent
+  // modifiers override --badge-tone; .badge--soft never touches it, so
+  // .badge--soft.badge--primary picks up primary via the cascade.
+  --badge-tone:         var(--st-muted-foreground);
+  --badge-bg:           var(--st-neutral);
+  --badge-color:        var(--st-neutral-foreground);
+
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  min-height: 1.25rem;
+  min-height: var(--badge-min-height);
+  padding: var(--badge-padding-y) var(--badge-padding-x);
+  font-family: inherit;
+  font-size: var(--badge-font-size);
+  font-weight: var(--badge-font-weight);
   line-height: 1;
+  color: var(--badge-color);
+  background: var(--badge-bg);
+  border-radius: var(--badge-radius);
+  white-space: nowrap;
 }
 
-.badge :is(svg, i) {
+// Inline icons scale to the badge's font size. Same convention as .btn.
+.badge :is(svg, i, .badge__icon) {
   width: 1em;
   height: 1em;
   flex-shrink: 0;
 }
 
-// Spinner inside a badge: shrink to 1em so it sits on the label baseline and
-// thin out the ring so the 0.25em default doesn't read as a donut at 12px.
-.badge :is(.spinner-border, .spinner-grow) {
-  --#{$prefix}spinner-width: 0.625rem;
-  --#{$prefix}spinner-height: 0.625rem;
-  --#{$prefix}spinner-vertical-align: 0;
-}
-.badge .spinner-border {
-  --#{$prefix}spinner-border-width: 1.5px;
+// === Intent modifiers — filled defaults ===============================
+// Each intent publishes --badge-tone (consumed by .badge--soft below) and
+// sets --badge-bg / --badge-color for the filled chip.
+
+@mixin badge-intent($token) {
+  --badge-tone:  var(--st-#{$token});
+  --badge-bg:    var(--st-#{$token});
+  --badge-color: var(--st-#{$token}-foreground);
 }
 
-// Light variant — color at 15% bg, solid color text. Mirrors the
-// .btn-light-* mixin in components/_buttons.scss (skip light/dark — emitting
-// .badge-light-light reads awkwardly and BS5's .text-bg-* still covers them).
-@mixin badge-light-variant($color) {
-  --#{$prefix}badge-color: #{$color};
-  background-color: #{rgba($color, 0.15)};
-}
+.badge--primary { @include badge-intent(primary); }
+.badge--success { @include badge-intent(success); }
+.badge--warning { @include badge-intent(warning); }
+.badge--danger  { @include badge-intent(danger);  }
+.badge--info    { @include badge-intent(info);    }
 
-@mixin badge-outline-variant($color) {
-  --#{$prefix}badge-color: #{$color};
-  background-color: #{rgba($color, 0.15)};
-  border: 1px solid $color;
-}
-
-@each $color, $value in map-remove($theme-colors, "light", "dark") {
-  .badge-light-#{$color} {
-    @include badge-light-variant($value);
-  }
-}
-
-@each $color, $value in map-remove($theme-colors, "light", "dark") {
-  .badge-outline-#{$color} {
-    @include badge-outline-variant($value);
-  }
-}
-
-// Mono secondary compiles to near-black; on a dark surface the tint and the
-// text both vanish. Repaint to the dark-mode foreground (matches the dark
-// override for .btn-light-secondary in components/_buttons.scss).
-@include color-mode(dark) {
-  .badge-light-secondary {
-    --#{$prefix}badge-color: #{$body-color-dark};
-    background-color: #{rgba($body-color-dark, 0.15)};
-  }
-  .badge-outline-secondary {
-    --#{$prefix}badge-color: #{$body-color-dark};
-    background-color: #{rgba($body-color-dark, 0.15)};
-    border-color: $gray-600;
-  }
+// === Soft shape modifier ==============================================
+// Tinted bg (15%) + solid tone text per V3.md §3.5. Reads --badge-tone
+// (set by an intent modifier, or the muted-foreground default on .badge
+// for the bare .badge--soft chip). Does NOT redefine --badge-tone — that
+// would clobber the intent and break .badge--soft.badge--primary.
+.badge--soft {
+  --badge-bg:    color-mix(in oklch, var(--badge-tone) 15%, transparent);
+  --badge-color: var(--badge-tone);
 }

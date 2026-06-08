@@ -10,40 +10,33 @@
   </header>
 
   <section>
-    <h2>Basic</h2>
-    <p>Use <code>.alert</code> on its own for a neutral message.</p>
+    <h2>Tones</h2>
+    <p>A tone is required. Pair <code>.alert</code> with <code>.alert--neutral</code> for the plain surface look, or with an intent like <code>.alert--success</code> for a tinted variant. A bare <code>.alert</code> renders transparent — same contract as <code>.btn</code>.</p>
     {% call ui.demo() %}
-    <div class="alert w-100">
-      <i data-lucide="info"></i>
-      Some neutral message here.
-    </div>
-    {% endcall %}
-  </section>
-
-  <section>
-    <h2>Variants</h2>
-    <p>Add a state modifier like <code>.alert-success</code> or <code>.alert-danger</code>. Background and border tint to the state, the icon takes its full color, and body text stays neutral so the message reads at a glance.</p>
-    {% call ui.demo() %}
-    <div class="d-flex flex-column gap-2 w-100">
-      <div class="alert">
+    <div class="demo-stack">
+      <div class="alert alert--neutral">
         <i data-lucide="info"></i>
         <div>Some neutral message here.</div>
       </div>
-      <div class="alert alert-danger">
-        <i data-lucide="x-circle"></i>
-        <div>Payment failed. Check your card details.</div>
-      </div>
-      <div class="alert alert-info">
+      <div class="alert alert--primary">
         <i data-lucide="info"></i>
-        <div>Some useful information here.</div>
+        <div>Heads up, your trial ends in 3 days.</div>
       </div>
-      <div class="alert alert-success">
+      <div class="alert alert--success">
         <i data-lucide="check-circle-2"></i>
         <div>Your changes have been saved successfully.</div>
       </div>
-      <div class="alert alert-warning">
+      <div class="alert alert--warning">
         <i data-lucide="triangle-alert"></i>
         <div>Some features may not work.</div>
+      </div>
+      <div class="alert alert--danger">
+        <i data-lucide="x-circle"></i>
+        <div>Payment failed. Check your card details.</div>
+      </div>
+      <div class="alert alert--info">
+        <i data-lucide="info"></i>
+        <div>Some useful information here.</div>
       </div>
     </div>
     {% endcall %}
@@ -53,84 +46,76 @@
     <h2>Without icon</h2>
     <p>There's no icon wrapper class. The leading icon is any direct <code>&lt;svg&gt;</code> or <code>&lt;i&gt;</code> child. Skip it and the row reflows around the text.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-column gap-2 w-100">
-      <div class="alert alert-primary">Heads up, your trial ends in 3 days.</div>
-      <div class="alert alert-success">Your changes have been saved successfully.</div>
+    <div class="demo-stack">
+      <div class="alert alert--neutral">Heads up, your trial ends in 3 days.</div>
+      <div class="alert alert--success">Your changes have been saved successfully.</div>
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>With heading and description</h2>
-    <p>Add <code>.alert-description</code> for a stacked layout. The heading sits above the description, the icon aligns with the heading, and the row gains a bit of breathing room.</p>
+    <p>Add <code>.alert__description</code> for a stacked layout. The heading sits above the description, the icon aligns with the heading, and the row gains a bit of breathing room.</p>
     {% call ui.demo() %}
-    <div class="alert w-100">
+    <div class="alert alert--neutral">
       <i data-lucide="info"></i>
-      <div class="alert-heading">Alert Title</div>
-      <div class="alert-description">Alert Description</div>
+      <div class="alert__heading">Alert Title</div>
+      <div class="alert__description">Alert Description</div>
     </div>
     {% endcall %}
 
-    <p>Same layout, stateful variant.</p>
+    <p>Same layout, with an intent.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-column gap-2 w-100">
-      <div class="alert alert-info">
+    <div class="demo-stack">
+      <div class="alert alert--info">
         <i data-lucide="info"></i>
-        <div class="alert-heading">Heads up</div>
-        <div class="alert-description">A new version is available. Refresh to load it.</div>
+        <div class="alert__heading">Heads up</div>
+        <div class="alert__description">A new version is available. Refresh to load it.</div>
       </div>
-      <div class="alert alert-warning">
+      <div class="alert alert--warning">
         <i data-lucide="triangle-alert"></i>
-        <div class="alert-heading">Unsaved changes</div>
-        <div class="alert-description">Leaving this page will discard your edits.</div>
+        <div class="alert__heading">Unsaved changes</div>
+        <div class="alert__description">Leaving this page will discard your edits.</div>
       </div>
-      <div class="alert alert-danger">
+      <div class="alert alert--danger">
         <i data-lucide="x-circle"></i>
-        <div class="alert-heading">Payment failed</div>
-        <div class="alert-description">We couldn't charge your card. Update billing details and retry.</div>
+        <div class="alert__heading">Payment failed</div>
+        <div class="alert__description">We couldn't charge your card. Update billing details and retry.</div>
       </div>
-    </div>
-    {% endcall %}
-
-    <p>Without an icon the heading and description take the leading column.</p>
-    {% call ui.demo() %}
-    <div class="alert w-100">
-      <div class="alert-heading">No icon</div>
-      <div class="alert-description">The icon column collapses when no <code>&lt;svg&gt;</code> / <code>&lt;i&gt;</code> child is present.</div>
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>Action slot</h2>
-    <p><code>.alert-action</code> is the trailing slot. It pushes to the right on single-line alerts and centers vertically when a description is present. Drop in a button, link, or close control.</p>
+    <p><code>.alert__action</code> is the trailing slot. It pushes to the right on single-line alerts and centers vertically when a description is present. Drop in a button, link, or any control.</p>
     {% call ui.demo() %}
-    <div class="alert w-100">
+    <div class="alert alert--neutral">
       <i data-lucide="info"></i>
       <div>Message deleted successfully.</div>
-      <div class="alert-action">
-        <button type="button" class="btn btn-secondary btn-sm">Undo</button>
+      <div class="alert__action">
+        <button type="button" class="btn btn--neutral btn--sm">Undo</button>
       </div>
     </div>
     {% endcall %}
 
-    <p>Multiple actions and stateful variants.</p>
+    <p>Multiple actions and intent variants.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-column gap-2 w-100">
-      <div class="alert alert-warning">
+    <div class="demo-stack">
+      <div class="alert alert--warning">
         <i data-lucide="triangle-alert"></i>
         <div>Your session is about to expire.</div>
-        <div class="alert-action">
-          <button type="button" class="btn btn-ghost-secondary btn-sm">Stay</button>
-          <button type="button" class="btn btn-warning btn-sm">Extend</button>
+        <div class="alert__action">
+          <button type="button" class="btn btn--ghost btn--neutral btn--sm">Stay</button>
+          <button type="button" class="btn btn--neutral btn--sm">Extend</button>
         </div>
       </div>
-      <div class="alert alert-info">
+      <div class="alert alert--info">
         <i data-lucide="info"></i>
-        <div class="alert-heading">New version available</div>
-        <div class="alert-description">Reload to pick up the latest changes.</div>
-        <div class="alert-action">
-          <button type="button" class="btn btn-info btn-sm">Reload</button>
+        <div class="alert__heading">New version available</div>
+        <div class="alert__description">Reload to pick up the latest changes.</div>
+        <div class="alert__action">
+          <button type="button" class="btn btn--primary btn--sm">Reload</button>
         </div>
       </div>
     </div>
@@ -139,22 +124,26 @@
 
   <section>
     <h2>Dismissible</h2>
-    <p>Put a <code>.btn-close</code> with <code>data-bsdismiss="alert"</code> inside <code>.alert-action</code>. Bootstrap's dismiss JS still fires and the close sits in flow next to any other action. Skip the <code>.alert-dismissible</code> class. Its absolute positioning isn't needed here.</p>
+    <p>Alert ships no special close control. Drop a <code>.btn--ghost.btn--neutral.btn--icon-only.btn--sm</code> with an X icon inside <code>.alert__action</code>. JS to close the alert is wired in Step 4; today the button is markup-only.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-column gap-2 w-100">
-      <div class="alert alert-success fade show">
+    <div class="demo-stack">
+      <div class="alert alert--success">
         <i data-lucide="check-circle-2"></i>
         <div>Your changes have been saved.</div>
-        <div class="alert-action">
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <div class="alert__action">
+          <button type="button" class="btn btn--ghost btn--neutral btn--icon-only btn--sm" aria-label="Dismiss">
+            <i data-lucide="x"></i>
+          </button>
         </div>
       </div>
-      <div class="alert alert-danger fade show">
+      <div class="alert alert--danger">
         <i data-lucide="x-circle"></i>
-        <div class="alert-heading">Couldn't connect</div>
-        <div class="alert-description">We lost contact with the server. Try again in a moment.</div>
-        <div class="alert-action">
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <div class="alert__heading">Couldn't connect</div>
+        <div class="alert__description">We lost contact with the server. Try again in a moment.</div>
+        <div class="alert__action">
+          <button type="button" class="btn btn--ghost btn--neutral btn--icon-only btn--sm" aria-label="Dismiss">
+            <i data-lucide="x"></i>
+          </button>
         </div>
       </div>
     </div>
@@ -162,12 +151,18 @@
   </section>
 
   <section>
-    <h2>Link color</h2>
-    <p>Use <code>.alert-link</code> for inline links so they pick up the variant color without extra utility classes.</p>
+    <h2>Inline link</h2>
+    <p><code>.alert__link</code> reads <code>--alert-link-color</code> — primary on a neutral alert, the intent color on tinted alerts. The link affordance stays readable regardless of tone.</p>
     {% call ui.demo() %}
-    <div class="alert alert-info w-100">
-      <i data-lucide="info"></i>
-      <div>A simple info alert with <a href="#" class="alert-link">an example link</a>.</div>
+    <div class="demo-stack">
+      <div class="alert alert--neutral">
+        <i data-lucide="info"></i>
+        <div>A neutral alert with <a href="#" class="alert__link">a primary link</a>.</div>
+      </div>
+      <div class="alert alert--info">
+        <i data-lucide="info"></i>
+        <div>An info alert with <a href="#" class="alert__link">an info-colored link</a>.</div>
+      </div>
     </div>
     {% endcall %}
   </section>

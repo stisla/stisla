@@ -69,3 +69,18 @@
   word-wrap: break-word !important;
   word-break: break-word !important;
 }
+
+// === Accessibility ===
+// Visually hide content while keeping it accessible to screen readers.
+// Used for spinner labels, icon-only button labels, skip-link text.
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}

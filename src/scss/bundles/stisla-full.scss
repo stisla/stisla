@@ -38,7 +38,7 @@
 //
 // Order preserves the Step 1 sequence so re-enabling is mechanical.
 @layer components {
-  // @import '../components/kbd';
+  @import '../components/kbd';
   // @import '../components/table';
   // @import '../components/form-control';
   // @import '../components/form-select';
@@ -56,9 +56,9 @@
   // @import '../components/accordion';
   // @import '../components/breadcrumb';
   // @import '../components/pagination';
-  // @import '../components/badge';
-  // @import '../components/alert';
-  // @import '../components/icon-box';
+  @import '../components/badge';
+  @import '../components/alert';
+  @import '../components/icon-box';
   // @import '../components/progress';
   // @import '../components/list-group';
   // @import '../components/toast';
@@ -67,7 +67,8 @@
   // @import '../components/popover';
   // @import '../components/carousel';
   // @import '../components/offcanvas';
-  // @import '../components/placeholders';
+  @import '../components/spinner';
+  @import '../components/placeholders';
 }
 
 // === Utilities =========================================================

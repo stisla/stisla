@@ -1,80 +1,94 @@
-// Stisla v3 — alerts.
+// Stisla v3 — alert.
 //
-// BS5 ships .alert-{state} as a triplet of Sass-computed solid colors
-// (-bg-subtle / -border-subtle / -text-emphasis). We rewire those to
-// color-mix() over the runtime --bs-{state} tokens so swapping
-// --bs-danger at runtime actually recolors .alert-danger. This is the
-// §3.1 "components don't respond at runtime" caveat, broken on purpose
-// for alerts (single-token theming was the explicit ask).
+// BEM: .alert (root, transparent on its own) + tone modifier (--neutral
+// / --primary / --success / --warning / --danger / --info). A tone is
+// required for visible chrome — bare .alert is layout-only. Mirrors the
+// .btn rule that tone is explicit, not implicit (V3.md §3.6).
 //
-// Parts:
-//   .alert                     base (BS5)
-//   .alert-{state}             variant (BS5 modifier, recolored here)
-//   > svg | > i                leading icon, slotless (Selia-style)
-//   .alert-heading             title (BS5, restyled)
-//   .alert-description         body text under heading (new)
-//   .alert-action              trailing slot, right-aligned (new)
+//   <div class="alert alert--neutral">   surface bg + neutral border
+//   <div class="alert alert--danger">    danger-tinted
 //
-// Padding switches via :has(.alert-description): single-line alerts get
-// a 44px row; alerts with a description get even 16px on both axes.
+// Parts: __heading / __description / __action / __link. Leading icon
+// is any direct <svg> or <i> child (matches .btn). No dedicated icon
+// class. Dismiss is a plain .btn--ghost.btn--icon-only inside
+// .alert__action — alert doesn't ship its own close control.
+//
+// Padding switches via :has(.alert__description):
+//   single-line  → 2.75rem min-height row, vertical centering
+//   with desc    → grid layout, 1rem both axes, no min-height clamp
 
 .alert {
-  // Neutral defaults — match image #15 row 1 (surface bg, neutral border).
-  --#{$prefix}alert-bg: var(--#{$prefix}surface);
-  --#{$prefix}alert-border-color: var(--#{$prefix}border-color);
-  --#{$prefix}alert-color: var(--#{$prefix}body-color);
-  --#{$prefix}alert-icon-color: var(--#{$prefix}secondary-color);
-  --#{$prefix}alert-padding-x: 1rem;
-  --#{$prefix}alert-padding-y: 0.625rem;
+  --alert-radius:         var(--st-alert-radius, var(--st-radius));
+  --alert-padding-y:      calc(0.625rem * var(--st-density));
+  --alert-padding-x:      calc(1rem     * var(--st-density));
+  // Defaults are transparent — tone modifier supplies visible chrome.
+  --alert-bg:             transparent;
+  --alert-border-color:   transparent;
+  --alert-color:          var(--st-foreground);
+  --alert-icon-color:     var(--st-muted-foreground);
+  // Link defaults to primary so the inline link still reads as a link
+  // on a bare or neutral alert. Intent modifiers override to the intent.
+  --alert-link-color:     var(--st-primary);
 
   display: flex;
   align-items: center;
   gap: 0.625rem;
-  min-height: 2.75rem;
-
-  // Leading icon: any direct <svg> or pre-init <i data-lucide>.
-  // Mirrors the convention in _buttons.scss (handles both lucide states).
-  > :is(svg, i) {
-    width: 1.125rem;
-    height: 1.125rem;
-    flex-shrink: 0;
-    color: var(--#{$prefix}alert-icon-color);
-  }
+  min-height: calc(2.75rem * var(--st-density));
+  padding: var(--alert-padding-y) var(--alert-padding-x);
+  color: var(--alert-color);
+  background: var(--alert-bg);
+  border: 1px solid var(--alert-border-color);
+  border-radius: var(--alert-radius);
 }
 
-.alert-heading {
+// Leading icon: any direct <svg> or <i> child. Same convention as .btn.
+.alert > :is(svg, i) {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex-shrink: 0;
+  color: var(--alert-icon-color);
+}
+
+// === Parts ============================================================
+.alert__heading {
   margin: 0;
   font-size: 0.875rem;
   font-weight: 600;
   line-height: 1.5;
-  color: var(--#{$prefix}emphasis-color);
+  color: var(--st-foreground);
 }
 
-.alert-description {
+.alert__description {
   margin: 0;
   font-size: 0.875rem;
   line-height: 1.5;
-  color: var(--#{$prefix}secondary-color);
+  color: var(--st-muted-foreground);
 }
 
-.alert-action {
+// Trailing slot. Right-aligned on single-line alerts; row-spanning and
+// vertically centered when a description is present (see grid block).
+.alert__action {
   display: flex;
   align-items: center;
   gap: 0.375rem;
-  margin-left: auto;
-
-  .btn-close {
-    width: 1rem;
-    height: 1rem;
-    padding: 0;
-  }
+  margin-inline-start: auto;
 }
 
-// Description present → grid layout, 16px both axes, no min-height clamp.
-// Cols: icon (auto) | heading + description (1fr) | action (auto).
+// Inline link picks up --alert-link-color: primary on neutral alerts,
+// the intent color on tinted alerts. Keeps the link affordance readable
+// regardless of which tone the alert carries.
+.alert__link {
+  color: var(--alert-link-color);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+// === Layout switch — heading + description ============================
+// Grid layout: icon (auto) | heading + description (1fr) | action (auto).
 // Icon aligns with the heading row; action centers across both rows.
-.alert:has(.alert-description) {
-  --#{$prefix}alert-padding-y: 1rem;
+.alert:has(.alert__description) {
+  --alert-padding-y: calc(1rem * var(--st-density));
 
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -89,52 +103,59 @@
     align-self: center;
   }
 
-  // Tight heading row (line-height: 1) collapses the row to the em-box so the
-  // icon's center lands on the heading's cap. Description keeps line-height
-  // 1.5 below, providing the visual gap without row-gap.
-  .alert-heading {
+  // Tight heading row (line-height: 1) collapses to the em-box so the
+  // icon's center lands on the heading's cap. Description below keeps
+  // line-height 1.5, providing the visual gap without row-gap.
+  .alert__heading {
     grid-column: 2;
     grid-row: 1;
     line-height: 1;
   }
 
-  .alert-description {
+  .alert__description {
     grid-column: 2;
     grid-row: 2;
   }
 
-  .alert-action {
+  .alert__action {
     grid-column: 3;
-    // `1 / -1` would only span row 1 here — there are no explicit rows, so -1
-    // resolves to the last explicit line (= 2). `span 2` covers both auto rows.
+    // `span 2` covers both auto rows; `1 / -1` would only span row 1
+    // because there are no explicit grid rows here.
     grid-row: 1 / span 2;
     align-self: center;
-    margin-left: 0;
+    margin-inline-start: 0;
   }
 
   // No leading icon → heading + description take col 1.
   &:not(:has(> :is(svg, i))) {
     grid-template-columns: 1fr auto;
 
-    .alert-heading,
-    .alert-description {
-      grid-column: 1;
-    }
-
-    .alert-action {
-      grid-column: 2;
-    }
+    .alert__heading,
+    .alert__description { grid-column: 1; }
+    .alert__action      { grid-column: 2; }
   }
 }
 
-// Per-state recoloring. color-mix() lets runtime --bs-{state} overrides
-// propagate to bg/border/icon. Text stays at --bs-body-color (full solid)
-// since the subtle bg has enough contrast against it in both themes.
-@each $state in map-keys($theme-colors) {
-  .alert-#{$state} {
-    --#{$prefix}alert-bg: #{"color-mix(in srgb, var(--#{$prefix}#{$state}) 7%, transparent)"};
-    --#{$prefix}alert-border-color: #{"color-mix(in srgb, var(--#{$prefix}#{$state}) 40%, transparent)"};
-    --#{$prefix}alert-color: var(--#{$prefix}body-color);
-    --#{$prefix}alert-icon-color: var(--#{$prefix}#{$state});
-  }
+// === Tone modifiers ===================================================
+// Neutral wears the surface look (the old no-modifier default). Intents
+// tint bg (7%) + border (40%) per V3.md §3.5. Body text stays at
+// --st-foreground; only the icon and link pick up the intent so the
+// message reads at a glance.
+
+.alert--neutral {
+  --alert-bg:           var(--st-surface);
+  --alert-border-color: var(--st-border);
 }
+
+@mixin alert-intent($token) {
+  --alert-bg:           color-mix(in oklch, var(--st-#{$token}) 7%, transparent);
+  --alert-border-color: color-mix(in oklch, var(--st-#{$token}) 40%, transparent);
+  --alert-icon-color:   var(--st-#{$token});
+  --alert-link-color:   var(--st-#{$token});
+}
+
+.alert--primary { @include alert-intent(primary); }
+.alert--success { @include alert-intent(success); }
+.alert--warning { @include alert-intent(warning); }
+.alert--danger  { @include alert-intent(danger);  }
+.alert--info    { @include alert-intent(info);    }

@@ -1,0 +1,73 @@
+// Stisla v3 — spinner.
+//
+// BEM: .spinner (default — border ring) + .spinner--grow (pulsing dot).
+// Sizes compose flat: .spinner--sm / .spinner--lg.
+//
+//   <div class="spinner" role="status"><span class="visually-hidden">Loading…</span></div>
+//   <div class="spinner spinner--grow" role="status">…</div>
+//   <div class="spinner spinner--sm" role="status">…</div>
+//
+// Color inherits via currentColor — any parent .text-{intent} utility
+// recolors the spinner. Sits inside .btn.is-loading too (the button
+// renders its own ::before spinner; this one is for standalone use).
+//
+// Opts out of --st-radius (must stay round — V3.md §3.4).
+//
+// prefers-reduced-motion: reduce slows the animation rather than killing
+// it. A static spinner reads as "frozen", not "loading". 1.5s for the
+// border ring is just slow enough to feel intentional.
+
+.spinner {
+  --spinner-size:     1.25rem;
+  --spinner-width:    2px;
+  --spinner-duration: 0.75s;
+
+  display: inline-block;
+  width: var(--spinner-size);
+  height: var(--spinner-size);
+  vertical-align: -0.125em;
+  color: inherit;
+  border: var(--spinner-width) solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: st-spinner-border var(--spinner-duration) linear infinite;
+}
+
+// === Grow modifier ====================================================
+// Pulsing solid disc. Replaces the ring with a filled circle and swaps
+// the animation. Same sizing knobs.
+.spinner--grow {
+  --spinner-duration: 0.75s;
+
+  border: 0;
+  background: currentColor;
+  opacity: 0;
+  animation-name: st-spinner-grow;
+}
+
+// === Sizes ============================================================
+.spinner--sm {
+  --spinner-size:  0.875rem;
+  --spinner-width: 1.5px;
+}
+.spinner--lg {
+  --spinner-size:  2rem;
+  --spinner-width: 3px;
+}
+
+// === Reduced motion ===================================================
+// Slow the loop instead of stopping it (V3.md §2). A static spinner
+// reads as "stuck", not "loading".
+@media (prefers-reduced-motion: reduce) {
+  .spinner { --spinner-duration: 1.5s; }
+}
+
+@keyframes st-spinner-border {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes st-spinner-grow {
+  0%   { transform: scale(0);   opacity: 0;   }
+  50%  { opacity: 1; }
+  100% { transform: scale(1);   opacity: 0;   }
+}

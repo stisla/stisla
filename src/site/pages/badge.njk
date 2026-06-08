@@ -10,46 +10,38 @@
   </header>
 
   <section>
-    <h2>Variants</h2>
-    <p>Pair <code>.badge</code> with a <code>.text-bg-{state}</code> utility for the solid filled chip.</p>
+    <h2>Default</h2>
+    <p>A bare <code>.badge</code> sits on the neutral interactional fill. Use for non-semantic chips like counts or tags.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
-      <span class="badge text-bg-primary">Primary</span>
-      <span class="badge text-bg-secondary">Secondary</span>
-      <span class="badge text-bg-success">Success</span>
-      <span class="badge text-bg-danger">Danger</span>
-      <span class="badge text-bg-warning">Warning</span>
-      <span class="badge text-bg-info">Info</span>
+    <span class="badge">Default</span>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Filled intents</h2>
+    <p>Add an intent modifier for a solid filled chip. Each intent ships with its paired <code>-foreground</code>, so a runtime token override recolors the chip and the label together.</p>
+    {% call ui.demo() %}
+    <div class="demo-row">
+      <span class="badge badge--primary">Primary</span>
+      <span class="badge badge--success">Success</span>
+      <span class="badge badge--warning">Warning</span>
+      <span class="badge badge--danger">Danger</span>
+      <span class="badge badge--info">Info</span>
     </div>
     {% endcall %}
   </section>
 
   <section>
-    <h2>Light</h2>
-    <p>Use <code>.badge-light-{state}</code> for a soft tinted chip.</p>
+    <h2>Soft</h2>
+    <p>Add <code>.badge--soft</code> for a tinted chip. The background mixes the intent at 15% over transparent; the label keeps the solid intent color. Without an intent, soft falls back to a muted neutral chip.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
-      <span class="badge badge-light-primary">Primary</span>
-      <span class="badge badge-light-secondary">Secondary</span>
-      <span class="badge badge-light-success">Success</span>
-      <span class="badge badge-light-danger">Danger</span>
-      <span class="badge badge-light-warning">Warning</span>
-      <span class="badge badge-light-info">Info</span>
-    </div>
-    {% endcall %}
-  </section>
-
-  <section>
-    <h2>Outline</h2>
-    <p>Use <code>.badge-outline-{state}</code> for a soft tinted chip with border.</p>
-    {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
-      <span class="badge badge-outline-primary">Primary</span>
-      <span class="badge badge-outline-secondary">Secondary</span>
-      <span class="badge badge-outline-success">Success</span>
-      <span class="badge badge-outline-danger">Danger</span>
-      <span class="badge badge-outline-warning">Warning</span>
-      <span class="badge badge-outline-info">Info</span>
+    <div class="demo-row">
+      <span class="badge badge--soft">Default</span>
+      <span class="badge badge--soft badge--primary">Primary</span>
+      <span class="badge badge--soft badge--success">Success</span>
+      <span class="badge badge--soft badge--warning">Warning</span>
+      <span class="badge badge--soft badge--danger">Danger</span>
+      <span class="badge badge--soft badge--info">Info</span>
     </div>
     {% endcall %}
   </section>
@@ -58,20 +50,20 @@
     <h2>With icon</h2>
     <p>Drop a direct <code>&lt;svg&gt;</code> or <code>&lt;i&gt;</code> child. The icon picks up the text color and scales to the badge's font size.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
-      <span class="badge badge-light-success">
+    <div class="demo-row">
+      <span class="badge badge--soft badge--success">
         <i data-lucide="check"></i>
         Active
       </span>
-      <span class="badge badge-light-warning">
+      <span class="badge badge--soft badge--warning">
         <i data-lucide="clock"></i>
         Pending
       </span>
-      <span class="badge badge-light-danger">
+      <span class="badge badge--soft badge--danger">
         <i data-lucide="x"></i>
         Failed
       </span>
-      <span class="badge text-bg-primary">
+      <span class="badge badge--primary">
         <i data-lucide="star"></i>
         Featured
       </span>
@@ -81,19 +73,19 @@
 
   <section>
     <h2>Loading</h2>
-    <p>Slot a Bootstrap <code>.spinner-border</code> in to signal in-flight work. It inherits the badge's text color and shrinks to the same metric as an icon.</p>
+    <p>Slot a <code>.spinner.spinner--sm</code> in to signal in-flight work. It inherits the badge's text color and shrinks to the badge's font size.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
-      <span class="badge badge-light-primary">
-        <span class="spinner-border" role="status" aria-hidden="true"></span>
+    <div class="demo-row">
+      <span class="badge badge--soft badge--primary">
+        <span class="spinner spinner--sm" role="status" aria-hidden="true"></span>
         Syncing
       </span>
-      <span class="badge badge-light-secondary">
-        <span class="spinner-border" role="status" aria-hidden="true"></span>
+      <span class="badge badge--soft">
+        <span class="spinner spinner--sm" role="status" aria-hidden="true"></span>
         Loading
       </span>
-      <span class="badge text-bg-info">
-        <span class="spinner-border" role="status" aria-hidden="true"></span>
+      <span class="badge badge--info">
+        <span class="spinner spinner--sm" role="status" aria-hidden="true"></span>
         Uploading
       </span>
     </div>
@@ -101,30 +93,17 @@
   </section>
 
   <section>
-    <h2>Pill</h2>
-    <p>Add <code>.rounded-pill</code> for a fully rounded shape.</p>
-    {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
-      <span class="badge rounded-pill text-bg-primary">Primary</span>
-      <span class="badge rounded-pill text-bg-success">Success</span>
-      <span class="badge rounded-pill badge-light-warning">Warning</span>
-      <span class="badge rounded-pill badge-light-info">Info</span>
-    </div>
-    {% endcall %}
-  </section>
-
-  <section>
     <h2>In buttons</h2>
-    <p>Drop a badge inside a button for a count or status. Combine with a <code>.btn-icon</code> for a notification dot.</p>
+    <p>Drop a badge inside a button for a count or status.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2 align-items-center">
-      <button type="button" class="btn btn-primary">
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary">
         Inbox
-        <span class="badge text-bg-light">4</span>
+        <span class="badge">4</span>
       </button>
-      <button type="button" class="btn btn-outline-secondary">
+      <button type="button" class="btn btn--outline btn--neutral">
         Notifications
-        <span class="badge text-bg-danger">12</span>
+        <span class="badge badge--danger">12</span>
       </button>
     </div>
     {% endcall %}
