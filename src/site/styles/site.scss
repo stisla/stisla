@@ -112,11 +112,12 @@ body {
 // Per-token color comes from Shiki inline styles (light) or --shiki-dark (dark).
 .demo .shiki {
   margin: 0;
-  padding: 1rem 1.25rem;
+  padding: 1rem 0;
   background: transparent !important;
   font-size: 0.8125rem;
   line-height: 1.6;
   font-family: var(--st-font-mono);
+  border: none;
 }
 
 [data-theme="dark"] .demo .shiki,
@@ -191,11 +192,16 @@ body {
 // cascade-customization pattern the framework supports (any consumer
 // can do the same on their own `.context.prose` selector).
 //
-// `:where()` keeps specificity matched to the framework's element rules;
-// `:not(.not-prose, .not-prose *)` opts out inside demo viewers.
+// `:where()` keeps specificity matched to the framework's element rules.
+// The opt-out gate covers three cases:
+//   .not-prose / .not-prose *       — demo viewers (.demo carries .not-prose)
+//   .prose .prose / .prose .prose * — nested .prose subtrees (e.g. the
+//     long-form article showcase on /typography). Site overrides target
+//     the docs page wrapper only; nested .prose content gets the
+//     framework's default proportions, not docs-context overrides.
 
 .main-container.prose {
-  $opt-out: ":not(.not-prose, .not-prose *)";
+  $opt-out: ":not(:where(.not-prose, .not-prose *, .prose .prose, .prose .prose *))";
 
   // Quieter reading rhythm for reference docs.
   line-height: 1.7;

@@ -252,6 +252,7 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
 
   :where(thead th)#{$skip} {
     font-weight: 600;
+    color: var(--st-muted-foreground);
     border-bottom: 1px solid var(--st-border);
   }
 
