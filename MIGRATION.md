@@ -19,6 +19,7 @@ Prompt for each session:
 
 _Latest entry first. One line per session: ISO date — step completed / current — blockers._
 
+- 2026-06-08 — Step 2 done. 5 BS5-coupled token files deleted (`_colors`, `_maps`, `_root`, `_variables`, `_variables-dark`). `tokens/_theme.scss` ships the 28 `--st-*` OKLCH tokens (light + dark, `--st-base: 258` hue-locked to primary). Breakpoints moved `foundation/` → `tokens/` per V3.md §3.9. Bundle rebuilt with `@layer foundation, theme, components, utilities`; every BS5 `@import` gone; component imports commented out (Step 3 PRs uncomment as they land). `index.js` stripped of `import 'bootstrap'` + Popover/Tooltip auto-init; app-shell handlers kept. `bootstrap` + `@popperjs/core` deps removed. `stisla-full.css` 16 kB / 3.2 kB gz (down from 283 kB), site renders 39 pages with unstyled component markup — strict approach as designed. Mono stack is JetBrains Mono first. Next: Step 3 (btn + card — V3.md Phase 1 architecture proof). Blockers: none. OKLCH conversions for neutrals are estimates, validate during Step 3.
 - 2026-06-08 — Step 2 approach locked: **strict.** Gut the BS5 token files, accept a broken bundle, let each Step 3 component PR heal the build incrementally. No interim BS5 shim. Trade: docs site renders broken between Step 2 and the end of Step 3.
 - 2026-06-08 — Theme selector renamed `data-bs-theme` → `data-theme` + `.dark` class. V3.md §3.8 reworked to spec both conventions. `foundation/_mixins.scss` color-mode mixin emits `[data-theme="dark"], .dark`; overrides BS5's mixin so BS5's `_root.scss` dark block now flips on the Stisla selectors (no `data-bs-theme` shim needed). Compiled CSS has 4 paired dark blocks; zero `data-bs-theme` in rendered HTML. Spec, site CSS/JS, layout, and tools/nunjucks-filters all updated. The 3 residual `data-bs-theme` references in `tokens/_variables*.scss` + `components/_tooltip.scss` are dead comments in files slated for delete/rewrite — left alone.
 - 2026-06-08 — Step 1 done. `src/scss/foundation/` lands with normalize, reboot, grid, containers, breakpoints, mixins. `LICENSES/` carries BS5 + modern-normalize MIT text. Bundle swap leaves the BS5 reboot/grid/containers behind. Reboot reads `--st-*` directly — no `--bs-*` fallbacks (V3.md §3: no --bs in v3 code). Bare surfaces (body fg/bg, link, hr, focus ring) until tokens land in Step 2; intended trade. **Scope shift:** `bootstrap` dep removal moved to Step 2 (tokens/* and components/* still reference BS5 vars and mixins — pulling the dep now would un-build the bundle). Next: Step 2 (token rewrite). No blockers.
@@ -107,13 +108,15 @@ Each step lands and merges before the next starts. No "step 3 partial PR" overla
 - [x] Add `LICENSES/bootstrap-MIT.txt` (full BS5 MIT text) + `LICENSES/modern-normalize-MIT.txt`. Each forked foundation file carries a credit header. README NOTICE block lists both.
 - [x] Verify: `npm run build` is green. `stisla-full.css` 283 KB / 38 KB gz. modern-normalize banner present in output, `--st-grid-gutter-x` emits 44×, zero `--bs-gutter-x` in foundation-emitted CSS, `.container-{sm..xxl}` + `.col-md-{1..12}` all emit. 39 static pages render via `npm run build:site`.
 
-### Step 2 — Token rewrite
+### Step 2 — Token rewrite ✅
 
-- [ ] Delete `tokens/_colors.scss`, `_maps.scss`, `_root.scss`, `_variables.scss`, `_variables-dark.scss`.
-- [ ] Create `tokens/_theme.scss` — 28 OKLCH tokens, light + dark blocks. Single source of truth for color literals.
-- [ ] Create `tokens/_breakpoints.scss` — `$breakpoints` Sass map + `media-up/down/between` mixins (or move from `foundation/_breakpoints.scss` and re-export — pick one location).
-- [ ] Update `bundles/stisla-full.scss` to the new import order: `foundation/normalize → foundation/reboot → tokens/theme → @layer foundation, theme, components, utilities → components/* → utilities/*`.
-- [ ] All component files break here. That's intentional — fixed in step 3.
+- [x] Delete `tokens/_colors.scss`, `_maps.scss`, `_root.scss`, `_variables.scss`, `_variables-dark.scss`.
+- [x] Create `tokens/_theme.scss` — 28 OKLCH tokens, light + dark blocks. Single source of truth for color literals.
+- [x] Move `foundation/_breakpoints.scss` → `tokens/_breakpoints.scss` (V3.md §3.9 puts it under `tokens/`). Bundle import path updated; `media-breakpoint-*` shim kept for the two components (`_navbar`, `_app-shell`) that still use BS5 names — retire during Step 3.
+- [x] Update `bundles/stisla-full.scss` to the `@layer foundation, theme, components, utilities` order; every BS5 `@import` deleted; all components commented out (Step 3 PRs uncomment as they land).
+- [x] Strip `import * as bs from 'bootstrap'` + Popover/Tooltip auto-init from `src/js/index.js`. Step 4 reintroduces via `@floating-ui/dom`.
+- [x] `npm uninstall bootstrap @popperjs/core` — deps gone, lockfile refreshed.
+- [x] All component files break here. That's intentional — fixed in step 3.
 
 ### Step 3 — Component rewrite (per-component, in dependency order)
 
@@ -243,7 +246,7 @@ Build them on top of the rewritten foundation after 3.0 ships.
 
 - [x] Step 0 — Snapshot BS5 build, tag `v3-bs5-snapshot` ✅
 - [x] Step 1 — Foundation rewrite (deps swap, `foundation/` files, `LICENSES/`) ✅
-- [ ] Step 2 — Token rewrite (`_theme.scss` + `_breakpoints.scss`) + remove `bootstrap` dep
+- [x] Step 2 — Token rewrite (`_theme.scss` + `_breakpoints.scss`) + remove `bootstrap` dep ✅
 - [ ] Step 3 — Component rewrite (per §4 table, in order from §3 step 3)
 - [ ] Step 4 — JS rewrite (interleaved with step 3 JS-coordinated components)
 - [ ] Step 5 — Demo pages (.njk class + attr + delete pass)
