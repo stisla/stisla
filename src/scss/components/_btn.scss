@@ -1,0 +1,289 @@
+// Stisla v3 — button.
+//
+// BEM: .btn (base) + .btn--<tone> + .btn--<shape>. Tone and shape compose
+// flat at the root (V3.md §3.6):
+//
+//   <button class="btn btn--primary">                      filled primary
+//   <button class="btn btn--outline btn--danger">          outline danger
+//   <button class="btn btn--ghost btn--neutral">           ghost neutral
+//
+// Shipped tones: primary, neutral, tertiary, danger. Other intents
+// (success, warning, info) are not first-class button tones because every
+// shipped tone needs a verified text-contrast pair across light + dark.
+// For one-off uses, override --btn-bg / --btn-color inline (see the
+// "Custom color" section on /buttons). Promote to a project-scoped class
+// when the color appears in three or more places.
+//
+// State derivation (hover, active, focus, disabled) lives on .btn base
+// reading --btn-tone. --btn-tone is the user-facing knob — set it on a
+// custom button and bg, hover, active, rim, and bevel all derive from
+// it. The internal --btn-bg starts as var(--btn-tone) and gets mutated
+// per state; --btn-tone itself never changes, which avoids the var
+// cycle that would kill state transitions on custom buttons.
+
+.btn {
+  --btn-radius:       var(--st-btn-radius, var(--st-radius));
+  --btn-padding-y:    calc(0.5rem  * var(--st-density));
+  --btn-padding-x:    calc(0.75rem * var(--st-density));
+  --btn-font-size:    0.875rem;
+  --btn-font-weight:  500;
+  --btn-min-height:   2.25rem;
+
+  // Derive the rest bg from --btn-tone. Tones with a non-matching bg
+  // (neutral fills with --st-neutral, not its tone) override below.
+  --btn-bg:           var(--btn-tone);
+
+  // Universal rim + bevel. Border derives from --btn-tone so every
+  // filled tone (shipped or one-off via --btn-tone override) gets a
+  // matching darker edge. The inset top highlight reads as a soft bevel
+  // on colored fills and is invisible on near-white fills. Shape
+  // modifiers override both.
+  --btn-border-color: color-mix(in oklch, var(--btn-tone) 85%, black);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: var(--btn-min-height);
+  padding: var(--btn-padding-y) var(--btn-padding-x);
+  font-family: inherit;
+  font-size: var(--btn-font-size);
+  font-weight: var(--btn-font-weight);
+  line-height: 1.2;
+  color: var(--btn-color);
+  background: var(--btn-bg);
+  border: 1px solid var(--btn-border-color);
+  border-radius: var(--btn-radius);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color .12s ease, border-color .12s ease,
+              color .12s ease, box-shadow .12s ease;
+
+  // Universal state derivations. Tones that need a different direction
+  // (neutral → accent, tertiary → toward background) override below.
+  // Shape modifiers (outline/ghost/light) override too — they tint over
+  // transparent rather than darkening a solid fill.
+  &:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) 88%, black); }
+  &:active,
+  &[aria-pressed="true"],
+  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--btn-tone) 78%, black); }
+
+  &:focus-visible {
+    outline: 2px solid var(--st-ring);
+    outline-offset: 2px;
+  }
+
+  &:disabled,
+  &.disabled,
+  &[aria-disabled="true"] {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.55;
+  }
+}
+
+// Icons inside .btn scale to the button's font size. Targets .btn__icon
+// (BEM opt-in) plus inline <svg>/<i> as a convenience so Lucide and
+// Bootstrap-Icons markup just work.
+.btn :is(svg, i, .btn__icon) {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+}
+
+// === Sizes ============================================================
+// Each size pulls its own --st-radius-{sm,lg} derived sibling so corner
+// scaling tracks --st-radius proportionally. .btn--icon-round overrides
+// --btn-radius directly and ignores the size-derived value.
+.btn--sm {
+  --btn-radius:     var(--st-btn-radius, var(--st-radius-sm));
+  --btn-padding-y:  calc(0.375rem * var(--st-density));
+  --btn-padding-x:  calc(0.625rem * var(--st-density));
+  --btn-font-size:  0.8125rem;
+  --btn-min-height: 1.75rem;
+}
+.btn--lg {
+  --btn-radius:     var(--st-btn-radius, var(--st-radius-lg));
+  --btn-padding-y:  calc(0.625rem * var(--st-density));
+  --btn-padding-x:  calc(1rem     * var(--st-density));
+  --btn-font-size:  1rem;
+  --btn-min-height: 2.75rem;
+}
+
+// === Icon shapes ======================================================
+// Square at every size. Width tracks --btn-min-height so .btn--icon-only
+// composes with .btn--sm / .btn--lg.
+.btn--icon-only {
+  --btn-padding-x: 0;
+  width: var(--btn-min-height);
+}
+
+// Opt out of --st-radius for a circular silhouette.
+.btn--icon-round {
+  border-radius: 9999px;
+}
+
+// === Tone modifiers — filled defaults =================================
+// Each tone publishes --btn-tone (for shape modifiers) and sets
+// --btn-bg + --btn-color. State transitions come from .btn base.
+
+.btn--primary {
+  --btn-tone:  var(--st-primary);
+  --btn-color: var(--st-primary-foreground);
+}
+
+.btn--danger {
+  --btn-tone:  var(--st-danger);
+  --btn-color: var(--st-danger-foreground);
+}
+
+// Neutral — filled neutral button. Rest fills with --st-neutral. Hover
+// and active darken via the same color-mix math as primary/danger/custom
+// so every filled tone moves in the same direction on interaction. Tone
+// for shape modifiers stays --st-foreground so outline/ghost/light pick
+// up the body text color rather than the light --st-neutral fill.
+//
+// Border is asymmetric: mix toward --st-muted-foreground so the rim
+// reads as a recessed edge in light mode and a rim-light in dark mode
+// (the muted-foreground token flips with theme, so the same formula
+// pulls in opposite directions per mode).
+//
+// --st-accent is still the right hover bg for transparent-rest neutral
+// surfaces (.btn--outline.btn--neutral, .btn--ghost.btn--neutral, plus
+// sidebar / dropdown / table-row items further down the component tree).
+.btn--neutral {
+  --btn-tone:         var(--st-foreground);
+  --btn-bg:           var(--st-neutral);
+  --btn-color:        var(--st-neutral-foreground);
+  --btn-border-color: color-mix(in oklch, var(--st-neutral) 85%, var(--st-muted-foreground));
+
+  &:hover  { --btn-bg: color-mix(in oklch, var(--st-neutral) 88%, black); }
+  &:active,
+  &[aria-pressed="true"],
+  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--st-neutral) 78%, black); }
+}
+
+// Tertiary — mono high-emphasis CTA. Inverts per theme automatically
+// (--st-foreground / --st-background flip). Hover goes LIGHTER (mix
+// toward background) because rest already sits at maximum contrast;
+// darkening further loses the contrast against the surrounding text.
+.btn--tertiary {
+  --btn-tone:  var(--st-foreground);
+  --btn-color: var(--st-background);
+
+  &:hover  { --btn-bg: color-mix(in oklch, var(--st-foreground) 88%, var(--st-background)); }
+  &:active,
+  &[aria-pressed="true"],
+  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--st-foreground) 78%, var(--st-background)); }
+}
+
+// === Shape modifiers ==================================================
+// Read --btn-tone (set by the tone modifier) and re-resolve bg/color/border.
+// Source order matters: shape modifiers come AFTER tone modifiers so their
+// declarations win in the cascade for combined classes.
+
+// Tint percentages tuned for visibility against the darker page bg.
+// Lower values (8% / 10%) read fine in light mode where white shines
+// through but vanish on dark surfaces; 14% / 18% / 22% / 26% give a
+// perceivable step in both modes without competing with the tone-
+// colored border (outline) or label (ghost).
+.btn--outline {
+  --btn-bg:           transparent;
+  --btn-color:        var(--btn-tone);
+  --btn-border-color: var(--btn-tone);
+  box-shadow: none;
+
+  &:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) 14%, transparent); }
+  &:active,
+  &[aria-pressed="true"],
+  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--btn-tone) 22%, transparent); }
+}
+
+.btn--ghost {
+  --btn-bg:           transparent;
+  --btn-color:        var(--btn-tone);
+  --btn-border-color: transparent;
+  box-shadow: none;
+
+  &:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) 18%, transparent); }
+  &:active,
+  &[aria-pressed="true"],
+  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--btn-tone) 26%, transparent); }
+}
+
+.btn--light {
+  --btn-bg:           color-mix(in oklch, var(--btn-tone) 12%, transparent);
+  --btn-color:        var(--btn-tone);
+  --btn-border-color: transparent;
+  box-shadow: none;
+
+  &:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) 20%, transparent); }
+  &:active,
+  &[aria-pressed="true"],
+  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--btn-tone) 28%, transparent); }
+}
+
+// Neutral × shape — neutral's tone is var(--st-foreground), which would
+// produce a near-black outline border via the generic .btn--outline rule.
+// Override outline to --st-border (soft neutral rim — the canonical Cancel
+// look) and tune ghost/outline hover to land on --st-accent.
+.btn--outline.btn--neutral {
+  --btn-border-color: var(--st-border);
+  &:hover  { --btn-bg: var(--st-accent); }
+  &:active,
+  &[aria-pressed="true"],
+  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--st-foreground) 12%, var(--st-background)); }
+}
+.btn--ghost.btn--neutral {
+  &:hover  { --btn-bg: var(--st-accent); }
+  &:active,
+  &[aria-pressed="true"],
+  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--st-foreground) 12%, var(--st-background)); }
+}
+
+// === Loading ==========================================================
+// .is-loading is Stisla-original (V3.md §3.6). Pair with aria-busy="true".
+// Spinner renders via ::before so the label stays in place; any inline
+// icons hide so the spinner sits where the leading icon was.
+.btn.is-loading {
+  cursor: progress;
+  pointer-events: none;
+
+  & > :is(svg, i, .btn__icon) {
+    display: none;
+  }
+
+  &::before {
+    content: "";
+    display: inline-block;
+    flex-shrink: 0;
+    width: 1em;
+    height: 1em;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: st-btn-spin .75s linear infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn.is-loading::before { animation-duration: 3s; }
+}
+
+@keyframes st-btn-spin {
+  to { transform: rotate(360deg); }
+}
+
+// === Flush ============================================================
+// Pull a button by its own horizontal padding so the label aligns with
+// the container's content edge. Use on ghost / link-style buttons inside
+// content rows (toolbar trailing, table cells, alert actions).
+.btn--flush-start { margin-inline-start: calc(-1 * var(--btn-padding-x)); }
+.btn--flush-end   { margin-inline-end:   calc(-1 * var(--btn-padding-x)); }

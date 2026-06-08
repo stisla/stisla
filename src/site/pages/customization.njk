@@ -1,0 +1,154 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Customization · Stisla v3{% endblock %}
+
+{#
+  Architecture proof for Phase 1 (V3.md). One showcase, replayed under five
+  presets applied via inline --st-* overrides. If any preset doesn't reshape
+  the components correctly, the token model has a hole.
+
+  Each preset wraps `showcase()` in a scoped `<div style="--st-…">` block so
+  the override applies only to that subtree.
+#}
+
+{%- macro showcase() -%}
+<div class="demo-row demo-row--top demo-row--gap-md">
+  <div class="card" style="width: 16rem;">
+    <div class="card__header">Card title</div>
+    <div class="card__body">
+      <p class="card__text">A card with a header, body, and footer to show every padding and surface tier respond to the preset.</p>
+      <div class="demo-row">
+        <button type="button" class="btn btn--primary">Primary</button>
+        <button type="button" class="btn btn--outline btn--neutral">Cancel</button>
+      </div>
+    </div>
+    <div class="card__footer">
+      <small style="color: var(--st-muted-foreground);">Footer note</small>
+    </div>
+  </div>
+  <div class="demo-stack">
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary">Primary</button>
+      <button type="button" class="btn btn--neutral">Neutral</button>
+      <button type="button" class="btn btn--tertiary">Tertiary</button>
+    </div>
+    <div class="demo-row">
+      <button type="button" class="btn btn--outline btn--primary">Outline</button>
+      <button type="button" class="btn btn--ghost btn--primary">Ghost</button>
+      <button type="button" class="btn btn--light btn--primary">Light</button>
+    </div>
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary btn--sm">Small</button>
+      <button type="button" class="btn btn--primary">Default</button>
+      <button type="button" class="btn btn--primary btn--lg">Large</button>
+    </div>
+  </div>
+</div>
+{%- endmacro %}
+
+{% block content %}
+  <header>
+    <h1>Customization</h1>
+    <p class="lead">
+      Reshape every component by overriding root tokens. No CSS edits.
+    </p>
+  </header>
+
+  <section>
+    <h2>How it works</h2>
+    <p>
+      All visual decisions live in 30 <code>--st-*</code> tokens. Set one or
+      more at <code>:root</code> and every component picks up the change.
+      Scope them to a wrapper to theme one subtree.
+    </p>
+    <p>
+      Each preset below applies a few overrides via an inline
+      <code>style</code> attribute on the section wrapper. The component
+      markup is identical in every preset.
+    </p>
+  </section>
+
+  <section>
+    <h2>Default</h2>
+    <p>The token surface as it ships. Reference for comparison.</p>
+    {% call ui.demo() %}
+    {{ showcase() }}
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Brutalist</h2>
+    <p>
+      Zero radius and a solid offset shadow. Identity flip from two knobs.
+    </p>
+    {% call ui.demo() %}
+    <div style="--st-radius: 0; --st-shadow: 4px 4px 0 black;">
+      {{ showcase() }}
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Soft</h2>
+    <p>Larger radius, softer ambient shadow.</p>
+    {% call ui.demo() %}
+    <div style="--st-radius: 1rem; --st-shadow: 0 12px 32px rgba(0,0,0,.10), 0 4px 8px rgba(0,0,0,.04);">
+      {{ showcase() }}
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Dense</h2>
+    <p>
+      Density at <code>0.875</code> shrinks padding proportionally across
+      every component.
+    </p>
+    {% call ui.demo() %}
+    <div style="--st-density: 0.875;">
+      {{ showcase() }}
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Violet primary</h2>
+    <p>
+      Swap the brand color. Every primary-toned surface picks up the new
+      hue, including ghost and light variants that derive from it.
+    </p>
+    {% call ui.demo() %}
+    <div style="--st-primary: oklch(0.58 0.22 285);">
+      {{ showcase() }}
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Warm neutrals</h2>
+    <p>
+      <code>--st-base</code> is a hue number, not a color. Every neutral
+      tracks it, so one knob retints the whole gray ramp warm.
+    </p>
+    {% call ui.demo() %}
+    <div style="--st-base: 30;">
+      {{ showcase() }}
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Per-component override</h2>
+    <p>
+      Set a component-scoped token to retune one family without touching
+      the global radius. Here the buttons get a fully rounded silhouette
+      while cards keep the default radius.
+    </p>
+    {% call ui.demo() %}
+    <div style="--st-btn-radius: 9999px;">
+      {{ showcase() }}
+    </div>
+    {% endcall %}
+  </section>
+{% endblock %}

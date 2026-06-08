@@ -31,9 +31,9 @@
 }
 
 // === Components ========================================================
-// Every component below is BS5-coupled (reads $prefix / --bs-* / BS5
-// Sass vars). Step 3 rewrites each on the v3 model (BEM + --st-* +
-// color-mix); the PR that lands the rewrite also uncomments its import.
+// Step 3 rewrites each component on the v3 model (BEM + --st-* + color-mix);
+// the PR that lands the rewrite also uncomments its import. Uncommented
+// entries are already on v3; commented entries are still pending.
 //
 // Order preserves the Step 1 sequence so re-enabling is mechanical.
 @layer components {
@@ -43,12 +43,12 @@
   // @import '../components/form-select';
   // @import '../components/form-check';
   // @import '../components/input-group';
-  // @import '../components/buttons';
+  @import '../components/btn';
   // @import '../components/dropdown';
   // @import '../components/button-group';
   // @import '../components/nav';
   // @import '../components/navbar';
-  // @import '../components/card';
+  @import '../components/card';
   // @import '../components/sidebar';
   // @import '../components/app-shell';
   // @import '../components/page';

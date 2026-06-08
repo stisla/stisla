@@ -13,54 +13,31 @@
     <h2>Primary</h2>
     <p>
       The main call to action. Use one per surface for the action you most
-      want the user to take, like Save, Submit, or Continue.
+      want the user to take.
     </p>
     {% call ui.demo() %}
-    <button type="button" class="btn btn-primary">Primary</button>
+    <button type="button" class="btn btn--primary">Primary</button>
     {% endcall %}
   </section>
 
   <section>
-    <h2>Secondary</h2>
+    <h2>Neutral</h2>
     <p>
-      For actions that sit alongside primary but should not compete with it.
-      Common cases are Cancel next to Save, Filter next to Search, or any
-      non-prominent control.
-    </p>
-    <p>
-      Two flavors. The filled secondary reads as a peer to primary, useful
-      when both actions are equal weight. The outline secondary is quieter
-      and sits in the grey ramp, which is the canonical Cancel-next-to-Save
-      pairing.
+      A quieter button next to primary. Use for actions that should sit
+      alongside primary without competing for attention, like Cancel next
+      to Save or Filter next to Search.
     </p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
-      <button type="button" class="btn btn-secondary">Secondary</button>
-      <button type="button" class="btn btn-outline-secondary">Outline</button>
+    <div class="demo-row">
+      <button type="button" class="btn btn--neutral">Neutral</button>
+      <button type="button" class="btn btn--outline btn--neutral">Outline</button>
     </div>
     {% endcall %}
     <p>The canonical pairing in context.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
-      <button type="button" class="btn btn-primary">Save changes</button>
-      <button type="button" class="btn btn-outline-secondary">Cancel</button>
-    </div>
-    {% endcall %}
-  </section>
-
-  <section>
-    <h2>Danger</h2>
-    <p>
-      For destructive actions like Delete, Remove, or Discard. The filled red
-      carries the most weight and is the safe default for a confirm dialog.
-      Outline and light are options when a softer treatment fits the surface
-      better, like a row-level delete inside a dense table.
-    </p>
-    {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
-      <button type="button" class="btn btn-danger">Danger</button>
-      <button type="button" class="btn btn-outline-danger">Outline</button>
-      <button type="button" class="btn btn-light-danger">Light</button>
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary">Save changes</button>
+      <button type="button" class="btn btn--outline btn--neutral">Cancel</button>
     </div>
     {% endcall %}
   </section>
@@ -68,104 +45,73 @@
   <section>
     <h2>Tertiary</h2>
     <p>
-      An alternative to primary for surfaces where the action should be
-      prominent but the brand primary color doesn't fit. Tertiary's color
-      flips by theme. Dark in light mode, light in dark mode. Reach for it
-      when primary is already taken on the page and a second prominent action
-      needs to stand apart.
+      An alternative to primary when the brand color is already taken on the
+      page and a second prominent action needs to stand apart. The fill
+      flips by theme, dark in light mode and light in dark mode.
     </p>
     {% call ui.demo() %}
-    <button type="button" class="btn btn-tertiary">Tertiary</button>
+    <button type="button" class="btn btn--tertiary">Tertiary</button>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Danger</h2>
+    <p>
+      For destructive actions like Delete, Remove, or Discard. The filled
+      red is the safe default for a confirm dialog. Outline and light fit
+      softer surfaces such as row-level deletes inside a dense table.
+    </p>
+    {% call ui.demo() %}
+    <div class="demo-row">
+      <button type="button" class="btn btn--danger">Danger</button>
+      <button type="button" class="btn btn--outline btn--danger">Outline</button>
+      <button type="button" class="btn btn--light btn--danger">Light</button>
+    </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>Ghost</h2>
     <p>
-      No background, no border, just a colored label. Use it for low-stakes
-      actions like a modal Close, a Cancel inside a card row, or toolbar
-      items. Hover paints a soft tint so the affordance shows up on
-      interaction.
+      No background, no border, just a colored label. Use for low-stakes
+      actions in toolbars, in-card cancels, or quiet inline triggers. Hover
+      paints a soft tint so the affordance shows up on interaction.
     </p>
     {% call ui.demo() %}
-    <button type="button" class="btn btn-ghost">Ghost</button>
-    {% endcall %}
-  </section>
-
-  <section>
-    <h2>Other variants</h2>
-    <p>
-      Stisla v3 ships filled, outline, light, and ghost flavors for every
-      Bootstrap theme color. You probably won't need most of these in a real
-      app. Reach for primary, secondary, danger, tertiary, or ghost first.
-      Everything below is here for the rare case a surface calls for it.
-    </p>
-    <p>Filled variants for the remaining colors.</p>
-    {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
-      <button type="button" class="btn btn-success">Success</button>
-      <button type="button" class="btn btn-warning">Warning</button>
-      <button type="button" class="btn btn-info">Info</button>
-    </div>
-    {% endcall %}
-    <p>Outline across the remaining colors.</p>
-    {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
-      <button type="button" class="btn btn-outline-primary">Primary</button>
-      <button type="button" class="btn btn-outline-success">Success</button>
-      <button type="button" class="btn btn-outline-warning">Warning</button>
-      <button type="button" class="btn btn-outline-info">Info</button>
-    </div>
-    {% endcall %}
-    <p>Light flavors across every color. Soft tinted fill, no border.</p>
-    {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
-      <button type="button" class="btn btn-light-primary">Primary</button>
-      <button type="button" class="btn btn-light-secondary">Secondary</button>
-      <button type="button" class="btn btn-light-success">Success</button>
-      <button type="button" class="btn btn-light-warning">Warning</button>
-      <button type="button" class="btn btn-light-info">Info</button>
-    </div>
-    {% endcall %}
-    <p>Ghost flavors across every color. No chrome at rest, soft tint on hover.</p>
-    {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
-      <button type="button" class="btn btn-ghost-primary">Primary</button>
-      <button type="button" class="btn btn-ghost-secondary">Secondary</button>
-      <button type="button" class="btn btn-ghost-success">Success</button>
-      <button type="button" class="btn btn-ghost-danger">Danger</button>
-      <button type="button" class="btn btn-ghost-warning">Warning</button>
-      <button type="button" class="btn btn-ghost-info">Info</button>
+    <div class="demo-row">
+      <button type="button" class="btn btn--ghost btn--neutral">Cancel</button>
+      <button type="button" class="btn btn--ghost btn--primary">View details</button>
+      <button type="button" class="btn btn--ghost btn--danger">Remove</button>
     </div>
     {% endcall %}
   </section>
 
   <section>
-    <h2>Where are <code>btn-light</code> and <code>btn-dark</code>?</h2>
+    <h2>Custom color</h2>
     <p>
-      Stisla v3 doesn't restyle BS5's <code>.btn-light</code> or
-      <code>.btn-dark</code>. In practice they don't pull their weight as
-      semantic categories. <code>.btn-light</code> reads as a barely-visible
-      grey button on a white surface, and <code>.btn-dark</code> is
-      essentially <code>.btn-primary</code> inverted. BS5's compiled defaults
-      still emit, so existing markup keeps working, just unbranded.
+      For one-off colors outside the shipped tones, set
+      <code>--btn-tone</code> and <code>--btn-color</code> inline. The
+      bg, hover, active, rim, and bevel all derive from
+      <code>--btn-tone</code>, so a one-line override carries every state.
     </p>
     <p>
-      Use <code>btn-secondary</code> instead. It's mono and inverts per
-      theme, which is what <code>.btn-dark</code> (light mode) and
-      <code>.btn-light</code> (dark mode) were trying to be. Heads-up on the
-      name collision. The light flavors in <em>Other variants</em> above
-      (<code>btn-light-primary</code>, <code>btn-light-success</code>, ...)
-      are unrelated. Same word, different family. They're per-color soft
-      tints, not the BS5 grey button.
+      If the same color appears in three or more places, promote it to a
+      project-scoped class. The shipped tones (primary, neutral, tertiary,
+      danger) are the curated set with verified text contrast across light
+      and dark.
     </p>
-  </section>
-
-  <section>
-    <h2>Link button</h2>
-    <p>No background, no shadow. Underline on hover.</p>
     {% call ui.demo() %}
-    <button type="button" class="btn btn-link">Link button</button>
+    <div class="demo-row">
+      <button type="button" class="btn" style="--btn-tone: oklch(0.55 0.18 149); --btn-color: white;">
+        Custom green
+      </button>
+      <button type="button" class="btn" style="--btn-tone: oklch(0.55 0.15 285); --btn-color: white;">
+        Custom violet
+      </button>
+      <button type="button" class="btn" style="--btn-tone: oklch(0.65 0.18 55); --btn-color: white;">
+        Custom orange
+      </button>
+    </div>
     {% endcall %}
   </section>
 
@@ -173,10 +119,10 @@
     <h2>Sizes</h2>
     <p>Heights are pinned across small, default, and large regardless of content.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2 align-items-center">
-      <button type="button" class="btn btn-primary btn-sm">Small</button>
-      <button type="button" class="btn btn-primary">Default</button>
-      <button type="button" class="btn btn-primary btn-lg">Large</button>
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary btn--sm">Small</button>
+      <button type="button" class="btn btn--primary">Default</button>
+      <button type="button" class="btn btn--primary btn--lg">Large</button>
     </div>
     {% endcall %}
   </section>
@@ -184,16 +130,17 @@
   <section>
     <h2>With icon</h2>
     <p>
-      Any icon component drops into <code>.btn</code> via flexbox
-      <code>gap</code>. Icons scale with the button's font size.
+      Icons drop into <code>.btn</code> via flexbox <code>gap</code>. Any
+      inline <code>&lt;svg&gt;</code> or <code>&lt;i&gt;</code> scales to
+      the button's font size.
     </p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2 align-items-center">
-      <button type="button" class="btn btn-primary">
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary">
         <i data-lucide="plus"></i>
         Leading icon
       </button>
-      <button type="button" class="btn btn-primary">
+      <button type="button" class="btn btn--primary">
         Trailing icon
         <i data-lucide="arrow-right"></i>
       </button>
@@ -204,25 +151,29 @@
   <section>
     <h2>Icon only</h2>
     <p>
-      Add <code>.btn-icon</code> for a 1:1 square button. Pair with
-      <code>aria-label</code> so the action stays announced.
+      Add <code>.btn--icon-only</code> for a square button at any size.
+      Pair with <code>aria-label</code> so the action stays announced. Add
+      <code>.btn--icon-round</code> for a circular silhouette.
     </p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2 align-items-center">
-      <button type="button" class="btn btn-primary btn-icon btn-sm" aria-label="Add">
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary btn--icon-only btn--sm" aria-label="Add">
         <i data-lucide="plus"></i>
       </button>
-      <button type="button" class="btn btn-primary btn-icon" aria-label="Add">
+      <button type="button" class="btn btn--primary btn--icon-only" aria-label="Add">
         <i data-lucide="plus"></i>
       </button>
-      <button type="button" class="btn btn-primary btn-icon btn-lg" aria-label="Add">
+      <button type="button" class="btn btn--primary btn--icon-only btn--lg" aria-label="Add">
         <i data-lucide="plus"></i>
       </button>
-      <button type="button" class="btn btn-outline-danger btn-icon" aria-label="Delete">
+      <button type="button" class="btn btn--outline btn--danger btn--icon-only" aria-label="Delete">
         <i data-lucide="trash-2"></i>
       </button>
-      <button type="button" class="btn btn-outline-secondary btn-icon" aria-label="Edit">
+      <button type="button" class="btn btn--outline btn--neutral btn--icon-only" aria-label="Edit">
         <i data-lucide="pencil"></i>
+      </button>
+      <button type="button" class="btn btn--ghost btn--neutral btn--icon-only btn--icon-round" aria-label="More">
+        <i data-lucide="more-horizontal"></i>
       </button>
     </div>
     {% endcall %}
@@ -230,11 +181,17 @@
 
   <section>
     <h2>States</h2>
+    <p>
+      <code>aria-pressed="true"</code> applies the pressed-in fill on any
+      tone. Native <code>:disabled</code> applies on form controls;
+      <code>aria-disabled="true"</code> and <code>tabindex="-1"</code>
+      mirror the same behavior on link buttons.
+    </p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2 align-items-center">
-      <button type="button" class="btn btn-primary active" aria-pressed="true">Active</button>
-      <button type="button" class="btn btn-primary" disabled>Disabled button</button>
-      <a href="#" role="button" class="btn btn-primary disabled" aria-disabled="true" tabindex="-1">Disabled link</a>
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary" aria-pressed="true">Pressed</button>
+      <button type="button" class="btn btn--primary" disabled>Disabled button</button>
+      <a href="#" role="button" class="btn btn--primary" aria-disabled="true" tabindex="-1">Disabled link</a>
     </div>
     {% endcall %}
   </section>
@@ -242,28 +199,28 @@
   <section>
     <h2>Loading</h2>
     <p>
-      Toggle <code>.btn-loading</code> from JS to show a leading spinner. The
-      label stays visible. Any leading or trailing icons are hidden so the
-      spinner takes their place. Click is blocked while the class is applied.
-      Pair with <code>aria-busy="true"</code>.
+      Toggle <code>.is-loading</code> from JS to show a leading spinner.
+      The label stays visible. Any leading or trailing icons hide so the
+      spinner takes their place. Click is blocked while the class is
+      applied. Pair with <code>aria-busy="true"</code>.
     </p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2 align-items-center">
-      <button type="button" class="btn btn-primary btn-loading btn-sm" aria-busy="true">Saving</button>
-      <button type="button" class="btn btn-primary btn-loading" aria-busy="true">Saving</button>
-      <button type="button" class="btn btn-primary btn-loading btn-lg" aria-busy="true">Saving</button>
-      <button type="button" class="btn btn-outline-secondary btn-loading" aria-busy="true">Loading</button>
-      <button type="button" class="btn btn-danger btn-icon btn-loading" aria-busy="true" aria-label="Deleting"></button>
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary is-loading btn--sm" aria-busy="true">Saving</button>
+      <button type="button" class="btn btn--primary is-loading" aria-busy="true">Saving</button>
+      <button type="button" class="btn btn--primary is-loading btn--lg" aria-busy="true">Saving</button>
+      <button type="button" class="btn btn--outline btn--neutral is-loading" aria-busy="true">Loading</button>
+      <button type="button" class="btn btn--danger btn--icon-only is-loading" aria-busy="true" aria-label="Deleting"></button>
     </div>
     {% endcall %}
     <p>With icons, the spinner replaces them in place.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2 align-items-center">
-      <button type="button" class="btn btn-primary btn-loading" aria-busy="true">
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary is-loading" aria-busy="true">
         <i data-lucide="plus"></i>
         Adding
       </button>
-      <button type="button" class="btn btn-primary btn-loading" aria-busy="true">
+      <button type="button" class="btn btn--primary is-loading" aria-busy="true">
         Continuing
         <i data-lucide="arrow-right"></i>
       </button>
@@ -271,21 +228,10 @@
     {% endcall %}
     <p>Click to try. The state auto-clears after two seconds.</p>
     {% call ui.demo() %}
-    <button type="button" class="btn btn-primary" data-demo-loading="2000">
+    <button type="button" class="btn btn--primary" data-demo-loading="2000">
       <i data-lucide="save"></i>
       Save changes
     </button>
-    {% endcall %}
-  </section>
-
-  <section>
-    <h2>Toggle</h2>
-    <p>
-      <code>data-bs-toggle="button"</code> flips <code>.active</code> and
-      <code>aria-pressed</code> on click.
-    </p>
-    {% call ui.demo() %}
-    <button type="button" class="btn btn-primary" data-bs-toggle="button">Press me</button>
     {% endcall %}
   </section>
 
@@ -296,10 +242,10 @@
       <code>&lt;a&gt;</code>, and form inputs.
     </p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2 align-items-center">
-      <button type="button" class="btn btn-primary">&lt;button&gt;</button>
-      <a href="#" role="button" class="btn btn-primary">&lt;a&gt;</a>
-      <input type="submit" class="btn btn-primary" value="<input type=submit>" />
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary">&lt;button&gt;</button>
+      <a href="#" role="button" class="btn btn--primary">&lt;a&gt;</a>
+      <input type="submit" class="btn btn--primary" value="<input type=submit>" />
     </div>
     {% endcall %}
   </section>

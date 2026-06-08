@@ -100,13 +100,13 @@ document.addEventListener("change", (e) => {
 // <button class="btn btn-primary" data-demo-loading="2000">Click to save</button>
 document.addEventListener("click", (e) => {
   const target = e.target.closest("[data-demo-loading]");
-  if (!target || target.classList.contains("btn-loading")) return;
+  if (!target || target.classList.contains("is-loading")) return;
   const ms = parseInt(target.dataset.demoLoading, 10) || 1500;
-  target.classList.add("btn-loading");
+  target.classList.add("is-loading");
   target.setAttribute("aria-busy", "true");
   target.setAttribute("disabled", "true");
   setTimeout(() => {
-    target.classList.remove("btn-loading");
+    target.classList.remove("is-loading");
     target.removeAttribute("aria-busy");
     target.removeAttribute("disabled");
   }, ms);

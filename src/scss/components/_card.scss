@@ -1,57 +1,118 @@
-// Stisla v3 — cards. Most styling rides on BS5 Sass vars set in
-// tokens/_variables.scss; the rules below are the bits BS5 vars can't express.
+// Stisla v3 — card.
+//
+// BEM: .card (root) + parts (__header / __body / __footer / __title /
+// __subtitle / __text / __link / __image / __overlay). Variants stay
+// flat on the root (.card--bordered).
+//
+// Tokens: --st-surface (bg), --st-border, --st-card-radius → --st-radius,
+// --st-card-shadow → --st-shadow, padding × var(--st-density).
 
 .card {
-  // Repoint --bs-card-bg at the runtime surface var so theming tools can
-  // swap card / modal / dropdown surfaces in one place. BS5 declares
-  // --bs-card-bg locally on .card from $card-bg at build time; we override
-  // it at runtime to follow --bs-surface (which the color-mode mixin in
-  // tokens/_root.scss flips for dark).
-  --#{$prefix}card-bg: var(--#{$prefix}surface);
-  --#{$prefix}card-img-overlay-padding: var(--#{$prefix}card-spacer-y)
-    var(--#{$prefix}card-spacer-x);
+  --card-radius:    var(--st-card-radius, var(--st-radius));
+  --card-padding:   calc(1.25rem * var(--st-density));
+  --card-shadow:    var(--st-card-shadow, var(--st-shadow));
+  --card-bg:        var(--st-surface);
+  --card-color:     var(--st-foreground);
+  --card-border:    1px solid transparent;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  color: var(--card-color);
+  background: var(--card-bg);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  // Clip inner backgrounds (header alt fill, image) to the outer radius.
+  // Box-shadow renders outside the box, so this does not clip the elevation.
+  overflow: hidden;
 }
 
-// Pin to 16px regardless of which <h*> tag the user picks for .card-title.
-// BS5 doesn't ship $card-title-font-size — title sizing comes from the
-// heading element by default, so we set it here instead of in _variables.
-.card-title {
-  font-size: 1rem;
+.card--bordered {
+  --card-border: 1px solid var(--st-border);
+  --card-shadow: none;
 }
 
-// Footer sits on the alt surface so the body/footer split reads without a
-// border (the card is borderless — $card-border-width: 0).
-.card-footer {
-  background-color: var(--#{$prefix}surface-alt);
-  border-top: 1px solid var(--#{$prefix}card-border-color);
+// === Parts ============================================================
+.card__body {
+  padding: var(--card-padding);
 }
 
-.card-header {
+.card__header {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid var(--#{$prefix}card-border-color);
-  min-height: 46px;
-  padding: 0 var(--#{$prefix}card-cap-padding-x);
-}
-
-.card-header-tabs {
-  margin-bottom: -7px;
-  &.nav-tabs {
-    --#{$prefix}nav-tabs-link-hover-border-color: transparent;
-  }
-  .nav-link.active {
-    border-color: var(--#{$prefix}card-border-color)
-      var(--#{$prefix}card-border-color) transparent;
-  }
+  gap: 0.5rem;
+  min-height: calc(2.875rem * var(--st-density));
+  padding: 0 var(--card-padding);
+  border-bottom: 1px solid var(--st-border);
 }
 
 // Opt the header onto the alt surface to mirror the footer's contrast.
-// Composes with .card-header: <div class="card-header card-header-alt">.
-.card-header:has(.nav-tabs),
-.card-header-alt {
-  background-color: var(--#{$prefix}surface-alt);
+// Composes with .card__header: <div class="card__header card__header--alt">.
+.card__header--alt {
+  background: var(--st-surface-2);
 }
 
-.card .list-group .list-group-item {
-  --#{$prefix}list-group-border-color: var(--#{$prefix}card-border-color);
+.card__footer {
+  padding: var(--card-padding);
+  background: var(--st-surface-2);
+  border-top: 1px solid var(--st-border);
+}
+
+.card__title {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.card__subtitle {
+  margin: -0.25rem 0 0.75rem;
+  font-size: 0.875rem;
+  color: var(--st-muted-foreground);
+  font-weight: 500;
+}
+
+.card__text {
+  margin: 0 0 1rem;
+  &:last-child { margin-bottom: 0; }
+}
+
+.card__link {
+  color: var(--st-primary);
+  text-decoration: none;
+  & + .card__link { margin-inline-start: 1rem; }
+  &:hover { text-decoration: underline; }
+}
+
+// Image position-aware. .card has overflow:hidden so corners clip
+// automatically; explicit radii keep the image correct in contexts
+// where overflow is reset.
+.card__image {
+  display: block;
+  width: 100%;
+  height: auto;
+
+  &:first-child { border-radius: var(--card-radius) var(--card-radius) 0 0; }
+  &:last-child  { border-radius: 0 0 var(--card-radius) var(--card-radius); }
+  &:only-child  { border-radius: var(--card-radius); }
+}
+
+// Overlay sits over a .card__image (or any background sibling). Positions
+// absolute over the image; default text color is white because overlays
+// land on photos.
+.card__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: var(--card-padding);
+  color: #fff;
+
+  .card__title,
+  .card__subtitle,
+  .card__text {
+    color: inherit;
+  }
 }

@@ -45,10 +45,15 @@
   --st-border:               oklch(0.93 0.005 var(--st-base));
   --st-muted-foreground:     oklch(0.52 0.04  var(--st-base));
 
-  // === Interactional (4) — 2 pairs ======================================
-  // Accent = neutral hover bg (transient).
+  // === Interactional (6) — 3 pairs ======================================
+  // Neutral   = rest bg for filled-neutral elements (.btn--neutral, kbd,
+  //             input-group addons, default badge).
+  // Accent    = neutral hover bg (transient).
   // Highlight = persistent selected/current bg (soft primary tint).
+  // Rest → hover → selected progression for neutral surfaces.
   // See V3.md §3.2 table for component-by-component application.
+  --st-neutral:              oklch(0.91 0.005 var(--st-base));
+  --st-neutral-foreground:   var(--st-foreground);
   --st-accent:               oklch(0.9593 0.0057 256.68);
   --st-accent-foreground:    var(--st-foreground);
   --st-highlight:            color-mix(in oklch, var(--st-primary) 12%, transparent);
@@ -64,6 +69,14 @@
   --st-radius:               0.75rem;
   --st-shadow:               0 1px 3px rgba(0, 0, 0, .05), 0 1px 2px rgba(0, 0, 0, .03);
   --st-density:              1;
+
+  // Derived siblings (V3.md §3.4 line 167). Not part of the customization
+  // story — components reach for these via calc() ratios of --st-radius so
+  // smaller / larger size variants scale proportionally. Brutalist preset
+  // (--st-radius: 0) cascades to 0 for every size; additive offsets would
+  // leave lg with a stray corner.
+  --st-radius-sm:            calc(var(--st-radius) * 0.667);
+  --st-radius-lg:            calc(var(--st-radius) * 1.333);
 
   // === Type (2) =========================================================
   --st-font-sans:            "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -82,6 +95,8 @@
   --st-border:               oklch(0.30 0.012 var(--st-base));
   --st-muted-foreground:     oklch(0.72 0.02  var(--st-base));
 
+  --st-neutral:              oklch(0.27 0.008 var(--st-base));
   --st-accent:               oklch(0.2606 0.0238 256.84);
-  // --st-accent-foreground tracks var(--st-foreground); no override needed.
+  // --st-neutral-foreground / --st-accent-foreground track var(--st-foreground);
+  // no override needed.
 }
