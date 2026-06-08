@@ -21,6 +21,7 @@
 @layer foundation {
   @import '../foundation/normalize';
   @import '../foundation/reboot';
+  @import '../foundation/typography';
   @import '../foundation/grid';
   @import '../foundation/containers';
 }
@@ -70,7 +71,8 @@
 }
 
 // === Utilities =========================================================
-// Hand-written utility set lands in Phase 1 (V3.md §5 open question).
+// Hand-written utility set. Each PR adds a slice; today: text only.
+// Layout (display, flex, gap, margin, padding) lands in a later PR.
 @layer utilities {
-  // @import '../utilities/…';
+  @import '../utilities/text';
 }

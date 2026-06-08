@@ -1,0 +1,103 @@
+// Stisla v3 — typography helpers.
+//
+// Lives in @layer foundation alongside _reboot.scss. These are not
+// utilities — they're typographic patterns (heading-as-class, lead
+// paragraph, display scale, list/blockquote presentations) that any
+// component or page composes with.
+//
+// Sizes are literals, not tokens (V3.md §3.4 discipline argument:
+// no `--st-font-size-*` ramp at root). Heading-class sizes mirror the
+// h1..h6 element scale in _reboot.scss exactly.
+
+// === Heading classes ===
+// Use when you want the heading look on a different element without
+// changing the semantics (e.g. <p class="h3"> for a styled lead-in
+// without breaking the document outline).
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: inherit;
+}
+
+.h1 { font-size: 2rem;     }
+.h2 { font-size: 1.5rem;   }
+.h3 { font-size: 1.25rem;  }
+.h4 { font-size: 1.125rem; }
+.h5 { font-size: 1rem;     }
+.h6 { font-size: 0.875rem; }
+
+// === Lead ===
+// Slightly larger and lighter intro paragraph. Inter ships at 400 as
+// its lightest weight, so 400 instead of BS5's 300 to avoid the
+// fallback gap.
+.lead {
+  font-size: 1.125rem;     // 18px
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+// === Display scale ===
+// Hero / marketing scale. Tighter line-height and heavier visual weight
+// than the heading scale. Weight 300 documents the intent; Inter falls
+// back to 400 since 300 isn't shipped.
+.display-1,
+.display-2,
+.display-3,
+.display-4,
+.display-5,
+.display-6 {
+  font-weight: 300;
+  line-height: 1.1;
+}
+
+.display-1 { font-size: 5rem;   } // 80
+.display-2 { font-size: 4.5rem; } // 72
+.display-3 { font-size: 4rem;   } // 64
+.display-4 { font-size: 3.5rem; } // 56
+.display-5 { font-size: 3rem;   } // 48
+.display-6 { font-size: 2.5rem; } // 40
+
+// === Lists ===
+// Strip markers + indent. For nav-like vertical or row layouts.
+.list-unstyled {
+  padding-left: 0;
+  list-style: none;
+}
+
+.list-inline {
+  padding-left: 0;
+  list-style: none;
+}
+
+.list-inline-item {
+  display: inline-block;
+
+  &:not(:last-child) {
+    margin-right: 0.5rem;
+  }
+}
+
+// === Blockquote ===
+// Bigger leading text with optional footer for attribution.
+.blockquote {
+  margin-bottom: 1rem;
+  font-size: 1.125rem;
+}
+
+.blockquote-footer {
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.875em;
+  color: var(--st-muted-foreground);
+
+  &::before {
+    content: "\2014\00A0"; // em-dash, nbsp
+  }
+}
