@@ -19,7 +19,7 @@ Prompt for each session:
 
 _Latest entry first. One line per session: ISO date — step completed / current — blockers._
 
-- 2026-06-08 — Step 1 done. `src/scss/foundation/` lands with normalize, reboot, grid, containers, breakpoints, mixins. `LICENSES/` carries BS5 + modern-normalize MIT text. Bundle swap leaves the BS5 reboot/grid/containers behind. Reboot temporarily falls back `var(--st-X, var(--bs-Y))` until tokens land in Step 2. **Scope shift:** `bootstrap` dep removal moved to Step 2 (tokens/* and components/* still reference BS5 vars and mixins — pulling the dep now would un-build the bundle). Next: Step 2 (token rewrite). No blockers.
+- 2026-06-08 — Step 1 done. `src/scss/foundation/` lands with normalize, reboot, grid, containers, breakpoints, mixins. `LICENSES/` carries BS5 + modern-normalize MIT text. Bundle swap leaves the BS5 reboot/grid/containers behind. Reboot reads `--st-*` directly — no `--bs-*` fallbacks (V3.md §3: no --bs in v3 code). Bare surfaces (body fg/bg, link, hr, focus ring) until tokens land in Step 2; intended trade. **Scope shift:** `bootstrap` dep removal moved to Step 2 (tokens/* and components/* still reference BS5 vars and mixins — pulling the dep now would un-build the bundle). Next: Step 2 (token rewrite). No blockers.
 - 2026-06-07 — Step 0 done. BS5 build snapshotted to `bs5-snapshot/` (44 files, 3.7 MB). Tagged `v3-bs5-snapshot` at commit `eba7fc1`. Next: Step 1 (foundation rewrite). No blockers.
 - 2026-06-07 — V3.md spec locked. MIGRATION.md drafted. Step 0 (snapshot) not started. No blockers.
 
@@ -98,7 +98,7 @@ Each step lands and merges before the next starts. No "step 3 partial PR" overla
 - [ ] ~~Remove `bootstrap` from `package.json`.~~ **Moved to Step 2.** Tokens (`tokens/_variables.scss`) and components (`components/_app-shell.scss`, `_navbar.scss`) still reference BS5 vars (`$grid-breakpoints`) and the `bootstrap/scss/*` import chain in `stisla-full.scss` is the source of those vars. Removing `bootstrap` now un-builds the bundle. Step 2 (token rewrite) replaces the var surface and pulls the dep then.
 - [x] Create `src/scss/foundation/` with:
   - `_normalize.scss` — vendored modern-normalize 3.0.1
-  - `_reboot.scss` — Stisla opinions (~50 lines). Reads `--st-*` with `var(--bs-Y)` fallbacks so the visible baseline matches pre-rewrite; fallbacks drop in Step 2.
+  - `_reboot.scss` — Stisla opinions (~75 lines). Reads `--st-*` directly. No `--bs-*` references (V3.md §3). Affected surfaces (body fg/bg, link, focus ring, hr) sit on browser initial values until tokens land in Step 2.
   - `_grid.scss` + `_containers.scss` — forked from BS5. `--bs-gutter-*` renamed to `--st-grid-gutter-*`. RTL flips, `_root` emits, `.no-gutters`, `$enable-cssgrid` stripped. Mixins inlined (no separate `mixins/_grid.scss`).
   - `_breakpoints.scss` — forked from `bootstrap/scss/mixins/_breakpoints.scss`. `media-breakpoint-up/down/between/only` renamed to `media-up/down/between/only`. **Shim** at the bottom re-exports the old names so existing component files keep building until Step 3.
   - `_mixins.scss` — `color-mode` helper.
@@ -241,7 +241,7 @@ Build them on top of the rewritten foundation after 3.0 ships.
 
 - [x] Step 0 — Snapshot BS5 build, tag `v3-bs5-snapshot` ✅
 - [x] Step 1 — Foundation rewrite (deps swap, `foundation/` files, `LICENSES/`) ✅
-- [ ] Step 2 — Token rewrite (`_theme.scss` + `_breakpoints.scss`) + remove `bootstrap` dep + drop `--bs-Y` fallbacks from `foundation/_reboot.scss`
+- [ ] Step 2 — Token rewrite (`_theme.scss` + `_breakpoints.scss`) + remove `bootstrap` dep
 - [ ] Step 3 — Component rewrite (per §4 table, in order from §3 step 3)
 - [ ] Step 4 — JS rewrite (interleaved with step 3 JS-coordinated components)
 - [ ] Step 5 — Demo pages (.njk class + attr + delete pass)
