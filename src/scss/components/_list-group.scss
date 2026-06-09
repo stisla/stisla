@@ -1,36 +1,264 @@
 // Stisla v3 — list group.
-// Most of the customization lives on BS5 Sass vars (see tokens/_variables.scss
-// list-group block). The rules below cover what those vars can't reach:
-// a focus ring that matches .form-control / .form-select / .accordion-button,
-// and a leading-icon convention that pins direct <svg>/<i> children to 16px so
-// rows align regardless of icon-pack default size (same as .dropdown-item).
 //
-// Parts:
-//   .list-group              wrapper (BS5)
-//   .list-group-item         row (BS5, restyled via vars)
-//   .list-group-item-action  interactive row — <a> or <button> (BS5)
-//   .list-group-flush        edge-to-edge variant (BS5)
-//   > svg | > i              leading icon, slotless
+// Vertical stack of rows on a shared rounded surface. Navigation lists,
+// settings panels, contact rolls, payment methods, status logs — anywhere
+// a series of similar items belongs in one frame. The reading-list look
+// for long-form content lives in components/_prose.scss; .list-group is
+// the dashboard counterpart.
+//
+// === Anatomy =============================================================
+//   .list-group                          root frame (any list element or
+//                                        <div> works; semantic <ul>/<ol>
+//                                        recommended when items are
+//                                        siblings of similar role)
+//   .list-group__item                    one row
+//
+// === Modifiers ===========================================================
+//   .list-group--flush                   drop outer border + radius
+//   .list-group--horizontal              row layout
+//   .list-group--horizontal-{sm…xxl}     row layout above the breakpoint
+//   .list-group--numbered                <ol> auto-counter prefix
+//   .list-group__item--{primary,success,info,warning,danger}
+//                                        contextual tint (10% soft fill)
+//   .list-group__item--neutral           neutral fill, tracks --st-neutral
+//
+// === State hooks (V3.md §3.6) ============================================
+//   .list-group__item[data-state="active"]   persistent selected row
+//   .list-group__item[aria-current="page"]   current page (nav links)
+//   .list-group__item[aria-current="true"]   current item (generic)
+//   .list-group__item[aria-disabled="true"]  unreachable
+//   :disabled                                native form-button disabled
+//
+// === Interactive rows ====================================================
+// Anchor (<a>) or button (<button>) elements with .list-group__item get
+// hover + focus-visible automatically — no opt-in class (was BS5's
+// .list-group-item-action). Static rows (<li>, <div>) sit quiet so a
+// settings row whose only interactive surface is a switch doesn't
+// light up under cursor.
+//
+// === Leading icon ========================================================
+// First-child <svg>/<i> in a row pins to the icon-size var so rows align
+// across icon packs. Color tracks currentColor so hover + active states
+// drag it along (the BS5 file had to override this manually; v3's
+// inherit-color reboot handles it for free).
+//
+// === Card integration ===================================================
+// Dropped as a direct child of .card the list-group sheds its own outer
+// chrome (border, radius, top/bottom edge) so the card owns the frame
+// and the rows read as one continuous stack. Pattern matches
+// .card > .table:last-child in _table.scss.
 
-.list-group-item-action:focus-visible {
-  z-index: 1; // match BS5's hover/focus z-index so the ring sits over siblings
-  outline: 0;
-  box-shadow: 0 0 0 0.1875rem rgba(var(--#{$prefix}primary-rgb), 0.2);
+.list-group {
+  // === Geometry ========================================================
+  --list-group-radius: var(--st-list-group-radius, var(--st-radius));
+  --list-group-item-padding-y: calc(0.75rem * var(--st-density));
+  --list-group-item-padding-x: calc(1rem * var(--st-density));
+  --list-group-item-gap: 0.75rem;
+  --list-group-item-icon-size: 1rem;
+
+  // === Surface =========================================================
+  --list-group-bg: var(--st-surface);
+  --list-group-color: var(--st-foreground);
+  --list-group-border-color: var(--st-border);
+  --list-group-border-width: 1px;
+  --list-group-divider-color: var(--st-border);
+
+  // === Item states =====================================================
+  --list-group-item-hover-bg: var(--st-accent);
+  --list-group-item-hover-color: var(--st-accent-foreground);
+  --list-group-item-active-bg: var(--st-highlight);
+  --list-group-item-active-color: var(--st-highlight-foreground);
+  --list-group-item-disabled-color: var(--st-muted-foreground);
+
+  // === Focus ===========================================================
+  --list-group-ring: var(--st-ring);
+
+  display: flex;
+  flex-direction: column;
+  background-color: var(--list-group-bg);
+  color: var(--list-group-color);
+  border: var(--list-group-border-width) solid var(--list-group-border-color);
+  border-radius: var(--list-group-radius);
+  // Clip square inner-row corners to the rounded outer shape; same trick
+  // as .card. Inset focus halos (outline-offset: -2px below) sit inside
+  // the box so this overflow doesn't fight them.
+  overflow: hidden;
 }
 
-// Leading icon — direct <svg> or pre-init <i data-lucide>. 16px so rows
-// align across icon packs; color tracks the secondary channel until the
-// row is hovered/active and inherits the link color.
-.list-group-item > :is(svg, i):first-child {
-  width: 1rem;
-  height: 1rem;
+// === Item =============================================================
+
+.list-group__item {
+  display: flex;
+  align-items: center;
+  gap: var(--list-group-item-gap);
+  padding: var(--list-group-item-padding-y) var(--list-group-item-padding-x);
+  color: var(--list-group-color);
+  // Transparent base lets variant tints + state paints stack on top
+  // without per-rule conflicts.
+  background-color: transparent;
+  // Inter-row rule. The root border owns the top/bottom edges; subsequent
+  // items get a top divider, first item stays flush.
+  border-top: 1px solid var(--list-group-divider-color);
+  // Local stacking context — needed so a focus halo (z-index: 1 below)
+  // sits above neighbor row backgrounds without jumping out of the frame.
+  position: relative;
+
+  &:first-child { border-top: 0; }
+}
+
+// === Interactive rows ================================================
+
+a.list-group__item,
+button.list-group__item {
+  // <button> doesn't stretch by default and centers text — both wrong
+  // for a row.
+  width: 100%;
+  text-align: inherit;
+  cursor: pointer;
+  // <a> drops underline globally via Preflight, but a <button> inside a
+  // form context may inherit one; explicitly clear here.
+  text-decoration: none;
+}
+
+a.list-group__item:hover,
+button.list-group__item:hover {
+  background-color: var(--list-group-item-hover-bg);
+  color: var(--list-group-item-hover-color);
+}
+
+a.list-group__item:focus-visible,
+button.list-group__item:focus-visible {
+  // Inset halo so the outer overflow: hidden on .list-group doesn't clip
+  // it. z-index lifts the row above siblings so the bottom-edge outline
+  // paints over the next item's top divider.
+  outline: 2px solid var(--list-group-ring);
+  outline-offset: -2px;
+  z-index: 1;
+}
+
+// === Selection states (V3.md §3.6) ====================================
+// Source-order beats the :hover rule above via specificity (0,2,0 vs
+// 0,1,2): hover on an already-active row keeps the highlight tier.
+
+.list-group__item[data-state="active"],
+.list-group__item[aria-current="page"],
+.list-group__item[aria-current="true"] {
+  background-color: var(--list-group-item-active-bg);
+  color: var(--list-group-item-active-color);
+}
+
+// === Disabled =========================================================
+
+.list-group__item[aria-disabled="true"],
+.list-group__item:disabled {
+  color: var(--list-group-item-disabled-color);
+  pointer-events: none;
+  cursor: not-allowed;
+  background-color: transparent;
+}
+
+// === Leading icon =====================================================
+// First-child <svg>/<i data-lucide> pins to a fixed size + currentColor
+// so rows align across icon packs and the icon drags through hover +
+// active surfaces along with the text.
+
+.list-group__item > :is(svg, i):first-child {
+  width: var(--list-group-item-icon-size);
+  height: var(--list-group-item-icon-size);
   flex-shrink: 0;
-  color: var(--#{$prefix}secondary-color);
+  color: currentColor;
 }
 
-.list-group-item-action:hover > :is(svg, i):first-child,
-.list-group-item-action:focus > :is(svg, i):first-child,
-.list-group-item.active > :is(svg, i):first-child,
-.list-group-item-action:active > :is(svg, i):first-child {
-  color: inherit;
+// === Contextual variants ==============================================
+// 10% soft fill — same recipe as .table__row--{intent}. Border mix uses
+// `in oklab` instead of `in oklch` because --st-border is neutral
+// (chroma 0); oklch interpolation pulls neutrals toward hue 0 (red)
+// regardless of the intent's hue, so primary, success, info, warning
+// would all border red. oklab has no hue wheel — it just shrinks chroma
+// toward the neutral, preserving each intent's hue direction.
+
+@each $intent in (primary, success, info, warning, danger) {
+  .list-group__item--#{$intent} {
+    background-color: color-mix(in oklab, var(--st-#{$intent}) 10%, var(--list-group-bg));
+    color: var(--st-foreground);
+  }
 }
+
+// Neutral fill — replaces BS5's .list-group-item-secondary. Routes
+// through the interactional neutral so warm/cool theme retints drag
+// the fill along.
+.list-group__item--neutral {
+  background-color: var(--st-neutral);
+  color: var(--st-neutral-foreground);
+}
+
+// === Flush ============================================================
+// Drop outer border + radius. Useful inside parents that already own a
+// frame (popover, sidebar panel, or a card body holding multiple
+// surfaces). For direct .card > .list-group, the auto-integration below
+// already does this — keep --flush for non-card parents.
+
+.list-group--flush {
+  border-width: 0;
+  border-radius: 0;
+}
+
+// === Numbered =========================================================
+// <ol class="list-group list-group--numbered">. Preflight strips
+// list-style globally; this restores it via a counter so a nested
+// numbered list cascades (1, 1.1, 1.2, 2, …) without a second wrapper.
+
+.list-group--numbered {
+  counter-reset: list-group;
+
+  > .list-group__item {
+    counter-increment: list-group;
+
+    &::before {
+      content: counters(list-group, ".") ". ";
+    }
+  }
+}
+
+// === Horizontal =======================================================
+// Lay rows side by side. Divider rule moves from row-top to row-start.
+
+.list-group--horizontal {
+  flex-direction: row;
+
+  > .list-group__item {
+    border-top: 0;
+    border-inline-start: 1px solid var(--list-group-divider-color);
+
+    &:first-child { border-inline-start: 0; }
+  }
+}
+
+@each $bp in (sm, md, lg, xl, xxl) {
+  @include media-up($bp) {
+    .list-group--horizontal-#{$bp} {
+      flex-direction: row;
+
+      > .list-group__item {
+        border-top: 0;
+        border-inline-start: 1px solid var(--list-group-divider-color);
+
+        &:first-child { border-inline-start: 0; }
+      }
+    }
+  }
+}
+
+// === Card integration =================================================
+// Direct .card > .list-group sheds its own outer chrome so the card
+// owns the frame. The list-group's first/last edge merges with the
+// card's adjacent edges (header bottom, footer top, or card corner).
+// Pattern mirrors .card > .table:last-child in _table.scss.
+
+.card > .list-group {
+  border-inline-width: 0;
+  border-radius: 0;
+}
+
+.card > .list-group:first-child { border-top-width: 0; }
+.card > .list-group:last-child  { border-bottom-width: 0; }

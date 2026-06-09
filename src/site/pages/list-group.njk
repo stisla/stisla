@@ -6,102 +6,102 @@
 {% block content %}
   <header>
     <h1>List group</h1>
-    <p class="lead">A flexible stack of rows on a shared rounded surface. Use it for navigation, settings, contact lists, payment methods, or any vertical run of similar items.</p>
+    <p class="lead">A stack of rows on a shared rounded surface.</p>
   </header>
 
   <section>
     <h2>Basic</h2>
-    <p>A <code>.list-group</code> with plain <code>.list-group-item</code> rows. Each row sits on the surface tier and shares borders with its neighbors.</p>
+    <p>Add <code>.list-group</code> to the wrapper and <code>.list-group__item</code> to each row. Use any list element — <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, or a plain <code>&lt;div&gt;</code>.</p>
     {% call ui.demo() %}
     <ul class="list-group" style="max-width: 24rem;">
-      <li class="list-group-item">Cras justo odio</li>
-      <li class="list-group-item">Dapibus ac facilisis in</li>
-      <li class="list-group-item">Morbi leo risus</li>
-      <li class="list-group-item">Porta ac consectetur ac</li>
-      <li class="list-group-item">Vestibulum at eros</li>
+      <li class="list-group__item">Cras justo odio</li>
+      <li class="list-group__item">Dapibus ac facilisis in</li>
+      <li class="list-group__item">Morbi leo risus</li>
+      <li class="list-group__item">Porta ac consectetur ac</li>
+      <li class="list-group__item">Vestibulum at eros</li>
     </ul>
     {% endcall %}
   </section>
 
   <section>
     <h2>Active and disabled</h2>
-    <p>Mark the current item with <code>.active</code> and unreachable items with <code>.disabled</code>. Active takes the accent surface; disabled greys out and stops pointer events.</p>
+    <p>Mark the selected row with <code>data-state="active"</code> (or <code>aria-current</code> on a link). Mark unreachable rows with <code>aria-disabled="true"</code>. Active takes the highlight surface; disabled fades and blocks pointer events.</p>
     {% call ui.demo() %}
     <ul class="list-group" style="max-width: 24rem;">
-      <li class="list-group-item active" aria-current="true">An active item</li>
-      <li class="list-group-item">A second item</li>
-      <li class="list-group-item">A third item</li>
-      <li class="list-group-item disabled" aria-disabled="true">A disabled item</li>
+      <li class="list-group__item" data-state="active" aria-current="true">An active item</li>
+      <li class="list-group__item">A second item</li>
+      <li class="list-group__item">A third item</li>
+      <li class="list-group__item" aria-disabled="true">A disabled item</li>
     </ul>
     {% endcall %}
   </section>
 
   <section>
     <h2>Links and buttons</h2>
-    <p>Swap <code>&lt;li&gt;</code> for <code>&lt;a&gt;</code> or <code>&lt;button&gt;</code> and add <code>.list-group-item-action</code> to make rows interactive. Hover and focus light up; <code>.active</code> sticks.</p>
+    <p>Swap <code>&lt;li&gt;</code> for <code>&lt;a&gt;</code> or <code>&lt;button&gt;</code> and the rows pick up hover and focus automatically — no opt-in class. Mark the current page with <code>aria-current="page"</code>.</p>
     {% call ui.demo() %}
     <div class="list-group" style="max-width: 24rem;">
-      <a href="#" class="list-group-item list-group-item-action active" aria-current="true">The current link</a>
-      <a href="#" class="list-group-item list-group-item-action">A second link</a>
-      <a href="#" class="list-group-item list-group-item-action">A third link</a>
-      <a href="#" class="list-group-item list-group-item-action disabled" aria-disabled="true">A disabled link</a>
+      <a href="#" class="list-group__item" aria-current="page">The current link</a>
+      <a href="#" class="list-group__item">A second link</a>
+      <a href="#" class="list-group__item">A third link</a>
+      <a href="#" class="list-group__item" aria-disabled="true">A disabled link</a>
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>Flush</h2>
-    <p>Add <code>.list-group-flush</code> to drop the wrapper border and radius. Rows sit edge-to-edge with a single divider between them — useful inside cards or panels.</p>
+    <p>Add <code>.list-group--flush</code> to drop the outer border and radius. Rows sit edge to edge with a divider between them. Useful inside popovers, sidebar panels, or anywhere that already owns a frame.</p>
     {% call ui.demo() %}
-    <ul class="list-group list-group-flush" style="max-width: 24rem;">
-      <li class="list-group-item">An item</li>
-      <li class="list-group-item">A second item</li>
-      <li class="list-group-item">A third item</li>
-      <li class="list-group-item">A fourth item</li>
+    <ul class="list-group list-group--flush" style="max-width: 24rem;">
+      <li class="list-group__item">An item</li>
+      <li class="list-group__item">A second item</li>
+      <li class="list-group__item">A third item</li>
+      <li class="list-group__item">A fourth item</li>
     </ul>
     {% endcall %}
   </section>
 
   <section>
     <h2>Numbered</h2>
-    <p>Drop <code>.list-group-numbered</code> on the wrapper and use an <code>&lt;ol&gt;</code>. Bootstrap stamps the counter; nest another numbered list and the counter cascades.</p>
+    <p>Drop <code>.list-group--numbered</code> on the wrapper and use an <code>&lt;ol&gt;</code>. A CSS counter stamps the prefix; nest another numbered list and the counter cascades.</p>
     {% call ui.demo() %}
-    <ol class="list-group list-group-numbered" style="max-width: 24rem;">
-      <li class="list-group-item">Pour a flat white</li>
-      <li class="list-group-item">Open the laptop</li>
-      <li class="list-group-item">Ship something</li>
+    <ol class="list-group list-group--numbered" style="max-width: 24rem;">
+      <li class="list-group__item">Pour a flat white</li>
+      <li class="list-group__item">Open the laptop</li>
+      <li class="list-group__item">Ship something</li>
     </ol>
     {% endcall %}
   </section>
 
   <section>
     <h2>Horizontal</h2>
-    <p>Use <code>.list-group-horizontal</code> to lay rows side by side instead of stacked. Add a breakpoint suffix (<code>-md</code>, <code>-lg</code>, …) to switch at a given width.</p>
+    <p>Use <code>.list-group--horizontal</code> to lay rows side by side instead of stacked. Add a breakpoint suffix (<code>-sm</code>, <code>-md</code>, <code>-lg</code>, <code>-xl</code>, <code>-xxl</code>) to switch to row layout above that width.</p>
     {% call ui.demo() %}
-    <ul class="list-group list-group-horizontal">
-      <li class="list-group-item">First</li>
-      <li class="list-group-item">Second</li>
-      <li class="list-group-item">Third</li>
+    <ul class="list-group list-group--horizontal">
+      <li class="list-group__item">First</li>
+      <li class="list-group__item">Second</li>
+      <li class="list-group__item">Third</li>
     </ul>
     {% endcall %}
   </section>
 
   <section>
     <h2>With badge</h2>
-    <p>Push a count or status to the trailing edge with <code>d-flex justify-content-between</code> and a <code>.badge</code>. Reads as a counter row.</p>
+    <p>Push a count or status to the trailing edge with a span flagged for auto-margin. Reads as a counter row.</p>
     {% call ui.demo() %}
-    <ul class="list-group" style="max-width: 24rem; width: 12rem">
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        Inbox
-        <span class="badge text-bg-primary">14</span>
+    <ul class="list-group" style="max-width: 24rem;">
+      <li class="list-group__item">
+        <span style="flex: 1;">Inbox</span>
+        <span class="badge badge--primary">14</span>
       </li>
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        Drafts
-        <span class="badge badge-light-secondary">2</span>
+      <li class="list-group__item">
+        <span style="flex: 1;">Drafts</span>
+        <span class="badge badge--soft">2</span>
       </li>
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        Spam
-        <span class="badge badge-light-secondary">0</span>
+      <li class="list-group__item">
+        <span style="flex: 1;">Spam</span>
+        <span class="badge badge--soft">0</span>
       </li>
     </ul>
     {% endcall %}
@@ -109,47 +109,47 @@
 
   <section>
     <h2>Contextual variants</h2>
-    <p>Tint a row with <code>.list-group-item-{state}</code> for status messaging. Same five semantic states as alerts.</p>
+    <p>Tint a row with <code>.list-group__item--{intent}</code> for status messaging. Same five intents as <code>.alert</code> and <code>.table__row--{intent}</code>. Add <code>.list-group__item--neutral</code> for a quiet fill that tracks the interactional neutral.</p>
     {% call ui.demo() %}
     <ul class="list-group" style="max-width: 24rem;">
-      <li class="list-group-item">A neutral item</li>
-      <li class="list-group-item list-group-item-primary">A primary item</li>
-      <li class="list-group-item list-group-item-success">A success item</li>
-      <li class="list-group-item list-group-item-info">An info item</li>
-      <li class="list-group-item list-group-item-warning">A warning item</li>
-      <li class="list-group-item list-group-item-danger">A danger item</li>
+      <li class="list-group__item">A neutral item</li>
+      <li class="list-group__item list-group__item--primary">A primary item</li>
+      <li class="list-group__item list-group__item--success">A success item</li>
+      <li class="list-group__item list-group__item--info">An info item</li>
+      <li class="list-group__item list-group__item--warning">A warning item</li>
+      <li class="list-group__item list-group__item--danger">A danger item</li>
     </ul>
     {% endcall %}
   </section>
 
   <section>
     <h2>Custom content</h2>
-    <p>A row can hold whatever you need: a title, a subhead, a timestamp. Lean on <code>d-flex</code>, <code>gap-*</code>, and the type utilities to lay it out.</p>
+    <p>A row can hold whatever you need: a title, a subhead, a timestamp. Drop the default centered alignment by overriding <code>align-items</code> inline when a row stacks vertically.</p>
     {% call ui.demo() %}
     <div class="list-group" style="max-width: 32rem;">
-      <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-        <div class="d-flex w-100 justify-content-between">
-          <h6 class="mb-1">List group item heading</h6>
+      <a href="#" class="list-group__item" aria-current="page" style="flex-direction: column; align-items: stretch; gap: 0.25rem;">
+        <div style="display: flex; justify-content: space-between; gap: 0.5rem;">
+          <span class="h6">List group item heading</span>
           <small>3 days ago</small>
         </div>
-        <p class="mb-1">Some placeholder content in a paragraph.</p>
+        <p>Some placeholder content in a paragraph.</p>
         <small>And some small print.</small>
       </a>
-      <a href="#" class="list-group-item list-group-item-action">
-        <div class="d-flex w-100 justify-content-between">
-          <h6 class="mb-1">List group item heading</h6>
-          <small class="text-body-secondary">3 days ago</small>
+      <a href="#" class="list-group__item" style="flex-direction: column; align-items: stretch; gap: 0.25rem;">
+        <div style="display: flex; justify-content: space-between; gap: 0.5rem;">
+          <span class="h6">List group item heading</span>
+          <small class="text-muted-foreground">3 days ago</small>
         </div>
-        <p class="mb-1">Some placeholder content in a paragraph.</p>
-        <small class="text-body-secondary">And some muted small print.</small>
+        <p>Some placeholder content in a paragraph.</p>
+        <small class="text-muted-foreground">And some muted small print.</small>
       </a>
-      <a href="#" class="list-group-item list-group-item-action">
-        <div class="d-flex w-100 justify-content-between">
-          <h6 class="mb-1">List group item heading</h6>
-          <small class="text-body-secondary">3 days ago</small>
+      <a href="#" class="list-group__item" style="flex-direction: column; align-items: stretch; gap: 0.25rem;">
+        <div style="display: flex; justify-content: space-between; gap: 0.5rem;">
+          <span class="h6">List group item heading</span>
+          <small class="text-muted-foreground">3 days ago</small>
         </div>
-        <p class="mb-1">Some placeholder content in a paragraph.</p>
-        <small class="text-body-secondary">And some muted small print.</small>
+        <p>Some placeholder content in a paragraph.</p>
+        <small class="text-muted-foreground">And some muted small print.</small>
       </a>
     </div>
     {% endcall %}
@@ -157,46 +157,46 @@
 
   <section>
     <h2>Contacts</h2>
-    <p>Compose a chat-style contact row from an avatar, a two-line label, and a trailing timestamp + unread counter. Each row is a <code>.list-group-item-action</code> so the whole strip is clickable.</p>
+    <p>Compose a chat-style contact row from an avatar, a two-line label, and a trailing timestamp + unread counter. Each row is an <code>&lt;a&gt;</code> so the whole strip is clickable.</p>
     {% call ui.demo() %}
     <div class="list-group" style="max-width: 32rem;">
-      <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-        <img src="https://i.pravatar.cc/80?img=12" alt="" width="40" height="40" class="rounded-circle flex-shrink-0">
-        <div class="flex-grow-1" style="min-width: 0;">
+      <a href="#" class="list-group__item" aria-current="page" style="gap: 0.75rem; padding-block: 0.75rem;">
+        <img src="https://i.pravatar.cc/80?img=12" alt="" width="40" height="40" style="border-radius: 50%; flex-shrink: 0;">
+        <div style="flex: 1; min-width: 0;">
           <div class="fw-medium">Mariam Saidova</div>
-          <div class="text-body-secondary text-truncate small">Sure, I'll push the branch in a few minutes — just running the tests one more time…</div>
+          <div class="text-muted-foreground small" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Sure, I'll push the branch in a few minutes — just running the tests one more time…</div>
         </div>
-        <div class="d-flex flex-column align-items-end gap-1 flex-shrink-0">
-          <small class="text-body-secondary">12:04</small>
-          <span class="badge text-bg-primary rounded-pill">3</span>
+        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 0.25rem; flex-shrink: 0;">
+          <small>12:04</small>
+          <span class="badge badge--primary">3</span>
         </div>
       </a>
-      <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
-        <img src="https://i.pravatar.cc/80?img=33" alt="" width="40" height="40" class="rounded-circle flex-shrink-0">
-        <div class="flex-grow-1" style="min-width: 0;">
+      <a href="#" class="list-group__item" style="gap: 0.75rem; padding-block: 0.75rem;">
+        <img src="https://i.pravatar.cc/80?img=33" alt="" width="40" height="40" style="border-radius: 50%; flex-shrink: 0;">
+        <div style="flex: 1; min-width: 0;">
           <div class="fw-medium">Hideo Tanaka</div>
-          <div class="text-body-secondary text-truncate small">Design review notes are in the Figma comments. Let me know what you think.</div>
+          <div class="text-muted-foreground small" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Design review notes are in the Figma comments. Let me know what you think.</div>
         </div>
-        <div class="d-flex flex-column align-items-end gap-1 flex-shrink-0">
-          <small class="text-body-secondary">11:47</small>
-          <span class="badge text-bg-primary rounded-pill">1</span>
+        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 0.25rem; flex-shrink: 0;">
+          <small class="text-muted-foreground">11:47</small>
+          <span class="badge badge--primary">1</span>
         </div>
       </a>
-      <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
-        <img src="https://i.pravatar.cc/80?img=47" alt="" width="40" height="40" class="rounded-circle flex-shrink-0">
-        <div class="flex-grow-1" style="min-width: 0;">
+      <a href="#" class="list-group__item" style="gap: 0.75rem; padding-block: 0.75rem;">
+        <img src="https://i.pravatar.cc/80?img=47" alt="" width="40" height="40" style="border-radius: 50%; flex-shrink: 0;">
+        <div style="flex: 1; min-width: 0;">
           <div class="fw-medium">Priya Ramanathan</div>
-          <div class="text-body-secondary text-truncate small">Coffee tomorrow? 9am at the usual place.</div>
+          <div class="text-muted-foreground small" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Coffee tomorrow? 9am at the usual place.</div>
         </div>
-        <small class="text-body-secondary flex-shrink-0">Yesterday</small>
+        <small class="text-muted-foreground" style="flex-shrink: 0;">Yesterday</small>
       </a>
-      <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
-        <img src="https://i.pravatar.cc/80?img=58" alt="" width="40" height="40" class="rounded-circle flex-shrink-0">
-        <div class="flex-grow-1" style="min-width: 0;">
+      <a href="#" class="list-group__item" style="gap: 0.75rem; padding-block: 0.75rem;">
+        <img src="https://i.pravatar.cc/80?img=58" alt="" width="40" height="40" style="border-radius: 50%; flex-shrink: 0;">
+        <div style="flex: 1; min-width: 0;">
           <div class="fw-medium">Tomás Reyes</div>
-          <div class="text-body-secondary text-truncate small">You: sounds good, let's do it.</div>
+          <div class="text-muted-foreground small" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">You: sounds good, let's do it.</div>
         </div>
-        <small class="text-body-secondary flex-shrink-0">Mon</small>
+        <small class="text-muted-foreground" style="flex-shrink: 0;">Mon</small>
       </a>
     </div>
     {% endcall %}
@@ -204,56 +204,56 @@
 
   <section>
     <h2>Settings</h2>
-    <p>Use <code>.list-group-flush</code> inside a <code>.card</code> for a settings panel. Each row pairs a label and helper text with the matching control — switch, select, or input — at the trailing edge.</p>
+    <p>Drop a <code>.list-group</code> as a direct child of a <code>.card</code> and the outer chrome auto-merges with the card. No <code>--flush</code> modifier needed — the card owns the frame, the list-group owns the inner rows.</p>
     {% call ui.demo() %}
     <div class="card" style="max-width: 36rem;">
-      <div class="card-header">
-        <h5 class="card-title mb-0">Notifications</h5>
+      <div class="card__header">
+        <span class="h6">Notifications</span>
       </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item d-flex align-items-center gap-3 py-3">
-          <div class="flex-grow-1">
-            <label class="form-check-label fw-medium d-block" for="settingsEmail">Email digest</label>
-            <small class="text-body-secondary">A weekly summary of activity across your projects.</small>
+      <ul class="list-group">
+        <li class="list-group__item" style="gap: 0.75rem;">
+          <div style="flex: 1;">
+            <label class="form-label fw-medium" for="settingsEmail" style="margin-bottom: 0;">Email digest</label>
+            <small class="text-muted-foreground" style="display: block;">A weekly summary of activity across your projects.</small>
           </div>
-          <div class="form-check form-switch form-switch-lg m-0 flex-shrink-0">
-            <input class="form-check-input" type="checkbox" role="switch" id="settingsEmail" checked>
-          </div>
+          <label class="switch switch--lg" style="flex-shrink: 0;">
+            <input class="switch__input" type="checkbox" id="settingsEmail" checked>
+          </label>
         </li>
-        <li class="list-group-item d-flex align-items-center gap-3 py-3">
-          <div class="flex-grow-1">
-            <label class="form-check-label fw-medium d-block" for="settingsPush">Push notifications</label>
-            <small class="text-body-secondary">Get a ping on this device when someone mentions you.</small>
+        <li class="list-group__item" style="gap: 0.75rem;">
+          <div style="flex: 1;">
+            <label class="form-label fw-medium" for="settingsPush" style="margin-bottom: 0;">Push notifications</label>
+            <small class="text-muted-foreground" style="display: block;">Get a ping on this device when someone mentions you.</small>
           </div>
-          <div class="form-check form-switch form-switch-lg m-0 flex-shrink-0">
-            <input class="form-check-input" type="checkbox" role="switch" id="settingsPush">
-          </div>
+          <label class="switch switch--lg" style="flex-shrink: 0;">
+            <input class="switch__input" type="checkbox" id="settingsPush">
+          </label>
         </li>
-        <li class="list-group-item d-flex align-items-center gap-3 py-3">
-          <div class="flex-grow-1">
-            <label class="form-label fw-medium mb-0" for="settingsLanguage">Language</label>
-            <small class="text-body-secondary d-block">Used across the app and outgoing emails.</small>
+        <li class="list-group__item" style="gap: 0.75rem;">
+          <div style="flex: 1;">
+            <label class="form-label fw-medium" for="settingsLanguage" style="margin-bottom: 0;">Language</label>
+            <small class="text-muted-foreground" style="display: block;">Used across the app and outgoing emails.</small>
           </div>
-          <select class="form-control form-control--sm flex-shrink-0" id="settingsLanguage" style="max-width: 10rem;">
+          <select class="form-control form-control--sm" id="settingsLanguage" style="flex-shrink: 0; max-width: 10rem;">
             <option selected>English</option>
             <option>Bahasa Indonesia</option>
             <option>日本語</option>
             <option>Deutsch</option>
           </select>
         </li>
-        <li class="list-group-item d-flex align-items-center gap-3 py-3">
-          <div class="flex-grow-1">
-            <label class="form-label fw-medium mb-0" for="settingsHandle">Public handle</label>
-            <small class="text-body-secondary d-block">Shown on your profile and in mentions.</small>
+        <li class="list-group__item" style="gap: 0.75rem;">
+          <div style="flex: 1;">
+            <label class="form-label fw-medium" for="settingsHandle" style="margin-bottom: 0;">Public handle</label>
+            <small class="text-muted-foreground" style="display: block;">Shown on your profile and in mentions.</small>
           </div>
-          <input type="text" class="form-control form-control--sm flex-shrink-0" id="settingsHandle" value="nauval" style="max-width: 10rem;">
+          <input type="text" class="form-control form-control--sm" id="settingsHandle" value="nauval" style="flex-shrink: 0; max-width: 10rem;">
         </li>
-        <li class="list-group-item d-flex align-items-center gap-3 py-3">
-          <div class="flex-grow-1">
-            <div class="fw-medium">Delete workspace</div>
-            <small class="text-body-secondary">This permanently removes everything. Cannot be undone.</small>
+        <li class="list-group__item" style="gap: 0.75rem;">
+          <div style="flex: 1;">
+            <span class="fw-medium" style="display: block;">Delete workspace</span>
+            <small class="text-muted-foreground" style="display: block;">This permanently removes everything. Cannot be undone.</small>
           </div>
-          <button type="button" class="btn btn-outline-danger btn-sm flex-shrink-0">Delete</button>
+          <button type="button" class="btn btn--outline btn--danger btn--sm" style="flex-shrink: 0;">Delete</button>
         </li>
       </ul>
     </div>
@@ -262,46 +262,76 @@
 
   <section>
     <h2>Payment methods</h2>
-    <p>Stack saved cards as rows with a brand mark, last-4 digits, expiry, and a default toggle. The default switch promotes the active card so the trailing edge stays uncluttered.</p>
+    <p>Stack saved methods as rows with a label, helper text, and a default-toggle on each. The switch promotes one card so the trailing edge stays uncluttered.</p>
     {% call ui.demo() %}
     <div class="list-group" style="max-width: 36rem;">
-      <div class="list-group-item d-flex align-items-center gap-3 py-3">
-        <div class="flex-grow-1">
+      <div class="list-group__item" style="gap: 0.75rem;">
+        <div style="flex: 1;">
           <div class="fw-medium">Visa ending in 4242</div>
-          <small class="text-body-secondary">Expires 08 / 2028</small>
+          <small class="text-muted-foreground">Expires 08 / 2028</small>
         </div>
-        <div class="form-check form-switch form-switch-lg m-0 flex-shrink-0">
-          <input class="form-check-input" type="checkbox" role="switch" id="payDefault1" checked aria-label="Default for billing">
-        </div>
+        <label class="switch switch--lg" style="flex-shrink: 0;">
+          <input class="switch__input" type="checkbox" id="payDefault1" checked aria-label="Default for billing">
+        </label>
       </div>
-      <div class="list-group-item d-flex align-items-center gap-3 py-3">
-        <div class="flex-grow-1">
+      <div class="list-group__item" style="gap: 0.75rem;">
+        <div style="flex: 1;">
           <div class="fw-medium">Mastercard ending in 0119</div>
-          <small class="text-body-secondary">Expires 03 / 2027</small>
+          <small class="text-muted-foreground">Expires 03 / 2027</small>
         </div>
-        <div class="form-check form-switch form-switch-lg m-0 flex-shrink-0">
-          <input class="form-check-input" type="checkbox" role="switch" id="payDefault2" aria-label="Default for billing">
-        </div>
+        <label class="switch switch--lg" style="flex-shrink: 0;">
+          <input class="switch__input" type="checkbox" id="payDefault2" aria-label="Default for billing">
+        </label>
       </div>
-      <div class="list-group-item d-flex align-items-center gap-3 py-3">
-        <div class="flex-grow-1">
+      <div class="list-group__item" style="gap: 0.75rem;">
+        <div style="flex: 1;">
           <div class="fw-medium">Bank transfer · BCA</div>
-          <small class="text-body-secondary">Account ····3084</small>
+          <small class="text-muted-foreground">Account ····3084</small>
         </div>
-        <div class="form-check form-switch form-switch-lg m-0 flex-shrink-0">
-          <input class="form-check-input" type="checkbox" role="switch" id="payDefault3" aria-label="Default for billing">
-        </div>
+        <label class="switch switch--lg" style="flex-shrink: 0;">
+          <input class="switch__input" type="checkbox" id="payDefault3" aria-label="Default for billing">
+        </label>
       </div>
-      <div class="list-group-item d-flex align-items-center gap-3 py-3">
-        <div class="flex-grow-1">
+      <div class="list-group__item" style="gap: 0.75rem;">
+        <div style="flex: 1;">
           <div class="fw-medium">Wallet credit</div>
-          <small class="text-body-secondary">$128.40 available</small>
+          <small class="text-muted-foreground">$128.40 available</small>
         </div>
-        <div class="form-check form-switch form-switch-lg m-0 flex-shrink-0">
-          <input class="form-check-input" type="checkbox" role="switch" id="payDefault4" aria-label="Use wallet first">
-        </div>
+        <label class="switch switch--lg" style="flex-shrink: 0;">
+          <input class="switch__input" type="checkbox" id="payDefault4" aria-label="Use wallet first">
+        </label>
       </div>
     </div>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>Every <code>.list-group</code> reads from these component-scoped variables. Override on the root (or any wrapper) to retune a single instance.</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>--list-group-radius</code></td><td><code>var(--st-list-group-radius, var(--st-radius))</code></td><td>Outer corner radius.</td></tr>
+          <tr><td><code>--list-group-item-padding-y</code></td><td><code>calc(0.75rem * var(--st-density))</code></td><td>Row vertical padding.</td></tr>
+          <tr><td><code>--list-group-item-padding-x</code></td><td><code>calc(1rem * var(--st-density))</code></td><td>Row horizontal padding.</td></tr>
+          <tr><td><code>--list-group-item-gap</code></td><td><code>0.75rem</code></td><td>Gap between leading icon, label, and trailing slot.</td></tr>
+          <tr><td><code>--list-group-item-icon-size</code></td><td><code>1rem</code></td><td>Pinned size for a first-child <code>&lt;svg&gt;</code> / <code>&lt;i&gt;</code>.</td></tr>
+          <tr><td><code>--list-group-bg</code></td><td><code>var(--st-surface)</code></td><td>Frame background.</td></tr>
+          <tr><td><code>--list-group-color</code></td><td><code>var(--st-foreground)</code></td><td>Row text color.</td></tr>
+          <tr><td><code>--list-group-border-color</code></td><td><code>var(--st-border)</code></td><td>Outer frame border.</td></tr>
+          <tr><td><code>--list-group-border-width</code></td><td><code>1px</code></td><td>Outer frame border thickness.</td></tr>
+          <tr><td><code>--list-group-divider-color</code></td><td><code>var(--st-border)</code></td><td>Rule between adjacent rows.</td></tr>
+          <tr><td><code>--list-group-item-hover-bg</code></td><td><code>var(--st-accent)</code></td><td>Hover background on interactive rows.</td></tr>
+          <tr><td><code>--list-group-item-hover-color</code></td><td><code>var(--st-accent-foreground)</code></td><td>Hover text color on interactive rows.</td></tr>
+          <tr><td><code>--list-group-item-active-bg</code></td><td><code>var(--st-highlight)</code></td><td>Selected-row background (<code>[data-state="active"]</code> / <code>aria-current</code>).</td></tr>
+          <tr><td><code>--list-group-item-active-color</code></td><td><code>var(--st-highlight-foreground)</code></td><td>Selected-row text color.</td></tr>
+          <tr><td><code>--list-group-item-disabled-color</code></td><td><code>var(--st-muted-foreground)</code></td><td>Disabled-row text color.</td></tr>
+          <tr><td><code>--list-group-ring</code></td><td><code>var(--st-ring)</code></td><td>Focus halo color on interactive rows.</td></tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 {% endblock %}
