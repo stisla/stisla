@@ -10,20 +10,24 @@
   </header>
 
   <section>
+    <p><code>.page</code> is a flex-column that owns the rhythm between its top-level children via <code>--page-section-gap</code>. The header and sections carry no outer margin themselves. No JS, pure CSS.</p>
+  </section>
+
+  <section>
     <h2>The page wrapper</h2>
-    <p><code>.page</code> is a flex-column that owns the gap between its children via <code>--bs-page-section-gap</code> (default 1.5rem). The header and each section carry no outer margin themselves.</p>
+    <p>Drop a <code>.page</code> inside <code>.app-shell__main</code>. Top-level children stack vertically with the section gap.</p>
     {% call ui.demo() %}
-    <div class="page p-4 border rounded bg-body w-100">
-      <header class="page-header">
-        <div class="page-header-title">
-          <h1 class="h3 mb-0">Customers</h1>
+    <div class="page" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); padding: 1rem; background: var(--st-background); width: 100%;">
+      <header class="page__header">
+        <div class="page__title">
+          <h1 class="h3">Customers</h1>
         </div>
       </header>
-      <section class="page-section">
-        <p class="text-body-secondary mb-0">First section content.</p>
+      <section class="page__section">
+        <p class="text-muted-foreground">First section content.</p>
       </section>
-      <section class="page-section">
-        <p class="text-body-secondary mb-0">Second section content.</p>
+      <section class="page__section">
+        <p class="text-muted-foreground">Second section content.</p>
       </section>
     </div>
     {% endcall %}
@@ -31,45 +35,45 @@
 
   <section>
     <h2>Page header</h2>
-    <p><code>.page-header</code> is a flex row with a <code>.page-header-title</code> slot on the leading edge and a <code>.page-header-action</code> slot on the trailing edge. Both slots are passthrough. Title takes an h1 with an optional subtitle, actions takes any buttons.</p>
+    <p><code>.page__header</code> is a flex row with a <code>.page__title</code> slot on the leading edge and a <code>.page__action</code> slot on the trailing edge. Both slots are passthrough. Title takes a heading with an optional subtitle, actions takes any button row.</p>
     {% call ui.demo() %}
-    <div class="page p-4 border rounded bg-body w-100">
-      <header class="page-header">
-        <div class="page-header-title">
-          <h1 class="h3 mb-1">Customers</h1>
-          <p class="text-body-secondary mb-0">All accounts in this workspace.</p>
+    <div class="page" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); padding: 1rem; background: var(--st-background); width: 100%;">
+      <header class="page__header">
+        <div class="page__title">
+          <h1 class="h3">Customers</h1>
+          <p class="text-muted-foreground">All accounts in this workspace.</p>
         </div>
-        <div class="page-header-action">
-          <button type="button" class="btn btn-outline-secondary"><i data-lucide="download" class="me-1"></i>Export</button>
-          <button type="button" class="btn btn-primary"><i data-lucide="plus" class="me-1"></i>Add customer</button>
+        <div class="page__action">
+          <button type="button" class="btn btn--outline btn--neutral"><i data-lucide="download"></i>Export</button>
+          <button type="button" class="btn btn--primary"><i data-lucide="plus"></i>Add customer</button>
         </div>
       </header>
     </div>
     {% endcall %}
 
     <h3>Without actions</h3>
-    <p>Drop the actions slot. The title block sits alone.</p>
+    <p>Drop the action slot. The title block sits alone.</p>
     {% call ui.demo() %}
-    <div class="page p-4 border rounded bg-body w-100">
-      <header class="page-header">
-        <div class="page-header-title">
-          <h1 class="h3 mb-1">Settings</h1>
-          <p class="text-body-secondary mb-0">Manage your account, billing, and integrations.</p>
+    <div class="page" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); padding: 1rem; background: var(--st-background); width: 100%;">
+      <header class="page__header">
+        <div class="page__title">
+          <h1 class="h3">Settings</h1>
+          <p class="text-muted-foreground">Manage your account, billing, and integrations.</p>
         </div>
       </header>
     </div>
     {% endcall %}
 
     <h3>Wraps on narrow widths</h3>
-    <p>The header is <code>flex-wrap: wrap</code>. When the viewport gets too narrow for the title and actions to share a row, the actions drop below.</p>
+    <p>The header is <code>flex-wrap: wrap</code>. When the viewport gets too narrow for the title and action slot to share a row, the actions drop below.</p>
     {% call ui.code() %}
-    <header class="page-header">
-      <div class="page-header-title">
-        <h1 class="h3 mb-1">Customers</h1>
-        <p class="text-body-secondary mb-0">All accounts in this workspace.</p>
+    <header class="page__header">
+      <div class="page__title">
+        <h1 class="h3">Customers</h1>
+        <p class="text-muted-foreground">All accounts in this workspace.</p>
       </div>
-      <div class="page-header-action">
-        <button type="button" class="btn btn-primary">Add customer</button>
+      <div class="page__action">
+        <button type="button" class="btn btn--primary">Add customer</button>
       </div>
     </header>
     {% endcall %}
@@ -77,125 +81,155 @@
 
   <section>
     <h2>Sections</h2>
-    <p><code>.page-section</code> is a flex-column for each block inside the page. The <code>.page</code> parent supplies the gap <em>between</em> sections, and each section supplies its own inner gap via <code>--bs-page-section-inner-gap</code>.</p>
+    <p><code>.page__section</code> is a flex-column for each block inside the page. The <code>.page</code> parent supplies the gap between sections; each section supplies its own inner gap via <code>--page-section-inner-gap</code>.</p>
     {% call ui.demo() %}
-    <div class="page p-4 border rounded bg-body w-100">
-      <section class="page-section">
-        <h2 class="page-section-title">Overview</h2>
-        <p class="text-body-secondary mb-0">Headline stats and the period selector live here.</p>
+    <div class="page" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); padding: 1rem; background: var(--st-background); width: 100%;">
+      <section class="page__section">
+        <h2 class="page__section-title">Overview</h2>
+        <p class="text-muted-foreground">Headline stats and the period selector live here.</p>
       </section>
-      <section class="page-section">
-        <h2 class="page-section-title">Recent activity</h2>
-        <p class="text-body-secondary mb-0">A timeline of the last events on this account.</p>
+      <section class="page__section">
+        <h2 class="page__section-title">Recent activity</h2>
+        <p class="text-muted-foreground">A timeline of the last events on this account.</p>
       </section>
-      <section class="page-section">
-        <h2 class="page-section-title">Quick actions</h2>
-        <p class="text-body-secondary mb-0">Shortcuts to the most-used flows.</p>
+      <section class="page__section">
+        <h2 class="page__section-title">Quick actions</h2>
+        <p class="text-muted-foreground">Shortcuts to the most-used flows.</p>
       </section>
     </div>
     {% endcall %}
 
     <h3>With section header + actions</h3>
-    <p>For sections that need an action row of their own, wrap the title in <code>.page-section-header</code> and reuse <code>.page-header-action</code> as the slot. Same recipe at a tighter scale.</p>
+    <p>For sections that need their own action row, wrap the title in <code>.page__section-header</code> and reuse <code>.page__action</code> as the slot. Same flex recipe at a tighter scale.</p>
     {% call ui.demo() %}
-    <div class="page p-4 border rounded bg-body w-100">
-      <section class="page-section">
-        <header class="page-section-header">
-          <h2 class="page-section-title">Active customers</h2>
-          <div class="page-header-action">
-            <button type="button" class="btn btn-sm btn-outline-secondary">Filter</button>
-            <button type="button" class="btn btn-sm btn-primary">Invite</button>
+    <div class="page" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); padding: 1rem; background: var(--st-background); width: 100%;">
+      <section class="page__section">
+        <header class="page__section-header">
+          <h2 class="page__section-title">Active customers</h2>
+          <div class="page__action">
+            <button type="button" class="btn btn--outline btn--neutral btn--sm">Filter</button>
+            <button type="button" class="btn btn--primary btn--sm">Invite</button>
           </div>
         </header>
-        <p class="text-body-secondary mb-0">1,284 accounts.</p>
+        <p class="text-muted-foreground">1,284 accounts.</p>
       </section>
     </div>
     {% endcall %}
   </section>
 
   <section>
-    <h2>Breadcrumb placement</h2>
-    <p>Put the breadcrumb as the first child of <code>.page</code>, above <code>.page-header</code>. It inherits the page's gap automatically.</p>
-    {% call ui.demo() %}
-    <div class="page p-4 border rounded bg-body w-100">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb mb-0">
-          <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-          <li class="breadcrumb-item"><a href="#">Reports</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Monthly</li>
-        </ol>
-      </nav>
-      <header class="page-header">
-        <div class="page-header-title">
-          <h1 class="h3 mb-0">Monthly</h1>
-        </div>
-      </header>
-    </div>
-    {% endcall %}
-    <p>Skip the breadcrumb on top-level pages where it would only show one crumb.</p>
-  </section>
-
-  <section>
     <h2>Content width</h2>
-    <p><code>.page</code> is unopinionated about width. Wrap it (or set its own classes) to clamp the content column.</p>
+    <p><code>.page</code> is unopinionated about width. Wrap it (or set its own width on a parent) to clamp the content column.</p>
     <ul>
-      <li><strong>Full width</strong> (<code>.container-fluid</code> or no container) for dashboards, tables, anything dense.</li>
-      <li><strong>Breakpoint-clamped</strong> (<code>.container</code>) for marketing pages, or anything that should match Bootstrap's standard column widths.</li>
-      <li><strong>Custom max-width</strong> (40 to 60rem) for settings forms, articles, anything text-heavy where long lines hurt readability.</li>
+      <li>Full width (<code>.container-fluid</code> or no container) for dashboards, tables, anything dense.</li>
+      <li>Breakpoint-clamped (<code>.container</code>) for marketing pages, or anything that should match the standard column widths.</li>
+      <li>Custom max-width (40 to 60rem) for settings forms, articles, anything text-heavy where long lines hurt readability.</li>
     </ul>
     {% call ui.code() %}
     <!-- Full width -->
     <main class="app-shell__main">
-      <div class="page container-fluid p-4">...</div>
+      <div class="page container-fluid" style="padding: 1rem;">...</div>
     </main>
 
     <!-- Breakpoint-clamped -->
     <main class="app-shell__main">
-      <div class="page container py-4">...</div>
+      <div class="page container" style="padding: 1rem;">...</div>
     </main>
 
     <!-- Custom narrow column for reading -->
     <main class="app-shell__main">
-      <div class="page mx-auto p-4" style="max-width: 48rem;">...</div>
+      <div class="page" style="margin-inline: auto; padding: 1rem; max-width: 48rem;">...</div>
     </main>
     {% endcall %}
   </section>
 
   <section>
     <h2>Putting it together</h2>
-    <p>Breadcrumb, page header, sections, and a section with its own header, all inside one <code>.page</code> that supplies the rhythm.</p>
+    <p>Page header, sections, and a section with its own header, all inside one <code>.page</code> that supplies the rhythm.</p>
     {% call ui.demo() %}
-    <div class="page p-4 border rounded bg-body w-100">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb mb-0">
-          <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Customers</li>
-        </ol>
-      </nav>
-      <header class="page-header">
-        <div class="page-header-title">
-          <h1 class="h3 mb-1">Customers</h1>
-          <p class="text-body-secondary mb-0">All accounts in this workspace.</p>
+    <div class="page" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); padding: 1rem; background: var(--st-background); width: 100%;">
+      <header class="page__header">
+        <div class="page__title">
+          <h1 class="h3">Customers</h1>
+          <p class="text-muted-foreground">All accounts in this workspace.</p>
         </div>
-        <div class="page-header-action">
-          <button type="button" class="btn btn-outline-secondary"><i data-lucide="download" class="me-1"></i>Export</button>
-          <button type="button" class="btn btn-primary"><i data-lucide="plus" class="me-1"></i>Add customer</button>
+        <div class="page__action">
+          <button type="button" class="btn btn--outline btn--neutral"><i data-lucide="download"></i>Export</button>
+          <button type="button" class="btn btn--primary"><i data-lucide="plus"></i>Add customer</button>
         </div>
       </header>
-      <section class="page-section">
-        <header class="page-section-header">
-          <h2 class="page-section-title">Active</h2>
-          <div class="page-header-action">
-            <button type="button" class="btn btn-sm btn-outline-secondary">Filter</button>
+      <section class="page__section">
+        <header class="page__section-header">
+          <h2 class="page__section-title">Active</h2>
+          <div class="page__action">
+            <button type="button" class="btn btn--outline btn--neutral btn--sm">Filter</button>
           </div>
         </header>
-        <p class="text-body-secondary mb-0">1,284 customers.</p>
+        <p class="text-muted-foreground">1,284 customers.</p>
       </section>
-      <section class="page-section">
-        <h2 class="page-section-title">Inactive</h2>
-        <p class="text-body-secondary mb-0">312 customers.</p>
+      <section class="page__section">
+        <h2 class="page__section-title">Inactive</h2>
+        <p class="text-muted-foreground">312 customers.</p>
       </section>
     </div>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>Eight variables retune <code>.page</code> without touching component CSS. Override on <code>.page</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--page-section-gap</code></td>
+            <td>calc(1.5rem * var(--st-density))</td>
+            <td>Vertical rhythm between top-level children of <code>.page</code></td>
+          </tr>
+          <tr>
+            <td><code>--page-header-gap</code></td>
+            <td>calc(1rem * var(--st-density))</td>
+            <td>Horizontal space between title and action slot in <code>.page__header</code></td>
+          </tr>
+          <tr>
+            <td><code>--page-title-gap</code></td>
+            <td>calc(0.25rem * var(--st-density))</td>
+            <td>Vertical gap between heading and subtitle inside <code>.page__title</code></td>
+          </tr>
+          <tr>
+            <td><code>--page-action-gap</code></td>
+            <td>calc(0.5rem * var(--st-density))</td>
+            <td>Space between buttons inside <code>.page__action</code></td>
+          </tr>
+          <tr>
+            <td><code>--page-section-inner-gap</code></td>
+            <td>calc(1rem * var(--st-density))</td>
+            <td>Vertical gap between header and content inside <code>.page__section</code></td>
+          </tr>
+          <tr>
+            <td><code>--page-section-header-gap</code></td>
+            <td>calc(0.75rem * var(--st-density))</td>
+            <td>Horizontal space between title and action slot in <code>.page__section-header</code></td>
+          </tr>
+          <tr>
+            <td><code>--page-section-title-size</code></td>
+            <td>1.125rem</td>
+            <td>Font size of <code>.page__section-title</code></td>
+          </tr>
+          <tr>
+            <td><code>--page-section-title-weight</code></td>
+            <td>600</td>
+            <td>Font weight of <code>.page__section-title</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 {% endblock %}
