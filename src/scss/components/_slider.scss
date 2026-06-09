@@ -1,0 +1,241 @@
+// Stisla v3 — slider.
+//
+// <input type="range"> styled as a filled-track + vertical-pill-thumb.
+// Track height matches .form-control so the slider lives in form rows
+// with the same vertical rhythm as inputs. The track shows progress
+// directly — filled (primary) from start to thumb, unfilled (neutral)
+// from thumb to end. Thumb sits centered as a narrow vertical pill.
+//
+// Name: .slider (not .form-range). The BS5 name read as
+// implementation; "slider" is the intent and matches the convention
+// in shadcn / Radix / Reka.
+//
+// === Filled-track technique (no JS) =====================================
+// Firefox has a native progress pseudo (::-moz-range-progress); we just
+// paint it. Webkit/Blink doesn't — so the classic box-shadow trick:
+// a giant fill-colored shadow shaped like the thumb, expanded by
+// 100vmax on every side and translated 100vmax to the left. Its right
+// edge lands at the thumb's right edge, and overflow: hidden on the
+// runnable-track clips the rest. The browser already moves the thumb;
+// the shadow follows it. Pure CSS, fully reactive to drag/keyboard.
+//
+// Side effect: overflow: hidden on the track would also clip a thumb-
+// based focus halo. So the halo moves to the shell — same 3px primary
+// vocabulary as .form-control:focus-visible, just wrapping the track.
+//
+// === Cross-browser pseudo footgun =======================================
+// Webkit and Firefox pseudo-elements CANNOT share a selector list —
+// any browser that doesn't recognize one pseudo drops the whole rule.
+// Every track + thumb rule below is emitted twice (once per vendor),
+// via inline mixins so the SCSS source stays half as long as duplicated
+// rules. Same applies to @media (prefers-reduced-motion: reduce).
+
+.slider {
+  --slider-h: 2.25rem; // 36 — matches .form-control
+  --slider-thumb-w: 0.5rem;
+  --slider-thumb-h: 1rem; // 16 — shorter than track so the clipped sliver at value extremes is less prominent
+  --slider-thumb-gap: 0.2rem; //  4 — visible space between thumb's right edge and unfilled track
+  --slider-radius: 999px;
+  --slider-track-bg: var(--st-neutral);
+  --slider-fill: var(--st-primary);
+  --slider-thumb-bg: #fff; // literal — works on filled (primary) AND unfilled (neutral) in both themes; drop shadow carries edge definition
+  --slider-thumb-shadow: 0 1px 3px oklch(0 0 0 / 0.25);
+  --slider-ring: var(--st-ring);
+
+  display: block;
+  width: 100%;
+  height: calc(var(--slider-h) * var(--st-density));
+  // Thumb inset at value extremes is handled on the runnable-track via
+  // a transparent border-inline (see slider-track mixin below) — no
+  // shell padding needed. The track's outer edges align with the
+  // slider's outer edges; the focus halo wraps them cleanly.
+  padding: 0;
+  box-sizing: border-box;
+  background: transparent;
+  border-radius: var(--slider-radius);
+  appearance: none;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+  // Focus halo lives on the track pseudo (below), not the shell —
+  // padding-inline on the shell would otherwise create a visible gap
+  // between halo and the track's border. overflow: hidden on the track
+  // only clips its children (the thumb's box-shadow fill); the track's
+  // own outset box-shadow renders past its edges and isn't clipped.
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  // Firefox-only: kill the dotted inner focus ring under our halo.
+  &::-moz-focus-outer {
+    border: 0;
+  }
+}
+
+// === Track ==============================================================
+// Full shell height; overflow: hidden clips the webkit fill-shadow.
+// Note: native range inputs position the thumb's center at the
+// runnable-track's edges at value extremes (0/100), so the thumb's
+// outer half gets clipped. Browser behavior, not fixable in pure CSS.
+@mixin slider-track {
+  width: 100%;
+  height: 100%;
+  background: var(--slider-track-bg);
+  border: 0;
+  border-radius: var(--slider-radius);
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.12s ease, border-color 0.12s ease;
+}
+
+.slider::-webkit-slider-runnable-track {
+  @include slider-track;
+}
+.slider::-moz-range-track {
+  @include slider-track;
+}
+
+// Focus halo on the track (not the shell — see comment in .slider above).
+@mixin slider-track-focus {
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--slider-ring) 25%, transparent);
+}
+.slider:focus-visible::-webkit-slider-runnable-track {
+  @include slider-track-focus;
+}
+.slider:focus-visible::-moz-range-track {
+  @include slider-track-focus;
+}
+
+// === Filled segment =====================================================
+// Firefox: native progress pseudo. Browser sets its width to thumb-center;
+// we paint it AND shift it right so its visible right edge lands a gap
+// past the thumb's right edge — thumb sits ON the fill side, with the
+// gap appearing between the thumb's right edge and the unfilled track.
+.slider::-moz-range-progress {
+  height: 100%;
+  background: var(--slider-fill);
+  border-radius: var(--slider-radius);
+  transform: translateX(
+    calc(var(--slider-thumb-w) / 2 + var(--slider-thumb-gap))
+  );
+}
+
+// === Thumb ==============================================================
+// Narrow vertical pill centered in the track. White literal so it reads
+// against both filled (primary) and unfilled (neutral) portions in both
+// themes; the drop shadow gives it edge definition without a border.
+//
+// Webkit: the giant box-shadow paints the filled segment to the left.
+// The drop shadow + the fill shadow stack on box-shadow (comma-separated).
+// Firefox: drop shadow only — the progress pseudo handles the fill.
+@mixin slider-thumb {
+  appearance: none;
+  width: var(--slider-thumb-w);
+  height: var(--slider-thumb-h);
+  background: var(--slider-thumb-bg);
+  border: 0;
+  border-radius: var(--slider-radius);
+  cursor: pointer;
+  transition:
+    background-color 0.12s ease,
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
+}
+
+.slider::-webkit-slider-thumb {
+  @include slider-thumb;
+  // Vertical centering — webkit places thumb at the track's top edge
+  // by default. Push down by (track-h - thumb-h)/2, density-scaled.
+  margin-top: calc(
+    (var(--slider-h) - var(--slider-thumb-h)) * var(--st-density) / 2
+  );
+  // Filled segment: giant shadow extending left, with its right edge
+  // landing a --slider-thumb-gap PAST the thumb's right edge — thumb
+  // sits ON the fill, with the gap appearing between thumb's right and
+  // the unfilled neutral track.
+  box-shadow:
+    var(--slider-thumb-shadow),
+    calc(var(--slider-thumb-gap) - 100vmax) 0 0 100vmax var(--slider-fill);
+}
+.slider::-moz-range-thumb {
+  @include slider-thumb;
+  // Firefox auto-centers; no margin needed. Drop shadow only.
+  box-shadow: var(--slider-thumb-shadow);
+}
+
+// Active — pressing the thumb. Subtle press feedback via transform;
+// fill color stays primary so the bar doesn't flicker on press.
+.slider::-webkit-slider-thumb:active {
+  transform: scaleY(0.92);
+}
+.slider::-moz-range-thumb:active {
+  transform: scaleY(0.92);
+}
+
+// === Validation =========================================================
+// aria-invalid covers server / JS / explicit; :user-invalid covers
+// native browser validation (step mismatch, out-of-range value) after
+// first interaction. Same hooks as form-control + form-check + switch.
+//
+// Treatment: paint a 1px danger border around the track. Fill and
+// thumb keep brand colors; the border carries the invalid signal.
+@mixin slider-track-invalid {
+  border: 1px solid var(--st-danger);
+}
+.slider[aria-invalid="true"]::-webkit-slider-runnable-track,
+.slider:user-invalid::-webkit-slider-runnable-track {
+  @include slider-track-invalid;
+}
+.slider[aria-invalid="true"]::-moz-range-track,
+.slider:user-invalid::-moz-range-track {
+  @include slider-track-invalid;
+}
+
+// Focus + invalid: outer halo flips to danger.
+@mixin slider-track-focus-invalid {
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--st-danger) 25%, transparent);
+}
+.slider[aria-invalid="true"]:focus-visible::-webkit-slider-runnable-track,
+.slider:user-invalid:focus-visible::-webkit-slider-runnable-track {
+  @include slider-track-focus-invalid;
+}
+.slider[aria-invalid="true"]:focus-visible::-moz-range-track,
+.slider:user-invalid:focus-visible::-moz-range-track {
+  @include slider-track-focus-invalid;
+}
+
+// === Sizes ==============================================================
+// Track height matches .form-control--sm / --lg so sliders sit cleanly
+// next to inputs in the same row. Thumb width + height scale with the
+// track so the proportions stay consistent.
+.slider--sm {
+  --slider-h: 1.75rem; // 28
+  --slider-thumb-w: 0.375rem; //  6
+  --slider-thumb-h: 1rem; // 16
+}
+
+.slider--lg {
+  --slider-h: 2.75rem; // 44
+  --slider-thumb-w: 0.625rem; // 10
+  --slider-thumb-h: 1.5rem; // 24
+}
+
+// === Reduced motion =====================================================
+// Separate rules per vendor (combining ::-webkit-* and ::-moz-* in one
+// selector list would drop the rule in both browsers).
+@media (prefers-reduced-motion: reduce) {
+  .slider {
+    transition: none;
+  }
+  .slider::-webkit-slider-thumb {
+    transition: none;
+  }
+  .slider::-moz-range-thumb {
+    transition: none;
+  }
+}
