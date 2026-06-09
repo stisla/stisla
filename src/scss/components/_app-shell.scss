@@ -1,52 +1,53 @@
 // Stisla v3 — app shell. Stisla-original layout component.
 //
-// Design choices:
-//   • Composes existing parts. The shell positions a Stisla .sidebar +
-//     a .app-shell-main content column; it doesn't reimplement either.
-//     Sidebar internals (rail visuals, item chrome, sub-menus) stay in
-//     _sidebar.scss; this file owns where the pieces sit and how the
-//     layout responds to viewport size.
-//   • One component, two structures — detected via :has(), no modifier.
-//     With a direct-child .navbar present (top bar across the page) the
-//     shell becomes flex-column and a .app-shell-body wraps the sidebar
-//     + main row underneath. Without it, the shell itself is the flex-
-//     row and .app-shell-body isn't needed.
-//   • Sidebar width is owned here, not on .sidebar. The sidebar component
-//     stays width-agnostic per its own design notes; .app-shell sets
-//     --bs-app-shell-sidebar-width and applies it via descendant selector.
-//   • State hooks (pure CSS):
-//       .is-sidebar-collapsed — desktop rail. Swaps the sidebar width to
-//         --bs-app-shell-sidebar-width-collapsed. Pair with .is-collapsed
-//         on the .sidebar itself for the internal rail visuals (label
-//         fade-out, icon centering). The Phase 3 JS module toggles both
-//         classes; until then, templates wire them in tandem.
-//       .is-sidebar-visible — mobile drawer. Below the mobile breakpoint
-//         the sidebar is position:fixed and translated off-screen by
-//         default; this class slides it in and shows a backdrop.
-//   • No JS in v3.0 — the Phase 3 toggle module will read
-//     data-app-shell-toggle="collapse|visibility" attributes and flip
-//     these classes against the closest .app-shell. Until then any
-//     button + a few lines of inline JS does the same job.
-//   • Dark mode: vars resolve to --bs-body-bg / --bs-body-color, which
-//     the BS5 color-mode mixin flips automatically. No explicit
-//     @include color-mode block needed in this file.
+// Composes existing parts: positions a Stisla .sidebar next to a
+// .app-shell__main content column. Sidebar internals (rail visuals,
+// item chrome, sub-menus) stay in _sidebar.scss; this file owns where
+// the pieces sit and how the layout responds to viewport size.
+//
+// One component, two structures — detected via :has(), no modifier:
+//   • With a direct-child .navbar (top bar across the page), the
+//     shell becomes flex-column and an .app-shell__body wraps the
+//     sidebar + main row underneath.
+//   • Without it, the shell itself is the flex-row and
+//     .app-shell__body is unused.
+//
+// Sidebar width is owned here, not on .sidebar. The .sidebar component
+// stays width-agnostic; the shell sets --app-shell-sidebar-width and
+// applies it via descendant selector.
+//
+// === State hooks (V3.md §3.6 — .is-* for Stisla-original states) =========
+//   .is-sidebar-collapsed — desktop rail. Swaps the sidebar width to
+//     --app-shell-sidebar-width-collapsed. Pair with .is-collapsed on
+//     the .sidebar itself for the rail visuals (Step 4 JS toggles both;
+//     until then, the site JS in src/js/index.js wires them in tandem).
+//   .is-sidebar-visible — mobile drawer. Below `lg`, the sidebar is
+//     position: fixed and translated off-screen by default; this class
+//     slides it in and shows a backdrop.
+//
+// JS: shell ships site-level toggle JS today (src/js/index.js scans
+// for data-app-shell-toggle="collapse|visibility" and flips the
+// matching class on the closest .app-shell + the sidebar's own
+// .is-collapsed). Step 4 promotes it into Stisla.AppShell with the
+// full class + destroy + custom-events contract.
 
 .app-shell {
-  --#{$prefix}app-shell-bg: #{$app-shell-bg};
-  --#{$prefix}app-shell-color: #{$app-shell-color};
-  --#{$prefix}app-shell-main-bg: #{$app-shell-main-bg};
-  --#{$prefix}app-shell-main-color: #{$app-shell-main-color};
-  --#{$prefix}app-shell-sidebar-width: #{$app-shell-sidebar-width};
-  --#{$prefix}app-shell-sidebar-width-collapsed: #{$app-shell-sidebar-width-collapsed};
-  --#{$prefix}app-shell-backdrop-bg: #{$app-shell-backdrop-bg};
-  --#{$prefix}app-shell-sidebar-mobile-bg: #{$app-shell-sidebar-mobile-bg};
-  --#{$prefix}app-shell-sidebar-mobile-shadow: #{$app-shell-sidebar-mobile-shadow};
-  --#{$prefix}app-shell-transition-duration: #{$app-shell-transition-duration};
+  --app-shell-bg:                      var(--st-background);
+  --app-shell-color:                   var(--st-foreground);
+  --app-shell-main-bg:                 var(--st-background);
+  --app-shell-main-color:              var(--st-foreground);
+  --app-shell-sidebar-width:           16rem;
+  --app-shell-sidebar-width-collapsed: 4.25rem;
+  --app-shell-sidebar-mobile-bg:       var(--st-surface);
+  --app-shell-sidebar-mobile-shadow:   2px 0 8px -2px oklch(0 0 0 / 0.15);
+  --app-shell-sidebar-z:               1030;
+  --app-shell-backdrop-bg:             oklch(0 0 0 / 0.5);
+  --app-shell-transition-duration:     200ms;
 
   display: flex;
   min-height: 100vh;
-  background-color: var(--#{$prefix}app-shell-bg);
-  color: var(--#{$prefix}app-shell-color);
+  background-color: var(--app-shell-bg);
+  color: var(--app-shell-color);
 }
 
 // Top-bar layout — a direct .navbar child means the shell stacks the
@@ -60,7 +61,7 @@
 // flex: 1 fills the remaining height below the navbar; min-height: 0 lets
 // nested scroll containers (sidebar-content, main scroll area) behave
 // without forcing the column to grow past the viewport.
-.app-shell-body {
+.app-shell__body {
   display: flex;
   flex: 1 1 auto;
   min-height: 0;
@@ -68,10 +69,10 @@
 
 // Sidebar positioning — width owned by the shell, not the panel.
 .app-shell > .sidebar,
-.app-shell-body > .sidebar {
-  width: var(--#{$prefix}app-shell-sidebar-width);
+.app-shell__body > .sidebar {
+  width: var(--app-shell-sidebar-width);
   flex-shrink: 0;
-  transition: width var(--#{$prefix}app-shell-transition-duration) ease;
+  transition: width var(--app-shell-transition-duration) ease;
 }
 
 // Main column — flex column so an optional navbar inside main and an
@@ -79,60 +80,71 @@
 // min-width: 0 is the canonical flexbox-overflow fix: a wide table or
 // <pre> inside main would otherwise force a page-level horizontal
 // scroll because the flex item's intrinsic min-width is its content.
-.app-shell-main {
+.app-shell__main {
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
   min-width: 0;
-  background-color: var(--#{$prefix}app-shell-main-bg);
-  color: var(--#{$prefix}app-shell-main-color);
+  background-color: var(--app-shell-main-bg);
+  color: var(--app-shell-main-color);
 }
 
-// === Desktop collapsed (rail) state ======================================
+// === Desktop collapsed (rail) state =====================================
 // Swap the sidebar width. The sidebar's own .is-collapsed class handles
 // the internal rail visuals — pair these two classes on the same toggle.
 .app-shell.is-sidebar-collapsed > .sidebar,
-.app-shell.is-sidebar-collapsed > .app-shell-body > .sidebar {
-  width: var(--#{$prefix}app-shell-sidebar-width-collapsed);
+.app-shell.is-sidebar-collapsed > .app-shell__body > .sidebar {
+  width: var(--app-shell-sidebar-width-collapsed);
 }
 
-// === Mobile drawer state =================================================
+// === Mobile drawer state ================================================
 // Below the mobile breakpoint, the sidebar leaves the flex flow, sits
 // fixed against the viewport's left edge, and slides in / out on the
 // .is-sidebar-visible flip. A semi-transparent backdrop covers the
 // rest of the shell while open.
-@include media-breakpoint-down($app-shell-mobile-breakpoint) {
+@include media-down(lg) {
   .app-shell > .sidebar,
-  .app-shell-body > .sidebar {
+  .app-shell__body > .sidebar {
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
-    z-index: $zindex-fixed;
+    z-index: var(--app-shell-sidebar-z);
     // Floating drawer needs an opaque surface (the sidebar component's own
     // bg defaults to transparent for the desktop inline-in-shell layout).
     // Shadow cast right-ward signals the slide-from-left motion.
-    background-color: var(--#{$prefix}app-shell-sidebar-mobile-bg);
-    box-shadow: var(--#{$prefix}app-shell-sidebar-mobile-shadow);
+    background-color: var(--app-shell-sidebar-mobile-bg);
+    box-shadow: var(--app-shell-sidebar-mobile-shadow);
     transform: translateX(-100%);
     transition:
-      transform var(--#{$prefix}app-shell-transition-duration) ease,
-      width var(--#{$prefix}app-shell-transition-duration) ease;
+      transform var(--app-shell-transition-duration) ease,
+      width     var(--app-shell-transition-duration) ease;
   }
 
   .app-shell.is-sidebar-visible > .sidebar,
-  .app-shell.is-sidebar-visible > .app-shell-body > .sidebar {
+  .app-shell.is-sidebar-visible > .app-shell__body > .sidebar {
     transform: translateX(0);
   }
 
   // Backdrop — pseudo-element on the shell, one z-index below the
-  // sidebar's fixed layer. Click-to-dismiss is the JS module's job
-  // (Phase 3); pure-CSS users dismiss via any toggle button.
+  // sidebar's fixed layer. Click-to-dismiss is handled by the site
+  // JS in src/js/index.js (event delegated on document).
   .app-shell.is-sidebar-visible::before {
     content: "";
     position: fixed;
     inset: 0;
-    z-index: #{$zindex-fixed - 1};
-    background-color: var(--#{$prefix}app-shell-backdrop-bg);
+    z-index: calc(var(--app-shell-sidebar-z) - 1);
+    background-color: var(--app-shell-backdrop-bg);
+  }
+}
+
+// === Reduced motion =====================================================
+// V3.md cross-browser commits: prefers-reduced-motion disables
+// component animations. Sourced last so it wins both the desktop
+// width transition and the mobile transform + width pair.
+@media (prefers-reduced-motion: reduce) {
+  .app-shell > .sidebar,
+  .app-shell__body > .sidebar {
+    transition-duration: 0.01ms;
   }
 }
