@@ -71,6 +71,20 @@ if (typeof document !== 'undefined') {
     menu.dataset.state = open ? 'closed' : 'open';
     target.setAttribute('aria-expanded', String(!open));
   });
+
+  // Sidebar submenu — [data-sidebar-submenu-toggle] flips data-state on
+  // the closest .sidebar__item between "open" and "closed" + aria-expanded
+  // on the trigger. The CSS hides closed submenus via display: none; an
+  // animated height transition lands in Step 4 (Stisla.Sidebar).
+  document.addEventListener('click', (e) => {
+    const target = e.target.closest('[data-sidebar-submenu-toggle]');
+    if (!target) return;
+    const item = target.closest('.sidebar__item');
+    if (!item) return;
+    const open = item.dataset.state === 'open';
+    item.dataset.state = open ? 'closed' : 'open';
+    target.setAttribute('aria-expanded', String(!open));
+  });
 }
 
 export default Stisla;

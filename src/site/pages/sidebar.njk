@@ -6,38 +6,42 @@
 {% block content %}
   <header>
     <h1>Sidebar</h1>
-    <p class="lead">A vertical navigation panel with no fixed position, no width, and no background by default. Your layout decides where it sits and how wide it gets.</p>
+    <p class="lead">Vertical navigation panel for app layouts. No fixed positioning, width, or background by default — the layout decides where it sits.</p>
   </header>
 
   <section>
+    <p>A <code>.sidebar</code> wraps an optional <code>.sidebar__header</code>, a <code>.sidebar__content</code>, and an optional <code>.sidebar__footer</code>. Items live inside <code>.sidebar__menu</code>, which holds one or more <code>.sidebar__group</code>, each with a <code>.sidebar__list</code> of <code>.sidebar__item</code> rows. The primary click target on each row is a <code>.sidebar__button</code>.</p>
+  </section>
+
+  <section>
     <h2>Basic</h2>
-    <p>A <code>.sidebar</code> wraps <code>.sidebar-header</code>, <code>.sidebar-content</code>, and an optional <code>.sidebar-footer</code>. Items live inside <code>.sidebar-menu</code>, which holds one or more <code>.sidebar-group</code>, each containing a <code>.sidebar-list</code>.</p>
+    <p>One content slot, one group, one list. The current page is marked with <code>aria-current="page"</code> on the matching button.</p>
     {% call ui.demo() %}
     <aside class="sidebar" style="width: 16rem;">
-      <div class="sidebar-content">
-        <nav class="sidebar-menu">
-          <div class="sidebar-group">
-            <ul class="sidebar-list">
-              <li class="sidebar-item">
-                <a class="sidebar-item-button" href="#" aria-current="page">
+      <div class="sidebar__content">
+        <nav class="sidebar__menu">
+          <div class="sidebar__group">
+            <ul class="sidebar__list">
+              <li class="sidebar__item">
+                <a class="sidebar__button" href="#" aria-current="page">
                   <i data-lucide="home"></i>
                   Dashboard
                 </a>
               </li>
-              <li class="sidebar-item">
-                <a class="sidebar-item-button" href="#">
+              <li class="sidebar__item">
+                <a class="sidebar__button" href="#">
                   <i data-lucide="shopping-bag"></i>
                   Products
                 </a>
               </li>
-              <li class="sidebar-item">
-                <a class="sidebar-item-button" href="#">
+              <li class="sidebar__item">
+                <a class="sidebar__button" href="#">
                   <i data-lucide="tags"></i>
                   Categories
                 </a>
               </li>
-              <li class="sidebar-item">
-                <a class="sidebar-item-button" href="#">
+              <li class="sidebar__item">
+                <a class="sidebar__button" href="#">
                   <i data-lucide="users"></i>
                   Customers
                 </a>
@@ -52,30 +56,30 @@
 
   <section>
     <h2>With header + footer</h2>
-    <p>Use <code>.sidebar-header</code> for the brand mark. The <code>.sidebar-logo</code> helper lines up an icon and a wordmark side by side. <code>.sidebar-footer</code> pins to the bottom with <code>margin-top: auto</code>.</p>
+    <p>Use <code>.sidebar__header</code> for the brand mark. The <code>.sidebar__brand</code> helper lines up an icon and a wordmark. <code>.sidebar__footer</code> pins to the bottom via <code>margin-top: auto</code>.</p>
     {% call ui.demo() %}
     <aside class="sidebar" style="width: 16rem; height: 22rem;">
-      <header class="sidebar-header">
-        <a class="sidebar-logo" href="#">
+      <header class="sidebar__header">
+        <a class="sidebar__brand" href="#">
           <i data-lucide="hexagon"></i>
           <span>Stisla</span>
         </a>
       </header>
-      <div class="sidebar-content">
-        <nav class="sidebar-menu">
-          <div class="sidebar-group">
-            <ul class="sidebar-list">
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#" aria-current="page"><i data-lucide="home"></i>Dashboard</a></li>
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="bar-chart-3"></i>Analytics</a></li>
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="inbox"></i>Inbox</a></li>
+      <div class="sidebar__content">
+        <nav class="sidebar__menu">
+          <div class="sidebar__group">
+            <ul class="sidebar__list">
+              <li class="sidebar__item"><a class="sidebar__button" href="#" aria-current="page"><i data-lucide="home"></i>Dashboard</a></li>
+              <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="bar-chart-3"></i>Analytics</a></li>
+              <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="inbox"></i>Inbox</a></li>
             </ul>
           </div>
         </nav>
       </div>
-      <footer class="sidebar-footer">
-        <ul class="sidebar-list">
-          <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="settings"></i>Settings</a></li>
-          <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="log-out"></i>Log out</a></li>
+      <footer class="sidebar__footer">
+        <ul class="sidebar__list">
+          <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="settings"></i>Settings</a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="log-out"></i>Log out</a></li>
         </ul>
       </footer>
     </aside>
@@ -84,18 +88,18 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Three sizes match the button scale: <code>.sidebar-sm</code>, default <code>.sidebar</code>, and <code>.sidebar-lg</code>. The size modifier only changes padding, item min-height, and group gap. Everything else stays the same.</p>
+    <p>Three sizes: <code>.sidebar--sm</code>, default, and <code>.sidebar--lg</code>. The modifier retunes button height, padding, and group gap. Outer panel padding stays the same so gutters read identically across sizes.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-3 align-items-start">
-      <aside class="sidebar sidebar-sm" style="width: 14rem;">
-        <div class="sidebar-content">
-          <nav class="sidebar-menu">
-            <div class="sidebar-group">
-              <span class="sidebar-group-title">Small</span>
-              <ul class="sidebar-list">
-                <li class="sidebar-item"><a class="sidebar-item-button" href="#" aria-current="page"><i data-lucide="home"></i>Dashboard</a></li>
-                <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="inbox"></i>Inbox</a></li>
-                <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="users"></i>Customers</a></li>
+    <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-start;">
+      <aside class="sidebar sidebar--sm" style="width: 14rem;">
+        <div class="sidebar__content">
+          <nav class="sidebar__menu">
+            <div class="sidebar__group">
+              <span class="sidebar__group-title">Small</span>
+              <ul class="sidebar__list">
+                <li class="sidebar__item"><a class="sidebar__button" href="#" aria-current="page"><i data-lucide="home"></i>Dashboard</a></li>
+                <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="inbox"></i>Inbox</a></li>
+                <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="users"></i>Customers</a></li>
               </ul>
             </div>
           </nav>
@@ -103,29 +107,29 @@
       </aside>
 
       <aside class="sidebar" style="width: 14rem;">
-        <div class="sidebar-content">
-          <nav class="sidebar-menu">
-            <div class="sidebar-group">
-              <span class="sidebar-group-title">Default</span>
-              <ul class="sidebar-list">
-                <li class="sidebar-item"><a class="sidebar-item-button" href="#" aria-current="page"><i data-lucide="home"></i>Dashboard</a></li>
-                <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="inbox"></i>Inbox</a></li>
-                <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="users"></i>Customers</a></li>
+        <div class="sidebar__content">
+          <nav class="sidebar__menu">
+            <div class="sidebar__group">
+              <span class="sidebar__group-title">Default</span>
+              <ul class="sidebar__list">
+                <li class="sidebar__item"><a class="sidebar__button" href="#" aria-current="page"><i data-lucide="home"></i>Dashboard</a></li>
+                <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="inbox"></i>Inbox</a></li>
+                <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="users"></i>Customers</a></li>
               </ul>
             </div>
           </nav>
         </div>
       </aside>
 
-      <aside class="sidebar sidebar-lg" style="width: 14rem;">
-        <div class="sidebar-content">
-          <nav class="sidebar-menu">
-            <div class="sidebar-group">
-              <span class="sidebar-group-title">Large</span>
-              <ul class="sidebar-list">
-                <li class="sidebar-item"><a class="sidebar-item-button" href="#" aria-current="page"><i data-lucide="home"></i>Dashboard</a></li>
-                <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="inbox"></i>Inbox</a></li>
-                <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="users"></i>Customers</a></li>
+      <aside class="sidebar sidebar--lg" style="width: 14rem;">
+        <div class="sidebar__content">
+          <nav class="sidebar__menu">
+            <div class="sidebar__group">
+              <span class="sidebar__group-title">Large</span>
+              <ul class="sidebar__list">
+                <li class="sidebar__item"><a class="sidebar__button" href="#" aria-current="page"><i data-lucide="home"></i>Dashboard</a></li>
+                <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="inbox"></i>Inbox</a></li>
+                <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="users"></i>Customers</a></li>
               </ul>
             </div>
           </nav>
@@ -137,29 +141,29 @@
 
   <section>
     <h2>Groups + group action</h2>
-    <p><code>.sidebar-group-title</code> labels each list. An optional <code>.sidebar-group-action</code> sits to the right of the title, useful for an add or filter button. It stays on the title row and does not take space inside the list.</p>
+    <p><code>.sidebar__group-title</code> labels each list. An optional <code>.sidebar__group-action</code> sits to the right of the title — useful for an add or filter button. Its contents collapse to a uniform 24×24 regardless of the button modifiers passed in; pick a tone via <code>.btn--ghost.btn--neutral</code> (or similar) and the slot handles the chrome.</p>
     {% call ui.demo() %}
     <aside class="sidebar" style="width: 17rem;">
-      <div class="sidebar-content">
-        <nav class="sidebar-menu">
-          <div class="sidebar-group">
-            <span class="sidebar-group-title">Workspaces</span>
-            <div class="sidebar-group-action">
-              <button type="button" class="btn btn-ghost-secondary" aria-label="Add workspace">
+      <div class="sidebar__content">
+        <nav class="sidebar__menu">
+          <div class="sidebar__group">
+            <span class="sidebar__group-title">Workspaces</span>
+            <div class="sidebar__group-action">
+              <button type="button" class="btn btn--ghost btn--neutral btn--icon-only" aria-label="Add workspace">
                 <i data-lucide="plus"></i>
               </button>
             </div>
-            <ul class="sidebar-list">
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#" aria-current="page"><i data-lucide="briefcase"></i>Acme Co.</a></li>
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="briefcase"></i>Side Project</a></li>
+            <ul class="sidebar__list">
+              <li class="sidebar__item"><a class="sidebar__button" href="#" aria-current="page"><i data-lucide="briefcase"></i>Acme Co.</a></li>
+              <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="briefcase"></i>Side Project</a></li>
             </ul>
           </div>
-          <div class="sidebar-group">
-            <span class="sidebar-group-title">Settings</span>
-            <ul class="sidebar-list">
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="settings"></i>General</a></li>
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="user"></i>Profile</a></li>
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="credit-card"></i>Billing</a></li>
+          <div class="sidebar__group">
+            <span class="sidebar__group-title">Settings</span>
+            <ul class="sidebar__list">
+              <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="settings"></i>General</a></li>
+              <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="user"></i>Profile</a></li>
+              <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="credit-card"></i>Billing</a></li>
             </ul>
           </div>
         </nav>
@@ -170,17 +174,17 @@
 
   <section>
     <h2>Active state</h2>
-    <p>Use <code>aria-current="page"</code> to mark the active link. This matches Bootstrap 5's <code>.nav-link</code> pattern. For non-link items like a button that opens a panel, use the <code>.active</code> class instead.</p>
+    <p>Two hooks. <code>aria-current="page"</code> marks the current page on a navigation link — the standard a11y attribute. <code>data-state="active"</code> covers non-link rows (a button toggling a panel, for example). Both paint the highlight chip; the difference is semantic, not visual.</p>
     {% call ui.demo() %}
     <aside class="sidebar" style="width: 16rem;">
-      <div class="sidebar-content">
-        <nav class="sidebar-menu">
-          <div class="sidebar-group">
-            <ul class="sidebar-list">
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="home"></i>Dashboard</a></li>
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#" aria-current="page"><i data-lucide="inbox"></i>Inbox</a></li>
-              <li class="sidebar-item"><button type="button" class="sidebar-item-button active"><i data-lucide="filter"></i>Filters open</button></li>
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="users"></i>Customers</a></li>
+      <div class="sidebar__content">
+        <nav class="sidebar__menu">
+          <div class="sidebar__group">
+            <ul class="sidebar__list">
+              <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="home"></i>Dashboard</a></li>
+              <li class="sidebar__item"><a class="sidebar__button" href="#" aria-current="page"><i data-lucide="inbox"></i>Inbox</a></li>
+              <li class="sidebar__item"><button type="button" class="sidebar__button" data-state="active"><i data-lucide="filter"></i>Filters open</button></li>
+              <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="users"></i>Customers</a></li>
             </ul>
           </div>
         </nav>
@@ -191,44 +195,44 @@
 
   <section>
     <h2>Item actions</h2>
-    <p>Place a <code>.sidebar-item-action</code> after the button to drop a badge or a small button into the right edge of the row. The main button keeps its full click area; the action sits on top of the right edge and only catches clicks on itself. Add <code>.sidebar-item-action-hover</code> to only show the action on row hover or keyboard focus. This works well for dense lists where always-visible actions feel noisy.</p>
+    <p>Place a <code>.sidebar__item-action</code> after the button to drop a badge or a quiet button into the right edge of the row. The button keeps its full click area; the action overlays only its own pixels. Add the <code>--reveal</code> modifier to show the action only on row hover or keyboard focus — good for dense lists where always-visible actions feel noisy.</p>
     {% call ui.demo() %}
     <aside class="sidebar" style="width: 18rem;">
-      <div class="sidebar-content">
-        <nav class="sidebar-menu">
-          <div class="sidebar-group">
-            <span class="sidebar-group-title">Always visible</span>
-            <ul class="sidebar-list">
-              <li class="sidebar-item">
-                <a class="sidebar-item-button" href="#"><i data-lucide="bell"></i>Notifications</a>
-                <span class="sidebar-item-action">
-                  <span class="badge text-bg-primary">3</span>
+      <div class="sidebar__content">
+        <nav class="sidebar__menu">
+          <div class="sidebar__group">
+            <span class="sidebar__group-title">Always visible</span>
+            <ul class="sidebar__list">
+              <li class="sidebar__item">
+                <a class="sidebar__button" href="#"><i data-lucide="bell"></i>Notifications</a>
+                <span class="sidebar__item-action">
+                  <span class="badge badge--primary">3</span>
                 </span>
               </li>
-              <li class="sidebar-item">
-                <a class="sidebar-item-button" href="#"><i data-lucide="inbox"></i>Inbox</a>
-                <span class="sidebar-item-action">
-                  <span class="badge text-bg-secondary">12</span>
+              <li class="sidebar__item">
+                <a class="sidebar__button" href="#"><i data-lucide="inbox"></i>Inbox</a>
+                <span class="sidebar__item-action">
+                  <span class="badge">12</span>
                 </span>
               </li>
             </ul>
           </div>
 
-          <div class="sidebar-group">
-            <span class="sidebar-group-title">Hover-reveal</span>
-            <ul class="sidebar-list">
-              <li class="sidebar-item">
-                <a class="sidebar-item-button" href="#"><i data-lucide="folder"></i>Documents</a>
-                <span class="sidebar-item-action sidebar-item-action-hover">
-                  <button type="button" class="btn btn-ghost-secondary" aria-label="More">
+          <div class="sidebar__group">
+            <span class="sidebar__group-title">Hover-reveal</span>
+            <ul class="sidebar__list">
+              <li class="sidebar__item">
+                <a class="sidebar__button" href="#"><i data-lucide="folder"></i>Documents</a>
+                <span class="sidebar__item-action sidebar__item-action--reveal">
+                  <button type="button" class="btn btn--ghost btn--neutral btn--icon-only" aria-label="More">
                     <i data-lucide="more-horizontal"></i>
                   </button>
                 </span>
               </li>
-              <li class="sidebar-item">
-                <a class="sidebar-item-button" href="#"><i data-lucide="folder"></i>Projects</a>
-                <span class="sidebar-item-action sidebar-item-action-hover">
-                  <button type="button" class="btn btn-ghost-secondary" aria-label="More">
+              <li class="sidebar__item">
+                <a class="sidebar__button" href="#"><i data-lucide="folder"></i>Projects</a>
+                <span class="sidebar__item-action sidebar__item-action--reveal">
+                  <button type="button" class="btn btn--ghost btn--neutral btn--icon-only" aria-label="More">
                     <i data-lucide="more-horizontal"></i>
                   </button>
                 </span>
@@ -242,44 +246,41 @@
   </section>
 
   <section>
-    <h2>Nested sub-menu</h2>
-    <p>Add <code>data-bs-toggle="collapse"</code> and <code>data-bs-target="#…"</code> to the parent button. Put the child <code>.sidebar-list</code> inside a <code>.sidebar-submenu</code>, wrapped in a Bootstrap 5 <code>.collapse</code>. The chevron rotates 180 degrees when <code>aria-expanded="true"</code>. No extra Stisla JS is needed; Bootstrap handles the open and close.</p>
+    <h2>Nested submenu</h2>
+    <p>Add <code>data-sidebar-submenu-toggle</code> to the parent button. Wrap the child <code>.sidebar__list</code> in a <code>.sidebar__submenu</code> inside the same <code>.sidebar__item</code>. The item carries <code>data-state="open"</code> or <code>data-state="closed"</code> — the framework JS flips both this and <code>aria-expanded</code> on the trigger when the toggle is clicked. The chevron rotates 180° in the open state.</p>
+    <p>Closed submenus snap shut via <code>display: none</code> in this release. Animated height transitions land with <code>Stisla.Sidebar</code> in Step 4.</p>
     {% call ui.demo() %}
     <aside class="sidebar" style="width: 18rem;">
-      <div class="sidebar-content">
-        <nav class="sidebar-menu">
-          <div class="sidebar-group">
-            <ul class="sidebar-list">
-              <li class="sidebar-item">
-                <a class="sidebar-item-button" href="#" aria-current="page">
+      <div class="sidebar__content">
+        <nav class="sidebar__menu">
+          <div class="sidebar__group">
+            <ul class="sidebar__list">
+              <li class="sidebar__item">
+                <a class="sidebar__button" href="#" aria-current="page">
                   <i data-lucide="home"></i>Dashboard
                 </a>
               </li>
-              <li class="sidebar-item">
-                <button type="button" class="sidebar-item-button" data-bs-toggle="collapse" data-bs-target="#demo-reports" aria-expanded="true" aria-controls="demo-reports">
+              <li class="sidebar__item" data-state="open">
+                <button type="button" class="sidebar__button" data-sidebar-submenu-toggle aria-expanded="true" aria-controls="demo-reports">
                   <i data-lucide="bar-chart-3"></i>Reports
                 </button>
-                <div class="collapse show" id="demo-reports">
-                  <div class="sidebar-submenu">
-                    <ul class="sidebar-list">
-                      <li class="sidebar-item"><a class="sidebar-item-button" href="#">Sales</a></li>
-                      <li class="sidebar-item"><a class="sidebar-item-button" href="#">Traffic</a></li>
-                      <li class="sidebar-item"><a class="sidebar-item-button" href="#">Conversion</a></li>
-                    </ul>
-                  </div>
+                <div class="sidebar__submenu" id="demo-reports">
+                  <ul class="sidebar__list">
+                    <li class="sidebar__item"><a class="sidebar__button" href="#">Sales</a></li>
+                    <li class="sidebar__item"><a class="sidebar__button" href="#">Traffic</a></li>
+                    <li class="sidebar__item"><a class="sidebar__button" href="#">Conversion</a></li>
+                  </ul>
                 </div>
               </li>
-              <li class="sidebar-item">
-                <button type="button" class="sidebar-item-button" data-bs-toggle="collapse" data-bs-target="#demo-billing" aria-expanded="false" aria-controls="demo-billing">
+              <li class="sidebar__item" data-state="closed">
+                <button type="button" class="sidebar__button" data-sidebar-submenu-toggle aria-expanded="false" aria-controls="demo-billing">
                   <i data-lucide="credit-card"></i>Billing
                 </button>
-                <div class="collapse" id="demo-billing">
-                  <div class="sidebar-submenu">
-                    <ul class="sidebar-list">
-                      <li class="sidebar-item"><a class="sidebar-item-button" href="#">Invoices</a></li>
-                      <li class="sidebar-item"><a class="sidebar-item-button" href="#">Payment methods</a></li>
-                    </ul>
-                  </div>
+                <div class="sidebar__submenu" id="demo-billing">
+                  <ul class="sidebar__list">
+                    <li class="sidebar__item"><a class="sidebar__button" href="#">Invoices</a></li>
+                    <li class="sidebar__item"><a class="sidebar__button" href="#">Payment methods</a></li>
+                  </ul>
                 </div>
               </li>
             </ul>
@@ -292,34 +293,34 @@
 
   <section>
     <h2>As a panel</h2>
-    <p>The sidebar has a transparent background by default, so it works on any surface. To turn it into a standalone panel, set <code>--bs-sidebar-bg</code> to a surface token, add a border, and round the corners.</p>
+    <p>The sidebar background is transparent by default. To frame it as a standalone panel, set <code>--sidebar-bg</code> to a surface token, add a border, and round the corners.</p>
     {% call ui.demo() %}
-    <aside class="sidebar border rounded-4 shadow-sm" style="width: 17rem; --bs-sidebar-bg: var(--bs-surface);">
-      <header class="sidebar-header">
-        <a class="sidebar-logo" href="#">
+    <aside class="sidebar" style="width: 17rem; border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
+      <header class="sidebar__header">
+        <a class="sidebar__brand" href="#">
           <i data-lucide="hexagon"></i>
           <span>Stisla</span>
         </a>
       </header>
-      <div class="sidebar-content">
-        <nav class="sidebar-menu">
-          <div class="sidebar-group">
-            <span class="sidebar-group-title">Prologue</span>
-            <ul class="sidebar-list">
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#" aria-current="page">Introduction</a></li>
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#">Installation</a></li>
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#">Customization</a></li>
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#">Upgrade Guide</a></li>
+      <div class="sidebar__content">
+        <nav class="sidebar__menu">
+          <div class="sidebar__group">
+            <span class="sidebar__group-title">Prologue</span>
+            <ul class="sidebar__list">
+              <li class="sidebar__item"><a class="sidebar__button" href="#" aria-current="page">Introduction</a></li>
+              <li class="sidebar__item"><a class="sidebar__button" href="#">Installation</a></li>
+              <li class="sidebar__item"><a class="sidebar__button" href="#">Customization</a></li>
+              <li class="sidebar__item"><a class="sidebar__button" href="#">Upgrade guide</a></li>
             </ul>
           </div>
-          <div class="sidebar-group">
-            <span class="sidebar-group-title">Components</span>
-            <ul class="sidebar-list">
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#">Button</a></li>
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#">Card</a></li>
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#">Input</a></li>
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#">Sidebar</a></li>
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#">Table</a></li>
+          <div class="sidebar__group">
+            <span class="sidebar__group-title">Components</span>
+            <ul class="sidebar__list">
+              <li class="sidebar__item"><a class="sidebar__button" href="#">Button</a></li>
+              <li class="sidebar__item"><a class="sidebar__button" href="#">Card</a></li>
+              <li class="sidebar__item"><a class="sidebar__button" href="#">Input</a></li>
+              <li class="sidebar__item"><a class="sidebar__button" href="#">Sidebar</a></li>
+              <li class="sidebar__item"><a class="sidebar__button" href="#">Table</a></li>
             </ul>
           </div>
         </nav>
@@ -330,119 +331,116 @@
 
   <section>
     <h2>Recolor</h2>
-    <p>Every visible part of the sidebar is wired to a <code>--bs-sidebar-*</code> CSS variable: background, text, icons, hover and active fills, group titles, submenu guide line, and logo color. Override the ones you need on the <code>.sidebar</code> element using an inline style, a scoped class, or a parent selector. No Sass changes required. The example below paints the sidebar with the primary brand color.</p>
+    <p>Every visible part wires to a <code>--sidebar-*</code> CSS variable. Override on the panel itself, on a scoped class, or on <code>:root</code>. The example below tints the sidebar with the primary brand color; tokens that pair with it (<code>--st-primary-foreground</code>) keep contrast correct in both light and dark mode.</p>
     {% call ui.demo() %}
-    <aside class="sidebar rounded-4" style="
+    <aside class="sidebar" style="
       width: 17rem;
-      --bs-sidebar-bg: var(--bs-primary);
-      --bs-sidebar-color: #fff;
-      --bs-sidebar-logo-color: #fff;
-      --bs-sidebar-item-color: rgba(255, 255, 255, 0.82);
-      --bs-sidebar-item-color-hover: #fff;
-      --bs-sidebar-item-color-active: #fff;
-      --bs-sidebar-item-bg-hover: rgba(255, 255, 255, 0.1);
-      --bs-sidebar-item-bg-active: rgba(255, 255, 255, 0.18);
-      --bs-sidebar-item-icon-color: rgba(255, 255, 255, 0.75);
-      --bs-sidebar-group-title-color: rgba(255, 255, 255, 0.6);
-      --bs-sidebar-submenu-border-color: rgba(255, 255, 255, 0.22);
+      border-radius: var(--st-radius);
+      --sidebar-bg: var(--st-primary);
+      --sidebar-color: var(--st-primary-foreground);
+      --sidebar-button-hover-bg: color-mix(in oklch, var(--st-primary-foreground) 12%, transparent);
+      --sidebar-button-hover-color: var(--st-primary-foreground);
+      --sidebar-button-active-bg: color-mix(in oklch, var(--st-primary-foreground) 20%, transparent);
+      --sidebar-button-active-color: var(--st-primary-foreground);
+      --sidebar-button-icon-color: color-mix(in oklch, var(--st-primary-foreground) 75%, transparent);
+      --sidebar-group-title-color: color-mix(in oklch, var(--st-primary-foreground) 70%, transparent);
+      --sidebar-submenu-border-color: color-mix(in oklch, var(--st-primary-foreground) 25%, transparent);
     ">
-      <header class="sidebar-header">
-        <a class="sidebar-logo" href="#">
+      <header class="sidebar__header">
+        <a class="sidebar__brand" href="#">
           <i data-lucide="hexagon"></i>
           <span>Stisla</span>
         </a>
       </header>
-      <div class="sidebar-content">
-        <nav class="sidebar-menu">
-          <div class="sidebar-group">
-            <span class="sidebar-group-title">Navigation</span>
-            <ul class="sidebar-list">
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#" aria-current="page"><i data-lucide="home"></i>Dashboard</a></li>
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="inbox"></i>Inbox</a></li>
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="users"></i>Customers</a></li>
-              <li class="sidebar-item">
-                <button type="button" class="sidebar-item-button" data-bs-toggle="collapse" data-bs-target="#demo-recolor-reports" aria-expanded="true" aria-controls="demo-recolor-reports">
+      <div class="sidebar__content">
+        <nav class="sidebar__menu">
+          <div class="sidebar__group">
+            <span class="sidebar__group-title">Navigation</span>
+            <ul class="sidebar__list">
+              <li class="sidebar__item"><a class="sidebar__button" href="#" aria-current="page"><i data-lucide="home"></i>Dashboard</a></li>
+              <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="inbox"></i>Inbox</a></li>
+              <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="users"></i>Customers</a></li>
+              <li class="sidebar__item" data-state="open">
+                <button type="button" class="sidebar__button" data-sidebar-submenu-toggle aria-expanded="true" aria-controls="demo-recolor-reports">
                   <i data-lucide="bar-chart-3"></i>Reports
                 </button>
-                <div class="collapse show" id="demo-recolor-reports">
-                  <div class="sidebar-submenu">
-                    <ul class="sidebar-list">
-                      <li class="sidebar-item"><a class="sidebar-item-button" href="#">Sales</a></li>
-                      <li class="sidebar-item"><a class="sidebar-item-button" href="#">Traffic</a></li>
-                    </ul>
-                  </div>
+                <div class="sidebar__submenu" id="demo-recolor-reports">
+                  <ul class="sidebar__list">
+                    <li class="sidebar__item"><a class="sidebar__button" href="#">Sales</a></li>
+                    <li class="sidebar__item"><a class="sidebar__button" href="#">Traffic</a></li>
+                  </ul>
                 </div>
               </li>
             </ul>
           </div>
-          <div class="sidebar-group">
-            <span class="sidebar-group-title">Settings</span>
-            <ul class="sidebar-list">
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="settings"></i>General</a></li>
-              <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="user"></i>Profile</a></li>
+          <div class="sidebar__group">
+            <span class="sidebar__group-title">Settings</span>
+            <ul class="sidebar__list">
+              <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="settings"></i>General</a></li>
+              <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="user"></i>Profile</a></li>
             </ul>
           </div>
         </nav>
       </div>
     </aside>
     {% endcall %}
-    <p>Use the same approach for a dark sidebar on a light page, a muted tinted sidebar, or any branded look. Pick the variables you care about. The rest keep their defaults.</p>
+    <p>Use the same approach for a dark sidebar on a light page, a muted tint, or a per-team brand. Pick the variables you need; the rest stay on defaults.</p>
   </section>
 
   <section>
     <h2>Rail / mini mode</h2>
-    <p>Add <code>.is-collapsed</code> to the <code>.sidebar</code> to shrink it down to icons only. Each <code>.sidebar-item-button</code> becomes a square with its icon centered. Labels, submenus, and chevrons fade out. Wrap label text in a <code>&lt;span&gt;</code> so it can be hidden with CSS. Bare text nodes cannot be targeted directly; the button's <code>overflow: hidden</code> still clips them as a fallback, but a span is cleaner.</p>
-    <p>The button size follows the sidebar size modifiers like <code>.sidebar-sm</code> and <code>.sidebar-lg</code>. The panel's <code>width</code> is still your layout's job. Match it to the item size for a clean fit. Stisla v3 does not include a sidebar toggle script, so you wire that up yourself. See the next section for a working example.</p>
+    <p>Add <code>.is-collapsed</code> to the panel to shrink it to icons only. Each button becomes a square with its icon centered. Labels, submenus, and chevrons fade out coordinated with whatever width transition your layout runs. Wrap label text in a <code>&lt;span&gt;</code> so it can be hidden cleanly — bare text nodes get clipped as a fallback but produce a less smooth transition.</p>
+    <p>The button size follows <code>.sidebar--sm</code> and <code>.sidebar--lg</code>. The panel <code>width</code> is the layout's job — match it to the button size for a clean square cell. The rail width recipe is <code>button-height + 2 × --sidebar-padding-x</code>, which gives 4rem (sm), 4.25rem (default), 4.5rem (lg) at density 1.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-3 align-items-start">
-      <aside class="sidebar sidebar-sm is-collapsed border rounded-4" style="width: calc(4rem + 2px); --bs-sidebar-bg: var(--bs-surface);">
-        <header class="sidebar-header">
-          <a class="sidebar-logo" href="#" aria-label="Stisla"><i data-lucide="hexagon"></i><span>Stisla</span></a>
+    <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-start;">
+      <aside class="sidebar sidebar--sm is-collapsed" style="width: 4rem; border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
+        <header class="sidebar__header">
+          <a class="sidebar__brand" href="#" aria-label="Stisla"><i data-lucide="hexagon"></i><span>Stisla</span></a>
         </header>
-        <div class="sidebar-content">
-          <nav class="sidebar-menu">
-            <div class="sidebar-group">
-              <ul class="sidebar-list">
-                <li class="sidebar-item"><a class="sidebar-item-button" href="#" aria-current="page"><i data-lucide="home"></i><span>Dashboard</span></a></li>
-                <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="inbox"></i><span>Inbox</span></a></li>
-                <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="users"></i><span>Customers</span></a></li>
-                <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="settings"></i><span>Settings</span></a></li>
+        <div class="sidebar__content">
+          <nav class="sidebar__menu">
+            <div class="sidebar__group">
+              <ul class="sidebar__list">
+                <li class="sidebar__item"><a class="sidebar__button" href="#" aria-current="page"><i data-lucide="home"></i><span>Dashboard</span></a></li>
+                <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="inbox"></i><span>Inbox</span></a></li>
+                <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="users"></i><span>Customers</span></a></li>
+                <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="settings"></i><span>Settings</span></a></li>
               </ul>
             </div>
           </nav>
         </div>
       </aside>
 
-      <aside class="sidebar is-collapsed border rounded-4" style="width: calc(4.25rem + 2px); --bs-sidebar-bg: var(--bs-surface);">
-        <header class="sidebar-header">
-          <a class="sidebar-logo" href="#" aria-label="Stisla"><i data-lucide="hexagon"></i><span>Stisla</span></a>
+      <aside class="sidebar is-collapsed" style="width: 4.25rem; border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
+        <header class="sidebar__header">
+          <a class="sidebar__brand" href="#" aria-label="Stisla"><i data-lucide="hexagon"></i><span>Stisla</span></a>
         </header>
-        <div class="sidebar-content">
-          <nav class="sidebar-menu">
-            <div class="sidebar-group">
-              <ul class="sidebar-list">
-                <li class="sidebar-item"><a class="sidebar-item-button" href="#" aria-current="page"><i data-lucide="home"></i><span>Dashboard</span></a></li>
-                <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="inbox"></i><span>Inbox</span></a></li>
-                <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="users"></i><span>Customers</span></a></li>
-                <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="settings"></i><span>Settings</span></a></li>
+        <div class="sidebar__content">
+          <nav class="sidebar__menu">
+            <div class="sidebar__group">
+              <ul class="sidebar__list">
+                <li class="sidebar__item"><a class="sidebar__button" href="#" aria-current="page"><i data-lucide="home"></i><span>Dashboard</span></a></li>
+                <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="inbox"></i><span>Inbox</span></a></li>
+                <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="users"></i><span>Customers</span></a></li>
+                <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="settings"></i><span>Settings</span></a></li>
               </ul>
             </div>
           </nav>
         </div>
       </aside>
 
-      <aside class="sidebar sidebar-lg is-collapsed border rounded-4" style="width: calc(4.5rem + 2px); --bs-sidebar-bg: var(--bs-surface);">
-        <header class="sidebar-header">
-          <a class="sidebar-logo" href="#" aria-label="Stisla"><i data-lucide="hexagon"></i><span>Stisla</span></a>
+      <aside class="sidebar sidebar--lg is-collapsed" style="width: 4.5rem; border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
+        <header class="sidebar__header">
+          <a class="sidebar__brand" href="#" aria-label="Stisla"><i data-lucide="hexagon"></i><span>Stisla</span></a>
         </header>
-        <div class="sidebar-content">
-          <nav class="sidebar-menu">
-            <div class="sidebar-group">
-              <ul class="sidebar-list">
-                <li class="sidebar-item"><a class="sidebar-item-button" href="#" aria-current="page"><i data-lucide="home"></i><span>Dashboard</span></a></li>
-                <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="inbox"></i><span>Inbox</span></a></li>
-                <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="users"></i><span>Customers</span></a></li>
-                <li class="sidebar-item"><a class="sidebar-item-button" href="#"><i data-lucide="settings"></i><span>Settings</span></a></li>
+        <div class="sidebar__content">
+          <nav class="sidebar__menu">
+            <div class="sidebar__group">
+              <ul class="sidebar__list">
+                <li class="sidebar__item"><a class="sidebar__button" href="#" aria-current="page"><i data-lucide="home"></i><span>Dashboard</span></a></li>
+                <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="inbox"></i><span>Inbox</span></a></li>
+                <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="users"></i><span>Customers</span></a></li>
+                <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="settings"></i><span>Settings</span></a></li>
               </ul>
             </div>
           </nav>
@@ -454,102 +452,98 @@
 
   <section>
     <h2>Toggle with JS</h2>
-    <p>Stisla v3 does not include a sidebar toggle script, so you wire it up in your layout. Below is a small working example: one button, one class toggle, and one inline <code>transition</code> for the width slide. Copy it into your page and adjust to taste.</p>
+    <p>For a sidebar inside an <code>.app-shell</code>, a button with <code>data-app-shell-toggle="collapse"</code> handles the rail toggle automatically — it flips <code>.is-sidebar-collapsed</code> on the shell and <code>.is-collapsed</code> on the descendant sidebar in one click. For a standalone sidebar, the example below wires the toggle yourself: one class flip, one width change, no JS dependencies beyond what the framework ships.</p>
     {% call ui.demo() %}
-    <aside id="demo-toggleable-sidebar" class="sidebar position-absolute start-0 top-0 h-100" style="width: 18rem; transition: width 0.3s ease; --bs-sidebar-bg: var(--bs-surface);">
-      <header class="sidebar-header">
-        <a class="sidebar-logo" href="#">
+    <aside id="demo-toggleable-sidebar" class="sidebar" style="position: absolute; inset: 0 auto 0 0; width: 18rem; transition: width 0.3s ease; border-right: 1px solid var(--st-border); --sidebar-bg: var(--st-surface);">
+      <header class="sidebar__header">
+        <a class="sidebar__brand" href="#">
           <i data-lucide="hexagon"></i>
           <span>Acme</span>
         </a>
       </header>
-      <div class="sidebar-content">
-        <nav class="sidebar-menu">
+      <div class="sidebar__content">
+        <nav class="sidebar__menu">
 
-          <div class="sidebar-group">
-            <span class="sidebar-group-title">Workspace</span>
-            <div class="sidebar-group-action">
-              <button type="button" class="btn btn-ghost-secondary" aria-label="Add workspace">
+          <div class="sidebar__group">
+            <span class="sidebar__group-title">Workspace</span>
+            <div class="sidebar__group-action">
+              <button type="button" class="btn btn--ghost btn--neutral btn--icon-only" aria-label="Add workspace">
                 <i data-lucide="plus"></i>
               </button>
             </div>
-            <ul class="sidebar-list">
-              <li class="sidebar-item">
-                <a class="sidebar-item-button" href="#" aria-current="page">
+            <ul class="sidebar__list">
+              <li class="sidebar__item">
+                <a class="sidebar__button" href="#" aria-current="page">
                   <i data-lucide="home"></i><span>Dashboard</span>
                 </a>
               </li>
-              <li class="sidebar-item">
-                <button type="button" class="sidebar-item-button" data-bs-toggle="collapse" data-bs-target="#demo-toggleable-analytics" aria-expanded="true" aria-controls="demo-toggleable-analytics">
+              <li class="sidebar__item" data-state="open">
+                <button type="button" class="sidebar__button" data-sidebar-submenu-toggle aria-expanded="true" aria-controls="demo-toggleable-analytics">
                   <i data-lucide="bar-chart-3"></i><span>Analytics</span>
                 </button>
-                <div class="collapse show" id="demo-toggleable-analytics">
-                  <div class="sidebar-submenu">
-                    <ul class="sidebar-list">
-                      <li class="sidebar-item"><a class="sidebar-item-button" href="#"><span>Sales</span></a></li>
-                      <li class="sidebar-item"><a class="sidebar-item-button" href="#"><span>Traffic</span></a></li>
-                      <li class="sidebar-item"><a class="sidebar-item-button" href="#"><span>Conversion</span></a></li>
-                    </ul>
-                  </div>
+                <div class="sidebar__submenu" id="demo-toggleable-analytics">
+                  <ul class="sidebar__list">
+                    <li class="sidebar__item"><a class="sidebar__button" href="#"><span>Sales</span></a></li>
+                    <li class="sidebar__item"><a class="sidebar__button" href="#"><span>Traffic</span></a></li>
+                    <li class="sidebar__item"><a class="sidebar__button" href="#"><span>Conversion</span></a></li>
+                  </ul>
                 </div>
               </li>
-              <li class="sidebar-item">
-                <a class="sidebar-item-button" href="#">
+              <li class="sidebar__item">
+                <a class="sidebar__button" href="#">
                   <i data-lucide="inbox"></i><span>Inbox</span>
                 </a>
-                <span class="sidebar-item-action">
-                  <span class="badge text-bg-primary">12</span>
+                <span class="sidebar__item-action">
+                  <span class="badge badge--primary">12</span>
                 </span>
               </li>
             </ul>
           </div>
 
-          <div class="sidebar-group">
-            <span class="sidebar-group-title">Library</span>
-            <ul class="sidebar-list">
-              <li class="sidebar-item">
-                <a class="sidebar-item-button" href="#">
+          <div class="sidebar__group">
+            <span class="sidebar__group-title">Library</span>
+            <ul class="sidebar__list">
+              <li class="sidebar__item">
+                <a class="sidebar__button" href="#">
                   <i data-lucide="folder"></i><span>Documents</span>
                 </a>
               </li>
-              <li class="sidebar-item">
-                <a class="sidebar-item-button" href="#">
+              <li class="sidebar__item">
+                <a class="sidebar__button" href="#">
                   <i data-lucide="folder-open"></i><span>Projects</span>
                 </a>
-                <span class="sidebar-item-action sidebar-item-action-hover">
-                  <button type="button" class="btn btn-ghost-secondary" aria-label="More">
+                <span class="sidebar__item-action sidebar__item-action--reveal">
+                  <button type="button" class="btn btn--ghost btn--neutral btn--icon-only" aria-label="More">
                     <i data-lucide="more-horizontal"></i>
                   </button>
                 </span>
               </li>
-              <li class="sidebar-item">
-                <a class="sidebar-item-button" href="#">
+              <li class="sidebar__item">
+                <a class="sidebar__button" href="#">
                   <i data-lucide="layout-template"></i><span>Templates</span>
                 </a>
               </li>
             </ul>
           </div>
 
-          <div class="sidebar-group">
-            <span class="sidebar-group-title">Team</span>
-            <ul class="sidebar-list">
-              <li class="sidebar-item">
-                <a class="sidebar-item-button" href="#">
+          <div class="sidebar__group">
+            <span class="sidebar__group-title">Team</span>
+            <ul class="sidebar__list">
+              <li class="sidebar__item">
+                <a class="sidebar__button" href="#">
                   <i data-lucide="users"></i><span>Members</span>
                 </a>
               </li>
-              <li class="sidebar-item">
-                <button type="button" class="sidebar-item-button" data-bs-toggle="collapse" data-bs-target="#demo-toggleable-settings" aria-expanded="false" aria-controls="demo-toggleable-settings">
+              <li class="sidebar__item" data-state="closed">
+                <button type="button" class="sidebar__button" data-sidebar-submenu-toggle aria-expanded="false" aria-controls="demo-toggleable-settings">
                   <i data-lucide="settings"></i><span>Settings</span>
                 </button>
-                <div class="collapse" id="demo-toggleable-settings">
-                  <div class="sidebar-submenu">
-                    <ul class="sidebar-list">
-                      <li class="sidebar-item"><a class="sidebar-item-button" href="#"><span>General</span></a></li>
-                      <li class="sidebar-item"><a class="sidebar-item-button" href="#"><span>Profile</span></a></li>
-                      <li class="sidebar-item"><a class="sidebar-item-button" href="#"><span>Billing</span></a></li>
-                    </ul>
-                  </div>
+                <div class="sidebar__submenu" id="demo-toggleable-settings">
+                  <ul class="sidebar__list">
+                    <li class="sidebar__item"><a class="sidebar__button" href="#"><span>General</span></a></li>
+                    <li class="sidebar__item"><a class="sidebar__button" href="#"><span>Profile</span></a></li>
+                    <li class="sidebar__item"><a class="sidebar__button" href="#"><span>Billing</span></a></li>
+                  </ul>
                 </div>
               </li>
             </ul>
@@ -557,15 +551,15 @@
 
         </nav>
       </div>
-      <footer class="sidebar-footer">
-        <ul class="sidebar-list">
-          <li class="sidebar-item">
-            <a class="sidebar-item-button" href="#">
+      <footer class="sidebar__footer">
+        <ul class="sidebar__list">
+          <li class="sidebar__item">
+            <a class="sidebar__button" href="#">
               <i data-lucide="life-buoy"></i><span>Help &amp; support</span>
             </a>
           </li>
-          <li class="sidebar-item">
-            <button type="button" id="demo-toggleable-sidebar-trigger" class="sidebar-item-button" aria-controls="demo-toggleable-sidebar" aria-expanded="true">
+          <li class="sidebar__item">
+            <button type="button" id="demo-toggleable-sidebar-trigger" class="sidebar__button" aria-controls="demo-toggleable-sidebar" aria-expanded="true">
               <i data-lucide="panel-left-close"></i><span>Collapse</span>
             </button>
           </li>
@@ -579,13 +573,6 @@
         const trigger = document.getElementById('demo-toggleable-sidebar-trigger');
         trigger.addEventListener('click', () => {
           const willCollapse = !sidebar.classList.contains('is-collapsed');
-          if (willCollapse) {
-            // Close any open submenus first so they animate shut alongside
-            // the width slide instead of snapping to display:none mid-collapse.
-            sidebar.querySelectorAll('.collapse.show').forEach((el) => {
-              Stisla.bs.Collapse.getOrCreateInstance(el).hide();
-            });
-          }
           sidebar.classList.toggle('is-collapsed');
           sidebar.style.width = willCollapse ? '4.25rem' : '18rem';
           trigger.setAttribute('aria-expanded', willCollapse ? 'false' : 'true');
@@ -593,11 +580,261 @@
       })();
     </script>
     {% endcall %}
-    <p>That is the whole script. From here you can persist the state to <code>localStorage</code>, swap the icon, animate the icon flip, move the trigger to a topbar button, reopen submenus when expanding, and so on. The script also closes any open submenus before collapsing the sidebar. It uses Bootstrap 5's <code>Collapse</code> API (<code>Stisla.bs.Collapse</code> when you load Stisla's bundle, <code>bootstrap.Collapse</code> if you import Bootstrap separately) so the submenu height animation runs alongside the width slide. Without that step, the <code>display: none</code> on collapsed submenus would snap them shut instead of animating.</p>
+    <p>That's the whole script: one class toggle, one width change. The submenu's <code>display: none</code> in <code>.is-collapsed</code> already hides any open submenus during the rail transition. Persist the state to <code>localStorage</code>, swap the icon, or move the trigger to a topbar button by adapting the same pattern.</p>
   </section>
 
   <section>
-    <h2>Dark mode</h2>
-    <p>Item hover and active surfaces tint <code>--bs-emphasis-color-rgb</code>. Bootstrap 5 flips that value in dark mode automatically, so the sidebar follows the theme without a separate dark stylesheet.</p>
+    <h2>Customization</h2>
+    <p>Twenty-nine variables retune <code>.sidebar</code> without touching component CSS. Override on the panel, a parent scope, or <code>:root</code>. Density-tuned values multiply <code>--st-density</code> automatically.</p>
+
+    <h3>Shell</h3>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--sidebar-bg</code></td>
+            <td>transparent</td>
+            <td>Panel background</td>
+          </tr>
+          <tr>
+            <td><code>--sidebar-color</code></td>
+            <td>var(--st-foreground)</td>
+            <td>Panel foreground (brand + buttons inherit)</td>
+          </tr>
+          <tr>
+            <td><code>--sidebar-padding-y</code></td>
+            <td>calc(1rem * var(--st-density))</td>
+            <td>Top + bottom padding on header / footer</td>
+          </tr>
+          <tr>
+            <td><code>--sidebar-padding-x</code></td>
+            <td>calc(1rem * var(--st-density))</td>
+            <td>Panel outer gutter — feeds the rail-width recipe</td>
+          </tr>
+          <tr>
+            <td><code>--sidebar-gap</code></td>
+            <td>calc(0.75rem * var(--st-density))</td>
+            <td>Space between header, content, footer</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Brand</h3>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--sidebar-brand-color</code></td>
+            <td>var(--sidebar-color)</td>
+            <td>Brand text color</td>
+          </tr>
+          <tr>
+            <td><code>--sidebar-brand-icon-size</code></td>
+            <td>1.5rem</td>
+            <td>Brand icon dimensions; load-bearing for rail re-center math</td>
+          </tr>
+          <tr>
+            <td><code>--sidebar-brand-gap</code></td>
+            <td>0.625rem</td>
+            <td>Space between brand icon and wordmark</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Button (item)</h3>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--sidebar-button-height</code></td>
+            <td>2.25rem</td>
+            <td>Hard height; multiplied by <code>--st-density</code></td>
+          </tr>
+          <tr>
+            <td><code>--sidebar-button-padding-x</code></td>
+            <td>calc(0.75rem * var(--st-density))</td>
+            <td>Horizontal inset</td>
+          </tr>
+          <tr>
+            <td><code>--sidebar-button-radius</code></td>
+            <td>var(--st-radius-sm)</td>
+            <td>Corner radius</td>
+          </tr>
+          <tr>
+            <td><code>--sidebar-button-gap</code></td>
+            <td>calc(0.625rem * var(--st-density))</td>
+            <td>Space between icon and label</td>
+          </tr>
+          <tr>
+            <td><code>--sidebar-button-font-weight</code></td>
+            <td>500</td>
+            <td>Label weight</td>
+          </tr>
+          <tr>
+            <td><code>--sidebar-button-color</code></td>
+            <td>var(--sidebar-color)</td>
+            <td>Rest text color</td>
+          </tr>
+          <tr>
+            <td><code>--sidebar-button-hover-bg</code></td>
+            <td>var(--st-accent)</td>
+            <td>Hover chip fill</td>
+          </tr>
+          <tr>
+            <td><code>--sidebar-button-hover-color</code></td>
+            <td>var(--st-accent-foreground)</td>
+            <td>Hover text color</td>
+          </tr>
+          <tr>
+            <td><code>--sidebar-button-active-bg</code></td>
+            <td>var(--st-highlight)</td>
+            <td>Active chip fill (aria-current="page" or data-state="active")</td>
+          </tr>
+          <tr>
+            <td><code>--sidebar-button-active-color</code></td>
+            <td>var(--st-highlight-foreground)</td>
+            <td>Active text color</td>
+          </tr>
+          <tr>
+            <td><code>--sidebar-button-icon-size</code></td>
+            <td>1.125rem</td>
+            <td>Icon dimensions; load-bearing for rail recipe + chevron</td>
+          </tr>
+          <tr>
+            <td><code>--sidebar-button-icon-color</code></td>
+            <td>var(--st-muted-foreground)</td>
+            <td>Icon color (constant across rest / hover / active)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Item action</h3>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--sidebar-item-action-size</code></td>
+            <td>1.5rem</td>
+            <td>Right-edge slot reserved size — also the dimensions of any <code>.btn</code> inside</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Group</h3>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--sidebar-group-gap</code></td>
+            <td>calc(0.75rem * var(--st-density))</td>
+            <td>Space between groups in the menu</td>
+          </tr>
+          <tr>
+            <td><code>--sidebar-group-title-font-size</code></td>
+            <td>0.75rem</td>
+            <td>Caption text size</td>
+          </tr>
+          <tr>
+            <td><code>--sidebar-group-title-font-weight</code></td>
+            <td>600</td>
+            <td>Caption weight</td>
+          </tr>
+          <tr>
+            <td><code>--sidebar-group-title-color</code></td>
+            <td>var(--st-muted-foreground)</td>
+            <td>Caption color (also tints <code>.sidebar__group-action</code>)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Submenu</h3>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--sidebar-submenu-border-color</code></td>
+            <td>var(--st-border)</td>
+            <td>Guide-line color</td>
+          </tr>
+          <tr>
+            <td><code>--sidebar-submenu-padding-start</code></td>
+            <td>0.625rem</td>
+            <td>Space between the guide line and submenu rows</td>
+          </tr>
+          <tr>
+            <td><code>--sidebar-submenu-margin-start</code></td>
+            <td>calc(button-padding-x + button-icon-size / 2)</td>
+            <td>Inset from the panel edge; aligns the guide line with the parent icon's center axis</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Motion</h3>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--sidebar-transition</code></td>
+            <td>0.3s ease</td>
+            <td>Rail-mode soft-hide transition; zeroed under <code>prefers-reduced-motion</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 {% endblock %}

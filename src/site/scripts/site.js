@@ -7,7 +7,7 @@
 (function markActiveSidebarItem() {
   const here = window.location.pathname.replace(/\/$/, "") || "/";
   document
-    .querySelectorAll(".site-sidebar a.sidebar-item-button")
+    .querySelectorAll(".site-sidebar a.sidebar__button")
     .forEach((link) => {
       const href = (link.getAttribute("href") || "").replace(/\/$/, "") || "/";
       if (href === here) link.setAttribute("aria-current", "page");
