@@ -73,6 +73,9 @@
   // === Focus ===========================================================
   --list-group-ring: var(--st-ring);
 
+  // === Motion ==========================================================
+  --list-group-transition: background-color .12s ease, color .12s ease;
+
   display: flex;
   flex-direction: column;
   background-color: var(--list-group-bg);
@@ -102,6 +105,10 @@
   // Local stacking context — needed so a focus halo (z-index: 1 below)
   // sits above neighbor row backgrounds without jumping out of the frame.
   position: relative;
+  // Smooth hover + selection transitions. Tracks the .btn / .form-control
+  // baseline (.12s ease). Zeroed under reduced-motion at the bottom of
+  // this file.
+  transition: var(--list-group-transition);
 
   &:first-child { border-top: 0; }
 }
@@ -120,8 +127,13 @@ button.list-group__item {
   text-decoration: none;
 }
 
-a.list-group__item:hover,
-button.list-group__item:hover {
+// Hover only fires on a quiet row — an already-selected or disabled row
+// must not flash the accent surface. :not() with a selector-list keeps
+// the rule explicit and avoids a specificity puzzle (the active rule
+// below has lower specificity than `a.list-group__item:hover` since
+// the type selector tips the balance toward hover).
+a.list-group__item:hover:not([data-state="active"], [aria-current="page"], [aria-current="true"], [aria-disabled="true"]),
+button.list-group__item:hover:not([data-state="active"], [aria-current="page"], [aria-current="true"], [aria-disabled="true"]):not(:disabled) {
   background-color: var(--list-group-item-hover-bg);
   color: var(--list-group-item-hover-color);
 }
@@ -137,8 +149,8 @@ button.list-group__item:focus-visible {
 }
 
 // === Selection states (V3.md §3.6) ====================================
-// Source-order beats the :hover rule above via specificity (0,2,0 vs
-// 0,1,2): hover on an already-active row keeps the highlight tier.
+// The hover rule above carves these states out via :not(), so an active
+// row stays on the highlight tier even under cursor.
 
 .list-group__item[data-state="active"],
 .list-group__item[aria-current="page"],
@@ -262,3 +274,12 @@ button.list-group__item:focus-visible {
 
 .card > .list-group:first-child { border-top-width: 0; }
 .card > .list-group:last-child  { border-bottom-width: 0; }
+
+// === Reduced motion ===================================================
+// Zero the row transition. Honors the user-agent's accessibility setting
+// across browsers (V3.md cross-browser commitments).
+@media (prefers-reduced-motion: reduce) {
+  .list-group__item {
+    transition: none;
+  }
+}
