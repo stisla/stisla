@@ -60,12 +60,14 @@
     <p>
       All visual decisions live in 30 <code>--st-*</code> tokens. Set one or
       more at <code>:root</code> and every component picks up the change.
-      Scope them to a wrapper to theme one subtree.
+      Scope them to a wrapper to theme one subtree — components inside
+      read their tokens via <code>var()</code>, so they pick up whatever
+      values are in scope without rebuilding.
     </p>
     <p>
-      Each preset below applies a few overrides via an inline
-      <code>style</code> attribute on the section wrapper. The component
-      markup is identical in every preset.
+      Each preset below applies overrides via an inline <code>style</code>
+      attribute on the section wrapper. The component markup is identical
+      in every preset.
     </p>
   </section>
 
@@ -128,11 +130,54 @@
   <section>
     <h2>Warm neutrals</h2>
     <p>
-      <code>--st-base</code> is a hue number, not a color. Every neutral
-      tracks it, so one knob retints the whole gray ramp warm.
+      Default neutrals ship as pure gray. To retint, override the nine
+      neutral tokens on a wrapper. Components inside read those tokens via
+      <code>var()</code> and pick up the new values automatically. Intents
+      (primary, success, warning, danger, info) stay vivid at their
+      authored values — only the neutral tier shifts.
     </p>
     {% call ui.demo() %}
-    <div style="--st-base: 30;">
+    <div style="
+      --st-background:       oklch(0.97  0.018 30);
+      --st-foreground:       oklch(0.27  0.018 30);
+      --st-surface:          oklch(0.985 0.012 30);
+      --st-surface-2:        oklch(0.95  0.025 30);
+      --st-surface-3:        oklch(0.92  0.030 30);
+      --st-border:           oklch(0.88  0.028 30);
+      --st-muted-foreground: oklch(0.52  0.060 30);
+      --st-neutral:          oklch(0.90  0.022 30);
+      --st-accent:           oklch(0.96  0.018 30);
+      background: var(--st-background);
+      padding: 1.5rem;
+      border-radius: var(--st-radius);
+    ">
+      {{ showcase() }}
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Cool neutrals</h2>
+    <p>
+      Same shape, different hue. Swap <code>30</code> for <code>240</code>
+      in each OKLCH literal. Any hue 0–360 works — match it to the brand
+      color (or anything else) and the whole UI follows.
+    </p>
+    {% call ui.demo() %}
+    <div style="
+      --st-background:       oklch(0.97  0.018 240);
+      --st-foreground:       oklch(0.27  0.018 240);
+      --st-surface:          oklch(0.985 0.012 240);
+      --st-surface-2:        oklch(0.95  0.025 240);
+      --st-surface-3:        oklch(0.92  0.030 240);
+      --st-border:           oklch(0.88  0.028 240);
+      --st-muted-foreground: oklch(0.52  0.060 240);
+      --st-neutral:          oklch(0.90  0.022 240);
+      --st-accent:           oklch(0.96  0.018 240);
+      background: var(--st-background);
+      padding: 1.5rem;
+      border-radius: var(--st-radius);
+    ">
       {{ showcase() }}
     </div>
     {% endcall %}

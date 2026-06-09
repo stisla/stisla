@@ -1,6 +1,6 @@
 // Stisla v3 — design tokens.
 //
-// The entire public customization API. 28 --st-* tokens. All values
+// The entire public customization API. 30 --st-* tokens. All values
 // authored as OKLCH literals; this is the only file in the codebase
 // with literal color values. No Sass color ramps. No --bs-*.
 //
@@ -8,42 +8,45 @@
 // paired -foreground. Without it, hardcoding `color: #fff` on
 // .btn--primary breaks the moment someone overrides --st-primary.
 //
-// Hue lock (V3.md §3.2): --st-base is a hue number (0–360), not a
-// color. Neutrals are oklch(L C var(--st-base)) so swapping --st-base
-// re-tints the whole gray ramp from one knob. Intents are independent.
+// Customization model: every token is a literal OKLCH value. To retint
+// — for a wrapper, a page, or globally — override the relevant tokens
+// in a parent scope. Inline style, a class, a `[data-theme="X"]` block,
+// whatever. Components inherit via `var()` and re-render against the
+// new values automatically. No runtime math, no calc() chains; the
+// math happens once at authoring time (or in a future theme generator)
+// and ships as the OKLCH numbers below.
 //
 // Dark mode (V3.md §3.8): the color-mode mixin emits
 // [data-theme="dark"], .dark — both selectors share the dark block.
 
 :root {
   // === Intent (10) — 5 pairs ============================================
-  // Shared across light + dark. Foregrounds flip per-intent per the
-  // pairing rule; --st-warning-foreground stays dark in both themes
-  // (V3.md §3.8 asymmetry note: yellow stays yellow, text on it stays
-  // dark regardless of theme).
+  // Foregrounds flip per-intent per the pairing rule;
+  // --st-warning-foreground stays dark in both themes (V3.md §3.8
+  // asymmetry note: yellow stays yellow, text on it stays dark
+  // regardless of mode).
   --st-primary: oklch(0.639 0.1844 257.69);
   --st-primary-foreground: oklch(1 0 0);
   --st-success: oklch(0.6966 0.1853 149.54);
   --st-success-foreground: oklch(1 0 0);
   --st-warning: oklch(0.7697 0.1645 70.61);
-  --st-warning-foreground: oklch(0.27 0.015 var(--st-base));
+  --st-warning-foreground: oklch(0.27 0 0);
   --st-danger: oklch(0.6155 0.2229 26.82);
   --st-danger-foreground: oklch(1 0 0);
   --st-info: oklch(0.677589 0.148143 238.1044);
   --st-info-foreground: oklch(1 0 0);
 
-  // === Surface tier (8) =================================================
-  // --st-base is the hue every neutral tracks. 258 = the primary blue's
-  // own hue, so the neutrals read cool against the brand. Bump to 30
-  // for warm-tinted neutrals (preset on the customization page).
-  --st-base: 258;
-  --st-background: oklch(1 0 0);
-  --st-foreground: oklch(0.27 0.015 var(--st-base));
-  --st-surface: oklch(1 0 0);
-  --st-surface-2: oklch(0.98 0.003 var(--st-base));
-  --st-surface-3: oklch(0.97 0.005 var(--st-base));
-  --st-border: oklch(0.93 0.005 var(--st-base));
-  --st-muted-foreground: oklch(0.52 0.04 var(--st-base));
+  // === Surface tier (7) =================================================
+  // Default neutrals are pure gray — no warm/cool bias. Retint by
+  // overriding these tokens in a parent scope (see customization page
+  // for the warm/cool wrapper examples).
+  --st-background:       oklch(1    0 0);
+  --st-foreground:       oklch(0.27 0 0);
+  --st-surface:          oklch(1    0 0);
+  --st-surface-2:        oklch(0.98 0 0);
+  --st-surface-3:        oklch(0.97 0 0);
+  --st-border:           oklch(0.93 0 0);
+  --st-muted-foreground: oklch(0.52 0 0);
 
   // === Interactional (6) — 3 pairs ======================================
   // Neutral   = rest bg for filled-neutral elements (.btn--neutral, kbd,
@@ -52,10 +55,10 @@
   // Highlight = persistent selected/current bg (soft primary tint).
   // Rest → hover → selected progression for neutral surfaces.
   // See V3.md §3.2 table for component-by-component application.
-  --st-neutral: oklch(0.91 0.005 var(--st-base));
+  --st-neutral:            oklch(0.91 0 0);
   --st-neutral-foreground: var(--st-foreground);
-  --st-accent: oklch(0.96 0.005 var(--st-base));
-  --st-accent-foreground: var(--st-foreground);
+  --st-accent:             oklch(0.96 0 0);
+  --st-accent-foreground:  var(--st-foreground);
   --st-highlight: color-mix(in oklch, var(--st-primary) 12%, transparent);
   --st-highlight-foreground: var(--st-primary);
 
@@ -88,20 +91,20 @@
     "Liberation Mono", monospace;
 }
 
-// Dark mode. Intents stay put; only the surface tier and the accent
-// pair flip. Foregrounds with `var(--st-foreground)` cascade for free
-// once --st-foreground swaps here.
+// Dark mode. Intents stay put; the surface + interactional tiers flip.
+// Default dark neutrals are also pure gray (no hue bias); override in a
+// parent scope to retint.
 @include color-mode(dark) {
-  --st-background: oklch(0.1548 0.005 var(--st-base));
-  --st-foreground: oklch(0.97 0.01 var(--st-base));
-  --st-surface: oklch(0.18 0.005 var(--st-base));
-  --st-surface-2: oklch(0.21 0.005 var(--st-base));
-  --st-surface-3: oklch(0.23 0.008 var(--st-base));
-  --st-border: oklch(0.27 0.012 var(--st-base));
-  --st-muted-foreground: oklch(0.72 0.02 var(--st-base));
+  --st-background:       oklch(0.155 0 0);
+  --st-foreground:       oklch(0.97  0 0);
+  --st-surface:          oklch(0.18  0 0);
+  --st-surface-2:        oklch(0.21  0 0);
+  --st-surface-3:        oklch(0.23  0 0);
+  --st-border:           oklch(0.27  0 0);
+  --st-muted-foreground: oklch(0.72  0 0);
 
-  --st-neutral: oklch(0.27 0.008 var(--st-base));
-  --st-accent: oklch(0.26 0.008 var(--st-base));
+  --st-neutral: oklch(0.27 0 0);
+  --st-accent:  oklch(0.26 0 0);
   // --st-neutral-foreground / --st-accent-foreground track var(--st-foreground);
   // no override needed.
 }
