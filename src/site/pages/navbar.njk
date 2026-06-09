@@ -56,29 +56,6 @@
   </section>
 
   <section>
-    <h2>With search</h2>
-    <p>Above the collapse breakpoint, the nav grabs the leading edge so any sibling element inside <code>.navbar__menu</code> falls on the trailing edge. Drop a <code>&lt;form&gt;</code> after the nav for a search row.</p>
-    {% call ui.demo() %}
-    <nav class="navbar" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); width: 100%;">
-      <a class="navbar__brand" href="#">Acme</a>
-      <button type="button" class="navbar__toggle" data-navbar-toggle aria-controls="navbarSearch" aria-expanded="false" aria-label="Toggle navigation">
-        <i data-lucide="menu"></i>
-      </button>
-      <div class="navbar__menu" id="navbarSearch" data-state="closed">
-        <ul class="navbar__nav">
-          <li><a class="navbar__link" data-state="active" aria-current="page" href="#">Home</a></li>
-          <li><a class="navbar__link" href="#">Features</a></li>
-        </ul>
-        <form role="search" style="display: flex; gap: 0.5rem;">
-          <input class="form-control form-control--sm" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn--primary btn--sm" type="submit">Search</button>
-        </form>
-      </div>
-    </nav>
-    {% endcall %}
-  </section>
-
-  <section>
     <h2>With status text</h2>
     <p>Drop any element inside <code>.navbar__menu</code> for a trailing status pill, workspace name, or counter. Without a nav before it, push the element to the trailing edge with <code>margin-inline-start: auto</code>.</p>
     {% call ui.demo() %}
@@ -126,7 +103,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Sixteen variables retune <code>.navbar</code> without touching component CSS. Override on the <code>.navbar</code> itself, on a parent scope, or on <code>:root</code>.</p>
+    <p>Seventeen variables retune <code>.navbar</code> without touching component CSS. Override on the <code>.navbar</code> itself, on a parent scope, or on <code>:root</code>.</p>
 
     <h3>Layout</h3>
     <div class="prose">
@@ -188,6 +165,11 @@
             <td><code>--navbar-link-padding-x</code></td>
             <td>calc(0.75rem * var(--st-density))</td>
             <td>Horizontal chip padding</td>
+          </tr>
+          <tr>
+            <td><code>--navbar-brand-padding-x</code></td>
+            <td>var(--navbar-link-padding-x)</td>
+            <td>Horizontal padding on <code>.navbar__brand</code>; defaults to the link chip's inset so brand text sits on the same x-grid as link text. Override to <code>0</code> for a flush brand.</td>
           </tr>
           <tr>
             <td><code>--navbar-link-gap</code></td>
