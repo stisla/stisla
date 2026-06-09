@@ -39,7 +39,7 @@
 // Order preserves the Step 1 sequence so re-enabling is mechanical.
 @layer components {
   @import '../components/kbd';
-  // @import '../components/table';
+  @import '../components/table';
   @import '../components/form-control';
   @import '../components/form-check';
   @import '../components/switch';
