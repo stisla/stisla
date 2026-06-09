@@ -291,6 +291,9 @@ body {
   flex-shrink: 0;
   width: 16rem;
   height: 100vh;
+  .sidebar__button {
+    width: auto;
+  }
 }
 
 .site-main {

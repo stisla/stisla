@@ -10,10 +10,6 @@
   </header>
 
   <section>
-    <p>A <code>.sidebar</code> wraps an optional <code>.sidebar__header</code>, a <code>.sidebar__content</code>, and an optional <code>.sidebar__footer</code>. Items live inside <code>.sidebar__menu</code>, which holds one or more <code>.sidebar__group</code>, each with a <code>.sidebar__list</code> of <code>.sidebar__item</code> rows. The primary click target on each row is a <code>.sidebar__button</code>.</p>
-  </section>
-
-  <section>
     <h2>Basic</h2>
     <p>One content slot, one group, one list. The current page is marked with <code>aria-current="page"</code> on the matching button.</p>
     {% call ui.demo() %}
@@ -331,7 +327,7 @@
 
   <section>
     <h2>Recolor</h2>
-    <p>Every visible part wires to a <code>--sidebar-*</code> CSS variable. Override on the panel itself, on a scoped class, or on <code>:root</code>. The example below tints the sidebar with the primary brand color; tokens that pair with it (<code>--st-primary-foreground</code>) keep contrast correct in both light and dark mode.</p>
+    <p>Every visible part wires to a <code>--sidebar-*</code> CSS variable. Override on the panel itself, on a scoped class, or on <code>:root</code>. The example below tints the sidebar with the primary brand color, paired with <code>--st-primary-foreground</code> for the chip text.</p>
     {% call ui.demo() %}
     <aside class="sidebar" style="
       width: 17rem;
@@ -390,10 +386,10 @@
   <section>
     <h2>Rail / mini mode</h2>
     <p>Add <code>.is-collapsed</code> to the panel to shrink it to icons only. Each button becomes a square with its icon centered. Labels, submenus, and chevrons fade out coordinated with whatever width transition your layout runs. Wrap label text in a <code>&lt;span&gt;</code> so it can be hidden cleanly — bare text nodes get clipped as a fallback but produce a less smooth transition.</p>
-    <p>The button size follows <code>.sidebar--sm</code> and <code>.sidebar--lg</code>. The panel <code>width</code> is the layout's job — match it to the button size for a clean square cell. The rail width recipe is <code>button-height + 2 × --sidebar-padding-x</code>, which gives 4rem (sm), 4.25rem (default), 4.5rem (lg) at density 1.</p>
+    <p>The button size follows <code>.sidebar--sm</code> and <code>.sidebar--lg</code>. The panel <code>width</code> is the layout's job — match it to the button size for a clean square cell. The recipe is <code>(button-height + 2 × --sidebar-padding-x) × --st-density</code>, which gives 4rem (sm), 4.25rem (default), 4.5rem (lg) at density 1, and scales proportionally at <code>0.875</code> or <code>1.125</code>. Add 2 × border-width on top when the panel carries a border (<code>box-sizing: border-box</code> trims the interior by the border, squeezing the icon cell); the demos below use <code>calc(4rem * var(--st-density) + 2px)</code> for a 1px border at the sm size.</p>
     {% call ui.demo() %}
     <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-start;">
-      <aside class="sidebar sidebar--sm is-collapsed" style="width: 4rem; border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
+      <aside class="sidebar sidebar--sm is-collapsed" style="width: calc(4rem * var(--st-density) + 2px); border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
         <header class="sidebar__header">
           <a class="sidebar__brand" href="#" aria-label="Stisla"><i data-lucide="hexagon"></i><span>Stisla</span></a>
         </header>
@@ -411,7 +407,7 @@
         </div>
       </aside>
 
-      <aside class="sidebar is-collapsed" style="width: 4.25rem; border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
+      <aside class="sidebar is-collapsed" style="width: calc(4.25rem * var(--st-density) + 2px); border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
         <header class="sidebar__header">
           <a class="sidebar__brand" href="#" aria-label="Stisla"><i data-lucide="hexagon"></i><span>Stisla</span></a>
         </header>
@@ -429,7 +425,7 @@
         </div>
       </aside>
 
-      <aside class="sidebar sidebar--lg is-collapsed" style="width: 4.5rem; border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
+      <aside class="sidebar sidebar--lg is-collapsed" style="width: calc(4.5rem * var(--st-density) + 2px); border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
         <header class="sidebar__header">
           <a class="sidebar__brand" href="#" aria-label="Stisla"><i data-lucide="hexagon"></i><span>Stisla</span></a>
         </header>
@@ -574,7 +570,7 @@
         trigger.addEventListener('click', () => {
           const willCollapse = !sidebar.classList.contains('is-collapsed');
           sidebar.classList.toggle('is-collapsed');
-          sidebar.style.width = willCollapse ? '4.25rem' : '18rem';
+          sidebar.style.width = willCollapse ? 'calc(4.25rem * var(--st-density) + 1px)' : '18rem';
           trigger.setAttribute('aria-expanded', willCollapse ? 'false' : 'true');
         });
       })();
@@ -675,8 +671,8 @@
           </tr>
           <tr>
             <td><code>--sidebar-button-padding-x</code></td>
-            <td>calc(0.75rem * var(--st-density))</td>
-            <td>Horizontal inset</td>
+            <td>calc(0.625rem * var(--st-density))</td>
+            <td>Horizontal inset. Load-bearing for rail symmetry: <code>padding-x + icon-size + padding-x</code> equals <code>button-height</code> so the icon centers naturally at rail width without any <code>justify-content</code> override.</td>
           </tr>
           <tr>
             <td><code>--sidebar-button-radius</code></td>
@@ -685,12 +681,12 @@
           </tr>
           <tr>
             <td><code>--sidebar-button-gap</code></td>
-            <td>calc(0.625rem * var(--st-density))</td>
+            <td>calc(1rem * var(--st-density))</td>
             <td>Space between icon and label</td>
           </tr>
           <tr>
             <td><code>--sidebar-button-font-weight</code></td>
-            <td>500</td>
+            <td>400</td>
             <td>Label weight</td>
           </tr>
           <tr>
@@ -720,13 +716,13 @@
           </tr>
           <tr>
             <td><code>--sidebar-button-icon-size</code></td>
-            <td>1.125rem</td>
-            <td>Icon dimensions; load-bearing for rail recipe + chevron</td>
+            <td>1rem</td>
+            <td>Icon dimensions; load-bearing for rail recipe (see <code>--sidebar-button-padding-x</code>) + chevron</td>
           </tr>
           <tr>
             <td><code>--sidebar-button-icon-color</code></td>
             <td>var(--st-muted-foreground)</td>
-            <td>Icon color (constant across rest / hover / active)</td>
+            <td>Icon color at rest + hover. Active rows flip the icon to <code>--sidebar-button-active-color</code> so the row reads unified.</td>
           </tr>
         </tbody>
       </table>
@@ -745,8 +741,8 @@
         <tbody>
           <tr>
             <td><code>--sidebar-item-action-size</code></td>
-            <td>1.5rem</td>
-            <td>Right-edge slot reserved size — also the dimensions of any <code>.btn</code> inside</td>
+            <td>2.25rem</td>
+            <td>Right-edge slot reserved size (matches button height so the slot occupies the full row vertically). A <code>.btn</code> inside still collapses to 1.5rem × 1.5rem via internal override.</td>
           </tr>
         </tbody>
       </table>
@@ -765,7 +761,7 @@
         <tbody>
           <tr>
             <td><code>--sidebar-group-gap</code></td>
-            <td>calc(0.75rem * var(--st-density))</td>
+            <td>calc(1rem * var(--st-density))</td>
             <td>Space between groups in the menu</td>
           </tr>
           <tr>
@@ -775,7 +771,7 @@
           </tr>
           <tr>
             <td><code>--sidebar-group-title-font-weight</code></td>
-            <td>600</td>
+            <td>400</td>
             <td>Caption weight</td>
           </tr>
           <tr>
@@ -805,13 +801,13 @@
           </tr>
           <tr>
             <td><code>--sidebar-submenu-padding-start</code></td>
-            <td>0.625rem</td>
+            <td>0.5rem</td>
             <td>Space between the guide line and submenu rows</td>
           </tr>
           <tr>
             <td><code>--sidebar-submenu-margin-start</code></td>
-            <td>calc(button-padding-x + button-icon-size / 2)</td>
-            <td>Inset from the panel edge; aligns the guide line with the parent icon's center axis</td>
+            <td>1.125rem</td>
+            <td>Inset from the panel edge; aligns the guide line on the parent icon's center axis</td>
           </tr>
         </tbody>
       </table>

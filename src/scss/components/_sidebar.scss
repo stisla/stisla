@@ -48,47 +48,46 @@
 
 .sidebar {
   // === Shell vars ========================================================
+  // Values ported from bs5-snapshot/_variables.scss (BS5 was the
+  // reference; v3 just swaps $sass vars → --css vars + BEM + tokens).
   --sidebar-bg: transparent;
   --sidebar-color: var(--st-foreground);
-  --sidebar-padding-y: calc(1rem * var(--st-density));
-  --sidebar-padding-x: calc(1rem * var(--st-density));
-  --sidebar-gap: calc(0.75rem * var(--st-density));
+  --sidebar-padding-y: calc(1rem * var(--st-density));         //  16
+  --sidebar-padding-x: calc(1rem * var(--st-density));         //  16
+  --sidebar-gap: calc(1rem * var(--st-density));               //  16 — header ↔ content ↔ footer
 
   // === Brand vars ========================================================
   --sidebar-brand-color: var(--sidebar-color);
-  --sidebar-brand-icon-size: 1.5rem;
-  --sidebar-brand-gap: 0.625rem;
+  --sidebar-brand-icon-size: 1.5rem;                           //  24
+  --sidebar-brand-gap: 0.625rem;                               //  10
 
   // === Button (item) vars ================================================
-  --sidebar-button-height: 2.25rem;
-  --sidebar-button-padding-x: calc(0.75rem * var(--st-density));
+  --sidebar-button-height: 2.25rem;                            //  36
+  --sidebar-button-padding-x: calc(0.625rem * var(--st-density)); // 10 — load-bearing: 10 + 16 + 10 = 36 button-height (symmetric icon centering at rail width)
   --sidebar-button-radius: var(--st-radius-sm);
-  --sidebar-button-gap: calc(0.625rem * var(--st-density));
-  --sidebar-button-font-weight: 500;
+  --sidebar-button-gap: calc(1rem * var(--st-density));        //  16 — icon ↔ label
+  --sidebar-button-font-weight: 400;
   --sidebar-button-color: var(--sidebar-color);
   --sidebar-button-hover-bg: var(--st-accent);
   --sidebar-button-hover-color: var(--st-accent-foreground);
   --sidebar-button-active-bg: var(--st-highlight);
   --sidebar-button-active-color: var(--st-highlight-foreground);
-  --sidebar-button-icon-size: 1.125rem;
+  --sidebar-button-icon-size: 1rem;                            //  16 — load-bearing, see padding-x note
   --sidebar-button-icon-color: var(--st-muted-foreground);
 
   // === Item action var ===================================================
-  --sidebar-item-action-size: 1.5rem;
+  --sidebar-item-action-size: 2.25rem;                         //  36 — same as button-height, slot occupies full row
 
   // === Group vars ========================================================
-  --sidebar-group-gap: calc(0.75rem * var(--st-density));
-  --sidebar-group-title-font-size: 0.75rem;
-  --sidebar-group-title-font-weight: 600;
+  --sidebar-group-gap: calc(1rem * var(--st-density));         //  16
+  --sidebar-group-title-font-size: 0.75rem;                    //  12
+  --sidebar-group-title-font-weight: 400;
   --sidebar-group-title-color: var(--st-muted-foreground);
 
   // === Submenu vars ======================================================
   --sidebar-submenu-border-color: var(--st-border);
-  --sidebar-submenu-padding-start: 0.625rem;
-  --sidebar-submenu-margin-start: calc(
-    var(--sidebar-button-padding-x) +
-      (var(--sidebar-button-icon-size) / 2)
-  );
+  --sidebar-submenu-padding-start: 0.5rem;
+  --sidebar-submenu-margin-start: 1.125rem;                    //  18 — literal, aligns guide-line on parent icon column
 
   // === Motion ============================================================
   --sidebar-transition: 0.3s ease;
@@ -274,7 +273,9 @@
 
   // Excluding active and disabled from hover keeps the active row reading
   // steadier (no transient hover repaint over an already-tinted chip).
-  &:hover:not(:disabled):not(.disabled):not([aria-current="page"]):not([data-state="active"]) {
+  &:hover:not(:disabled):not(.disabled):not([aria-current="page"]):not(
+      [data-state="active"]
+    ) {
     background-color: var(--sidebar-button-hover-bg);
     color: var(--sidebar-button-hover-color);
   }
@@ -300,10 +301,18 @@
 
 // Active state — aria-current="page" is the semantic primary for nav
 // links; data-state="active" is the Radix-aligned hook for non-link
-// rows (a button opening a panel, etc.) per V3.md §3.6.
+// rows (a button opening a panel, etc.) per V3.md §3.6. The icon
+// flips along with the label so the active row reads as one unified
+// block — hover stays icon-quiet by design (hover is fleeting; active
+// is sustained, so it deserves the extra pop).
 .sidebar__button[aria-current="page"],
 .sidebar__button[data-state="active"] {
   background-color: var(--sidebar-button-active-bg);
+  color: var(--sidebar-button-active-color);
+}
+
+.sidebar__button[aria-current="page"] :is(svg, i),
+.sidebar__button[data-state="active"] :is(svg, i) {
   color: var(--sidebar-button-active-color);
 }
 
@@ -413,17 +422,15 @@
 // identical gutters at any size.
 
 .sidebar--sm {
-  --sidebar-button-height: 2rem;
-  --sidebar-button-padding-x: calc(0.5rem * var(--st-density));
-  --sidebar-button-gap: calc(0.5rem * var(--st-density));
-  --sidebar-group-gap: calc(0.5rem * var(--st-density));
+  --sidebar-button-height: 2rem;                                  // 32
+  --sidebar-button-padding-x: calc(0.5rem * var(--st-density));   //  8 — keeps rail symmetric: 8 + 16 + 8 = 32 = button-height
+  --sidebar-group-gap: calc(0.875rem * var(--st-density));        // 14
 }
 
 .sidebar--lg {
-  --sidebar-button-height: 2.5rem;
-  --sidebar-button-padding-x: calc(0.875rem * var(--st-density));
-  --sidebar-button-gap: calc(0.75rem * var(--st-density));
-  --sidebar-group-gap: calc(1rem * var(--st-density));
+  --sidebar-button-height: 2.5rem;                                // 40
+  --sidebar-button-padding-x: calc(0.75rem * var(--st-density));  // 12 — keeps rail symmetric: 12 + 16 + 12 = 40 = button-height
+  --sidebar-group-gap: calc(1.125rem * var(--st-density));        // 18
 }
 
 // === Rail / mini-collapsed (.is-collapsed) ==============================
@@ -438,6 +445,11 @@
 // Sizes give 32 + 32 = 4rem (sm) and 40 + 32 = 4.5rem (lg). Panel-padding-x
 // stays constant across sizes by design — only the button geometry scales.
 // The .app-shell ships a 4.25rem rail-width default that matches default.
+//
+// When the panel carries a border, widen by 2 × border-width — the
+// border sits inside the box (box-sizing: border-box) and trims that
+// much off the content interior, squeezing the icon cell off-square.
+// A bordered default rail = calc(4.25rem + 2px) for a 1px border.
 
 // Soft-hide targets — always primed for an opacity + translate fade so
 // the rail-mode toggle doesn't blink. Coordinated with the consumer's
@@ -487,16 +499,18 @@
   .sidebar__header {
     padding-inline: calc(
       var(--sidebar-padding-x) + var(--sidebar-button-padding-x) -
-        (
-          var(--sidebar-brand-icon-size) -
-            var(--sidebar-button-icon-size)
-        ) / 2
+        (var(--sidebar-brand-icon-size) - var(--sidebar-button-icon-size)) / 2
     );
     overflow: hidden;
   }
 
   // Hard clip on each button — even if a label is written as a bare
   // text node (no span wrapper), it stays clipped to the rail width.
+  // Icons stay at their natural left-padded offset through the width
+  // animation; labels clip out the right as the panel narrows. No
+  // justify-content shift in rail mode — that would snap content from
+  // left to center mid-animation since justify-content doesn't
+  // interpolate.
   .sidebar__button {
     overflow: hidden;
   }
