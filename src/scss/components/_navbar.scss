@@ -11,12 +11,12 @@
 //   .navbar__toggle   hamburger button — visible below lg only
 //   .navbar__menu     collapsing wrapper — holds nav + trailing extras
 //   .navbar__nav      link list (<ul>) inside .navbar__menu
-//   .navbar__link     row inside .navbar__nav — ghost chip with hover
+//   .navbar__button   row inside .navbar__nav — ghost chip with hover
 //
 // === State hooks (V3.md §3.6) ============================================
 //   .navbar__menu[data-state="open|closed"]   mobile menu visibility
-//   .navbar__link[data-state="active"]        current page (highlight chip)
-//   .navbar__link[aria-disabled="true"]       unreachable link
+//   .navbar__button[data-state="active"]        current page (highlight chip)
+//   .navbar__button[aria-disabled="true"]       unreachable link
 //
 // === JS ==================================================================
 // Mobile toggle ships from src/js/index.js: a [data-navbar-toggle]
@@ -31,16 +31,16 @@
   --navbar-bg: var(--st-background);
   --navbar-color: var(--st-foreground);
 
-  --navbar-link-height: 2.25rem;
-  --navbar-link-padding-x: calc(0.75rem * var(--st-density));
-  --navbar-brand-padding-x: var(--navbar-link-padding-x);
-  --navbar-link-gap: calc(0.25rem * var(--st-density));
-  --navbar-link-radius: calc(var(--st-radius) - 0.25rem);
-  --navbar-link-color: var(--st-foreground);
-  --navbar-link-hover-bg: var(--st-accent);
-  --navbar-link-hover-color: var(--st-accent-foreground);
-  --navbar-link-active-bg: var(--st-highlight);
-  --navbar-link-active-color: var(--st-highlight-foreground);
+  --navbar-button-height: 2.25rem;
+  --navbar-button-padding-x: calc(0.75rem * var(--st-density));
+  --navbar-brand-padding-x: var(--navbar-button-padding-x);
+  --navbar-button-gap: calc(0.25rem * var(--st-density));
+  --navbar-button-radius: calc(var(--st-radius) - 0.25rem);
+  --navbar-button-color: var(--st-foreground);
+  --navbar-button-hover-bg: var(--st-accent);
+  --navbar-button-hover-color: var(--st-accent-foreground);
+  --navbar-button-active-bg: var(--st-highlight);
+  --navbar-button-active-color: var(--st-highlight-foreground);
 
   --navbar-toggle-size: 2.25rem;
   --navbar-transition: 150ms ease;
@@ -74,14 +74,14 @@
 }
 
 // Brand — wordmark / logo. Hard height + line-height: 1 matches the
-// link chip's geometry so the row reads as one band. Same horizontal
-// inset as a link chip so the brand text sits on the same x-grid as
-// the link text — override --navbar-brand-padding-x to 0 if a flush-
+// button chip's geometry so the row reads as one band. Same horizontal
+// inset as a button chip so the brand text sits on the same x-grid as
+// the button text — override --navbar-brand-padding-x to 0 if a flush-
 // left brand is wanted.
 .navbar__brand {
   display: inline-flex;
   align-items: center;
-  height: calc(var(--navbar-link-height) * var(--st-density));
+  height: calc(var(--navbar-button-height) * var(--st-density));
   padding-inline: var(--navbar-brand-padding-x);
   color: var(--navbar-color);
   line-height: 1;
@@ -100,14 +100,14 @@
   background-color: transparent;
   color: var(--navbar-color);
   border: 0;
-  border-radius: var(--navbar-link-radius);
+  border-radius: var(--navbar-button-radius);
   cursor: pointer;
   transition: background-color var(--navbar-transition);
 
   &:hover,
   &:focus-visible {
-    background-color: var(--navbar-link-hover-bg);
-    color: var(--navbar-link-hover-color);
+    background-color: var(--navbar-button-hover-bg);
+    color: var(--navbar-button-hover-color);
   }
 }
 
@@ -125,21 +125,22 @@
 .navbar__nav {
   display: flex;
   align-items: center;
-  gap: var(--navbar-link-gap);
+  gap: var(--navbar-button-gap);
 }
 
-// Link — ghost chip; soft accent on hover/focus, highlight when the
+// Button — ghost chip; soft accent on hover/focus, highlight when the
 // row marks the current page. Hard height + line-height: 1 keeps the
-// chip a clean band regardless of the link's font metrics.
-.navbar__link {
+// chip a clean band regardless of the element's font metrics. Renders
+// on whatever element fits (<a> for navigation, <button> for actions).
+.navbar__button {
   display: inline-flex;
   align-items: center;
-  height: calc(var(--navbar-link-height) * var(--st-density));
+  height: calc(var(--navbar-button-height) * var(--st-density));
   padding-block: 0;
-  padding-inline: var(--navbar-link-padding-x);
-  border-radius: var(--navbar-link-radius);
+  padding-inline: var(--navbar-button-padding-x);
+  border-radius: var(--navbar-button-radius);
   background-color: transparent;
-  color: var(--navbar-link-color);
+  color: var(--navbar-button-color);
   line-height: 1;
   text-decoration: none;
   transition:
@@ -148,13 +149,13 @@
 
   &:hover,
   &:focus-visible {
-    background-color: var(--navbar-link-hover-bg);
-    color: var(--navbar-link-hover-color);
+    background-color: var(--navbar-button-hover-bg);
+    color: var(--navbar-button-hover-color);
   }
 
   &[data-state="active"] {
-    background-color: var(--navbar-link-active-bg);
-    color: var(--navbar-link-active-color);
+    background-color: var(--navbar-button-active-bg);
+    color: var(--navbar-button-active-color);
   }
 
   &[aria-disabled="true"] {
@@ -200,14 +201,14 @@
     width: 100%;
   }
 
-  .navbar__link {
+  .navbar__button {
     width: 100%;
   }
 }
 
 // === Reduced motion ======================================================
 @media (prefers-reduced-motion: reduce) {
-  .navbar__link,
+  .navbar__button,
   .navbar__toggle {
     transition-duration: 0.01ms;
   }
