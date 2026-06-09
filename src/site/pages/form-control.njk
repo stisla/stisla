@@ -70,29 +70,39 @@
   </section>
 
   <section>
-    <h2>Validation</h2>
-    <p>Mark a field as invalid with <code>aria-invalid="true"</code>. Pair with <code>.form-text--error</code> tied via <code>aria-describedby</code> so the error reaches assistive tech. This is the canonical hook for server-rendered errors — Django, Rails, Laravel render the attribute, and the border + message paint themselves. Native validation (<code>required</code>, <code>type="email"</code>) also kicks in via <code>:user-invalid</code> after the user interacts — try submitting empty below.</p>
+    <h2>Browser validation</h2>
+    <p>Pair native constraint attributes (<code>required</code>, <code>type="email"</code>, <code>pattern</code>, <code>min</code>, <code>max</code>) with the <code>:user-invalid</code> pseudo. The browser fires it after the user interacts with the field, and clears it the moment the value satisfies the constraints. Use for inline validation where the field owns its own state.</p>
     {% call ui.demo() %}
-    <form class="demo-stack" style="width: 100%; max-width: 24rem;" novalidate onsubmit="event.preventDefault()">
+    <form class="demo-stack" style="width: 100%; max-width: 24rem;" onsubmit="event.preventDefault()">
       <div>
-        <label for="invalidEmail" class="form-label">Email (server-rendered error)</label>
-        <input
-          type="email"
-          class="form-control"
-          id="invalidEmail"
-          value="not-an-email"
-          aria-invalid="true"
-          aria-describedby="invalidEmailError" />
-        <div id="invalidEmailError" class="form-text form-text--error">Please enter a valid email address.</div>
-      </div>
-      <div>
-        <label for="nativeRequired" class="form-label">Required (native validation)</label>
-        <input type="email" class="form-control" id="nativeRequired" required placeholder="you@example.com" />
-        <div class="form-text">Lights up red after submit via <code>:user-invalid</code>.</div>
+        <label for="reqEmail" class="form-label">Email</label>
+        <input type="email" class="form-control" id="reqEmail" required placeholder="you@example.com" />
+        <div class="form-text">Hit Submit to trigger <code>:user-invalid</code>. Enter a valid email and the red clears on its own.</div>
       </div>
       <button type="submit" class="btn btn--primary">Submit</button>
     </form>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Server validation</h2>
+    <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky. Frameworks like React Hook Form, Formik, vee-validate, and Rails / Django / Laravel form helpers manage this based on their own error state. Pair with a <code>.form-text--error</code> message tied via <code>aria-describedby</code> so the error reaches assistive tech.</p>
+    {% call ui.demo() %}
+    <div class="demo-stack" style="width: 100%; max-width: 24rem;">
+      <div>
+        <label for="srvEmail" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="srvEmail"
+          value="not-an-email"
+          aria-invalid="true"
+          aria-describedby="srvEmailError" />
+        <div id="srvEmailError" class="form-text form-text--error">Please enter a valid email address.</div>
+      </div>
+    </div>
+    {% endcall %}
+    <p>The red stays even after you edit the field. Stisla just paints while the attribute is present; your code removes it when the field's error state resolves.</p>
   </section>
 
   <section>

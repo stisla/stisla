@@ -1,0 +1,142 @@
+// Stisla v3 — switch.
+//
+// Track + thumb toggle. The track is the input itself (rounded rect);
+// the thumb is a radial-gradient circle that slides via background-position
+// on :checked. No data: URL for the thumb — geometry lives in component-
+// scoped vars so density and --lg recompute the gradient cleanly.
+//
+// BEM (V3.md §3.6):
+//   <div class="switch">
+//     <input type="checkbox" role="switch" class="switch__input" id="x">
+//     <label class="switch__label" for="x">Notifications</label>
+//   </div>
+//
+// Off-state track uses a semi-transparent foreground tone instead of
+// --st-neutral. --st-neutral sits at ~96% lightness in light mode, which
+// gives a white thumb almost no contrast against the track. The mix below
+// resolves to a mid-gray that adapts per theme and reads in both. Thumb
+// is a white literal — pure white in both themes regardless of how a
+// consumer retunes --st-surface or --st-primary-foreground.
+//
+// Validation hooks match .form-check: [aria-invalid="true"] for sticky
+// server-rendered errors, :user-invalid for native browser validation
+// after first interaction (pair with required on the input). The red
+// signal lives on the track border; the fill follows the on/off state
+// so both signals compose at once.
+//
+// Pair role="switch" on the input so assistive tech announces "switch"
+// instead of "checkbox". The visual treatment is the same regardless of
+// the role — role just changes the announcement.
+
+// === Wrapper ============================================================
+.switch {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-block: 0.125rem;
+}
+
+.switch--inline {
+  display: inline-flex;
+}
+
+// Label-first, input-last. Justify-content keeps the input pinned to the
+// row trailing edge (useful in settings rows where the affordance lives
+// on the right).
+.switch--reverse {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+// === Label ==============================================================
+.switch__label {
+  cursor: pointer;
+  line-height: 1.4;
+  user-select: none;
+}
+
+.switch:has(> .switch__input:disabled) .switch__label {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+// === Track + thumb =====================================================
+.switch__input {
+  --switch-track-w:     calc(1.75rem  * var(--st-density));            // 28
+  --switch-track-h:     calc(1rem     * var(--st-density));            // 16
+  --switch-thumb:       calc(0.75rem  * var(--st-density));            // 12
+  --switch-inset:       calc(0.125rem * var(--st-density));            //  2
+  --switch-off-bg:      color-mix(in oklch, var(--st-foreground) 25%, transparent);
+  --switch-on-bg:       var(--st-primary);
+  --switch-thumb-color: white;
+
+  flex-shrink: 0;
+  width:  var(--switch-track-w);
+  height: var(--switch-track-h);
+  margin: 0;
+  vertical-align: middle;
+  border: 1px solid transparent;
+  border-radius: 9999px;
+  background-color: var(--switch-off-bg);
+  background-image: radial-gradient(
+    circle at center,
+    var(--switch-thumb-color) 49%,
+    transparent 51%
+  );
+  background-size: var(--switch-thumb) var(--switch-thumb);
+  background-position: var(--switch-inset) center;
+  background-repeat: no-repeat;
+  appearance: none;
+  cursor: pointer;
+  transition: background-color .12s ease, background-position .15s ease,
+              border-color .12s ease, box-shadow .12s ease;
+  print-color-adjust: exact;
+
+  // Hover (idle only). Skip when focus / invalid / checked / disabled own
+  // their own state cue.
+  &:hover:not(:disabled, :focus-visible, :checked, [aria-invalid="true"], :user-invalid) {
+    background-color: color-mix(in oklch, var(--st-foreground) 35%, transparent);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--st-ring) 25%, transparent);
+  }
+
+  &:checked {
+    background-color: var(--switch-on-bg);
+    background-position: calc(100% - var(--switch-inset)) center;
+  }
+
+  // Validation. Invalid touches border only; fill follows on/off so both
+  // signals compose. Same convention as .form-check (shadcn / MUI / Tailwind).
+  &[aria-invalid="true"],
+  &:user-invalid {
+    border-color: var(--st-danger);
+  }
+  &[aria-invalid="true"]:focus-visible,
+  &:user-invalid:focus-visible {
+    border-color: var(--st-danger);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--st-danger) 25%, transparent);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .switch__input { transition: none; }
+}
+
+// === Large ==============================================================
+// 44×24 variant. Suited to standalone settings rows where the switch is
+// the row's primary affordance and reads small at the default 28×16.
+// Density still multiplies through the var chain.
+.switch--lg .switch__input {
+  --switch-track-w: calc(2.75rem  * var(--st-density));                 // 44
+  --switch-track-h: calc(1.5rem   * var(--st-density));                 // 24
+  --switch-thumb:   calc(1.25rem  * var(--st-density));                 // 20
+  --switch-inset:   calc(0.125rem * var(--st-density));                 //  2
+}

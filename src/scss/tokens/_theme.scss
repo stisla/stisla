@@ -21,29 +21,29 @@
   // pairing rule; --st-warning-foreground stays dark in both themes
   // (V3.md §3.8 asymmetry note: yellow stays yellow, text on it stays
   // dark regardless of theme).
-  --st-primary:              oklch(0.639   0.1844  257.69);
-  --st-primary-foreground:   oklch(1 0 0);
-  --st-success:              oklch(0.6966  0.1853  149.54);
-  --st-success-foreground:   oklch(1 0 0);
-  --st-warning:              oklch(0.7697  0.1645   70.61);
-  --st-warning-foreground:   oklch(0.27 0.015 var(--st-base));
-  --st-danger:               oklch(0.6155  0.2229   26.82);
-  --st-danger-foreground:    oklch(1 0 0);
-  --st-info:                 oklch(0.677589 0.148143 238.1044);
-  --st-info-foreground:      oklch(1 0 0);
+  --st-primary: oklch(0.639 0.1844 257.69);
+  --st-primary-foreground: oklch(1 0 0);
+  --st-success: oklch(0.6966 0.1853 149.54);
+  --st-success-foreground: oklch(1 0 0);
+  --st-warning: oklch(0.7697 0.1645 70.61);
+  --st-warning-foreground: oklch(0.27 0.015 var(--st-base));
+  --st-danger: oklch(0.6155 0.2229 26.82);
+  --st-danger-foreground: oklch(1 0 0);
+  --st-info: oklch(0.677589 0.148143 238.1044);
+  --st-info-foreground: oklch(1 0 0);
 
   // === Surface tier (8) =================================================
   // --st-base is the hue every neutral tracks. 258 = the primary blue's
   // own hue, so the neutrals read cool against the brand. Bump to 30
   // for warm-tinted neutrals (preset on the customization page).
-  --st-base:                 258;
-  --st-background:           oklch(1 0 0);
-  --st-foreground:           oklch(0.27 0.015 var(--st-base));
-  --st-surface:              oklch(1 0 0);
-  --st-surface-2:            oklch(0.98 0.003 var(--st-base));
-  --st-surface-3:            oklch(0.97 0.005 var(--st-base));
-  --st-border:               oklch(0.93 0.005 var(--st-base));
-  --st-muted-foreground:     oklch(0.52 0.04  var(--st-base));
+  --st-base: 258;
+  --st-background: oklch(1 0 0);
+  --st-foreground: oklch(0.27 0.015 var(--st-base));
+  --st-surface: oklch(1 0 0);
+  --st-surface-2: oklch(0.98 0.003 var(--st-base));
+  --st-surface-3: oklch(0.97 0.005 var(--st-base));
+  --st-border: oklch(0.93 0.005 var(--st-base));
+  --st-muted-foreground: oklch(0.52 0.04 var(--st-base));
 
   // === Interactional (6) — 3 pairs ======================================
   // Neutral   = rest bg for filled-neutral elements (.btn--neutral, kbd,
@@ -52,51 +52,56 @@
   // Highlight = persistent selected/current bg (soft primary tint).
   // Rest → hover → selected progression for neutral surfaces.
   // See V3.md §3.2 table for component-by-component application.
-  --st-neutral:              oklch(0.91 0.005 var(--st-base));
-  --st-neutral-foreground:   var(--st-foreground);
-  --st-accent:               oklch(0.9593 0.0057 256.68);
-  --st-accent-foreground:    var(--st-foreground);
-  --st-highlight:            color-mix(in oklch, var(--st-primary) 12%, transparent);
+  --st-neutral: oklch(0.91 0.005 var(--st-base));
+  --st-neutral-foreground: var(--st-foreground);
+  --st-accent: oklch(0.96 0.005 var(--st-base));
+  --st-accent-foreground: var(--st-foreground);
+  --st-highlight: color-mix(in oklch, var(--st-primary) 12%, transparent);
   --st-highlight-foreground: var(--st-primary);
 
   // === Focus (1) ========================================================
-  --st-ring:                 var(--st-primary);
+  --st-ring: var(--st-primary);
 
   // === Geometry (3) =====================================================
   // 0 = brutalist, 0.75rem = default, 1rem = soft.
   // Solid neo-brutalist shadow: "4px 4px 0 black".
   // Density: 1 default, 0.875 compact, 1.125 comfortable.
-  --st-radius:               0.75rem;
-  --st-shadow:               0 1px 3px rgba(0, 0, 0, .05), 0 1px 2px rgba(0, 0, 0, .03);
-  --st-density:              1;
+  --st-radius: 0.75rem;
+  --st-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --st-density: 1;
 
   // Derived siblings (V3.md §3.4 line 167). Not part of the customization
   // story — components reach for these via calc() ratios of --st-radius so
   // smaller / larger size variants scale proportionally. Brutalist preset
   // (--st-radius: 0) cascades to 0 for every size; additive offsets would
   // leave lg with a stray corner.
-  --st-radius-sm:            calc(var(--st-radius) * 0.667);
-  --st-radius-lg:            calc(var(--st-radius) * 1.333);
+  --st-radius-sm: calc(var(--st-radius) * 0.667);
+  --st-radius-lg: calc(var(--st-radius) * 1.333);
 
   // === Type (2) =========================================================
-  --st-font-sans:            "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --st-font-mono:            "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --st-font-sans:
+    "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --st-font-mono:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
 }
 
 // Dark mode. Intents stay put; only the surface tier and the accent
 // pair flip. Foregrounds with `var(--st-foreground)` cascade for free
 // once --st-foreground swaps here.
 @include color-mode(dark) {
-  --st-background:           oklch(0.13 0.005 var(--st-base));
-  --st-foreground:           oklch(0.97 0.01  var(--st-base));
-  --st-surface:              oklch(0.18 0.005 var(--st-base));
-  --st-surface-2:            oklch(0.21 0.005 var(--st-base));
-  --st-surface-3:            oklch(0.23 0.008 var(--st-base));
-  --st-border:               oklch(0.30 0.012 var(--st-base));
-  --st-muted-foreground:     oklch(0.72 0.02  var(--st-base));
+  --st-background: oklch(0.1548 0.005 var(--st-base));
+  --st-foreground: oklch(0.97 0.01 var(--st-base));
+  --st-surface: oklch(0.18 0.005 var(--st-base));
+  --st-surface-2: oklch(0.21 0.005 var(--st-base));
+  --st-surface-3: oklch(0.23 0.008 var(--st-base));
+  --st-border: oklch(0.27 0.012 var(--st-base));
+  --st-muted-foreground: oklch(0.72 0.02 var(--st-base));
 
-  --st-neutral:              oklch(0.27 0.008 var(--st-base));
-  --st-accent:               oklch(0.2606 0.0238 256.84);
+  --st-neutral: oklch(0.27 0.008 var(--st-base));
+  --st-accent: oklch(0.26 0.008 var(--st-base));
   // --st-neutral-foreground / --st-accent-foreground track var(--st-foreground);
   // no override needed.
 }

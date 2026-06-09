@@ -1,0 +1,105 @@
+// Stisla v3 — toggle.
+//
+// HTML-only toggle button pattern. A hidden <input type="checkbox|radio"
+// class="toggle"> drives a sibling <label class="btn"> as its visible
+// affordance. Works without JS: the browser's native input state
+// (:checked) flips the label's treatment.
+//
+// Pairs naturally with .switch (same naming family, both are native
+// input-backed affordances). Use for option pickers and segmented
+// controls where the toggle state is just form data (no JS handling
+// needed): font-weight pickers, alignment pickers, day-of-week filters,
+// view-mode switchers, settings toggles. For JS-driven tabs with active
+// state managed in script, see the planned .btn-group[data-state="active"]
+// pattern (Step 4).
+//
+// .toggle owns the full visual treatment. It does NOT compose with .btn
+// tone modifiers (.btn--primary / .btn--danger etc.). The label just
+// needs class="btn" for shape (height, padding, density, focus ring);
+// .toggle + .btn rules paint outline-neutral / accent-fill regardless
+// of any tone class the user adds. This is intentional: a segmented
+// control is a "pick one of these" affordance, not a "trigger this
+// action" one. The neutral container treatment reads as "you're
+// choosing", not "click for danger".
+//
+// Visual story (V3.md §3.2 interactional trio — neutral, accent, highlight):
+//   off          transparent bg, --st-border, foreground text
+//   off + hover  --st-accent bg (neutral hover, transient)
+//   selected     --st-highlight bg (soft primary tint), primary border at 20%, primary text
+//   sel + hover  no change (selected state is the destination, not a step)
+//   focus        2px outline ring at --st-ring (inherits .btn focus)
+//   disabled     opacity 0.55 (inherits .btn)
+//
+// Off-state visual matches .btn--outline.btn--neutral rest + hover. The
+// .toggle rules force that treatment so any .btn tone modifier on the
+// label is overridden. Selected state shifts to the brand-tinted family
+// (--st-highlight), same token language as future sidebar-current-page /
+// active-tab / accordion-open states.
+//
+// <input type="checkbox" class="toggle" id="x" autocomplete="off">
+// <label class="btn" for="x">Bold</label>
+//
+// <input type="radio" class="toggle" name="g" id="d" autocomplete="off" checked>
+// <label class="btn" for="d">Day</label>
+// <input type="radio" class="toggle" name="g" id="w" autocomplete="off">
+// <label class="btn" for="w">Week</label>
+
+// Hide the input (sr-only / visually-hidden geometry) while keeping it
+// reachable by keyboard. The clickable label still drives state via for/id.
+.toggle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+  pointer-events: none;
+}
+
+// Off state. Forces outline-neutral regardless of any .btn--<tone>
+// modifier the user puts on the label — the toggle owns the visual.
+.toggle + .btn {
+  --btn-bg:           transparent;
+  --btn-border-color: var(--st-border);
+  --btn-color:        var(--st-foreground);
+  --btn-bevel:        none;
+}
+
+.toggle + .btn:hover {
+  --btn-bg: var(--st-accent);
+}
+
+// Selected state — V3.md §3.2 spec path. Fill is --st-highlight (a 12%
+// primary tint), text is --st-highlight-foreground (= --st-primary), and
+// the border picks up a slightly stronger primary tint so the rim reads
+// as a hair more saturated than the fill without contrast jumping. Hover
+// stays neutral (--st-accent) above; selected adopts brand tint here.
+// That asymmetry follows the spec table: hover is transient (neutral),
+// selected is persistent state (branded). Same token language as the
+// future sidebar-current-page, active-tab, accordion-open states, so the
+// whole "selected/current" semantic stays consistent across components.
+// No hover change once selected: the user already knows this one is on,
+// an extra darken on hover would add noise without adding info.
+.toggle:checked + .btn,
+.toggle:checked + .btn:hover {
+  --btn-bg:           var(--st-highlight);
+  --btn-border-color: color-mix(in oklch, var(--st-primary) 20%, transparent);
+  --btn-color:        var(--st-highlight-foreground);
+}
+
+// Focus ring sits on the label (the input is visually hidden but still
+// receives focus). Inherits .btn's focus vocabulary so it composes with
+// keyboard navigation across mixed button + toggle rows.
+.toggle:focus-visible + .btn {
+  outline: 2px solid var(--st-ring);
+  outline-offset: 2px;
+}
+
+.toggle:disabled + .btn {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.55;
+}

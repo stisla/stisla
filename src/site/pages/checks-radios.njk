@@ -6,21 +6,21 @@
 {% block content %}
   <header>
     <h1>Checks &amp; radios</h1>
-    <p class="lead">Checkboxes, radios, and switches for choosing one or more options.</p>
+    <p class="lead">Native checkbox and radio inputs styled on the framework. See <a href="/switch" class="link">Switch</a> for the track-and-thumb variant.</p>
   </header>
 
   <section>
     <h2>Checkbox</h2>
-    <p>Wrap an <code>&lt;input type="checkbox"&gt;</code> in <code>.form-check</code> and pair it with a <code>.form-check-label</code> tied via <code>for</code>/<code>id</code>.</p>
+    <p>Wrap an <code>&lt;input type="checkbox"&gt;</code> in <code>.form-check</code> and pair it with a <code>.form-check__label</code> tied via <code>for</code>/<code>id</code>.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
+    <div class="demo-stack" style="max-width: 24rem;">
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="defaultCheck" />
-        <label class="form-check-label" for="defaultCheck">Default checkbox</label>
+        <input class="form-check__input" type="checkbox" id="defaultCheck" />
+        <label class="form-check__label" for="defaultCheck">Default checkbox</label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="checkedCheck" checked />
-        <label class="form-check-label" for="checkedCheck">Checked by default</label>
+        <input class="form-check__input" type="checkbox" id="checkedCheck" checked />
+        <label class="form-check__label" for="checkedCheck">Checked by default</label>
       </div>
     </div>
     {% endcall %}
@@ -30,14 +30,14 @@
     <h2>Radio</h2>
     <p>Group radios by giving them a shared <code>name</code>. The browser handles single-selection within the group.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
+    <div class="demo-stack" style="max-width: 24rem;">
       <div class="form-check">
-        <input class="form-check-input" type="radio" name="defaultRadio" id="defaultRadio1" checked />
-        <label class="form-check-label" for="defaultRadio1">First option</label>
+        <input class="form-check__input" type="radio" name="defaultRadio" id="defaultRadio1" checked />
+        <label class="form-check__label" for="defaultRadio1">First option</label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="radio" name="defaultRadio" id="defaultRadio2" />
-        <label class="form-check-label" for="defaultRadio2">Second option</label>
+        <input class="form-check__input" type="radio" name="defaultRadio" id="defaultRadio2" />
+        <label class="form-check__label" for="defaultRadio2">Second option</label>
       </div>
     </div>
     {% endcall %}
@@ -45,75 +45,20 @@
 
   <section>
     <h2>Inline</h2>
-    <p>Add <code>.form-check-inline</code> to line items up on the same row.</p>
+    <p>Add <code>.form-check--inline</code> to line items up on the same row.</p>
     {% call ui.demo() %}
-    <div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="inlineCheck1" />
-        <label class="form-check-label" for="inlineCheck1">One</label>
+    <div class="demo-row">
+      <div class="form-check form-check--inline">
+        <input class="form-check__input" type="checkbox" id="inlineCheck1" />
+        <label class="form-check__label" for="inlineCheck1">One</label>
       </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="inlineCheck2" />
-        <label class="form-check-label" for="inlineCheck2">Two</label>
+      <div class="form-check form-check--inline">
+        <input class="form-check__input" type="checkbox" id="inlineCheck2" />
+        <label class="form-check__label" for="inlineCheck2">Two</label>
       </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="inlineCheck3" />
-        <label class="form-check-label" for="inlineCheck3">Three</label>
-      </div>
-    </div>
-    {% endcall %}
-  </section>
-
-  <section>
-    <h2>Switch</h2>
-    <p>Add <code>.form-switch</code> alongside <code>.form-check</code> to render a checkbox as a toggle.</p>
-    {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
-      <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" role="switch" id="defaultSwitch" />
-        <label class="form-check-label" for="defaultSwitch">Notifications</label>
-      </div>
-      <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" role="switch" id="checkedSwitch" checked />
-        <label class="form-check-label" for="checkedSwitch">Auto-update</label>
-      </div>
-    </div>
-    {% endcall %}
-  </section>
-
-  <section>
-    <h2>Large switch</h2>
-    <p>Add <code>.form-switch-lg</code> for a 44×24 variant. Better suited to standalone settings rows where the switch is the row's primary affordance.</p>
-    {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
-      <div class="form-check form-switch form-switch-lg">
-        <input class="form-check-input" type="checkbox" role="switch" id="lgSwitch" />
-        <label class="form-check-label" for="lgSwitch">Notifications</label>
-      </div>
-      <div class="form-check form-switch form-switch-lg">
-        <input class="form-check-input" type="checkbox" role="switch" id="lgSwitchOn" checked />
-        <label class="form-check-label" for="lgSwitchOn">Auto-update</label>
-      </div>
-    </div>
-    {% endcall %}
-  </section>
-
-  <section>
-    <h2>Settings row</h2>
-    <p>Drop the switch into a flex row to put the label on the left and the affordance on the right. The <code>.form-check</code> wrapper stays single-purpose; row layout lives on the outer container.</p>
-    {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
-      <div class="d-flex align-items-center justify-content-between py-2">
-        <label class="form-check-label" for="settingEmail">Email notifications</label>
-        <div class="form-check form-switch form-switch-lg p-0 m-0">
-          <input class="form-check-input m-0" type="checkbox" role="switch" id="settingEmail" checked />
-        </div>
-      </div>
-      <div class="d-flex align-items-center justify-content-between py-2">
-        <label class="form-check-label" for="settingPush">Push notifications</label>
-        <div class="form-check form-switch form-switch-lg p-0 m-0">
-          <input class="form-check-input m-0" type="checkbox" role="switch" id="settingPush" />
-        </div>
+      <div class="form-check form-check--inline">
+        <input class="form-check__input" type="checkbox" id="inlineCheck3" />
+        <label class="form-check__label" for="inlineCheck3">Three</label>
       </div>
     </div>
     {% endcall %}
@@ -123,10 +68,10 @@
     <h2>Indeterminate</h2>
     <p>The indeterminate state is set from script — there's no HTML attribute for it. Useful as a parent of a partially-selected group.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
+    <div class="demo-stack" style="max-width: 24rem;">
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="indeterminateCheck" />
-        <label class="form-check-label" for="indeterminateCheck">Select all</label>
+        <input class="form-check__input" type="checkbox" id="indeterminateCheck" />
+        <label class="form-check__label" for="indeterminateCheck">Select all</label>
       </div>
       <script>
         document.getElementById('indeterminateCheck').indeterminate = true;
@@ -137,16 +82,16 @@
 
   <section>
     <h2>Reverse</h2>
-    <p>Add <code>.form-check-reverse</code> to flip the label to the start and the input to the end.</p>
+    <p>Add <code>.form-check--reverse</code> to flip the label to the start and the input to the end.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
-      <div class="form-check form-check-reverse">
-        <input class="form-check-input" type="checkbox" id="reverseCheck" />
-        <label class="form-check-label" for="reverseCheck">Reversed checkbox</label>
+    <div class="demo-stack" style="max-width: 24rem;">
+      <div class="form-check form-check--reverse">
+        <input class="form-check__input" type="checkbox" id="reverseCheck" />
+        <label class="form-check__label" for="reverseCheck">Reversed checkbox</label>
       </div>
-      <div class="form-check form-check-reverse form-switch">
-        <input class="form-check-input" type="checkbox" role="switch" id="reverseSwitch" checked />
-        <label class="form-check-label" for="reverseSwitch">Reversed switch</label>
+      <div class="form-check form-check--reverse">
+        <input class="form-check__input" type="radio" name="reverseRadio" id="reverseRadio" checked />
+        <label class="form-check__label" for="reverseRadio">Reversed radio</label>
       </div>
     </div>
     {% endcall %}
@@ -156,52 +101,74 @@
     <h2>Disabled</h2>
     <p>Add <code>disabled</code> to dim the input and its label, and block interaction.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
+    <div class="demo-stack" style="max-width: 24rem;">
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="disabledCheck" disabled />
-        <label class="form-check-label" for="disabledCheck">Disabled checkbox</label>
+        <input class="form-check__input" type="checkbox" id="disabledCheck" disabled />
+        <label class="form-check__label" for="disabledCheck">Disabled checkbox</label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="disabledCheckedCheck" checked disabled />
-        <label class="form-check-label" for="disabledCheckedCheck">Disabled, checked</label>
-      </div>
-      <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" role="switch" id="disabledSwitch" checked disabled />
-        <label class="form-check-label" for="disabledSwitch">Disabled switch</label>
+        <input class="form-check__input" type="checkbox" id="disabledCheckedCheck" checked disabled />
+        <label class="form-check__label" for="disabledCheckedCheck">Disabled, checked</label>
       </div>
     </div>
     {% endcall %}
   </section>
 
   <section>
-    <h2>Toggle buttons</h2>
-    <p>Pair <code>.btn-check</code> with a sibling <code>.btn</code> label to render a checkbox or radio as a button. The input stays visually hidden but reachable by keyboard.</p>
+    <h2>Browser validation</h2>
+    <p>Pair <code>required</code> with the native <code>:user-invalid</code> pseudo. The browser fires it after the user interacts with the field, and clears it the moment the constraint is satisfied. Use for inline validation where the affordance owns its own state.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-column gap-3">
-      <div>
-        <input type="checkbox" class="btn-check" id="toggleCheck" autocomplete="off" />
-        <label class="btn btn-outline-primary" for="toggleCheck">Single toggle</label>
+    <div class="demo-stack" style="max-width: 24rem;">
+      <div class="form-check">
+        <input class="form-check__input" type="checkbox" id="reqTerms" required />
+        <label class="form-check__label" for="reqTerms">Accept the terms</label>
       </div>
-      <div>
-        <input type="radio" class="btn-check" name="toggleRadio" id="toggleRadio1" autocomplete="off" checked />
-        <label class="btn btn-outline-primary" for="toggleRadio1">Day</label>
-        <input type="radio" class="btn-check" name="toggleRadio" id="toggleRadio2" autocomplete="off" />
-        <label class="btn btn-outline-primary" for="toggleRadio2">Week</label>
-        <input type="radio" class="btn-check" name="toggleRadio" id="toggleRadio3" autocomplete="off" />
-        <label class="btn btn-outline-primary" for="toggleRadio3">Month</label>
+      <div class="form-check">
+        <input class="form-check__input" type="radio" name="reqPlan" id="reqPlanBasic" required />
+        <label class="form-check__label" for="reqPlanBasic">Basic plan</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check__input" type="radio" name="reqPlan" id="reqPlanPro" required />
+        <label class="form-check__label" for="reqPlanPro">Pro plan</label>
       </div>
     </div>
     {% endcall %}
+    <p>The fields above look valid until you interact with them. Click in then click away (or try submitting an enclosing form) to trigger <code>:user-invalid</code>. Check the box or pick a radio and the red clears on its own.</p>
+  </section>
+
+  <section>
+    <h2>Server validation</h2>
+    <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky. Frameworks like React Hook Form, Formik, vee-validate, and Rails form helpers manage this based on their own error state. Stisla just paints the red while the attribute is present; remove it when your validator considers the field resolved.</p>
+    {% call ui.demo() %}
+    <div class="demo-stack" style="max-width: 24rem;">
+      <div class="form-check">
+        <input class="form-check__input" type="checkbox" id="srvTerms" aria-invalid="true" />
+        <label class="form-check__label" for="srvTerms">Accept the terms</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check__input" type="checkbox" id="srvTermsChecked" aria-invalid="true" checked />
+        <label class="form-check__label" for="srvTermsChecked">Accept the terms (checked, server still flagged)</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check__input" type="radio" name="srvPlan" id="srvPlanBasic" aria-invalid="true" />
+        <label class="form-check__label" for="srvPlanBasic">Basic plan</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check__input" type="radio" name="srvPlan" id="srvPlanPro" aria-invalid="true" checked />
+        <label class="form-check__label" for="srvPlanPro">Pro plan (selected, server still flagged)</label>
+      </div>
+    </div>
+    {% endcall %}
+    <p>The red border stays even after you check or select. That is the point. Server errors should not dismiss themselves on touch. The checked variants show both signals composing at once: primary fill says "this is selected", red rim says "and the server still considers it invalid".</p>
   </section>
 
   <section>
     <h2>Without labels</h2>
-    <p>Drop the <code>.form-check</code> wrapper to use a bare <code>.form-check-input</code>. Always pair with an <code>aria-label</code> for accessibility.</p>
+    <p>Drop the <code>.form-check</code> wrapper to use a bare <code>.form-check__input</code>. Always pair with an <code>aria-label</code> for accessibility.</p>
     {% call ui.demo() %}
-    <div class="d-flex align-items-center gap-3">
-      <input class="form-check-input" type="checkbox" aria-label="Bare checkbox" />
-      <input class="form-check-input" type="radio" aria-label="Bare radio" checked />
-      <input class="form-check-input" type="checkbox" role="switch" aria-label="Bare switch" checked />
+    <div class="demo-row">
+      <input class="form-check__input" type="checkbox" aria-label="Bare checkbox" />
+      <input class="form-check__input" type="radio" aria-label="Bare radio" checked />
     </div>
     {% endcall %}
   </section>
