@@ -109,11 +109,12 @@
 
   // Divider — chevron between items. ::before lives on every crumb
   // past the first; gap on the parent handles the spacing on both
-  // sides via the parent flex.
+  // sides via the parent flex, which also centers this pseudo with
+  // the crumb text via align-items: center. Do NOT set inline-flex
+  // here — it collides with replaced-element rendering when content
+  // is url(...) and the divider goes invisible in Chrome.
   + .breadcrumb__item::before {
     content: var(--breadcrumb-divider);
-    display: inline-flex;
-    align-items: center;
     color: var(--breadcrumb-color);
   }
 }
