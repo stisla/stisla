@@ -11,9 +11,9 @@
 
   <section>
     <h2>How it works</h2>
-    <p>A hidden <code>&lt;input class="toggle"&gt;</code> sits next to a <code>&lt;label class="btn"&gt;</code>. The input owns the state (checkbox <code>:checked</code> for a single toggle, radio for a one-of-many group). The label is the visible affordance, paired via <code>for</code> / <code>id</code>. No JS — the browser's native input handling drives everything.</p>
-    <p>The visual is fixed: outline-neutral by default, accent fill when selected. The label uses <code>class="btn"</code> for shape (height, padding, density, focus ring), and the toggle's rules overwrite the color layer on top.</p>
-    <p><strong>Shape modifiers compose</strong> — pair <code>.btn--sm</code> / <code>.btn--lg</code> / <code>.btn--icon-only</code> / <code>.btn--icon-round</code> on the label and they apply as expected. <strong>Tone modifiers do not</strong> — <code>.btn--primary</code> / <code>.btn--danger</code> are silently ignored because a segmented control reads as "pick one of these", not "trigger this action". If you need a tone-colored toggle, that's a different pattern (custom CSS at the consumer level).</p>
+    <p>A hidden <code>&lt;input class="toggle"&gt;</code> sits next to a <code>&lt;label class="btn"&gt;</code>. The input owns the state (checkbox <code>:checked</code> for a single toggle, radio for a one-of-many group). The label is the visible affordance, paired via <code>for</code> / <code>id</code>. No JS is involved; the browser's native input handling drives everything.</p>
+    <p>The visual is fixed. Outline-neutral by default, accent fill when selected. The label uses <code>class="btn"</code> for shape (height, padding, density, focus ring), and the toggle's rules overwrite the color layer on top.</p>
+    <p><strong>Shape modifiers compose.</strong> Pair <code>.btn--sm</code> / <code>.btn--lg</code> / <code>.btn--icon-only</code> / <code>.btn--icon-round</code> on the label and they apply as expected. <strong>Tone modifiers do not.</strong> <code>.btn--primary</code> / <code>.btn--danger</code> are silently ignored because a segmented control reads as "pick one of these", not "trigger this action". If you need a tone-colored toggle, that's a different pattern (custom CSS at the consumer level).</p>
   </section>
 
   <section>
@@ -159,5 +159,45 @@
     <h2>Versus <code>.btn-group</code></h2>
     <p><code>.toggle</code> is an HTML-only pattern. No JS, the browser's native input state is the source of truth. Use when the selected value should land in form data, or when you need a one-of-many picker without writing handlers.</p>
     <p>For tab-like UI where the selected state lives in script (active tab on a panel, view mode on a chart, segment in a wizard), use the planned <code>.btn-group[data-state="active"]</code> pattern instead. Same visual, different state ownership.</p>
+  </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>The label is a <code>.btn</code>, so the toggle inherits the button variable surface. See <a class="link" href="/buttons">Buttons</a> for the full table. Retuning shape (radius, height, padding) on <code>.btn</code> reshapes the toggle at the same time.</p>
+    <p>The toggle owns the color layer. It reassigns four <code>.btn</code> variables based on the input's state. The rest-state values come from the neutral interactional surfaces; the selected-state values come from <code>--st-accent</code> and <code>--st-highlight</code>.</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Rest</th>
+            <th>Selected</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--btn-bg</code></td>
+            <td>transparent</td>
+            <td>var(--st-highlight)</td>
+          </tr>
+          <tr>
+            <td><code>--btn-border-color</code></td>
+            <td>var(--st-border)</td>
+            <td>color-mix(in oklch, var(--st-primary) 20%, transparent)</td>
+          </tr>
+          <tr>
+            <td><code>--btn-color</code></td>
+            <td>var(--st-foreground)</td>
+            <td>var(--st-highlight-foreground)</td>
+          </tr>
+          <tr>
+            <td><code>--btn-bevel</code></td>
+            <td>none</td>
+            <td>none</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Hover on rest paints <code>--st-accent</code>; hover on selected blends 20% foreground over <code>--st-accent</code> for a slightly bolder fill. Both compose at the variable layer, so a brand-color override on <code>--st-accent</code> or <code>--st-highlight</code> retones every toggle in scope.</p>
   </section>
 {% endblock %}

@@ -60,9 +60,9 @@
     <p>
       All visual decisions live in 30 <code>--st-*</code> tokens. Set one or
       more at <code>:root</code> and every component picks up the change.
-      Scope them to a wrapper to theme one subtree — components inside
-      read their tokens via <code>var()</code>, so they pick up whatever
-      values are in scope without rebuilding.
+      Scope them to a wrapper to theme one subtree. Components inside read
+      their tokens via <code>var()</code>, so they pick up whatever values
+      are in scope without rebuilding.
     </p>
     <p>
       Each preset below applies overrides via an inline <code>style</code>
@@ -134,7 +134,7 @@
       neutral tokens on a wrapper. Components inside read those tokens via
       <code>var()</code> and pick up the new values automatically. Intents
       (primary, success, warning, danger, info) stay vivid at their
-      authored values — only the neutral tier shifts.
+      authored values. Only the neutral tier shifts.
     </p>
     {% call ui.demo() %}
     <div style="
@@ -160,8 +160,8 @@
     <h2>Cool neutrals</h2>
     <p>
       Same shape, different hue. Swap <code>30</code> for <code>240</code>
-      in each OKLCH literal. Any hue 0–360 works — match it to the brand
-      color (or anything else) and the whole UI follows.
+      in each OKLCH literal. Any hue from 0 to 360 works. Match it to the
+      brand color (or anything else) and the whole UI follows.
     </p>
     {% call ui.demo() %}
     <div style="

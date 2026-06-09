@@ -41,7 +41,7 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Add <code>.input-group--sm</code> or <code>.input-group--lg</code> on the wrapper and the matching <code>.form-control--sm</code> / <code>--lg</code> on the input to scale each member to 28&nbsp;/&nbsp;36&nbsp;/&nbsp;44&nbsp;px.</p>
+    <p>Add <code>.input-group--sm</code> or <code>.input-group--lg</code> on the wrapper and the matching <code>.form-control--sm</code> / <code>--lg</code> on the input to scale every member together.</p>
     {% call ui.demo() %}
     <div class="demo-stack" style="max-width: 24rem;">
       <div class="input-group input-group--sm">
@@ -157,7 +157,7 @@
 
   <section>
     <h2>Textarea</h2>
-    <p>A textarea grows past the 36&nbsp;px floor and the wrapper grows with it. Addons hold to their top edge.</p>
+    <p>A textarea grows past the default height and the wrapper grows with it. Addons hold to their top edge.</p>
     {% call ui.demo() %}
     <div style="max-width: 24rem;">
       <div class="input-group">
@@ -196,5 +196,54 @@
       </div>
     </div>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>Six variables retune <code>.input-group</code> without touching component CSS. Override on <code>.input-group</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--input-group-radius</code></td>
+            <td>var(--st-radius)</td>
+            <td>Wrapper corner radius (per-component override via <code>--st-input-radius</code>; sizes pull <code>--st-radius-sm</code> / <code>-lg</code>)</td>
+          </tr>
+          <tr>
+            <td><code>--input-group-height</code></td>
+            <td>calc(2.25rem * var(--st-density))</td>
+            <td>Wrapper height; sm and lg reassign this</td>
+          </tr>
+          <tr>
+            <td><code>--input-group-bg</code></td>
+            <td>var(--st-surface)</td>
+            <td>Wrapper background</td>
+          </tr>
+          <tr>
+            <td><code>--input-group-border</code></td>
+            <td>var(--st-border)</td>
+            <td>Wrapper border color</td>
+          </tr>
+          <tr>
+            <td><code>--input-group-padding-x</code></td>
+            <td>calc(0.625rem * var(--st-density))</td>
+            <td>Addon horizontal padding; matches <code>.form-control</code> at each size so an addon's text baseline aligns with the input's</td>
+          </tr>
+          <tr>
+            <td><code>--input-group-addon-color</code></td>
+            <td>var(--st-muted-foreground)</td>
+            <td>Addon text and icon color</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The wrapper owns the chrome. Child <code>.form-control</code> elements clear their own background, border, and focus halo so only the wrapper's surface and focus state are visible.</p>
   </section>
 {% endblock %}

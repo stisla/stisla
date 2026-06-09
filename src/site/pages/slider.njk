@@ -6,7 +6,7 @@
 {% block content %}
   <header>
     <h1>Slider</h1>
-    <p class="lead">A filled-track input for picking a value from a continuous span. Track height matches <code>.form-control</code> so sliders sit cleanly next to inputs in the same row.</p>
+    <p class="lead">A filled-track input for picking a value from a continuous span.</p>
   </header>
 
   <section>
@@ -37,7 +37,7 @@
 
   <section>
     <h2>Min and max</h2>
-    <p>Set <code>min</code> and <code>max</code> to bound the slider. Defaults to <code>0</code>&ndash;<code>100</code>.</p>
+    <p>Set <code>min</code> and <code>max</code> to bound the slider. Defaults to <code>0</code> through <code>100</code>.</p>
     {% call ui.demo() %}
     <div style="max-width: 24rem;">
       <label for="minMaxSlider" class="form-label">Year</label>
@@ -59,7 +59,7 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Three sizes match the <code>.form-control</code> family: <code>.slider--sm</code> (28 / 6 / 16), default (36 / 8 / 20), and <code>.slider--lg</code> (44 / 10 / 24) &mdash; track / thumb-width / thumb-height in pixels. The thumb is shorter than the track so the clipped sliver at value extremes (0/100) is less prominent. Density-scaled.</p>
+    <p>Three sizes match the <code>.form-control</code> family. The thumb is shorter than the track so the clipped sliver at value extremes is less prominent, and every dimension scales with <code>--st-density</code>.</p>
     {% call ui.demo() %}
     <div class="demo-stack" style="max-width: 24rem;">
       <div>
@@ -91,7 +91,7 @@
 
   <section>
     <h2>Browser validation</h2>
-    <p>Native <code>:user-invalid</code> fires after the user moves the thumb past the allowed range &mdash; usually a <code>step</code> mismatch on a constrained input. A danger border paints around the track; fill and thumb keep their brand colors.</p>
+    <p>Native <code>:user-invalid</code> fires after the user moves the thumb past the allowed range. Usually a <code>step</code> mismatch on a constrained input. A danger border paints around the track; fill and thumb keep their brand colors.</p>
     {% call ui.demo() %}
     <div style="max-width: 24rem;">
       <label for="invalidSlider" class="form-label">Quantity (must land on a multiple of 10)</label>
@@ -103,7 +103,7 @@
 
   <section>
     <h2>Server validation</h2>
-    <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky &mdash; the red border persists until the library clears it.</p>
+    <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky, so the red border persists until the library clears it.</p>
     {% call ui.demo() %}
     <div style="max-width: 24rem;">
       <label for="srvSlider" class="form-label">Threshold</label>
@@ -125,7 +125,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Ten variables retune <code>.slider</code> without touching component CSS. Override on <code>.slider</code> itself, on a parent scope, or on <code>:root</code> &mdash; the cascade scopes the change.</p>
+    <p>Ten variables retune <code>.slider</code> without touching component CSS. Override on <code>.slider</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
     <div class="prose">
       <table>
         <thead>
@@ -189,6 +189,6 @@
         </tbody>
       </table>
     </div>
-    <p>Track and thumb opt out of <code>--st-radius</code> &mdash; pill is semantic, not stylistic. Override <code>--slider-radius</code> per-component if a square track is genuinely wanted.</p>
+    <p>Track and thumb opt out of <code>--st-radius</code>. Pill is semantic, not stylistic. Override <code>--slider-radius</code> per-component if a square track is genuinely wanted.</p>
   </section>
 {% endblock %}

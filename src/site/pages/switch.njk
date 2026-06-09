@@ -28,7 +28,7 @@
 
   <section>
     <h2>Large</h2>
-    <p>Add <code>.switch--lg</code> for a 44×24 variant. Suited to standalone settings rows where the switch is the row's primary affordance.</p>
+    <p>Add <code>.switch--lg</code> for a larger variant. Suited to standalone settings rows where the switch is the row's primary affordance.</p>
     {% call ui.demo() %}
     <div class="demo-stack" style="max-width: 24rem;">
       <div class="switch switch--lg">
@@ -118,5 +118,59 @@
     </div>
     {% endcall %}
     <p>The red border stays in both off and on states. Track fill follows the on/off semantic; border carries the invalid signal. Both compose at once.</p>
+  </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>Seven variables retune <code>.switch</code> without touching component CSS. Override on <code>.switch</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--switch-track-w</code></td>
+            <td>calc(1.75rem * var(--st-density))</td>
+            <td>Track width; <code>--lg</code> reassigns this</td>
+          </tr>
+          <tr>
+            <td><code>--switch-track-h</code></td>
+            <td>calc(1rem * var(--st-density))</td>
+            <td>Track height</td>
+          </tr>
+          <tr>
+            <td><code>--switch-thumb</code></td>
+            <td>calc(0.75rem * var(--st-density))</td>
+            <td>Thumb diameter</td>
+          </tr>
+          <tr>
+            <td><code>--switch-inset</code></td>
+            <td>calc(0.125rem * var(--st-density))</td>
+            <td>Visible gap between thumb edge and track edge</td>
+          </tr>
+          <tr>
+            <td><code>--switch-off-bg</code></td>
+            <td>color-mix(in oklch, var(--st-foreground) 25%, transparent)</td>
+            <td>Off-state track; mid-gray that adapts per theme so the white thumb stays readable in both modes</td>
+          </tr>
+          <tr>
+            <td><code>--switch-on-bg</code></td>
+            <td>var(--st-primary)</td>
+            <td>On-state track</td>
+          </tr>
+          <tr>
+            <td><code>--switch-thumb-color</code></td>
+            <td>white</td>
+            <td>Thumb fill (white literal so the thumb reads on both the off-state mid-gray and the on-state primary track in both themes)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Track and thumb opt out of <code>--st-radius</code>. The pill and circle are semantic. Override <code>--switch-track-h</code> or <code>--switch-thumb</code> for a different shape; the radius follows the shorter dimension.</p>
   </section>
 {% endblock %}

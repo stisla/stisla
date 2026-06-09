@@ -249,4 +249,165 @@
     </div>
     {% endcall %}
   </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>Override on <code>.btn</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change. The variable surface splits into four groups.</p>
+
+    <h3>Geometry and sizes</h3>
+    <p>Shape, height, and text scale. Size modifiers (<code>--sm</code>, <code>--lg</code>) reassign each row to the corresponding small or large value.</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--btn-radius</code></td>
+            <td>var(--st-radius)</td>
+            <td>Corner radius (per-component override via <code>--st-btn-radius</code>; sizes pull <code>--st-radius-sm</code> / <code>-lg</code>)</td>
+          </tr>
+          <tr>
+            <td><code>--btn-height</code></td>
+            <td>2.25rem (default), 1.75rem (--sm), 2.75rem (--lg)</td>
+            <td>Hard single-line height. Multiplied by <code>--st-density</code> at the component level</td>
+          </tr>
+          <tr>
+            <td><code>--btn-padding-x</code></td>
+            <td>calc(0.75rem * var(--st-density)) (default), 0.625rem (--sm), 1rem (--lg)</td>
+            <td>Horizontal padding</td>
+          </tr>
+          <tr>
+            <td><code>--btn-font-size</code></td>
+            <td>0.875rem (default), 0.8125rem (--sm), 1rem (--lg)</td>
+            <td>Label size</td>
+          </tr>
+          <tr>
+            <td><code>--btn-font-weight</code></td>
+            <td>500</td>
+            <td>Label weight</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p><code>.btn--icon-only</code> zeroes <code>--btn-padding-x</code> and pins width to <code>--btn-height</code> for a 1:1 square.</p>
+
+    <h3>Color knobs</h3>
+    <p>The four surface variables that paint each state. Each one defaults from <code>--btn-tone</code> (covered in the next group), so retoning the button is usually a one-line <code>--btn-tone</code> override rather than four separate writes.</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--btn-bg</code></td>
+            <td>var(--btn-tone)</td>
+            <td>Background. <code>:hover</code> mixes 88% over black; <code>:active</code> 78%; <code>:disabled</code> 50% over transparent</td>
+          </tr>
+          <tr>
+            <td><code>--btn-color</code></td>
+            <td>(tone-modifier sets it)</td>
+            <td>Label color. Pairs with <code>--btn-tone</code> so a white-on-tone button stays legible across token overrides</td>
+          </tr>
+          <tr>
+            <td><code>--btn-border-color</code></td>
+            <td>color-mix(in oklch, var(--btn-tone) 85%, black)</td>
+            <td>Rim border. Reads as recessed in light and rim-lit in dark</td>
+          </tr>
+          <tr>
+            <td><code>--btn-bevel</code></td>
+            <td>inset 0 1px 0 rgba(255, 255, 255, 0.15)</td>
+            <td>Inset top highlight. Set to <code>none</code> for a flat-button look (outline, ghost, and soft variants do this automatically)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Tone source</h3>
+    <p>One variable carries the button's brand color. The four color knobs above derive from it, so a single <code>--btn-tone</code> override retones every state. Tone modifiers reassign <code>--btn-tone</code> to the matching token.</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default per modifier</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--btn-tone</code></td>
+            <td>set by tone modifier</td>
+            <td>Source color for <code>--btn-bg</code> and <code>--btn-border-color</code> derivations</td>
+          </tr>
+          <tr>
+            <td><code>.btn--primary</code></td>
+            <td>var(--st-primary)</td>
+            <td>Pairs with <code>--btn-color: var(--st-primary-foreground)</code></td>
+          </tr>
+          <tr>
+            <td><code>.btn--danger</code></td>
+            <td>var(--st-danger)</td>
+            <td>Pairs with <code>--btn-color: var(--st-danger-foreground)</code></td>
+          </tr>
+          <tr>
+            <td><code>.btn--neutral</code></td>
+            <td>var(--st-foreground)</td>
+            <td>Asymmetric: <code>--btn-bg</code> is forced to <code>--st-neutral</code> and <code>--btn-border-color</code> mixes neutral with muted foreground so the rim reads as recessed</td>
+          </tr>
+          <tr>
+            <td><code>.btn--tertiary</code></td>
+            <td>var(--st-foreground)</td>
+            <td>Pairs with <code>--btn-color: var(--st-background)</code>. Fill flips with the theme</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>For one-off colors, set <code>--btn-tone</code> and <code>--btn-color</code> inline (see Custom color above). The bg, hover, active, rim, and bevel all follow from that one assignment.</p>
+
+    <h3>Shape variants</h3>
+    <p>The outline, ghost, and soft modifiers override the color knobs while leaving <code>--btn-tone</code> intact, so a single tone reads three different ways. Each modifier sets <code>--btn-bevel: none</code> because the inset highlight only reads on filled surfaces.</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Modifier</th>
+            <th>--btn-bg</th>
+            <th>--btn-color</th>
+            <th>--btn-border-color</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>.btn--outline</code></td>
+            <td>transparent</td>
+            <td>var(--btn-tone)</td>
+            <td>var(--btn-tone)</td>
+          </tr>
+          <tr>
+            <td><code>.btn--ghost</code></td>
+            <td>transparent</td>
+            <td>var(--btn-tone)</td>
+            <td>transparent</td>
+          </tr>
+          <tr>
+            <td><code>.btn--soft</code></td>
+            <td>color-mix(in oklch, var(--btn-tone) 12%, transparent)</td>
+            <td>var(--btn-tone)</td>
+            <td>transparent</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Hover on outline and ghost paints <code>--st-accent</code>; hover on soft increases the bg mix from 12% to ~20%. Active on each shape darkens accordingly.</p>
+  </section>
 {% endblock %}

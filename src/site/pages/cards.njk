@@ -147,4 +147,52 @@
     </div>
     {% endcall %}
   </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>Six variables retune <code>.card</code> without touching component CSS. Override on <code>.card</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--card-radius</code></td>
+            <td>var(--st-radius)</td>
+            <td>Corner radius (per-card override via <code>--st-card-radius</code>)</td>
+          </tr>
+          <tr>
+            <td><code>--card-padding</code></td>
+            <td>calc(1.25rem * var(--st-density))</td>
+            <td>Padding for header, body, and footer</td>
+          </tr>
+          <tr>
+            <td><code>--card-shadow</code></td>
+            <td>var(--st-shadow)</td>
+            <td>Drop shadow; <code>.card--flat</code> sets it to <code>none</code></td>
+          </tr>
+          <tr>
+            <td><code>--card-bg</code></td>
+            <td>var(--st-surface)</td>
+            <td>Background</td>
+          </tr>
+          <tr>
+            <td><code>--card-color</code></td>
+            <td>var(--st-foreground)</td>
+            <td>Text color</td>
+          </tr>
+          <tr>
+            <td><code>--card-border</code></td>
+            <td>1px solid var(--st-border)</td>
+            <td>Full border shorthand (width, style, color)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 {% endblock %}

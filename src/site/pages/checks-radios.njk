@@ -66,7 +66,7 @@
 
   <section>
     <h2>Indeterminate</h2>
-    <p>The indeterminate state is set from script — there's no HTML attribute for it. Useful as a parent of a partially-selected group.</p>
+    <p>The indeterminate state is set from script. There's no HTML attribute for it. Useful as a parent of a partially-selected group.</p>
     {% call ui.demo() %}
     <div class="demo-stack" style="max-width: 24rem;">
       <div class="form-check">
@@ -159,7 +159,7 @@
       </div>
     </div>
     {% endcall %}
-    <p>The red border stays even after you check or select. That is the point. Server errors should not dismiss themselves on touch. The checked variants show both signals composing at once: primary fill says "this is selected", red rim says "and the server still considers it invalid".</p>
+    <p>The red border stays even after you check or select. That is the point. Server errors should not dismiss themselves on touch. The checked variants show both signals composing at once. Primary fill says "this is selected", red rim says "and the server still considers it invalid".</p>
   </section>
 
   <section>
@@ -171,5 +171,59 @@
       <input class="form-check__input" type="radio" aria-label="Bare radio" checked />
     </div>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>Seven variables retune <code>.form-check__input</code> without touching component CSS. Override on the input itself, on the <code>.form-check</code> wrapper, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--form-check-size</code></td>
+            <td>calc(1rem * var(--st-density))</td>
+            <td>Box dimension; checkbox renders square, radio inherits and renders round</td>
+          </tr>
+          <tr>
+            <td><code>--form-check-radius</code></td>
+            <td>0.25rem</td>
+            <td>Checkbox corner radius; radio overrides to 50%</td>
+          </tr>
+          <tr>
+            <td><code>--form-check-bg</code></td>
+            <td>var(--st-surface)</td>
+            <td>Unchecked background</td>
+          </tr>
+          <tr>
+            <td><code>--form-check-border</code></td>
+            <td>var(--st-border)</td>
+            <td>Unchecked border</td>
+          </tr>
+          <tr>
+            <td><code>--form-check-checked-bg</code></td>
+            <td>var(--st-primary)</td>
+            <td>Checked or indeterminate background</td>
+          </tr>
+          <tr>
+            <td><code>--form-check-checked-color</code></td>
+            <td>var(--st-primary-foreground)</td>
+            <td>Indicator color reference (the SVG itself is a literal white that pairs with the default primary; recolor the indicator by replacing <code>--form-check-indicator</code> instead)</td>
+          </tr>
+          <tr>
+            <td><code>--form-check-indicator</code></td>
+            <td>SVG data URL (checkmark, dash, or dot)</td>
+            <td>Glyph painted over <code>--form-check-checked-bg</code>; checked, indeterminate, and radio states each set their own SVG</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Checkbox and radio share the same variable surface. The radio reads the same defaults and only flips <code>--form-check-radius</code> to 50% and swaps <code>--form-check-indicator</code> to the dot SVG. Override either var on the radio's input to retune just that shape.</p>
   </section>
 {% endblock %}

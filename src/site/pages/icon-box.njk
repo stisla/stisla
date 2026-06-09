@@ -45,7 +45,7 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Default is 36×36 with an 18px icon. Add <code>.icon-box--sm</code> (28×28) or <code>.icon-box--lg</code> (48×48). Size scales with <code>--st-density</code>.</p>
+    <p>Three sizes match the <code>.btn</code> family. Add <code>.icon-box--sm</code> or <code>.icon-box--lg</code>. Every dimension scales with <code>--st-density</code>.</p>
     {% call ui.demo() %}
     <div class="demo-row demo-row--top">
       <span class="icon-box icon-box--primary icon-box--sm"><i data-lucide="zap"></i></span>
@@ -71,5 +71,53 @@
       </span>
     </div>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>Six variables retune <code>.icon-box</code> without touching component CSS. Override on <code>.icon-box</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--icon-box-size</code></td>
+            <td>calc(2.25rem * var(--st-density))</td>
+            <td>Outer square dimension; sm and lg reassign this</td>
+          </tr>
+          <tr>
+            <td><code>--icon-box-icon-size</code></td>
+            <td>1.125rem</td>
+            <td>Inner icon size</td>
+          </tr>
+          <tr>
+            <td><code>--icon-box-radius</code></td>
+            <td>var(--st-radius-sm)</td>
+            <td>Corner radius (per-component override via <code>--st-icon-box-radius</code>); <code>--round</code> forces 50%, <code>--square</code> forces 0</td>
+          </tr>
+          <tr>
+            <td><code>--icon-box-tone</code></td>
+            <td>var(--st-muted-foreground)</td>
+            <td>Color source the bg and icon derive from; intents reassign this</td>
+          </tr>
+          <tr>
+            <td><code>--icon-box-bg</code></td>
+            <td>color-mix(in oklch, var(--icon-box-tone) 15%, transparent)</td>
+            <td>Background tint</td>
+          </tr>
+          <tr>
+            <td><code>--icon-box-color</code></td>
+            <td>var(--icon-box-tone)</td>
+            <td>Icon color</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 {% endblock %}

@@ -10,7 +10,7 @@
   </header>
 
   <section>
-    <p>Stisla has two typographic contexts. The pattern classes on this page — <code>.h1</code>–<code>.h6</code>, <code>.lead</code>, <code>.display-*</code> — are for app UI: card titles, page section labels, dashboard headers. You control spacing. For article or CMS content where the typography owns its rhythm, jump to <a class="link" href="#prose">long-form content</a>.</p>
+    <p>Stisla has two typographic contexts. The pattern classes on this page (<code>.h1</code> through <code>.h6</code>, <code>.lead</code>, <code>.display-*</code>) are for app UI like card titles, page section labels, and dashboard headers. You control spacing. For article or CMS content where the typography owns its rhythm, jump to <a class="link" href="#prose">long-form content</a>.</p>
   </section>
 
   <section>
@@ -26,7 +26,7 @@
       <p class="h6">Heading six</p>
     </div>
     {% endcall %}
-    <p>Reboot strips the default size and weight from <code>&lt;h1&gt;</code>–<code>&lt;h6&gt;</code> so the heading element doesn&rsquo;t leak visual treatment into UI contexts (a card title that&rsquo;s an <code>&lt;h5&gt;</code> shouldn&rsquo;t pick up an extra 16px of margin). Use the matching class for the look; the element carries the document outline.</p>
+    <p>Reboot strips the default size and weight from <code>&lt;h1&gt;</code> through <code>&lt;h6&gt;</code> so the heading element doesn&rsquo;t leak visual treatment into UI contexts (a card title that&rsquo;s an <code>&lt;h5&gt;</code> shouldn&rsquo;t pick up the heading&rsquo;s default margin). Use the matching class for the look; the element carries the document outline.</p>
     {% call ui.demo() %}
     <p class="h3">A paragraph styled as an h3.</p>
     {% endcall %}
@@ -60,16 +60,16 @@
 
   <section id="prose">
     <h2>Long-form content</h2>
-    <p>Wrap article or CMS content in <code>.prose</code>. It restores the reading typography that the foundation reboot strips &mdash; heading scale and rhythm, paragraph margins, list markers, blockquote treatment, inline code chip, tables, figure captions. Everything an article needs and nothing a dashboard does.</p>
+    <p>Wrap article or CMS content in <code>.prose</code>. It restores the reading typography that the foundation reboot strips (heading scale and rhythm, paragraph margins, list markers, blockquote treatment, inline code chip, tables, figure captions). Everything an article needs and nothing a dashboard does.</p>
     <p>The parent decides width. <code>.prose</code> is a typographic treatment, not a layout box.</p>
-    <p>The article below exercises every element <code>.prose</code> styles &mdash; headings, lead, paragraphs with inline <code>&lt;a&gt;</code>/<code>&lt;strong&gt;</code>/<code>&lt;em&gt;</code>/<code>&lt;code&gt;</code>/<code>&lt;kbd&gt;</code>/<code>&lt;small&gt;</code>, unordered + ordered + description lists, blockquote, inline code chip, pre/code block, image, figure with caption, table, and horizontal rule.</p>
+    <p>The article below exercises every element <code>.prose</code> styles. It covers headings, lead, paragraphs with inline <code>&lt;a&gt;</code>/<code>&lt;strong&gt;</code>/<code>&lt;em&gt;</code>/<code>&lt;code&gt;</code>/<code>&lt;kbd&gt;</code>/<code>&lt;small&gt;</code>, unordered + ordered + description lists, blockquote, inline code chip, pre/code block, image, figure with caption, table, and horizontal rule.</p>
     {% call ui.demo(prose=true) %}
 <article style="max-width: 36rem;">
   <div class="prose">
     <p class="text-muted-foreground small">June 4, 2026 &middot; Engineering &middot; 6 min read</p>
     <h1>Shipping a 14px baseline</h1>
     <p class="lead">Why we dropped the body text by two pixels and what changed downstream.</p>
-    <p>The framework used to render body copy at <code>16px</code>, the common web default. That reads fine on a marketing page but feels heavy in a <strong>dashboard</strong> where every row counts. We took the baseline to <code>14px</code> and let the heading scale follow &mdash; <em>without</em> touching <code>html</code>, so <code>1rem</code> stays anchored at 16px and every component&rsquo;s rem-based math keeps its pixel meaning. The whole change is one <a href="#">commit on the v3 branch</a>.</p>
+    <p>The framework used to render body copy at <code>16px</code>, the common web default. That reads fine on a marketing page but feels heavy in a <strong>dashboard</strong> where every row counts. We took the baseline to <code>14px</code> and let the heading scale follow, <em>without</em> touching <code>html</code>. <code>1rem</code> stays anchored at 16px and every component&rsquo;s rem-based math keeps its pixel meaning. The whole change is one <a href="#">commit on the v3 branch</a>.</p>
 
     <img alt="Stand-in banner illustrating the type-scale comparison" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 180'><defs><linearGradient id='g' x1='0' x2='1'><stop offset='0' stop-color='%23e0e7ff'/><stop offset='1' stop-color='%23c7d2fe'/></linearGradient></defs><rect width='600' height='180' fill='url(%23g)'/><text x='300' y='90' text-anchor='middle' font-family='ui-sans-serif,system-ui,sans-serif' font-size='18' fill='%231e1b4b' font-weight='600'>Before / After: type-scale comparison</text><text x='300' y='114' text-anchor='middle' font-family='ui-sans-serif,system-ui,sans-serif' font-size='13' fill='%23312e81'>16px baseline vs 14px baseline</text></svg>">
 
@@ -119,25 +119,25 @@ background-color: var(--st-background);
     <p>The change reads loudest in three places. Each one earned its own dashboard pass during the migration.</p>
 
     <ol>
-      <li>Card titles inside dashboard widgets &mdash; they used to read like page sections; now they read like card chrome.</li>
-      <li>Form field labels in dense layouts &mdash; the new size keeps the label and its input visually tied.</li>
-      <li>Table cells in data-heavy views &mdash; more rows fit on screen without horizontal scroll.</li>
+      <li>Card titles inside dashboard widgets. They used to read like page sections; now they read like card chrome.</li>
+      <li>Form field labels in dense layouts. The new size keeps the label and its input visually tied.</li>
+      <li>Table cells in data-heavy views. More rows fit on screen without horizontal scroll.</li>
     </ol>
 
     <figure>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 220" style="display: block; width: 100%; height: auto; background: var(--st-surface-2); border-radius: calc(var(--st-radius) - 1px);">
         <rect x="24" y="24"  width="200" height="28" fill="var(--st-primary)" opacity="0.85" rx="4"/>
-        <text x="232" y="44" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="var(--st-foreground)">h1 &mdash; 32px</text>
+        <text x="232" y="44" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="var(--st-foreground)">h1 &middot; 32px</text>
         <rect x="24" y="62"  width="150" height="22" fill="var(--st-primary)" opacity="0.72" rx="4"/>
-        <text x="232" y="78" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="var(--st-foreground)">h2 &mdash; 24px</text>
+        <text x="232" y="78" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="var(--st-foreground)">h2 &middot; 24px</text>
         <rect x="24" y="92"  width="124" height="20" fill="var(--st-primary)" opacity="0.60" rx="4"/>
-        <text x="232" y="106" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="var(--st-foreground)">h3 &mdash; 20px</text>
+        <text x="232" y="106" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="var(--st-foreground)">h3 &middot; 20px</text>
         <rect x="24" y="120" width="110" height="18" fill="var(--st-primary)" opacity="0.48" rx="4"/>
-        <text x="232" y="133" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="var(--st-foreground)">h4 &mdash; 18px</text>
+        <text x="232" y="133" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="var(--st-foreground)">h4 &middot; 18px</text>
         <rect x="24" y="146" width="92"  height="16" fill="var(--st-primary)" opacity="0.36" rx="4"/>
-        <text x="232" y="158" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="var(--st-foreground)">h5 &mdash; 16px</text>
+        <text x="232" y="158" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="var(--st-foreground)">h5 &middot; 16px</text>
         <rect x="24" y="170" width="78"  height="14" fill="var(--st-primary)" opacity="0.24" rx="4"/>
-        <text x="232" y="181" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="var(--st-foreground)">h6 &mdash; 14px</text>
+        <text x="232" y="181" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="var(--st-foreground)">h6 &middot; 14px</text>
       </svg>
       <figcaption>The heading scale rendered to scale at the 14px baseline.</figcaption>
     </figure>
@@ -171,7 +171,7 @@ background-color: var(--st-background);
 
   <section>
     <h2>Customization</h2>
-    <p>Five variables retune <code>.prose</code> without touching component CSS. Override on <code>.prose</code> itself, or on any ancestor &mdash; the cascade scopes the change.</p>
+    <p>Five variables retune <code>.prose</code> without touching component CSS. Override on <code>.prose</code> itself, or on any ancestor. The cascade scopes the change.</p>
     <div class="prose">
       <table>
         <thead>
@@ -210,6 +210,6 @@ background-color: var(--st-background);
         </tbody>
       </table>
     </div>
-    <p>Components nested inside prose customize through the cascade. To enlarge <code>&lt;kbd&gt;</code> chips inside long-form content, set <code>--st-kbd-padding-y</code> on <code>.prose</code> &mdash; the kbd component reads its own variable and the cascade scopes the change. No prose-specific variable is invented for the nested component.</p>
+    <p>Components nested inside prose customize through the cascade. To enlarge <code>&lt;kbd&gt;</code> chips inside long-form content, set <code>--st-kbd-padding-y</code> on <code>.prose</code>. The kbd component reads its own variable and the cascade scopes the change. No prose-specific variable is invented for the nested component.</p>
   </section>
 {% endblock %}

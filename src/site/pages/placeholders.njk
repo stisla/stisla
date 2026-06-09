@@ -97,12 +97,45 @@
 
   <section>
     <h2>Buttons</h2>
-    <p>Apply <code>.placeholder</code> to a <code>.btn</code> to render an unlabeled stand-in. Mirror the variant of the real button so the swap is seamless.</p>
+    <p>Apply <code>.placeholder</code> to a <code>.btn</code> to render an unlabeled stand-in. Mirror the variant of the real button so the swap doesn't shift the layout.</p>
     {% call ui.demo() %}
     <div class="demo-row">
       <span class="btn btn--primary placeholder" aria-disabled="true" style="width: 6rem"></span>
       <span class="btn btn--outline btn--neutral placeholder" aria-disabled="true" style="width: 4rem"></span>
     </div>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>Three variables retune <code>.placeholder</code> without touching component CSS. Override on <code>.placeholder</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--placeholder-opacity</code></td>
+            <td>0.5</td>
+            <td>Opacity applied over <code>currentColor</code></td>
+          </tr>
+          <tr>
+            <td><code>--placeholder-radius</code></td>
+            <td>var(--st-radius-sm)</td>
+            <td>Corner radius (per-component override via <code>--st-placeholder-radius</code>)</td>
+          </tr>
+          <tr>
+            <td><code>--placeholder-height</code></td>
+            <td>1em</td>
+            <td>Block height; size modifiers reassign this</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 {% endblock %}

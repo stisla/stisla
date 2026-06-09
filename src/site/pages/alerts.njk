@@ -11,7 +11,7 @@
 
   <section>
     <h2>Tones</h2>
-    <p>A tone is required. Pair <code>.alert</code> with <code>.alert--neutral</code> for the plain surface look, or with an intent like <code>.alert--success</code> for a tinted variant. A bare <code>.alert</code> renders transparent — same contract as <code>.btn</code>.</p>
+    <p>A tone is required. Pair <code>.alert</code> with <code>.alert--neutral</code> for the plain surface look, or with an intent like <code>.alert--success</code> for a tinted variant. A bare <code>.alert</code> renders transparent, the same contract as <code>.btn</code>.</p>
     {% call ui.demo() %}
     <div class="demo-stack">
       <div class="alert alert--neutral">
@@ -152,7 +152,7 @@
 
   <section>
     <h2>Inline link</h2>
-    <p><code>.alert__link</code> reads <code>--alert-link-color</code> — primary on a neutral alert, the intent color on tinted alerts. The link affordance stays readable regardless of tone.</p>
+    <p><code>.alert__link</code> reads <code>--alert-link-color</code>. That resolves to primary on a neutral alert and to the intent color on tinted alerts, so the link affordance stays readable regardless of tone.</p>
     {% call ui.demo() %}
     <div class="demo-stack">
       <div class="alert alert--neutral">
@@ -165,5 +165,64 @@
       </div>
     </div>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>Eight variables retune <code>.alert</code> without touching component CSS. Override on <code>.alert</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--alert-radius</code></td>
+            <td>var(--st-radius)</td>
+            <td>Corner radius (per-component override via <code>--st-alert-radius</code>)</td>
+          </tr>
+          <tr>
+            <td><code>--alert-padding-y</code></td>
+            <td>calc(0.625rem * var(--st-density))</td>
+            <td>Vertical padding; doubles when <code>.alert__description</code> is present</td>
+          </tr>
+          <tr>
+            <td><code>--alert-padding-x</code></td>
+            <td>calc(1rem * var(--st-density))</td>
+            <td>Horizontal padding</td>
+          </tr>
+          <tr>
+            <td><code>--alert-bg</code></td>
+            <td>transparent</td>
+            <td>Background; <code>--neutral</code> sets <code>--st-surface</code>, intents set a 7% tint of the intent color</td>
+          </tr>
+          <tr>
+            <td><code>--alert-border-color</code></td>
+            <td>transparent</td>
+            <td>Border color; <code>--neutral</code> sets <code>--st-border</code>, intents set a 40% tint of the intent color</td>
+          </tr>
+          <tr>
+            <td><code>--alert-color</code></td>
+            <td>var(--st-foreground)</td>
+            <td>Body text color</td>
+          </tr>
+          <tr>
+            <td><code>--alert-icon-color</code></td>
+            <td>var(--st-muted-foreground)</td>
+            <td>Leading icon color; intents flip this to the intent color</td>
+          </tr>
+          <tr>
+            <td><code>--alert-link-color</code></td>
+            <td>var(--st-primary)</td>
+            <td><code>.alert__link</code> color; intents flip this to the intent color so the link stays readable</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>A bare <code>.alert</code> stays transparent because <code>--alert-bg</code> and <code>--alert-border-color</code> default to transparent. The tone modifier provides the visible chrome, so an alert without a tone is invisible by design.</p>
   </section>
 {% endblock %}
