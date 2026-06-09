@@ -71,9 +71,9 @@
 
   <section>
     <h2>Embedded SVG divider</h2>
-    <p>Use a URL-encoded SVG to drop in any glyph. The default chevron paints with <code>fill='currentColor'</code> so it tracks the trail color; bake a hex in if you want a tone that ignores the cascade.</p>
+    <p>Use a URL-encoded SVG to drop in any glyph. Bake the stroke or fill tone in hex — browsers parse data-URL SVGs in their own context, so <code>currentColor</code> and CSS vars inside the SVG don't track the trail color. Pick a tone that reads in both themes, or use a Unicode glyph instead.</p>
     {% call ui.demo() %}
-    <nav style="--breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M0 4h8M5 1l3 3-3 3' fill='none' stroke='currentColor' stroke-width='1'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+    <nav style="--breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M0 4h8M5 1l3 3-3 3' fill='none' stroke='%23999' stroke-width='1'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb__item"><a href="#">Home</a></li>
         <li class="breadcrumb__item"><a href="#">Library</a></li>
@@ -148,8 +148,8 @@
           </tr>
           <tr>
             <td><code>--breadcrumb-divider</code></td>
-            <td>chevron SVG (currentColor)</td>
-            <td>Glyph between crumbs; any <code>content</code> value works</td>
+            <td>'›' (U+203A)</td>
+            <td>Glyph between crumbs; any <code>content</code> value works (string, url(), counter)</td>
           </tr>
           <tr>
             <td><code>--breadcrumb-icon-size</code></td>

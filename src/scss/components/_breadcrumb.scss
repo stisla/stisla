@@ -17,13 +17,14 @@
 // not a highlight chip. aria-current carries the whole signal.
 //
 // === Divider =============================================================
-// Chevron SVG between crumbs, painted via ::before on every item past
-// the first. The glyph uses fill='currentColor' so it tracks the trail
-// color in light, dark, and any retint scope (the BS5 version baked
-// #6c757d in and went stale under dark mode). Override the glyph
-// per-instance via inline style="--breadcrumb-divider: '/'" on the
-// <nav> wrapper or the .breadcrumb itself; the cascade lets any
-// ancestor win.
+// Unicode chevron (› U+203A) between crumbs, painted via ::before on
+// every item past the first. Text glyph inherits --breadcrumb-color
+// naturally, so the divider tracks the trail across themes + retints.
+// (We tried fill='currentColor' inside a data-URL SVG first; browsers
+// parse the SVG in its own context so the chevron always rendered
+// black. Unicode sidesteps the limitation.) Override per-instance via
+// inline style="--breadcrumb-divider: '/'" — strings work; url() SVGs
+// work too but lose the color cascade, so bake the tone in hex.
 //
 // === Leading icon ========================================================
 // <svg> or <i> inside a crumb pins to --breadcrumb-icon-size and
@@ -51,7 +52,7 @@
   // === States ===
   --breadcrumb-hover-color:  var(--st-foreground);
   --breadcrumb-active-color: var(--st-foreground);
-  --breadcrumb-divider:      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' fill='currentColor'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z'/%3E%3C/svg%3E");
+  --breadcrumb-divider:      "›";
 
   // === Icon ===
   --breadcrumb-icon-size:    1rem;
