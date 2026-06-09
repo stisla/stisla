@@ -294,6 +294,9 @@ body {
   .sidebar__button {
     width: auto;
   }
+  &.sidebar--sm {
+    --sidebar-group-gap: 1.75rem;
+  }
 }
 
 .site-main {
