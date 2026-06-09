@@ -11,15 +11,15 @@
 
   <section>
     <h2>Basic</h2>
-    <p>Wrap a list of <code>.page-item</code> in <code>.pagination</code>. Mark the current page with <code>.active</code> and <code>aria-current="page"</code>; both hover and the active chip use the accent fill.</p>
+    <p>Wrap a list of <code>.pagination__button</code> in <code>.pagination</code>. Mark the current page with <code>data-state="active"</code> and <code>aria-current="page"</code>; the active chip paints <code>--st-highlight</code> while hover paints the lighter <code>--st-accent</code>.</p>
     {% call ui.demo() %}
     <nav aria-label="Page navigation">
-      <ul class="pagination mb-0">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item active" aria-current="page"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      <ul class="pagination">
+        <li><a class="pagination__button" href="#">Previous</a></li>
+        <li><a class="pagination__button" href="#">1</a></li>
+        <li><a class="pagination__button" href="#" data-state="active" aria-current="page">2</a></li>
+        <li><a class="pagination__button" href="#">3</a></li>
+        <li><a class="pagination__button" href="#">Next</a></li>
       </ul>
     </nav>
     {% endcall %}
@@ -27,21 +27,21 @@
 
   <section>
     <h2>With icons</h2>
-    <p>Drop a <code>&lt;svg&gt;</code> or <code>&lt;i&gt;</code> inside the link. Icons inherit the chip's text color and sit on the same baseline as the label.</p>
+    <p>Drop an <code>&lt;svg&gt;</code> or <code>&lt;i&gt;</code> inside the chip. Icons sit at <code>1em</code> so they scale with the chip's font size and stay on the label baseline.</p>
     {% call ui.demo() %}
     <nav aria-label="Page navigation">
-      <ul class="pagination mb-0">
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Previous">
+      <ul class="pagination">
+        <li>
+          <a class="pagination__button" href="#" aria-label="Previous">
             <i data-lucide="chevron-left"></i>
             <span>Previous</span>
           </a>
         </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item active" aria-current="page"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Next">
+        <li><a class="pagination__button" href="#">1</a></li>
+        <li><a class="pagination__button" href="#" data-state="active" aria-current="page">2</a></li>
+        <li><a class="pagination__button" href="#">3</a></li>
+        <li>
+          <a class="pagination__button" href="#" aria-label="Next">
             <span>Next</span>
             <i data-lucide="chevron-right"></i>
           </a>
@@ -53,21 +53,21 @@
 
   <section>
     <h2>Disabled</h2>
-    <p>Add <code>.disabled</code> to a <code>.page-item</code> to gray it out and turn off pointer events. Use it on the leading or trailing control when the user is at the start or end of the range.</p>
+    <p>Set <code>aria-disabled="true"</code> on the chip — or use <code>&lt;button disabled&gt;</code> — to gray it out and turn off pointer events. Drop the <code>href</code> too so screen readers don't announce it as a link. Use on the leading or trailing chip when the user is at the start or end of the range.</p>
     {% call ui.demo() %}
     <nav aria-label="Page navigation">
-      <ul class="pagination mb-0">
-        <li class="page-item disabled">
-          <a class="page-link" aria-label="Previous" aria-disabled="true">
+      <ul class="pagination">
+        <li>
+          <span class="pagination__button" aria-label="Previous" aria-disabled="true">
             <i data-lucide="chevron-left"></i>
             <span>Previous</span>
-          </a>
+          </span>
         </li>
-        <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Next">
+        <li><a class="pagination__button" href="#" data-state="active" aria-current="page">1</a></li>
+        <li><a class="pagination__button" href="#">2</a></li>
+        <li><a class="pagination__button" href="#">3</a></li>
+        <li>
+          <a class="pagination__button" href="#" aria-label="Next">
             <span>Next</span>
             <i data-lucide="chevron-right"></i>
           </a>
@@ -78,35 +78,63 @@
   </section>
 
   <section>
-    <h2>Sizes</h2>
-    <p>Add <code>.pagination-sm</code> or <code>.pagination-lg</code> for compact or large chips. Heights match the button scale.</p>
+    <h2>Ellipsis</h2>
+    <p>Drop <code>.pagination__ellipsis</code> in for a truncation marker between page ranges. Takes the same chip footprint so the row rhythm holds, no hover, no focus.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-column gap-3 w-100">
+    <nav aria-label="Page navigation">
+      <ul class="pagination">
+        <li>
+          <a class="pagination__button" href="#" aria-label="Previous">
+            <i data-lucide="chevron-left"></i>
+          </a>
+        </li>
+        <li><a class="pagination__button" href="#">1</a></li>
+        <li><a class="pagination__button" href="#">2</a></li>
+        <li><a class="pagination__button" href="#" data-state="active" aria-current="page">3</a></li>
+        <li><a class="pagination__button" href="#">4</a></li>
+        <li><a class="pagination__button" href="#">5</a></li>
+        <li><span class="pagination__ellipsis" aria-hidden="true">…</span></li>
+        <li><a class="pagination__button" href="#">12</a></li>
+        <li>
+          <a class="pagination__button" href="#" aria-label="Next">
+            <i data-lucide="chevron-right"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Sizes</h2>
+    <p>Add <code>.pagination--sm</code> or <code>.pagination--lg</code> for compact or large chips. Heights match the button scale at 28 / 36 / 44 px under default density.</p>
+    {% call ui.demo() %}
+    <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%;">
       <nav aria-label="Small page navigation">
-        <ul class="pagination pagination-sm mb-0">
-          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item active" aria-current="page"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        <ul class="pagination pagination--sm">
+          <li><a class="pagination__button" href="#">Previous</a></li>
+          <li><a class="pagination__button" href="#">1</a></li>
+          <li><a class="pagination__button" href="#" data-state="active" aria-current="page">2</a></li>
+          <li><a class="pagination__button" href="#">3</a></li>
+          <li><a class="pagination__button" href="#">Next</a></li>
         </ul>
       </nav>
       <nav aria-label="Default page navigation">
-        <ul class="pagination mb-0">
-          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item active" aria-current="page"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        <ul class="pagination">
+          <li><a class="pagination__button" href="#">Previous</a></li>
+          <li><a class="pagination__button" href="#">1</a></li>
+          <li><a class="pagination__button" href="#" data-state="active" aria-current="page">2</a></li>
+          <li><a class="pagination__button" href="#">3</a></li>
+          <li><a class="pagination__button" href="#">Next</a></li>
         </ul>
       </nav>
       <nav aria-label="Large page navigation">
-        <ul class="pagination pagination-lg mb-0">
-          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item active" aria-current="page"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        <ul class="pagination pagination--lg">
+          <li><a class="pagination__button" href="#">Previous</a></li>
+          <li><a class="pagination__button" href="#">1</a></li>
+          <li><a class="pagination__button" href="#" data-state="active" aria-current="page">2</a></li>
+          <li><a class="pagination__button" href="#">3</a></li>
+          <li><a class="pagination__button" href="#">Next</a></li>
         </ul>
       </nav>
     </div>
@@ -115,28 +143,126 @@
 
   <section>
     <h2>Alignment</h2>
-    <p>Use flex utilities on the wrapping <code>&lt;nav&gt;</code> or the list itself to align the chips. <code>.justify-content-center</code> for center, <code>.justify-content-end</code> for the trailing edge.</p>
+    <p>Add <code>.pagination--center</code> or <code>.pagination--end</code> to flip the row's <code>justify-content</code>. Default is start.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-column gap-3 w-100">
+    <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%;">
       <nav aria-label="Centered page navigation">
-        <ul class="pagination justify-content-center mb-0">
-          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item active" aria-current="page"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        <ul class="pagination pagination--center">
+          <li><a class="pagination__button" href="#">Previous</a></li>
+          <li><a class="pagination__button" href="#">1</a></li>
+          <li><a class="pagination__button" href="#" data-state="active" aria-current="page">2</a></li>
+          <li><a class="pagination__button" href="#">3</a></li>
+          <li><a class="pagination__button" href="#">Next</a></li>
         </ul>
       </nav>
       <nav aria-label="End-aligned page navigation">
-        <ul class="pagination justify-content-end mb-0">
-          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item active" aria-current="page"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        <ul class="pagination pagination--end">
+          <li><a class="pagination__button" href="#">Previous</a></li>
+          <li><a class="pagination__button" href="#">1</a></li>
+          <li><a class="pagination__button" href="#" data-state="active" aria-current="page">2</a></li>
+          <li><a class="pagination__button" href="#">3</a></li>
+          <li><a class="pagination__button" href="#">Next</a></li>
         </ul>
       </nav>
     </div>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>Sixteen variables retune <code>.pagination</code> without touching component CSS. Override on <code>.pagination</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change. Size modifiers <code>--sm</code> / <code>--lg</code> retune the chip height + padding + font size in their own scope — no per-size vars to maintain.</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--pagination-gap</code></td>
+            <td>calc(0.25rem * var(--st-density))</td>
+            <td>Space between chips</td>
+          </tr>
+          <tr>
+            <td><code>--pagination-margin-bottom</code></td>
+            <td>0</td>
+            <td>Trailing space below the row</td>
+          </tr>
+          <tr>
+            <td><code>--pagination-font-size</code></td>
+            <td>0.875rem</td>
+            <td>Chip text size</td>
+          </tr>
+          <tr>
+            <td><code>--pagination-button-height</code></td>
+            <td>calc(2.25rem * var(--st-density))</td>
+            <td>Chip height (also doubles as <code>min-width</code> so single-glyph chips land as squares)</td>
+          </tr>
+          <tr>
+            <td><code>--pagination-button-padding-x</code></td>
+            <td>calc(0.75rem * var(--st-density))</td>
+            <td>Chip horizontal padding (longer labels grow from this)</td>
+          </tr>
+          <tr>
+            <td><code>--pagination-button-inner-gap</code></td>
+            <td>0.375rem</td>
+            <td>Space between icon and label inside a chip</td>
+          </tr>
+          <tr>
+            <td><code>--pagination-button-radius</code></td>
+            <td>var(--st-radius)</td>
+            <td>Chip corner radius (set 9999px for pill chips)</td>
+          </tr>
+          <tr>
+            <td><code>--pagination-button-bg</code></td>
+            <td>transparent</td>
+            <td>Chip rest background</td>
+          </tr>
+          <tr>
+            <td><code>--pagination-button-color</code></td>
+            <td>var(--st-foreground)</td>
+            <td>Chip rest text color</td>
+          </tr>
+          <tr>
+            <td><code>--pagination-button-border-color</code></td>
+            <td>transparent</td>
+            <td>Chip border color (set <code>var(--st-border)</code> for outlined chips)</td>
+          </tr>
+          <tr>
+            <td><code>--pagination-button-hover-bg</code></td>
+            <td>var(--st-accent)</td>
+            <td>Hover background (interactive chips only)</td>
+          </tr>
+          <tr>
+            <td><code>--pagination-button-hover-color</code></td>
+            <td>var(--st-accent-foreground)</td>
+            <td>Hover text color</td>
+          </tr>
+          <tr>
+            <td><code>--pagination-button-active-bg</code></td>
+            <td>var(--st-highlight)</td>
+            <td>Current page background (<code>data-state="active"</code> / <code>aria-current="page"</code>)</td>
+          </tr>
+          <tr>
+            <td><code>--pagination-button-active-color</code></td>
+            <td>var(--st-highlight-foreground)</td>
+            <td>Current page text color</td>
+          </tr>
+          <tr>
+            <td><code>--pagination-button-disabled-color</code></td>
+            <td>var(--st-muted-foreground)</td>
+            <td>Disabled / ellipsis text color</td>
+          </tr>
+          <tr>
+            <td><code>--pagination-button-ring</code></td>
+            <td>var(--st-ring)</td>
+            <td>Focus outline color</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 {% endblock %}

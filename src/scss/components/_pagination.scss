@@ -1,48 +1,209 @@
 // Stisla v3 — pagination.
 //
-// Most of the visual flip from BS5's bordered conjoined row to a flat rail
-// of standalone chips is set at the Sass-var level in tokens/_variables.scss
-// (transparent bg + border, accent-bg fills on hover/focus/.active, text on
-// --bs-body-color, margin-start 0 to round every chip). This file holds the
-// rules that BS5 vars can't express: a 4px gap between chips, the flex
-// layout on .page-link so labels and icons sit on the optical baseline,
-// and per-size min-width/min-height that match the button scale
-// (28 / 36 / 44 px). Single-glyph chips ("1", "2", "3") land as squares
-// at the matching height; chips with longer labels (Previous, Next) grow
-// from the padding. BS5's padding-only formula falls a few pixels short
-// of the button cadence at every size, so min-height pins the final
-// height the same way it does in components/_buttons.scss.
+// Row of page chips for moving through a long list or paginated view.
+// Standalone chips with a gap between, not BS5's conjoined-bordered row.
+// Rest is transparent; hover paints --st-accent; current page paints
+// --st-highlight (matches sidebar / list-group / table — current is
+// persistent selected state, not transient hover). Heights match the
+// .btn cadence (28 / 36 / 44 px) so a pagination row drops next to a
+// "Load more" button on the same baseline.
 //
-// Hover and .active both land on --bs-accent-bg by design — a selected page
-// reads the same as a hover dwell because the chips are toggleable, not
-// destinations. Dark mode rides --bs-accent-bg / --bs-body-color and needs
-// no per-mode override.
+// === Anatomy =============================================================
+//   .pagination              root list wrapper (<ul>/<ol>, or any list)
+//   .pagination__button      one chip — interactive (<a>/<button>) or
+//                            edge marker (<span aria-disabled>)
+//   .pagination__ellipsis    truncation marker between page ranges
+//                            (1 2 … 9 10) — non-interactive
+//
+// === Modifiers ===========================================================
+//   .pagination--sm          compact chips (28 × density)
+//   .pagination--lg          large chips (44 × density)
+//   .pagination--center      center the row
+//   .pagination--end         right-align the row
+//
+// === State hooks (V3.md §3.6) ============================================
+//   .pagination__button[data-state="active"]    current page → highlight
+//   .pagination__button[aria-current="page"]    same; the a11y signal
+//   .pagination__button[aria-disabled="true"]   unreachable (edge chip)
+//   :disabled                                   native button disabled
+//
+// === Interactive vs static ===============================================
+// a.pagination__button and button.pagination__button get hover + focus
+// styling automatically; <span class="pagination__button"> sits quiet so
+// an aria-disabled edge marker doesn't light up under cursor.
+//
+// === Height architecture (V3.md §3.4) ====================================
+// Hard `height` + `padding-block: 0` so --st-density genuinely shrinks
+// the chip, not just its inner padding. min-width === height so a
+// single-glyph chip ("1") lands as a square at the matching cadence;
+// longer labels ("Previous") grow from padding-inline.
+//
+// === Icons ===============================================================
+// <svg> or <i> inside a chip pins to 1em × 1em with flex-shrink: 0 so
+// icons sit on the same baseline as the label and don't squish on the
+// "Previous <chevron>" / "<chevron> Next" pairs.
 
 .pagination {
-  gap: 0.25rem;
+  // === Layout ==========================================================
+  --pagination-gap:                    calc(0.25rem * var(--st-density));
+  --pagination-margin-bottom:          0;
+  --pagination-font-size:              0.875rem;
+
+  // === Chip geometry ===================================================
+  --pagination-button-height:          calc(2.25rem * var(--st-density));
+  --pagination-button-padding-x:       calc(0.75rem * var(--st-density));
+  --pagination-button-inner-gap:       0.375rem;
+  --pagination-button-radius:          var(--st-pagination-button-radius, var(--st-radius));
+
+  // === Chip surface (rest) =============================================
+  --pagination-button-bg:              transparent;
+  --pagination-button-color:           var(--st-foreground);
+  --pagination-button-border-color:    transparent;
+
+  // === Chip states =====================================================
+  --pagination-button-hover-bg:        var(--st-accent);
+  --pagination-button-hover-color:     var(--st-accent-foreground);
+  --pagination-button-active-bg:       var(--st-highlight);
+  --pagination-button-active-color:    var(--st-highlight-foreground);
+  --pagination-button-disabled-color:  var(--st-muted-foreground);
+
+  // === Focus ===========================================================
+  --pagination-button-ring:            var(--st-ring);
+
+  // === Motion ==========================================================
+  --pagination-transition:             background-color .12s ease, color .12s ease;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pagination-gap);
+  margin-bottom: var(--pagination-margin-bottom);
+  font-size: var(--pagination-font-size);
+  // Strip default list chrome — works whether root is <ul>/<ol>/<div>.
+  // Preflight already zeroes padding/margin/list-style globally; this
+  // re-asserts in case a consumer wraps the row in .prose or any scope
+  // that re-adds list defaults.
+  padding-left: 0;
+  list-style: none;
 }
 
-.page-link {
+// === Chip =================================================================
+
+.pagination__button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.375rem;
-  min-width: 2.25rem;
-  min-height: 2.25rem;
+  gap: var(--pagination-button-inner-gap);
+  height: var(--pagination-button-height);
+  min-width: var(--pagination-button-height);
+  padding-block: 0;
+  padding-inline: var(--pagination-button-padding-x);
+  background-color: var(--pagination-button-bg);
+  color: var(--pagination-button-color);
+  border: 1px solid var(--pagination-button-border-color);
+  border-radius: var(--pagination-button-radius);
+  text-decoration: none;
+  font: inherit;
+  font-size: inherit;
+  line-height: 1;
+  cursor: default;
+  transition: var(--pagination-transition);
+
+  // Icon inside the chip — 1em scales with font-size so .pagination--sm
+  // shrinks icons proportionally, no per-size override needed.
+  > :is(svg, i) {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+  }
 }
 
-.pagination-sm .page-link {
-  min-width: 1.75rem;
-  min-height: 1.75rem;
-}
-.pagination-lg .page-link {
-  min-width: 2.75rem;
-  min-height: 2.75rem;
+// Interactive chips opt in via element selector — anchors and buttons
+// get cursor + focus; <span> edge markers sit quiet.
+a.pagination__button,
+button.pagination__button {
+  cursor: pointer;
 }
 
-// Icons inside a page link — scale with font-size and never squish.
-.page-link :is(svg, i) {
-  width: 1em;
-  height: 1em;
-  flex-shrink: 0;
+a.pagination__button:focus-visible,
+button.pagination__button:focus-visible {
+  outline: 2px solid var(--pagination-button-ring);
+  outline-offset: 2px;
+}
+
+// Hover only fires on a quiet chip — an already-selected or disabled
+// chip must not flash the accent surface. :not() with a selector-list
+// keeps the rule explicit and avoids a specificity puzzle (the active
+// rule below has lower specificity than `a.pagination__button:hover`
+// since the type selector tips the balance toward hover). Same pattern
+// as .list-group__item.
+a.pagination__button:hover:not([data-state="active"], [aria-current="page"], [aria-disabled="true"]),
+button.pagination__button:hover:not([data-state="active"], [aria-current="page"], [aria-disabled="true"]):not(:disabled) {
+  background-color: var(--pagination-button-hover-bg);
+  color: var(--pagination-button-hover-color);
+}
+
+// === Current page =========================================================
+// data-state="active" + aria-current="page" paint highlight. The hover
+// rule above carves these out via :not(), so an active chip stays on
+// the highlight tier even under cursor.
+.pagination__button[data-state="active"],
+.pagination__button[aria-current="page"] {
+  background-color: var(--pagination-button-active-bg);
+  color: var(--pagination-button-active-color);
+  border-color: var(--pagination-button-active-bg);
+}
+
+// === Disabled =============================================================
+.pagination__button[aria-disabled="true"],
+.pagination__button:disabled {
+  color: var(--pagination-button-disabled-color);
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+// === Ellipsis =============================================================
+// Non-interactive truncation marker. Same chip footprint so the row
+// rhythm holds, but no hover, no focus, no border.
+.pagination__ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--pagination-button-height);
+  min-width: var(--pagination-button-height);
+  color: var(--pagination-button-disabled-color);
+  pointer-events: none;
+  user-select: none;
+}
+
+// === Size modifiers =======================================================
+// Retune the existing chip vars in the modifier scope — no new vars.
+// Matches .btn--sm / .btn--lg pattern.
+
+.pagination--sm {
+  --pagination-button-height:    calc(1.75rem * var(--st-density));
+  --pagination-button-padding-x: calc(0.5rem * var(--st-density));
+  --pagination-font-size:        0.8125rem;
+}
+
+.pagination--lg {
+  --pagination-button-height:    calc(2.75rem * var(--st-density));
+  --pagination-button-padding-x: calc(1rem * var(--st-density));
+  --pagination-font-size:        1rem;
+}
+
+// === Alignment modifiers ==================================================
+
+.pagination--center {
+  justify-content: center;
+}
+
+.pagination--end {
+  justify-content: flex-end;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pagination__button {
+    transition: none;
+  }
 }
