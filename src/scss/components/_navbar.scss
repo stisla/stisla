@@ -1,107 +1,209 @@
-// Stisla v3 — navbar.
+// Stisla v3 — navbar. Stisla-original top bar.
 //
-// BS5 ships .navbar links with no background and rgba-emphasis text. We
-// keep the ghost stance and paint a soft accent chip on hover so the
-// cursor target reads without committing to a permanent pill. Padding is
-// 8px both axes at the expand breakpoint (padding-y from BS5's
-// $nav-link-padding-y, padding-x from $navbar-nav-link-padding-x in
-// tokens/_variables.scss); chip radius derives from the design-system
-// $border-radius-sm so it visually pairs with .btn-sm trailing actions.
+// Lays out a brand mark, a row of nav links, and any trailing extras
+// (search, status pill, action button) in a horizontal bar. Below the
+// collapse breakpoint (lg), the nav and extras fold into a vertical
+// column behind a hamburger toggle.
 //
-// Hover, .active (current page), and .show (open dropdown toggle) all share
-// the accent chip so the selected row reads at the same weight as the cursor
-// target. Text color stays --bs-body-color across all three via the
-// $navbar-*-color overrides in tokens/_variables.scss.
+// === Anatomy =============================================================
+//   .navbar           outer bar — flex row
+//   .navbar__brand    wordmark / logo slot
+//   .navbar__toggle   hamburger button — visible below lg only
+//   .navbar__menu     collapsing wrapper — holds nav + trailing extras
+//   .navbar__nav      link list (<ul>) inside .navbar__menu
+//   .navbar__link     row inside .navbar__nav — ghost chip with hover
 //
-// Parts:
-//   .navbar              outer bar (BS5)
-//   .navbar-brand        wordmark / logo slot (BS5)
-//   .navbar-nav          link list (BS5)
-//   .nav-link            row (BS5, ghost + hover/active chip)
-//   .navbar-toggler      hamburger for sm/md collapse (BS5)
-//   .navbar-collapse     collapsing wrapper (BS5)
+// === State hooks (V3.md §3.6) ============================================
+//   .navbar__menu[data-state="open|closed"]   mobile menu visibility
+//   .navbar__link[data-state="active"]        current page (highlight chip)
+//   .navbar__link[aria-disabled="true"]       unreachable link
+//
+// === JS ==================================================================
+// Mobile toggle ships from src/js/index.js: a [data-navbar-toggle]
+// click flips data-state on the closest .navbar__menu between "open"
+// and "closed". Step 4 promotes that into Stisla.Navbar with the class
+// + destroy + custom-events contract (V3.md §3.7).
 
-.navbar-nav .nav-link,
-.navbar-brand {
+.navbar {
+  --navbar-padding-y:         calc(0.5rem  * var(--st-density));
+  --navbar-padding-x:         calc(1rem    * var(--st-density));
+  --navbar-gap:               calc(0.75rem * var(--st-density));
+  --navbar-bg:                var(--st-background);
+  --navbar-color:             var(--st-foreground);
+
+  --navbar-link-height:       2.25rem;
+  --navbar-link-padding-x:    calc(0.75rem * var(--st-density));
+  --navbar-link-gap:          calc(0.25rem * var(--st-density));
+  --navbar-link-radius:       calc(var(--st-radius) - 0.25rem);
+  --navbar-link-color:        var(--st-foreground);
+  --navbar-link-hover-bg:     var(--st-accent);
+  --navbar-link-hover-color:  var(--st-accent-foreground);
+  --navbar-link-active-bg:    var(--st-highlight);
+  --navbar-link-active-color: var(--st-highlight-foreground);
+
+  --navbar-toggle-size:       2.25rem;
+  --navbar-transition:        150ms ease;
+
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  height: 2.25rem;
-  line-height: 1;
+  gap: var(--navbar-gap);
+  padding: var(--navbar-padding-y) var(--navbar-padding-x);
+  background-color: var(--navbar-bg);
+  color: var(--navbar-color);
 }
 
-.navbar-nav .nav-link {
-  border-radius: var(--#{$prefix}border-radius-sm);
-  transition:
-    background-color 0.15s ease,
-    color 0.15s ease;
+// Container-inside-navbar — when the consumer wraps the inner row in
+// a .container or .container-fluid (for an inset that matches the page
+// body), the bar's own inline padding zeroes out and the container
+// takes over the clamp. Padding-y rides the container so its block
+// height matches a paddingless bar.
+.navbar:has(> .container),
+.navbar:has(> .container-fluid) {
+  --navbar-padding-x: 0;
+}
+
+.navbar > .container,
+.navbar > .container-fluid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--navbar-gap);
+  padding-block: var(--navbar-padding-y);
+}
+
+// Brand — wordmark / logo. Hard height + line-height: 1 matches the
+// link chip's geometry so the row reads as one band.
+.navbar__brand {
+  display: inline-flex;
+  align-items: center;
+  height: calc(var(--navbar-link-height) * var(--st-density));
+  color: var(--navbar-color);
+  line-height: 1;
+  text-decoration: none;
+}
+
+// Toggle — square hamburger button. Hidden by default; the lg-down
+// block flips it to inline-flex and pushes it to the trailing edge.
+.navbar__toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--navbar-toggle-size) * var(--st-density));
+  height: calc(var(--navbar-toggle-size) * var(--st-density));
+  padding: 0;
+  background-color: transparent;
+  color: var(--navbar-color);
+  border: 0;
+  border-radius: var(--navbar-link-radius);
+  cursor: pointer;
+  transition: background-color var(--navbar-transition);
 
   &:hover,
-  &:focus,
-  &.active,
-  &.show {
-    background-color: var(--#{$prefix}accent-bg);
+  &:focus-visible {
+    background-color: var(--navbar-link-hover-bg);
+    color: var(--navbar-link-hover-color);
   }
 }
 
-.navbar-nav {
-  gap: 4px;
-  // BS5 pins --bs-nav-link-padding-x to 0 inside .navbar-nav for the
-  // collapsed (column) layout, then the .navbar-expand-* rules set padding-x
-  // to var(--bs-navbar-nav-link-padding-x) only above the breakpoint. That
-  // leaves mobile links flush and the hover chip clings to the bar edge.
-  // Route the inherited var to the navbar value so column and row share
-  // the same horizontal inset.
-  --#{$prefix}nav-link-padding-x: var(--#{$prefix}navbar-nav-link-padding-x);
+// Menu — collapsing wrapper. Above lg it's a transparent flex row
+// alongside the brand. Below lg it folds (see media block).
+.navbar__menu {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: var(--navbar-gap);
 }
 
-// Column-mode bleed. In collapsed layout the stacked links should reach
-// further toward the bar's outer edge while still leaving a small gutter
-// inside the rounded border. The bleed lives on .navbar-collapse, NOT on
-// .navbar-nav: BS5 puts `overflow: hidden` on .collapsing during the height
-// animation, so anything extending past .navbar-collapse's box (e.g. a
-// nav-link's hover chip via negative margin) would be clipped mid-fold.
-// Pulling .navbar-collapse itself wider means its content stays inside its
-// own clip box. -8px (matching the nav-link's column-mode padding-x) lands
-// the chip's inner text at navbar-padding-x = brand-text-left for clean
-// vertical alignment with the brand.
-//
-// Mirrors BS5's .navbar-expand-* loop with media-breakpoint-down so each
-// variant scopes the bleed to its own collapse window; .navbar-expand (no
-// infix, never collapses) is skipped.
-@each $breakpoint in map-keys($grid-breakpoints) {
-  $next: breakpoint-next($breakpoint, $grid-breakpoints);
-  $infix: breakpoint-infix($next, $grid-breakpoints);
+// Nav — link list. Preflight already zeroes ul margin/padding +
+// list-style; only the flex layout is set here.
+.navbar__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--navbar-link-gap);
+}
 
-  @if $next {
-    .navbar-expand#{$infix} {
-      @include media-breakpoint-down($next) {
-        .navbar-collapse {
-          margin-inline: -0.5rem;
-          // Gutter between the brand/toggler row and the stacked menu.
-          // Lives as margin-top (NOT row-gap on .navbar or padding-top here)
-          // because the BS5 collapse animates `height`, not box position:
-          // margin-top sits constant outside the height box throughout the
-          // fold, so the element grows downward cleanly from its parked
-          // offset. row-gap and padding-top both shift layout in the same
-          // frame as the .collapse → .collapsing class swap, which reads as
-          // a jump at the start and end of the transition.
-          margin-top: 0.375rem;
-        }
-        .navbar-nav {
-          --#{$prefix}nav-link-padding-x: 0.5rem;
-        }
-      }
+// Link — ghost chip; soft accent on hover/focus, highlight when the
+// row marks the current page. Hard height + line-height: 1 keeps the
+// chip a clean band regardless of the link's font metrics.
+.navbar__link {
+  display: inline-flex;
+  align-items: center;
+  height: calc(var(--navbar-link-height) * var(--st-density));
+  padding-block: 0;
+  padding-inline: var(--navbar-link-padding-x);
+  border-radius: var(--navbar-link-radius);
+  background-color: transparent;
+  color: var(--navbar-link-color);
+  line-height: 1;
+  text-decoration: none;
+  transition:
+    background-color var(--navbar-transition),
+    color var(--navbar-transition);
+
+  &:hover,
+  &:focus-visible {
+    background-color: var(--navbar-link-hover-bg);
+    color: var(--navbar-link-hover-color);
+  }
+
+  &[data-state="active"] {
+    background-color: var(--navbar-link-active-bg);
+    color: var(--navbar-link-active-color);
+  }
+
+  &[aria-disabled="true"] {
+    opacity: 0.55;
+    pointer-events: none;
+  }
+}
+
+// === Above the collapse breakpoint =======================================
+// Nav grabs the leading edge so any sibling (search form, status pill,
+// action button) naturally falls on the trailing edge. Mirrors BS5's
+// .me-auto convention without making consumers carry the class.
+@include media-up(lg) {
+  .navbar__nav {
+    margin-inline-end: auto;
+  }
+}
+
+// === Below the collapse breakpoint =======================================
+// Menu folds vertically behind the toggle. Toggle shows; menu hides
+// unless [data-state="open"]. Nav + extras stack full-width as a
+// column.
+@include media-down(lg) {
+  .navbar__toggle {
+    display: inline-flex;
+    margin-inline-start: auto;
+  }
+
+  .navbar__menu {
+    display: none;
+    flex: 1 0 100%;
+    flex-direction: column;
+    align-items: stretch;
+
+    &[data-state="open"] {
+      display: flex;
     }
   }
+
+  .navbar__nav {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .navbar__link {
+    width: 100%;
+  }
 }
 
-.navbar-toggler {
-  height: 2.25rem;
-  width: 2.25rem;
-  padding: 0;
-}
-
-.navbar-toggler-icon {
-  width: 1.25rem;
-  height: 1.25rem;
+// === Reduced motion ======================================================
+@media (prefers-reduced-motion: reduce) {
+  .navbar__link,
+  .navbar__toggle {
+    transition-duration: 0.01ms;
+  }
 }

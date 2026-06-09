@@ -54,6 +54,23 @@ if (typeof document !== 'undefined') {
     if (e.target.closest('[data-app-shell-toggle]')) return;
     shell.classList.remove('is-sidebar-visible');
   });
+
+  // Navbar — [data-navbar-toggle] flips data-state on the closest
+  // .navbar__menu between "open" and "closed". The CSS keys off
+  // data-state to show/hide the folded menu below the collapse
+  // breakpoint. Step 4 promotes this into Stisla.Navbar with the full
+  // class + destroy + custom-events contract (V3.md §3.7).
+  document.addEventListener('click', (e) => {
+    const target = e.target.closest('[data-navbar-toggle]');
+    if (!target) return;
+    const navbar = target.closest('.navbar');
+    if (!navbar) return;
+    const menu = navbar.querySelector('.navbar__menu');
+    if (!menu) return;
+    const open = menu.dataset.state === 'open';
+    menu.dataset.state = open ? 'closed' : 'open';
+    target.setAttribute('aria-expanded', String(!open));
+  });
 }
 
 export default Stisla;

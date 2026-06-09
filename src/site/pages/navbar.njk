@@ -6,54 +6,28 @@
 {% block content %}
   <header>
     <h1>Navbar</h1>
-    <p class="lead">A top bar with a brand mark and a row of nav links.</p>
+    <p class="lead">A top bar with a brand mark, a row of nav links, and optional trailing content.</p>
   </header>
 
   <section>
-    <h2>Basic</h2>
-    <p>Wrap a <code>.navbar-brand</code> and a <code>.navbar-nav</code> in <code>.navbar.navbar-expand-lg</code>. The <code>.navbar-toggler</code> + <code>.navbar-collapse</code> pair folds the menu below the expand breakpoint; resize the preview to a small width to see it fold.</p>
-    {% call ui.demo() %}
-    <nav class="navbar navbar-expand-lg border rounded w-100">
-      <a class="navbar-brand" href="#">Acme</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarBasic" aria-controls="navbarBasic" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarBasic">
-        <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Features</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">About</a></li>
-        </ul>
-      </div>
-    </nav>
-    {% endcall %}
+    <p>Above the collapse breakpoint (<code>lg</code>), the bar reads as one row. Below, the nav and any trailing extras fold into a column behind a toggle. Resize the preview to a narrow width to see it fold. Drop the bar inside an <code>.app-shell__main</code> or at the top of <code>&lt;body&gt;</code>.</p>
   </section>
 
   <section>
-    <h2>With dropdown</h2>
-    <p>Drop a <code>.dropdown</code> into the nav list. The toggle uses <code>.nav-link.dropdown-toggle</code> so it shares the same ghost chip as the siblings.</p>
+    <h2>Basic</h2>
+    <p>Wrap a <code>.navbar__brand</code>, a <code>.navbar__toggle</code>, and a <code>.navbar__menu</code> with its <code>.navbar__nav</code> link list. Mark the current page with <code>data-state="active"</code> on the matching <code>.navbar__link</code>.</p>
     {% call ui.demo() %}
-    <nav class="navbar navbar-expand-lg border rounded w-100">
-      <a class="navbar-brand" href="#">Acme</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDropdown" aria-controls="navbarDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+    <nav class="navbar" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); width: 100%;">
+      <a class="navbar__brand" href="#">Acme</a>
+      <button type="button" class="navbar__toggle" data-navbar-toggle aria-controls="navbarBasic" aria-expanded="false" aria-label="Toggle navigation">
+        <i data-lucide="menu"></i>
       </button>
-      <div class="collapse navbar-collapse" id="navbarDropdown">
-        <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Features</a></li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Resources
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Docs</a></li>
-              <li><a class="dropdown-item" href="#">Changelog</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Support</a></li>
-            </ul>
-          </li>
+      <div class="navbar__menu" id="navbarBasic" data-state="closed">
+        <ul class="navbar__nav">
+          <li><a class="navbar__link" data-state="active" aria-current="page" href="#">Home</a></li>
+          <li><a class="navbar__link" href="#">Features</a></li>
+          <li><a class="navbar__link" href="#">Pricing</a></li>
+          <li><a class="navbar__link" href="#">About</a></li>
         </ul>
       </div>
     </nav>
@@ -62,19 +36,19 @@
 
   <section>
     <h2>Active and disabled</h2>
-    <p>Mark the current page with <code>.active</code> and unreachable links with <code>.disabled</code>. Active takes the emphasis color; disabled greys out and stops pointer events.</p>
+    <p>Active links carry <code>data-state="active"</code> (highlight chip); unreachable links carry <code>aria-disabled="true"</code> (dim + no pointer events). Hover is the soft accent chip; the active treatment is the highlight chip so the current row reads steadier than a transient hover.</p>
     {% call ui.demo() %}
-    <nav class="navbar navbar-expand-lg border rounded w-100">
-      <a class="navbar-brand" href="#">Acme</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarStates" aria-controls="navbarStates" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+    <nav class="navbar" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); width: 100%;">
+      <a class="navbar__brand" href="#">Acme</a>
+      <button type="button" class="navbar__toggle" data-navbar-toggle aria-controls="navbarStates" aria-expanded="false" aria-label="Toggle navigation">
+        <i data-lucide="menu"></i>
       </button>
-      <div class="collapse navbar-collapse" id="navbarStates">
-        <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link" href="#">Overview</a></li>
-          <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Reports</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Settings</a></li>
-          <li class="nav-item"><a class="nav-link disabled" aria-disabled="true">Billing</a></li>
+      <div class="navbar__menu" id="navbarStates" data-state="closed">
+        <ul class="navbar__nav">
+          <li><a class="navbar__link" href="#">Overview</a></li>
+          <li><a class="navbar__link" data-state="active" aria-current="page" href="#">Reports</a></li>
+          <li><a class="navbar__link" href="#">Settings</a></li>
+          <li><a class="navbar__link" aria-disabled="true">Billing</a></li>
         </ul>
       </div>
     </nav>
@@ -83,21 +57,21 @@
 
   <section>
     <h2>With search</h2>
-    <p>Drop a <code>&lt;form&gt;</code> after the nav list and use <code>.me-auto</code> on the list to push the form to the trailing edge.</p>
+    <p>Above the collapse breakpoint, the nav grabs the leading edge so any sibling element inside <code>.navbar__menu</code> falls on the trailing edge. Drop a <code>&lt;form&gt;</code> after the nav for a search row.</p>
     {% call ui.demo() %}
-    <nav class="navbar navbar-expand-lg border rounded w-100">
-      <a class="navbar-brand" href="#">Acme</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSearch" aria-controls="navbarSearch" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+    <nav class="navbar" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); width: 100%;">
+      <a class="navbar__brand" href="#">Acme</a>
+      <button type="button" class="navbar__toggle" data-navbar-toggle aria-controls="navbarSearch" aria-expanded="false" aria-label="Toggle navigation">
+        <i data-lucide="menu"></i>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSearch">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Features</a></li>
+      <div class="navbar__menu" id="navbarSearch" data-state="closed">
+        <ul class="navbar__nav">
+          <li><a class="navbar__link" data-state="active" aria-current="page" href="#">Home</a></li>
+          <li><a class="navbar__link" href="#">Features</a></li>
         </ul>
-        <form class="d-flex gap-2 ms-0 ms-lg-4" role="search">
-          <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-primary" type="submit">Search</button>
+        <form role="search" style="display: flex; gap: 0.5rem;">
+          <input class="form-control form-control--sm" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn--primary btn--sm" type="submit">Search</button>
         </form>
       </div>
     </nav>
@@ -105,17 +79,17 @@
   </section>
 
   <section>
-    <h2>With text</h2>
-    <p>Use <code>.navbar-text</code> for non-interactive copy like a status pill or a workspace name on the trailing edge.</p>
+    <h2>With status text</h2>
+    <p>Drop any element inside <code>.navbar__menu</code> for a trailing status pill, workspace name, or counter. Without a nav before it, push the element to the trailing edge with <code>margin-inline-start: auto</code>.</p>
     {% call ui.demo() %}
-    <nav class="navbar navbar-expand-lg border rounded w-100">
-      <a class="navbar-brand" href="#">Acme</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+    <nav class="navbar" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); width: 100%;">
+      <a class="navbar__brand" href="#">Acme</a>
+      <button type="button" class="navbar__toggle" data-navbar-toggle aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <i data-lucide="menu"></i>
       </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <span class="navbar-text d-inline-flex align-items-center ms-auto">
-          <span class="bg-success rounded-circle d-inline-block me-2" style="width: 6px; height: 6px;"></span>
+      <div class="navbar__menu" id="navbarText" data-state="closed">
+        <span style="display: inline-flex; align-items: center; gap: 0.5rem; margin-inline-start: auto; color: var(--st-muted-foreground);">
+          <span style="display: inline-block; width: 0.375rem; height: 0.375rem; border-radius: 50%; background: var(--st-success);"></span>
           All systems normal
         </span>
       </div>
@@ -125,23 +99,158 @@
 
   <section>
     <h2>Container</h2>
-    <p>Drop a <code>.container</code> or <code>.container-fluid</code> as the bar's direct child to align its contents with a matching container in the page body. The bar still spans full width; only the inner row clamps to the container's gutter.</p>
+    <p>Drop a <code>.container</code> or <code>.container-fluid</code> as the bar's direct child to clamp inner content to the standard column widths. The bar still spans full width; the container takes over the inline padding so the inner row shares its inset with a matching container in the page body.</p>
     {% call ui.demo() %}
-    <nav class="navbar navbar-expand-lg border rounded w-100">
+    <nav class="navbar" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); width: 100%;">
       <div class="container">
-        <a class="navbar-brand" href="#">Acme</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContainer" aria-controls="navbarContainer" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+        <a class="navbar__brand" href="#">Acme</a>
+        <button type="button" class="navbar__toggle" data-navbar-toggle aria-controls="navbarContainer" aria-expanded="false" aria-label="Toggle navigation">
+          <i data-lucide="menu"></i>
         </button>
-        <div class="collapse navbar-collapse" id="navbarContainer">
-          <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Features</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li>
+        <div class="navbar__menu" id="navbarContainer" data-state="closed">
+          <ul class="navbar__nav">
+            <li><a class="navbar__link" data-state="active" aria-current="page" href="#">Home</a></li>
+            <li><a class="navbar__link" href="#">Features</a></li>
+            <li><a class="navbar__link" href="#">Pricing</a></li>
           </ul>
         </div>
       </div>
     </nav>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Dropdowns</h2>
+    <p>Dropdown menus inside <code>.navbar__nav</code> land with the dropdown component in Step 4. Until then, link rows that anchor a menu render as plain links.</p>
+  </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>Sixteen variables retune <code>.navbar</code> without touching component CSS. Override on the <code>.navbar</code> itself, on a parent scope, or on <code>:root</code>.</p>
+
+    <h3>Layout</h3>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--navbar-padding-y</code></td>
+            <td>calc(0.5rem * var(--st-density))</td>
+            <td>Vertical padding inside the bar</td>
+          </tr>
+          <tr>
+            <td><code>--navbar-padding-x</code></td>
+            <td>calc(1rem * var(--st-density))</td>
+            <td>Horizontal padding inside the bar; zeroed when a container child is present</td>
+          </tr>
+          <tr>
+            <td><code>--navbar-gap</code></td>
+            <td>calc(0.75rem * var(--st-density))</td>
+            <td>Space between brand, menu, and toggle</td>
+          </tr>
+          <tr>
+            <td><code>--navbar-bg</code></td>
+            <td>var(--st-background)</td>
+            <td>Bar background</td>
+          </tr>
+          <tr>
+            <td><code>--navbar-color</code></td>
+            <td>var(--st-foreground)</td>
+            <td>Bar foreground (brand + toggle inherit)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Link chip</h3>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--navbar-link-height</code></td>
+            <td>2.25rem</td>
+            <td>Hard height of <code>.navbar__brand</code> and <code>.navbar__link</code>; multiplied by <code>--st-density</code></td>
+          </tr>
+          <tr>
+            <td><code>--navbar-link-padding-x</code></td>
+            <td>calc(0.75rem * var(--st-density))</td>
+            <td>Horizontal chip padding</td>
+          </tr>
+          <tr>
+            <td><code>--navbar-link-gap</code></td>
+            <td>calc(0.25rem * var(--st-density))</td>
+            <td>Space between adjacent chips in <code>.navbar__nav</code></td>
+          </tr>
+          <tr>
+            <td><code>--navbar-link-radius</code></td>
+            <td>calc(var(--st-radius) - 0.25rem)</td>
+            <td>Chip corner radius</td>
+          </tr>
+          <tr>
+            <td><code>--navbar-link-color</code></td>
+            <td>var(--st-foreground)</td>
+            <td>Rest text color</td>
+          </tr>
+          <tr>
+            <td><code>--navbar-link-hover-bg</code></td>
+            <td>var(--st-accent)</td>
+            <td>Hover + focus chip fill</td>
+          </tr>
+          <tr>
+            <td><code>--navbar-link-hover-color</code></td>
+            <td>var(--st-accent-foreground)</td>
+            <td>Hover + focus text color</td>
+          </tr>
+          <tr>
+            <td><code>--navbar-link-active-bg</code></td>
+            <td>var(--st-highlight)</td>
+            <td>Current-page chip fill (<code>data-state="active"</code>)</td>
+          </tr>
+          <tr>
+            <td><code>--navbar-link-active-color</code></td>
+            <td>var(--st-highlight-foreground)</td>
+            <td>Current-page text color</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Toggle + motion</h3>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--navbar-toggle-size</code></td>
+            <td>2.25rem</td>
+            <td>Square hamburger button size; multiplied by <code>--st-density</code></td>
+          </tr>
+          <tr>
+            <td><code>--navbar-transition</code></td>
+            <td>150ms ease</td>
+            <td>Chip + toggle hover transition</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 {% endblock %}
