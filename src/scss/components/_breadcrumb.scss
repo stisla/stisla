@@ -22,9 +22,16 @@
 // naturally, so the divider tracks the trail across themes + retints.
 // (We tried fill='currentColor' inside a data-URL SVG first; browsers
 // parse the SVG in its own context so the chevron always rendered
-// black. Unicode sidesteps the limitation.) Override per-instance via
-// inline style="--breadcrumb-divider: '/'" — strings work; url() SVGs
-// work too but lose the color cascade, so bake the tone in hex.
+// black. Unicode sidesteps the limitation.)
+//
+// The default lives as the var() FALLBACK on the content rule, NOT
+// as --breadcrumb-divider on .breadcrumb. Custom props resolve at
+// the element that declares them, so a declaration on .breadcrumb
+// would shadow per-instance overrides on the wrapper (e.g.
+// <nav style="--breadcrumb-divider: '/'">). Keeping it in the
+// fallback lets any ancestor set the var and win. Strings work as
+// content; url() SVGs work too but lose the color cascade, so bake
+// the tone in hex.
 //
 // === Leading icon ========================================================
 // <svg> or <i> inside a crumb pins to --breadcrumb-icon-size and
@@ -52,7 +59,9 @@
   // === States ===
   --breadcrumb-hover-color:  var(--st-foreground);
   --breadcrumb-active-color: var(--st-foreground);
-  --breadcrumb-divider:      "›";
+  // --breadcrumb-divider intentionally undeclared here. The default
+  // "›" lives as the var() fallback in the ::before content rule so
+  // ancestor overrides on the <nav> wrapper aren't shadowed.
 
   // === Icon ===
   --breadcrumb-icon-size:    1rem;
@@ -113,8 +122,11 @@
   // the crumb text via align-items: center. Do NOT set inline-flex
   // here — it collides with replaced-element rendering when content
   // is url(...) and the divider goes invisible in Chrome.
+  //
+  // Default "›" sits as the fallback so per-instance overrides on
+  // the <nav> wrapper (or anywhere up the tree) win. See header.
   + .breadcrumb__item::before {
-    content: var(--breadcrumb-divider);
+    content: var(--breadcrumb-divider, "›");
     color: var(--breadcrumb-color);
   }
 }
