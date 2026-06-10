@@ -24,6 +24,7 @@
 
 import { createFocusTrap } from 'focus-trap';
 import { Component, getInstance } from '../core/component.js';
+import { readOpts } from '../core/init.js';
 
 const SCROLL_LOCK_CLASS = 'is-modal-open';
 const OPEN = 'open';
@@ -245,7 +246,17 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined' && !window.
       const modalEl = id && document.getElementById(id);
       if (modalEl && modalEl.classList.contains('modal')) {
         e.preventDefault();
-        Modal.getOrCreate(modalEl).open();
+        // Read per-attr opts from the element. If an instance already
+        // exists, replace it (constructor auto-destroys + dev-warns) so
+        // opts always reflect the current DOM. Belt-and-braces over the
+        // Stisla.init() scan in case it ran with an empty registry, an
+        // HMR cycle preserved a stale instance, or the modal was added
+        // after init.
+        const opts = readOpts(modalEl, 'modal', Modal);
+        const existing = getInstance(modalEl);
+        const inst = existing ?? new Modal(modalEl, opts);
+        if (existing) Object.assign(existing.opts, opts);
+        inst.open();
       }
       return;
     }
