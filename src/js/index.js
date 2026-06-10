@@ -1,7 +1,7 @@
 // Stisla public JS entry.
 //
 // Step 4 prelude shipped: the Component base class + declarative scanner
-// land in core/. JS-coordinated components (modal, offcanvas, dropdown,
+// land in core/. JS-coordinated components (modal, drawer, dropdown,
 // tooltip, popover, toast, carousel) get imported here as they're built
 // out under components/. The interim delegated handlers at the bottom
 // stay until each component is promoted to a proper Stisla.<Component>
@@ -10,10 +10,10 @@
 import { Component, getInstance } from './core/component.js';
 import { register, init } from './core/init.js';
 import { Modal } from './components/modal.js';
-import { Offcanvas } from './components/offcanvas.js';
+import { Drawer } from './components/drawer.js';
 
 register('modal', Modal);
-register('offcanvas', Offcanvas);
+register('drawer', Drawer);
 
 // Auto-init runs AFTER every register() call above so the scanner walks
 // [data-stisla-<name>] with a populated registry. Module-level code in
@@ -31,7 +31,7 @@ export const Stisla = {
   version: '3.0.0-alpha.0',
   Component,
   Modal,
-  Offcanvas,
+  Drawer,
   register,
   init,
   get: getInstance,

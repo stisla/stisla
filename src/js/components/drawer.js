@@ -1,20 +1,20 @@
-// Stisla.Offcanvas — V3.md §3.7 reference implementation.
+// Stisla.Drawer — V3.md §3.7 reference implementation.
 //
 // Anatomy:
-//   .offcanvas[data-stisla-offcanvas][data-state="open|closed"]
-//     .offcanvas__backdrop[data-stisla-offcanvas-dismiss]
-//     .offcanvas__content
-//       .offcanvas__header
-//         .offcanvas__title
-//         .offcanvas__close[data-stisla-offcanvas-dismiss]
-//       .offcanvas__body
-//       .offcanvas__footer
+//   .drawer[data-stisla-drawer][data-state="open|closed"]
+//     .drawer__backdrop[data-stisla-drawer-dismiss]
+//     .drawer__content
+//       .drawer__header
+//         .drawer__title
+//         .drawer__close[data-stisla-drawer-dismiss]
+//       .drawer__body
+//       .drawer__footer
 //
-// Events (bubbling, detail: { offcanvas: this }):
-//   stisla:offcanvas:opening   — before open  (cancelable)
-//   stisla:offcanvas:opened    — after open transition
-//   stisla:offcanvas:closing   — before close (cancelable)
-//   stisla:offcanvas:closed    — after close transition
+// Events (bubbling, detail: { drawer: this }):
+//   stisla:drawer:opening   — before open  (cancelable)
+//   stisla:drawer:opened    — after open transition
+//   stisla:drawer:closing   — before close (cancelable)
+//   stisla:drawer:closed    — after close transition
 //
 // Opts (defaults below):
 //   backdrop: true | false | 'static'  — false = no backdrop; 'static' = shake on click
@@ -27,14 +27,14 @@ import { createFocusTrap } from 'focus-trap';
 import { Component, getInstance } from '../core/component.js';
 import { readOpts } from '../core/init.js';
 
-const SCROLL_LOCK_CLASS = 'is-offcanvas-open';
+const SCROLL_LOCK_CLASS = 'is-drawer-open';
 const OPEN = 'open';
 const CLOSED = 'closed';
 
 let openCount = 0;
 
-export class Offcanvas extends Component {
-  static eventNamespace = 'offcanvas';
+export class Drawer extends Component {
+  static eventNamespace = 'drawer';
   static defaults = {
     backdrop: true,
     keyboard: true,
@@ -53,7 +53,7 @@ export class Offcanvas extends Component {
     // Normalize scroll to boolean (the attribute parser may hand us "true"/"false" strings).
     this.opts.scroll = this.opts.scroll === true || this.opts.scroll === 'true';
 
-    this._content = el.querySelector('.offcanvas__content');
+    this._content = el.querySelector('.drawer__content');
     this._returnFocusEl = null;
     this._trap = null;
     this._inertCleanup = null;
@@ -242,34 +242,34 @@ export class Offcanvas extends Component {
 
 // Global delegated click handler — bound once per page load.
 // Sentinel mirrors the HMR-safe pattern from src/js/components/modal.js.
-if (typeof document !== 'undefined' && typeof window !== 'undefined' && !window.__stislaOffcanvasBound) {
-  window.__stislaOffcanvasBound = true;
+if (typeof document !== 'undefined' && typeof window !== 'undefined' && !window.__stislaDrawerBound) {
+  window.__stislaDrawerBound = true;
 
   document.addEventListener('click', (e) => {
-    const opener = e.target.closest('[data-stisla-offcanvas-trigger]');
+    const opener = e.target.closest('[data-stisla-drawer-trigger]');
     if (opener) {
-      const id = opener.getAttribute('data-stisla-offcanvas-trigger');
-      const offcanvasEl = id && document.getElementById(id);
-      if (offcanvasEl && offcanvasEl.classList.contains('offcanvas')) {
+      const id = opener.getAttribute('data-stisla-drawer-trigger');
+      const drawerEl = id && document.getElementById(id);
+      if (drawerEl && drawerEl.classList.contains('drawer')) {
         e.preventDefault();
-        const opts = readOpts(offcanvasEl, 'offcanvas', Offcanvas);
-        const existing = getInstance(offcanvasEl);
-        const inst = existing ?? new Offcanvas(offcanvasEl, opts);
+        const opts = readOpts(drawerEl, 'drawer', Drawer);
+        const existing = getInstance(drawerEl);
+        const inst = existing ?? new Drawer(drawerEl, opts);
         if (existing) Object.assign(existing.opts, opts);
         inst.open();
       }
       return;
     }
 
-    const dismiss = e.target.closest('[data-stisla-offcanvas-dismiss]');
+    const dismiss = e.target.closest('[data-stisla-drawer-dismiss]');
     if (dismiss) {
-      const offcanvasEl = dismiss.closest('.offcanvas');
-      const inst = offcanvasEl && getInstance(offcanvasEl);
+      const drawerEl = dismiss.closest('.drawer');
+      const inst = drawerEl && getInstance(drawerEl);
       if (!inst) return;
       // Static backdrop: a click on the backdrop element shakes the panel
-      // instead of closing. Explicit dismiss controls (.offcanvas__close,
-      // footer buttons with [data-stisla-offcanvas-dismiss]) always close.
-      if (inst.opts.backdrop === 'static' && dismiss.classList.contains('offcanvas__backdrop')) {
+      // instead of closing. Explicit dismiss controls (.drawer__close,
+      // footer buttons with [data-stisla-drawer-dismiss]) always close.
+      if (inst.opts.backdrop === 'static' && dismiss.classList.contains('drawer__backdrop')) {
         inst.shake();
         return;
       }

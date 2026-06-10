@@ -172,7 +172,7 @@ Build order respects token + foundation dependencies:
    - 3.3c — slider (renamed from form-range; `.form-range` BS5 name dropped — matches shadcn/Radix/Reka convention, same rationale as switch + toggle)
 4. **Layout:** app-shell, page, navbar, sidebar (sidebar last — biggest file).
 5. **Display:** card, table, list-group, breadcrumb, pagination, progress, toast, accordion.
-6. **JS-coordinated:** button-group, carousel (Embla), dropdown, modal, offcanvas, tooltip, popover. Each blocked by its step 4 JS component.
+6. **JS-coordinated:** button-group, carousel (Embla), dropdown, modal, drawer, tooltip, popover. Each blocked by its step 4 JS component.
 
 Per-component PRs land independently after the token rewrite (step 2) merges. Each PR updates the SCSS + the matching `.njk` demo page.
 
@@ -181,7 +181,7 @@ Per-component PRs land independently after the token rewrite (step 2) merges. Ea
 - [x] `src/js/components/` directory created. ✅ (4.0 prelude)
 - [x] `Stisla.init()` declarative scanner (`[data-stisla-*]` attrs → instantiate matching class). ✅ (4.0 prelude — `src/js/core/init.js`)
 - [ ] Modal: `inert` on siblings + `focus-trap` + `data-state="open"` toggling + custom events.
-- [ ] Offcanvas: same primitives as modal with transform animation.
+- [ ] Drawer: same primitives as modal with transform animation.
 - [ ] Dropdown: `@floating-ui/dom` + roving tabindex + `focus-trap` + outside-click + Escape.
 - [ ] Tooltip: `@floating-ui/dom` + hover/focus delay state.
 - [ ] Popover: `@floating-ui/dom` + `focus-trap` + outside-click + Escape.
@@ -242,7 +242,7 @@ Action key:
 | modal        | 4.7 K  | rewrite    | New JS impl (focus-trap + inert + `[data-state="open"]`)                                                                       |
 | nav          | 2.6 K  | **delete** | Family cut. See V3.md §4 Phase 2                                                                                               |
 | navbar       | 4.0 K  | port       | Stisla original; retoken                                                                                                       |
-| offcanvas    | 2.5 K  | rewrite    | Same primitives as modal                                                                                                       |
+| drawer       | 2.5 K  | rewrite    | Same primitives as modal                                                                                                       |
 | page         | 4.0 K  | port       | Stisla original                                                                                                                |
 | pagination   | 1.6 K  | rewrite    | `[data-state="active"]` for current page                                                                                       |
 | placeholders | 328 B  | port       | Tiny                                                                                                                           |

@@ -1,14 +1,14 @@
-// Stisla v3 — offcanvas.
+// Stisla v3 — drawer.
 //
 // Anatomy (V3.md §3.6 BEM + §3.7 JS contract):
-//   .offcanvas[data-state="open|closed"]
-//     .offcanvas__backdrop      translucent dim, dismiss target
-//     .offcanvas__content       the visible panel (anchored to viewport edge)
-//       .offcanvas__header
-//         .offcanvas__title     pinned size, heading-tag agnostic
-//         .offcanvas__close     inline ghost icon button (trailing edge)
-//       .offcanvas__body        scrollable region
-//       .offcanvas__footer      pinned action band, --st-surface-2 seam
+//   .drawer[data-state="open|closed"]
+//     .drawer__backdrop      translucent dim, dismiss target
+//     .drawer__content       the visible panel (anchored to viewport edge)
+//       .drawer__header
+//         .drawer__title     pinned size, heading-tag agnostic
+//         .drawer__close     inline ghost icon button (trailing edge)
+//       .drawer__body        scrollable region
+//       .drawer__footer      pinned action band, --st-surface-2 seam
 //
 // Default placement is --end (right drawer — common dashboard case,
 // mirrors Radix Sheet). Sharp viewport-edge corners are the affordance:
@@ -17,210 +17,210 @@
 //
 // Reuses modal's primitives via separate vars (no token indirection):
 // data-state paint hook, dialog transition, focus-trap, inert siblings,
-// scroll-lock counter (`<html>.is-offcanvas-open`).
+// scroll-lock counter (`<html>.is-drawer-open`).
 
-.offcanvas {
+.drawer {
   // Geometry
-  --offcanvas-width: 22rem;
-  --offcanvas-height: 16rem;
-  --offcanvas-padding: calc(1.25rem * var(--st-density));
-  --offcanvas-z-index: 1045;
+  --drawer-width: 22rem;
+  --drawer-height: 16rem;
+  --drawer-padding: calc(1.25rem * var(--st-density));
+  --drawer-z-index: 1045;
 
   // Surface
-  --offcanvas-bg: var(--st-surface);
-  --offcanvas-color: var(--st-foreground);
-  --offcanvas-border-color: var(--st-border);
-  --offcanvas-shadow: 0 0 40px -10px color-mix(in oklch, black 35%, transparent);
+  --drawer-bg: var(--st-surface);
+  --drawer-color: var(--st-foreground);
+  --drawer-border-color: var(--st-border);
+  --drawer-shadow: 0 0 40px -10px color-mix(in oklch, black 35%, transparent);
 
   // Backdrop — solid dark dim, same treatment as modal so a stacked
-  // open (offcanvas → modal) reads consistently.
-  --offcanvas-backdrop-bg: oklch(0 0 0 / 0.55);
-  --offcanvas-backdrop-blur: 12px;
+  // open (drawer → modal) reads consistently.
+  --drawer-backdrop-bg: oklch(0 0 0 / 0.55);
+  --drawer-backdrop-blur: 12px;
 
   // Title
-  --offcanvas-title-font-size: 1.125rem;
-  --offcanvas-title-font-weight: 600;
+  --drawer-title-font-size: 1.125rem;
+  --drawer-title-font-weight: 600;
 
   // Close chip — inline ghost icon button at the trailing edge of the
   // header row. Rest bg is transparent so the chip reads as a quiet
   // affordance; hover surfaces it as --st-accent (same muscle memory as
   // navbar/sidebar hover chips). Color rides theme tokens so dark mode
   // tracks automatically.
-  --offcanvas-close-size: 1.75rem;
-  --offcanvas-close-color: var(--st-muted-foreground);
-  --offcanvas-close-color-hover: var(--st-foreground);
-  --offcanvas-close-bg-hover: var(--st-accent);
+  --drawer-close-size: 1.75rem;
+  --drawer-close-color: var(--st-muted-foreground);
+  --drawer-close-color-hover: var(--st-foreground);
+  --drawer-close-bg-hover: var(--st-accent);
 
   // Footer
-  --offcanvas-footer-padding-y: calc(0.875rem * var(--st-density));
-  --offcanvas-footer-bg: var(--st-surface-2);
-  --offcanvas-footer-border-color: var(--st-border);
+  --drawer-footer-padding-y: calc(0.875rem * var(--st-density));
+  --drawer-footer-bg: var(--st-surface-2);
+  --drawer-footer-border-color: var(--st-border);
 
   // Motion — slightly slower than modal's 0.2s because the slide
   // distance is longer than a scale.
-  --offcanvas-transition-duration: 0.25s;
+  --drawer-transition-duration: 0.25s;
 
   position: fixed;
   inset: 0;
-  z-index: var(--offcanvas-z-index);
+  z-index: var(--drawer-z-index);
   display: none;
   pointer-events: none;
 }
 
-.offcanvas[data-state='open'] {
+.drawer[data-state='open'] {
   display: block;
   pointer-events: auto;
 }
 
-.offcanvas__backdrop {
+.drawer__backdrop {
   position: absolute;
   inset: 0;
-  background-color: var(--offcanvas-backdrop-bg);
-  backdrop-filter: blur(var(--offcanvas-backdrop-blur));
-  -webkit-backdrop-filter: blur(var(--offcanvas-backdrop-blur));
+  background-color: var(--drawer-backdrop-bg);
+  backdrop-filter: blur(var(--drawer-backdrop-blur));
+  -webkit-backdrop-filter: blur(var(--drawer-backdrop-blur));
   opacity: 0;
-  transition: opacity var(--offcanvas-transition-duration) ease;
+  transition: opacity var(--drawer-transition-duration) ease;
   cursor: pointer;
 }
 
-.offcanvas[data-state='open'] .offcanvas__backdrop {
+.drawer[data-state='open'] .drawer__backdrop {
   opacity: 1;
 }
 
 // Backdrop opt-out — hide the backdrop element entirely. The JS skips
 // the dismiss-on-click path; the page behind stays interactive.
-.offcanvas[data-stisla-offcanvas-backdrop='false'] .offcanvas__backdrop {
+.drawer[data-stisla-drawer-backdrop='false'] .drawer__backdrop {
   display: none;
 }
 
-.offcanvas__content {
+.drawer__content {
   position: absolute;
   display: flex;
   flex-direction: column;
-  background-color: var(--offcanvas-bg);
-  color: var(--offcanvas-color);
-  box-shadow: var(--offcanvas-shadow);
+  background-color: var(--drawer-bg);
+  color: var(--drawer-color);
+  box-shadow: var(--drawer-shadow);
   overflow: hidden;
   outline: none;
-  transition: transform var(--offcanvas-transition-duration) ease;
+  transition: transform var(--drawer-transition-duration) ease;
 }
 
 // === Placement modifiers =================================================
 // Each placement pins the panel to a viewport edge and translates the
 // content off-screen by 100% in the rest state. Only the inner edge
 // carries a border so the outer sides stay flush with the viewport.
-// Default: --end (bare .offcanvas paints as end).
-.offcanvas,
-.offcanvas--end {
-  .offcanvas__content {
+// Default: --end (bare .drawer paints as end).
+.drawer,
+.drawer--end {
+  .drawer__content {
     top: 0;
     bottom: 0;
     inset-inline-end: 0;
-    width: var(--offcanvas-width);
+    width: var(--drawer-width);
     max-width: 100vw;
-    border-inline-start: 1px solid var(--offcanvas-border-color);
+    border-inline-start: 1px solid var(--drawer-border-color);
     transform: translateX(100%);
   }
 }
 
-.offcanvas--start {
-  .offcanvas__content {
+.drawer--start {
+  .drawer__content {
     top: 0;
     bottom: 0;
     inset-inline-start: 0;
     inset-inline-end: auto;
-    width: var(--offcanvas-width);
+    width: var(--drawer-width);
     max-width: 100vw;
     border-inline-start: 0;
-    border-inline-end: 1px solid var(--offcanvas-border-color);
+    border-inline-end: 1px solid var(--drawer-border-color);
     transform: translateX(-100%);
   }
 }
 
-.offcanvas--top {
-  .offcanvas__content {
+.drawer--top {
+  .drawer__content {
     top: 0;
     inset-inline: 0;
     bottom: auto;
     width: auto;
-    height: var(--offcanvas-height);
+    height: var(--drawer-height);
     max-height: 100dvh;
     border: 0;
-    border-bottom: 1px solid var(--offcanvas-border-color);
+    border-bottom: 1px solid var(--drawer-border-color);
     transform: translateY(-100%);
   }
 }
 
-.offcanvas--bottom {
-  .offcanvas__content {
+.drawer--bottom {
+  .drawer__content {
     top: auto;
     bottom: 0;
     inset-inline: 0;
     width: auto;
-    height: var(--offcanvas-height);
+    height: var(--drawer-height);
     max-height: 100dvh;
     border: 0;
-    border-top: 1px solid var(--offcanvas-border-color);
+    border-top: 1px solid var(--drawer-border-color);
     transform: translateY(100%);
   }
 }
 
 // Open state — slide into place.
-.offcanvas[data-state='open'] .offcanvas__content {
+.drawer[data-state='open'] .drawer__content {
   transform: none;
 }
 
 // === Parts ===============================================================
-.offcanvas__header {
+.drawer__header {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   flex: 0 0 auto;
-  padding: var(--offcanvas-padding);
+  padding: var(--drawer-padding);
   padding-bottom: 0;
 }
 
-.offcanvas__title {
+.drawer__title {
   margin: 0;
-  font-size: var(--offcanvas-title-font-size);
-  font-weight: var(--offcanvas-title-font-weight);
+  font-size: var(--drawer-title-font-size);
+  font-weight: var(--drawer-title-font-weight);
   line-height: 1.3;
-  color: var(--offcanvas-color);
+  color: var(--drawer-color);
 }
 
-.offcanvas__body {
+.drawer__body {
   flex: 1 1 auto;
   min-height: 0;
-  padding: var(--offcanvas-padding);
-  color: var(--offcanvas-color);
+  padding: var(--drawer-padding);
+  color: var(--drawer-color);
   overflow-y: auto;
 }
 
-.offcanvas__footer {
+.drawer__footer {
   display: flex;
   flex: 0 0 auto;
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
   gap: 0.5rem;
-  padding: var(--offcanvas-footer-padding-y) var(--offcanvas-padding);
-  background-color: var(--offcanvas-footer-bg);
-  border-top: 1px solid var(--offcanvas-footer-border-color);
+  padding: var(--drawer-footer-padding-y) var(--drawer-padding);
+  background-color: var(--drawer-footer-bg);
+  border-top: 1px solid var(--drawer-footer-border-color);
 }
 
 // Inline ghost dismiss chip. Pushed to the trailing edge regardless of
 // whether the header wraps the title directly or in a centered column
 // (used by --bottom placements with a constrained inner column).
-.offcanvas__close {
+.drawer__close {
   margin-inline-start: auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: var(--offcanvas-close-size);
-  height: var(--offcanvas-close-size);
+  width: var(--drawer-close-size);
+  height: var(--drawer-close-size);
   padding: 0;
-  color: var(--offcanvas-close-color);
+  color: var(--drawer-close-color);
   background-color: transparent;
   border: 0;
   border-radius: 50%;
@@ -230,15 +230,15 @@
     color 0.15s ease;
 
   &:hover {
-    color: var(--offcanvas-close-color-hover);
-    background-color: var(--offcanvas-close-bg-hover);
+    color: var(--drawer-close-color-hover);
+    background-color: var(--drawer-close-bg-hover);
   }
 
   &:focus-visible {
     outline: 2px solid var(--st-ring);
     outline-offset: 2px;
-    color: var(--offcanvas-close-color-hover);
-    background-color: var(--offcanvas-close-bg-hover);
+    color: var(--drawer-close-color-hover);
+    background-color: var(--drawer-close-bg-hover);
   }
 
   > svg,
@@ -249,27 +249,27 @@
 }
 
 // === Static backdrop shake ==============================================
-// Triggered by JS toggling .is-shaking on .offcanvas__content when a
+// Triggered by JS toggling .is-shaking on .drawer__content when a
 // click hits the backdrop while opts.backdrop === 'static'. Shake axis
 // matches the placement axis so the nudge reads as "stuck" along the
 // direction the panel slides.
-.offcanvas__content.is-shaking {
-  animation: offcanvas-shake-x 0.2s ease-in-out;
+.drawer__content.is-shaking {
+  animation: drawer-shake-x 0.2s ease-in-out;
 }
 
-.offcanvas--top .offcanvas__content.is-shaking,
-.offcanvas--bottom .offcanvas__content.is-shaking {
-  animation-name: offcanvas-shake-y;
+.drawer--top .drawer__content.is-shaking,
+.drawer--bottom .drawer__content.is-shaking {
+  animation-name: drawer-shake-y;
 }
 
-@keyframes offcanvas-shake-x {
+@keyframes drawer-shake-x {
   0%,
   100% { transform: none; }
   25%  { transform: translateX(-4px); }
   75%  { transform: translateX(4px); }
 }
 
-@keyframes offcanvas-shake-y {
+@keyframes drawer-shake-y {
   0%,
   100% { transform: none; }
   25%  { transform: translateY(-4px); }
@@ -277,22 +277,22 @@
 }
 
 // === Scroll lock =========================================================
-// Applied to <html> while any backdrop-bearing offcanvas is open.
+// Applied to <html> while any backdrop-bearing drawer is open.
 // scrollbar-gutter keeps the page width stable. opts.scroll === true
 // skips this entirely so the page behind stays scrollable (filter
 // panels, inspector strips).
-html.is-offcanvas-open {
+html.is-drawer-open {
   overflow: hidden;
   scrollbar-gutter: stable;
 }
 
 // === Reduced motion ======================================================
 @media (prefers-reduced-motion: reduce) {
-  .offcanvas__backdrop,
-  .offcanvas__content {
+  .drawer__backdrop,
+  .drawer__content {
     transition: none;
   }
-  .offcanvas__content.is-shaking {
+  .drawer__content.is-shaking {
     animation: none;
   }
 }

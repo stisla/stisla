@@ -1,32 +1,32 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Offcanvas · Stisla v3{% endblock %}
+{% block title %}Drawer · Stisla v3{% endblock %}
 
 {% block content %}
   <header>
-    <h1>Offcanvas</h1>
+    <h1>Drawer</h1>
     <p class="lead">An edge-anchored panel for side drawers, filters, and quick captures.</p>
   </header>
 
   <section>
     <h2>Basic</h2>
-    <p>A trigger opens the panel via <code>data-stisla-offcanvas-trigger="&lt;id&gt;"</code>. The panel itself is a <code>.offcanvas</code> with an optional <code>.offcanvas__header</code>, an <code>.offcanvas__body</code>, and an optional <code>.offcanvas__footer</code>. The dismiss control is <code>.offcanvas__close</code>, an inline ghost icon button at the trailing edge of the header row. Default placement is the right edge.</p>
+    <p>A trigger opens the panel via <code>data-stisla-drawer-trigger="&lt;id&gt;"</code>. The panel itself is a <code>.drawer</code> with an optional <code>.drawer__header</code>, a <code>.drawer__body</code>, and an optional <code>.drawer__footer</code>. The dismiss control is <code>.drawer__close</code>, an inline ghost icon button at the trailing edge of the header row. Default placement is the right edge.</p>
     {% call ui.demo() %}
-    <button type="button" class="btn btn--primary" data-stisla-offcanvas-trigger="offcanvasBasic">
+    <button type="button" class="btn btn--primary" data-stisla-drawer-trigger="drawerBasic">
       New task
     </button>
 
-    <div class="offcanvas" data-stisla-offcanvas id="offcanvasBasic" aria-labelledby="offcanvasBasicLabel">
-      <div class="offcanvas__backdrop" data-stisla-offcanvas-dismiss></div>
-      <div class="offcanvas__content">
-        <div class="offcanvas__header">
-          <h3 class="offcanvas__title" id="offcanvasBasicLabel">New task</h3>
-          <button type="button" class="offcanvas__close" data-stisla-offcanvas-dismiss aria-label="Close">
+    <div class="drawer" data-stisla-drawer id="drawerBasic" aria-labelledby="drawerBasicLabel">
+      <div class="drawer__backdrop" data-stisla-drawer-dismiss></div>
+      <div class="drawer__content">
+        <div class="drawer__header">
+          <h3 class="drawer__title" id="drawerBasicLabel">New task</h3>
+          <button type="button" class="drawer__close" data-stisla-drawer-dismiss aria-label="Close">
             <i data-lucide="x"></i>
           </button>
         </div>
-        <div class="offcanvas__body">
+        <div class="drawer__body">
           <div style="margin-bottom: 1rem;">
             <label for="taskTitle" class="form-label">Title</label>
             <input type="text" class="form-control" id="taskTitle" placeholder="Write the launch announcement">
@@ -50,9 +50,9 @@
             </div>
           </div>
         </div>
-        <div class="offcanvas__footer">
-          <button type="button" class="btn btn--ghost btn--neutral" data-stisla-offcanvas-dismiss>Cancel</button>
-          <button type="button" class="btn btn--primary" data-stisla-offcanvas-dismiss>Create task</button>
+        <div class="drawer__footer">
+          <button type="button" class="btn btn--ghost btn--neutral" data-stisla-drawer-dismiss>Cancel</button>
+          <button type="button" class="btn btn--primary" data-stisla-drawer-dismiss>Create task</button>
         </div>
       </div>
     </div>
@@ -61,23 +61,23 @@
 
   <section>
     <h2>Placements</h2>
-    <p>Four modifiers anchor the panel to a viewport edge. <code>.offcanvas--start</code> slides in from the left, <code>.offcanvas--end</code> from the right, <code>.offcanvas--top</code> from above, <code>.offcanvas--bottom</code> from below. Start and end take a fixed width, top and bottom take a fixed height. Bare <code>.offcanvas</code> behaves as end.</p>
+    <p>Four modifiers anchor the panel to a viewport edge. <code>.drawer--start</code> slides in from the left, <code>.drawer--end</code> from the right, <code>.drawer--top</code> from above, <code>.drawer--bottom</code> from below. Start and end take a fixed width, top and bottom take a fixed height. Bare <code>.drawer</code> behaves as end.</p>
     {% call ui.demo() %}
     <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-      <button type="button" class="btn btn--outline btn--neutral" data-stisla-offcanvas-trigger="offcanvasStart">Start</button>
-      <button type="button" class="btn btn--outline btn--neutral" data-stisla-offcanvas-trigger="offcanvasEnd">End</button>
-      <button type="button" class="btn btn--outline btn--neutral" data-stisla-offcanvas-trigger="offcanvasTop">Top</button>
-      <button type="button" class="btn btn--outline btn--neutral" data-stisla-offcanvas-trigger="offcanvasBottom">Bottom</button>
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-drawer-trigger="drawerStart">Start</button>
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-drawer-trigger="drawerEnd">End</button>
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-drawer-trigger="drawerTop">Top</button>
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-drawer-trigger="drawerBottom">Bottom</button>
     </div>
 
-    <div class="offcanvas offcanvas--start" data-stisla-offcanvas id="offcanvasStart">
-      <div class="offcanvas__backdrop" data-stisla-offcanvas-dismiss></div>
-      <div class="offcanvas__content">
-        <div class="offcanvas__header">
-          <h3 class="offcanvas__title">Account</h3>
-          <button type="button" class="offcanvas__close" data-stisla-offcanvas-dismiss aria-label="Close"><i data-lucide="x"></i></button>
+    <div class="drawer drawer--start" data-stisla-drawer id="drawerStart">
+      <div class="drawer__backdrop" data-stisla-drawer-dismiss></div>
+      <div class="drawer__content">
+        <div class="drawer__header">
+          <h3 class="drawer__title">Account</h3>
+          <button type="button" class="drawer__close" data-stisla-drawer-dismiss aria-label="Close"><i data-lucide="x"></i></button>
         </div>
-        <div class="offcanvas__body" style="padding: 0;">
+        <div class="drawer__body" style="padding: 0;">
           <ul class="list-group list-group--flush">
             <li class="list-group__item" style="display: flex; align-items: center; gap: 0.75rem;">
               <span class="icon-box icon-box--primary"><i data-lucide="user"></i></span>
@@ -116,14 +116,14 @@
       </div>
     </div>
 
-    <div class="offcanvas offcanvas--end" data-stisla-offcanvas id="offcanvasEnd">
-      <div class="offcanvas__backdrop" data-stisla-offcanvas-dismiss></div>
-      <div class="offcanvas__content">
-        <div class="offcanvas__header">
-          <h3 class="offcanvas__title">Notifications</h3>
-          <button type="button" class="offcanvas__close" data-stisla-offcanvas-dismiss aria-label="Close"><i data-lucide="x"></i></button>
+    <div class="drawer drawer--end" data-stisla-drawer id="drawerEnd">
+      <div class="drawer__backdrop" data-stisla-drawer-dismiss></div>
+      <div class="drawer__content">
+        <div class="drawer__header">
+          <h3 class="drawer__title">Notifications</h3>
+          <button type="button" class="drawer__close" data-stisla-drawer-dismiss aria-label="Close"><i data-lucide="x"></i></button>
         </div>
-        <div class="offcanvas__body">
+        <div class="drawer__body">
           <div style="display: flex; gap: 0.75rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--st-border);">
             <span class="icon-box icon-box--success icon-box--round" style="flex-shrink: 0;"><i data-lucide="check"></i></span>
             <div>
@@ -152,14 +152,14 @@
       </div>
     </div>
 
-    <div class="offcanvas offcanvas--top" data-stisla-offcanvas id="offcanvasTop" style="--offcanvas-height: 16rem;">
-      <div class="offcanvas__backdrop" data-stisla-offcanvas-dismiss></div>
-      <div class="offcanvas__content">
-        <div class="offcanvas__header">
-          <h3 class="offcanvas__title">What's new in June</h3>
-          <button type="button" class="offcanvas__close" data-stisla-offcanvas-dismiss aria-label="Close"><i data-lucide="x"></i></button>
+    <div class="drawer drawer--top" data-stisla-drawer id="drawerTop" style="--drawer-height: 16rem;">
+      <div class="drawer__backdrop" data-stisla-drawer-dismiss></div>
+      <div class="drawer__content">
+        <div class="drawer__header">
+          <h3 class="drawer__title">What's new in June</h3>
+          <button type="button" class="drawer__close" data-stisla-drawer-dismiss aria-label="Close"><i data-lucide="x"></i></button>
         </div>
-        <div class="offcanvas__body">
+        <div class="drawer__body">
           <div class="row g-3">
             <div class="col-md-4">
               <span class="badge badge--primary" style="margin-bottom: 0.5rem;">New</span>
@@ -181,16 +181,16 @@
       </div>
     </div>
 
-    <div class="offcanvas offcanvas--bottom" data-stisla-offcanvas id="offcanvasBottom" style="--offcanvas-height: 14rem;">
-      <div class="offcanvas__backdrop" data-stisla-offcanvas-dismiss></div>
-      <div class="offcanvas__content">
-        <div class="offcanvas__header">
+    <div class="drawer drawer--bottom" data-stisla-drawer id="drawerBottom" style="--drawer-height: 14rem;">
+      <div class="drawer__backdrop" data-stisla-drawer-dismiss></div>
+      <div class="drawer__content">
+        <div class="drawer__header">
           <div style="margin: 0 auto; width: 100%; max-width: 30rem; display: flex; align-items: center;">
-            <h3 class="offcanvas__title">Share this report</h3>
-            <button type="button" class="offcanvas__close" data-stisla-offcanvas-dismiss aria-label="Close"><i data-lucide="x"></i></button>
+            <h3 class="drawer__title">Share this report</h3>
+            <button type="button" class="drawer__close" data-stisla-drawer-dismiss aria-label="Close"><i data-lucide="x"></i></button>
           </div>
         </div>
-        <div class="offcanvas__body">
+        <div class="drawer__body">
           <div style="margin: 0 auto; width: 100%; max-width: 30rem;">
             <div class="input-group" style="margin-bottom: 1rem;">
               <input type="text" class="form-control" value="https://app.example.com/r/q3-revenue" readonly>
@@ -211,20 +211,20 @@
 
   <section>
     <h2>Sized</h2>
-    <p>Override <code>--offcanvas-width</code> (start/end) or <code>--offcanvas-height</code> (top/bottom) inline on the root to retune a single instance. The default width is <code>22rem</code>; this one widens to <code>28rem</code> for a roomier form layout.</p>
+    <p>Override <code>--drawer-width</code> (start/end) or <code>--drawer-height</code> (top/bottom) inline on the root to retune a single instance. The default width is <code>22rem</code>; this one widens to <code>28rem</code> for a roomier form layout.</p>
     {% call ui.demo() %}
-    <button type="button" class="btn btn--primary" data-stisla-offcanvas-trigger="offcanvasSized">
+    <button type="button" class="btn btn--primary" data-stisla-drawer-trigger="drawerSized">
       Edit profile
     </button>
 
-    <div class="offcanvas" data-stisla-offcanvas id="offcanvasSized" style="--offcanvas-width: 28rem;">
-      <div class="offcanvas__backdrop" data-stisla-offcanvas-dismiss></div>
-      <div class="offcanvas__content">
-        <div class="offcanvas__header">
-          <h3 class="offcanvas__title">Edit profile</h3>
-          <button type="button" class="offcanvas__close" data-stisla-offcanvas-dismiss aria-label="Close"><i data-lucide="x"></i></button>
+    <div class="drawer" data-stisla-drawer id="drawerSized" style="--drawer-width: 28rem;">
+      <div class="drawer__backdrop" data-stisla-drawer-dismiss></div>
+      <div class="drawer__content">
+        <div class="drawer__header">
+          <h3 class="drawer__title">Edit profile</h3>
+          <button type="button" class="drawer__close" data-stisla-drawer-dismiss aria-label="Close"><i data-lucide="x"></i></button>
         </div>
-        <div class="offcanvas__body">
+        <div class="drawer__body">
           <div class="row g-3">
             <div class="col-6">
               <label for="profileFirst" class="form-label">First name</label>
@@ -244,9 +244,9 @@
             </div>
           </div>
         </div>
-        <div class="offcanvas__footer">
-          <button type="button" class="btn btn--ghost btn--neutral" data-stisla-offcanvas-dismiss>Cancel</button>
-          <button type="button" class="btn btn--primary" data-stisla-offcanvas-dismiss>Save changes</button>
+        <div class="drawer__footer">
+          <button type="button" class="btn btn--ghost btn--neutral" data-stisla-drawer-dismiss>Cancel</button>
+          <button type="button" class="btn btn--primary" data-stisla-drawer-dismiss>Save changes</button>
         </div>
       </div>
     </div>
@@ -255,20 +255,20 @@
 
   <section>
     <h2>Body scroll allowed</h2>
-    <p>Set <code>data-stisla-offcanvas-scroll="true"</code> to let the page behind keep scrolling while the panel is open. Useful for activity feeds or reference panels that support the main task without interrupting it.</p>
+    <p>Set <code>data-stisla-drawer-scroll="true"</code> to let the page behind keep scrolling while the panel is open. Useful for activity feeds or reference panels that support the main task without interrupting it.</p>
     {% call ui.demo() %}
-    <button type="button" class="btn btn--primary" data-stisla-offcanvas-trigger="offcanvasActivity">
+    <button type="button" class="btn btn--primary" data-stisla-drawer-trigger="drawerActivity">
       Open activity
     </button>
 
-    <div class="offcanvas" data-stisla-offcanvas data-stisla-offcanvas-scroll="true" data-stisla-offcanvas-backdrop="false" id="offcanvasActivity">
-      <div class="offcanvas__backdrop" data-stisla-offcanvas-dismiss></div>
-      <div class="offcanvas__content">
-        <div class="offcanvas__header">
-          <h3 class="offcanvas__title">Activity</h3>
-          <button type="button" class="offcanvas__close" data-stisla-offcanvas-dismiss aria-label="Close"><i data-lucide="x"></i></button>
+    <div class="drawer" data-stisla-drawer data-stisla-drawer-scroll="true" data-stisla-drawer-backdrop="false" id="drawerActivity">
+      <div class="drawer__backdrop" data-stisla-drawer-dismiss></div>
+      <div class="drawer__content">
+        <div class="drawer__header">
+          <h3 class="drawer__title">Activity</h3>
+          <button type="button" class="drawer__close" data-stisla-drawer-dismiss aria-label="Close"><i data-lucide="x"></i></button>
         </div>
-        <div class="offcanvas__body">
+        <div class="drawer__body">
           <ol style="list-style: none; padding: 0; margin: 0;">
             <li style="display: flex; gap: 0.75rem; margin-bottom: 1rem;">
               <div class="icon-box icon-box--primary icon-box--round" style="flex-shrink: 0; --icon-box-size: 2rem;"><i data-lucide="git-commit"></i></div>
@@ -315,19 +315,19 @@
 
   <section>
     <h2>Static backdrop</h2>
-    <p>Set <code>data-stisla-offcanvas-backdrop="static"</code> and <code>data-stisla-offcanvas-keyboard="false"</code> to force a deliberate dismiss. The backdrop click shakes the panel along its slide axis instead of closing. Explicit dismiss controls still close.</p>
+    <p>Set <code>data-stisla-drawer-backdrop="static"</code> and <code>data-stisla-drawer-keyboard="false"</code> to force a deliberate dismiss. The backdrop click shakes the panel along its slide axis instead of closing. Explicit dismiss controls still close.</p>
     {% call ui.demo() %}
-    <button type="button" class="btn btn--primary" data-stisla-offcanvas-trigger="offcanvasSetup">
+    <button type="button" class="btn btn--primary" data-stisla-drawer-trigger="drawerSetup">
       Finish setup
     </button>
 
-    <div class="offcanvas" data-stisla-offcanvas data-stisla-offcanvas-backdrop="static" data-stisla-offcanvas-keyboard="false" id="offcanvasSetup">
-      <div class="offcanvas__backdrop" data-stisla-offcanvas-dismiss></div>
-      <div class="offcanvas__content">
-        <div class="offcanvas__header">
-          <h3 class="offcanvas__title">Finish your profile</h3>
+    <div class="drawer" data-stisla-drawer data-stisla-drawer-backdrop="static" data-stisla-drawer-keyboard="false" id="drawerSetup">
+      <div class="drawer__backdrop" data-stisla-drawer-dismiss></div>
+      <div class="drawer__content">
+        <div class="drawer__header">
+          <h3 class="drawer__title">Finish your profile</h3>
         </div>
-        <div class="offcanvas__body">
+        <div class="drawer__body">
           <p class="text-muted-foreground">A few details so teammates know who they're working with.</p>
           <div style="margin-bottom: 1rem;">
             <label for="setupName" class="form-label">Full name</label>
@@ -352,8 +352,8 @@
             </select>
           </div>
         </div>
-        <div class="offcanvas__footer">
-          <button type="button" class="btn btn--primary" style="width: 100%;" data-stisla-offcanvas-dismiss>Save and continue</button>
+        <div class="drawer__footer">
+          <button type="button" class="btn btn--primary" style="width: 100%;" data-stisla-drawer-dismiss>Save and continue</button>
         </div>
       </div>
     </div>
@@ -362,20 +362,20 @@
 
   <section>
     <h2>No backdrop</h2>
-    <p>Set <code>data-stisla-offcanvas-backdrop="false"</code> to drop the dim entirely so the panel sits alongside the main content. Pair with <code>data-stisla-offcanvas-scroll="true"</code> for filter panels and inspector strips the user wants to keep open while they read or click around.</p>
+    <p>Set <code>data-stisla-drawer-backdrop="false"</code> to drop the dim entirely so the panel sits alongside the main content. Pair with <code>data-stisla-drawer-scroll="true"</code> for filter panels and inspector strips the user wants to keep open while they read or click around.</p>
     {% call ui.demo() %}
-    <button type="button" class="btn btn--outline btn--neutral" data-stisla-offcanvas-trigger="offcanvasFilters">
+    <button type="button" class="btn btn--outline btn--neutral" data-stisla-drawer-trigger="drawerFilters">
       <i data-lucide="filter"></i>Filters
     </button>
 
-    <div class="offcanvas offcanvas--start" data-stisla-offcanvas data-stisla-offcanvas-backdrop="false" data-stisla-offcanvas-scroll="true" id="offcanvasFilters">
-      <div class="offcanvas__backdrop" data-stisla-offcanvas-dismiss></div>
-      <div class="offcanvas__content">
-        <div class="offcanvas__header">
-          <h3 class="offcanvas__title">Filters</h3>
-          <button type="button" class="offcanvas__close" data-stisla-offcanvas-dismiss aria-label="Close"><i data-lucide="x"></i></button>
+    <div class="drawer drawer--start" data-stisla-drawer data-stisla-drawer-backdrop="false" data-stisla-drawer-scroll="true" id="drawerFilters">
+      <div class="drawer__backdrop" data-stisla-drawer-dismiss></div>
+      <div class="drawer__content">
+        <div class="drawer__header">
+          <h3 class="drawer__title">Filters</h3>
+          <button type="button" class="drawer__close" data-stisla-drawer-dismiss aria-label="Close"><i data-lucide="x"></i></button>
         </div>
-        <div class="offcanvas__body">
+        <div class="drawer__body">
           <div style="margin-bottom: 1.5rem;">
             <div style="font-weight: 500; margin-bottom: 0.5rem;">Status</div>
             <div class="form-check">
@@ -421,9 +421,9 @@
             </select>
           </div>
         </div>
-        <div class="offcanvas__footer">
-          <button type="button" class="btn btn--ghost btn--neutral" data-stisla-offcanvas-dismiss>Reset</button>
-          <button type="button" class="btn btn--primary" data-stisla-offcanvas-dismiss>Apply filters</button>
+        <div class="drawer__footer">
+          <button type="button" class="btn btn--ghost btn--neutral" data-stisla-drawer-dismiss>Reset</button>
+          <button type="button" class="btn btn--primary" data-stisla-drawer-dismiss>Apply filters</button>
         </div>
       </div>
     </div>
@@ -432,17 +432,17 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Override these on the <code>.offcanvas</code> root (or globally) to retune a single instance.</p>
+    <p>Override these on the <code>.drawer</code> root (or globally) to retune a single instance.</p>
 
     <div class="prose">
       <h3>Geometry</h3>
       <table>
         <thead><tr><th>Variable</th><th>Default</th><th>Use</th></tr></thead>
         <tbody>
-          <tr><td><code>--offcanvas-width</code></td><td><code>22rem</code></td><td>Panel width for <code>--start</code> and <code>--end</code> (default).</td></tr>
-          <tr><td><code>--offcanvas-height</code></td><td><code>16rem</code></td><td>Panel height for <code>--top</code> and <code>--bottom</code>.</td></tr>
-          <tr><td><code>--offcanvas-padding</code></td><td><code>calc(1.25rem * var(--st-density))</code></td><td>Header and body padding. Scales with <code>--st-density</code>.</td></tr>
-          <tr><td><code>--offcanvas-z-index</code></td><td><code>1045</code></td><td>Stack level. One tier below modal.</td></tr>
+          <tr><td><code>--drawer-width</code></td><td><code>22rem</code></td><td>Panel width for <code>--start</code> and <code>--end</code> (default).</td></tr>
+          <tr><td><code>--drawer-height</code></td><td><code>16rem</code></td><td>Panel height for <code>--top</code> and <code>--bottom</code>.</td></tr>
+          <tr><td><code>--drawer-padding</code></td><td><code>calc(1.25rem * var(--st-density))</code></td><td>Header and body padding. Scales with <code>--st-density</code>.</td></tr>
+          <tr><td><code>--drawer-z-index</code></td><td><code>1045</code></td><td>Stack level. One tier below modal.</td></tr>
         </tbody>
       </table>
 
@@ -450,10 +450,10 @@
       <table>
         <thead><tr><th>Variable</th><th>Default</th><th>Use</th></tr></thead>
         <tbody>
-          <tr><td><code>--offcanvas-bg</code></td><td><code>var(--st-surface)</code></td><td>Panel fill.</td></tr>
-          <tr><td><code>--offcanvas-color</code></td><td><code>var(--st-foreground)</code></td><td>Panel text color.</td></tr>
-          <tr><td><code>--offcanvas-border-color</code></td><td><code>var(--st-border)</code></td><td>Inner-edge border (only the side facing the viewport).</td></tr>
-          <tr><td><code>--offcanvas-shadow</code></td><td><code>0 0 40px -10px color-mix(…)</code></td><td>Soft ambient shadow around the panel.</td></tr>
+          <tr><td><code>--drawer-bg</code></td><td><code>var(--st-surface)</code></td><td>Panel fill.</td></tr>
+          <tr><td><code>--drawer-color</code></td><td><code>var(--st-foreground)</code></td><td>Panel text color.</td></tr>
+          <tr><td><code>--drawer-border-color</code></td><td><code>var(--st-border)</code></td><td>Inner-edge border (only the side facing the viewport).</td></tr>
+          <tr><td><code>--drawer-shadow</code></td><td><code>0 0 40px -10px color-mix(…)</code></td><td>Soft ambient shadow around the panel.</td></tr>
         </tbody>
       </table>
 
@@ -461,8 +461,8 @@
       <table>
         <thead><tr><th>Variable</th><th>Default</th><th>Use</th></tr></thead>
         <tbody>
-          <tr><td><code>--offcanvas-backdrop-bg</code></td><td><code>oklch(0 0 0 / 0.55)</code></td><td>Dim color over the page behind.</td></tr>
-          <tr><td><code>--offcanvas-backdrop-blur</code></td><td><code>12px</code></td><td>Backdrop blur radius.</td></tr>
+          <tr><td><code>--drawer-backdrop-bg</code></td><td><code>oklch(0 0 0 / 0.55)</code></td><td>Dim color over the page behind.</td></tr>
+          <tr><td><code>--drawer-backdrop-blur</code></td><td><code>12px</code></td><td>Backdrop blur radius.</td></tr>
         </tbody>
       </table>
 
@@ -470,8 +470,8 @@
       <table>
         <thead><tr><th>Variable</th><th>Default</th><th>Use</th></tr></thead>
         <tbody>
-          <tr><td><code>--offcanvas-title-font-size</code></td><td><code>1.125rem</code></td><td>Pins the title size so any heading tag reads the same.</td></tr>
-          <tr><td><code>--offcanvas-title-font-weight</code></td><td><code>600</code></td><td>Title weight.</td></tr>
+          <tr><td><code>--drawer-title-font-size</code></td><td><code>1.125rem</code></td><td>Pins the title size so any heading tag reads the same.</td></tr>
+          <tr><td><code>--drawer-title-font-weight</code></td><td><code>600</code></td><td>Title weight.</td></tr>
         </tbody>
       </table>
 
@@ -479,10 +479,10 @@
       <table>
         <thead><tr><th>Variable</th><th>Default</th><th>Use</th></tr></thead>
         <tbody>
-          <tr><td><code>--offcanvas-close-size</code></td><td><code>1.75rem</code></td><td>Width and height of the dismiss chip.</td></tr>
-          <tr><td><code>--offcanvas-close-color</code></td><td><code>var(--st-muted-foreground)</code></td><td>Resting icon color.</td></tr>
-          <tr><td><code>--offcanvas-close-color-hover</code></td><td><code>var(--st-foreground)</code></td><td>Hover and focus icon color.</td></tr>
-          <tr><td><code>--offcanvas-close-bg-hover</code></td><td><code>var(--st-accent)</code></td><td>Hover and focus chip background.</td></tr>
+          <tr><td><code>--drawer-close-size</code></td><td><code>1.75rem</code></td><td>Width and height of the dismiss chip.</td></tr>
+          <tr><td><code>--drawer-close-color</code></td><td><code>var(--st-muted-foreground)</code></td><td>Resting icon color.</td></tr>
+          <tr><td><code>--drawer-close-color-hover</code></td><td><code>var(--st-foreground)</code></td><td>Hover and focus icon color.</td></tr>
+          <tr><td><code>--drawer-close-bg-hover</code></td><td><code>var(--st-accent)</code></td><td>Hover and focus chip background.</td></tr>
         </tbody>
       </table>
 
@@ -490,9 +490,9 @@
       <table>
         <thead><tr><th>Variable</th><th>Default</th><th>Use</th></tr></thead>
         <tbody>
-          <tr><td><code>--offcanvas-footer-padding-y</code></td><td><code>calc(0.875rem * var(--st-density))</code></td><td>Vertical padding for the footer band.</td></tr>
-          <tr><td><code>--offcanvas-footer-bg</code></td><td><code>var(--st-surface-2)</code></td><td>Footer fill. Tints to the alt surface so the seam reads against the body.</td></tr>
-          <tr><td><code>--offcanvas-footer-border-color</code></td><td><code>var(--st-border)</code></td><td>Top border of the footer band.</td></tr>
+          <tr><td><code>--drawer-footer-padding-y</code></td><td><code>calc(0.875rem * var(--st-density))</code></td><td>Vertical padding for the footer band.</td></tr>
+          <tr><td><code>--drawer-footer-bg</code></td><td><code>var(--st-surface-2)</code></td><td>Footer fill. Tints to the alt surface so the seam reads against the body.</td></tr>
+          <tr><td><code>--drawer-footer-border-color</code></td><td><code>var(--st-border)</code></td><td>Top border of the footer band.</td></tr>
         </tbody>
       </table>
 
@@ -500,7 +500,7 @@
       <table>
         <thead><tr><th>Variable</th><th>Default</th><th>Use</th></tr></thead>
         <tbody>
-          <tr><td><code>--offcanvas-transition-duration</code></td><td><code>0.25s</code></td><td>Slide and backdrop fade duration. Zeroed under <code>prefers-reduced-motion: reduce</code>.</td></tr>
+          <tr><td><code>--drawer-transition-duration</code></td><td><code>0.25s</code></td><td>Slide and backdrop fade duration. Zeroed under <code>prefers-reduced-motion: reduce</code>.</td></tr>
         </tbody>
       </table>
     </div>
