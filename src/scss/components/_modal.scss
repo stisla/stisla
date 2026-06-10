@@ -29,8 +29,11 @@
   --modal-border-color: var(--st-border);
   --modal-shadow: 0 10px 40px -10px color-mix(in oklch, black 35%, transparent);
 
-  // Backdrop
-  --modal-backdrop-bg: color-mix(in oklch, var(--st-background) 60%, transparent);
+  // Backdrop — solid dark dim in both themes (matches the prior v3). The
+  // backdrop-filter blur keeps the frosted character without the per-theme
+  // inversion that made light mode read as "wash out" instead of "modal up
+  // front".
+  --modal-backdrop-bg: oklch(0 0 0 / 0.55);
   --modal-backdrop-blur: 12px;
 
   // Title
