@@ -1,29 +1,40 @@
 // Stisla public JS entry.
 //
-// Step 2 status: BS5 is gone. Popover + Tooltip auto-init lived here
-// during the BS5 era; Step 4 reintroduces them via @floating-ui/dom +
-// the Stisla.JS contract (class + destroy + custom events, V3.md §3.7).
-// Until then, popover/tooltip markup renders inert.
+// Step 4 prelude shipped: the Component base class + declarative scanner
+// land in core/. JS-coordinated components (modal, offcanvas, dropdown,
+// tooltip, popover, toast, carousel) get imported here as they're built
+// out under components/. The interim delegated handlers at the bottom
+// stay until each component is promoted to a proper Stisla.<Component>
+// class in its own session.
+
+import { Component, getInstance } from './core/component.js';
+import { register, init } from './core/init.js';
 
 export const Stisla = {
   version: '3.0.0-alpha.0',
-  init() {
-    // Declarative re-scan API lands in Step 4. Today the handler below
-    // auto-attaches at module load.
-  },
+  Component,
+  register,
+  init,
+  get: getInstance,
 };
 
 if (typeof window !== 'undefined') {
   window.Stisla = Stisla;
 }
 
-// === Framework auto-init =================================================
-// SSR-safe: skip when document is unavailable. ES module scripts are
-// deferred by default, so querySelectorAll at module load runs after
-// the DOM is parsed; UMD consumers should load this script at the end
-// of <body> or inside DOMContentLoaded.
+// === Interim delegated handlers ==========================================
+// Promoted into proper Stisla.<Component> classes in later sessions:
+//   - app-shell  → Stisla.AppShell
+//   - navbar     → Stisla.Navbar
+//   - sidebar    → Stisla.Sidebar (submenu open/close)
+//   - accordion  → Stisla.Accordion
+//
+// The window sentinel prevents Vite HMR from double-binding when the
+// module re-executes after a hot reload.
 
-if (typeof document !== 'undefined') {
+if (typeof document !== 'undefined' && !window.__stislaInterimBound) {
+  window.__stislaInterimBound = true;
+
   // App shell — data-app-shell-toggle="collapse|visibility" flips the
   // matching state class on the closest .app-shell. "collapse" also
   // flips .is-collapsed on the descendant .sidebar so its internal
@@ -113,5 +124,7 @@ if (typeof document !== 'undefined') {
     trigger.setAttribute('aria-expanded', String(!open));
   });
 }
+
+if (import.meta.hot) import.meta.hot.accept();
 
 export default Stisla;
