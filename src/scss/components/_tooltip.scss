@@ -1,18 +1,139 @@
 // Stisla v3 — tooltip.
-// Inverted by default and the invert is BS5's own behavior, not a Stisla
-// override. $tooltip-bg defaults to var(--bs-emphasis-color) and $tooltip-color
-// to var(--bs-body-bg), so the tooltip surface flips with [data-bs-theme]:
-// near-black on light, near-white on dark. We just tighten the visuals on top.
 //
-// Padding goes to 8px both axes (BS5 ships 4/8). Radius drops to
-// --bs-border-radius-sm (8px) so the chip reads as a small floating label, not
-// a card. Opacity goes to 1 — the BS5 .9 default softens the invert into a
-// washed grey that loses the high-contrast read.
+// Anatomy (V3.md §3.6 BEM + §3.7 JS contract):
+//   .tooltip[role="tooltip"][data-state="open|closed"][data-placement="..."]
+//     .tooltip__arrow                       caret, positioned by FUI arrow()
+//     .tooltip__inner                       padded surface, text or HTML
+//
+// Tooltip element is created by Stisla.Tooltip JS, appended to <body> on first
+// show, and positioned via Floating UI. Trigger lives elsewhere (any element
+// carrying data-stisla-tooltip + the title attrs); the trigger gets
+// aria-describedby pointing at the tooltip's id while it's open.
+//
+// Position strategy: position: fixed so the tooltip escapes any ancestor with
+// overflow: hidden. Floating UI's strategy: 'fixed' computes top/left in
+// viewport coordinates to match (same as .dropdown-menu).
+//
+// Color model: inverse surface — bg = --st-foreground, color = --st-background.
+// The chip reads dark-on-light in light mode, light-on-dark in dark mode via
+// the token swap. Distinguishes from popover (which uses --st-surface).
 
 .tooltip {
-  --#{$prefix}tooltip-padding-y: 0.5rem;
-  --#{$prefix}tooltip-padding-x: 0.5rem;
-  --#{$prefix}tooltip-border-radius: var(--#{$prefix}border-radius-sm);
-  --#{$prefix}tooltip-opacity: 1;
-  --#{$prefix}tooltip-max-width: 240px;
+  // Geometry — small floating label, not a card. --st-radius-sm = 8px under
+  // default --st-radius (12px) per the 3.6c three-tier rhythm.
+  --tooltip-max-width: 240px;
+  --tooltip-padding-y: 6px;
+  --tooltip-padding-x: 10px;
+  --tooltip-radius: var(--st-radius-sm);
+  --tooltip-z-index: 1050;
+  --tooltip-font-size: 0.8125rem;
+  --tooltip-line-height: 1.4;
+
+  // Surface — inverse treatment. Auto-flips with theme via the token swap;
+  // no [data-theme] override block needed.
+  --tooltip-bg: var(--st-foreground);
+  --tooltip-color: var(--st-background);
+  --tooltip-shadow:
+    0 4px 12px -2px color-mix(in oklch, var(--st-foreground) 12%, transparent);
+
+  // Arrow — 8px square rotated 45° for the diamond caret. Half buries under
+  // .tooltip__inner; the other half sticks out as the visible point.
+  --tooltip-arrow-size: 8px;
+
+  // Motion — short fade + small translate toward the trigger so the tooltip
+  // appears to rise from the anchored edge.
+  --tooltip-transition-duration: 0.15s;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--tooltip-z-index);
+  display: none;
+  max-width: var(--tooltip-max-width);
+  margin: 0;
+  pointer-events: none;
+  opacity: 0;
+  // Default resting transform = "above the trigger, easing up from below".
+  // JS sets [data-placement] on every position pass; per-side rules below
+  // override the transform direction so the entrance always reads as moving
+  // away from the trigger.
+  transform: translateY(4px);
+  transition:
+    opacity var(--tooltip-transition-duration) ease,
+    transform var(--tooltip-transition-duration) ease;
+}
+
+.tooltip[data-state='open'] {
+  display: block;
+  opacity: 1;
+  transform: none;
+}
+
+// Per-placement resting transform — Floating UI's resolved placement (which
+// may differ from opts.placement after flip()) sets [data-placement] so the
+// transform direction tracks the actual anchored edge.
+.tooltip[data-placement^='bottom'] {
+  transform: translateY(-4px);
+}
+.tooltip[data-placement^='left'] {
+  transform: translateX(4px);
+}
+.tooltip[data-placement^='right'] {
+  transform: translateX(-4px);
+}
+.tooltip[data-placement^='bottom'][data-state='open'],
+.tooltip[data-placement^='left'][data-state='open'],
+.tooltip[data-placement^='right'][data-state='open'] {
+  transform: none;
+}
+
+// === Inner =================================================================
+// The visible chip. Holds the bg/padding/radius so the arrow can overlap its
+// edge cleanly without affecting layout.
+
+.tooltip__inner {
+  padding: var(--tooltip-padding-y) var(--tooltip-padding-x);
+  font-size: var(--tooltip-font-size);
+  line-height: var(--tooltip-line-height);
+  color: var(--tooltip-color);
+  text-align: center;
+  background-color: var(--tooltip-bg);
+  border-radius: var(--tooltip-radius);
+  box-shadow: var(--tooltip-shadow);
+  word-wrap: break-word;
+}
+
+// === Arrow =================================================================
+// 8px square rotated 45°. Position along the perpendicular axis is set by JS
+// from Floating UI's arrow() middleware data; this rule pins the cross-axis
+// offset per placement so half the square sits inside the inner (covered by
+// its bg) and half sticks out as the visible triangle.
+
+.tooltip__arrow {
+  position: absolute;
+  width: var(--tooltip-arrow-size);
+  height: var(--tooltip-arrow-size);
+  background-color: var(--tooltip-bg);
+  transform: rotate(45deg);
+}
+
+.tooltip[data-placement^='top'] .tooltip__arrow {
+  bottom: calc(var(--tooltip-arrow-size) * -0.5);
+}
+.tooltip[data-placement^='bottom'] .tooltip__arrow {
+  top: calc(var(--tooltip-arrow-size) * -0.5);
+}
+.tooltip[data-placement^='left'] .tooltip__arrow {
+  right: calc(var(--tooltip-arrow-size) * -0.5);
+}
+.tooltip[data-placement^='right'] .tooltip__arrow {
+  left: calc(var(--tooltip-arrow-size) * -0.5);
+}
+
+// === Reduced motion ========================================================
+
+@media (prefers-reduced-motion: reduce) {
+  .tooltip {
+    transition: none;
+  }
 }
