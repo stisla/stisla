@@ -59,7 +59,7 @@
   // Header
   --accordion-header-padding-y: calc(0.75rem * var(--st-density));
   --accordion-header-padding-x: calc(1rem * var(--st-density));
-  --accordion-header-font-size: 0.9375rem;
+  --accordion-header-font-size: inherit;
   --accordion-header-font-weight: 500;
   --accordion-header-color: var(--st-foreground);
   --accordion-header-bg: transparent;
