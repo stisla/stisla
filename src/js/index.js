@@ -9,10 +9,14 @@
 
 import { Component, getInstance } from './core/component.js';
 import { register, init } from './core/init.js';
+import { Modal } from './components/modal.js';
+
+register('modal', Modal);
 
 export const Stisla = {
   version: '3.0.0-alpha.0',
   Component,
+  Modal,
   register,
   init,
   get: getInstance,
