@@ -34,11 +34,16 @@
 
   // Universal rim + bevel. Border derives from --btn-tone so every
   // filled tone (shipped or one-off via --btn-tone override) gets a
-  // matching darker edge. --btn-bevel is the inset top highlight that
-  // reads as a soft bevel on colored fills and is invisible on
-  // near-white fills. Set --btn-bevel: none on :root for a flat look,
-  // or override per-tone. Shape modifiers (outline/ghost/soft) null it.
-  --btn-border-color: color-mix(in oklch, var(--btn-tone) 85%, black);
+  // matching darker edge. --btn-rim-mix is the tone-retention pct in
+  // the rim color-mix — 85% at rest, .btn-group lifts to 92% so internal
+  // seams (two rims overlapping at the -1px margin) sit quieter. Outline
+  // /ghost/soft set --btn-border-color directly and bypass this knob.
+  // --btn-bevel is the inset top highlight that reads as a soft bevel on
+  // colored fills and is invisible on near-white fills. Set --btn-bevel:
+  // none on :root for a flat look, or override per-tone. Shape modifiers
+  // (outline/ghost/soft) null it.
+  --btn-rim-mix:      85%;
+  --btn-border-color: color-mix(in oklch, var(--btn-tone) var(--btn-rim-mix), black);
   --btn-bevel:        inset 0 1px 0 rgba(255, 255, 255, 0.15);
 
   display: inline-flex;
@@ -190,7 +195,7 @@
   --btn-tone:         var(--st-foreground);
   --btn-bg:           var(--st-neutral);
   --btn-color:        var(--st-neutral-foreground);
-  --btn-border-color: color-mix(in oklch, var(--st-neutral) 85%, var(--st-muted-foreground));
+  --btn-border-color: color-mix(in oklch, var(--st-neutral) var(--btn-rim-mix), var(--st-muted-foreground));
 
   &:hover  { --btn-bg: color-mix(in oklch, var(--st-neutral) 88%, black); }
   &:active,

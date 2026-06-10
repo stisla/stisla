@@ -40,6 +40,11 @@
     position: relative;
     flex: 0 1 auto;
     border-radius: 0;
+    // Soften the rim mix on filled tones so internal seams (two adjacent
+    // rims overlapping at the -1px margin) read as a quieter divider, not
+    // a hard frame. Outline / ghost / soft shapes override --btn-border-color
+    // directly and bypass this knob — their rim color stays intentional.
+    --btn-rim-mix: 92%;
   }
 
   // Lift the interactive member above its neighbours so its border, ring,
