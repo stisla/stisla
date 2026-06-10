@@ -144,21 +144,23 @@
 
   <section>
     <h2>Vertical</h2>
-    <p>Add <code>.toggle-group--vertical</code> to stack members. Inner toggles keep their standalone default height — no vertical compression.</p>
+    <p>Add <code>.toggle-group--vertical</code> to stack members. The container is block-level so it fills its parent's width — wrap in a sized container (sidebar shell, settings panel) to constrain. Inner toggles keep their standalone default height; content left-aligns as a menu list.</p>
     {% call ui.demo() %}
-    <div class="toggle-group toggle-group--vertical" role="radiogroup" aria-label="Sidebar view">
-      <button type="button" class="toggle" role="radio" data-state="active" aria-checked="true">
-        <i data-lucide="inbox"></i>
-        Inbox
-      </button>
-      <button type="button" class="toggle" role="radio" aria-checked="false">
-        <i data-lucide="archive"></i>
-        Archive
-      </button>
-      <button type="button" class="toggle" role="radio" aria-checked="false">
-        <i data-lucide="trash-2"></i>
-        Trash
-      </button>
+    <div style="max-width: 240px;">
+      <div class="toggle-group toggle-group--vertical" role="radiogroup" aria-label="Sidebar view">
+        <button type="button" class="toggle" role="radio" data-state="active" aria-checked="true">
+          <i data-lucide="inbox"></i>
+          Inbox
+        </button>
+        <button type="button" class="toggle" role="radio" aria-checked="false">
+          <i data-lucide="archive"></i>
+          Archive
+        </button>
+        <button type="button" class="toggle" role="radio" aria-checked="false">
+          <i data-lucide="trash-2"></i>
+          Trash
+        </button>
+      </div>
     </div>
     {% endcall %}
   </section>

@@ -106,7 +106,14 @@
 // stretches via the shared `align-items: stretch` so a vertical group
 // with mixed-content members lines up cleanly.
 .toggle-group--vertical {
+  // Block-level so the menu fills its parent's width — overrides the
+  // shared base's inline-flex (intrinsic content sizing) which makes
+  // sense for horizontal segmented controls but reads as a "floating
+  // narrow card" in vertical mode. Consumer constrains via parent
+  // width (e.g. inside a 240 px sidebar shell).
+  display: flex;
   flex-direction: column;
+  width: 100%;
   height: auto;
 
   // Vertical mode reads as a stacked menu list (Inbox / Archive / Trash,
