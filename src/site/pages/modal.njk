@@ -44,13 +44,14 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Add <code>.modal--sm</code>, <code>.modal--lg</code>, or <code>.modal--xl</code> on the <code>.modal</code> root to swap widths. The default sits in the middle of the scale. <code>.modal--fullscreen</code> edge-bleeds the dialog to the viewport.</p>
+    <p>Add <code>.modal--sm</code>, <code>.modal--lg</code>, or <code>.modal--xl</code> on the <code>.modal</code> root to swap widths. The default sits in the middle of the scale. <code>.modal--almost-fullscreen</code> keeps a 2.5rem breathing strip around the dialog so the page still hints through; <code>.modal--fullscreen</code> edge-bleeds the dialog to the viewport.</p>
     {% call ui.demo() %}
     <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-modal-trigger="modalSm">Small</button>
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-modal-trigger="modalDefault">Default</button>
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-modal-trigger="modalLg">Large</button>
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-modal-trigger="modalXl">Extra large</button>
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-modal-trigger="modalAlmostFs">Almost fullscreen</button>
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-modal-trigger="modalFs">Fullscreen</button>
     </div>
 
@@ -101,6 +102,19 @@
           <div class="modal__header"><h3 class="modal__title">Extra large</h3></div>
           <div class="modal__body">
             <p style="margin: 0;">A canvas for media, rich detail views, or a side-by-side comparison.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal modal--almost-fullscreen" id="modalAlmostFs" data-stisla-modal data-state="closed" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1">
+      <div class="modal__backdrop" data-stisla-modal-dismiss></div>
+      <div class="modal__dialog">
+        <div class="modal__content">
+          <button type="button" class="modal__close" data-stisla-modal-dismiss aria-label="Close"><i data-lucide="x"></i></button>
+          <div class="modal__header"><h3 class="modal__title">Almost fullscreen</h3></div>
+          <div class="modal__body">
+            <p style="margin: 0;">A breathing strip around the dialog so the page still hints through. Useful when you want immersion without losing the surrounding context entirely.</p>
           </div>
         </div>
       </div>

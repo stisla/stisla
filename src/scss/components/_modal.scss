@@ -216,6 +216,19 @@
   }
 }
 
+// Almost-fullscreen — keeps a 2.5rem breathing strip around the dialog
+// so the page hints through, but the dialog itself takes the rest of the
+// viewport. Useful for immersive editors, onboarding panels, lightbox-
+// adjacent layouts where the surrounding context still belongs in view.
+.modal--almost-fullscreen {
+  --modal-margin: 2.5rem;
+  --modal-width: calc(100vw - 2 * var(--modal-margin));
+
+  .modal__dialog {
+    height: calc(100dvh - 2 * var(--modal-margin));
+  }
+}
+
 // === Position modifiers ==================================================
 // Default is centered. --top and --bottom override via auto margins.
 .modal__dialog--top {
