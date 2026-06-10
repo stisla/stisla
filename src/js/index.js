@@ -10,8 +10,10 @@
 import { Component, getInstance } from './core/component.js';
 import { register, init } from './core/init.js';
 import { Modal } from './components/modal.js';
+import { Offcanvas } from './components/offcanvas.js';
 
 register('modal', Modal);
+register('offcanvas', Offcanvas);
 
 // Auto-init runs AFTER every register() call above so the scanner walks
 // [data-stisla-<name>] with a populated registry. Module-level code in
@@ -29,6 +31,7 @@ export const Stisla = {
   version: '3.0.0-alpha.0',
   Component,
   Modal,
+  Offcanvas,
   register,
   init,
   get: getInstance,
