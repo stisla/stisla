@@ -227,6 +227,10 @@
   .modal__dialog {
     height: calc(100dvh - 2 * var(--modal-margin));
   }
+
+  .modal__content {
+    height: 100%;
+  }
 }
 
 // === Position modifiers ==================================================
