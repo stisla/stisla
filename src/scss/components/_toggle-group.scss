@@ -119,7 +119,11 @@
   // Vertical mode reads as a stacked menu list (Inbox / Archive / Trash,
   // primary nav items, settings rows). Left-align content so labels read
   // in scan order; full-width chip so the active fill spans the row.
+  // Row height drops from .toggle's standalone 36 px to a compact 32 px —
+  // menu-list cadence (matches Notion / Linear / shadcn sidebar rhythm).
+  // The full 36 px chip read too tall for a stacked menu.
   > .toggle {
+    --toggle-height: 2rem;
     width: 100%;
     justify-content: flex-start;
     text-align: left;
