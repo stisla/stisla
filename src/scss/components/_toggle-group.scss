@@ -85,7 +85,13 @@
 // Outer height locked; children fill via flex stretch + height: 100% so
 // the inner area math (height - 2*border - 2*padding) is handled by the
 // box model instead of by a manual calc that has to track border width.
-.toggle-group {
+//
+// Scoped via :not(--vertical) so these rules DON'T leak into the vertical
+// block — a vertical container has both .toggle-group AND .toggle-group
+// --vertical classes, so the plain .toggle-group selector would match
+// both. height: 100% on vertical children would override the standalone
+// --toggle-height calc and break the row-height knob.
+.toggle-group:not(.toggle-group--vertical) {
   height: calc(var(--toggle-group-height) * var(--st-density));
 
   > .toggle {
