@@ -55,12 +55,14 @@
   --toggle-hover-bg:            var(--st-accent);
   --toggle-hover-color:         var(--st-accent-foreground);
 
-  // Active — highlight bg + slightly stronger border. Border mixes the
-  // active bg toward --st-foreground so it reads as "a step beyond
-  // highlight" in both themes (darker in light, lighter in dark).
+  // Active — highlight bg, border matches bg so the chip reads as a
+  // clean solid fill with no visible rim. The earlier foreground-mix
+  // border ghosted around the fill in dark mode; matching the bg
+  // keeps the active chip cohesive across both themes. Consumers who
+  // want a distinct active rim override --toggle-active-border-color.
   --toggle-active-bg:           var(--st-highlight);
   --toggle-active-color:        var(--st-highlight-foreground);
-  --toggle-active-border-color: color-mix(in oklch, var(--st-highlight) 75%, var(--st-foreground));
+  --toggle-active-border-color: var(--toggle-active-bg);
 
   // Focus
   --toggle-ring:                var(--st-ring);
