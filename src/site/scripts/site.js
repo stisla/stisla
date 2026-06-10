@@ -57,10 +57,11 @@ document.addEventListener("click", (e) => {
 
 // data-demo-select-rows — wire a checkbox column into a working row-selection
 // pattern. The header <thead>'s checkbox is the bulk toggle (with indeterminate
-// state when the selection is partial); each tbody checkbox flips .table-active
-// on its row. A descendant [data-demo-select-count] gets its text replaced with
-// the current selection count, so the "<n> of <total> selected" headline ticks
-// live without a per-demo handler.
+// state when the selection is partial); each tbody checkbox flips
+// data-state="active" on its row (V3.md §3.6, matches the .table CSS hook). A
+// descendant [data-demo-select-count] gets its text replaced with the current
+// selection count, so the "<n> of <total> selected" headline ticks live
+// without a per-demo handler.
 // <table data-demo-select-rows>…<tbody>… <tr><td><input class="form-check-input" …></td>… </tr> …</tbody></table>
 document.addEventListener("change", (e) => {
   const input = e.target.closest(".form-check-input");
@@ -73,13 +74,19 @@ document.addEventListener("change", (e) => {
     root.querySelectorAll("tbody .form-check-input"),
   );
 
+  const setRowActive = (tr, on) => {
+    if (!tr) return;
+    if (on) tr.dataset.state = "active";
+    else delete tr.dataset.state;
+  };
+
   if (input === head) {
     bodyBoxes.forEach((cb) => {
       cb.checked = head.checked;
-      cb.closest("tr")?.classList.toggle("table-active", head.checked);
+      setRowActive(cb.closest("tr"), head.checked);
     });
   } else {
-    input.closest("tr")?.classList.toggle("table-active", input.checked);
+    setRowActive(input.closest("tr"), input.checked);
   }
 
   const selected = bodyBoxes.filter((cb) => cb.checked).length;
