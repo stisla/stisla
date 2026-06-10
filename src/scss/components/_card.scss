@@ -4,11 +4,11 @@
 // __subtitle / __text / __link / __image / __overlay). Variants stay
 // flat on the root (.card--flat).
 //
-// Tokens: --st-surface (bg), --st-border, --st-card-radius → --st-radius,
-// --st-card-shadow → --st-shadow, padding × var(--st-density).
+// Tokens: --st-surface (bg), --st-border, --st-card-radius → --st-radius-lg
+// (large-surface tier), --st-card-shadow → --st-shadow, padding × var(--st-density).
 
 .card {
-  --card-radius:    var(--st-card-radius, var(--st-radius));
+  --card-radius:    var(--st-card-radius, var(--st-radius-lg));
   --card-padding:   calc(1.25rem * var(--st-density));
   --card-shadow:    var(--st-card-shadow, var(--st-shadow));
   --card-bg:        var(--st-surface);
@@ -36,7 +36,14 @@
 }
 
 // === Parts ============================================================
+// Body is flex column + gap so .card__title / __subtitle / __text don't
+// need component-level margins. Parent owns the rhythm; children stay
+// margin-zero (same model as .alert). Drops the old negative-top hack
+// on __subtitle and the :last-child:margin-bottom override on __text.
 .card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   padding: var(--card-padding);
 }
 
@@ -69,23 +76,19 @@
 }
 
 .card__title {
-  margin: 0 0 0.5rem;
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.3;
 }
 
 .card__subtitle {
-  margin: -0.25rem 0 0.75rem;
   font-size: 0.875rem;
   color: var(--st-muted-foreground);
   font-weight: 500;
 }
 
-.card__text {
-  margin: 0 0 1rem;
-  &:last-child { margin-bottom: 0; }
-}
+// .card__text — no per-element rules. Sibling rhythm comes from
+// .card__body's gap; .card__overlay's color: inherit (below) still applies.
 
 .card__link {
   color: var(--st-primary);

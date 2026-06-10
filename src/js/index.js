@@ -85,6 +85,33 @@ if (typeof document !== 'undefined') {
     item.dataset.state = open ? 'closed' : 'open';
     target.setAttribute('aria-expanded', String(!open));
   });
+
+  // Accordion — [data-stisla-accordion-trigger] flips data-state on the
+  // closest .accordion__item between "open" and "closed" + aria-expanded
+  // on the trigger. Add data-stisla-accordion-single on the .accordion
+  // root to enforce one-open-at-a-time mode. Step 4 promotes this into
+  // Stisla.Accordion with the full class + destroy + custom-events
+  // contract (V3.md §3.7) plus a measured-height transition.
+  document.addEventListener('click', (e) => {
+    const trigger = e.target.closest('[data-stisla-accordion-trigger]');
+    if (!trigger || trigger.disabled) return;
+    const item = trigger.closest('.accordion__item');
+    const accordion = trigger.closest('.accordion');
+    if (!item || !accordion) return;
+    const open = item.dataset.state === 'open';
+    if (!open && accordion.hasAttribute('data-stisla-accordion-single')) {
+      accordion
+        .querySelectorAll('.accordion__item[data-state="open"]')
+        .forEach((sibling) => {
+          sibling.dataset.state = 'closed';
+          sibling
+            .querySelector('[data-stisla-accordion-trigger]')
+            ?.setAttribute('aria-expanded', 'false');
+        });
+    }
+    item.dataset.state = open ? 'closed' : 'open';
+    trigger.setAttribute('aria-expanded', String(!open));
+  });
 }
 
 export default Stisla;

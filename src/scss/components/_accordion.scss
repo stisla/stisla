@@ -1,131 +1,206 @@
-// Stisla v3 — accordion. BS5 stacks items as a single bordered block; we
-// restyle them as individually rounded chips inset 4px from the wrapper,
-// with a 4px gap between items. The flush variant strips the chip styling
-// back to plain edge-to-edge rows (matches BS5's flush convention).
-
-// Wrapper inset for the chip layout. Drives the .accordion padding AND
-// the calc()s that derive the item / button radii — concentric corners
-// require inner = outer - padding (- border-width for the next layer in).
-// Change this single value and every nested corner stays concentric.
-$accordion-wrapper-padding: 0.25rem;
+// Stisla v3 — accordion.
+//
+// A stack of collapsible panels. Closed items sit transparent on the
+// frame; opening an item raises it as a soft chip (--st-surface-2 fill
+// + --st-border rim) with a 1px divider between its header and body.
+// The header text stays in --st-foreground in both states — the chip
+// itself is the open-signal, not a colour flip.
+//
+// CSS today + thin declarative toggle in src/js/index.js; the proper
+// class + destroy + custom-events contract (V3.md §3.7) and the
+// height-transition animation land in Step 4 (Stisla.Accordion).
+//
+// === Anatomy =============================================================
+//   .accordion                       root frame
+//   .accordion__item                 one panel (header + body pair)
+//   .accordion__header               the <button> trigger row
+//   .accordion__icon                 chevron; rotates 0→180° on open
+//   .accordion__body                 the collapsible content
+//
+// === Modifiers ===========================================================
+//   .accordion--flush                drop frame border + shadow; keep the
+//                                    root padding inset so items still
+//                                    chip out concentrically inside a card
+//
+// === State hooks (V3.md §3.6) ============================================
+//   .accordion__item[data-state="open|closed"]   Radix-aligned
+//   .accordion__header[aria-expanded]            native button state
+//   .accordion__header:disabled                  unreachable item
+//
+// === Padding model =======================================================
+// Frame padding (4 px) + inner padding (16 px) = 20 px from frame edge to
+// content — aligns with .card content padding so a nested accordion sits
+// in the same horizontal rhythm.
+//
+// === JS wiring (interim) =================================================
+//   data-stisla-accordion-trigger on the header button — the handler in
+//   src/js/index.js flips data-state on the closest .accordion__item
+//   and aria-expanded on the trigger. Add data-stisla-accordion-single
+//   on the .accordion root to enforce one-open-at-a-time mode.
 
 .accordion {
+  // Geometry — large frame, so radius-lg (16px under default density). With
+  // the 4px wrapper inset, the inner item lands at 12px = the standalone
+  // --st-radius default, so the inner chip reads like a normal rounded
+  // element framed by a softer outer rim.
+  --accordion-radius: var(--st-radius-lg);
+  --accordion-padding: 0.25rem;
+  --accordion-gap: 0.25rem;
+
+  // Frame surface
+  --accordion-bg: var(--st-surface);
+  --accordion-border-color: var(--st-border);
+  --accordion-shadow: var(--st-shadow);
+
+  // Open-item chip
+  --accordion-item-open-bg: var(--st-surface-2);
+  --accordion-item-open-border-color: var(--st-border);
+
+  // Header
+  --accordion-header-padding-y: calc(0.75rem * var(--st-density));
+  --accordion-header-padding-x: calc(1rem * var(--st-density));
+  --accordion-header-font-size: 0.9375rem;
+  --accordion-header-font-weight: 500;
+  --accordion-header-color: var(--st-foreground);
+  --accordion-header-bg: transparent;
+  --accordion-header-hover-bg: var(--st-accent);
+  --accordion-header-divider-color: var(--st-border);
+
+  // Icon
+  --accordion-icon-size: 1rem;
+  --accordion-icon-color: currentColor;
+  --accordion-icon-transition-duration: 0.15s;
+
+  // Body
+  --accordion-body-padding-y: calc(0.75rem * var(--st-density));
+  --accordion-body-padding-x: calc(1rem * var(--st-density));
+  --accordion-body-color: var(--st-foreground);
+  --accordion-body-transition-duration: 0.2s;
+
+  // Focus
+  --accordion-ring: var(--st-ring);
+
   display: flex;
   flex-direction: column;
-  gap: $accordion-wrapper-padding;
-  padding: $accordion-wrapper-padding;
-  border: var(--#{$prefix}accordion-border-width) solid
-    var(--#{$prefix}accordion-border-color);
-  border-radius: var(--#{$prefix}accordion-border-radius);
-
-  // Repoint BS5's inner-border-radius var so the button + collapse corners
-  // (which reference it via our rules below) land concentric to the chip
-  // inset, not flush to the outer wrapper. Formula:
-  //   button_radius = outer - wrapper_padding - item_border_width
-  // Everything downstream that reads --bs-accordion-inner-border-radius
-  // picks this up automatically — no per-rule calc().
-  --#{$prefix}accordion-inner-border-radius: calc(
-    var(--#{$prefix}accordion-border-radius) -
-      #{$accordion-wrapper-padding} - var(--#{$prefix}accordion-border-width)
-  );
+  gap: var(--accordion-gap);
+  padding: var(--accordion-padding);
+  background-color: var(--accordion-bg);
+  border: 1px solid var(--accordion-border-color);
+  border-radius: var(--accordion-radius);
+  box-shadow: var(--accordion-shadow);
 }
 
-.accordion-button {
-  font-weight: 500;
-  height: 2.25rem;
+// Item carries a transparent border at rest so the chip-out treatment
+// on open doesn't reflow the row (border-width stays 1px in both states).
+// overflow: hidden lets the header background fill the chip without
+// bleeding past the rounded edge while the body is hidden.
+.accordion__item {
+  border: 1px solid transparent;
+  border-radius: calc(var(--accordion-radius) - var(--accordion-padding));
+  overflow: hidden;
+  transition:
+    background-color 0.12s ease,
+    border-color 0.12s ease;
+}
+
+.accordion__item[data-state="open"] {
+  background-color: var(--accordion-item-open-bg);
+  border-color: var(--accordion-item-open-border-color);
+}
+
+.accordion__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  padding: var(--accordion-header-padding-y) var(--accordion-header-padding-x);
+  font: inherit;
+  font-size: var(--accordion-header-font-size);
+  font-weight: var(--accordion-header-font-weight);
+  text-align: start;
+  color: var(--accordion-header-color);
+  background-color: var(--accordion-header-bg);
+  border: 0;
   border-bottom: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    background-color 0.12s ease,
+    border-color 0.12s ease;
 
-  // BS5 paints an inset border-bottom inside the active button to mark the
-  // header/body split. The tint background already signals "active" inside
-  // a rounded chip, so the line just reads as visual noise — drop it.
-  &:not(.collapsed) {
-    box-shadow: none;
+  &:focus-visible {
+    outline: 2px solid var(--accordion-ring);
+    outline-offset: -2px;
   }
 
-  &:hover:not([aria-expanded="true"]) {
-    background-color: var(--#{$prefix}accent-bg);
-  }
-
-  &[aria-expanded="true"] {
-    border-bottom-color: var(--#{$prefix}accordion-border-color);
-  }
-}
-
-.accordion-item {
-  // Concentric chip: item radius = outer (wrapper) radius - wrapper padding.
-  // BS5 sets the item to the OUTER value, fine for its stacked-block layout
-  // where items reach the wrapper edge; in our inset-chip layout the item
-  // sits 4px inside, so its visible radius shrinks by the same 4px to keep
-  // corners concentric with the wrapper.
-  border-radius: calc(
-    var(--#{$prefix}accordion-border-radius) - #{$accordion-wrapper-padding}
-  );
-
-  border-color: transparent;
-
-  &:has(.accordion-button:not(.collapsed)) {
-    background-color: var(--#{$prefix}surface-alt);
-    border-color: var(--#{$prefix}border-color);
-
-    &:not(:first-of-type) {
-      border-top: inherit;
-    }
-  }
-
-  // Button corners follow the chip: top always rounded; bottom only when
-  // collapsed (an expanded body sits flush against the button bottom).
-  > .accordion-header .accordion-button {
-    border-top-left-radius: var(--#{$prefix}accordion-inner-border-radius);
-    border-top-right-radius: var(--#{$prefix}accordion-inner-border-radius);
-
-    &.collapsed {
-      border-bottom-left-radius: var(--#{$prefix}accordion-inner-border-radius);
-      border-bottom-right-radius: var(
-        --#{$prefix}accordion-inner-border-radius
-      );
-    }
-  }
-
-  > .accordion-collapse {
-    border-bottom-left-radius: var(--#{$prefix}accordion-inner-border-radius);
-    border-bottom-right-radius: var(--#{$prefix}accordion-inner-border-radius);
+  &:disabled {
+    color: var(--st-muted-foreground);
+    cursor: not-allowed;
   }
 }
 
-// Flush — plain edge-to-edge rows with a single divider between items.
-// Reverts the chip layout: no wrapper padding, no per-item radius, no
-// active tint. BS5's own .accordion-flush rules already zero the button
-// and collapse radii via a higher-specificity selector, so we only need
-// to handle the bits Stisla adds on top.
-.accordion-flush {
-  padding: 0;
-  gap: 0;
-  border-color: transparent;
-  --#{$prefix}accordion-btn-padding-x: 1rem;
-  --#{$prefix}accordion-body-padding-x: 1rem;
+// Hover paint applies only to closed items — the open chip already
+// signals state via surface-2 + rim + divider, so the open header is
+// removed from the hover cascade entirely rather than overridden.
+//
+// `> * >` accounts for the ARIA accordion pattern's heading wrapper
+// (the <button> sits inside an <h2>/<h3>/... element for screen-reader
+// navigation). The intermediate level acts as a scope fence so a nested
+// accordion inside an open item's body doesn't pick up these styles —
+// nested headers are at `> .accordion__body > .accordion > .accordion__item > * > .accordion__header`,
+// not at `> * > .accordion__header`.
+.accordion__item[data-state="closed"]
+  > *
+  > .accordion__header:hover:not(:disabled) {
+  background-color: var(--accordion-header-hover-bg);
+}
 
-  > .accordion-item {
-    border-top: 0;
-    background-color: transparent !important;
+// Open item header — divider line between header and body emerges.
+.accordion__item[data-state="open"] > * > .accordion__header {
+  border-bottom-color: var(--accordion-header-divider-color);
+}
 
-    .accordion-button {
-      &:hover:not([aria-expanded="true"]) {
-        background-color: var(--#{$prefix}accent-bg);
-      }
+.accordion__icon {
+  flex-shrink: 0;
+  width: var(--accordion-icon-size);
+  height: var(--accordion-icon-size);
+  color: var(--accordion-icon-color);
+  transition: transform var(--accordion-icon-transition-duration) ease;
+}
 
-      &[aria-expanded="true"] {
-        border-bottom-color: transparent;
-      }
-    }
+.accordion__item[data-state="open"]
+  > *
+  > .accordion__header
+  > .accordion__icon {
+  transform: rotate(180deg);
+}
 
-    &:not(:last-child) {
-      border-bottom: var(--#{$prefix}accordion-border-width) solid
-        var(--#{$prefix}accordion-border-color);
-    }
+.accordion__body {
+  padding: var(--accordion-body-padding-y) var(--accordion-body-padding-x);
+  color: var(--accordion-body-color);
+}
 
-    > .accordion-header .accordion-button {
-      --#{$prefix}accordion-active-bg: transparent;
-      --#{$prefix}accordion-active-color: var(--#{$prefix}body-color);
-    }
+// CSS-only collapse. Step 4 swaps in a JS-measured height transition
+// keyed off --accordion-body-transition-duration.
+.accordion__item[data-state="closed"] > .accordion__body {
+  display: none;
+}
+
+// === Flush ===============================================================
+// Drop the frame border + shadow so the accordion fades into its parent
+// surface (typically a card or page section). Root padding stays — items
+// still chip out concentrically when opened. The frame's own margin-bottom
+// goes too; the parent (card body, page section) owns inter-block spacing
+// in flush contexts, not the accordion.
+.accordion--flush {
+  border: 0;
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accordion__item,
+  .accordion__header,
+  .accordion__icon {
+    transition: none;
   }
 }

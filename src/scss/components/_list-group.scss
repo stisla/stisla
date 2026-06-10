@@ -50,7 +50,7 @@
 
 .list-group {
   // === Geometry ========================================================
-  --list-group-radius: var(--st-list-group-radius, var(--st-radius));
+  --list-group-radius: var(--st-list-group-radius, var(--st-radius-lg));
   --list-group-item-padding-y: calc(0.75rem * var(--st-density));
   --list-group-item-padding-x: calc(1rem * var(--st-density));
   --list-group-item-gap: 0.75rem;
