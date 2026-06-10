@@ -184,12 +184,12 @@
           <tr>
             <td><code>--toggle-group-height</code></td>
             <td>2.25rem</td>
-            <td>Outer raw height (density multiplies once). Inner toggle height computes as <code>outer - 2 × padding</code>.</td>
+            <td>Outer raw height (density multiplies once). Inner toggle fills via flex stretch — height resolves to <code>outer − 2 × border − 2 × padding</code> via the box model.</td>
           </tr>
           <tr>
             <td><code>--toggle-group-padding</code></td>
-            <td>0.25rem</td>
-            <td>Padding around the children. Eats into the inner toggle's effective height and radius.</td>
+            <td>0.125rem</td>
+            <td>Padding around the children. Subtracts from the inner toggle's effective height and from the concentric inner radius.</td>
           </tr>
           <tr>
             <td><code>--toggle-group-gap</code></td>
