@@ -109,8 +109,13 @@
   flex-direction: column;
   height: auto;
 
+  // Vertical mode reads as a stacked menu list (Inbox / Archive / Trash,
+  // primary nav items, settings rows). Left-align content so labels read
+  // in scan order; full-width chip so the active fill spans the row.
   > .toggle {
     width: 100%;
+    justify-content: flex-start;
+    text-align: left;
   }
 }
 
