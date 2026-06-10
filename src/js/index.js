@@ -13,6 +13,18 @@ import { Modal } from './components/modal.js';
 
 register('modal', Modal);
 
+// Auto-init runs AFTER every register() call above so the scanner walks
+// [data-stisla-<name>] with a populated registry. Module-level code in
+// core/init.js evaluates before this entry's body, so the auto-init has
+// to live here.
+if (typeof document !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => init());
+  } else {
+    init();
+  }
+}
+
 export const Stisla = {
   version: '3.0.0-alpha.0',
   Component,

@@ -66,10 +66,7 @@ function kebabToCamel(s) {
   return s.replace(/-([a-z0-9])/g, (_, ch) => ch.toUpperCase());
 }
 
-if (typeof document !== 'undefined') {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => init());
-  } else {
-    init();
-  }
-}
+// Auto-init lives in src/js/index.js, AFTER every register() call, so the
+// scanner sees a populated registry. Don't move it back here — module
+// top-level code evaluates before the entry's body, and an auto-init at
+// the bottom of this file would race with the register() calls.
