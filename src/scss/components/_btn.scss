@@ -79,7 +79,8 @@
   &:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) 88%, black); }
   &:active,
   &[aria-pressed="true"],
-  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--btn-tone) 78%, black); }
+  &[data-state="active"],
+  .btn-check:checked + & { --btn-bg: color-mix(in oklch, var(--btn-tone) 78%, black); }
 
   &:focus-visible {
     outline: 2px solid var(--st-ring);
@@ -194,7 +195,8 @@
   &:hover  { --btn-bg: color-mix(in oklch, var(--st-neutral) 88%, black); }
   &:active,
   &[aria-pressed="true"],
-  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--st-neutral) 78%, black); }
+  &[data-state="active"],
+  .btn-check:checked + & { --btn-bg: color-mix(in oklch, var(--st-neutral) 78%, black); }
 }
 
 // Tertiary — mono high-emphasis CTA. Inverts per theme automatically
@@ -208,7 +210,8 @@
   &:hover  { --btn-bg: color-mix(in oklch, var(--st-foreground) 88%, var(--st-background)); }
   &:active,
   &[aria-pressed="true"],
-  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--st-foreground) 78%, var(--st-background)); }
+  &[data-state="active"],
+  .btn-check:checked + & { --btn-bg: color-mix(in oklch, var(--st-foreground) 78%, var(--st-background)); }
 }
 
 // === Shape modifiers ==================================================
@@ -231,7 +234,8 @@
   &:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) 14%, transparent); }
   &:active,
   &[aria-pressed="true"],
-  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--btn-tone) 22%, transparent); }
+  &[data-state="active"],
+  .btn-check:checked + & { --btn-bg: color-mix(in oklch, var(--btn-tone) 22%, transparent); }
 }
 
 .btn--ghost {
@@ -243,7 +247,8 @@
   &:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) 18%, transparent); }
   &:active,
   &[aria-pressed="true"],
-  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--btn-tone) 26%, transparent); }
+  &[data-state="active"],
+  .btn-check:checked + & { --btn-bg: color-mix(in oklch, var(--btn-tone) 26%, transparent); }
 }
 
 .btn--soft {
@@ -255,7 +260,8 @@
   &:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) 20%, transparent); }
   &:active,
   &[aria-pressed="true"],
-  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--btn-tone) 28%, transparent); }
+  &[data-state="active"],
+  .btn-check:checked + & { --btn-bg: color-mix(in oklch, var(--btn-tone) 28%, transparent); }
 }
 
 // Neutral × shape — neutral's tone is var(--st-foreground), which would
@@ -267,13 +273,15 @@
   &:hover  { --btn-bg: var(--st-accent); }
   &:active,
   &[aria-pressed="true"],
-  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--st-accent) 92%, var(--st-foreground)); }
+  &[data-state="active"],
+  .btn-check:checked + & { --btn-bg: color-mix(in oklch, var(--st-accent) 92%, var(--st-foreground)); }
 }
 .btn--ghost.btn--neutral {
   &:hover  { --btn-bg: var(--st-accent); }
   &:active,
   &[aria-pressed="true"],
-  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--st-accent) 92%, var(--st-foreground)); }
+  &[data-state="active"],
+  .btn-check:checked + & { --btn-bg: color-mix(in oklch, var(--st-accent) 92%, var(--st-foreground)); }
 }
 
 // === Loading ==========================================================

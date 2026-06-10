@@ -1,34 +1,178 @@
 // Stisla v3 — button group.
 //
-// Our buttons carry their own elevation ($btn-box-shadow = drop shadow +
-// top inset gleam). Three buttons stacked edge-to-edge in a group then
-// paint three separate "cards" instead of one chip. Lift the drop shadow
-// to the wrapper and strip the per-button shadow on members so the group
-// reads as a single elevated control with BS5's outer-only radius.
+// A row (or column) of .btn members that shares chrome so the cluster
+// reads as one control: outer corners round, inner corners square,
+// adjacent borders dedupe into a single seam. .btn-group owns layout;
+// member .btn keeps its own paint. Hover / focus / active members lift
+// their stacking order so their border + ring paint over the seam.
 //
-// Outline groups stay flat — same opt-out we already apply to standalone
-// outline buttons (transparent fill + a 1px ring shouldn't sit on a drop
-// shadow). The :has() check covers any outline variant in the group.
+// Three documented use cases, one shape:
+//   - Action group: filled buttons, no active member.
+//   - Toggle group: members carry aria-pressed; .btn base paints active.
+//   - Tabs / segmented control: members carry data-state="active"
+//     inside a role="tablist" wrapper; .btn base paints active.
 //
-// .btn-toolbar gets a small default gap so multiple groups in a row
-// breathe without needing utility classes per usage.
+// .btn-check is the input-driven variant: a visually-hidden <input> sits
+// before a <label class="btn">; :checked + .btn forwards the active paint
+// via the same selector chain .btn already supports (see _btn.scss).
+//
+// .btn-toolbar is a separate block — a flex row that gaps multiple
+// groups apart without inline flex utilities at each call site.
+//
+// BS5 history: .btn-group-vertical → .btn-group--vertical;
+// .btn-group-sm / .btn-group-lg → .btn-group--sm / .btn-group--lg
+// (retunes the child --btn-* vars in modifier scope, no per-size vars);
+// .dropdown-toggle-split dropped — use .btn--icon-only with a chevron.
 
 .btn-group,
-.btn-group-vertical {
-  box-shadow:
-    0 1px 3px 0 rgba(0, 0, 0, 0.1),
-    0 1px 2px -1px rgba(0, 0, 0, 0.1);
+.btn-group--vertical {
+  --btn-group-radius: var(--st-btn-radius, var(--st-radius));
 
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+
+  // Members participate in stacking so the seam-dedupe negative margin
+  // doesn't bury hover / focus / active borders under the next sibling.
+  // Inner corners are square; rounding rules below re-round the outer
+  // edges per orientation.
   > .btn {
-    --#{$prefix}btn-box-shadow: none;
+    position: relative;
+    flex: 0 1 auto;
+    border-radius: 0;
+  }
+
+  // Lift the interactive member above its neighbours so its border, ring,
+  // and active paint clear the seam dedupe. Order: focus on top, then the
+  // persistent active states, then transient hover.
+  > .btn:hover,
+  > .btn-check:hover + .btn                 { z-index: 1; }
+  > .btn[aria-pressed="true"],
+  > .btn[data-state="active"],
+  > .btn-check:checked + .btn               { z-index: 2; }
+  > .btn:focus-visible,
+  > .btn-check:focus-visible + .btn         { z-index: 3; }
+}
+
+// === Horizontal seams ===================================================
+// Negative inline margin collapses adjacent 1px borders into a single
+// seam. Two adjacency forms cover both markup patterns:
+//   <button.btn> + <button.btn>            → consecutive .btn siblings
+//   <button.btn> + <input.btn-check> + <label.btn>  → input-driven pairs
+.btn-group {
+  > .btn + .btn,
+  > .btn + .btn-check + .btn,
+  > .btn-check + .btn-check + .btn {
+    margin-inline-start: -1px;
+  }
+
+  // Round the leading edge — whichever element starts the row.
+  > .btn:first-child,
+  > .btn-check:first-child + .btn {
+    border-start-start-radius: var(--btn-group-radius);
+    border-end-start-radius:   var(--btn-group-radius);
+  }
+
+  // Round the trailing edge — the last .btn is always last in source order
+  // because .btn-check sits before its label.
+  > .btn:last-child {
+    border-start-end-radius: var(--btn-group-radius);
+    border-end-end-radius:   var(--btn-group-radius);
   }
 }
 
-.btn-group:has(> [class*="btn-outline-"]),
-.btn-group-vertical:has(> [class*="btn-outline-"]) {
-  box-shadow: none;
+// === Vertical seams =====================================================
+// Same dedupe rotated 90°.
+.btn-group--vertical {
+  flex-direction: column;
+  align-items: stretch;
+
+  > .btn + .btn,
+  > .btn + .btn-check + .btn,
+  > .btn-check + .btn-check + .btn {
+    margin-top: -1px;
+  }
+
+  > .btn:first-child,
+  > .btn-check:first-child + .btn {
+    border-start-start-radius: var(--btn-group-radius);
+    border-start-end-radius:   var(--btn-group-radius);
+  }
+
+  > .btn:last-child {
+    border-end-start-radius: var(--btn-group-radius);
+    border-end-end-radius:   var(--btn-group-radius);
+  }
 }
 
+// === Sizes ==============================================================
+// Retune the child .btn's component vars in modifier scope. No per-size
+// vars on .btn-group itself — the children stay consistent with the
+// standalone .btn--sm / .btn--lg (28 / 44 px under default density).
+.btn-group--sm {
+  --btn-group-radius: var(--st-btn-radius, var(--st-radius-sm));
+
+  > .btn,
+  > .btn-check + .btn {
+    --btn-height:    1.75rem;
+    --btn-padding-x: calc(0.625rem * var(--st-density));
+    --btn-font-size: 0.8125rem;
+    --btn-radius:    var(--st-btn-radius, var(--st-radius-sm));
+  }
+}
+
+.btn-group--lg {
+  --btn-group-radius: var(--st-btn-radius, var(--st-radius-lg));
+
+  > .btn,
+  > .btn-check + .btn {
+    --btn-height:    2.75rem;
+    --btn-padding-x: calc(1rem * var(--st-density));
+    --btn-font-size: 1rem;
+    --btn-radius:    var(--st-btn-radius, var(--st-radius-lg));
+  }
+}
+
+// === .btn-check =========================================================
+// Visually hide the input so the <label class="btn"> carries the visible
+// shape. Geometry matches .visually-hidden so screen readers + keyboard
+// focus still reach it; display: none / visibility: hidden would drop the
+// input from the a11y tree and tab order. :checked active paint is
+// forwarded by _btn.scss's `.btn-check:checked + &` selector chain so
+// every tone + shape combo lights up correctly.
+.btn-check {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+
+  // Focus forwarded to the label so keyboard nav has a visible halo.
+  // Outline lives on .btn base (focus-visible halo); replicate here so a
+  // checked input on a label still rings on tab.
+  &:focus-visible + .btn {
+    outline: 2px solid var(--st-ring);
+    outline-offset: 2px;
+  }
+
+  &:disabled + .btn {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.55;
+  }
+}
+
+// === .btn-toolbar =======================================================
+// A separate block. Gaps multiple .btn-group children apart without
+// requiring inline flex utilities at each call site.
 .btn-toolbar {
-  gap: 0.5rem;
+  --btn-toolbar-gap: 0.5rem;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--btn-toolbar-gap);
 }

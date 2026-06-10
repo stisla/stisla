@@ -6,63 +6,63 @@
 {% block content %}
   <header>
     <h1>Button group</h1>
-    <p class="lead">A row of buttons that share rounding and elevation so they read as a single control.</p>
+    <p class="lead">A row of buttons that share chrome so they read as a single control.</p>
   </header>
 
   <section>
     <h2>Basic</h2>
-    <p>Wrap two or more <code>.btn</code>s in <code>.btn-group</code> with <code>role="group"</code> and an <code>aria-label</code>. Only the outer corners round; the seam between buttons stays square.</p>
+    <p>Wrap two or more <code>.btn</code>s in <code>.btn-group</code> with <code>role="group"</code> and an <code>aria-label</code>. Outer corners round, inner corners square, adjacent borders dedupe into a single seam.</p>
     {% call ui.demo() %}
     <div class="btn-group" role="group" aria-label="Basic example">
-      <button type="button" class="btn btn-primary">Left</button>
-      <button type="button" class="btn btn-primary">Middle</button>
-      <button type="button" class="btn btn-primary">Right</button>
+      <button type="button" class="btn btn--primary">Left</button>
+      <button type="button" class="btn btn--primary">Middle</button>
+      <button type="button" class="btn btn--primary">Right</button>
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>Outline</h2>
-    <p>Outline groups stay flat — no wrapper shadow, same opt-out we apply to standalone outline buttons. Adjacent borders dedupe at the seam.</p>
+    <p>Outline members work the same way — adjacent borders dedupe at the seam.</p>
     {% call ui.demo() %}
     <div class="btn-group" role="group" aria-label="Outline example">
-      <button type="button" class="btn btn-outline-secondary">Left</button>
-      <button type="button" class="btn btn-outline-secondary">Middle</button>
-      <button type="button" class="btn btn-outline-secondary">Right</button>
+      <button type="button" class="btn btn--outline btn--neutral">Left</button>
+      <button type="button" class="btn btn--outline btn--neutral">Middle</button>
+      <button type="button" class="btn btn--outline btn--neutral">Right</button>
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>Mixed</h2>
-    <p>A loud action paired with a quiet alternative. Same pattern as the standalone primary + outline-secondary pairing, just locked together as one chip.</p>
+    <p>A loud action paired with a quiet alternative. Same pattern as the standalone primary plus outline-neutral pairing, locked together as one chip.</p>
     {% call ui.demo() %}
     <div class="btn-group" role="group" aria-label="Mixed example">
-      <button type="button" class="btn btn-primary">Publish</button>
-      <button type="button" class="btn btn-outline-secondary">Save draft</button>
+      <button type="button" class="btn btn--primary">Publish</button>
+      <button type="button" class="btn btn--outline btn--neutral">Save draft</button>
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>Sizes</h2>
-    <p>Add <code>.btn-group-sm</code> or <code>.btn-group-lg</code> on the wrapper to size every member at once.</p>
+    <p>Add <code>.btn-group--sm</code> or <code>.btn-group--lg</code> on the wrapper. The modifier retunes child <code>--btn-*</code> vars so every member shrinks or grows at once, matching the standalone <code>.btn--sm</code> / <code>.btn--lg</code> cadence (28 / 36 / 44 px under default density).</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-column gap-2 align-items-start">
-      <div class="btn-group btn-group-sm" role="group" aria-label="Small">
-        <button type="button" class="btn btn-outline-secondary">Left</button>
-        <button type="button" class="btn btn-outline-secondary">Middle</button>
-        <button type="button" class="btn btn-outline-secondary">Right</button>
+    <div style="display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-start;">
+      <div class="btn-group btn-group--sm" role="group" aria-label="Small">
+        <button type="button" class="btn btn--outline btn--neutral">Left</button>
+        <button type="button" class="btn btn--outline btn--neutral">Middle</button>
+        <button type="button" class="btn btn--outline btn--neutral">Right</button>
       </div>
       <div class="btn-group" role="group" aria-label="Default">
-        <button type="button" class="btn btn-outline-secondary">Left</button>
-        <button type="button" class="btn btn-outline-secondary">Middle</button>
-        <button type="button" class="btn btn-outline-secondary">Right</button>
+        <button type="button" class="btn btn--outline btn--neutral">Left</button>
+        <button type="button" class="btn btn--outline btn--neutral">Middle</button>
+        <button type="button" class="btn btn--outline btn--neutral">Right</button>
       </div>
-      <div class="btn-group btn-group-lg" role="group" aria-label="Large">
-        <button type="button" class="btn btn-outline-secondary">Left</button>
-        <button type="button" class="btn btn-outline-secondary">Middle</button>
-        <button type="button" class="btn btn-outline-secondary">Right</button>
+      <div class="btn-group btn-group--lg" role="group" aria-label="Large">
+        <button type="button" class="btn btn--outline btn--neutral">Left</button>
+        <button type="button" class="btn btn--outline btn--neutral">Middle</button>
+        <button type="button" class="btn btn--outline btn--neutral">Right</button>
       </div>
     </div>
     {% endcall %}
@@ -70,54 +70,72 @@
 
   <section>
     <h2>Toggle group</h2>
-    <p>Mark the selected member with <code>.active</code> and <code>aria-pressed="true"</code>. Use <code>data-bs-toggle="button"</code> to flip the state on click.</p>
+    <p>Members that flip on and off carry <code>aria-pressed="true|false"</code>. The base <code>.btn</code> reads <code>aria-pressed</code> and paints the active state. Click handling lands with the JS contract in a later step; the markup below is hardcoded for the visual.</p>
     {% call ui.demo() %}
-    <div class="btn-group" role="group" aria-label="View mode">
-      <button type="button" class="btn btn-outline-secondary active" aria-pressed="true" data-bs-toggle="button">Day</button>
-      <button type="button" class="btn btn-outline-secondary" aria-pressed="false" data-bs-toggle="button">Week</button>
-      <button type="button" class="btn btn-outline-secondary" aria-pressed="false" data-bs-toggle="button">Month</button>
+    <div class="btn-group" role="group" aria-label="Text style">
+      <button type="button" class="btn btn--outline btn--neutral" aria-pressed="true" aria-label="Bold">
+        <i data-lucide="bold"></i>
+      </button>
+      <button type="button" class="btn btn--outline btn--neutral" aria-pressed="false" aria-label="Italic">
+        <i data-lucide="italic"></i>
+      </button>
+      <button type="button" class="btn btn--outline btn--neutral" aria-pressed="true" aria-label="Underline">
+        <i data-lucide="underline"></i>
+      </button>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Tabs / segmented control</h2>
+    <p>Use a <code>role="tablist"</code> wrapper and mark the current member with <code>data-state="active"</code> + <code>aria-selected="true"</code>. The base <code>.btn</code> reads <code>data-state="active"</code> and paints the active member — same hook the sidebar, list-group, table and pagination use. Roving-tabindex keyboard navigation lands with the JS contract.</p>
+    {% call ui.demo() %}
+    <div class="btn-group" role="tablist" aria-label="Calendar view">
+      <button type="button" class="btn btn--outline btn--neutral" role="tab" data-state="active" aria-selected="true">Day</button>
+      <button type="button" class="btn btn--outline btn--neutral" role="tab" aria-selected="false">Week</button>
+      <button type="button" class="btn btn--outline btn--neutral" role="tab" aria-selected="false">Month</button>
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>Checkbox &amp; radio</h2>
-    <p><code>.btn-check</code> turns hidden inputs into segmented-control members. Labels carry the visible styling; the input keeps a11y semantics.</p>
+    <p><code>.btn-check</code> visually hides a native <code>&lt;input&gt;</code> so the paired <code>&lt;label class="btn"&gt;</code> carries the visible shape. <code>:checked</code> forwards the active paint to the label via the same selector chain <code>.btn</code> uses for <code>aria-pressed</code>; native semantics drive state. Multiple members can stay active for checkboxes.</p>
     {% call ui.demo() %}
-    <div class="btn-group" role="group" aria-label="Tools">
+    <div class="btn-group" role="group" aria-label="Format">
       <input type="checkbox" class="btn-check" id="bg-check-1" autocomplete="off" checked>
-      <label class="btn btn-outline-secondary" for="bg-check-1">Bold</label>
+      <label class="btn btn--outline btn--neutral" for="bg-check-1">Bold</label>
       <input type="checkbox" class="btn-check" id="bg-check-2" autocomplete="off">
-      <label class="btn btn-outline-secondary" for="bg-check-2">Italic</label>
+      <label class="btn btn--outline btn--neutral" for="bg-check-2">Italic</label>
       <input type="checkbox" class="btn-check" id="bg-check-3" autocomplete="off">
-      <label class="btn btn-outline-secondary" for="bg-check-3">Underline</label>
+      <label class="btn btn--outline btn--neutral" for="bg-check-3">Underline</label>
     </div>
     {% endcall %}
     <p>Radios work the same way; only one member can be active at a time.</p>
     {% call ui.demo() %}
     <div class="btn-group" role="group" aria-label="Alignment">
       <input type="radio" class="btn-check" name="bg-radio" id="bg-radio-1" autocomplete="off" checked>
-      <label class="btn btn-outline-secondary" for="bg-radio-1">Left</label>
+      <label class="btn btn--outline btn--neutral" for="bg-radio-1">Left</label>
       <input type="radio" class="btn-check" name="bg-radio" id="bg-radio-2" autocomplete="off">
-      <label class="btn btn-outline-secondary" for="bg-radio-2">Center</label>
+      <label class="btn btn--outline btn--neutral" for="bg-radio-2">Center</label>
       <input type="radio" class="btn-check" name="bg-radio" id="bg-radio-3" autocomplete="off">
-      <label class="btn btn-outline-secondary" for="bg-radio-3">Right</label>
+      <label class="btn btn--outline btn--neutral" for="bg-radio-3">Right</label>
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>With icons</h2>
-    <p>Icons work the same as in standalone buttons — flexbox gap places them next to the label, and <code>.btn-icon</code> gives a square slot.</p>
+    <p>Icons compose the same as in standalone buttons. <code>.btn--icon-only</code> gives a square slot.</p>
     {% call ui.demo() %}
     <div class="btn-group" role="group" aria-label="Format">
-      <button type="button" class="btn btn-outline-secondary btn-icon" aria-label="Bold">
+      <button type="button" class="btn btn--outline btn--neutral btn--icon-only" aria-label="Bold">
         <i data-lucide="bold"></i>
       </button>
-      <button type="button" class="btn btn-outline-secondary btn-icon" aria-label="Italic">
+      <button type="button" class="btn btn--outline btn--neutral btn--icon-only" aria-label="Italic">
         <i data-lucide="italic"></i>
       </button>
-      <button type="button" class="btn btn-outline-secondary btn-icon" aria-label="Underline">
+      <button type="button" class="btn btn--outline btn--neutral btn--icon-only" aria-label="Underline">
         <i data-lucide="underline"></i>
       </button>
     </div>
@@ -126,55 +144,78 @@
 
   <section>
     <h2>Split button</h2>
-    <p>Pair a primary action with a caret-only toggle. The dropdown menu attaches to the trailing button.</p>
+    <p>Pair a primary action with a caret-only trigger. The trigger reuses <code>.btn--icon-only</code> with a chevron, so no split-specific class ships. Dropdown attach behavior lands with the Dropdown component in a later step.</p>
     {% call ui.demo() %}
-    <div class="btn-group">
-      <button type="button" class="btn btn-primary">Save</button>
-      <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-        <span class="visually-hidden">Toggle dropdown</span>
+    <div class="btn-group" role="group" aria-label="Save">
+      <button type="button" class="btn btn--primary">Save</button>
+      <button type="button" class="btn btn--primary btn--icon-only" aria-label="More save options" aria-haspopup="menu" aria-expanded="false">
+        <i data-lucide="chevron-down"></i>
       </button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Save and continue</a></li>
-        <li><a class="dropdown-item" href="#">Save as draft</a></li>
-        <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="#">Discard changes</a></li>
-      </ul>
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>Vertical</h2>
-    <p>Swap <code>.btn-group</code> for <code>.btn-group-vertical</code> to stack the buttons. Outer corners round on the top and bottom instead of left and right.</p>
+    <p>Swap <code>.btn-group</code> for <code>.btn-group--vertical</code> to stack the members. Outer corners round on the top and bottom instead of left and right.</p>
     {% call ui.demo() %}
-    <div class="btn-group-vertical" role="group" aria-label="Vertical example">
-      <button type="button" class="btn btn-primary">Top</button>
-      <button type="button" class="btn btn-primary">Middle</button>
-      <button type="button" class="btn btn-primary">Bottom</button>
+    <div class="btn-group--vertical" role="group" aria-label="Vertical example">
+      <button type="button" class="btn btn--primary">Top</button>
+      <button type="button" class="btn btn--primary">Middle</button>
+      <button type="button" class="btn btn--primary">Bottom</button>
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>Toolbar</h2>
-    <p>Combine multiple groups under <code>.btn-toolbar</code>. The toolbar carries a default <code>0.5rem</code> gap between groups so they breathe without needing utility classes.</p>
+    <p>Combine multiple groups under <code>.btn-toolbar</code>. The toolbar carries a default <code>0.5rem</code> gap between groups so they breathe without inline utility classes.</p>
     {% call ui.demo() %}
     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
       <div class="btn-group" role="group" aria-label="First group">
-        <button type="button" class="btn btn-outline-secondary">1</button>
-        <button type="button" class="btn btn-outline-secondary">2</button>
-        <button type="button" class="btn btn-outline-secondary">3</button>
-        <button type="button" class="btn btn-outline-secondary">4</button>
+        <button type="button" class="btn btn--outline btn--neutral">1</button>
+        <button type="button" class="btn btn--outline btn--neutral">2</button>
+        <button type="button" class="btn btn--outline btn--neutral">3</button>
+        <button type="button" class="btn btn--outline btn--neutral">4</button>
       </div>
       <div class="btn-group" role="group" aria-label="Second group">
-        <button type="button" class="btn btn-outline-secondary">5</button>
-        <button type="button" class="btn btn-outline-secondary">6</button>
-        <button type="button" class="btn btn-outline-secondary">7</button>
+        <button type="button" class="btn btn--outline btn--neutral">5</button>
+        <button type="button" class="btn btn--outline btn--neutral">6</button>
+        <button type="button" class="btn btn--outline btn--neutral">7</button>
       </div>
       <div class="btn-group" role="group" aria-label="Third group">
-        <button type="button" class="btn btn-outline-secondary">8</button>
+        <button type="button" class="btn btn--outline btn--neutral">8</button>
       </div>
     </div>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>Two variables retune <code>.btn-group</code> + <code>.btn-toolbar</code>. Sizes retune the child <code>--btn-*</code> vars in modifier scope rather than introducing per-size vars on the group — same model as <code>.btn--sm</code> / <code>.btn--lg</code>. Override on the wrapper, a parent scope, or <code>:root</code>; the cascade scopes the change.</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--btn-group-radius</code></td>
+            <td>var(--st-btn-radius, var(--st-radius))</td>
+            <td>Outer corner radius. Inner corners stay square. <code>--sm</code> / <code>--lg</code> retune this in modifier scope.</td>
+          </tr>
+          <tr>
+            <td><code>--btn-toolbar-gap</code></td>
+            <td>0.5rem</td>
+            <td>Space between groups inside a <code>.btn-toolbar</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The group's chrome — members' borders, fills, hover and active paint — lives on the child <code>.btn</code>. To recolor a tabset or toggle group, set <code>--btn-bg</code> / <code>--btn-tone</code> on the members, not on the wrapper. See the <a class="link" href="/buttons">buttons</a> page for the full <code>.btn</code> variable surface.</p>
   </section>
 {% endblock %}
