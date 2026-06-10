@@ -62,7 +62,7 @@
 
   <section>
     <h2>With button</h2>
-    <p>A button slot keeps its own fill so it reads as the affordance, not chrome. The wrapper clips the button's corners flush with the group radius.</p>
+    <p>A button slot sits inset inside the wrapper with its own concentric pill shape. Reads as a chip floating in the field rather than chrome welded to its edge. Retune the inset with <code>--input-group-inset</code>.</p>
     {% call ui.demo() %}
     <div class="demo-stack" style="max-width: 24rem;">
       <div class="input-group">
@@ -72,6 +72,23 @@
       <div class="input-group">
         <button type="button" class="btn btn--outline btn--neutral">Copy</button>
         <input type="text" class="form-control" value="https://stisla.dev/v3" readonly />
+      </div>
+    </div>
+    {% endcall %}
+    <p>Pair the button size with the wrapper size so the chip's text fits its chip. <code>.input-group--sm</code> + <code>.btn--sm</code>, default + default, <code>.input-group--lg</code> + <code>.btn--lg</code>.</p>
+    {% call ui.demo() %}
+    <div class="demo-stack" style="max-width: 24rem;">
+      <div class="input-group input-group--sm">
+        <input type="search" class="form-control form-control--sm" placeholder="Small" />
+        <button type="button" class="btn btn--sm btn--primary">Go</button>
+      </div>
+      <div class="input-group">
+        <input type="search" class="form-control" placeholder="Default" />
+        <button type="button" class="btn btn--primary">Go</button>
+      </div>
+      <div class="input-group input-group--lg">
+        <input type="search" class="form-control form-control--lg" placeholder="Large" />
+        <button type="button" class="btn btn--lg btn--primary">Go</button>
       </div>
     </div>
     {% endcall %}
@@ -200,7 +217,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Six variables retune <code>.input-group</code> without touching component CSS. Override on <code>.input-group</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
+    <p>Seven variables retune <code>.input-group</code> without touching component CSS. Override on <code>.input-group</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
     <div class="prose">
       <table>
         <thead>
@@ -235,6 +252,11 @@
             <td><code>--input-group-padding-x</code></td>
             <td>calc(0.625rem * var(--st-density))</td>
             <td>Addon horizontal padding; matches <code>.form-control</code> at each size so an addon's text baseline aligns with the input's</td>
+          </tr>
+          <tr>
+            <td><code>--input-group-inset</code></td>
+            <td>calc(0.25rem * var(--st-density))</td>
+            <td>Margin around an inline <code>.btn</code> child. The button's height becomes <em>wrapper height − 2 × inset</em> and its radius <em>wrapper radius − inset</em> for concentric corners</td>
           </tr>
           <tr>
             <td><code>--input-group-addon-color</code></td>

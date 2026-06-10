@@ -6,10 +6,11 @@
 // Inverts BS5's seam-and-border layout where each child has its own
 // outline.
 //
-// Members: .input-group__text (icon/text addon). .form-control children
-// paint the field shape via the wrapper. .btn children keep their own
-// fill so a button slot reads as the affordance, not chrome — the wrapper's
-// overflow: hidden clips the btn's corners flush with the wrapper radius.
+// Members: .input-group__text (icon/text addon, transparent — paints
+// through the wrapper). .form-control children paint the field shape via
+// the wrapper. .btn children sit inset (--input-group-inset margin on
+// all sides) with concentric inner radius — a chip floating inside the
+// field rather than a slab welded to its edge.
 //
 // BEM (V3.md §3.6):
 //   <div class="input-group">
@@ -26,6 +27,7 @@
   --input-group-bg:            var(--st-surface);
   --input-group-border:        var(--st-border);
   --input-group-padding-x:     calc(0.625rem * var(--st-density));       // 10
+  --input-group-inset:         calc(0.25rem  * var(--st-density));       //  4
   --input-group-addon-color:   var(--st-muted-foreground);
 
   display: flex;
@@ -34,9 +36,6 @@
   background: var(--input-group-bg);
   border: 1px solid var(--input-group-border);
   border-radius: var(--input-group-radius);
-  // Clip child corners flush with wrapper radius — lets a leading .btn
-  // sit inside without its own corner peeking past the wrapper edge.
-  overflow: hidden;
   transition: border-color .12s ease, box-shadow .12s ease;
 
   // Focus the whole group when an editable child is focused. Drops the
@@ -60,20 +59,42 @@
     box-shadow: 0 0 0 3px color-mix(in oklch, var(--st-danger) 25%, transparent);
   }
 
-  // Strip chrome from form controls inside — wrapper owns it. Also reset
-  // hover + focus so .form-control's own halo / hover border doesn't fight
-  // the wrapper's group focus.
+  // Strip chrome from form controls inside — wrapper owns it. Zero only
+  // background-color (not the `background` shorthand) so a <select>'s
+  // chevron background-image survives; the shorthand would wipe it too.
+  // Also reset hover + focus so .form-control's own halo / hover border
+  // doesn't fight the wrapper's group focus.
   > .form-control {
-    background: transparent;
+    background-color: transparent;
     border-color: transparent;
     box-shadow: none;
 
     &:hover,
     &:focus-visible {
-      background: transparent;
+      background-color: transparent;
       border-color: transparent;
       box-shadow: none;
     }
+  }
+
+  // Readonly inputs repaint themselves with --st-surface-2 over the
+  // wrapper bg (see .form-control[readonly]:not(:disabled) in
+  // _form-control.scss — specificity (0,3,0)). Match that specificity
+  // here so the wrapper's single surface shows through; differentiation
+  // lives at the wrapper scope, not on a sub-area.
+  > .form-control[readonly] {
+    background-color: transparent;
+  }
+
+  // Inset buttons — chip floating inside the field, not a slab welded to
+  // its edge. Margin on all sides shrinks the btn off the wrapper rim;
+  // height re-derives from the wrapper's already-density-aware value so
+  // density genuinely compresses the chip. Inner radius is concentric
+  // with the wrapper (outer minus inset), so the corners stay aligned.
+  > .btn {
+    height: calc(var(--input-group-height) - 2 * var(--input-group-inset));
+    margin: var(--input-group-inset);
+    border-radius: calc(var(--input-group-radius) - var(--input-group-inset));
   }
 
   // Drop the addon's inner padding where it meets a sibling field. With
