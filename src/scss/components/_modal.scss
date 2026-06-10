@@ -37,14 +37,20 @@
   --modal-title-font-size: 1.125rem;
   --modal-title-font-weight: 600;
 
-  // Close chip
+  // Close chip — literal dark chip with white icon in light mode; the
+  // dark-mode block at the bottom flips to a subtle light chip + white
+  // icon (matches the prior v3 BS5 overlay). The icon stays white in
+  // both themes so the chip reads against any surface — including the
+  // photo-bg media-hero variant.
   --modal-close-size: 1.75rem;
-  --modal-close-bg: color-mix(in oklch, var(--st-foreground) 55%, transparent);
-  --modal-close-bg-hover: color-mix(in oklch, var(--st-foreground) 70%, transparent);
-  --modal-close-color: color-mix(in oklch, var(--st-background) 92%, transparent);
+  --modal-close-bg: oklch(0 0 0 / 0.55);
+  --modal-close-bg-hover: oklch(0 0 0 / 0.7);
+  --modal-close-color: oklch(1 0 0 / 0.92);
+  --modal-close-color-hover: oklch(1 0 0);
 
   // Footer
   --modal-footer-padding-y: calc(0.875rem * var(--st-density));
+  --modal-footer-bg: var(--st-surface-2);
   --modal-footer-border-color: var(--st-border);
 
   // Motion
@@ -145,6 +151,7 @@
   justify-content: flex-end;
   gap: 0.5rem;
   padding: var(--modal-footer-padding-y) var(--modal-padding);
+  background-color: var(--modal-footer-bg);
   border-top: 1px solid var(--modal-footer-border-color);
 }
 
@@ -172,6 +179,7 @@
     color 0.15s ease;
 
   &:hover {
+    color: var(--modal-close-color-hover);
     background-color: var(--modal-close-bg-hover);
   }
 
@@ -251,6 +259,21 @@
 html.is-modal-open {
   overflow: hidden;
   scrollbar-gutter: stable;
+}
+
+// === Dark mode ===========================================================
+// Light mode runs a solid dark close chip for contrast over the white
+// surface. Dark mode flips to a subtle light chip so it doesn't dominate
+// the deep dark surface — same affordance, inverted luminance. The icon
+// stays white in both themes (drops slightly in alpha for dark to soften
+// it against the lighter chip).
+@include color-mode(dark) {
+  .modal {
+    --modal-close-bg: oklch(1 0 0 / 0.1);
+    --modal-close-bg-hover: oklch(1 0 0 / 0.18);
+    --modal-close-color: oklch(1 0 0 / 0.85);
+    --modal-close-color-hover: oklch(1 0 0);
+  }
 }
 
 // === Reduced motion ======================================================

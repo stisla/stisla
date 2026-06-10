@@ -350,7 +350,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Twenty variables retune <code>.modal</code> without touching component CSS. Override on the <code>.modal</code> element, on a parent scope, or on <code>:root</code>. Size modifiers <code>--sm</code> / <code>--lg</code> / <code>--xl</code> retune <code>--modal-width</code> in their own scope.</p>
+    <p>Twenty-two variables retune <code>.modal</code> without touching component CSS. Override on the <code>.modal</code> element, on a parent scope, or on <code>:root</code>. Size modifiers <code>--sm</code> / <code>--lg</code> / <code>--xl</code> retune <code>--modal-width</code> in their own scope. The dark-mode block flips the close chip from a solid dark overlay to a subtle light translucent overlay so it reads against the deep dark surface.</p>
     <div class="prose">
       <h3>Geometry</h3>
       <table>
@@ -466,18 +466,23 @@
           </tr>
           <tr>
             <td><code>--modal-close-bg</code></td>
-            <td>color-mix(in oklch, var(--st-foreground) 55%, transparent)</td>
-            <td>Frosted chip background.</td>
+            <td>oklch(0 0 0 / 0.55) light, oklch(1 0 0 / 0.1) dark</td>
+            <td>Frosted chip background. Solid dark over light surface; subtle light translucent over dark surface.</td>
           </tr>
           <tr>
             <td><code>--modal-close-bg-hover</code></td>
-            <td>color-mix(in oklch, var(--st-foreground) 70%, transparent)</td>
-            <td>Hover fill.</td>
+            <td>oklch(0 0 0 / 0.7) light, oklch(1 0 0 / 0.18) dark</td>
+            <td>Hover fill. Same inversion logic as the rest state.</td>
           </tr>
           <tr>
             <td><code>--modal-close-color</code></td>
-            <td>color-mix(in oklch, var(--st-background) 92%, transparent)</td>
-            <td>Icon color. Inverts against the chip.</td>
+            <td>oklch(1 0 0 / 0.92) light, oklch(1 0 0 / 0.85) dark</td>
+            <td>Icon glyph color. Stays white in both themes so the chip reads over any surface.</td>
+          </tr>
+          <tr>
+            <td><code>--modal-close-color-hover</code></td>
+            <td>oklch(1 0 0)</td>
+            <td>Icon glyph color on hover. Pure white in both themes.</td>
           </tr>
         </tbody>
       </table>
@@ -492,6 +497,11 @@
             <td><code>--modal-footer-padding-y</code></td>
             <td>calc(0.875rem * var(--st-density))</td>
             <td>Vertical padding inside the footer. Slightly tighter than the body padding so the seam reads as an action row.</td>
+          </tr>
+          <tr>
+            <td><code>--modal-footer-bg</code></td>
+            <td>var(--st-surface-2)</td>
+            <td>Footer background. The alt-surface tier sets the action row apart from the body without a bold paint. Set to <code>transparent</code> for a flat footer.</td>
           </tr>
           <tr>
             <td><code>--modal-footer-border-color</code></td>
