@@ -1,39 +1,39 @@
-// Stisla.Modal — V3.md §3.7 reference implementation.
+// Stisla.Dialog — V3.md §3.7 reference implementation.
 //
 // Anatomy:
-//   .modal[data-stisla-modal][data-state="open|closed"]
-//     .modal__backdrop[data-stisla-modal-dismiss]
-//     .modal__dialog
-//       .modal__content
-//         .modal__close[data-stisla-modal-dismiss]
-//         .modal__header > .modal__title
-//         .modal__body
-//         .modal__footer
+//   .dialog[data-stisla-dialog][data-state="open|closed"]
+//     .dialog__backdrop[data-stisla-dialog-dismiss]
+//     .dialog__panel
+//       .dialog__content
+//         .dialog__close[data-stisla-dialog-dismiss]
+//         .dialog__header > .dialog__title
+//         .dialog__body
+//         .dialog__footer
 //
-// Events (bubbling, detail: { modal: this }):
-//   stisla:modal:opening   — before open  (cancelable)
-//   stisla:modal:opened    — after open transition
-//   stisla:modal:closing   — before close (cancelable)
-//   stisla:modal:closed    — after close transition
+// Events (bubbling, detail: { dialog: this }):
+//   stisla:dialog:opening   — before open  (cancelable)
+//   stisla:dialog:opened    — after open transition
+//   stisla:dialog:closing   — before close (cancelable)
+//   stisla:dialog:closed    — after close transition
 //
 // Opts (defaults below):
 //   backdrop: true | false | 'static'  — false = no backdrop dismiss; 'static' = shake instead
 //   keyboard: true                      — ESC closes
-//   focus: true                         — move focus into modal on open (via focus-trap)
+//   focus: true                         — move focus into dialog on open (via focus-trap)
 //   returnFocus: true                   — restore focus to opener on close
 
 import { createFocusTrap } from 'focus-trap';
 import { Component, getInstance } from '../core/component.js';
 import { readOpts } from '../core/init.js';
 
-const SCROLL_LOCK_CLASS = 'is-modal-open';
+const SCROLL_LOCK_CLASS = 'is-dialog-open';
 const OPEN = 'open';
 const CLOSED = 'closed';
 
 let openCount = 0;
 
-export class Modal extends Component {
-  static eventNamespace = 'modal';
+export class Dialog extends Component {
+  static eventNamespace = 'dialog';
   static defaults = {
     backdrop: true,
     keyboard: true,
@@ -49,10 +49,10 @@ export class Modal extends Component {
       this.opts.backdrop = true;
     }
 
-    this._dialog = el.querySelector('.modal__dialog');
-    this._content = el.querySelector('.modal__content');
+    this._panel = el.querySelector('.dialog__panel');
+    this._content = el.querySelector('.dialog__content');
     // Make the trap container focusable. Without this, a mousedown on text
-    // inside .modal__body walks up to .modal[tabindex=-1] for focus — which
+    // inside .dialog__body walks up to .dialog[tabindex=-1] for focus — which
     // is outside the trap — and focus-trap yanks focus back, canceling the
     // browser's pending text selection.
     if (this._content && !this._content.hasAttribute('tabindex')) {
@@ -110,7 +110,7 @@ export class Modal extends Component {
         document.addEventListener('keydown', this._onKeydown);
       }
 
-      this._waitForTransition(this._dialog).then(() => {
+      this._waitForTransition(this._panel).then(() => {
         if (!this.el) return;
         this.emit('opened', {}, { cancelable: false });
       });
@@ -132,7 +132,7 @@ export class Modal extends Component {
     this.el.dataset.state = CLOSED;
     this.el.setAttribute('aria-hidden', 'true');
 
-    this._waitForTransition(this._dialog).then(() => {
+    this._waitForTransition(this._panel).then(() => {
       if (!this.el) return;
       this.el.style.display = '';
       this._inertSiblings(false);
@@ -153,11 +153,11 @@ export class Modal extends Component {
 
   // Visual nudge used when a static backdrop is clicked.
   shake() {
-    if (!this._dialog) return;
-    this._dialog.classList.remove('is-shaking');
-    void this._dialog.offsetWidth;
-    this._dialog.classList.add('is-shaking');
-    setTimeout(() => this._dialog?.classList.remove('is-shaking'), 250);
+    if (!this._panel) return;
+    this._panel.classList.remove('is-shaking');
+    void this._panel.offsetWidth;
+    this._panel.classList.add('is-shaking');
+    setTimeout(() => this._panel?.classList.remove('is-shaking'), 250);
   }
 
   destroy() {
@@ -184,8 +184,8 @@ export class Modal extends Component {
     );
   }
 
-  // Walks from modal up to <body>, inerting siblings at each level so the
-  // modal's ancestor chain stays interactive and everything outside it
+  // Walks from dialog up to <body>, inerting siblings at each level so the
+  // dialog's ancestor chain stays interactive and everything outside it
   // drops out of the focus + AT tree.
   _inertSiblings(on) {
     if (on) {
@@ -243,40 +243,40 @@ export class Modal extends Component {
 
 // Global delegated click handler — bound once per page load.
 // Sentinel mirrors the HMR-safe pattern from src/js/index.js (Step 4.0 prelude).
-if (typeof document !== 'undefined' && typeof window !== 'undefined' && !window.__stislaModalBound) {
-  window.__stislaModalBound = true;
+if (typeof document !== 'undefined' && typeof window !== 'undefined' && !window.__stislaDialogBound) {
+  window.__stislaDialogBound = true;
 
   document.addEventListener('click', (e) => {
-    const opener = e.target.closest('[data-stisla-modal-trigger]');
+    const opener = e.target.closest('[data-stisla-dialog-trigger]');
     if (opener) {
-      const id = opener.getAttribute('data-stisla-modal-trigger');
-      const modalEl = id && document.getElementById(id);
-      if (modalEl && modalEl.classList.contains('modal')) {
+      const id = opener.getAttribute('data-stisla-dialog-trigger');
+      const dialogEl = id && document.getElementById(id);
+      if (dialogEl && dialogEl.classList.contains('dialog')) {
         e.preventDefault();
         // Read per-attr opts from the element. If an instance already
         // exists, replace it (constructor auto-destroys + dev-warns) so
         // opts always reflect the current DOM. Belt-and-braces over the
         // Stisla.init() scan in case it ran with an empty registry, an
-        // HMR cycle preserved a stale instance, or the modal was added
+        // HMR cycle preserved a stale instance, or the dialog was added
         // after init.
-        const opts = readOpts(modalEl, 'modal', Modal);
-        const existing = getInstance(modalEl);
-        const inst = existing ?? new Modal(modalEl, opts);
+        const opts = readOpts(dialogEl, 'dialog', Dialog);
+        const existing = getInstance(dialogEl);
+        const inst = existing ?? new Dialog(dialogEl, opts);
         if (existing) Object.assign(existing.opts, opts);
         inst.open();
       }
       return;
     }
 
-    const dismiss = e.target.closest('[data-stisla-modal-dismiss]');
+    const dismiss = e.target.closest('[data-stisla-dialog-dismiss]');
     if (dismiss) {
-      const modalEl = dismiss.closest('.modal');
-      const inst = modalEl && getInstance(modalEl);
+      const dialogEl = dismiss.closest('.dialog');
+      const inst = dialogEl && getInstance(dialogEl);
       if (!inst) return;
-      // Static backdrop: a click on the backdrop element shakes the dialog
-      // instead of closing. Explicit dismiss controls (like .modal__close)
+      // Static backdrop: a click on the backdrop element shakes the panel
+      // instead of closing. Explicit dismiss controls (like .dialog__close)
       // always close, even on static.
-      if (inst.opts.backdrop === 'static' && dismiss.classList.contains('modal__backdrop')) {
+      if (inst.opts.backdrop === 'static' && dismiss.classList.contains('dialog__backdrop')) {
         inst.shake();
         return;
       }

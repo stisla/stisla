@@ -1,0 +1,543 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Dialog · Stisla v3{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Dialog</h1>
+    <p class="lead">An overlay surface that holds focus until the user resolves a task.</p>
+  </header>
+
+  <section>
+    <h2>Basic</h2>
+    <p>A trigger opens the dialog via <code>data-stisla-dialog-trigger="&lt;id&gt;"</code>. The panel carries an optional <code>.dialog__header</code> with the title, a <code>.dialog__body</code> for content, and an optional <code>.dialog__footer</code> for actions. <code>.dialog__close</code> is a floating frosted chip that sits inside <code>.dialog__content</code> so it works whether or not a header is present. Add <code>autofocus</code> to any control inside the panel to land focus there on open.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn--primary" data-stisla-dialog-trigger="dialogBasic">
+      Invite a teammate
+    </button>
+
+    <div class="dialog" id="dialogBasic" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" aria-labelledby="dialogBasicLabel" aria-hidden="true" tabindex="-1">
+      <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+      <div class="dialog__panel">
+        <div class="dialog__content">
+          <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close">
+            <i data-lucide="x"></i>
+          </button>
+          <div class="dialog__header">
+            <h3 class="dialog__title" id="dialogBasicLabel">Invite a teammate</h3>
+          </div>
+          <div class="dialog__body">
+            <p>Send a link by email. The invite expires in seven days.</p>
+            <label for="dialogBasicEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="dialogBasicEmail" placeholder="name@example.com" autocomplete="email" autofocus>
+          </div>
+          <div class="dialog__footer">
+            <button type="button" class="btn btn--ghost btn--neutral" data-stisla-dialog-dismiss>Cancel</button>
+            <button type="button" class="btn btn--primary" data-stisla-dialog-dismiss>Send invite</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Sizes</h2>
+    <p>Add <code>.dialog--sm</code>, <code>.dialog--lg</code>, or <code>.dialog--xl</code> on the <code>.dialog</code> root to swap widths. The default sits in the middle of the scale. <code>.dialog--almost-fullscreen</code> keeps a 2.5rem breathing strip around the panel so the page still hints through; <code>.dialog--fullscreen</code> edge-bleeds the panel to the viewport.</p>
+    {% call ui.demo() %}
+    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogSm">Small</button>
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogDefault">Default</button>
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogLg">Large</button>
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogXl">Extra large</button>
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogAlmostFs">Almost fullscreen</button>
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogFs">Fullscreen</button>
+    </div>
+
+    <div class="dialog dialog--sm" id="dialogSm" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1">
+      <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+      <div class="dialog__panel">
+        <div class="dialog__content">
+          <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
+          <div class="dialog__header"><h3 class="dialog__title">Small</h3></div>
+          <div class="dialog__body">
+            <p style="margin: 0;">A compact card for confirmations and lightweight pickers.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dialog" id="dialogDefault" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1">
+      <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+      <div class="dialog__panel">
+        <div class="dialog__content">
+          <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
+          <div class="dialog__header"><h3 class="dialog__title">Default</h3></div>
+          <div class="dialog__body">
+            <p style="margin: 0;">The canonical width for an invite form, an edit dialog, or a focused capture.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dialog dialog--lg" id="dialogLg" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1">
+      <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+      <div class="dialog__panel">
+        <div class="dialog__content">
+          <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
+          <div class="dialog__header"><h3 class="dialog__title">Large</h3></div>
+          <div class="dialog__body">
+            <p style="margin: 0;">Room for a settings panel, a property inspector, or a small dashboard.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dialog dialog--xl" id="dialogXl" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1">
+      <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+      <div class="dialog__panel">
+        <div class="dialog__content">
+          <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
+          <div class="dialog__header"><h3 class="dialog__title">Extra large</h3></div>
+          <div class="dialog__body">
+            <p style="margin: 0;">A canvas for media, rich detail views, or a side-by-side comparison.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dialog dialog--almost-fullscreen" id="dialogAlmostFs" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1">
+      <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+      <div class="dialog__panel">
+        <div class="dialog__content">
+          <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
+          <div class="dialog__header"><h3 class="dialog__title">Almost fullscreen</h3></div>
+          <div class="dialog__body">
+            <p style="margin: 0;">A breathing strip around the panel so the page still hints through. Useful when you want immersion without losing the surrounding context entirely.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dialog dialog--fullscreen" id="dialogFs" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1">
+      <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+      <div class="dialog__panel">
+        <div class="dialog__content">
+          <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
+          <div class="dialog__header"><h3 class="dialog__title">Fullscreen</h3></div>
+          <div class="dialog__body">
+            <p style="margin: 0;">Edge to edge for an immersive flow. Useful for onboarding or a focused editor.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Positioning</h2>
+    <p>The panel centers vertically by default. Add <code>.dialog__panel--top</code> to drop in from above, or <code>.dialog__panel--bottom</code> to anchor it to the lower edge.</p>
+    {% call ui.demo() %}
+    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogTop">Top</button>
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogCenter">Center</button>
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogBottom">Bottom</button>
+    </div>
+
+    <div class="dialog" id="dialogTop" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1">
+      <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+      <div class="dialog__panel dialog__panel--top">
+        <div class="dialog__content">
+          <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
+          <div class="dialog__header"><h3 class="dialog__title">Pinned to top</h3></div>
+          <div class="dialog__body">
+            <p style="margin: 0;">Reads as a notification surface dropping in from above.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dialog" id="dialogCenter" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1">
+      <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+      <div class="dialog__panel">
+        <div class="dialog__content">
+          <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
+          <div class="dialog__header"><h3 class="dialog__title">Centered</h3></div>
+          <div class="dialog__body">
+            <p style="margin: 0;">The standard choice for confirmations and focused tasks.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dialog" id="dialogBottom" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1">
+      <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+      <div class="dialog__panel dialog__panel--bottom">
+        <div class="dialog__content">
+          <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
+          <div class="dialog__header"><h3 class="dialog__title">Pinned to bottom</h3></div>
+          <div class="dialog__body">
+            <p style="margin: 0;">Reads as a sheet on mobile, an action drawer on desktop.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Scrollable</h2>
+    <p>Add <code>.dialog__panel--scrollable</code> to cap the panel at the viewport. The body scrolls while the header and footer stay pinned.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn--primary" data-stisla-dialog-trigger="dialogScroll">
+      Read terms
+    </button>
+
+    <div class="dialog" id="dialogScroll" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" aria-labelledby="dialogScrollLabel" aria-hidden="true" tabindex="-1">
+      <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+      <div class="dialog__panel dialog__panel--scrollable">
+        <div class="dialog__content">
+          <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
+          <div class="dialog__header">
+            <h3 class="dialog__title" id="dialogScrollLabel">Terms of service</h3>
+          </div>
+          <div class="dialog__body">
+            <p>Welcome. By using this service you agree to the terms below. Please read carefully before continuing.</p>
+            <p>You may use the service for any lawful purpose. You may not use it to do harm, to interfere with other users, or to break the law where you live or where our servers run.</p>
+            <p>We collect the minimum data needed to deliver the product. We don't sell it, we don't share it with advertisers, and we delete it when you ask.</p>
+            <p>You own the content you put in. We get a limited license to store, process, and display it back to you and to anyone you've shared it with.</p>
+            <p>The service is provided as-is. We work hard to keep it up, but we can't promise zero downtime. If something breaks and costs you money, our liability is capped at what you've paid us in the last twelve months.</p>
+            <p>We may update these terms. If we do, we'll tell you in-app and give you a chance to read the new version before it takes effect.</p>
+            <p>Questions go to <a href="#" class="link">support@example.com</a>. We try to respond within one business day.</p>
+            <p>Last updated 12 May 2026.</p>
+            <p style="margin: 0;">Thanks for being here.</p>
+          </div>
+          <div class="dialog__footer">
+            <button type="button" class="btn btn--ghost btn--neutral" data-stisla-dialog-dismiss>Decline</button>
+            <button type="button" class="btn btn--primary" data-stisla-dialog-dismiss>Accept</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Static backdrop</h2>
+    <p>Set <code>data-stisla-dialog-backdrop="static"</code> and <code>data-stisla-dialog-keyboard="false"</code> to force a deliberate dismiss. Clicking the backdrop wobbles the panel; <kbd>Esc</kbd> stays inert. Explicit dismiss controls still close.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn--primary" data-stisla-dialog-trigger="dialogStatic">
+      Set a password
+    </button>
+
+    <div class="dialog" id="dialogStatic" data-stisla-dialog data-stisla-dialog-backdrop="static" data-stisla-dialog-keyboard="false" data-state="closed" role="dialog" aria-modal="true" aria-labelledby="dialogStaticLabel" aria-hidden="true" tabindex="-1">
+      <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+      <div class="dialog__panel">
+        <div class="dialog__content">
+          <div class="dialog__header">
+            <h3 class="dialog__title" id="dialogStaticLabel">Choose a password</h3>
+          </div>
+          <div class="dialog__body">
+            <label for="staticPwd" class="form-label">New password</label>
+            <input type="password" class="form-control" id="staticPwd" autocomplete="new-password">
+            <p class="form-text" style="margin-top: 0.25rem;">At least twelve characters. Mix letters, numbers, and a symbol.</p>
+          </div>
+          <div class="dialog__footer">
+            <button type="button" class="btn btn--ghost btn--neutral" data-stisla-dialog-dismiss>Cancel</button>
+            <button type="button" class="btn btn--primary" data-stisla-dialog-dismiss>Save password</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Media hero</h2>
+    <p>Drop the header when the leading row is media. The floating close still sits at the top right and reads cleanly against the image.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn--primary" data-stisla-dialog-trigger="dialogHero">
+      Open
+    </button>
+
+    <div class="dialog" id="dialogHero" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" aria-labelledby="dialogHeroLabel" aria-hidden="true" tabindex="-1">
+      <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+      <div class="dialog__panel">
+        <div class="dialog__content">
+          <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close">
+            <i data-lucide="x"></i>
+          </button>
+          <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80" alt="" style="display: block; width: 100%; height: auto;">
+          <div class="dialog__body">
+            <h4 id="dialogHeroLabel" style="margin: 0 0 0.25rem; font-size: 1.0625rem; font-weight: 600;">Autumn release</h4>
+            <p class="text-muted-foreground" style="margin: 0;">A round-up of what's new this season, with notes on what's still in flight.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Lightbox</h2>
+    <p>Override the surface vars on a single dialog to turn it into a frame for media. The blurred backdrop and the floating <code>.dialog__close</code> carry the affordance.</p>
+    {% call ui.demo() %}
+    <a href="#" data-stisla-dialog-trigger="dialogLightbox" style="display: inline-block; cursor: zoom-in;">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt="" width="240" height="160" style="border-radius: var(--st-radius); object-fit: cover;">
+    </a>
+
+    <div class="dialog dialog--xl" id="dialogLightbox" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1" style="--dialog-bg: transparent; --dialog-border-color: transparent; --dialog-shadow: none;">
+      <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+      <div class="dialog__panel">
+        <div class="dialog__content">
+          <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close">
+            <i data-lucide="x"></i>
+          </button>
+          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=2000&q=85" alt="" style="display: block; width: 100%; height: auto; max-height: calc(100dvh - 5rem); object-fit: contain; border-radius: var(--st-radius);">
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Confirmation</h2>
+    <p>An alert-dialog pattern for destructive actions. A tinted icon sets the tone, the heading names the action, the description explains the consequence.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn--outline btn--danger" data-stisla-dialog-trigger="dialogConfirm">
+      Delete workspace
+    </button>
+
+    <div class="dialog dialog--sm" id="dialogConfirm" data-stisla-dialog data-state="closed" role="alertdialog" aria-modal="true" aria-labelledby="dialogConfirmLabel" aria-describedby="dialogConfirmDesc" aria-hidden="true" tabindex="-1">
+      <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+      <div class="dialog__panel">
+        <div class="dialog__content">
+          <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
+          <div class="dialog__body" style="text-align: center; padding-top: 1.5rem;">
+            <span class="icon-box icon-box--danger icon-box--round" style="--icon-box-size: 3rem; --icon-box-icon-size: 1.25rem; margin-bottom: 0.75rem;">
+              <i data-lucide="trash-2"></i>
+            </span>
+            <h3 class="dialog__title" id="dialogConfirmLabel" style="margin: 0 0 0.25rem;">Delete this workspace?</h3>
+            <p class="text-muted-foreground" id="dialogConfirmDesc" style="margin: 0;">This removes every project, file, and member. The action can't be undone.</p>
+          </div>
+          <div class="dialog__footer" style="justify-content: center;">
+            <button type="button" class="btn btn--ghost btn--neutral" data-stisla-dialog-dismiss>Cancel</button>
+            <button type="button" class="btn btn--danger" data-stisla-dialog-dismiss>Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Success</h2>
+    <p>A celebratory state for the end of a flow. The icon sits on top, the heading and description fill the middle, and a single block button takes the user to the next step.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn" data-stisla-dialog-trigger="dialogSuccess" style="--btn-tone: var(--st-success); --btn-color: var(--st-success-foreground);">
+      Submit order
+    </button>
+
+    <div class="dialog dialog--sm" id="dialogSuccess" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" aria-labelledby="dialogSuccessLabel" aria-hidden="true" tabindex="-1">
+      <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+      <div class="dialog__panel">
+        <div class="dialog__content">
+          <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close">
+            <i data-lucide="x"></i>
+          </button>
+          <div class="dialog__body" style="text-align: center; padding-top: 1.5rem;">
+            <span class="icon-box icon-box--success icon-box--round" style="--icon-box-size: 3.5rem; --icon-box-icon-size: 1.5rem; margin-bottom: 0.75rem;">
+              <i data-lucide="check"></i>
+            </span>
+            <h3 class="dialog__title" id="dialogSuccessLabel" style="margin: 0 0 0.25rem;">Order placed</h3>
+            <p class="text-muted-foreground" style="margin: 0;">We've emailed the receipt and a tracking link. Delivery lands in two to three business days.</p>
+          </div>
+          <div class="dialog__footer">
+            <button type="button" class="btn" data-stisla-dialog-dismiss style="--btn-tone: var(--st-success); --btn-color: var(--st-success-foreground); width: 100%;">View order</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>Twenty-two variables retune <code>.dialog</code> without touching component CSS. Override on the <code>.dialog</code> element, on a parent scope, or on <code>:root</code>. Size modifiers <code>--sm</code> / <code>--lg</code> / <code>--xl</code> retune <code>--dialog-width</code> in their own scope. The dark-mode block flips the close chip from a solid dark overlay to a subtle light translucent overlay so it reads against the deep dark surface.</p>
+    <div class="prose">
+      <h3>Geometry</h3>
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--dialog-width</code></td>
+            <td>28rem</td>
+            <td>Max panel width. Retuned by <code>.dialog--sm</code> / <code>--lg</code> / <code>--xl</code> in modifier scope.</td>
+          </tr>
+          <tr>
+            <td><code>--dialog-margin</code></td>
+            <td>1rem</td>
+            <td>Breathing space between panel and viewport edge.</td>
+          </tr>
+          <tr>
+            <td><code>--dialog-padding</code></td>
+            <td>calc(1.25rem * var(--st-density))</td>
+            <td>Header, body, and footer inset.</td>
+          </tr>
+          <tr>
+            <td><code>--dialog-radius</code></td>
+            <td>var(--st-radius-lg)</td>
+            <td>Content corner radius. Large-surface tier, matches card and accordion.</td>
+          </tr>
+          <tr>
+            <td><code>--dialog-z-index</code></td>
+            <td>1055</td>
+            <td>Stack level. Sits above sidebar and navbar.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Surface</h3>
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--dialog-bg</code></td>
+            <td>var(--st-surface)</td>
+            <td>Content card background.</td>
+          </tr>
+          <tr>
+            <td><code>--dialog-color</code></td>
+            <td>var(--st-foreground)</td>
+            <td>Body and title text.</td>
+          </tr>
+          <tr>
+            <td><code>--dialog-border-color</code></td>
+            <td>var(--st-border)</td>
+            <td>Subtle content rim.</td>
+          </tr>
+          <tr>
+            <td><code>--dialog-shadow</code></td>
+            <td>0 10px 40px -10px color-mix(in oklch, black 35%, transparent)</td>
+            <td>Lift off the page. Set to <code>none</code> for a flat dialog.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Backdrop</h3>
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--dialog-backdrop-bg</code></td>
+            <td>oklch(0 0 0 / 0.55)</td>
+            <td>Translucent dim layer. Solid dark in both themes so the dialog reads as the foreground.</td>
+          </tr>
+          <tr>
+            <td><code>--dialog-backdrop-blur</code></td>
+            <td>12px</td>
+            <td>Backdrop blur radius. Set to 0 for a flat dim.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Title</h3>
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--dialog-title-font-size</code></td>
+            <td>1.125rem</td>
+            <td>Title text size. Independent of the heading tag wrapping it.</td>
+          </tr>
+          <tr>
+            <td><code>--dialog-title-font-weight</code></td>
+            <td>600</td>
+            <td>Title weight.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Close chip</h3>
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--dialog-close-size</code></td>
+            <td>1.75rem</td>
+            <td>Width and height of the dismiss chip.</td>
+          </tr>
+          <tr>
+            <td><code>--dialog-close-bg</code></td>
+            <td>oklch(0 0 0 / 0.55) light, oklch(1 0 0 / 0.1) dark</td>
+            <td>Frosted chip background. Solid dark over light surface; subtle light translucent over dark surface.</td>
+          </tr>
+          <tr>
+            <td><code>--dialog-close-bg-hover</code></td>
+            <td>oklch(0 0 0 / 0.7) light, oklch(1 0 0 / 0.18) dark</td>
+            <td>Hover fill. Same inversion logic as the rest state.</td>
+          </tr>
+          <tr>
+            <td><code>--dialog-close-color</code></td>
+            <td>oklch(1 0 0 / 0.92) light, oklch(1 0 0 / 0.85) dark</td>
+            <td>Icon glyph color. Stays white in both themes so the chip reads over any surface.</td>
+          </tr>
+          <tr>
+            <td><code>--dialog-close-color-hover</code></td>
+            <td>oklch(1 0 0)</td>
+            <td>Icon glyph color on hover. Pure white in both themes.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Footer</h3>
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--dialog-footer-padding-y</code></td>
+            <td>calc(0.875rem * var(--st-density))</td>
+            <td>Vertical padding inside the footer. Slightly tighter than the body padding so the seam reads as an action row.</td>
+          </tr>
+          <tr>
+            <td><code>--dialog-footer-bg</code></td>
+            <td>var(--st-surface-2)</td>
+            <td>Footer background. The alt-surface tier sets the action row apart from the body without a bold paint. Set to <code>transparent</code> for a flat footer.</td>
+          </tr>
+          <tr>
+            <td><code>--dialog-footer-border-color</code></td>
+            <td>var(--st-border)</td>
+            <td>Top divider line. Set to <code>transparent</code> to drop the seam entirely.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Motion</h3>
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--dialog-transition-duration</code></td>
+            <td>0.2s</td>
+            <td>Open and close fade plus panel slide. Zeroed under <code>prefers-reduced-motion</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+{% endblock %}

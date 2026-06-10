@@ -7,7 +7,7 @@
 //   4. State via data-state="open|closed|active" (Radix-aligned) or .is-* (Stisla-original).
 //
 // Subclasses set:
-//   static eventNamespace = 'modal'           // → 'stisla:modal:<name>'
+//   static eventNamespace = 'dialog'          // → 'stisla:dialog:<name>'
 //   static defaults = { backdrop: true, ... } // merged with opts
 //
 // Re-init on the same element destroys the old instance first. In dev,

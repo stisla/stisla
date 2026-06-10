@@ -15,8 +15,8 @@
 // the panel is flush with the screen edge, no radius. Only the inner edge
 // carries a border.
 //
-// Reuses modal's primitives via separate vars (no token indirection):
-// data-state paint hook, dialog transition, focus-trap, inert siblings,
+// Reuses dialog's primitives via separate vars (no token indirection):
+// data-state paint hook, panel transition, focus-trap, inert siblings,
 // scroll-lock counter (`<html>.is-drawer-open`).
 
 .drawer {
@@ -32,8 +32,8 @@
   --drawer-border-color: var(--st-border);
   --drawer-shadow: 0 0 40px -10px color-mix(in oklch, black 35%, transparent);
 
-  // Backdrop — solid dark dim, same treatment as modal so a stacked
-  // open (drawer → modal) reads consistently.
+  // Backdrop — solid dark dim, same treatment as dialog so a stacked
+  // open (drawer → dialog) reads consistently.
   --drawer-backdrop-bg: oklch(0 0 0 / 0.55);
   --drawer-backdrop-blur: 12px;
 
@@ -56,7 +56,7 @@
   --drawer-footer-bg: var(--st-surface-2);
   --drawer-footer-border-color: var(--st-border);
 
-  // Motion — slightly slower than modal's 0.2s because the slide
+  // Motion — slightly slower than dialog's 0.2s because the slide
   // distance is longer than a scale.
   --drawer-transition-duration: 0.25s;
 

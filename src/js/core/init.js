@@ -1,6 +1,6 @@
 // Stisla declarative scanner (V3.md §3.7).
 //
-// Components register with a kebab-case name (`register('modal', Modal)`),
+// Components register with a kebab-case name (`register('dialog', Dialog)`),
 // and `init(root)` walks `[data-stisla-<name>]` to instantiate matching
 // classes. Idempotent — elements with an existing instance are skipped.
 //

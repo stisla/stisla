@@ -247,7 +247,7 @@ export class Drawer extends Component {
 }
 
 // Global delegated click handler — bound once per page load.
-// Sentinel mirrors the HMR-safe pattern from src/js/components/modal.js.
+// Sentinel mirrors the HMR-safe pattern from src/js/components/dialog.js.
 if (typeof document !== 'undefined' && typeof window !== 'undefined' && !window.__stislaDrawerBound) {
   window.__stislaDrawerBound = true;
 
