@@ -321,7 +321,7 @@
     <h2>Success</h2>
     <p>A celebratory state for the end of a flow. The icon sits on top, the heading and description fill the middle, and a single block button takes the user to the next step.</p>
     {% call ui.demo() %}
-    <button type="button" class="btn btn--success" data-stisla-modal-trigger="modalSuccess">
+    <button type="button" class="btn" data-stisla-modal-trigger="modalSuccess" style="--btn-tone: var(--st-success); --btn-color: var(--st-success-foreground);">
       Submit order
     </button>
 
@@ -340,7 +340,7 @@
             <p class="text-muted-foreground" style="margin: 0;">We've emailed the receipt and a tracking link. Delivery lands in two to three business days.</p>
           </div>
           <div class="modal__footer">
-            <button type="button" class="btn btn--success" data-stisla-modal-dismiss style="width: 100%;">View order</button>
+            <button type="button" class="btn" data-stisla-modal-dismiss style="--btn-tone: var(--st-success); --btn-color: var(--st-success-foreground); width: 100%;">View order</button>
           </div>
         </div>
       </div>
@@ -350,7 +350,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Eighteen variables retune <code>.modal</code> without touching component CSS. Override on the <code>.modal</code> element, on a parent scope, or on <code>:root</code>. Size modifiers <code>--sm</code> / <code>--lg</code> / <code>--xl</code> retune <code>--modal-width</code> in their own scope.</p>
+    <p>Twenty variables retune <code>.modal</code> without touching component CSS. Override on the <code>.modal</code> element, on a parent scope, or on <code>:root</code>. Size modifiers <code>--sm</code> / <code>--lg</code> / <code>--xl</code> retune <code>--modal-width</code> in their own scope.</p>
     <div class="prose">
       <h3>Geometry</h3>
       <table>
@@ -478,6 +478,25 @@
             <td><code>--modal-close-color</code></td>
             <td>color-mix(in oklch, var(--st-background) 92%, transparent)</td>
             <td>Icon color. Inverts against the chip.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Footer</h3>
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--modal-footer-padding-y</code></td>
+            <td>calc(0.875rem * var(--st-density))</td>
+            <td>Vertical padding inside the footer. Slightly tighter than the body padding so the seam reads as an action row.</td>
+          </tr>
+          <tr>
+            <td><code>--modal-footer-border-color</code></td>
+            <td>var(--st-border)</td>
+            <td>Top divider line. Set to <code>transparent</code> to drop the seam entirely.</td>
           </tr>
         </tbody>
       </table>

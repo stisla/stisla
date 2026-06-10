@@ -43,6 +43,10 @@
   --modal-close-bg-hover: color-mix(in oklch, var(--st-foreground) 70%, transparent);
   --modal-close-color: color-mix(in oklch, var(--st-background) 92%, transparent);
 
+  // Footer
+  --modal-footer-padding-y: calc(0.875rem * var(--st-density));
+  --modal-footer-border-color: var(--st-border);
+
   // Motion
   --modal-transition-duration: 0.2s;
 
@@ -84,7 +88,7 @@
   max-height: calc(100dvh - 2 * var(--modal-margin));
   margin: auto;
   opacity: 0;
-  transform: translateY(-1rem) scale(0.98);
+  transform: scale(0.9);
   transition:
     opacity var(--modal-transition-duration) ease,
     transform var(--modal-transition-duration) ease;
@@ -140,8 +144,8 @@
   align-items: center;
   justify-content: flex-end;
   gap: 0.5rem;
-  padding: var(--modal-padding);
-  padding-top: 0;
+  padding: var(--modal-footer-padding-y) var(--modal-padding);
+  border-top: 1px solid var(--modal-footer-border-color);
 }
 
 // Floating dismiss chip. Reads on white surface, dark surface, and on media.
