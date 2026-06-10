@@ -1,52 +1,171 @@
 // Stisla v3 — toggle.
 //
-// HTML-only toggle button pattern. A hidden <input type="checkbox|radio"
-// class="toggle"> drives a sibling <label class="btn"> as its visible
-// affordance. Works without JS: the browser's native input state
-// (:checked) flips the label's treatment.
+// A two-state press button. The visible affordance carries .toggle and
+// renders the full visual identity (outline-neutral rest, accent hover,
+// highlight active + slightly stronger border). Active state can come
+// from THREE sources, all paint identically:
 //
-// Pairs naturally with .switch (same naming family, both are native
-// input-backed affordances). Use for option pickers and segmented
-// controls where the toggle state is just form data (no JS handling
-// needed): font-weight pickers, alignment pickers, day-of-week filters,
-// view-mode switchers, settings toggles. For JS-driven tabs with active
-// state managed in script, see the planned .btn-group[data-state="active"]
-// pattern (Step 4).
+//   1. [aria-pressed="true"]      — JS-driven press button (no form data)
+//   2. [data-state="active"]      — JS-driven single-select group member
+//                                   (paired with role="radio" + aria-checked)
+//   3. .toggle-input:checked + &  — form-data toggle, native input drives
+//                                   the label paint via sibling combinator
 //
-// .toggle owns the full visual treatment. It does NOT compose with .btn
-// tone modifiers (.btn--primary / .btn--danger etc.). The label just
-// needs class="btn" for shape (height, padding, density, focus ring);
-// .toggle + .btn rules paint outline-neutral / accent-fill regardless
-// of any tone class the user adds. This is intentional: a segmented
-// control is a "pick one of these" affordance, not a "trigger this
-// action" one. The neutral container treatment reads as "you're
-// choosing", not "click for danger".
+// .toggle-input is the hidden-input sibling for the form-data path. It
+// covers both <input type="checkbox"> and <input type="radio">; visually
+// hidden via the standard a11y-safe geometry so screen readers + keyboard
+// focus still reach it. The label class="toggle" sits next to it.
 //
-// Visual story (V3.md §3.2 interactional trio — neutral, accent, highlight):
-//   off          transparent bg, --st-border, foreground text
-//   off + hover  --st-accent bg (neutral hover, transient)
-//   selected     --st-highlight bg (soft primary tint), primary border at 20%, primary text
-//   sel + hover  no change (selected state is the destination, not a step)
-//   focus        2px outline ring at --st-ring (inherits .btn focus)
-//   disabled     opacity 0.55 (inherits .btn)
+// Three markup shapes, one paint:
 //
-// Off-state visual matches .btn--outline.btn--neutral rest + hover. The
-// .toggle rules force that treatment so any .btn tone modifier on the
-// label is overridden. Selected state shifts to the brand-tinted family
-// (--st-highlight), same token language as future sidebar-current-page /
-// active-tab / accordion-open states.
+//   <!-- JS-driven press button -->
+//   <button class="toggle" aria-pressed="false">Bold</button>
 //
-// <input type="checkbox" class="toggle" id="x" autocomplete="off">
-// <label class="btn" for="x">Bold</label>
+//   <!-- Form-data checkbox styled as toggle -->
+//   <input type="checkbox" class="toggle-input" id="b">
+//   <label class="toggle" for="b">Bold</label>
 //
-// <input type="radio" class="toggle" name="g" id="d" autocomplete="off" checked>
-// <label class="btn" for="d">Day</label>
-// <input type="radio" class="toggle" name="g" id="w" autocomplete="off">
-// <label class="btn" for="w">Week</label>
+//   <!-- Form-data radio set styled as segmented control -->
+//   <input type="radio" name="view" class="toggle-input" id="day" checked>
+//   <label class="toggle" for="day">Day</label>
+//   <input type="radio" name="view" class="toggle-input" id="week">
+//   <label class="toggle" for="week">Week</label>
+//
+// For collections of toggles inside a pill container with seam-dedupe-free
+// layout, see .toggle-group (/toggle-group). When members live inside a
+// .toggle-group, the group overrides rest paint to ghost (no individual
+// rims, parent owns the frame) — see _toggle-group.scss for the overrides.
 
-// Hide the input (sr-only / visually-hidden geometry) while keeping it
-// reachable by keyboard. The clickable label still drives state via for/id.
 .toggle {
+  // Geometry — matches .btn cadence so a standalone .toggle sits in the
+  // same rhythm as a standalone .btn next to it.
+  --toggle-radius:        var(--st-toggle-radius, var(--st-radius));
+  --toggle-height:        2.25rem;                          // 36
+  --toggle-padding-x:     calc(0.75rem * var(--st-density));
+  --toggle-font-size:     0.875rem;
+  --toggle-font-weight:   500;
+  --toggle-gap:           0.5rem;                           // icon ↔ label
+
+  // Surface — outline-neutral rest.
+  --toggle-bg:                  transparent;
+  --toggle-color:               var(--st-foreground);
+  --toggle-border-color:        var(--st-border);
+
+  // Hover — accent fill (transient, neutral). Rim stays --st-border.
+  --toggle-hover-bg:            var(--st-accent);
+  --toggle-hover-color:         var(--st-accent-foreground);
+
+  // Active — highlight bg + slightly stronger border. Border mixes the
+  // active bg toward --st-foreground so it reads as "a step beyond
+  // highlight" in both themes (darker in light, lighter in dark).
+  --toggle-active-bg:           var(--st-highlight);
+  --toggle-active-color:        var(--st-highlight-foreground);
+  --toggle-active-border-color: color-mix(in oklch, var(--st-highlight) 75%, var(--st-foreground));
+
+  // Focus
+  --toggle-ring:                var(--st-ring);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--toggle-gap);
+  // Hard height × density. Single-line — padding-block: 0 lets native
+  // vertical centering handle the label. Same height architecture as .btn.
+  height: calc(var(--toggle-height) * var(--st-density));
+  padding: 0 var(--toggle-padding-x);
+  font-family: inherit;
+  font-size: var(--toggle-font-size);
+  font-weight: var(--toggle-font-weight);
+  line-height: 1;
+  color: var(--toggle-color);
+  background: var(--toggle-bg);
+  border: 1px solid var(--toggle-border-color);
+  border-radius: var(--toggle-radius);
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background-color .12s ease, border-color .12s ease,
+              color .12s ease;
+
+  &:hover {
+    background: var(--toggle-hover-bg);
+    color: var(--toggle-hover-color);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--toggle-ring);
+    outline-offset: 2px;
+  }
+
+  &:disabled,
+  &[aria-disabled="true"] {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.55;
+  }
+}
+
+// Active — three sources, single paint block. Source order: this block
+// sits AFTER .toggle base so it wins specificity ties.
+.toggle[aria-pressed="true"],
+.toggle[data-state="active"],
+.toggle-input:checked + .toggle {
+  background: var(--toggle-active-bg);
+  color: var(--toggle-active-color);
+  border-color: var(--toggle-active-border-color);
+}
+
+// Icons inside .toggle scale to its font-size. 1em (not 1rem) so the icon
+// shrinks with --sm / grows with --lg automatically.
+.toggle :is(svg, i, .toggle__icon) {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toggle { transition: none; }
+}
+
+// === Sizes ============================================================
+// Match .btn--sm / .btn--lg cadence (28 / 44 px under default density)
+// so a sized .toggle baselines with the rest of the v3 control family.
+.toggle--sm {
+  --toggle-radius:    var(--st-toggle-radius, var(--st-radius-sm));
+  --toggle-height:    1.75rem;                                  // 28
+  --toggle-padding-x: calc(0.625rem * var(--st-density));
+  --toggle-font-size: 0.8125rem;
+}
+
+.toggle--lg {
+  --toggle-radius:    var(--st-toggle-radius, var(--st-radius-lg));
+  --toggle-height:    2.75rem;                                  // 44
+  --toggle-padding-x: calc(1rem * var(--st-density));
+  --toggle-font-size: 1rem;
+}
+
+// === Icon shapes ======================================================
+// Square at every size (mirrors .btn--icon-only).
+.toggle--icon-only {
+  --toggle-padding-x: 0;
+  width: calc(var(--toggle-height) * var(--st-density));
+}
+
+// Opt out of --st-radius for a circular silhouette (mirrors .btn--icon-round).
+.toggle--icon-round {
+  border-radius: 9999px;
+}
+
+// === .toggle-input ====================================================
+// Visually hidden input for the form-data path. Geometry copied from
+// .visually-hidden so screen readers + keyboard focus still reach it.
+// Pairs with an adjacent <label class="toggle">; :checked forwards the
+// active paint via the sibling-combinator rule above. Focus + disabled
+// forward to the label so the visible chip carries the visual.
+.toggle-input {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -56,50 +175,15 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
-  pointer-events: none;
-}
 
-// Off state. Forces outline-neutral regardless of any .btn--<tone>
-// modifier the user puts on the label — the toggle owns the visual.
-.toggle + .btn {
-  --btn-bg:           transparent;
-  --btn-border-color: var(--st-border);
-  --btn-color:        var(--st-foreground);
-  --btn-bevel:        none;
-}
+  &:focus-visible + .toggle {
+    outline: 2px solid var(--toggle-ring, var(--st-ring));
+    outline-offset: 2px;
+  }
 
-.toggle + .btn:hover {
-  --btn-bg: var(--st-accent);
-}
-
-// Selected state — V3.md §3.2 spec path. Fill is --st-highlight (a 12%
-// primary tint), text is --st-highlight-foreground (= --st-primary), and
-// the border picks up a slightly stronger primary tint so the rim reads
-// as a hair more saturated than the fill without contrast jumping. Hover
-// stays neutral (--st-accent) above; selected adopts brand tint here.
-// That asymmetry follows the spec table: hover is transient (neutral),
-// selected is persistent state (branded). Same token language as the
-// future sidebar-current-page, active-tab, accordion-open states, so the
-// whole "selected/current" semantic stays consistent across components.
-// No hover change once selected: the user already knows this one is on,
-// an extra darken on hover would add noise without adding info.
-.toggle:checked + .btn,
-.toggle:checked + .btn:hover {
-  --btn-bg:           var(--st-highlight);
-  --btn-border-color: color-mix(in oklch, var(--st-primary) 20%, transparent);
-  --btn-color:        var(--st-highlight-foreground);
-}
-
-// Focus ring sits on the label (the input is visually hidden but still
-// receives focus). Inherits .btn's focus vocabulary so it composes with
-// keyboard navigation across mixed button + toggle rows.
-.toggle:focus-visible + .btn {
-  outline: 2px solid var(--st-ring);
-  outline-offset: 2px;
-}
-
-.toggle:disabled + .btn {
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.55;
+  &:disabled + .toggle {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.55;
+  }
 }

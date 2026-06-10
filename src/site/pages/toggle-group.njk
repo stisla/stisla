@@ -1,0 +1,213 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Toggle group · Stisla v3{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Toggle group</h1>
+    <p class="lead">A pill container that hosts a row of toggles pressed inside its padded interior.</p>
+  </header>
+
+  <section>
+    <p>For a single press button, see <a class="link" href="/toggle">Toggle</a>. For purely visual button grouping with no state, see <a class="link" href="/button-group">Button group</a>.</p>
+  </section>
+
+  <section>
+    <h2>Single-select (segmented control)</h2>
+    <p>Use <code>role="radiogroup"</code> on the wrapper and <code>role="radio"</code> with <code>aria-checked</code> on each member. The CSS hook is <code>data-state="active"</code> on the current member. Roving-tabindex and arrow-key navigation land with the JS contract in a later step.</p>
+    {% call ui.demo() %}
+    <div class="toggle-group" role="radiogroup" aria-label="Text alignment">
+      <button type="button" class="toggle toggle--icon-only" role="radio" aria-checked="false" aria-label="Align left">
+        <i data-lucide="align-left"></i>
+      </button>
+      <button type="button" class="toggle toggle--icon-only" role="radio" data-state="active" aria-checked="true" aria-label="Align center">
+        <i data-lucide="align-center"></i>
+      </button>
+      <button type="button" class="toggle toggle--icon-only" role="radio" aria-checked="false" aria-label="Align right">
+        <i data-lucide="align-right"></i>
+      </button>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Multi-select</h2>
+    <p>Each member is an independent press toggle. Use <code>role="group"</code> on the wrapper and <code>aria-pressed</code> on each member.</p>
+    {% call ui.demo() %}
+    <div class="toggle-group" role="group" aria-label="Text style">
+      <button type="button" class="toggle toggle--icon-only" aria-pressed="true" aria-label="Bold">
+        <i data-lucide="bold"></i>
+      </button>
+      <button type="button" class="toggle toggle--icon-only" aria-pressed="false" aria-label="Italic">
+        <i data-lucide="italic"></i>
+      </button>
+      <button type="button" class="toggle toggle--icon-only" aria-pressed="true" aria-label="Underline">
+        <i data-lucide="underline"></i>
+      </button>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>With text labels</h2>
+    <p>Members can carry text instead of (or alongside) icons. The group's intrinsic width grows to fit.</p>
+    {% call ui.demo() %}
+    <div class="toggle-group" role="radiogroup" aria-label="Calendar view">
+      <button type="button" class="toggle" role="radio" data-state="active" aria-checked="true">Day</button>
+      <button type="button" class="toggle" role="radio" aria-checked="false">Week</button>
+      <button type="button" class="toggle" role="radio" aria-checked="false">Month</button>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Icon + label</h2>
+    <p>Mix icons with text by placing an <code>&lt;i&gt;</code> inside the <code>.toggle</code> button next to the label.</p>
+    {% call ui.demo() %}
+    <div class="toggle-group" role="radiogroup" aria-label="View mode">
+      <button type="button" class="toggle" role="radio" data-state="active" aria-checked="true">
+        <i data-lucide="list"></i>
+        List
+      </button>
+      <button type="button" class="toggle" role="radio" aria-checked="false">
+        <i data-lucide="layout-grid"></i>
+        Grid
+      </button>
+      <button type="button" class="toggle" role="radio" aria-checked="false">
+        <i data-lucide="columns-3"></i>
+        Kanban
+      </button>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Form data — radio set</h2>
+    <p>For single-select that needs to submit with a form, use native radios. The hidden <code>&lt;input class="toggle-input" type="radio"&gt;</code> drives the paired <code>&lt;label class="toggle"&gt;</code>; the browser handles single-select natively. No JS required.</p>
+    {% call ui.demo() %}
+    <div class="toggle-group">
+      <input type="radio" class="toggle-input" name="planRange" id="planDay" value="day" checked>
+      <label class="toggle" for="planDay">Day</label>
+      <input type="radio" class="toggle-input" name="planRange" id="planWeek" value="week">
+      <label class="toggle" for="planWeek">Week</label>
+      <input type="radio" class="toggle-input" name="planRange" id="planMonth" value="month">
+      <label class="toggle" for="planMonth">Month</label>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Form data — checkbox set</h2>
+    <p>For multi-select form data, use native checkboxes the same way. Multiple labels can be active at once.</p>
+    {% call ui.demo() %}
+    <div class="toggle-group">
+      <input type="checkbox" class="toggle-input" name="tools" id="toolBold" value="bold" checked>
+      <label class="toggle toggle--icon-only" for="toolBold" aria-label="Bold">
+        <i data-lucide="bold"></i>
+      </label>
+      <input type="checkbox" class="toggle-input" name="tools" id="toolItalic" value="italic">
+      <label class="toggle toggle--icon-only" for="toolItalic" aria-label="Italic">
+        <i data-lucide="italic"></i>
+      </label>
+      <input type="checkbox" class="toggle-input" name="tools" id="toolUnderline" value="underline" checked>
+      <label class="toggle toggle--icon-only" for="toolUnderline" aria-label="Underline">
+        <i data-lucide="underline"></i>
+      </label>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Sizes</h2>
+    <p>Add <code>.toggle-group--sm</code> or <code>.toggle-group--lg</code>. Outer height shrinks to 28 / grows to 44 px under default density; the inner toggle height re-derives from the new container values automatically (concentric corners per V3.md §3.4).</p>
+    {% call ui.demo() %}
+    <div style="display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-start;">
+      <div class="toggle-group toggle-group--sm" role="radiogroup" aria-label="Small">
+        <button type="button" class="toggle" role="radio" data-state="active" aria-checked="true">Day</button>
+        <button type="button" class="toggle" role="radio" aria-checked="false">Week</button>
+        <button type="button" class="toggle" role="radio" aria-checked="false">Month</button>
+      </div>
+      <div class="toggle-group" role="radiogroup" aria-label="Default">
+        <button type="button" class="toggle" role="radio" data-state="active" aria-checked="true">Day</button>
+        <button type="button" class="toggle" role="radio" aria-checked="false">Week</button>
+        <button type="button" class="toggle" role="radio" aria-checked="false">Month</button>
+      </div>
+      <div class="toggle-group toggle-group--lg" role="radiogroup" aria-label="Large">
+        <button type="button" class="toggle" role="radio" data-state="active" aria-checked="true">Day</button>
+        <button type="button" class="toggle" role="radio" aria-checked="false">Week</button>
+        <button type="button" class="toggle" role="radio" aria-checked="false">Month</button>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Vertical</h2>
+    <p>Add <code>.toggle-group--vertical</code> to stack members. Inner toggles keep their standalone default height — no vertical compression.</p>
+    {% call ui.demo() %}
+    <div class="toggle-group toggle-group--vertical" role="radiogroup" aria-label="Sidebar view">
+      <button type="button" class="toggle" role="radio" data-state="active" aria-checked="true">
+        <i data-lucide="inbox"></i>
+        Inbox
+      </button>
+      <button type="button" class="toggle" role="radio" aria-checked="false">
+        <i data-lucide="archive"></i>
+        Archive
+      </button>
+      <button type="button" class="toggle" role="radio" aria-checked="false">
+        <i data-lucide="trash-2"></i>
+        Trash
+      </button>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>Six variables retune <code>.toggle-group</code>. Child <code>.toggle</code> vars (height, radius, bg, border) re-derive from the container values inside member scope — see <a class="link" href="/toggle">Toggle</a> for the child surface.</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--toggle-group-radius</code></td>
+            <td>var(--st-toggle-group-radius, var(--st-radius))</td>
+            <td>Outer corner radius. Inner toggle radius computes as <code>outer - padding</code> (concentric).</td>
+          </tr>
+          <tr>
+            <td><code>--toggle-group-height</code></td>
+            <td>2.25rem</td>
+            <td>Outer raw height (density multiplies once). Inner toggle height computes as <code>outer - 2 × padding</code>.</td>
+          </tr>
+          <tr>
+            <td><code>--toggle-group-padding</code></td>
+            <td>0.25rem</td>
+            <td>Padding around the children. Eats into the inner toggle's effective height and radius.</td>
+          </tr>
+          <tr>
+            <td><code>--toggle-group-gap</code></td>
+            <td>0.125rem</td>
+            <td>Space between adjacent toggles. Lets multi-active members breathe without border collisions.</td>
+          </tr>
+          <tr>
+            <td><code>--toggle-group-bg</code></td>
+            <td>transparent</td>
+            <td>Container fill. Set to <code>var(--st-surface-2)</code> for a tinted pill.</td>
+          </tr>
+          <tr>
+            <td><code>--toggle-group-border-color</code></td>
+            <td>var(--st-border)</td>
+            <td>Outer rim color.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+{% endblock %}

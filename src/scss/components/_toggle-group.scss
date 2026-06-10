@@ -1,0 +1,133 @@
+// Stisla v3 — toggle group.
+//
+// A pill container that hosts a row (or column) of .toggle children
+// pressed inside its padded interior. The container owns the frame
+// (rim + radius + bg); members go ghost-rest (no individual rims) so
+// the cluster reads as one segmented control rather than N independent
+// chips.
+//
+// Visual story (V3.md §3.4 concentric corners):
+//
+//   ┌────────────────────────────────┐
+//   │ ┌──────┐ ┌──────┐ ┌──────┐     │   outer rim @ --st-border
+//   │ │ icon │ │  ●●  │ │ icon │     │   inner toggle radius = outer - padding
+//   │ └──────┘ └──────┘ └──────┘     │   the active one fills with --st-highlight
+//   └────────────────────────────────┘   + a slightly stronger rim
+//
+// Height architecture (V3.md §3.4):
+//   outer height   = --toggle-group-height (default 2.25rem = 36 px raw)
+//   inner toggle   = outer - 2 * padding (raw, density multiplies once
+//                    via .toggle's height calc)
+//   inner radius   = outer radius - padding (corners share a center)
+//
+// Three child markup shapes — same as standalone .toggle. The group's
+// rest-paint override (transparent bg + transparent border on members)
+// applies to all of them via `> .toggle` and `> .toggle-input + .toggle`
+// adjacency forms.
+//
+// JS-driven members:
+//   <div class="toggle-group" role="group" aria-label="...">
+//     <button class="toggle" aria-pressed="true">...</button>
+//   </div>
+//
+//   <div class="toggle-group" role="radiogroup" aria-label="...">
+//     <button class="toggle" role="radio" aria-checked="true"
+//             data-state="active">Day</button>
+//     <button class="toggle" role="radio" aria-checked="false">Week</button>
+//   </div>
+//
+// Form-data members:
+//   <div class="toggle-group">
+//     <input type="checkbox" class="toggle-input" id="b">
+//     <label class="toggle" for="b">Bold</label>
+//   </div>
+//
+//   <div class="toggle-group">
+//     <input type="radio" name="view" class="toggle-input" id="day" checked>
+//     <label class="toggle" for="day">Day</label>
+//   </div>
+//
+// Sizes: --sm / --lg retune --toggle-group-* in modifier scope. Member
+// child vars (--toggle-height, --toggle-radius) re-derive from the new
+// container values automatically.
+
+.toggle-group,
+.toggle-group--vertical {
+  --toggle-group-radius:       var(--st-toggle-group-radius, var(--st-radius));
+  --toggle-group-height:       2.25rem;                          // 36 raw
+  --toggle-group-padding:      0.25rem;                          //  4 raw
+  --toggle-group-gap:          0.125rem;                         //  2 raw
+
+  --toggle-group-bg:           transparent;
+  --toggle-group-border-color: var(--st-border);
+
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+  vertical-align: middle;
+  padding: calc(var(--toggle-group-padding) * var(--st-density));
+  gap: calc(var(--toggle-group-gap) * var(--st-density));
+  background: var(--toggle-group-bg);
+  border: 1px solid var(--toggle-group-border-color);
+  border-radius: var(--toggle-group-radius);
+
+  // Member toggles — recompute inner height + radius from container vars
+  // (concentric corners per V3.md §3.4). Rest paint goes ghost: parent
+  // rim is the frame, individual children sit quiet at rest. Active paint
+  // stays the standalone .toggle default (highlight bg + foreground-mix
+  // border) — no override needed.
+  > .toggle {
+    --toggle-height: calc(var(--toggle-group-height) - var(--toggle-group-padding) * 2);
+    --toggle-radius: calc(var(--toggle-group-radius) - var(--toggle-group-padding));
+    --toggle-bg:           transparent;
+    --toggle-border-color: transparent;
+  }
+}
+
+// === Horizontal =========================================================
+.toggle-group {
+  // Outer height locked to the container var; inner toggles stretch to
+  // fill via their own calc'd --toggle-height.
+  height: calc(var(--toggle-group-height) * var(--st-density));
+}
+
+// === Vertical ===========================================================
+// Stacked column. Outer height is auto (sum of children); inner toggles
+// keep their standalone default height — no vertical compression. Width
+// grows to fit the widest member.
+.toggle-group--vertical {
+  flex-direction: column;
+  height: auto;
+
+  > .toggle {
+    // Reset the horizontal-mode inner-height compression — vertical
+    // toggles use their standalone default height.
+    --toggle-height: 2.25rem;
+    width: 100%;
+  }
+}
+
+// === Sizes ==============================================================
+// Outer container shrinks / grows; inner toggle height re-derives from
+// the new --toggle-group-height value automatically. Padding shrinks on
+// --sm so the inner clickable area stays usable.
+.toggle-group--sm {
+  --toggle-group-radius:  var(--st-toggle-group-radius, var(--st-radius-sm));
+  --toggle-group-height:  1.75rem;                              // 28 raw
+  --toggle-group-padding: 0.125rem;                             //  2 raw
+}
+
+.toggle-group--lg {
+  --toggle-group-radius:  var(--st-toggle-group-radius, var(--st-radius-lg));
+  --toggle-group-height:  2.75rem;                              // 44 raw
+  --toggle-group-padding: 0.25rem;                              //  4 raw (same as default)
+}
+
+// --sm vertical adopts the small radius / padding but keeps width: 100%
+// behavior from .toggle-group--vertical above. (Same for --lg.)
+.toggle-group--vertical.toggle-group--sm > .toggle {
+  --toggle-height: 1.75rem;
+}
+.toggle-group--vertical.toggle-group--lg > .toggle {
+  --toggle-height: 2.75rem;
+}

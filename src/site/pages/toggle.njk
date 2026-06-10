@@ -6,68 +6,44 @@
 {% block content %}
   <header>
     <h1>Toggle</h1>
-    <p class="lead">A button-shaped affordance backed by a native input. Use for option pickers and segmented controls.</p>
+    <p class="lead">A two-state press button. Outline-neutral at rest, highlight-filled when active.</p>
   </header>
 
   <section>
+    <p>For collections of toggles in a pill container, see <a class="link" href="/toggle-group">Toggle group</a>.</p>
+  </section>
+
+  <section>
     <h2>How it works</h2>
-    <p>A hidden <code>&lt;input class="toggle"&gt;</code> sits next to a <code>&lt;label class="btn"&gt;</code>. The input owns the state (checkbox <code>:checked</code> for a single toggle, radio for a one-of-many group). The label is the visible affordance, paired via <code>for</code> / <code>id</code>. No JS is involved; the browser's native input handling drives everything.</p>
-    <p>The visual is fixed. Outline-neutral by default, accent fill when selected. The label uses <code>class="btn"</code> for shape (height, padding, density, focus ring), and the toggle's rules overwrite the color layer on top.</p>
-    <p><strong>Shape modifiers compose.</strong> Pair <code>.btn--sm</code> / <code>.btn--lg</code> / <code>.btn--icon-only</code> / <code>.btn--icon-round</code> on the label and they apply as expected. <strong>Tone modifiers do not.</strong> <code>.btn--primary</code> / <code>.btn--danger</code> are silently ignored because a segmented control reads as "pick one of these", not "trigger this action". If you need a tone-colored toggle, that's a different pattern (custom CSS at the consumer level).</p>
+    <p>The visible element carries <code>.toggle</code>. Active state can come from three sources, all paint the same:</p>
+    <ul>
+      <li><code>aria-pressed="true"</code> — JS-driven press button (no form data)</li>
+      <li><code>data-state="active"</code> — JS-driven single-select group member (paired with <code>role="radio"</code> + <code>aria-checked</code> on the markup)</li>
+      <li><code>.toggle-input:checked + .toggle</code> — form-data path, a hidden <code>&lt;input class="toggle-input"&gt;</code> sibling drives the label paint</li>
+    </ul>
+    <p>The semantic split lives in markup; the CSS just paints. Click-to-toggle behavior for JS-driven toggles lands with the Stisla.Toggle component in a later step.</p>
   </section>
 
   <section>
-    <h2>Single toggle</h2>
-    <p>A checkbox-backed toggle for a single on / off setting. Use when the affordance is part of a settings row and the on state has a discrete meaning.</p>
+    <h2>JS-driven press button</h2>
+    <p>A standalone toggle that flips on click. The markup below is hardcoded for the visual; the click handler lands with the JS contract.</p>
     {% call ui.demo() %}
-    <div class="demo-row">
-      <input type="checkbox" class="toggle" id="toggleBold" autocomplete="off" />
-      <label class="btn" for="toggleBold">Bold</label>
-      <input type="checkbox" class="toggle" id="toggleItalic" autocomplete="off" checked />
-      <label class="btn" for="toggleItalic">Italic</label>
-      <input type="checkbox" class="toggle" id="toggleUnderline" autocomplete="off" />
-      <label class="btn" for="toggleUnderline">Underline</label>
-    </div>
+    <button type="button" class="toggle" aria-pressed="true">
+      <i data-lucide="bell"></i>
+      Notifications on
+    </button>
     {% endcall %}
   </section>
 
   <section>
-    <h2>Segmented (radio)</h2>
-    <p>Radio inputs sharing a <code>name</code> make a one-of-many picker. The browser handles single-selection within the group.</p>
+    <h2>Form-data checkbox</h2>
+    <p>A hidden checkbox drives the label paint. State submits with the form natively; no JS required.</p>
     {% call ui.demo() %}
-    <div class="demo-row">
-      <input type="radio" class="toggle" name="rangeToggle" id="rangeDay" autocomplete="off" checked />
-      <label class="btn" for="rangeDay">Day</label>
-      <input type="radio" class="toggle" name="rangeToggle" id="rangeWeek" autocomplete="off" />
-      <label class="btn" for="rangeWeek">Week</label>
-      <input type="radio" class="toggle" name="rangeToggle" id="rangeMonth" autocomplete="off" />
-      <label class="btn" for="rangeMonth">Month</label>
-      <input type="radio" class="toggle" name="rangeToggle" id="rangeYear" autocomplete="off" />
-      <label class="btn" for="rangeYear">Year</label>
-    </div>
-    {% endcall %}
-  </section>
-
-  <section>
-    <h2>Icon only</h2>
-    <p>Pair with <code>.btn--icon-only</code> on the label for a compact picker. Add an <code>aria-label</code> so the affordance is named for assistive tech.</p>
-    {% call ui.demo() %}
-    <div class="demo-row">
-      <input type="radio" class="toggle" name="alignToggle" id="alignLeft" autocomplete="off" checked />
-      <label class="btn btn--icon-only" for="alignLeft" aria-label="Align left">
-        <i data-lucide="align-left"></i>
-      </label>
-      <input type="radio" class="toggle" name="alignToggle" id="alignCenter" autocomplete="off" />
-      <label class="btn btn--icon-only" for="alignCenter" aria-label="Align center">
-        <i data-lucide="align-center"></i>
-      </label>
-      <input type="radio" class="toggle" name="alignToggle" id="alignRight" autocomplete="off" />
-      <label class="btn btn--icon-only" for="alignRight" aria-label="Align right">
-        <i data-lucide="align-right"></i>
-      </label>
-      <input type="radio" class="toggle" name="alignToggle" id="alignJustify" autocomplete="off" />
-      <label class="btn btn--icon-only" for="alignJustify" aria-label="Justify">
-        <i data-lucide="align-justify"></i>
+    <div>
+      <input type="checkbox" class="toggle-input" id="newsletterToggle" name="newsletter" checked>
+      <label class="toggle" for="newsletterToggle">
+        <i data-lucide="mail"></i>
+        Subscribe to newsletter
       </label>
     </div>
     {% endcall %}
@@ -75,129 +51,140 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Add <code>.btn--sm</code> or <code>.btn--lg</code> on the label to scale the shape. Density still multiplies through.</p>
+    <p>Add <code>.toggle--sm</code> or <code>.toggle--lg</code> to match the <code>.btn</code> size cadence (28 / 36 / 44 px under default density).</p>
     {% call ui.demo() %}
-    <div class="demo-stack">
-      <div class="demo-row">
-        <input type="radio" class="toggle" name="sizeSmToggle" id="sizeSm1" autocomplete="off" checked />
-        <label class="btn btn--sm" for="sizeSm1">Compact</label>
-        <input type="radio" class="toggle" name="sizeSmToggle" id="sizeSm2" autocomplete="off" />
-        <label class="btn btn--sm" for="sizeSm2">Cozy</label>
-        <input type="radio" class="toggle" name="sizeSmToggle" id="sizeSm3" autocomplete="off" />
-        <label class="btn btn--sm" for="sizeSm3">Comfortable</label>
-      </div>
-      <div class="demo-row">
-        <input type="radio" class="toggle" name="sizeLgToggle" id="sizeLg1" autocomplete="off" />
-        <label class="btn btn--lg" for="sizeLg1">Day</label>
-        <input type="radio" class="toggle" name="sizeLgToggle" id="sizeLg2" autocomplete="off" checked />
-        <label class="btn btn--lg" for="sizeLg2">Week</label>
-        <input type="radio" class="toggle" name="sizeLgToggle" id="sizeLg3" autocomplete="off" />
-        <label class="btn btn--lg" for="sizeLg3">Month</label>
-      </div>
+    <div style="display: flex; gap: 0.5rem; align-items: center;">
+      <button type="button" class="toggle toggle--sm" aria-pressed="true">Bold</button>
+      <button type="button" class="toggle" aria-pressed="true">Bold</button>
+      <button type="button" class="toggle toggle--lg" aria-pressed="true">Bold</button>
     </div>
     {% endcall %}
   </section>
 
   <section>
-    <h2>Mix and match shape modifiers</h2>
-    <p>Stack any <code>.btn</code> shape modifier on the label. The toggle owns the color layer; shapes just compose. Icon + text in a segmented group, or icon-only with a round silhouette, both work as expected.</p>
+    <h2>Icon-only</h2>
+    <p>Add <code>.toggle--icon-only</code> for a square slot (mirrors <code>.btn--icon-only</code>). Add an <code>aria-label</code> so the affordance is named for assistive tech.</p>
     {% call ui.demo() %}
-    <div class="demo-stack">
-      <div class="demo-row">
-        <input type="radio" class="toggle" name="viewMode" id="viewList" autocomplete="off" checked />
-        <label class="btn" for="viewList">
-          <i data-lucide="list"></i>
-          List
-        </label>
-        <input type="radio" class="toggle" name="viewMode" id="viewGrid" autocomplete="off" />
-        <label class="btn" for="viewGrid">
-          <i data-lucide="layout-grid"></i>
-          Grid
-        </label>
-        <input type="radio" class="toggle" name="viewMode" id="viewKanban" autocomplete="off" />
-        <label class="btn" for="viewKanban">
-          <i data-lucide="columns-3"></i>
-          Kanban
-        </label>
-      </div>
-      <div class="demo-row">
-        <input type="radio" class="toggle" name="reaction" id="reactLike" autocomplete="off" />
-        <label class="btn btn--icon-only btn--icon-round" for="reactLike" aria-label="Like">
-          <i data-lucide="thumbs-up"></i>
-        </label>
-        <input type="radio" class="toggle" name="reaction" id="reactLove" autocomplete="off" checked />
-        <label class="btn btn--icon-only btn--icon-round" for="reactLove" aria-label="Love">
-          <i data-lucide="heart"></i>
-        </label>
-        <input type="radio" class="toggle" name="reaction" id="reactLaugh" autocomplete="off" />
-        <label class="btn btn--icon-only btn--icon-round" for="reactLaugh" aria-label="Laugh">
-          <i data-lucide="laugh"></i>
-        </label>
-        <input type="radio" class="toggle" name="reaction" id="reactCelebrate" autocomplete="off" />
-        <label class="btn btn--icon-only btn--icon-round" for="reactCelebrate" aria-label="Celebrate">
-          <i data-lucide="party-popper"></i>
-        </label>
-      </div>
+    <div style="display: flex; gap: 0.5rem; align-items: center;">
+      <button type="button" class="toggle toggle--icon-only" aria-pressed="false" aria-label="Bold">
+        <i data-lucide="bold"></i>
+      </button>
+      <button type="button" class="toggle toggle--icon-only" aria-pressed="true" aria-label="Italic">
+        <i data-lucide="italic"></i>
+      </button>
+      <button type="button" class="toggle toggle--icon-only" aria-pressed="false" aria-label="Underline">
+        <i data-lucide="underline"></i>
+      </button>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Icon-round</h2>
+    <p>Add <code>.toggle--icon-round</code> alongside <code>.toggle--icon-only</code> for a circular silhouette. Same opt-out as <code>.btn--icon-round</code> — radius forces 9999px, ignoring <code>--st-radius</code>.</p>
+    {% call ui.demo() %}
+    <div style="display: flex; gap: 0.5rem; align-items: center;">
+      <button type="button" class="toggle toggle--icon-only toggle--icon-round" aria-pressed="false" aria-label="Like">
+        <i data-lucide="thumbs-up"></i>
+      </button>
+      <button type="button" class="toggle toggle--icon-only toggle--icon-round" aria-pressed="true" aria-label="Love">
+        <i data-lucide="heart"></i>
+      </button>
+      <button type="button" class="toggle toggle--icon-only toggle--icon-round" aria-pressed="false" aria-label="Star">
+        <i data-lucide="star"></i>
+      </button>
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>Disabled</h2>
-    <p>Disable the input directly. The label dims with it and stops responding to clicks.</p>
+    <p>Native <code>:disabled</code> on the button (or on the paired <code>.toggle-input</code>) dims the chip and blocks pointer events.</p>
     {% call ui.demo() %}
-    <div class="demo-row">
-      <input type="checkbox" class="toggle" id="disabledOff" autocomplete="off" disabled />
-      <label class="btn" for="disabledOff">Off, disabled</label>
-      <input type="checkbox" class="toggle" id="disabledOn" autocomplete="off" checked disabled />
-      <label class="btn" for="disabledOn">On, disabled</label>
+    <div style="display: flex; gap: 0.5rem; align-items: center;">
+      <button type="button" class="toggle" aria-pressed="false" disabled>Off, disabled</button>
+      <button type="button" class="toggle" aria-pressed="true" disabled>On, disabled</button>
+      <input type="checkbox" class="toggle-input" id="toggleDisabledForm" disabled>
+      <label class="toggle" for="toggleDisabledForm">Form, disabled</label>
     </div>
     {% endcall %}
   </section>
 
   <section>
-    <h2>Versus <code>.btn-group</code></h2>
-    <p><code>.toggle</code> is an HTML-only pattern. No JS, the browser's native input state is the source of truth. Use when the selected value should land in form data, or when you need a one-of-many picker without writing handlers.</p>
-    <p>For tab-like UI where the selected state lives in script (active tab on a panel, view mode on a chart, segment in a wizard), use the planned <code>.btn-group[data-state="active"]</code> pattern instead. Same visual, different state ownership.</p>
-  </section>
-
-  <section>
     <h2>Customization</h2>
-    <p>The label is a <code>.btn</code>, so the toggle inherits the button variable surface. See <a class="link" href="/buttons">Buttons</a> for the full table. Retuning shape (radius, height, padding) on <code>.btn</code> reshapes the toggle at the same time.</p>
-    <p>The toggle owns the color layer. It reassigns four <code>.btn</code> variables based on the input's state. The rest-state values come from the neutral interactional surfaces; the selected-state values come from <code>--st-accent</code> and <code>--st-highlight</code>.</p>
+    <p>Twelve variables retune <code>.toggle</code>. Geometry mirrors <code>.btn</code>; surface variables follow the v3 interactional trio (rest → accent hover → highlight active) — the same vocabulary sidebar, list-group, table and pagination use for selected state.</p>
     <div class="prose">
       <table>
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Rest</th>
-            <th>Selected</th>
+            <th>Default</th>
+            <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><code>--btn-bg</code></td>
+            <td><code>--toggle-radius</code></td>
+            <td>var(--st-toggle-radius, var(--st-radius))</td>
+            <td>Corner radius.</td>
+          </tr>
+          <tr>
+            <td><code>--toggle-height</code></td>
+            <td>2.25rem</td>
+            <td>Raw height; density multiplies once.</td>
+          </tr>
+          <tr>
+            <td><code>--toggle-padding-x</code></td>
+            <td>calc(0.75rem * var(--st-density))</td>
+            <td>Horizontal padding.</td>
+          </tr>
+          <tr>
+            <td><code>--toggle-font-size</code></td>
+            <td>0.875rem</td>
+            <td>Label size.</td>
+          </tr>
+          <tr>
+            <td><code>--toggle-font-weight</code></td>
+            <td>500</td>
+            <td>Label weight.</td>
+          </tr>
+          <tr>
+            <td><code>--toggle-bg</code></td>
             <td>transparent</td>
-            <td>var(--st-highlight)</td>
+            <td>Rest fill.</td>
           </tr>
           <tr>
-            <td><code>--btn-border-color</code></td>
-            <td>var(--st-border)</td>
-            <td>color-mix(in oklch, var(--st-primary) 20%, transparent)</td>
-          </tr>
-          <tr>
-            <td><code>--btn-color</code></td>
+            <td><code>--toggle-color</code></td>
             <td>var(--st-foreground)</td>
-            <td>var(--st-highlight-foreground)</td>
+            <td>Rest text color.</td>
           </tr>
           <tr>
-            <td><code>--btn-bevel</code></td>
-            <td>none</td>
-            <td>none</td>
+            <td><code>--toggle-border-color</code></td>
+            <td>var(--st-border)</td>
+            <td>Rim color.</td>
+          </tr>
+          <tr>
+            <td><code>--toggle-hover-bg</code></td>
+            <td>var(--st-accent)</td>
+            <td>Hover fill (transient).</td>
+          </tr>
+          <tr>
+            <td><code>--toggle-active-bg</code></td>
+            <td>var(--st-highlight)</td>
+            <td>Active fill (persistent).</td>
+          </tr>
+          <tr>
+            <td><code>--toggle-active-color</code></td>
+            <td>var(--st-highlight-foreground)</td>
+            <td>Active text color.</td>
+          </tr>
+          <tr>
+            <td><code>--toggle-active-border-color</code></td>
+            <td>color-mix(in oklch, var(--st-highlight) 75%, var(--st-foreground))</td>
+            <td>Active rim — slightly stronger than the active fill in both themes.</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>Hover on rest paints <code>--st-accent</code>; hover on selected blends 20% foreground over <code>--st-accent</code> for a slightly bolder fill. Both compose at the variable layer, so a brand-color override on <code>--st-accent</code> or <code>--st-highlight</code> retones every toggle in scope.</p>
   </section>
 {% endblock %}

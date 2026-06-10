@@ -6,8 +6,12 @@
 {% block content %}
   <header>
     <h1>Button group</h1>
-    <p class="lead">A row of buttons that share chrome so they read as a single control.</p>
+    <p class="lead">A row of action buttons that share chrome so they read as a single control.</p>
   </header>
+
+  <section>
+    <p>For press toggles, segmented controls, and toggle-style checkbox / radio groups, see <a class="link" href="/toggle">Toggle</a> and <a class="link" href="/toggle-group">Toggle group</a>. <code>.btn-group</code> is purely visual grouping for action buttons — no state hooks, no JS.</p>
+  </section>
 
   <section>
     <h2>Basic</h2>
@@ -69,74 +73,18 @@
   </section>
 
   <section>
-    <h2>Toggle group</h2>
-    <p>Members that flip on and off carry <code>aria-pressed="true|false"</code>. The base <code>.btn</code> reads <code>aria-pressed</code> and paints the active state. Click handling lands with the JS contract in a later step; the markup below is hardcoded for the visual.</p>
-    {% call ui.demo() %}
-    <div class="btn-group" role="group" aria-label="Text style">
-      <button type="button" class="btn btn--outline btn--neutral" aria-pressed="true" aria-label="Bold">
-        <i data-lucide="bold"></i>
-      </button>
-      <button type="button" class="btn btn--outline btn--neutral" aria-pressed="false" aria-label="Italic">
-        <i data-lucide="italic"></i>
-      </button>
-      <button type="button" class="btn btn--outline btn--neutral" aria-pressed="true" aria-label="Underline">
-        <i data-lucide="underline"></i>
-      </button>
-    </div>
-    {% endcall %}
-  </section>
-
-  <section>
-    <h2>Tabs / segmented control</h2>
-    <p>Use a <code>role="tablist"</code> wrapper and mark the current member with <code>data-state="active"</code> + <code>aria-selected="true"</code>. The base <code>.btn</code> reads <code>data-state="active"</code> and paints the active member — same hook the sidebar, list-group, table and pagination use. Roving-tabindex keyboard navigation lands with the JS contract.</p>
-    {% call ui.demo() %}
-    <div class="btn-group" role="tablist" aria-label="Calendar view">
-      <button type="button" class="btn btn--outline btn--neutral" role="tab" data-state="active" aria-selected="true">Day</button>
-      <button type="button" class="btn btn--outline btn--neutral" role="tab" aria-selected="false">Week</button>
-      <button type="button" class="btn btn--outline btn--neutral" role="tab" aria-selected="false">Month</button>
-    </div>
-    {% endcall %}
-  </section>
-
-  <section>
-    <h2>Checkbox &amp; radio</h2>
-    <p><code>.btn-check</code> visually hides a native <code>&lt;input&gt;</code> so the paired <code>&lt;label class="btn"&gt;</code> carries the visible shape. <code>:checked</code> forwards the active paint to the label via the same selector chain <code>.btn</code> uses for <code>aria-pressed</code>; native semantics drive state. Multiple members can stay active for checkboxes.</p>
-    {% call ui.demo() %}
-    <div class="btn-group" role="group" aria-label="Format">
-      <input type="checkbox" class="btn-check" id="bg-check-1" autocomplete="off" checked>
-      <label class="btn btn--outline btn--neutral" for="bg-check-1">Bold</label>
-      <input type="checkbox" class="btn-check" id="bg-check-2" autocomplete="off">
-      <label class="btn btn--outline btn--neutral" for="bg-check-2">Italic</label>
-      <input type="checkbox" class="btn-check" id="bg-check-3" autocomplete="off">
-      <label class="btn btn--outline btn--neutral" for="bg-check-3">Underline</label>
-    </div>
-    {% endcall %}
-    <p>Radios work the same way; only one member can be active at a time.</p>
-    {% call ui.demo() %}
-    <div class="btn-group" role="group" aria-label="Alignment">
-      <input type="radio" class="btn-check" name="bg-radio" id="bg-radio-1" autocomplete="off" checked>
-      <label class="btn btn--outline btn--neutral" for="bg-radio-1">Left</label>
-      <input type="radio" class="btn-check" name="bg-radio" id="bg-radio-2" autocomplete="off">
-      <label class="btn btn--outline btn--neutral" for="bg-radio-2">Center</label>
-      <input type="radio" class="btn-check" name="bg-radio" id="bg-radio-3" autocomplete="off">
-      <label class="btn btn--outline btn--neutral" for="bg-radio-3">Right</label>
-    </div>
-    {% endcall %}
-  </section>
-
-  <section>
     <h2>With icons</h2>
     <p>Icons compose the same as in standalone buttons. <code>.btn--icon-only</code> gives a square slot.</p>
     {% call ui.demo() %}
     <div class="btn-group" role="group" aria-label="Format">
-      <button type="button" class="btn btn--outline btn--neutral btn--icon-only" aria-label="Bold">
-        <i data-lucide="bold"></i>
+      <button type="button" class="btn btn--outline btn--neutral btn--icon-only" aria-label="Cut">
+        <i data-lucide="scissors"></i>
       </button>
-      <button type="button" class="btn btn--outline btn--neutral btn--icon-only" aria-label="Italic">
-        <i data-lucide="italic"></i>
+      <button type="button" class="btn btn--outline btn--neutral btn--icon-only" aria-label="Copy">
+        <i data-lucide="copy"></i>
       </button>
-      <button type="button" class="btn btn--outline btn--neutral btn--icon-only" aria-label="Underline">
-        <i data-lucide="underline"></i>
+      <button type="button" class="btn btn--outline btn--neutral btn--icon-only" aria-label="Paste">
+        <i data-lucide="clipboard"></i>
       </button>
     </div>
     {% endcall %}
@@ -216,6 +164,6 @@
         </tbody>
       </table>
     </div>
-    <p>The group's chrome — members' borders, fills, hover and active paint — lives on the child <code>.btn</code>. To recolor a tabset or toggle group, set <code>--btn-bg</code> / <code>--btn-tone</code> on the members, not on the wrapper. See the <a class="link" href="/buttons">buttons</a> page for the full <code>.btn</code> variable surface.</p>
+    <p>The group's chrome — members' borders, fills, hover and active paint — lives on the child <code>.btn</code>. To recolor a cluster, set <code>--btn-bg</code> / <code>--btn-tone</code> on the members, not on the wrapper. See the <a class="link" href="/buttons">buttons</a> page for the full <code>.btn</code> variable surface.</p>
   </section>
 {% endblock %}
