@@ -1,63 +1,335 @@
 // Stisla v3 — dropdown.
 //
-// BS5 ships the menu as edge-to-edge rows inside a rounded wrapper. We
-// restyle the wrapper as an inset chip: 4px padding pulls every item 4px
-// off the outer edge, and item radius derives from the wrapper using the
-// same concentric formula as the accordion:
+// Anatomy (V3.md §3.6 BEM + §3.7 JS contract):
+//   .dropdown                                   positioning wrapper
+//     <button data-stisla-dropdown-trigger>     trigger (just .btn; no own class)
+//     .dropdown-menu[data-state="open|closed"]  menu surface
+//       .dropdown-menu__header                  section label
+//       .dropdown-menu__group                   role="group" wrapper
+//       .dropdown-menu__divider                 <hr role="separator">
+//       .dropdown-menu__item                    row (button or anchor)
+//         [data-highlighted]                    keyboard focus position
+//         [data-state="checked"]                menuitemcheckbox/radio checked
+//         [aria-current] / [data-state="active"]  currently-applied selection
+//         [aria-disabled] / :disabled
+//         .dropdown-menu__icon                  leading icon slot
+//         .dropdown-menu__indicator             leading check-mark slot
+//         .dropdown-menu__shortcut              trailing keyboard hint
 //
-//   item_radius = wrapper_radius - wrapper_padding
+// Sizes/positioning live on the menu via Floating UI inline styles. Placement
+// is a per-instance opt (data-stisla-dropdown-placement); BS5's .dropup /
+// .dropend / .dropstart wrapper classes are dropped — Floating UI flips
+// automatically when the menu would overflow the viewport.
 //
-// Change $dropdown-border-radius or $dropdown-padding-y in tokens and the
-// rows stay concentric. Row height is held at 32px by min-height (BS5 has
-// no $dropdown-item-height var); padding-y is 2px so the leading icon
-// centers cleanly inside the 32px clear.
+// Color model:
+//   rest          transparent + --st-foreground
+//   hover/key     --st-accent          (V3.md §3.3 transient interactional)
+//   active/current --st-highlight      (V3.md §3.3 persistent selected)
+//   disabled      --st-muted-foreground
+//   --danger      flips color → --st-danger; hover bg = soft danger tint
 //
-// Parts:
-//   .dropdown / .dropup / .dropend / .dropstart  positioning wrapper (BS5)
-//   .dropdown-toggle                              trigger (BS5)
-//   .dropdown-menu                                container (BS5, restyled)
-//   .dropdown-item                                row (BS5, restyled)
-//   .dropdown-header                              section label (BS5)
-//   .dropdown-divider                             rule between groups (BS5)
-//   > svg | > i                                   leading icon, slotless
+// Concentric inner radius (V3.md §3.4 canonical case):
+//   item radius = wrapper radius − wrapper padding
 
-.dropdown-menu {
-  // Concentric chip: row radius = wrapper radius - wrapper padding. BS5
-  // reads --bs-dropdown-item-border-radius on every .dropdown-item (with
-  // a 0 fallback), so emitting it here propagates to every row.
-  --#{$prefix}dropdown-item-border-radius: calc(
-    var(--#{$prefix}dropdown-border-radius) - var(
-        --#{$prefix}dropdown-padding-y
-      )
-  );
-  &.show {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
+.dropdown {
+  position: relative;
+  // inline-flex (not inline-block) so the wrapper doesn't get pulled into
+  // inline-baseline alignment when it sits inside a flex parent. The single
+  // child trigger drives the wrapper's height; the absolutely-positioned
+  // menu adds no contribution.
+  display: inline-flex;
+  vertical-align: middle;
 }
 
-.dropdown-item {
+.dropdown-menu {
+  // Geometry — outer radius is medium tier (12 px under default density);
+  // inner item radius derives so the row chip sits cleanly inset.
+  --dropdown-width-min: 10rem;
+  --dropdown-padding: 0.25rem;
+  --dropdown-radius: var(--st-radius);
+  --dropdown-item-radius: calc(var(--dropdown-radius) - var(--dropdown-padding));
+  --dropdown-gap: 2px;
+  --dropdown-z-index: 1030;
+  --dropdown-font-size: 0.875rem;
+
+  // Surface
+  --dropdown-bg: var(--st-surface);
+  --dropdown-color: var(--st-foreground);
+  --dropdown-border-color: var(--st-border);
+  --dropdown-shadow: var(--st-shadow);
+
+  // Item — single-line chip; density multiplies min-height alongside btn /
+  // form-control / icon-box (V3.md §3.4 height-aware components).
+  --dropdown-item-padding-y: calc(0.125rem * var(--st-density));
+  --dropdown-item-padding-x: calc(0.75rem * var(--st-density));
+  --dropdown-item-min-height: calc(2rem * var(--st-density));
+  --dropdown-item-gap: 0.5rem;
+  --dropdown-item-icon-size: 1rem;
+
+  // Item states
+  --dropdown-item-bg-hover: var(--st-accent);
+  --dropdown-item-color-hover: var(--st-accent-foreground);
+  --dropdown-item-bg-active: var(--st-highlight);
+  --dropdown-item-color-active: var(--st-highlight-foreground);
+  --dropdown-item-color-disabled: var(--st-muted-foreground);
+  --dropdown-item-color-danger: var(--st-danger);
+  --dropdown-item-bg-danger-hover: color-mix(
+    in oklch,
+    var(--st-danger) 12%,
+    transparent
+  );
+
+  // Header
+  --dropdown-header-padding-y: 0.25rem;
+  --dropdown-header-padding-x: 0.75rem;
+  --dropdown-header-font-size: 0.75rem;
+  --dropdown-header-font-weight: 600;
+  --dropdown-header-color: var(--st-muted-foreground);
+
+  // Divider
+  --dropdown-divider-color: var(--st-border);
+  --dropdown-divider-margin-y: 0.5rem;
+
+  // Shortcut chip — small muted text trailing the row.
+  --dropdown-shortcut-color: var(--st-muted-foreground);
+  --dropdown-shortcut-font-size: 0.75rem;
+
+  // Motion
+  --dropdown-transition-duration: 0.15s;
+
+  // position: fixed (not absolute) so the menu escapes any ancestor with
+  // overflow: hidden. Floating UI's strategy: 'fixed' computes top/left in
+  // viewport coordinates to match. Side effect: ancestors with transform /
+  // filter / will-change / contain become the containing block instead of
+  // the viewport — rare in practice but worth knowing if a menu suddenly
+  // mispositions inside a CSS-transformed wrapper.
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--dropdown-z-index);
+  display: none;
+  flex-direction: column;
+  gap: var(--dropdown-gap);
+  min-width: var(--dropdown-width-min);
+  max-width: max-content;
+  padding: var(--dropdown-padding);
+  margin: 0;
+  font-size: var(--dropdown-font-size);
+  color: var(--dropdown-color);
+  list-style: none;
+  background-color: var(--dropdown-bg);
+  border: 1px solid var(--dropdown-border-color);
+  border-radius: var(--dropdown-radius);
+  box-shadow: var(--dropdown-shadow);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    opacity var(--dropdown-transition-duration) ease,
+    transform var(--dropdown-transition-duration) ease;
+  outline: none;
+}
+
+.dropdown-menu[data-state='open'] {
+  display: flex;
+  opacity: 1;
+  transform: none;
+}
+
+// Floating UI's size middleware caps the menu's max-height to fit the
+// viewport; with display: flex + flex-direction: column, flex-shrink: 1
+// then squishes children to fit. Pin children at their natural size — the
+// menu's overflow-y: auto handles overflow by scrolling instead.
+.dropdown-menu > * {
+  flex-shrink: 0;
+}
+
+// === Item ================================================================
+
+.dropdown-menu__item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  min-height: 2rem;
-  transition: background-color 0.15s ease;
+  gap: var(--dropdown-item-gap);
+  width: 100%;
+  min-height: var(--dropdown-item-min-height);
+  padding: var(--dropdown-item-padding-y) var(--dropdown-item-padding-x);
+  font: inherit;
+  color: var(--dropdown-color);
+  text-align: start;
+  text-decoration: none;
+  background-color: transparent;
+  border: 0;
+  border-radius: var(--dropdown-item-radius);
+  cursor: pointer;
+  transition:
+    background-color 0.12s ease,
+    color 0.12s ease;
+  user-select: none;
+}
 
-  // Leading icon — direct <svg> or pre-init <i data-lucide>. Fixed at 16px
-  // so rows align regardless of font metrics; color tracks the secondary
-  // channel until the row is hovered/active and inherits the link color.
-  > :is(svg, i) {
-    width: 1rem;
-    height: 1rem;
-    flex-shrink: 0;
-    color: var(--#{$prefix}secondary-color);
-  }
+// Hover (mouse) + [data-highlighted] (keyboard nav) both paint accent. The
+// visible focus position is what data-highlighted owns; native :focus is
+// excluded so two simultaneous highlight indicators don't compete.
+.dropdown-menu__item:hover,
+.dropdown-menu__item[data-highlighted] {
+  color: var(--dropdown-item-color-hover);
+  background-color: var(--dropdown-item-bg-hover);
+}
 
-  &:hover > :is(svg, i),
-  &:focus > :is(svg, i),
-  &.active > :is(svg, i),
-  &:active > :is(svg, i) {
-    color: inherit;
+.dropdown-menu__item:focus-visible {
+  outline: 2px solid var(--st-ring);
+  outline-offset: -2px;
+}
+
+// Persistent selected — the user's currently-applied choice (e.g. the active
+// sort order). Both selectors paint the same; consumers pick whichever fits
+// their semantics. Hover does NOT override active paint — the active row
+// stays highlighted even on hover so the persistent state stays visible.
+.dropdown-menu__item[aria-current='true'],
+.dropdown-menu__item[data-state='active'],
+.dropdown-menu__item[aria-current='true']:hover,
+.dropdown-menu__item[aria-current='true'][data-highlighted],
+.dropdown-menu__item[data-state='active']:hover,
+.dropdown-menu__item[data-state='active'][data-highlighted] {
+  color: var(--dropdown-item-color-active);
+  background-color: var(--dropdown-item-bg-active);
+}
+
+// Disabled — :disabled covers <button>; [aria-disabled] covers <a> (which
+// has no native disabled attribute). pointer-events: none kills the hover
+// paint without an extra rule.
+.dropdown-menu__item:disabled,
+.dropdown-menu__item[aria-disabled='true'] {
+  color: var(--dropdown-item-color-disabled);
+  pointer-events: none;
+  background-color: transparent;
+}
+
+// Destructive variant — color flips to danger; hover bg uses a soft danger
+// tint so the row reads as "this is a destructive action" without ever
+// matching the standard accent fill.
+.dropdown-menu__item--danger {
+  color: var(--dropdown-item-color-danger);
+}
+
+.dropdown-menu__item--danger:hover,
+.dropdown-menu__item--danger[data-highlighted] {
+  color: var(--dropdown-item-color-danger);
+  background-color: var(--dropdown-item-bg-danger-hover);
+}
+
+// === Slots ===============================================================
+
+// Leading icon — direct <svg> or <i data-lucide>, OR an opt-in slot class
+// for any element that needs the icon footprint. Pinned at 1rem so rows
+// align regardless of font metrics; color tracks the muted channel until
+// the row is hovered/active.
+.dropdown-menu__item > :is(svg, i),
+.dropdown-menu__icon {
+  width: var(--dropdown-item-icon-size);
+  height: var(--dropdown-item-icon-size);
+  flex-shrink: 0;
+  color: var(--st-muted-foreground);
+}
+
+.dropdown-menu__item:hover > :is(svg, i),
+.dropdown-menu__item[data-highlighted] > :is(svg, i),
+.dropdown-menu__item[aria-current='true'] > :is(svg, i),
+.dropdown-menu__item[data-state='active'] > :is(svg, i),
+.dropdown-menu__item--danger > :is(svg, i),
+.dropdown-menu__item:hover .dropdown-menu__icon,
+.dropdown-menu__item[data-highlighted] .dropdown-menu__icon,
+.dropdown-menu__item[aria-current='true'] .dropdown-menu__icon,
+.dropdown-menu__item[data-state='active'] .dropdown-menu__icon,
+.dropdown-menu__item--danger .dropdown-menu__icon {
+  color: inherit;
+}
+
+// Indicator slot — leading checkmark for menuitemcheckbox/menuitemradio.
+// Always present in markup, hidden until the item flips to checked.
+// visibility (not display) preserves the leading footprint so menus with a
+// mix of checked / unchecked items stay column-aligned.
+.dropdown-menu__indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--dropdown-item-icon-size);
+  height: var(--dropdown-item-icon-size);
+  flex-shrink: 0;
+  color: inherit;
+  visibility: hidden;
+}
+
+.dropdown-menu__item[data-state='checked'] .dropdown-menu__indicator,
+.dropdown-menu__item[aria-checked='true'] .dropdown-menu__indicator {
+  visibility: visible;
+}
+
+// Shortcut chip — trailing keyboard hint. Auto-margin pushes it to the
+// trailing edge of the row; the small muted font marks it as supporting
+// content. Inheritance keeps it readable in hover/active paint.
+.dropdown-menu__shortcut {
+  margin-inline-start: auto;
+  font-size: var(--dropdown-shortcut-font-size);
+  color: var(--dropdown-shortcut-color);
+  letter-spacing: 0.02em;
+}
+
+.dropdown-menu__item:hover .dropdown-menu__shortcut,
+.dropdown-menu__item[data-highlighted] .dropdown-menu__shortcut,
+.dropdown-menu__item[aria-current='true'] .dropdown-menu__shortcut,
+.dropdown-menu__item[data-state='active'] .dropdown-menu__shortcut {
+  color: inherit;
+}
+
+// === Header ==============================================================
+
+.dropdown-menu__header {
+  display: block;
+  padding: var(--dropdown-header-padding-y) var(--dropdown-header-padding-x);
+  margin: 0;
+  font-size: var(--dropdown-header-font-size);
+  font-weight: var(--dropdown-header-font-weight);
+  color: var(--dropdown-header-color);
+  text-transform: none;
+  white-space: nowrap;
+}
+
+// === Group ===============================================================
+// Optional role="group" wrapper. Tightens vertical rhythm so the group's
+// header sits flush against its items without an extra row of menu gap.
+
+.dropdown-menu__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dropdown-gap);
+}
+
+// === Divider =============================================================
+
+.dropdown-menu__divider {
+  height: 0;
+  margin: var(--dropdown-divider-margin-y) 0;
+  border: 0;
+  border-top: 1px solid var(--dropdown-divider-color);
+  opacity: 1;
+}
+
+// === Scroll lock =========================================================
+// Applied to <html> while any dropdown is open. The menu uses position:
+// fixed so otherwise the page would scroll under it and Floating UI would
+// have to reposition every frame — visibly laggy. Locking matches the
+// dialog/drawer pattern; scrollbar-gutter keeps page width stable.
+
+html.is-dropdown-open {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}
+
+// === Reduced motion ======================================================
+
+@media (prefers-reduced-motion: reduce) {
+  .dropdown-menu,
+  .dropdown-menu__item {
+    transition: none;
   }
 }

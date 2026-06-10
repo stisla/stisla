@@ -1,0 +1,393 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Dropdown · Stisla v3{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Dropdown</h1>
+    <p class="lead">A floating menu of links or actions surfaced from a trigger.</p>
+  </header>
+
+  <section>
+    <h2>Basic</h2>
+    <p>A trigger opens the menu via <code>data-stisla-dropdown-trigger="&lt;id&gt;"</code>; the menu carries the matching <code>id</code> plus <code>data-stisla-dropdown</code>. The wrapper <code>.dropdown</code> only provides positioning context — Floating UI computes the actual placement and keeps the menu anchored on scroll or resize.</p>
+    {% call ui.demo() %}
+    <div class="dropdown">
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-dropdown-trigger="ddBasic" aria-haspopup="menu" aria-expanded="false" aria-controls="ddBasic">
+        Actions
+      </button>
+      <div class="dropdown-menu" id="ddBasic" data-stisla-dropdown role="menu" data-state="closed">
+        <button type="button" class="dropdown-menu__item" role="menuitem">Profile</button>
+        <button type="button" class="dropdown-menu__item" role="menuitem">Settings</button>
+        <button type="button" class="dropdown-menu__item" role="menuitem">Sign out</button>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>With icons</h2>
+    <p>Drop an <code>&lt;svg&gt;</code> or <code>&lt;i data-lucide&gt;</code> as the first child of an item. The icon pins to 1rem and inherits the row color on hover so it tracks the surface naturally.</p>
+    {% call ui.demo() %}
+    <div class="dropdown">
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-dropdown-trigger="ddIcons" aria-haspopup="menu" aria-expanded="false" aria-controls="ddIcons">
+        Account
+      </button>
+      <div class="dropdown-menu" id="ddIcons" data-stisla-dropdown role="menu" data-state="closed">
+        <a href="#" class="dropdown-menu__item" role="menuitem">
+          <i data-lucide="user"></i>
+          <span>Profile</span>
+        </a>
+        <a href="#" class="dropdown-menu__item" role="menuitem">
+          <i data-lucide="settings"></i>
+          <span>Settings</span>
+        </a>
+        <a href="#" class="dropdown-menu__item" role="menuitem">
+          <i data-lucide="bell"></i>
+          <span>Notifications</span>
+        </a>
+        <hr class="dropdown-menu__divider" role="separator">
+        <a href="#" class="dropdown-menu__item" role="menuitem">
+          <i data-lucide="log-out"></i>
+          <span>Sign out</span>
+        </a>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Headers and dividers</h2>
+    <p>Use <code>.dropdown-menu__header</code> to label a section and <code>.dropdown-menu__divider</code> to separate groups. Wrap rows in a <code>role="group"</code> with <code>aria-labelledby</code> pointing at the header so screen readers announce the grouping.</p>
+    {% call ui.demo() %}
+    <div class="dropdown">
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-dropdown-trigger="ddGroups" aria-haspopup="menu" aria-expanded="false" aria-controls="ddGroups">
+        Workspace
+      </button>
+      <div class="dropdown-menu" id="ddGroups" data-stisla-dropdown role="menu" data-state="closed">
+        <div class="dropdown-menu__group" role="group" aria-labelledby="ddGroupsAccount">
+          <h3 class="dropdown-menu__header" id="ddGroupsAccount">Account</h3>
+          <a href="#" class="dropdown-menu__item" role="menuitem">Profile</a>
+          <a href="#" class="dropdown-menu__item" role="menuitem">Billing</a>
+        </div>
+        <hr class="dropdown-menu__divider" role="separator">
+        <div class="dropdown-menu__group" role="group" aria-labelledby="ddGroupsWorkspace">
+          <h3 class="dropdown-menu__header" id="ddGroupsWorkspace">Workspace</h3>
+          <a href="#" class="dropdown-menu__item" role="menuitem">Members</a>
+          <a href="#" class="dropdown-menu__item" role="menuitem">Settings</a>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Active and disabled</h2>
+    <p>Mark the user's currently-applied choice with <code>aria-current="true"</code> or <code>data-state="active"</code> — both paint <code>--st-highlight</code> as the persistent selected fill. Disabled rows take <code>aria-disabled="true"</code> on anchors or the native <code>disabled</code> attribute on buttons.</p>
+    {% call ui.demo() %}
+    <div class="dropdown">
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-dropdown-trigger="ddSort" aria-haspopup="menu" aria-expanded="false" aria-controls="ddSort">
+        Sort by
+      </button>
+      <div class="dropdown-menu" id="ddSort" data-stisla-dropdown role="menu" data-state="closed">
+        <button type="button" class="dropdown-menu__item" role="menuitem" aria-current="true">Newest first</button>
+        <button type="button" class="dropdown-menu__item" role="menuitem">Oldest first</button>
+        <button type="button" class="dropdown-menu__item" role="menuitem">Alphabetical</button>
+        <button type="button" class="dropdown-menu__item" role="menuitem" disabled>By owner (Pro)</button>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Destructive items</h2>
+    <p>Add <code>.dropdown-menu__item--danger</code> for actions that delete data or sign the user out. The color flips to <code>--st-danger</code> and hover paints a soft danger tint instead of the standard accent fill so the row never reads like a routine choice.</p>
+    {% call ui.demo() %}
+    <div class="dropdown">
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-dropdown-trigger="ddDanger" aria-haspopup="menu" aria-expanded="false" aria-controls="ddDanger">
+        Manage project
+      </button>
+      <div class="dropdown-menu" id="ddDanger" data-stisla-dropdown role="menu" data-state="closed">
+        <button type="button" class="dropdown-menu__item" role="menuitem">
+          <i data-lucide="pencil"></i>
+          <span>Rename</span>
+        </button>
+        <button type="button" class="dropdown-menu__item" role="menuitem">
+          <i data-lucide="copy"></i>
+          <span>Duplicate</span>
+        </button>
+        <button type="button" class="dropdown-menu__item" role="menuitem">
+          <i data-lucide="archive"></i>
+          <span>Archive</span>
+        </button>
+        <hr class="dropdown-menu__divider" role="separator">
+        <button type="button" class="dropdown-menu__item dropdown-menu__item--danger" role="menuitem">
+          <i data-lucide="trash-2"></i>
+          <span>Delete project</span>
+        </button>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Checkbox items</h2>
+    <p>Items with <code>role="menuitemcheckbox"</code> toggle between checked and unchecked on click. The framework flips <code>data-state</code> and <code>aria-checked</code>; the leading <code>.dropdown-menu__indicator</code> slot paints the check glyph when checked. The menu stays open between toggles via <code>data-stisla-dropdown-auto-close="outside"</code>.</p>
+    {% call ui.demo() %}
+    <div class="dropdown">
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-dropdown-trigger="ddCheck" aria-haspopup="menu" aria-expanded="false" aria-controls="ddCheck">
+        View
+      </button>
+      <div class="dropdown-menu" id="ddCheck" data-stisla-dropdown data-stisla-dropdown-auto-close="outside" role="menu" data-state="closed">
+        <button type="button" class="dropdown-menu__item" role="menuitemcheckbox" data-state="checked" aria-checked="true">
+          <span class="dropdown-menu__indicator"><i data-lucide="check"></i></span>
+          <span>Show grid</span>
+        </button>
+        <button type="button" class="dropdown-menu__item" role="menuitemcheckbox" data-state="unchecked" aria-checked="false">
+          <span class="dropdown-menu__indicator"><i data-lucide="check"></i></span>
+          <span>Show ruler</span>
+        </button>
+        <button type="button" class="dropdown-menu__item" role="menuitemcheckbox" data-state="checked" aria-checked="true">
+          <span class="dropdown-menu__indicator"><i data-lucide="check"></i></span>
+          <span>Snap to pixels</span>
+        </button>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Radio items</h2>
+    <p>Items with <code>role="menuitemradio"</code> inside a <code>role="group"</code> behave like a radio group. Clicking one item checks it and unchecks every sibling in the same group. Same indicator slot as checkbox items.</p>
+    {% call ui.demo() %}
+    <div class="dropdown">
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-dropdown-trigger="ddRadio" aria-haspopup="menu" aria-expanded="false" aria-controls="ddRadio">
+        Theme
+      </button>
+      <div class="dropdown-menu" id="ddRadio" data-stisla-dropdown data-stisla-dropdown-auto-close="outside" role="menu" data-state="closed">
+        <div role="group" aria-labelledby="ddRadioHeader" style="display: flex; flex-direction: column; gap: 2px;">
+          <h3 class="dropdown-menu__header" id="ddRadioHeader">Appearance</h3>
+          <button type="button" class="dropdown-menu__item" role="menuitemradio" data-state="checked" aria-checked="true">
+            <span class="dropdown-menu__indicator"><i data-lucide="check"></i></span>
+            <span>Light</span>
+          </button>
+          <button type="button" class="dropdown-menu__item" role="menuitemradio" data-state="unchecked" aria-checked="false">
+            <span class="dropdown-menu__indicator"><i data-lucide="check"></i></span>
+            <span>Dark</span>
+          </button>
+          <button type="button" class="dropdown-menu__item" role="menuitemradio" data-state="unchecked" aria-checked="false">
+            <span class="dropdown-menu__indicator"><i data-lucide="check"></i></span>
+            <span>System</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Keyboard shortcuts</h2>
+    <p>Append a <code>.dropdown-menu__shortcut</code> chip after the label and auto-margin pushes it to the trailing edge of the row. Pair with <code>&lt;kbd&gt;</code> for the keystroke glyphs. The chip color inherits in hover and active paint so it stays readable on the highlight surface.</p>
+    {% call ui.demo() %}
+    <div class="dropdown">
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-dropdown-trigger="ddShortcut" aria-haspopup="menu" aria-expanded="false" aria-controls="ddShortcut">
+        File
+      </button>
+      <div class="dropdown-menu" id="ddShortcut" data-stisla-dropdown role="menu" data-state="closed" style="min-width: 14rem;">
+        <button type="button" class="dropdown-menu__item" role="menuitem">
+          <span>New file</span>
+          <span class="dropdown-menu__shortcut"><kbd>⌘</kbd><kbd>N</kbd></span>
+        </button>
+        <button type="button" class="dropdown-menu__item" role="menuitem">
+          <span>Open…</span>
+          <span class="dropdown-menu__shortcut"><kbd>⌘</kbd><kbd>O</kbd></span>
+        </button>
+        <button type="button" class="dropdown-menu__item" role="menuitem">
+          <span>Save</span>
+          <span class="dropdown-menu__shortcut"><kbd>⌘</kbd><kbd>S</kbd></span>
+        </button>
+        <hr class="dropdown-menu__divider" role="separator">
+        <button type="button" class="dropdown-menu__item" role="menuitem">
+          <span>Print</span>
+          <span class="dropdown-menu__shortcut"><kbd>⌘</kbd><kbd>P</kbd></span>
+        </button>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Form inside</h2>
+    <p>Drop a form into the menu and set <code>data-stisla-dropdown-auto-close="outside"</code> so clicks inside don't dismiss the menu while the user fills out fields. The menu auto-sizes its height to the viewport — long content scrolls inside.</p>
+    {% call ui.demo() %}
+    <div class="dropdown">
+      <button type="button" class="btn btn--primary" data-stisla-dropdown-trigger="ddForm" aria-haspopup="menu" aria-expanded="false" aria-controls="ddForm">
+        Sign in
+      </button>
+      <form class="dropdown-menu" id="ddForm" data-stisla-dropdown data-stisla-dropdown-auto-close="outside" data-state="closed" style="min-width: 18rem; gap: 0.75rem; padding: 0.75rem;">
+        <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+          <label for="ddFormEmail" class="form-label">Email</label>
+          <input type="email" class="form-control" id="ddFormEmail" placeholder="you@example.com">
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+          <label for="ddFormPassword" class="form-label">Password</label>
+          <input type="password" class="form-control" id="ddFormPassword">
+        </div>
+        <label class="form-check" for="ddFormRemember">
+          <input type="checkbox" class="form-check__input" id="ddFormRemember">
+          <span class="form-check__label">Remember me</span>
+        </label>
+        <button type="submit" class="btn btn--primary" style="width: 100%;">Sign in</button>
+      </form>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Placement</h2>
+    <p>Set <code>data-stisla-dropdown-placement</code> on the menu to override the default <code>bottom-start</code>. Floating UI flips the menu automatically when it would overflow the viewport, so the value is a preference, not a constraint.</p>
+    {% call ui.demo() %}
+    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+      <div class="dropdown">
+        <button type="button" class="btn btn--outline btn--neutral" data-stisla-dropdown-trigger="ddTop" aria-haspopup="menu" aria-expanded="false" aria-controls="ddTop">
+          Top
+        </button>
+        <div class="dropdown-menu" id="ddTop" data-stisla-dropdown data-stisla-dropdown-placement="top" role="menu" data-state="closed">
+          <button type="button" class="dropdown-menu__item" role="menuitem">Action</button>
+          <button type="button" class="dropdown-menu__item" role="menuitem">Another action</button>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button type="button" class="btn btn--outline btn--neutral" data-stisla-dropdown-trigger="ddRight" aria-haspopup="menu" aria-expanded="false" aria-controls="ddRight">
+          Right
+        </button>
+        <div class="dropdown-menu" id="ddRight" data-stisla-dropdown data-stisla-dropdown-placement="right-start" role="menu" data-state="closed">
+          <button type="button" class="dropdown-menu__item" role="menuitem">Action</button>
+          <button type="button" class="dropdown-menu__item" role="menuitem">Another action</button>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button type="button" class="btn btn--outline btn--neutral" data-stisla-dropdown-trigger="ddLeft" aria-haspopup="menu" aria-expanded="false" aria-controls="ddLeft">
+          Left
+        </button>
+        <div class="dropdown-menu" id="ddLeft" data-stisla-dropdown data-stisla-dropdown-placement="left-start" role="menu" data-state="closed">
+          <button type="button" class="dropdown-menu__item" role="menuitem">Action</button>
+          <button type="button" class="dropdown-menu__item" role="menuitem">Another action</button>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button type="button" class="btn btn--outline btn--neutral" data-stisla-dropdown-trigger="ddBottomEnd" aria-haspopup="menu" aria-expanded="false" aria-controls="ddBottomEnd">
+          Bottom-end
+        </button>
+        <div class="dropdown-menu" id="ddBottomEnd" data-stisla-dropdown data-stisla-dropdown-placement="bottom-end" role="menu" data-state="closed">
+          <button type="button" class="dropdown-menu__item" role="menuitem">Action</button>
+          <button type="button" class="dropdown-menu__item" role="menuitem">Another action</button>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>Every variable that retunes <code>.dropdown-menu</code> is below. Override on a single menu, on a parent scope, or on <code>:root</code>. The concentric inner radius derives from <code>--dropdown-radius</code> minus <code>--dropdown-padding</code> so the rows stay inset when the outer chip rounds.</p>
+    <div class="prose">
+      <h3>Geometry</h3>
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>--dropdown-width-min</code></td><td>10rem</td><td>Lower bound on menu width. Long labels grow past it.</td></tr>
+          <tr><td><code>--dropdown-padding</code></td><td>0.25rem</td><td>Inner padding around the row stack. Drives the concentric inset.</td></tr>
+          <tr><td><code>--dropdown-radius</code></td><td>var(--st-radius)</td><td>Outer chip radius. Medium tier, matches btn / form-control / popover.</td></tr>
+          <tr><td><code>--dropdown-item-radius</code></td><td>calc(var(--dropdown-radius) - var(--dropdown-padding))</td><td>Row radius. Derived; rarely overridden directly.</td></tr>
+          <tr><td><code>--dropdown-gap</code></td><td>2px</td><td>Vertical gap between rows.</td></tr>
+          <tr><td><code>--dropdown-z-index</code></td><td>1030</td><td>Stack level. Below drawer (1045) and dialog (1055).</td></tr>
+          <tr><td><code>--dropdown-font-size</code></td><td>0.875rem</td><td>Row text size.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Surface</h3>
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>--dropdown-bg</code></td><td>var(--st-surface)</td><td>Menu background.</td></tr>
+          <tr><td><code>--dropdown-color</code></td><td>var(--st-foreground)</td><td>Rest text color.</td></tr>
+          <tr><td><code>--dropdown-border-color</code></td><td>var(--st-border)</td><td>Outer rim.</td></tr>
+          <tr><td><code>--dropdown-shadow</code></td><td>var(--st-shadow)</td><td>Lift off the page.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Item</h3>
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>--dropdown-item-padding-y</code></td><td>calc(0.125rem * var(--st-density))</td><td>Top and bottom inset.</td></tr>
+          <tr><td><code>--dropdown-item-padding-x</code></td><td>calc(0.75rem * var(--st-density))</td><td>Left and right inset.</td></tr>
+          <tr><td><code>--dropdown-item-min-height</code></td><td>calc(2rem * var(--st-density))</td><td>Click-target floor. Density-multiplied.</td></tr>
+          <tr><td><code>--dropdown-item-gap</code></td><td>0.5rem</td><td>Space between icon, label, indicator, shortcut.</td></tr>
+          <tr><td><code>--dropdown-item-icon-size</code></td><td>1rem</td><td>Leading icon and indicator footprint.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Item states</h3>
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>--dropdown-item-bg-hover</code></td><td>var(--st-accent)</td><td>Hover and <code>[data-highlighted]</code> fill.</td></tr>
+          <tr><td><code>--dropdown-item-color-hover</code></td><td>var(--st-accent-foreground)</td><td>Hover text.</td></tr>
+          <tr><td><code>--dropdown-item-bg-active</code></td><td>var(--st-highlight)</td><td><code>aria-current</code> / <code>data-state="active"</code> fill.</td></tr>
+          <tr><td><code>--dropdown-item-color-active</code></td><td>var(--st-highlight-foreground)</td><td>Active text.</td></tr>
+          <tr><td><code>--dropdown-item-color-disabled</code></td><td>var(--st-muted-foreground)</td><td>Disabled row color.</td></tr>
+          <tr><td><code>--dropdown-item-color-danger</code></td><td>var(--st-danger)</td><td>Destructive row color.</td></tr>
+          <tr><td><code>--dropdown-item-bg-danger-hover</code></td><td>color-mix(in oklch, var(--st-danger) 12%, transparent)</td><td>Destructive hover fill. Soft tint instead of the standard accent.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Header</h3>
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>--dropdown-header-padding-y</code></td><td>0.25rem</td><td>Section label top/bottom inset.</td></tr>
+          <tr><td><code>--dropdown-header-padding-x</code></td><td>0.75rem</td><td>Section label left/right inset.</td></tr>
+          <tr><td><code>--dropdown-header-font-size</code></td><td>0.75rem</td><td>Section label text size.</td></tr>
+          <tr><td><code>--dropdown-header-font-weight</code></td><td>600</td><td>Section label weight.</td></tr>
+          <tr><td><code>--dropdown-header-color</code></td><td>var(--st-muted-foreground)</td><td>Section label color.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Divider</h3>
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>--dropdown-divider-color</code></td><td>var(--st-border)</td><td>Separator line.</td></tr>
+          <tr><td><code>--dropdown-divider-margin-y</code></td><td>0.5rem</td><td>Breathing space above and below.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Shortcut + motion</h3>
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>--dropdown-shortcut-color</code></td><td>var(--st-muted-foreground)</td><td>Trailing keystroke chip color.</td></tr>
+          <tr><td><code>--dropdown-shortcut-font-size</code></td><td>0.75rem</td><td>Shortcut chip text size.</td></tr>
+          <tr><td><code>--dropdown-transition-duration</code></td><td>0.15s</td><td>Open and close fade. Zeroed under <code>prefers-reduced-motion</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+{% endblock %}
