@@ -194,11 +194,40 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
   }
 
   // === Kbd ===
-  // Cascade-only — the kbd component reads its own --st-kbd-* vars. If a
-  // consumer wants a larger kbd inside prose, they set:
-  //   .prose { --st-kbd-padding-y: 0.25rem; }
-  // and the kbd component picks it up via the cascade. No prose vars
-  // invented for nested components (V3.md §3.4 lesson).
+  // Restore the .kbd chip on bare <kbd> inside prose so shortcut hints in
+  // long-form copy keep semantic markup without classes. Mirrors .kbd in
+  // components/_kbd.scss but stays em-based so the chip scales with the
+  // surrounding prose font instead of sitting at a fixed UI size.
+  :where(kbd)#{$skip} {
+    --kbd-padding-y: 0.125em;
+    --kbd-padding-x: 0.375em;
+    --kbd-radius:    var(--st-kbd-radius, var(--st-radius-sm));
+    --kbd-rim:       color-mix(in oklch, var(--st-neutral) 85%, var(--st-muted-foreground));
+
+    display: inline-block;
+    padding: var(--kbd-padding-y) var(--kbd-padding-x);
+    font-family: var(--st-font-mono);
+    font-size: 0.8125em;
+    font-weight: 500;
+    line-height: 1;
+    color: var(--st-neutral-foreground);
+    background: var(--st-neutral);
+    border: 1px solid var(--kbd-rim);
+    border-radius: var(--kbd-radius);
+    box-shadow: 0 1px 0 var(--kbd-rim);
+  }
+
+  // Combo wrapper: outer <kbd> wrapping nested <kbd> drops chrome so each
+  // inner cap renders as its own chip.
+  :where(kbd:has(> kbd))#{$skip} {
+    display: inline-flex;
+    gap: 0.25rem;
+    align-items: center;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+  }
 
   // === Images / figures ===
   :where(img, figure)#{$skip} {

@@ -1,38 +1,48 @@
-// Stisla v3 — <kbd>.
+// Stisla v3 — .kbd chip.
 //
-// Styles the native element directly — every <kbd> picks up the chip
-// styling without a class. Padding numbers match V3.md §3.4 (2 × density
-// vertical, 6 × density horizontal). Mono family reads from the
-// --st-font-mono token (V3.md §3.2).
+// Visual treatment of <kbd> never lives at the bare-element level (reboot
+// keeps semantic elements unstyled; classes opt in to look). App UI uses
+// the .kbd class for shortcut chips. Inside .prose, the prose component
+// restores the same chip on the bare <kbd> tag so long-form copy can keep
+// its semantic markup without classes.
 //
 // Sits in the rest tier of the interactional trio (--st-neutral fill,
-// --st-neutral-foreground text, --st-border rim). Same fill weight as
-// .btn--neutral and input-group addons.
+// --st-neutral-foreground text). Rim uses the same color-mix recipe as
+// .btn--neutral so the border stays visible in dark mode where
+// --st-neutral and --st-border land at the same lightness.
+//
+// Font-size is rem-based so the chip is a deliberate UI element rather
+// than tracking surrounding text (prose kbd uses em so it scales with
+// long-form copy).
 
-kbd {
-  --kbd-padding-y: calc(0.125rem * var(--st-density));
-  --kbd-padding-x: calc(0.375rem * var(--st-density));
+.kbd {
+  --kbd-padding-y: calc(0.1875rem * var(--st-density));
+  --kbd-padding-x: calc(0.5rem    * var(--st-density));
   --kbd-radius:    var(--st-kbd-radius, var(--st-radius-sm));
+  --kbd-rim:       color-mix(in oklch, var(--st-neutral) 85%, var(--st-muted-foreground));
 
   display: inline-block;
   padding: var(--kbd-padding-y) var(--kbd-padding-x);
   font-family: var(--st-font-mono);
-  font-size: 0.8125em;
+  font-size: 0.8125rem;
   font-weight: 500;
   line-height: 1;
   color: var(--st-neutral-foreground);
   background: var(--st-neutral);
-  border: 1px solid var(--st-border);
+  border: 1px solid var(--kbd-rim);
   border-radius: var(--kbd-radius);
-  // Tiny ambient shadow so the chip reads as a key cap and not a tag.
-  box-shadow: 0 1px 0 var(--st-border);
+  // Bottom edge in the rim color so the chip reads as a key cap.
+  box-shadow: 0 1px 0 var(--kbd-rim);
 }
 
-// Nested <kbd> (e.g. <kbd><kbd>⌘</kbd><kbd>K</kbd></kbd>) loses the
-// outer chrome so the inner caps don't get a double border.
-kbd kbd {
+// When .kbd wraps nested .kbd elements (combo shortcuts), the outer
+// becomes an invisible wrapper so each inner cap reads as its own chip
+// side-by-side rather than text inside one outer chip.
+.kbd:has(> .kbd) {
+  display: inline-flex;
+  gap: 0.25rem;
+  align-items: center;
   padding: 0;
-  font-size: 1em;
   background: transparent;
   border: 0;
   box-shadow: none;
