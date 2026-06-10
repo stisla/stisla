@@ -51,6 +51,13 @@ export class Modal extends Component {
 
     this._dialog = el.querySelector('.modal__dialog');
     this._content = el.querySelector('.modal__content');
+    // Make the trap container focusable. Without this, a mousedown on text
+    // inside .modal__body walks up to .modal[tabindex=-1] for focus — which
+    // is outside the trap — and focus-trap yanks focus back, canceling the
+    // browser's pending text selection.
+    if (this._content && !this._content.hasAttribute('tabindex')) {
+      this._content.setAttribute('tabindex', '-1');
+    }
     this._returnFocusEl = null;
     this._trap = null;
     this._inertCleanup = null;

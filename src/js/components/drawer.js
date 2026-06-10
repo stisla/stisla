@@ -54,6 +54,12 @@ export class Drawer extends Component {
     this.opts.scroll = this.opts.scroll === true || this.opts.scroll === 'true';
 
     this._content = el.querySelector('.drawer__content');
+    // Make the trap container focusable so a mousedown on plain text inside
+    // it doesn't walk up to a focusable ancestor outside the trap — which
+    // would make focus-trap yank focus back and cancel the text selection.
+    if (this._content && !this._content.hasAttribute('tabindex')) {
+      this._content.setAttribute('tabindex', '-1');
+    }
     this._returnFocusEl = null;
     this._trap = null;
     this._inertCleanup = null;
