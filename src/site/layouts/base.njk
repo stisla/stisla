@@ -33,10 +33,10 @@
   </div>
 
   {% if dev %}
-    <script type="module" src="/src/js/index.js"></script>
+    <script type="module" src="/src/js/index-full.js"></script>
     <script type="module" src="/src/site/scripts/site.js"></script>
   {% else %}
-    <script src="/assets/stisla.js"></script>
+    <script type="module" src="/assets/stisla-full.js"></script>
     <script src="/assets/site.js"></script>
   {% endif %}
   <script src="https://unpkg.com/lucide@latest"></script>

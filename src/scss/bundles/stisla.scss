@@ -1,0 +1,83 @@
+// Stisla v3 — core bundle.
+//
+// Core ships every Phase 2 component except carousel, plus Phase 7's avatar /
+// otp / preview-card (when they land). Reuses primitives already bundled in
+// core JS (Floating UI, focus-trap, tabbable). Hard cap ~24–26 KB gz per
+// V3.md §3.1 + §3.12.
+//
+// Integration components (carousel today; date-picker / custom-select / etc.
+// later) ship in `stisla-full.scss` or à la carte from
+// `scss/integrations/_*.scss`. The line is dependency cost, not value.
+//
+// Layer order (V3.md §3): foundation -> theme -> components -> utilities.
+
+@layer foundation, theme, components, utilities;
+
+// Sass-only files (mixins + breakpoint helpers). Must load outside any
+// @layer so the symbols are in scope when foundation/components compile.
+@import '../tokens/breakpoints';
+@import '../foundation/mixins';
+
+// === Foundation ========================================================
+@layer foundation {
+  @import '../foundation/normalize';
+  @import '../foundation/reboot';
+  @import '../foundation/typography';
+  @import '../foundation/grid';
+  @import '../foundation/containers';
+}
+
+// === Theme tokens ======================================================
+@layer theme {
+  @import '../tokens/theme';
+}
+
+// === Components ========================================================
+// Step 3 rewrites each component on the v3 model (BEM + --st-* + color-mix);
+// the PR that lands the rewrite also uncomments its import. Uncommented
+// entries are already on v3; commented entries are still pending.
+//
+// Order preserves the Step 1 sequence so re-enabling is mechanical.
+@layer components {
+  @import '../components/kbd';
+  @import '../components/table';
+  @import '../components/form-control';
+  @import '../components/form-check';
+  @import '../components/switch';
+  @import '../components/input-group';
+  @import '../components/btn';
+  @import '../components/toggle';
+  @import '../components/toggle-group';
+  @import '../components/slider';
+  @import '../components/dropdown';
+  @import '../components/button-group';
+  // @import '../components/nav';
+  @import '../components/navbar';
+  @import '../components/card';
+  @import '../components/sidebar';
+  @import '../components/app-shell';
+  @import '../components/page';
+  @import '../components/accordion';
+  @import '../components/breadcrumb';
+  @import '../components/pagination';
+  @import '../components/badge';
+  @import '../components/alert';
+  @import '../components/icon-box';
+  @import '../components/progress';
+  @import '../components/list-group';
+  @import '../components/toast';
+  @import '../components/dialog';
+  @import '../components/tooltip';
+  @import '../components/popover';
+  @import '../components/drawer';
+  @import '../components/spinner';
+  @import '../components/placeholders';
+  @import '../components/prose';
+}
+
+// === Utilities =========================================================
+// Hand-written utility set. Each PR adds a slice; today: text only.
+// Layout (display, flex, gap, margin, padding) lands in a later PR.
+@layer utilities {
+  @import '../utilities/text';
+}

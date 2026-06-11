@@ -1,11 +1,10 @@
-// Stisla public JS entry.
+// Stisla public JS entry (core bundle).
 //
-// Step 4 prelude shipped: the Component base class + declarative scanner
-// land in core/. JS-coordinated components (dialog, drawer, dropdown,
-// tooltip, popover, toast, carousel) get imported here as they're built
-// out under components/. The interim delegated handlers at the bottom
-// stay until each component is promoted to a proper Stisla.<Component>
-// class in its own session.
+// Ships every Phase 2 JS-coordinated component except carousel — that's an
+// integration component (V3.md §3.12) and lives in `index-full.js` or the
+// à-la-carte `integrations/carousel.js` path. The interim delegated
+// handlers at the bottom stay until each component (app-shell, navbar,
+// sidebar, accordion) is promoted to its own Stisla.<Component> class.
 
 import { Component, getInstance } from './core/component.js';
 import { register, init } from './core/init.js';
@@ -27,15 +26,16 @@ register('toast', Toast);
 register('toggle', Toggle);
 register('toggle-group', ToggleGroup);
 
-// Auto-init runs AFTER every register() call above so the scanner walks
-// [data-stisla-<name>] with a populated registry. Module-level code in
-// core/init.js evaluates before this entry's body, so the auto-init has
-// to live here.
+// Auto-init runs in a microtask so that an importer (e.g. index-full.js)
+// can register additional components synchronously after this module
+// finishes evaluating but before the scanner walks the DOM. In the
+// readyState !== 'loading' branch we'd otherwise call init() immediately
+// at module load and miss anything registered later in the same tick.
 if (typeof document !== 'undefined') {
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => init());
   } else {
-    init();
+    queueMicrotask(() => init());
   }
 }
 

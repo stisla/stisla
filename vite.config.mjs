@@ -32,6 +32,28 @@ export default defineConfig(({ command }) => {
 
   // Build: compile CSS+JS bundles into site-dist/assets/.
   // Static HTML is rendered separately by tools/render-site.mjs.
+  //
+  // Four shipped bundles (V3.md §3.12 core / integration split):
+  //   stisla.css        + stisla.js        — core only
+  //   stisla-full.css   + stisla-full.js   — core + every integration
+  //
+  // Rollup needs unique input keys, so the keys below ('css-core' etc.)
+  // are arbitrary; the entryFileNames / assetFileNames hooks map them to
+  // the public filenames.
+  // Map from Rollup chunk/asset name → public filename. Two separate JS
+  // bundles + two separate CSS bundles need four distinct input keys, but
+  // we want the public filenames to overlap (stisla.js + stisla.css share
+  // the basename "stisla"). The hooks below run on every emit, including
+  // the post-rename Vite re-emit, so they have to be idempotent — pass
+  // through any name that already matches a final filename.
+  const renames = {
+    'js-core': 'stisla.js',
+    'js-full': 'stisla-full.js',
+    'css-core.css': 'stisla.css',
+    'css-full.css': 'stisla-full.css',
+  };
+  const finalNames = new Set(Object.values(renames));
+
   return {
     css,
     build: {
@@ -39,15 +61,20 @@ export default defineConfig(({ command }) => {
       emptyOutDir: true,
       rollupOptions: {
         input: {
-          'stisla-full': 'src/scss/bundles/stisla-full.scss',
-          stisla: 'src/js/index.js',
+          'css-core': 'src/scss/bundles/stisla.scss',
+          'css-full': 'src/scss/bundles/stisla-full.scss',
+          'js-core': 'src/js/index.js',
+          'js-full': 'src/js/index-full.js',
           site: 'src/site/scripts/site.js',
           'site-styles': 'src/site/styles/site.scss',
         },
         output: {
-          entryFileNames: '[name].js',
+          entryFileNames: (chunk) => renames[chunk.name] ?? '[name].js',
           assetFileNames: ({ name }) => {
-            if (name && name.endsWith('.css')) return '[name][extname]';
+            if (!name) return 'assets/[name]-[hash][extname]';
+            if (finalNames.has(name)) return name;
+            if (renames[name]) return renames[name];
+            if (name.endsWith('.css')) return '[name][extname]';
             return 'assets/[name]-[hash][extname]';
           },
         },

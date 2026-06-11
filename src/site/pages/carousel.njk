@@ -3,9 +3,9 @@
 
 {% block title %}Carousel · Stisla v3{% endblock %}
 
-{% set img_slide_1 = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&h=850&q=70" %}
-{% set img_slide_2 = "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&w=1600&h=850&q=70" %}
-{% set img_slide_3 = "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1600&h=850&q=70" %}
+{% set img_1 = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&h=900&q=70" %}
+{% set img_2 = "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&w=1600&h=900&q=70" %}
+{% set img_3 = "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1600&h=900&q=70" %}
 
 {% block content %}
   <header>
@@ -14,19 +14,45 @@
   </header>
 
   <section>
-    <h2>Slides only</h2>
-    <p>The bare component cycles through <code>.carousel-item</code>s. Mark one as <code>.active</code> to set the starting slide.</p>
+    <h2>Installation</h2>
+    <p>Carousel is an integration component. It ships in <code>stisla-full</code>; install separately if you're on the core <code>stisla</code> bundle.</p>
+
+    <h3>Using stisla-full</h3>
+    <p>Already in your bundle. Use the markup in the demos below.</p>
+
+    <h3>À la carte</h3>
+    <p>Install Embla, import the integration's CSS + JS, register the class, then call <code>Stisla.init()</code>.</p>
+
+    {% call ui.code(lang='bash') %}
+    npm install embla-carousel
+    {% endcall %}
+
+    {% call ui.code(lang='js') %}
+    import '@stisla/vanilla/integrations/carousel.css';
+    import { Stisla } from '@stisla/vanilla';
+    import { Carousel } from '@stisla/vanilla/integrations/carousel';
+
+    Stisla.register('carousel', Carousel);
+    Stisla.init();
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Basic</h2>
+    <p>Three parts: a <code>.carousel</code> root, a <code>.carousel__viewport</code> with a <code>.carousel__track</code> inside, and one <code>.carousel__slide</code> per item. Drag to scrub.</p>
     {% call ui.demo() %}
-    <div id="carouselExampleSlidesOnly" class="carousel slide w-100" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="{{ img_slide_1 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Mountains above the clouds" />
-        </div>
-        <div class="carousel-item">
-          <img src="{{ img_slide_2 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="City skyline at sunset" />
-        </div>
-        <div class="carousel-item">
-          <img src="{{ img_slide_3 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Eiffel Tower at dusk" />
+    <div class="carousel" data-stisla-carousel role="region" aria-roledescription="carousel" aria-label="Travel destinations">
+      <div class="carousel__viewport">
+        <div class="carousel__track">
+          <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="1 of 3">
+            <img src="{{ img_1 }}" alt="Mountains above the clouds" />
+          </div>
+          <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="2 of 3">
+            <img src="{{ img_2 }}" alt="City skyline at sunset" />
+          </div>
+          <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="3 of 3">
+            <img src="{{ img_3 }}" alt="Eiffel Tower at dusk" />
+          </div>
         </div>
       </div>
     </div>
@@ -35,27 +61,27 @@
 
   <section>
     <h2>With controls</h2>
-    <p>Add <code>.carousel-control-prev</code> and <code>.carousel-control-next</code> with <code>data-bs-target</code> pointing at the carousel. The pair carries <code>.btn .btn-outline-secondary</code> so the chrome tracks the outline-secondary variant, then the component file pins it as a 1:1 circle with a smaller chevron.</p>
+    <p>Add <code>.carousel__control--prev</code> and <code>.carousel__control--next</code> as direct children of the root. The wrapper auto-disables the chip at the end of the track unless <code>loop</code> is on.</p>
     {% call ui.demo() %}
-    <div id="carouselExampleControls" class="carousel slide w-100">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="{{ img_slide_1 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Mountains above the clouds" />
-        </div>
-        <div class="carousel-item">
-          <img src="{{ img_slide_2 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="City skyline at sunset" />
-        </div>
-        <div class="carousel-item">
-          <img src="{{ img_slide_3 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Eiffel Tower at dusk" />
+    <div class="carousel" data-stisla-carousel role="region" aria-roledescription="carousel" aria-label="Travel destinations">
+      <div class="carousel__viewport">
+        <div class="carousel__track">
+          <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="1 of 3">
+            <img src="{{ img_1 }}" alt="Mountains above the clouds" />
+          </div>
+          <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="2 of 3">
+            <img src="{{ img_2 }}" alt="City skyline at sunset" />
+          </div>
+          <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="3 of 3">
+            <img src="{{ img_3 }}" alt="Eiffel Tower at dusk" />
+          </div>
         </div>
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
+      <button type="button" class="carousel__control carousel__control--prev" aria-label="Previous slide">
+        <i data-lucide="chevron-left"></i>
       </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
+      <button type="button" class="carousel__control carousel__control--next" aria-label="Next slide">
+        <i data-lucide="chevron-right"></i>
       </button>
     </div>
     {% endcall %}
@@ -63,158 +89,220 @@
 
   <section>
     <h2>With indicators</h2>
-    <p>The <code>.carousel-indicators</code> row paints a small dot per slide; the active one widens into a pill. Each button needs <code>data-bs-target</code> and <code>data-bs-slide-to</code>.</p>
+    <p>One <code>.carousel__indicator</code> button per slide inside <code>.carousel__indicators</code>. The wrapper paints the active chip via <code>[data-state="active"]</code> and <code>aria-current="true"</code>.</p>
     {% call ui.demo() %}
-    <div id="carouselExampleIndicators" class="carousel slide w-100">
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-      </div>
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="{{ img_slide_1 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Mountains above the clouds" />
-        </div>
-        <div class="carousel-item">
-          <img src="{{ img_slide_2 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="City skyline at sunset" />
-        </div>
-        <div class="carousel-item">
-          <img src="{{ img_slide_3 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Eiffel Tower at dusk" />
+    <div class="carousel" data-stisla-carousel role="region" aria-roledescription="carousel" aria-label="Travel destinations">
+      <div class="carousel__viewport">
+        <div class="carousel__track">
+          <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="1 of 3">
+            <img src="{{ img_1 }}" alt="Mountains above the clouds" />
+          </div>
+          <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="2 of 3">
+            <img src="{{ img_2 }}" alt="City skyline at sunset" />
+          </div>
+          <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="3 of 3">
+            <img src="{{ img_3 }}" alt="Eiffel Tower at dusk" />
+          </div>
         </div>
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
+      <button type="button" class="carousel__control carousel__control--prev" aria-label="Previous slide">
+        <i data-lucide="chevron-left"></i>
       </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
+      <button type="button" class="carousel__control carousel__control--next" aria-label="Next slide">
+        <i data-lucide="chevron-right"></i>
       </button>
+      <div class="carousel__indicators" role="tablist" aria-label="Slides">
+        <button type="button" class="carousel__indicator" data-state="active" aria-current="true" aria-label="Go to slide 1"></button>
+        <button type="button" class="carousel__indicator" aria-label="Go to slide 2"></button>
+        <button type="button" class="carousel__indicator" aria-label="Go to slide 3"></button>
+      </div>
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>With captions</h2>
-    <p>Drop a <code>.carousel-caption</code> inside any <code>.carousel-item</code>. It sits at the bottom over the slide.</p>
+    <p>Drop a <code>.carousel__caption</code> inside any <code>.carousel__slide</code>. It pins to the bottom edge with a gradient overlay.</p>
     {% call ui.demo() %}
-    <div id="carouselExampleCaptions" class="carousel slide w-100">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="{{ img_slide_1 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Mountains above the clouds" />
-          <div class="carousel-caption">
-            <h5>First slide label</h5>
-            <p>Some representative placeholder content for the first slide.</p>
+    <div class="carousel" data-stisla-carousel role="region" aria-roledescription="carousel" aria-label="Travel destinations">
+      <div class="carousel__viewport">
+        <div class="carousel__track">
+          <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="1 of 3">
+            <img src="{{ img_1 }}" alt="" />
+            <div class="carousel__caption">
+              <h3 style="margin: 0 0 0.25rem 0; font-size: 1.125rem; font-weight: 600;">Above the clouds</h3>
+              <p style="margin: 0; font-size: 0.875rem;">A break in the weather over the eastern alps.</p>
+            </div>
           </div>
-        </div>
-        <div class="carousel-item">
-          <img src="{{ img_slide_2 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="City skyline at sunset" />
-          <div class="carousel-caption">
-            <h5>Second slide label</h5>
-            <p>Some representative placeholder content for the second slide.</p>
+          <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="2 of 3">
+            <img src="{{ img_2 }}" alt="" />
+            <div class="carousel__caption">
+              <h3 style="margin: 0 0 0.25rem 0; font-size: 1.125rem; font-weight: 600;">City after dark</h3>
+              <p style="margin: 0; font-size: 0.875rem;">Lights up just as the last of the day fades out.</p>
+            </div>
           </div>
-        </div>
-        <div class="carousel-item">
-          <img src="{{ img_slide_3 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Eiffel Tower at dusk" />
-          <div class="carousel-caption">
-            <h5>Third slide label</h5>
-            <p>Some representative placeholder content for the third slide.</p>
+          <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="3 of 3">
+            <img src="{{ img_3 }}" alt="" />
+            <div class="carousel__caption">
+              <h3 style="margin: 0 0 0.25rem 0; font-size: 1.125rem; font-weight: 600;">Iron lattice</h3>
+              <p style="margin: 0; font-size: 0.875rem;">Paris in the gold hour from the Trocadero.</p>
+            </div>
           </div>
         </div>
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
+      <button type="button" class="carousel__control carousel__control--prev" aria-label="Previous slide">
+        <i data-lucide="chevron-left"></i>
       </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
+      <button type="button" class="carousel__control carousel__control--next" aria-label="Next slide">
+        <i data-lucide="chevron-right"></i>
+      </button>
+      <div class="carousel__indicators" role="tablist" aria-label="Slides">
+        <button type="button" class="carousel__indicator" data-state="active" aria-current="true" aria-label="Go to slide 1"></button>
+        <button type="button" class="carousel__indicator" aria-label="Go to slide 2"></button>
+        <button type="button" class="carousel__indicator" aria-label="Go to slide 3"></button>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Autoplay</h2>
+    <p>Pass <code>data-stisla-carousel-autoplay="true"</code> for a 4 s tick, or <code>{ "delay": 6000 }</code> for a custom delay. Autoplay pauses on hover, on focus, while dragging, and while the tab is hidden. Reduced motion disables it entirely.</p>
+    {% call ui.demo() %}
+    <div class="carousel" data-stisla-carousel data-stisla-carousel-autoplay="true" data-stisla-carousel-loop="true" role="region" aria-roledescription="carousel" aria-label="Travel destinations">
+      <div class="carousel__viewport">
+        <div class="carousel__track">
+          <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="1 of 3">
+            <img src="{{ img_1 }}" alt="Mountains above the clouds" />
+          </div>
+          <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="2 of 3">
+            <img src="{{ img_2 }}" alt="City skyline at sunset" />
+          </div>
+          <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="3 of 3">
+            <img src="{{ img_3 }}" alt="Eiffel Tower at dusk" />
+          </div>
+        </div>
+      </div>
+      <div class="carousel__indicators" role="tablist" aria-label="Slides">
+        <button type="button" class="carousel__indicator" data-state="active" aria-current="true" aria-label="Go to slide 1"></button>
+        <button type="button" class="carousel__indicator" aria-label="Go to slide 2"></button>
+        <button type="button" class="carousel__indicator" aria-label="Go to slide 3"></button>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Loop</h2>
+    <p><code>data-stisla-carousel-loop="true"</code> wraps past the last slide back to the first. The prev / next chips stay enabled at the ends.</p>
+    {% call ui.demo() %}
+    <div class="carousel" data-stisla-carousel data-stisla-carousel-loop="true" role="region" aria-roledescription="carousel" aria-label="Travel destinations">
+      <div class="carousel__viewport">
+        <div class="carousel__track">
+          <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="1 of 3">
+            <img src="{{ img_1 }}" alt="Mountains above the clouds" />
+          </div>
+          <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="2 of 3">
+            <img src="{{ img_2 }}" alt="City skyline at sunset" />
+          </div>
+          <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="3 of 3">
+            <img src="{{ img_3 }}" alt="Eiffel Tower at dusk" />
+          </div>
+        </div>
+      </div>
+      <button type="button" class="carousel__control carousel__control--prev" aria-label="Previous slide">
+        <i data-lucide="chevron-left"></i>
+      </button>
+      <button type="button" class="carousel__control carousel__control--next" aria-label="Next slide">
+        <i data-lucide="chevron-right"></i>
       </button>
     </div>
     {% endcall %}
   </section>
 
   <section>
-    <h2>Crossfade</h2>
-    <p>Add <code>.carousel-fade</code> on the wrapper to crossfade between slides instead of sliding.</p>
-    {% call ui.demo() %}
-    <div id="carouselExampleFade" class="carousel slide carousel-fade w-100" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="{{ img_slide_1 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Mountains above the clouds" />
-        </div>
-        <div class="carousel-item">
-          <img src="{{ img_slide_2 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="City skyline at sunset" />
-        </div>
-        <div class="carousel-item">
-          <img src="{{ img_slide_3 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Eiffel Tower at dusk" />
-        </div>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-    {% endcall %}
+    <h2>Keyboard</h2>
+    <p>The root is focusable. Once focus is on the carousel itself (not on a slide child), these keys move the track:</p>
+    <table>
+      <thead>
+        <tr><th>Key</th><th>Action</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><kbd>&larr;</kbd></td><td>Previous slide</td></tr>
+        <tr><td><kbd>&rarr;</kbd></td><td>Next slide</td></tr>
+        <tr><td><kbd>Home</kbd></td><td>First slide</td></tr>
+        <tr><td><kbd>End</kbd></td><td>Last slide</td></tr>
+      </tbody>
+    </table>
   </section>
 
   <section>
-    <h2>Individual interval</h2>
-    <p>Override the cycle time per slide with <code>data-bs-interval</code>. Slides without it fall back to the carousel default of 5 seconds.</p>
-    {% call ui.demo() %}
-    <div id="carouselExampleInterval" class="carousel slide w-100" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active" data-bs-interval="10000">
-          <img src="{{ img_slide_1 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Mountains above the clouds" />
-        </div>
-        <div class="carousel-item" data-bs-interval="2000">
-          <img src="{{ img_slide_2 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="City skyline at sunset" />
-        </div>
-        <div class="carousel-item">
-          <img src="{{ img_slide_3 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Eiffel Tower at dusk" />
-        </div>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-    {% endcall %}
-  </section>
+    <h2>Customization</h2>
+    <p>Override the <code>--carousel-*</code> vars in a parent scope to retune the surface, controls, and indicator chrome.</p>
 
-  <section>
-    <h2>Disable touch swiping</h2>
-    <p>Add <code>data-bs-touch="false"</code> to opt out of touch gestures on touchscreens. Mouse and keyboard still work.</p>
-    {% call ui.demo() %}
-    <div id="carouselExampleNoTouch" class="carousel slide w-100" data-bs-touch="false">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="{{ img_slide_1 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Mountains above the clouds" />
-        </div>
-        <div class="carousel-item">
-          <img src="{{ img_slide_2 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="City skyline at sunset" />
-        </div>
-        <div class="carousel-item">
-          <img src="{{ img_slide_3 }}" class="d-block w-100 h-auto" width="1600" height="850" alt="Eiffel Tower at dusk" />
-        </div>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleNoTouch" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleNoTouch" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-    {% endcall %}
+    <h3>Geometry</h3>
+    <table>
+      <thead>
+        <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>--carousel-radius</code></td><td><code>var(--st-radius-lg)</code></td><td>Viewport corner radius.</td></tr>
+        <tr><td><code>--carousel-aspect-ratio</code></td><td><code>16 / 9</code></td><td>Viewport aspect ratio. Opt out via the <code>--no-aspect</code> modifier on the root.</td></tr>
+        <tr><td><code>--carousel-slide-gap</code></td><td><code>0</code></td><td>Gap between adjacent slides. Applied as start-side padding on each slide.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Controls</h3>
+    <table>
+      <thead>
+        <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>--carousel-control-size</code></td><td><code>2.25rem</code></td><td>Prev / next chip diameter.</td></tr>
+        <tr><td><code>--carousel-control-inset</code></td><td><code>0.75rem</code></td><td>Distance from the chip to the slide edge.</td></tr>
+        <tr><td><code>--carousel-control-bg</code></td><td>translucent dark</td><td>Chip rest background.</td></tr>
+        <tr><td><code>--carousel-control-bg-hover</code></td><td>opaque dark</td><td>Chip hover background.</td></tr>
+        <tr><td><code>--carousel-control-color</code></td><td>near-white</td><td>Icon color.</td></tr>
+        <tr><td><code>--carousel-control-shadow</code></td><td>soft drop</td><td>Chip shadow.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Indicators</h3>
+    <table>
+      <thead>
+        <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>--carousel-indicators-inset</code></td><td><code>0.875rem</code></td><td>Distance from the indicator row to the slide bottom.</td></tr>
+        <tr><td><code>--carousel-indicator-size</code></td><td><code>0.375rem</code></td><td>Dot diameter at rest.</td></tr>
+        <tr><td><code>--carousel-indicator-gap</code></td><td><code>0.375rem</code></td><td>Space between dots.</td></tr>
+        <tr><td><code>--carousel-indicator-bg</code></td><td>translucent light</td><td>Inactive dot fill.</td></tr>
+        <tr><td><code>--carousel-indicator-active-bg</code></td><td>opaque light</td><td>Active pill fill.</td></tr>
+        <tr><td><code>--carousel-indicator-active-width</code></td><td><code>1.25rem</code></td><td>Active pill width. Width transitions between dot and pill.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Caption</h3>
+    <table>
+      <thead>
+        <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>--carousel-caption-padding-y</code></td><td><code>1.25rem</code></td><td>Caption vertical padding.</td></tr>
+        <tr><td><code>--carousel-caption-padding-x</code></td><td><code>1.25rem</code></td><td>Caption horizontal padding.</td></tr>
+        <tr><td><code>--carousel-caption-color</code></td><td>near-white</td><td>Caption text color.</td></tr>
+        <tr><td><code>--carousel-caption-bg</code></td><td>gradient overlay</td><td>Background. Defaults to a transparent-to-dark gradient so text reads over the image.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Motion</h3>
+    <table>
+      <thead>
+        <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>--carousel-transition-duration</code></td><td><code>0.2s</code></td><td>Indicator width and control color transitions. Reduced motion zeros both.</td></tr>
+      </tbody>
+    </table>
   </section>
 {% endblock %}

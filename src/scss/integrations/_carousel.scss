@@ -1,0 +1,210 @@
+// Stisla v3 — carousel (integration).
+//
+// Anatomy:
+//   .carousel                          positioning root, role="region"
+//     .carousel__viewport              overflow:hidden — Embla wires drag here
+//       .carousel__track               flex container, translated by Embla
+//         .carousel__slide             flex child, one per slide, role="group"
+//           .carousel__caption         optional overlay child
+//     .carousel__control--prev/next    nav chip on slide edge
+//     .carousel__indicators            dot row at the bottom
+//       .carousel__indicator           per-slide button, [data-state="active"]
+//
+// Embla writes `transform: translate3d(...)` on .carousel__track for the
+// slide motion. CSS here owns chrome only: rounded viewport, control chips,
+// indicator dot/pill, caption gradient.
+
+.carousel {
+  --carousel-radius: var(--st-radius-lg);
+  --carousel-aspect-ratio: 16 / 9;
+  --carousel-slide-gap: 0;
+
+  --carousel-control-size: 2.25rem;
+  --carousel-control-inset: 0.75rem;
+  --carousel-control-bg: color-mix(in oklch, oklch(0.18 0 0) 70%, transparent);
+  --carousel-control-bg-hover: oklch(0.18 0 0);
+  --carousel-control-color: oklch(0.98 0 0);
+  --carousel-control-shadow: 0 1px 2px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+
+  --carousel-indicators-inset: 0.875rem;
+  --carousel-indicator-size: 0.375rem;
+  --carousel-indicator-gap: 0.375rem;
+  --carousel-indicator-bg: color-mix(in oklch, oklch(0.98 0 0) 50%, transparent);
+  --carousel-indicator-active-bg: oklch(0.98 0 0);
+  --carousel-indicator-active-width: 1.25rem;
+
+  --carousel-caption-padding-y: 1.25rem;
+  --carousel-caption-padding-x: 1.25rem;
+  --carousel-caption-color: oklch(0.98 0 0);
+  --carousel-caption-bg: linear-gradient(
+    to bottom,
+    transparent,
+    color-mix(in oklch, oklch(0.155 0 0) 70%, transparent)
+  );
+
+  --carousel-transition-duration: 0.2s;
+
+  position: relative;
+  width: 100%;
+
+  &:focus-visible {
+    outline: 2px solid var(--st-ring);
+    outline-offset: 4px;
+  }
+}
+
+// === Viewport + track + slide =========================================
+.carousel__viewport {
+  overflow: hidden;
+  border-radius: var(--carousel-radius);
+  aspect-ratio: var(--carousel-aspect-ratio);
+}
+
+.carousel__track {
+  display: flex;
+  height: 100%;
+  // Embla writes the translate transform; this just hosts the slides.
+}
+
+.carousel__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  position: relative;
+  padding-inline-start: var(--carousel-slide-gap);
+
+  > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// .carousel--no-aspect lets the viewport size to slide content (e.g. text
+// cards) instead of locking to 16:9. The slide itself sets the height.
+.carousel--no-aspect .carousel__viewport {
+  aspect-ratio: auto;
+}
+
+// === Controls (prev/next) =============================================
+.carousel__control {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--carousel-control-size);
+  height: var(--carousel-control-size);
+  padding: 0;
+
+  border: 0;
+  border-radius: 50%;
+  background: var(--carousel-control-bg);
+  color: var(--carousel-control-color);
+  box-shadow: var(--carousel-control-shadow);
+
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: background-color var(--carousel-transition-duration) ease;
+
+  &:hover {
+    background: var(--carousel-control-bg-hover);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--st-ring);
+    outline-offset: 2px;
+  }
+
+  &[aria-disabled='true'],
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  > svg,
+  > i,
+  > [data-lucide] {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+}
+
+.carousel__control--prev {
+  inset-inline-start: var(--carousel-control-inset);
+}
+
+.carousel__control--next {
+  inset-inline-end: var(--carousel-control-inset);
+}
+
+// === Indicators =======================================================
+.carousel__indicators {
+  position: absolute;
+  inset-inline: 0;
+  bottom: var(--carousel-indicators-inset);
+  z-index: 2;
+
+  display: flex;
+  justify-content: center;
+  gap: var(--carousel-indicator-gap);
+
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  pointer-events: none;
+}
+
+.carousel__indicator {
+  width: var(--carousel-indicator-size);
+  height: var(--carousel-indicator-size);
+  padding: 0;
+
+  border: 0;
+  border-radius: 999px;
+  background: var(--carousel-indicator-bg);
+
+  cursor: pointer;
+  pointer-events: auto;
+  transition:
+    width var(--carousel-transition-duration) ease,
+    background-color var(--carousel-transition-duration) ease;
+
+  &:focus-visible {
+    outline: 2px solid var(--st-ring);
+    outline-offset: 2px;
+  }
+
+  &[data-state='active'] {
+    width: var(--carousel-indicator-active-width);
+    background: var(--carousel-indicator-active-bg);
+  }
+}
+
+// === Caption ==========================================================
+.carousel__caption {
+  position: absolute;
+  inset: auto 0 0 0;
+
+  padding: var(--carousel-caption-padding-y) var(--carousel-caption-padding-x);
+
+  background: var(--carousel-caption-bg);
+  color: var(--carousel-caption-color);
+
+  // The slide owns the rounded clip, so the caption can extend edge-to-edge
+  // without bleeding past the viewport.
+  pointer-events: none;
+  > * {
+    pointer-events: auto;
+  }
+}
+
+// === Reduced motion ===================================================
+@media (prefers-reduced-motion: reduce) {
+  .carousel__control,
+  .carousel__indicator {
+    transition: none;
+  }
+}

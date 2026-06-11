@@ -7,7 +7,7 @@ import { createHighlighter } from 'shiki';
 // `createHighlighter` is async, but the returned `codeToHtml` is sync — so
 // we await once at module load and expose a sync filter for Nunjucks.
 const HL_THEMES = { light: 'github-light', dark: 'github-dark' };
-const HL_LANGS = ['html', 'css', 'scss', 'javascript'];
+const HL_LANGS = ['html', 'css', 'scss', 'javascript', 'bash'];
 
 let highlighterPromise;
 export function getHighlighter() {

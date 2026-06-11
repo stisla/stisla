@@ -1,83 +1,20 @@
-// Stisla v3 — stisla-full bundle.
+// Stisla v3 — stisla-full bundle (V3.md §3.12).
 //
-// Step 2 status: token rewrite. BS5 SCSS is gone from the bundle.
-// Components are commented out — they're rewritten one-by-one in Step 3
-// and each PR uncomments its line as it lands.
+// Kitchen sink: core + every integration in one stylesheet. Use this when
+// you want every component available with one install. À la carte consumers
+// import `stisla.css` + the integrations they need from `integrations/*`.
 //
-// Layer order (V3.md §3): foundation -> theme -> components -> utilities.
-// Sass @import inlines content at compile time, so the @layer wrappers
-// below place each inlined file inside the named layer.
+// Layer order is re-declared so Sass knows the precedence even when the
+// integrations chain past the core's own declaration; the second
+// `@layer components` block is additive across stylesheets.
 
-// Cascade layer order. Authored once; layer mentions below stack into
-// the same order at runtime regardless of source order.
 @layer foundation, theme, components, utilities;
 
-// Sass-only files (mixins + breakpoint helpers). Must load outside any
-// @layer so the symbols are in scope when foundation/components compile.
-@import '../tokens/breakpoints';
-@import '../foundation/mixins';
+@import 'stisla';
 
-// === Foundation ========================================================
-@layer foundation {
-  @import '../foundation/normalize';
-  @import '../foundation/reboot';
-  @import '../foundation/typography';
-  @import '../foundation/grid';
-  @import '../foundation/containers';
-}
-
-// === Theme tokens ======================================================
-@layer theme {
-  @import '../tokens/theme';
-}
-
-// === Components ========================================================
-// Step 3 rewrites each component on the v3 model (BEM + --st-* + color-mix);
-// the PR that lands the rewrite also uncomments its import. Uncommented
-// entries are already on v3; commented entries are still pending.
-//
-// Order preserves the Step 1 sequence so re-enabling is mechanical.
+// === Integrations ======================================================
+// Each integration lands its SCSS here; the matching JS class is registered
+// from `src/js/index-full.js` against the same name.
 @layer components {
-  @import '../components/kbd';
-  @import '../components/table';
-  @import '../components/form-control';
-  @import '../components/form-check';
-  @import '../components/switch';
-  @import '../components/input-group';
-  @import '../components/btn';
-  @import '../components/toggle';
-  @import '../components/toggle-group';
-  @import '../components/slider';
-  @import '../components/dropdown';
-  @import '../components/button-group';
-  // @import '../components/nav';
-  @import '../components/navbar';
-  @import '../components/card';
-  @import '../components/sidebar';
-  @import '../components/app-shell';
-  @import '../components/page';
-  @import '../components/accordion';
-  @import '../components/breadcrumb';
-  @import '../components/pagination';
-  @import '../components/badge';
-  @import '../components/alert';
-  @import '../components/icon-box';
-  @import '../components/progress';
-  @import '../components/list-group';
-  @import '../components/toast';
-  @import '../components/dialog';
-  @import '../components/tooltip';
-  @import '../components/popover';
-  // @import '../components/carousel';
-  @import '../components/drawer';
-  @import '../components/spinner';
-  @import '../components/placeholders';
-  @import '../components/prose';
-}
-
-// === Utilities =========================================================
-// Hand-written utility set. Each PR adds a slice; today: text only.
-// Layout (display, flex, gap, margin, padding) lands in a later PR.
-@layer utilities {
-  @import '../utilities/text';
+  @import '../integrations/carousel';
 }
