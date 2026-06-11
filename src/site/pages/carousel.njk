@@ -19,30 +19,26 @@
 
     <div class="install-tabs" data-install-tabs style="margin-top: 1rem;">
       <div class="toggle-group" role="radiogroup" aria-label="Installation method" data-stisla-toggle-group>
-        <button type="button" class="toggle" role="radio" aria-checked="true" data-state="active" data-value="script">Script tag</button>
-        <button type="button" class="toggle" role="radio" aria-checked="false" data-value="package">Package manager</button>
+        <button type="button" class="toggle" role="radio" aria-checked="true" data-state="active" data-value="compiled">Compiled</button>
+        <button type="button" class="toggle" role="radio" aria-checked="false" data-value="manual">Manual</button>
       </div>
 
-      <div data-install-tab-panel="script" style="margin-top: 1rem;">
-        <p>Add the integration's stylesheet and script alongside the core bundle.</p>
+      <div data-install-tab-panel="compiled" style="margin-top: 1rem;">
+        <p>Add the integration's stylesheet and script next to the ones loading the core bundle.</p>
         {% call ui.code(lang='html') %}
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/vanilla@3/dist/stisla.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/vanilla@3/dist/integrations/carousel.css">
-
-        <script type="module" src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@3/dist/stisla.js"></script>
         <script type="module" src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@3/dist/integrations/carousel.js"></script>
         {% endcall %}
         <p>The integration script auto-registers on the global <code>Stisla</code> instance, so no extra wiring is needed.</p>
       </div>
 
-      <div data-install-tab-panel="package" style="margin-top: 1rem;" hidden>
-        <p>Install Stisla and Embla:</p>
+      <div data-install-tab-panel="manual" style="margin-top: 1rem;" hidden>
+        <p>Install Embla:</p>
         {% call ui.code(lang='bash') %}
-        npm install @stisla/vanilla embla-carousel
+        npm install embla-carousel
         {% endcall %}
-        <p>Import the CSS, the core, and the integration's class. Register the class before <code>Stisla.init()</code>:</p>
+        <p>Import the integration's CSS + class, register it, then call <code>Stisla.init()</code>:</p>
         {% call ui.code(lang='js') %}
-        import '@stisla/vanilla/dist/stisla.css';
         import '@stisla/vanilla/dist/integrations/carousel.css';
         import { Stisla } from '@stisla/vanilla';
         import { Carousel } from '@stisla/vanilla/integrations/carousel';
