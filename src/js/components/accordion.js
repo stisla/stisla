@@ -2,7 +2,11 @@
 //
 // Composes one Stisla.Collapsible per .accordion__item. The state hook
 // lives on the item (where the chip / chevron / divider styles read it);
-// the height transition runs on the body. The header button drives both.
+// the height transition runs on the body. The header button drives both
+// through the Collapsible primitive — Accordion doesn't bind its own
+// click handler. Single-mode coordination happens via the bubbling
+// stisla:collapsible:opening event, which catches every open path
+// (click, keyboard, programmatic API) at one point.
 //
 // Anatomy:
 //   <div class="accordion" data-stisla-accordion
@@ -54,10 +58,18 @@ export class Accordion extends Component {
     }
 
     this._items = [];
+    this._suppressClosingGuard = false;
+    this._lastValue = [];
     this._buildItems();
+    this._lastValue = this._value();
 
-    this._onClick = this._onClick.bind(this);
-    this.on(el, 'click', this._onClick);
+    this._onOpening = this._onOpening.bind(this);
+    this._onClosing = this._onClosing.bind(this);
+    this._onSettled = this._onSettled.bind(this);
+    this.on(el, 'stisla:collapsible:opening', this._onOpening);
+    this.on(el, 'stisla:collapsible:closing', this._onClosing);
+    this.on(el, 'stisla:collapsible:opened', this._onSettled);
+    this.on(el, 'stisla:collapsible:closed', this._onSettled);
   }
 
   // === public API ========================================================
@@ -68,30 +80,31 @@ export class Accordion extends Component {
 
   openItem(target) {
     const entry = this._resolve(target);
-    if (!entry || entry.collapsible.isOpen()) return this;
-    this._commit(entry, true);
+    if (!entry) return this;
+    entry.collapsible.open();
     return this;
   }
 
   closeItem(target) {
     const entry = this._resolve(target);
-    if (!entry || !entry.collapsible.isOpen()) return this;
-    this._commit(entry, false);
+    if (!entry) return this;
+    entry.collapsible.close();
     return this;
   }
 
   toggleItem(target) {
     const entry = this._resolve(target);
     if (!entry) return this;
-    this._commit(entry, !entry.collapsible.isOpen());
+    entry.collapsible.toggle();
     return this;
   }
 
   closeAll() {
+    this._suppressClosingGuard = true;
     for (const entry of this._items) {
       if (entry.collapsible.isOpen()) entry.collapsible.close();
     }
-    this._emitChange();
+    this._suppressClosingGuard = false;
     return this;
   }
 
@@ -119,35 +132,55 @@ export class Accordion extends Component {
     }
   }
 
-  _onClick(e) {
-    const trigger = e.target.closest('[data-stisla-accordion-trigger]');
-    if (!trigger) return;
-    // Only own triggers — nested accordions inside a body manage themselves.
-    const entry = this._items.find((x) => x.trigger === trigger);
+  _onOpening(e) {
+    const entry = this._items.find(({ body }) => body === e.target);
     if (!entry) return;
-    e.preventDefault();
-    if (trigger.disabled || trigger.getAttribute('aria-disabled') === 'true') {
-      return;
-    }
-    const opening = !entry.collapsible.isOpen();
-    if (!opening && this.opts.type === 'single' && !this.opts.collapsible) {
-      // Radix-style: in single mode with collapsible: false, the current
-      // item can't close itself — there's no value-less state.
-      return;
-    }
-    this._commit(entry, opening);
-  }
-
-  _commit(entry, opening) {
-    if (opening && this.opts.type === 'single') {
-      for (const other of this._items) {
-        if (other !== entry && other.collapsible.isOpen()) {
-          other.collapsible.close();
-        }
+    if (this.opts.type !== 'single') return;
+    // Auto-close every other open item in parallel. Suppress the closing
+    // guard so the collapsible: false rule doesn't fire here — it should
+    // only block user-driven close attempts on the only-open item, not
+    // the auto-close that single mode does as part of opening a new one.
+    this._suppressClosingGuard = true;
+    for (const other of this._items) {
+      if (other !== entry && other.collapsible.isOpen()) {
+        other.collapsible.close();
       }
     }
-    const action = opening ? entry.collapsible.open() : entry.collapsible.close();
-    Promise.resolve(action).then(() => this._emitChange());
+    this._suppressClosingGuard = false;
+  }
+
+  _onClosing(e) {
+    if (this._suppressClosingGuard) return;
+    if (this.opts.type !== 'single' || this.opts.collapsible) return;
+    const entry = this._items.find(({ body }) => body === e.target);
+    if (!entry) return;
+    // Block the close if this is the only open item AND no other item is
+    // currently opening — i.e. the user is trying to close the value-
+    // less state in a non-collapsible single accordion.
+    const otherOpen = this._items.some(
+      (x) => x !== entry && x.collapsible.isOpen(),
+    );
+    if (!otherOpen) e.preventDefault();
+  }
+
+  _onSettled() {
+    const value = this._value();
+    const previous = this._lastValue;
+    if (value.length === previous.length && value.every((v, i) => v === previous[i])) {
+      return;
+    }
+    this._lastValue = value;
+    this.emit(
+      'value-change',
+      {
+        value,
+        previousValue: previous,
+        openItems: this._items
+          .filter(({ collapsible }) => collapsible.isOpen())
+          .map(({ item }) => item),
+      },
+      { cancelable: false },
+    );
   }
 
   _resolve(target) {
@@ -174,19 +207,5 @@ export class Accordion extends Component {
           item.dataset.value ?? trigger.dataset.value ?? item.id ?? String(i)
         );
       });
-  }
-
-  _emitChange() {
-    const value = this._value();
-    const previous = this._lastValue ?? [];
-    if (value.length === previous.length && value.every((v, i) => v === previous[i])) {
-      return;
-    }
-    this._lastValue = value;
-    this.emit(
-      'value-change',
-      { value, previousValue: previous, openItems: this.getItems().filter((_, i) => this._items[i].collapsible.isOpen()) },
-      { cancelable: false },
-    );
   }
 }
