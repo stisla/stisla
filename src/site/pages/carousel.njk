@@ -179,6 +179,64 @@
   </section>
 
   <section>
+    <h2>Card content</h2>
+    <p>Slides aren't limited to images. Add <code>.carousel--no-aspect</code> on the root and the viewport sizes to its tallest slide instead of locking to <code>16 / 9</code>. The chrome tokens can be retuned to track theme surfaces so the controls and indicators read on light + dark.</p>
+    {% call ui.demo() %}
+    <div class="carousel carousel--no-aspect" data-stisla-carousel data-stisla-carousel-loop="true" role="region" aria-roledescription="carousel" aria-label="Customer stories"
+         style="--carousel-control-bg: var(--st-surface); --carousel-control-bg-hover: var(--st-accent); --carousel-control-color: var(--st-foreground); --carousel-indicator-bg: var(--st-border); --carousel-indicator-active-bg: var(--st-primary); --carousel-indicators-inset: -1rem;">
+      <div class="carousel__viewport">
+        <div class="carousel__track">
+          <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="1 of 3">
+            <div class="card" style="margin: 0;">
+              <div class="card__body" style="padding: 2rem;">
+                <p style="font-size: 1.0625rem; line-height: 1.6; margin: 0;">"Stisla took the headache out of rebuilding our internal admin tool. The token system meant we could ship a brand refresh in a single PR — no per-component overrides."</p>
+                <div style="margin-top: 1.25rem;">
+                  <strong>Maya Tanaka</strong>
+                  <div class="text-muted-foreground" style="font-size: 0.875rem;">Engineering Lead, Northwind Labs</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="2 of 3">
+            <div class="card" style="margin: 0;">
+              <div class="card__body" style="padding: 2rem;">
+                <p style="font-size: 1.0625rem; line-height: 1.6; margin: 0;">"We bought into the BS5 version for a client project two years ago. The v3 rewrite kept everything we liked and dropped the bits we were already hacking around."</p>
+                <div style="margin-top: 1.25rem;">
+                  <strong>Diego Romero</strong>
+                  <div class="text-muted-foreground" style="font-size: 0.875rem;">Design Engineer, Forge &amp; Tide</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="3 of 3">
+            <div class="card" style="margin: 0;">
+              <div class="card__body" style="padding: 2rem;">
+                <p style="font-size: 1.0625rem; line-height: 1.6; margin: 0;">"Dark mode used to be a quarterly bug ticket. Now it's a single <code>[data-theme]</code> flip on the root element and we don't think about it again."</p>
+                <div style="margin-top: 1.25rem;">
+                  <strong>Priya Reddy</strong>
+                  <div class="text-muted-foreground" style="font-size: 0.875rem;">Product Engineer, Helix Health</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="carousel__control carousel__control--prev" aria-label="Previous testimonial">
+        <i data-lucide="chevron-left"></i>
+      </button>
+      <button type="button" class="carousel__control carousel__control--next" aria-label="Next testimonial">
+        <i data-lucide="chevron-right"></i>
+      </button>
+      <div class="carousel__indicators" role="tablist" aria-label="Testimonials">
+        <button type="button" class="carousel__indicator" data-state="active" aria-current="true" aria-label="Testimonial 1"></button>
+        <button type="button" class="carousel__indicator" aria-label="Testimonial 2"></button>
+        <button type="button" class="carousel__indicator" aria-label="Testimonial 3"></button>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
     <h2>Autoplay</h2>
     <p>Pass <code>data-stisla-carousel-autoplay="true"</code> for a 4 s tick, or <code>{ "delay": 6000 }</code> for a custom delay. Autoplay pauses on hover, on focus, while dragging, and while the tab is hidden. Reduced motion disables it entirely.</p>
     {% call ui.demo() %}
