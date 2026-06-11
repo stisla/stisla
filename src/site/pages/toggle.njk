@@ -14,19 +14,8 @@
   </section>
 
   <section>
-    <h2>How it works</h2>
-    <p>The visible element carries <code>.toggle</code>. Active state can come from three sources, all paint the same:</p>
-    <ul>
-      <li><code>aria-pressed="true"</code> — JS-driven press button (no form data)</li>
-      <li><code>data-state="active"</code> — JS-driven single-select group member (paired with <code>role="radio"</code> + <code>aria-checked</code> on the markup)</li>
-      <li><code>.toggle-input:checked + .toggle</code> — form-data path, a hidden <code>&lt;input class="toggle-input"&gt;</code> sibling drives the label paint</li>
-    </ul>
-    <p>The semantic split lives in markup; the CSS paints. Click-to-toggle for the JS-driven press-button path runs through <code>Stisla.Toggle</code> — add <code>data-stisla-toggle</code> to opt in.</p>
-  </section>
-
-  <section>
-    <h2>JS-driven press button</h2>
-    <p>Add <code>data-stisla-toggle</code> to a <code>&lt;button class="toggle"&gt;</code> and clicking flips <code>aria-pressed</code>. Listen for <code>stisla:toggle:changed</code> to react.</p>
+    <h2>Press button</h2>
+    <p>Add <code>data-stisla-toggle</code> to a <code>&lt;button class="toggle"&gt;</code>. Clicking flips <code>aria-pressed</code>; listen for <code>stisla:toggle:changed</code> to react.</p>
     {% call ui.demo() %}
     <button type="button" class="toggle" data-stisla-toggle aria-pressed="true">
       <i data-lucide="bell"></i>
@@ -36,8 +25,8 @@
   </section>
 
   <section>
-    <h2>Form-data checkbox</h2>
-    <p>A hidden checkbox drives the label paint. State submits with the form natively; no JS required.</p>
+    <h2>Form data</h2>
+    <p>For a toggle whose state submits with a form, use a hidden <code>&lt;input class="toggle-input"&gt;</code> paired with a sibling <code>&lt;label class="toggle"&gt;</code>. The browser owns selection; no JS required.</p>
     {% call ui.demo() %}
     <div>
       <input type="checkbox" class="toggle-input" id="newsletterToggle" name="newsletter" checked>
@@ -54,9 +43,9 @@
     <p>Add <code>.toggle--sm</code> or <code>.toggle--lg</code> to match the <code>.btn</code> size cadence (28 / 36 / 44 px under default density).</p>
     {% call ui.demo() %}
     <div style="display: flex; gap: 0.5rem; align-items: center;">
-      <button type="button" class="toggle toggle--sm" aria-pressed="true">Bold</button>
-      <button type="button" class="toggle" aria-pressed="true">Bold</button>
-      <button type="button" class="toggle toggle--lg" aria-pressed="true">Bold</button>
+      <button type="button" class="toggle toggle--sm" data-stisla-toggle aria-pressed="true">Bold</button>
+      <button type="button" class="toggle" data-stisla-toggle aria-pressed="true">Bold</button>
+      <button type="button" class="toggle toggle--lg" data-stisla-toggle aria-pressed="true">Bold</button>
     </div>
     {% endcall %}
   </section>
@@ -66,13 +55,13 @@
     <p>Add <code>.toggle--icon-only</code> for a square slot (mirrors <code>.btn--icon-only</code>). Add an <code>aria-label</code> so the affordance is named for assistive tech.</p>
     {% call ui.demo() %}
     <div style="display: flex; gap: 0.5rem; align-items: center;">
-      <button type="button" class="toggle toggle--icon-only" aria-pressed="false" aria-label="Bold">
+      <button type="button" class="toggle toggle--icon-only" data-stisla-toggle aria-pressed="false" aria-label="Bold">
         <i data-lucide="bold"></i>
       </button>
-      <button type="button" class="toggle toggle--icon-only" aria-pressed="true" aria-label="Italic">
+      <button type="button" class="toggle toggle--icon-only" data-stisla-toggle aria-pressed="true" aria-label="Italic">
         <i data-lucide="italic"></i>
       </button>
-      <button type="button" class="toggle toggle--icon-only" aria-pressed="false" aria-label="Underline">
+      <button type="button" class="toggle toggle--icon-only" data-stisla-toggle aria-pressed="false" aria-label="Underline">
         <i data-lucide="underline"></i>
       </button>
     </div>
@@ -84,13 +73,13 @@
     <p>Add <code>.toggle--icon-round</code> alongside <code>.toggle--icon-only</code> for a circular silhouette. Same opt-out as <code>.btn--icon-round</code> — radius forces 9999px, ignoring <code>--st-radius</code>.</p>
     {% call ui.demo() %}
     <div style="display: flex; gap: 0.5rem; align-items: center;">
-      <button type="button" class="toggle toggle--icon-only toggle--icon-round" aria-pressed="false" aria-label="Like">
+      <button type="button" class="toggle toggle--icon-only toggle--icon-round" data-stisla-toggle aria-pressed="false" aria-label="Like">
         <i data-lucide="thumbs-up"></i>
       </button>
-      <button type="button" class="toggle toggle--icon-only toggle--icon-round" aria-pressed="true" aria-label="Love">
+      <button type="button" class="toggle toggle--icon-only toggle--icon-round" data-stisla-toggle aria-pressed="true" aria-label="Love">
         <i data-lucide="heart"></i>
       </button>
-      <button type="button" class="toggle toggle--icon-only toggle--icon-round" aria-pressed="false" aria-label="Star">
+      <button type="button" class="toggle toggle--icon-only toggle--icon-round" data-stisla-toggle aria-pressed="false" aria-label="Star">
         <i data-lucide="star"></i>
       </button>
     </div>
@@ -102,8 +91,8 @@
     <p>Native <code>:disabled</code> on the button (or on the paired <code>.toggle-input</code>) dims the chip and blocks pointer events.</p>
     {% call ui.demo() %}
     <div style="display: flex; gap: 0.5rem; align-items: center;">
-      <button type="button" class="toggle" aria-pressed="false" disabled>Off, disabled</button>
-      <button type="button" class="toggle" aria-pressed="true" disabled>On, disabled</button>
+      <button type="button" class="toggle" data-stisla-toggle aria-pressed="false" disabled>Off, disabled</button>
+      <button type="button" class="toggle" data-stisla-toggle aria-pressed="true" disabled>On, disabled</button>
       <input type="checkbox" class="toggle-input" id="toggleDisabledForm" disabled>
       <label class="toggle" for="toggleDisabledForm">Form, disabled</label>
     </div>
