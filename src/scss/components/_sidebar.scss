@@ -34,13 +34,11 @@
 //   .sidebar__button[aria-expanded="true|false"]   submenu trigger
 //
 // === JS ==================================================================
-// Submenu toggling ships from src/js/index.js: a click on
-// [data-sidebar-submenu-toggle] flips data-state on the closest
+// Submenu toggling lives in Stisla.Sidebar (src/js/components/sidebar.js):
+// a click on [data-stisla-sidebar-submenu-toggle] inside a
+// [data-stisla-sidebar] panel flips data-state on the closest
 // .sidebar__item between "open" and "closed" and aria-expanded on the
-// trigger. Step 4 promotes that into Stisla.Sidebar with the class +
-// destroy + custom-events contract (V3.md §3.7), and adds animated
-// height transitions — for now closed submenus snap shut via
-// display: none.
+// trigger, with an animated height transition powered by Collapsible.
 //
 // Rail toggling lives at the .app-shell layer:
 // data-app-shell-toggle="collapse" flips both .app-shell.is-sidebar-collapsed
@@ -52,42 +50,46 @@
   // reference; v3 just swaps $sass vars → --css vars + BEM + tokens).
   --sidebar-bg: transparent;
   --sidebar-color: var(--st-foreground);
-  --sidebar-padding-y: calc(1rem * var(--st-density));         //  16
-  --sidebar-padding-x: calc(1rem * var(--st-density));         //  16
-  --sidebar-gap: calc(1rem * var(--st-density));               //  16 — header ↔ content ↔ footer
+  --sidebar-padding-y: calc(1rem * var(--st-density)); //  16
+  --sidebar-padding-x: calc(1rem * var(--st-density)); //  16
+  --sidebar-gap: calc(
+    1rem * var(--st-density)
+  ); //  16 — header ↔ content ↔ footer
 
   // === Brand vars ========================================================
   --sidebar-brand-color: var(--sidebar-color);
-  --sidebar-brand-icon-size: 1.5rem;                           //  24
-  --sidebar-brand-gap: 0.625rem;                               //  10
+  --sidebar-brand-icon-size: 1.5rem; //  24
+  --sidebar-brand-gap: 0.625rem; //  10
 
   // === Button (item) vars ================================================
-  --sidebar-button-height: 2.25rem;                            //  36
-  --sidebar-button-padding-x: calc(0.625rem * var(--st-density)); // 10 — load-bearing: 10 + 16 + 10 = 36 button-height (symmetric icon centering at rail width)
+  --sidebar-button-height: 2.25rem; //  36
+  --sidebar-button-padding-x: calc(
+    0.625rem * var(--st-density)
+  ); // 10 — load-bearing: 10 + 16 + 10 = 36 button-height (symmetric icon centering at rail width)
   --sidebar-button-radius: var(--st-radius-sm);
-  --sidebar-button-gap: calc(1rem * var(--st-density));        //  16 — icon ↔ label
+  --sidebar-button-gap: calc(1rem * var(--st-density)); //  16 — icon ↔ label
   --sidebar-button-font-weight: 400;
   --sidebar-button-color: var(--sidebar-color);
   --sidebar-button-hover-bg: var(--st-accent);
   --sidebar-button-hover-color: var(--st-accent-foreground);
   --sidebar-button-active-bg: var(--st-highlight);
   --sidebar-button-active-color: var(--st-highlight-foreground);
-  --sidebar-button-icon-size: 1rem;                            //  16 — load-bearing, see padding-x note
+  --sidebar-button-icon-size: 1rem; //  16 — load-bearing, see padding-x note
   --sidebar-button-icon-color: var(--st-muted-foreground);
 
   // === Item action var ===================================================
-  --sidebar-item-action-size: 2.25rem;                         //  36 — same as button-height, slot occupies full row
+  --sidebar-item-action-size: 2.25rem; //  36 — same as button-height, slot occupies full row
 
   // === Group vars ========================================================
-  --sidebar-group-gap: calc(1rem * var(--st-density));         //  16
-  --sidebar-group-title-font-size: 0.75rem;                    //  12
+  --sidebar-group-gap: calc(1rem * var(--st-density)); //  16
+  --sidebar-group-title-font-size: 0.75rem; //  12
   --sidebar-group-title-font-weight: 400;
   --sidebar-group-title-color: var(--st-muted-foreground);
 
   // === Submenu vars ======================================================
   --sidebar-submenu-border-color: var(--st-border);
-  --sidebar-submenu-padding-start: 0.5rem;
-  --sidebar-submenu-margin-start: 1.125rem;                    //  18 — literal, aligns guide-line on parent icon column
+  --sidebar-submenu-padding-start: 0.8125rem;
+  --sidebar-submenu-margin-start: 1.125rem; //  18 — literal, aligns guide-line on parent icon column
 
   // === Motion ============================================================
   --sidebar-transition: 0.3s ease;
@@ -394,11 +396,13 @@
   margin-bottom: 2px;
 }
 
-// Submenu chevron — inline SVG mask so the glyph follows the icon color
-// var and stays crisp at any size. Rotates 180° when the trigger reports
-// aria-expanded="true".
-.sidebar__button[data-sidebar-submenu-toggle]::after {
-  content: "";
+// Submenu caret — opt-in indicator placed inside a submenu-toggle button.
+// Empty <span class="sidebar__caret"></span>; CSS draws the chevron via a
+// mask so the glyph follows --sidebar-button-icon-color and stays crisp at
+// any size. Defaults to the right edge via margin-left: auto; override
+// with margin or a wrapper if you want it elsewhere in the row. Rotates
+// 180° when the parent button reports aria-expanded="true".
+.sidebar__caret {
   display: inline-block;
   flex-shrink: 0;
   width: var(--sidebar-button-icon-size);
@@ -412,7 +416,7 @@
   transition: transform 0.15s ease;
 }
 
-.sidebar__button[data-sidebar-submenu-toggle][aria-expanded="true"]::after {
+.sidebar__button[aria-expanded="true"] > .sidebar__caret {
   transform: rotate(180deg);
 }
 
@@ -422,15 +426,19 @@
 // identical gutters at any size.
 
 .sidebar--sm {
-  --sidebar-button-height: 2rem;                                  // 32
-  --sidebar-button-padding-x: calc(0.5rem * var(--st-density));   //  8 — keeps rail symmetric: 8 + 16 + 8 = 32 = button-height
-  --sidebar-group-gap: calc(0.875rem * var(--st-density));        // 14
+  --sidebar-button-height: 2rem; // 32
+  --sidebar-button-padding-x: calc(
+    0.5rem * var(--st-density)
+  ); //  8 — keeps rail symmetric: 8 + 16 + 8 = 32 = button-height
+  --sidebar-group-gap: calc(0.875rem * var(--st-density)); // 14
 }
 
 .sidebar--lg {
-  --sidebar-button-height: 2.5rem;                                // 40
-  --sidebar-button-padding-x: calc(0.75rem * var(--st-density));  // 12 — keeps rail symmetric: 12 + 16 + 12 = 40 = button-height
-  --sidebar-group-gap: calc(1.125rem * var(--st-density));        // 18
+  --sidebar-button-height: 2.5rem; // 40
+  --sidebar-button-padding-x: calc(
+    0.75rem * var(--st-density)
+  ); // 12 — keeps rail symmetric: 12 + 16 + 12 = 40 = button-height
+  --sidebar-group-gap: calc(1.125rem * var(--st-density)); // 18
 }
 
 // === Rail / mini-collapsed (.is-collapsed) ==============================
@@ -456,8 +464,7 @@
 // width transition for a single smooth motion. Lives in the base rule
 // (not under .is-collapsed) so transitions run in both directions.
 .sidebar__button > span,
-.sidebar__brand > :not(svg):not(i):not(img),
-.sidebar__button[data-sidebar-submenu-toggle]::after {
+.sidebar__brand > :not(svg):not(i):not(img) {
   transition:
     opacity var(--sidebar-transition),
     transform var(--sidebar-transition);
@@ -523,9 +530,6 @@
     opacity: 0;
     pointer-events: none;
   }
-  .sidebar__button[data-sidebar-submenu-toggle]::after {
-    opacity: 0;
-  }
   .sidebar__item-action {
     opacity: 0;
     pointer-events: none;
@@ -559,7 +563,7 @@
   .sidebar__header,
   .sidebar__brand > :not(svg):not(i):not(img),
   .sidebar__button > span,
-  .sidebar__button[data-sidebar-submenu-toggle]::after,
+  .sidebar__caret,
   .sidebar__item-action,
   .sidebar__group-title,
   .sidebar__group-action {

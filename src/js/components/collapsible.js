@@ -161,9 +161,15 @@ export class Collapsible extends Component {
     this._cancelTransition();
     this._transitioning = 'close';
 
+    // Flip aria-expanded up front so caret/chevron rotations bound to it
+    // run concurrently with the height collapse (symmetric with open()).
+    // data-state stays 'open' until transitionend so the host keeps its
+    // display value through the animation; if we flipped it early, a
+    // [data-state="closed"] display:none rule would snap-hide the body.
+    this._syncTriggers(false);
+
     if (REDUCED_MOTION()) {
       this._stateEl.dataset.state = 'closed';
-      this._syncTriggers(false);
       this._transitioning = null;
       this.emit('closed', {}, { cancelable: false });
       return this;
@@ -185,7 +191,6 @@ export class Collapsible extends Component {
       this.el.classList.remove(COLLAPSING_CLASS);
       this.el.style.height = '';
       this._stateEl.dataset.state = 'closed';
-      this._syncTriggers(false);
       this._transitioning = null;
       this.emit('closed', {}, { cancelable: false });
     });

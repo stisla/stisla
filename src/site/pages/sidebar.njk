@@ -243,8 +243,8 @@
 
   <section>
     <h2>Nested submenu</h2>
-    <p>Add <code>data-stisla-sidebar-submenu-toggle</code> to the parent button. Wrap the child <code>.sidebar__list</code> in a <code>.sidebar__submenu</code> inside the same <code>.sidebar__item</code>. The item carries <code>data-state="open"</code> or <code>data-state="closed"</code> — the framework JS flips both this and <code>aria-expanded</code> on the trigger when the toggle is clicked. The chevron rotates 180° in the open state.</p>
-    <p>Closed submenus snap shut via <code>display: none</code> in this release. Animated height transitions land with <code>Stisla.Sidebar</code> in Step 4.</p>
+    <p>Add <code>data-stisla-sidebar-submenu-toggle</code> to the parent button. Wrap the child <code>.sidebar__list</code> in a <code>.sidebar__submenu</code> inside the same <code>.sidebar__item</code>. The item carries <code>data-state="open"</code> or <code>data-state="closed"</code> — the framework JS flips both this and <code>aria-expanded</code> on the trigger when the toggle is clicked, with an animated height transition.</p>
+    <p>Drop an empty <code>&lt;span class="sidebar__caret"&gt;&lt;/span&gt;</code> inside the trigger button to render a chevron indicator. The span defaults to the right edge via <code>margin-left: auto</code> and rotates 180° when the parent reports <code>aria-expanded="true"</code>. Placement is yours — put it after the label for the common right-aligned look, or use your own positioning if you want it elsewhere in the row.</p>
     {% call ui.demo() %}
     <aside data-stisla-sidebar class="sidebar" style="width: 18rem;">
       <div class="sidebar__content">
@@ -259,6 +259,7 @@
               <li class="sidebar__item" data-state="open">
                 <button type="button" class="sidebar__button" data-stisla-sidebar-submenu-toggle aria-expanded="true" aria-controls="demo-reports">
                   <i data-lucide="bar-chart-3"></i>Reports
+                  <span class="sidebar__caret"></span>
                 </button>
                 <div class="sidebar__submenu" id="demo-reports">
                   <ul class="sidebar__list">
@@ -271,6 +272,7 @@
               <li class="sidebar__item" data-state="closed">
                 <button type="button" class="sidebar__button" data-stisla-sidebar-submenu-toggle aria-expanded="false" aria-controls="demo-billing">
                   <i data-lucide="credit-card"></i>Billing
+                  <span class="sidebar__caret"></span>
                 </button>
                 <div class="sidebar__submenu" id="demo-billing">
                   <ul class="sidebar__list">
@@ -359,6 +361,7 @@
               <li class="sidebar__item" data-state="open">
                 <button type="button" class="sidebar__button" data-stisla-sidebar-submenu-toggle aria-expanded="true" aria-controls="demo-recolor-reports">
                   <i data-lucide="bar-chart-3"></i>Reports
+                  <span class="sidebar__caret"></span>
                 </button>
                 <div class="sidebar__submenu" id="demo-recolor-reports">
                   <ul class="sidebar__list">
@@ -450,7 +453,7 @@
     <h2>Toggle with JS</h2>
     <p>For a sidebar inside an <code>.app-shell</code>, a button with <code>data-app-shell-toggle="collapse"</code> handles the rail toggle automatically — it flips <code>.is-sidebar-collapsed</code> on the shell and <code>.is-collapsed</code> on the descendant sidebar in one click. For a standalone sidebar, the example below wires the toggle yourself: one class flip, one width change, no JS dependencies beyond what the framework ships.</p>
     {% call ui.demo() %}
-    <aside id="demo-toggleable-sidebar" class="sidebar" style="position: absolute; inset: 0 auto 0 0; width: 18rem; transition: width 0.3s ease; border-right: 1px solid var(--st-border); --sidebar-bg: var(--st-surface);">
+    <aside id="demo-toggleable-sidebar" data-stisla-sidebar class="sidebar" style="position: absolute; inset: 0 auto 0 0; width: 18rem; transition: width 0.3s ease; border-right: 1px solid var(--st-border); --sidebar-bg: var(--st-surface);">
       <header class="sidebar__header">
         <a class="sidebar__brand" href="#">
           <i data-lucide="hexagon"></i>
@@ -476,6 +479,7 @@
               <li class="sidebar__item" data-state="open">
                 <button type="button" class="sidebar__button" data-stisla-sidebar-submenu-toggle aria-expanded="true" aria-controls="demo-toggleable-analytics">
                   <i data-lucide="bar-chart-3"></i><span>Analytics</span>
+                  <span class="sidebar__caret"></span>
                 </button>
                 <div class="sidebar__submenu" id="demo-toggleable-analytics">
                   <ul class="sidebar__list">
@@ -533,6 +537,7 @@
               <li class="sidebar__item" data-state="closed">
                 <button type="button" class="sidebar__button" data-stisla-sidebar-submenu-toggle aria-expanded="false" aria-controls="demo-toggleable-settings">
                   <i data-lucide="settings"></i><span>Settings</span>
+                  <span class="sidebar__caret"></span>
                 </button>
                 <div class="sidebar__submenu" id="demo-toggleable-settings">
                   <ul class="sidebar__list">
