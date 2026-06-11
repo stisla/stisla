@@ -116,7 +116,6 @@ export class Popover extends Component {
     this._closeTimer = 0;
 
     this._onDocKeydown = this._onDocKeydown.bind(this);
-    this._onDocClick = this._onDocClick.bind(this);
 
     // Hover/focus trigger wiring. Mouseenter/leave on BOTH trigger and surface
     // so cursor can bridge into the popover without dismissing.
@@ -198,14 +197,6 @@ export class Popover extends Component {
       }
 
       document.addEventListener('keydown', this._onDocKeydown, true);
-      if (!this._hoverMode) {
-        // Bubble phase so consumer click handlers (demo scripts, custom
-        // toggle buttons) run first and can update state before auto-close
-        // checks it. Capture-phase pointerdown would race the consumer's
-        // click and pre-close the popover, then the consumer's open()
-        // would re-open it on the same gesture.
-        document.addEventListener('click', this._onDocClick);
-      }
 
       this._waitForTransition(this.el).then(() => {
         if (!this.el) return;
@@ -238,7 +229,6 @@ export class Popover extends Component {
       this._trap = null;
     }
     document.removeEventListener('keydown', this._onDocKeydown, true);
-    document.removeEventListener('click', this._onDocClick);
 
     this.el.dataset.state = CLOSED;
     if (this._trigger) this._trigger.setAttribute('aria-expanded', 'false');
@@ -297,7 +287,6 @@ export class Popover extends Component {
         this._trap = null;
       }
       document.removeEventListener('keydown', this._onDocKeydown, true);
-      document.removeEventListener('click', this._onDocClick);
       // If destroy() lands mid-open, restore DOM position so the consumer's
       // tree isn't left with a portaled-away popover.
       if (this._originalParent && this.el?.parentNode === document.body) {
@@ -409,27 +398,6 @@ export class Popover extends Component {
     }
   }
 
-  _onDocClick(e) {
-    if (!this.el || this.el.dataset.state !== OPEN) return;
-    const insideSurface = this.el.contains(e.target);
-    if (this.opts.autoClose === false) return;
-    if (this.opts.autoClose === 'inside' && !insideSurface) return;
-    if (this.opts.autoClose === 'outside' && insideSurface) return;
-    // Bypass auto-close on any element that opts to control this popover —
-    // the official trigger attr, plus the dedicated dismiss attr. By the time
-    // this bubble-phase listener runs, the module-level handler has already
-    // executed its toggle/dismiss; we don't want to double-fire.
-    const id = this.el.id;
-    if (
-      id &&
-      e.target.closest(`[data-stisla-popover-trigger="${id}"]`)
-    ) {
-      return;
-    }
-    if (e.target.closest('[data-stisla-popover-dismiss]')) return;
-    this.close({ returnFocus: false });
-  }
-
   _waitForTransition(el) {
     return new Promise((resolve) => {
       if (!el) return resolve();
@@ -502,6 +470,20 @@ if (
       const surface = dismiss.closest('.popover');
       const inst = surface && getInstance(surface);
       if (inst) inst.close();
+      return;
+    }
+
+    // Auto-close pass for every open popover. Hover/focus triggers skip this
+    // path — they close on mouseleave/blur, not on outside click.
+    for (const surface of document.querySelectorAll('.popover[data-state="open"]')) {
+      const inst = getInstance(surface);
+      if (!inst || inst.opts.autoClose === false) continue;
+      const triggers = String(inst.opts.trigger).split(/\s+/).filter(Boolean);
+      if (triggers.includes('hover') || triggers.includes('focus')) continue;
+      const insideSurface = surface.contains(e.target);
+      if (inst.opts.autoClose === 'inside' && !insideSurface) continue;
+      if (inst.opts.autoClose === 'outside' && insideSurface) continue;
+      inst.close({ returnFocus: false });
     }
   });
 }
