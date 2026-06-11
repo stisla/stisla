@@ -15,16 +15,16 @@
 
   <section>
     <h2>Single-select (segmented control)</h2>
-    <p>Use <code>role="radiogroup"</code> on the wrapper and <code>role="radio"</code> with <code>aria-checked</code> on each member. The CSS hook is <code>data-state="active"</code> on the current member. Roving-tabindex and arrow-key navigation land with the JS contract in a later step.</p>
+    <p>Use <code>role="radiogroup"</code> on the wrapper and <code>role="radio"</code> with <code>aria-checked</code> on each member. The CSS hook is <code>data-state="active"</code> on the current member. Add <code>data-stisla-toggle-group</code> to wire the click + arrow-key contract — the type autodetects from <code>role="radiogroup"</code>.</p>
     {% call ui.demo() %}
-    <div class="toggle-group" role="radiogroup" aria-label="Text alignment">
-      <button type="button" class="toggle toggle--icon-only" role="radio" aria-checked="false" aria-label="Align left">
+    <div class="toggle-group" data-stisla-toggle-group role="radiogroup" aria-label="Text alignment">
+      <button type="button" class="toggle toggle--icon-only" role="radio" aria-checked="false" aria-label="Align left" data-value="left">
         <i data-lucide="align-left"></i>
       </button>
-      <button type="button" class="toggle toggle--icon-only" role="radio" data-state="active" aria-checked="true" aria-label="Align center">
+      <button type="button" class="toggle toggle--icon-only" role="radio" data-state="active" aria-checked="true" aria-label="Align center" data-value="center">
         <i data-lucide="align-center"></i>
       </button>
-      <button type="button" class="toggle toggle--icon-only" role="radio" aria-checked="false" aria-label="Align right">
+      <button type="button" class="toggle toggle--icon-only" role="radio" aria-checked="false" aria-label="Align right" data-value="right">
         <i data-lucide="align-right"></i>
       </button>
     </div>
@@ -33,16 +33,16 @@
 
   <section>
     <h2>Multi-select</h2>
-    <p>Each member is an independent press toggle. Use <code>role="group"</code> on the wrapper and <code>aria-pressed</code> on each member.</p>
+    <p>Each member is an independent press toggle. Use <code>role="group"</code> on the wrapper and <code>aria-pressed</code> on each member. The type autodetects to <code>multiple</code> when no radio role is present; arrows move focus, Space or Enter commits the press.</p>
     {% call ui.demo() %}
-    <div class="toggle-group" role="group" aria-label="Text style">
-      <button type="button" class="toggle toggle--icon-only" aria-pressed="true" aria-label="Bold">
+    <div class="toggle-group" data-stisla-toggle-group role="group" aria-label="Text style">
+      <button type="button" class="toggle toggle--icon-only" aria-pressed="true" aria-label="Bold" data-value="bold">
         <i data-lucide="bold"></i>
       </button>
-      <button type="button" class="toggle toggle--icon-only" aria-pressed="false" aria-label="Italic">
+      <button type="button" class="toggle toggle--icon-only" aria-pressed="false" aria-label="Italic" data-value="italic">
         <i data-lucide="italic"></i>
       </button>
-      <button type="button" class="toggle toggle--icon-only" aria-pressed="true" aria-label="Underline">
+      <button type="button" class="toggle toggle--icon-only" aria-pressed="true" aria-label="Underline" data-value="underline">
         <i data-lucide="underline"></i>
       </button>
     </div>
@@ -53,10 +53,10 @@
     <h2>With text labels</h2>
     <p>Members can carry text instead of (or alongside) icons. The group's intrinsic width grows to fit.</p>
     {% call ui.demo() %}
-    <div class="toggle-group" role="radiogroup" aria-label="Calendar view">
-      <button type="button" class="toggle" role="radio" data-state="active" aria-checked="true">Day</button>
-      <button type="button" class="toggle" role="radio" aria-checked="false">Week</button>
-      <button type="button" class="toggle" role="radio" aria-checked="false">Month</button>
+    <div class="toggle-group" data-stisla-toggle-group role="radiogroup" aria-label="Calendar view">
+      <button type="button" class="toggle" role="radio" data-state="active" aria-checked="true" data-value="day">Day</button>
+      <button type="button" class="toggle" role="radio" aria-checked="false" data-value="week">Week</button>
+      <button type="button" class="toggle" role="radio" aria-checked="false" data-value="month">Month</button>
     </div>
     {% endcall %}
   </section>
@@ -65,16 +65,16 @@
     <h2>Icon + label</h2>
     <p>Mix icons with text by placing an <code>&lt;i&gt;</code> inside the <code>.toggle</code> button next to the label.</p>
     {% call ui.demo() %}
-    <div class="toggle-group" role="radiogroup" aria-label="View mode">
-      <button type="button" class="toggle" role="radio" data-state="active" aria-checked="true">
+    <div class="toggle-group" data-stisla-toggle-group role="radiogroup" aria-label="View mode">
+      <button type="button" class="toggle" role="radio" data-state="active" aria-checked="true" data-value="list">
         <i data-lucide="list"></i>
         List
       </button>
-      <button type="button" class="toggle" role="radio" aria-checked="false">
+      <button type="button" class="toggle" role="radio" aria-checked="false" data-value="grid">
         <i data-lucide="layout-grid"></i>
         Grid
       </button>
-      <button type="button" class="toggle" role="radio" aria-checked="false">
+      <button type="button" class="toggle" role="radio" aria-checked="false" data-value="kanban">
         <i data-lucide="columns-3"></i>
         Kanban
       </button>
@@ -123,17 +123,17 @@
     <p>Add <code>.toggle-group--sm</code> or <code>.toggle-group--lg</code>. Outer height shrinks to 28 / grows to 44 px under default density; the inner toggle height re-derives from the new container values automatically (concentric corners per V3.md §3.4).</p>
     {% call ui.demo() %}
     <div style="display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-start;">
-      <div class="toggle-group toggle-group--sm" role="radiogroup" aria-label="Small">
+      <div class="toggle-group toggle-group--sm" data-stisla-toggle-group role="radiogroup" aria-label="Small">
         <button type="button" class="toggle" role="radio" data-state="active" aria-checked="true">Day</button>
         <button type="button" class="toggle" role="radio" aria-checked="false">Week</button>
         <button type="button" class="toggle" role="radio" aria-checked="false">Month</button>
       </div>
-      <div class="toggle-group" role="radiogroup" aria-label="Default">
+      <div class="toggle-group" data-stisla-toggle-group role="radiogroup" aria-label="Default">
         <button type="button" class="toggle" role="radio" data-state="active" aria-checked="true">Day</button>
         <button type="button" class="toggle" role="radio" aria-checked="false">Week</button>
         <button type="button" class="toggle" role="radio" aria-checked="false">Month</button>
       </div>
-      <div class="toggle-group toggle-group--lg" role="radiogroup" aria-label="Large">
+      <div class="toggle-group toggle-group--lg" data-stisla-toggle-group role="radiogroup" aria-label="Large">
         <button type="button" class="toggle" role="radio" data-state="active" aria-checked="true">Day</button>
         <button type="button" class="toggle" role="radio" aria-checked="false">Week</button>
         <button type="button" class="toggle" role="radio" aria-checked="false">Month</button>
@@ -147,22 +147,69 @@
     <p>Add <code>.toggle-group--vertical</code> to stack members. The container is block-level so it fills its parent's width — wrap in a sized container (sidebar shell, settings panel) to constrain. Inner toggles keep their standalone default height; content left-aligns as a menu list.</p>
     {% call ui.demo() %}
     <div style="max-width: 240px;">
-      <div class="toggle-group toggle-group--vertical" role="radiogroup" aria-label="Sidebar view">
-        <button type="button" class="toggle" role="radio" data-state="active" aria-checked="true">
+      <div class="toggle-group toggle-group--vertical" data-stisla-toggle-group role="radiogroup" aria-label="Sidebar view">
+        <button type="button" class="toggle" role="radio" data-state="active" aria-checked="true" data-value="inbox">
           <i data-lucide="inbox"></i>
           Inbox
         </button>
-        <button type="button" class="toggle" role="radio" aria-checked="false">
+        <button type="button" class="toggle" role="radio" aria-checked="false" data-value="archive">
           <i data-lucide="archive"></i>
           Archive
         </button>
-        <button type="button" class="toggle" role="radio" aria-checked="false">
+        <button type="button" class="toggle" role="radio" aria-checked="false" data-value="trash">
           <i data-lucide="trash-2"></i>
           Trash
         </button>
       </div>
     </div>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Keyboard</h2>
+    <p>Roving tabindex keeps one member in the tab order at a time, so Tab leaves the group naturally. Arrow keys move focus along the group's orientation. In single-select mode focus is selection (WAI-ARIA radio-group); multi-select decouples them.</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Single-select</th>
+            <th>Multi-select</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><kbd class="kbd">→</kbd> / <kbd class="kbd">↓</kbd></td>
+            <td>Focus next enabled member, auto-select.</td>
+            <td>Focus next enabled member.</td>
+          </tr>
+          <tr>
+            <td><kbd class="kbd">←</kbd> / <kbd class="kbd">↑</kbd></td>
+            <td>Focus previous enabled member, auto-select.</td>
+            <td>Focus previous enabled member.</td>
+          </tr>
+          <tr>
+            <td><kbd class="kbd">Home</kbd></td>
+            <td>Focus first enabled, auto-select.</td>
+            <td>Focus first enabled member.</td>
+          </tr>
+          <tr>
+            <td><kbd class="kbd">End</kbd></td>
+            <td>Focus last enabled, auto-select.</td>
+            <td>Focus last enabled member.</td>
+          </tr>
+          <tr>
+            <td><kbd class="kbd">Space</kbd> / <kbd class="kbd">Enter</kbd></td>
+            <td>Select focused (no-op if already selected).</td>
+            <td>Flip <code>aria-pressed</code> on focused member.</td>
+          </tr>
+          <tr>
+            <td><kbd class="kbd">Tab</kbd></td>
+            <td colspan="2">Leaves the group — only the tabbable member is in the tab order.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 
   <section>

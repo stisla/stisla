@@ -21,14 +21,14 @@
       <li><code>data-state="active"</code> — JS-driven single-select group member (paired with <code>role="radio"</code> + <code>aria-checked</code> on the markup)</li>
       <li><code>.toggle-input:checked + .toggle</code> — form-data path, a hidden <code>&lt;input class="toggle-input"&gt;</code> sibling drives the label paint</li>
     </ul>
-    <p>The semantic split lives in markup; the CSS just paints. Click-to-toggle behavior for JS-driven toggles lands with the Stisla.Toggle component in a later step.</p>
+    <p>The semantic split lives in markup; the CSS paints. Click-to-toggle for the JS-driven press-button path runs through <code>Stisla.Toggle</code> — add <code>data-stisla-toggle</code> to opt in.</p>
   </section>
 
   <section>
     <h2>JS-driven press button</h2>
-    <p>A standalone toggle that flips on click. The markup below is hardcoded for the visual; the click handler lands with the JS contract.</p>
+    <p>Add <code>data-stisla-toggle</code> to a <code>&lt;button class="toggle"&gt;</code> and clicking flips <code>aria-pressed</code>. Listen for <code>stisla:toggle:changed</code> to react.</p>
     {% call ui.demo() %}
-    <button type="button" class="toggle" aria-pressed="true">
+    <button type="button" class="toggle" data-stisla-toggle aria-pressed="true">
       <i data-lucide="bell"></i>
       Notifications on
     </button>
