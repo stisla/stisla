@@ -1,0 +1,263 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Popover · Stisla v3{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Popover</h1>
+    <p class="lead">A small floating panel anchored to a trigger. Holds a title, a short body, and any interactive content the trigger surfaces.</p>
+  </header>
+
+  <section>
+    <h2>Basic</h2>
+    <p>Author the popover as real markup with an <code>id</code>. Point the trigger at it with <code>data-stisla-popover-trigger="&lt;id&gt;"</code>. Click toggles, Escape closes, and a pointer down outside dismisses.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn--primary"
+            data-stisla-popover-trigger="popover-basic"
+            aria-haspopup="dialog" aria-expanded="false" aria-controls="popover-basic">
+      Show popover
+    </button>
+
+    <div class="popover" id="popover-basic" data-stisla-popover
+         aria-labelledby="popover-basic-title">
+      <h3 class="popover__title" id="popover-basic-title">API key</h3>
+      <div class="popover__body">Used to authenticate requests to the workspace from your scripts and CI.</div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Anatomy</h2>
+    <p>An optional <code>.popover__close</code> chip sits in the top-right corner. Wire it with <code>data-stisla-popover-dismiss</code> so the delegated handler closes the popover without needing per-instance JS.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn--outline btn--neutral"
+            data-stisla-popover-trigger="popover-anatomy"
+            aria-haspopup="dialog" aria-expanded="false" aria-controls="popover-anatomy">
+      With explicit close
+    </button>
+
+    <div class="popover" id="popover-anatomy" data-stisla-popover
+         aria-labelledby="popover-anatomy-title">
+      <h3 class="popover__title" id="popover-anatomy-title">Release notes</h3>
+      <div class="popover__body">v3.0 ships the popover, dropdown, and tooltip components on the Floating UI foundation.</div>
+      <button type="button" class="popover__close" data-stisla-popover-dismiss aria-label="Dismiss">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Placements</h2>
+    <p><code>data-stisla-popover-placement</code> picks the resting side. Floating UI flips automatically when the chosen side would overflow the viewport.</p>
+    {% call ui.demo() %}
+    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+      <button type="button" class="btn btn--outline btn--neutral"
+              data-stisla-popover-trigger="popover-top"
+              aria-haspopup="dialog" aria-expanded="false" aria-controls="popover-top">Top</button>
+      <button type="button" class="btn btn--outline btn--neutral"
+              data-stisla-popover-trigger="popover-right"
+              aria-haspopup="dialog" aria-expanded="false" aria-controls="popover-right">Right</button>
+      <button type="button" class="btn btn--outline btn--neutral"
+              data-stisla-popover-trigger="popover-bottom"
+              aria-haspopup="dialog" aria-expanded="false" aria-controls="popover-bottom">Bottom</button>
+      <button type="button" class="btn btn--outline btn--neutral"
+              data-stisla-popover-trigger="popover-left"
+              aria-haspopup="dialog" aria-expanded="false" aria-controls="popover-left">Left</button>
+    </div>
+
+    <div class="popover" id="popover-top" data-stisla-popover data-stisla-popover-placement="top"
+         aria-labelledby="popover-top-title">
+      <h3 class="popover__title" id="popover-top-title">Top</h3>
+      <div class="popover__body">Anchors above the trigger.</div>
+    </div>
+    <div class="popover" id="popover-right" data-stisla-popover data-stisla-popover-placement="right"
+         aria-labelledby="popover-right-title">
+      <h3 class="popover__title" id="popover-right-title">Right</h3>
+      <div class="popover__body">Anchors to the right of the trigger.</div>
+    </div>
+    <div class="popover" id="popover-bottom" data-stisla-popover data-stisla-popover-placement="bottom"
+         aria-labelledby="popover-bottom-title">
+      <h3 class="popover__title" id="popover-bottom-title">Bottom</h3>
+      <div class="popover__body">Anchors below the trigger.</div>
+    </div>
+    <div class="popover" id="popover-left" data-stisla-popover data-stisla-popover-placement="left"
+         aria-labelledby="popover-left-title">
+      <h3 class="popover__title" id="popover-left-title">Left</h3>
+      <div class="popover__body">Anchors to the left of the trigger.</div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Hover trigger</h2>
+    <p>Add <code>data-stisla-popover-trigger-mode="hover focus"</code> to open on hover and keyboard focus. The 100ms close delay bridges the cursor from the trigger into the popover so it stays open while you read it.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn--outline btn--neutral"
+            data-stisla-popover-trigger="popover-hover"
+            aria-haspopup="dialog" aria-expanded="false" aria-controls="popover-hover">
+      Hover or focus me
+    </button>
+
+    <div class="popover" id="popover-hover" data-stisla-popover
+         data-stisla-popover-trigger-mode="hover focus"
+         aria-labelledby="popover-hover-title">
+      <h3 class="popover__title" id="popover-hover-title">Read-only</h3>
+      <div class="popover__body">Members with the viewer role can browse but not edit shared boards.</div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Rich content</h2>
+    <p>Author the body with whatever markup the popover needs. Paragraphs, links, buttons, and form bits all work — there's no string-content opt-in.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn--primary"
+            data-stisla-popover-trigger="popover-rich"
+            aria-haspopup="dialog" aria-expanded="false" aria-controls="popover-rich">
+      Invite teammate
+    </button>
+
+    <div class="popover" id="popover-rich" data-stisla-popover data-stisla-popover-placement="bottom-start"
+         aria-labelledby="popover-rich-title" style="min-width: 17rem;">
+      <h3 class="popover__title" id="popover-rich-title">Invite by email</h3>
+      <div class="popover__body" style="color: var(--st-foreground);">
+        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <input type="email" class="form-control" placeholder="name@example.com" aria-label="Email address">
+          <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+            <button type="button" class="btn btn--sm btn--ghost btn--neutral" data-stisla-popover-dismiss>Cancel</button>
+            <button type="button" class="btn btn--sm btn--primary">Send invite</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Imperative</h2>
+    <p>Mark a popover with an <code>id</code> and reach it via <code>Stisla.get(document.getElementById('&lt;id&gt;'))</code>. Call <code>Stisla.Popover.getOrCreate(el).open()</code> if you need to drive it from script without a click trigger.</p>
+    {% call ui.demo() %}
+    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+      <button type="button" class="btn btn--neutral" data-demo-popover-open="popover-imperative">
+        Open via JS
+      </button>
+      <button type="button" class="btn btn--outline btn--neutral"
+              data-stisla-popover-trigger="popover-imperative"
+              aria-haspopup="dialog" aria-expanded="false" aria-controls="popover-imperative">
+        Anchor
+      </button>
+    </div>
+
+    <div class="popover" id="popover-imperative" data-stisla-popover
+         aria-labelledby="popover-imperative-title">
+      <h3 class="popover__title" id="popover-imperative-title">Programmatic</h3>
+      <div class="popover__body">Opened by a script, anchored to the marked trigger.</div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>Every variable that retunes <code>.popover</code> is below. Override on a single popover, on a parent scope, or on <code>:root</code>. The surface uses the <code>--st-surface</code> tier so the popover sits in the same elevation family as dialog and drawer.</p>
+    <div class="prose">
+      <h3>Geometry</h3>
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>--popover-max-width</code></td><td>17.25rem</td><td>Wrap point for body text. Long content wraps; rich content can set its own min-width.</td></tr>
+          <tr><td><code>--popover-min-width</code></td><td>13rem</td><td>Floor so single-line action labels don't collapse the panel.</td></tr>
+          <tr><td><code>--popover-padding</code></td><td>1rem</td><td>Single frame inset. Title, body, and close chip share it.</td></tr>
+          <tr><td><code>--popover-radius</code></td><td>var(--st-radius-lg)</td><td>Frame radius. Matches dialog and card large-frame tier.</td></tr>
+          <tr><td><code>--popover-z-index</code></td><td>1070</td><td>Stack level. Sits above an open dropdown, below a toast.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Surface</h3>
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>--popover-bg</code></td><td>var(--st-surface)</td><td>Panel background.</td></tr>
+          <tr><td><code>--popover-color</code></td><td>var(--st-foreground)</td><td>Default text color inside the panel.</td></tr>
+          <tr><td><code>--popover-border-color</code></td><td>var(--st-border)</td><td>Frame outline. Solid, not translucent.</td></tr>
+          <tr><td><code>--popover-border-width</code></td><td>1px</td><td>Frame thickness. Arrow border thickness tracks this.</td></tr>
+          <tr><td><code>--popover-shadow</code></td><td>var(--st-shadow)</td><td>Elevation off the page.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Title</h3>
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>--popover-title-color</code></td><td>var(--st-foreground)</td><td>Heading color.</td></tr>
+          <tr><td><code>--popover-title-font-weight</code></td><td>600</td><td>Heading weight.</td></tr>
+          <tr><td><code>--popover-title-font-size</code></td><td>0.9375rem</td><td>Slightly larger than body for hierarchy.</td></tr>
+          <tr><td><code>--popover-title-margin-bottom</code></td><td>0.5rem</td><td>Gap between title and body. Sized so a bare-text body and a form-control body both read cleanly under the title.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Body</h3>
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>--popover-body-color</code></td><td>var(--st-muted-foreground)</td><td>Default body color. Override to <code>--st-foreground</code> inside rich-content popovers.</td></tr>
+          <tr><td><code>--popover-body-font-size</code></td><td>0.875rem</td><td>Body text size.</td></tr>
+          <tr><td><code>--popover-body-line-height</code></td><td>1.5</td><td>Wrapping rhythm.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Close chip</h3>
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>--popover-close-size</code></td><td>1.5rem</td><td>Square footprint of the optional dismiss chip.</td></tr>
+          <tr><td><code>--popover-close-color</code></td><td>var(--st-muted-foreground)</td><td>Resting icon color.</td></tr>
+          <tr><td><code>--popover-close-color-hover</code></td><td>var(--st-foreground)</td><td>Hover icon color.</td></tr>
+          <tr><td><code>--popover-close-bg-hover</code></td><td>var(--st-accent)</td><td>Hover background fill.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Arrow and motion</h3>
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>--popover-arrow-size</code></td><td>12px</td><td>Square that's rotated 45° for the diamond caret.</td></tr>
+          <tr><td><code>--popover-transition-duration</code></td><td>0.18s</td><td>Fade and translate duration. Zeroed under <code>prefers-reduced-motion</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      // Imperative demo: open the named popover from script. Bubble phase so
+      // it runs before the popover instance's outside-click auto-close (which
+      // registers later, on first open). stopImmediatePropagation keeps the
+      // popover open when the button is clicked while it's already open —
+      // open() is a no-op in that case, so without the stop the auto-close
+      // handler would still see state=open and dismiss it.
+      document.addEventListener('click', function (e) {
+        var openBtn = e.target.closest('[data-demo-popover-open]');
+        if (!openBtn || !window.Stisla) return;
+        var el = document.getElementById(openBtn.getAttribute('data-demo-popover-open'));
+        if (!el) return;
+        var inst = window.Stisla.get(el) || new window.Stisla.Popover(el);
+        inst.open();
+        e.stopImmediatePropagation();
+      });
+    })();
+  </script>
+{% endblock %}

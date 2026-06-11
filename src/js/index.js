@@ -13,11 +13,15 @@ import { Dialog } from './components/dialog.js';
 import { Drawer } from './components/drawer.js';
 import { Dropdown } from './components/dropdown.js';
 import { Tooltip } from './components/tooltip.js';
+import { Popover } from './components/popover.js';
+import { Toast, toast } from './components/toast.js';
 
 register('dialog', Dialog);
 register('drawer', Drawer);
 register('dropdown', Dropdown);
 register('tooltip', Tooltip);
+register('popover', Popover);
+register('toast', Toast);
 
 // Auto-init runs AFTER every register() call above so the scanner walks
 // [data-stisla-<name>] with a populated registry. Module-level code in
@@ -38,6 +42,9 @@ export const Stisla = {
   Drawer,
   Dropdown,
   Tooltip,
+  Popover,
+  Toast,
+  toast,
   register,
   init,
   get: getInstance,

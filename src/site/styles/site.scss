@@ -61,6 +61,10 @@ body {
   align-items: center;
   justify-content: center;
   position: relative;
+  // Baseline so single-chip demos don't look squat next to multi-row demos.
+  // Component-specific rules below (dropdown, etc.) raise it where the
+  // component needs more headroom; tall content grows past this naturally.
+  min-height: 24rem;
 }
 
 // Dropdown demos pop a floating menu out of the trigger. The menu uses
@@ -96,6 +100,7 @@ body {
 .demo-code {
   position: relative;
   border-top: 1px solid var(--st-border);
+  background-color: var(--st-surface-2);
 }
 
 // Clip + scroll only apply to "long" demos flagged with [data-demo-code].

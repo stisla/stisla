@@ -1,27 +1,253 @@
 // Stisla v3 — popover.
-// Strips BS5's filled-header treatment (tinted bg + bottom border) so the
-// title reads as the first line of the popover content, not a separate band.
-// Padding moves off the header/body blocks and onto .popover itself so the
-// title and body share one consistent 16px frame.
 //
-// Border-color bumps from --bs-border-color-translucent (the elevated-surface
-// default) to solid --bs-border-color. BS5 draws the arrow as two CSS-border
-// triangles offset by the popover border-width, so the outline thickness on
-// the slanted sides is sub-pixel: the translucent token is too faint at that
-// size to trace the arrow, especially in dark mode. $popover-bg is already
-// pointed at --bs-surface via the surface fanout in tokens/_variables.scss.
+// Anatomy (V3.md §3.6 BEM + §3.7 JS contract):
+//   .popover[role="dialog"][data-state="open|closed"][data-placement="..."]
+//     .popover__arrow                       caret, positioned by FUI arrow()
+//     .popover__title                       optional heading
+//     .popover__body                        text or rich content
+//     .popover__close                       optional ghost-chip dismiss
+//
+// Popover element is rendered into the page (not appended by JS) so its content
+// — titles, links, buttons, forms — can be authored as real markup. Stisla.Popover
+// JS positions it via Floating UI, traps focus on open, dismisses on Escape /
+// outside-pointerdown, and toggles [data-state] for the paint hook.
+//
+// Position strategy: position: fixed so the popover escapes any ancestor with
+// overflow: hidden. Floating UI's strategy: 'fixed' computes top/left in
+// viewport coordinates to match (same as .dropdown-menu and .tooltip).
+//
+// Color model: surface family — bg = --st-surface, border = --st-border (solid,
+// not translucent — Stisla deviation from BS5's default). Distinguishes from
+// tooltip (which inverts to --st-foreground) by the surface tier. Same frame
+// rhythm as dialog + drawer + dropdown via --st-radius-lg.
 
 .popover {
-  --#{$prefix}popover-header-bg: transparent;
-  --#{$prefix}popover-header-padding-y: 0;
-  --#{$prefix}popover-header-padding-x: 0;
-  --#{$prefix}popover-body-padding-y: 0;
-  --#{$prefix}popover-body-padding-x: 0;
-  --#{$prefix}popover-border-color: var(--#{$prefix}border-color);
-  padding: 1rem;
+  // === Geometry =============================================================
+  --popover-max-width: 17.25rem; // 276px — preserves BS5 default
+  --popover-min-width: 13rem; // 208px — floor for a line of action text
+  --popover-padding: 1rem; // 16px — single frame padding (no inner header/body padding)
+  --popover-radius: var(--st-radius-lg);
+  --popover-z-index: 1070; // between dropdown (1050) and toast (1090)
+
+  // === Surface ==============================================================
+  --popover-bg: var(--st-surface);
+  --popover-color: var(--st-foreground);
+  --popover-border-color: var(--st-border);
+  --popover-border-width: 1px;
+  --popover-shadow: var(--st-shadow);
+
+  // === Title ================================================================
+  --popover-title-color: var(--st-foreground);
+  --popover-title-font-weight: 600;
+  --popover-title-font-size: 0.9375rem;
+  --popover-title-margin-bottom: 0.5rem;
+
+  // === Body =================================================================
+  --popover-body-color: var(--st-muted-foreground);
+  --popover-body-font-size: 0.875rem;
+  --popover-body-line-height: 1.5;
+
+  // === Close chip ===========================================================
+  --popover-close-size: 1.5rem;
+  --popover-close-color: var(--st-muted-foreground);
+  --popover-close-color-hover: var(--st-foreground);
+  --popover-close-bg-hover: var(--st-accent);
+
+  // === Arrow + motion =======================================================
+  --popover-arrow-size: 12px;
+  --popover-transition-duration: 0.18s;
+
+  // position: absolute (not fixed) so the popover scrolls with the page
+  // alongside its trigger. Stisla.Popover portals the element to <body> on
+  // open, making the offset parent the document root — that way ancestor
+  // overflow: hidden can't crop it, and FUI's autoUpdate doesn't have to
+  // fight viewport-coord drift on every scroll frame.
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: var(--popover-z-index);
+  display: none;
+  min-width: var(--popover-min-width);
+  max-width: var(--popover-max-width);
+  padding: var(--popover-padding);
+  margin: 0;
+  color: var(--popover-color);
+  background-color: var(--popover-bg);
+  border: var(--popover-border-width) solid var(--popover-border-color);
+  border-radius: var(--popover-radius);
+  box-shadow: var(--popover-shadow);
+  opacity: 0;
+  // Default resting transform = "above the trigger, easing up from below".
+  // Per-placement overrides below flip the direction so the entrance always
+  // reads as moving away from the anchored edge.
+  transform: translateY(4px);
+  transition:
+    opacity var(--popover-transition-duration) ease,
+    transform var(--popover-transition-duration) ease;
 }
 
-.popover-header {
-  margin-bottom: 0.25rem;
-  border-bottom: 0;
+.popover[data-state="open"] {
+  display: block;
+  opacity: 1;
+  transform: none;
+}
+
+// Per-placement resting transform — Floating UI's resolved placement (which
+// may differ from opts.placement after flip()) sets [data-placement] so the
+// transform direction tracks the actual anchored edge.
+.popover[data-placement^="bottom"] {
+  transform: translateY(-4px);
+}
+.popover[data-placement^="left"] {
+  transform: translateX(4px);
+}
+.popover[data-placement^="right"] {
+  transform: translateX(-4px);
+}
+.popover[data-placement^="bottom"][data-state="open"],
+.popover[data-placement^="left"][data-state="open"],
+.popover[data-placement^="right"][data-state="open"] {
+  transform: none;
+}
+
+// === Title =================================================================
+
+.popover__title {
+  margin: 0 0 var(--popover-title-margin-bottom);
+  color: var(--popover-title-color);
+  font-size: var(--popover-title-font-size);
+  font-weight: var(--popover-title-font-weight);
+  line-height: 1.3;
+}
+
+// Clear the close chip when both title and close are present. :has() is
+// baseline per V3.md §2 (Safari 16.4+).
+.popover:has(.popover__close) .popover__title {
+  padding-right: calc(var(--popover-close-size) + 0.5rem);
+}
+
+// === Body ==================================================================
+
+.popover__body {
+  margin: 0;
+  color: var(--popover-body-color);
+  font-size: var(--popover-body-font-size);
+  line-height: var(--popover-body-line-height);
+}
+
+// Body that holds interactive children (buttons, links, form bits) opts back
+// into --st-foreground via a class or inline override at the consumer. The
+// default muted color keeps simple text-only popovers reading as supporting
+// context.
+
+// === Close chip ============================================================
+// Optional dismiss affordance. Positioned absolutely so it doesn't disturb the
+// title/body flow. Same shape language as toast's close chip — 1.5rem ghost
+// chip with --st-accent hover.
+
+.popover__close {
+  position: absolute;
+  top: var(--popover-padding);
+  right: var(--popover-padding);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--popover-close-size);
+  height: var(--popover-close-size);
+  padding: 0;
+  color: var(--popover-close-color);
+  background: transparent;
+  border: 0;
+  // Small chip radius — not concentric math against the frame, since the chip
+  // is a stand-alone affordance in the corner rather than a nested rim.
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    color var(--popover-transition-duration) ease,
+    background-color var(--popover-transition-duration) ease;
+}
+
+.popover__close:hover {
+  color: var(--popover-close-color-hover);
+  background-color: var(--popover-close-bg-hover);
+}
+
+.popover__close:focus-visible {
+  outline: 2px solid var(--st-ring);
+  outline-offset: 2px;
+}
+
+.popover__close > svg,
+.popover__close > i {
+  width: 1em;
+  height: 1em;
+  font-size: 1rem;
+}
+
+// === Arrow =================================================================
+// 12px square rotated 45°. FUI arrow() middleware sets the cross-axis offset
+// via JS (left for top/bottom placements, top for left/right). Per-placement
+// rules below pin the placement-axis offset so half the diamond sits inside
+// the popover surface (covered by --popover-bg) and the other half sticks out
+// as the visible point. The two outward-facing diagonals carry the border so
+// the arrow continues the popover's frame seamlessly.
+
+.popover__arrow {
+  position: absolute;
+  width: var(--popover-arrow-size);
+  height: var(--popover-arrow-size);
+  background-color: var(--popover-bg);
+  transform: rotate(45deg);
+}
+
+// CSS rotates clockwise. After rotate(45deg):
+//   original top edge    → top-right diagonal of diamond
+//   original right edge  → bottom-right diagonal of diamond
+//   original bottom edge → bottom-left diagonal of diamond
+//   original left edge   → top-left diagonal of diamond
+//
+// For each placement, the two outward-facing diagonals need border. The other
+// two sit inside the popover surface (covered by bg) and stay borderless.
+
+// Top placement → arrow at popover's bottom, pointing down. Visible diagonals
+// are bottom-right (= original right) + bottom-left (= original bottom).
+.popover[data-placement^="top"] .popover__arrow {
+  bottom: calc(var(--popover-arrow-size) * -0.5);
+  border-right: var(--popover-border-width) solid var(--popover-border-color);
+  border-bottom: var(--popover-border-width) solid var(--popover-border-color);
+}
+
+// Bottom placement → arrow at popover's top, pointing up. Visible diagonals
+// are top-left (= original left) + top-right (= original top).
+.popover[data-placement^="bottom"] .popover__arrow {
+  top: calc(var(--popover-arrow-size) * -0.5);
+  border-top: var(--popover-border-width) solid var(--popover-border-color);
+  border-left: var(--popover-border-width) solid var(--popover-border-color);
+}
+
+// Left placement → arrow at popover's right, pointing right. Visible diagonals
+// are top-right (= original top) + bottom-right (= original right).
+.popover[data-placement^="left"] .popover__arrow {
+  right: calc(var(--popover-arrow-size) * -0.5);
+  border-top: var(--popover-border-width) solid var(--popover-border-color);
+  border-right: var(--popover-border-width) solid var(--popover-border-color);
+}
+
+// Right placement → arrow at popover's left, pointing left. Visible diagonals
+// are top-left (= original left) + bottom-left (= original bottom).
+.popover[data-placement^="right"] .popover__arrow {
+  left: calc(var(--popover-arrow-size) * -0.5);
+  border-bottom: var(--popover-border-width) solid var(--popover-border-color);
+  border-left: var(--popover-border-width) solid var(--popover-border-color);
+}
+
+// === Reduced motion ========================================================
+
+@media (prefers-reduced-motion: reduce) {
+  .popover {
+    transition: none;
+  }
+  .popover__close {
+    transition: none;
+  }
 }
