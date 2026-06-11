@@ -106,24 +106,27 @@ export class Collapsible extends Component {
     }
 
     // The CSS just removed display:none — measure the now-natural height,
-    // snap to 0, transition to the measured height, then clear inline
-    // styles so the element returns to flowing naturally.
+    // pin to 0, then in the next frame set the transition spec, then in
+    // the frame AFTER set the target. The frame split between transition
+    // and target is the canonical kick-off pattern: it guarantees the
+    // browser registers the new transition spec before the height change,
+    // so a same-task spec+value change can't fall through to the previous
+    // (none) transition computation.
+    const duration = this._duration();
     const target = this._measureHeight();
-    this._setInline({ height: '0px', overflow: 'hidden', transition: 'none' });
-    // Force a reflow so the height:0 starting state lands before the
-    // transition kicks in.
-    void this.el.offsetHeight;
+    this._setInline({ height: '0px', overflow: 'hidden', willChange: 'height' });
     requestAnimationFrame(() => {
       if (this._transitioning !== 'open' || !this.el) return;
-      this._setInline({
-        transition: `height ${this._duration()}ms ease`,
-        height: `${target}px`,
-      });
-      this._awaitTransition(() => {
-        if (!this.el) return;
-        this._clearInline();
-        this._transitioning = null;
-        this.emit('opened', {}, { cancelable: false });
+      this.el.style.transition = `height ${duration}ms ease`;
+      requestAnimationFrame(() => {
+        if (this._transitioning !== 'open' || !this.el) return;
+        this.el.style.height = `${target}px`;
+        this._awaitTransition(duration, () => {
+          if (!this.el) return;
+          this._clearInline();
+          this._transitioning = null;
+          this.emit('opened', {}, { cancelable: false });
+        });
       });
     });
     return this;
@@ -146,29 +149,29 @@ export class Collapsible extends Component {
     }
 
     // The element is currently display:block at natural height. Pin the
-    // measured value, force a reflow, then transition to 0. After the
-    // animation completes, flip data-state — CSS re-applies display: none
-    // and we clear our inline styles.
+    // measured value, then animate to 0 — same frame split as open() so
+    // the transition spec lands before the property change.
+    const duration = this._duration();
     const start = this._measureHeight();
     this._setInline({
       height: `${start}px`,
       overflow: 'hidden',
-      transition: 'none',
+      willChange: 'height',
     });
-    void this.el.offsetHeight;
     requestAnimationFrame(() => {
       if (this._transitioning !== 'close' || !this.el) return;
-      this._setInline({
-        transition: `height ${this._duration()}ms ease`,
-        height: '0px',
-      });
-      this._awaitTransition(() => {
-        if (!this.el) return;
-        this._clearInline();
-        this._stateEl.dataset.state = 'closed';
-        this._syncTriggers(false);
-        this._transitioning = null;
-        this.emit('closed', {}, { cancelable: false });
+      this.el.style.transition = `height ${duration}ms ease`;
+      requestAnimationFrame(() => {
+        if (this._transitioning !== 'close' || !this.el) return;
+        this.el.style.height = '0px';
+        this._awaitTransition(duration, () => {
+          if (!this.el) return;
+          this._clearInline();
+          this._stateEl.dataset.state = 'closed';
+          this._syncTriggers(false);
+          this._transitioning = null;
+          this.emit('closed', {}, { cancelable: false });
+        });
       });
     });
     return this;
@@ -228,6 +231,7 @@ export class Collapsible extends Component {
     this.el.style.height = '';
     this.el.style.overflow = '';
     this.el.style.transition = '';
+    this.el.style.willChange = '';
   }
 
   _duration() {
@@ -245,7 +249,7 @@ export class Collapsible extends Component {
     return 200;
   }
 
-  _awaitTransition(done) {
+  _awaitTransition(duration, done) {
     const el = this.el;
     let settled = false;
     const finish = () => {
@@ -263,7 +267,7 @@ export class Collapsible extends Component {
     // Safety net: if the transition never fires (display: none mid-flight,
     // browser quirk, fractional pixel rounding), wake up after duration ×
     // 1.5 + 50 ms so we don't strand the instance in a transitioning state.
-    const fallback = setTimeout(finish, this._duration() * 1.5 + 50);
+    const fallback = setTimeout(finish, duration * 1.5 + 50);
     this._pendingTransition = finish;
   }
 
