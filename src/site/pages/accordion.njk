@@ -13,7 +13,7 @@
     <h2>Default</h2>
     <p>Each item carries <code>data-state="open"</code> or <code>"closed"</code>. Multiple items may stay open at once. Click any header to toggle its panel.</p>
     {% call ui.demo() %}
-    <div class="accordion">
+    <div class="accordion" data-stisla-accordion>
       <div class="accordion__item" data-state="open">
         <h3>
           <button type="button" class="accordion__header" data-stisla-accordion-trigger aria-expanded="true" aria-controls="acc-default-1" id="acc-default-1-trigger">
@@ -59,9 +59,9 @@
 
   <section>
     <h2>Single open</h2>
-    <p>Add <code>data-stisla-accordion-single</code> on the root to enforce one-open-at-a-time. Opening any header closes the others.</p>
+    <p>Add <code>data-stisla-accordion-type="single"</code> on the root to enforce one-open-at-a-time. Opening any header closes the others.</p>
     {% call ui.demo() %}
-    <div class="accordion" data-stisla-accordion-single>
+    <div class="accordion" data-stisla-accordion data-stisla-accordion-type="single">
       <div class="accordion__item" data-state="open">
         <h3>
           <button type="button" class="accordion__header" data-stisla-accordion-trigger aria-expanded="true" aria-controls="acc-single-1" id="acc-single-1-trigger">
@@ -113,7 +113,7 @@
       <div class="card__header">
         <h4 class="card__title">Frequently asked</h4>
       </div>
-      <div class="accordion accordion--flush">
+      <div class="accordion accordion--flush" data-stisla-accordion>
         <div class="accordion__item" data-state="open">
           <h4>
             <button type="button" class="accordion__header" data-stisla-accordion-trigger aria-expanded="true" aria-controls="acc-flush-1" id="acc-flush-1-trigger">
@@ -162,7 +162,7 @@
     <h2>With leading icon</h2>
     <p>Drop an icon inside the header before the label. The chevron stays pinned to the end.</p>
     {% call ui.demo() %}
-    <div class="accordion">
+    <div class="accordion" data-stisla-accordion>
       <div class="accordion__item" data-state="open">
         <h3>
           <button type="button" class="accordion__header" data-stisla-accordion-trigger aria-expanded="true" aria-controls="acc-icon-1" id="acc-icon-1-trigger">
@@ -226,7 +226,7 @@
     <h2>Disabled item</h2>
     <p>Mark a header <code>disabled</code> to keep it visible without a toggle target. The chevron stops responding and the row reads in the muted text colour.</p>
     {% call ui.demo() %}
-    <div class="accordion">
+    <div class="accordion" data-stisla-accordion>
       <div class="accordion__item" data-state="closed">
         <h3>
           <button type="button" class="accordion__header" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-disabled-1" id="acc-disabled-1-trigger">

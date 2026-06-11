@@ -3,8 +3,8 @@
 // Ships every Phase 2 JS-coordinated component except carousel — that's an
 // integration component (V3.md §3.12) and lives in `index-full.js` or the
 // à-la-carte `integrations/carousel.js` path. The interim delegated
-// handlers at the bottom stay until each component (app-shell, navbar,
-// sidebar, accordion) is promoted to its own Stisla.<Component> class.
+// handler at the bottom stays until app-shell is promoted to its own
+// Stisla.AppShell class.
 
 import { Component, getInstance } from './core/component.js';
 import { register, init } from './core/init.js';
@@ -16,6 +16,10 @@ import { Popover } from './components/popover.js';
 import { Toast, toast } from './components/toast.js';
 import { Toggle } from './components/toggle.js';
 import { ToggleGroup } from './components/toggle-group.js';
+import { Collapsible } from './components/collapsible.js';
+import { Accordion } from './components/accordion.js';
+import { Sidebar } from './components/sidebar.js';
+import { Navbar } from './components/navbar.js';
 
 register('dialog', Dialog);
 register('drawer', Drawer);
@@ -25,6 +29,10 @@ register('popover', Popover);
 register('toast', Toast);
 register('toggle', Toggle);
 register('toggle-group', ToggleGroup);
+register('collapsible', Collapsible);
+register('accordion', Accordion);
+register('sidebar', Sidebar);
+register('navbar', Navbar);
 
 // Auto-init runs in a microtask so that an importer (e.g. index-full.js)
 // can register additional components synchronously after this module
@@ -51,6 +59,10 @@ export const Stisla = {
   toast,
   Toggle,
   ToggleGroup,
+  Collapsible,
+  Accordion,
+  Sidebar,
+  Navbar,
   register,
   init,
   get: getInstance,
@@ -60,18 +72,13 @@ if (typeof window !== 'undefined') {
   window.Stisla = Stisla;
 }
 
-// === Interim delegated handlers ==========================================
-// Promoted into proper Stisla.<Component> classes in later sessions:
-//   - app-shell  → Stisla.AppShell
-//   - navbar     → Stisla.Navbar
-//   - sidebar    → Stisla.Sidebar (submenu open/close)
-//   - accordion  → Stisla.Accordion
-//
-// The window sentinel prevents Vite HMR from double-binding when the
-// module re-executes after a hot reload.
+// === Interim delegated handler ===========================================
+// App-shell is the last interim handler — promotion to Stisla.AppShell
+// lands in its own session. The window sentinel prevents Vite HMR from
+// double-binding when the module re-executes after a hot reload.
 
-if (typeof document !== 'undefined' && !window.__stislaInterimBound) {
-  window.__stislaInterimBound = true;
+if (typeof document !== 'undefined' && !window.__stislaAppShellBound) {
+  window.__stislaAppShellBound = true;
 
   // App shell — data-app-shell-toggle="collapse|visibility" flips the
   // matching state class on the closest .app-shell. "collapse" also
@@ -102,64 +109,6 @@ if (typeof document !== 'undefined' && !window.__stislaInterimBound) {
     if (e.target.closest('.sidebar')) return;
     if (e.target.closest('[data-app-shell-toggle]')) return;
     shell.classList.remove('is-sidebar-visible');
-  });
-
-  // Navbar — [data-navbar-toggle] flips data-state on the closest
-  // .navbar__menu between "open" and "closed". The CSS keys off
-  // data-state to show/hide the folded menu below the collapse
-  // breakpoint. Step 4 promotes this into Stisla.Navbar with the full
-  // class + destroy + custom-events contract (V3.md §3.7).
-  document.addEventListener('click', (e) => {
-    const target = e.target.closest('[data-navbar-toggle]');
-    if (!target) return;
-    const navbar = target.closest('.navbar');
-    if (!navbar) return;
-    const menu = navbar.querySelector('.navbar__menu');
-    if (!menu) return;
-    const open = menu.dataset.state === 'open';
-    menu.dataset.state = open ? 'closed' : 'open';
-    target.setAttribute('aria-expanded', String(!open));
-  });
-
-  // Sidebar submenu — [data-sidebar-submenu-toggle] flips data-state on
-  // the closest .sidebar__item between "open" and "closed" + aria-expanded
-  // on the trigger. The CSS hides closed submenus via display: none; an
-  // animated height transition lands in Step 4 (Stisla.Sidebar).
-  document.addEventListener('click', (e) => {
-    const target = e.target.closest('[data-sidebar-submenu-toggle]');
-    if (!target) return;
-    const item = target.closest('.sidebar__item');
-    if (!item) return;
-    const open = item.dataset.state === 'open';
-    item.dataset.state = open ? 'closed' : 'open';
-    target.setAttribute('aria-expanded', String(!open));
-  });
-
-  // Accordion — [data-stisla-accordion-trigger] flips data-state on the
-  // closest .accordion__item between "open" and "closed" + aria-expanded
-  // on the trigger. Add data-stisla-accordion-single on the .accordion
-  // root to enforce one-open-at-a-time mode. Step 4 promotes this into
-  // Stisla.Accordion with the full class + destroy + custom-events
-  // contract (V3.md §3.7) plus a measured-height transition.
-  document.addEventListener('click', (e) => {
-    const trigger = e.target.closest('[data-stisla-accordion-trigger]');
-    if (!trigger || trigger.disabled) return;
-    const item = trigger.closest('.accordion__item');
-    const accordion = trigger.closest('.accordion');
-    if (!item || !accordion) return;
-    const open = item.dataset.state === 'open';
-    if (!open && accordion.hasAttribute('data-stisla-accordion-single')) {
-      accordion
-        .querySelectorAll('.accordion__item[data-state="open"]')
-        .forEach((sibling) => {
-          sibling.dataset.state = 'closed';
-          sibling
-            .querySelector('[data-stisla-accordion-trigger]')
-            ?.setAttribute('aria-expanded', 'false');
-        });
-    }
-    item.dataset.state = open ? 'closed' : 'open';
-    trigger.setAttribute('aria-expanded', String(!open));
   });
 }
 

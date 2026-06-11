@@ -1,0 +1,178 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Collapsible · Stisla v3{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Collapsible</h1>
+    <p class="lead">A region that opens and closes from a trigger. The primitive that <code>.accordion</code>, <code>.sidebar</code> submenus, and <code>.navbar</code> mobile menu compose for their own collapse behaviour.</p>
+  </header>
+
+  <section>
+    <h2>Anatomy</h2>
+    <p>A trigger button and a content region tied by id. The trigger points at the region via <code>data-stisla-collapsible-trigger</code>; ARIA attributes wire up screen readers in the usual way. The region carries <code>data-stisla-collapsible</code> so the scanner picks it up and <code>data-state="open"</code> or <code>"closed"</code> drives the paint.</p>
+    <p>The height transition runs around the state flip — the CSS <code>display: none</code> on the closed state stays put; the JS measures, animates, and clears the inline height once it lands.</p>
+  </section>
+
+  <section>
+    <h2>Basic</h2>
+    <p>One trigger, one region. Click the button to flip the panel below.</p>
+    {% call ui.demo() %}
+    <div style="display: flex; flex-direction: column; gap: 0.75rem; align-items: flex-start;">
+      <button type="button" class="btn btn--neutral"
+              data-stisla-collapsible-trigger="collapsible-basic"
+              aria-controls="collapsible-basic" aria-expanded="false">
+        Toggle details
+      </button>
+      <div id="collapsible-basic" class="collapsible" data-stisla-collapsible data-state="closed" role="region">
+        <div style="padding: 1rem; border: 1px solid var(--st-border); border-radius: var(--st-radius); background: var(--st-surface);">
+          A collapsible is a region whose visibility flips between open and closed. The state lives on the element itself; the height transition runs around the flip so the panel doesn't jump.
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Open by default</h2>
+    <p>Render the region with <code>data-state="open"</code> to start open. The trigger's <code>aria-expanded</code> follows on construction.</p>
+    {% call ui.demo() %}
+    <div style="display: flex; flex-direction: column; gap: 0.75rem; align-items: flex-start;">
+      <button type="button" class="btn btn--neutral"
+              data-stisla-collapsible-trigger="collapsible-open"
+              aria-controls="collapsible-open" aria-expanded="true">
+        Toggle details
+      </button>
+      <div id="collapsible-open" class="collapsible" data-stisla-collapsible data-state="open" role="region">
+        <div style="padding: 1rem; border: 1px solid var(--st-border); border-radius: var(--st-radius); background: var(--st-surface);">
+          This region started open. Click the trigger to close it. The opening transition is the same one the trigger fires.
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Inside a card</h2>
+    <p>A common shape — a card with extra detail hidden behind a chevron. The region's content owns its own surface so the card body doesn't paint inside the collapsed footprint.</p>
+    {% call ui.demo() %}
+    <div class="card" style="max-width: 24rem;">
+      <div class="card__body">
+        <h4 class="card__title">API token</h4>
+        <p class="card__text" style="color: var(--st-muted-foreground);">Created two weeks ago. Last used yesterday.</p>
+        <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+          <button type="button" class="btn btn--sm btn--ghost btn--neutral"
+                  data-stisla-collapsible-trigger="collapsible-card"
+                  aria-controls="collapsible-card" aria-expanded="false">
+            Show permissions
+          </button>
+        </div>
+        <div id="collapsible-card" class="collapsible" data-stisla-collapsible data-state="closed" role="region" style="margin-top: 0.5rem;">
+          <ul style="margin: 0; padding-inline-start: 1.25rem; color: var(--st-muted-foreground);">
+            <li>read:repo</li>
+            <li>write:issues</li>
+            <li>read:user</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Programmatic control</h2>
+    <p>Construct a <code>Stisla.Collapsible</code> directly to drive a region from code. Pass any element as <code>opts.triggers</code>, or let the constructor scan for matching <code>data-stisla-collapsible-trigger</code>s by id.</p>
+    {% call ui.demo() %}
+    <div style="display: flex; flex-direction: column; gap: 0.75rem; align-items: flex-start;">
+      <div style="display: flex; gap: 0.5rem;">
+        <button type="button" class="btn btn--sm btn--neutral" data-demo-collapsible="open">Open</button>
+        <button type="button" class="btn btn--sm btn--neutral" data-demo-collapsible="close">Close</button>
+        <button type="button" class="btn btn--sm btn--neutral" data-demo-collapsible="toggle">Toggle</button>
+      </div>
+      <div id="collapsible-programmatic" class="collapsible" data-stisla-collapsible data-state="closed" role="region">
+        <div style="padding: 1rem; border: 1px solid var(--st-border); border-radius: var(--st-radius); background: var(--st-surface);">
+          This region is opened and closed by the buttons above through <code>Stisla.Collapsible</code>'s imperative API.
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Events</h2>
+    <p>Four events bubble from the region element. <code>opening</code> and <code>closing</code> are cancelable — call <code>preventDefault()</code> on the event to abort.</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Event</th>
+            <th>Cancelable</th>
+            <th>Fires</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>stisla:collapsible:opening</code></td>
+            <td>Yes</td>
+            <td>Before the open transition starts</td>
+          </tr>
+          <tr>
+            <td><code>stisla:collapsible:opened</code></td>
+            <td>No</td>
+            <td>After the open transition ends</td>
+          </tr>
+          <tr>
+            <td><code>stisla:collapsible:closing</code></td>
+            <td>Yes</td>
+            <td>Before the close transition starts</td>
+          </tr>
+          <tr>
+            <td><code>stisla:collapsible:closed</code></td>
+            <td>No</td>
+            <td>After the close transition ends</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>One variable controls the transition duration. Override it on the region itself, on a parent scope, or on <code>:root</code>. Pass <code>{ duration: 350 }</code> at construction for a per-instance override.</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--collapsible-transition-duration</code></td>
+            <td>0.2s</td>
+            <td>Height transition speed. Set <code>0</code> to snap. Honored at construction and on every open/close call. <code>prefers-reduced-motion: reduce</code> zeroes it regardless.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      var el = document.getElementById('collapsible-programmatic');
+      if (!el || !window.Stisla) return;
+      var inst = window.Stisla.Collapsible.getOrCreate(el);
+      document.addEventListener('click', function (e) {
+        var btn = e.target.closest('[data-demo-collapsible]');
+        if (!btn) return;
+        var action = btn.dataset.demoCollapsible;
+        if (action === 'open') inst.open();
+        else if (action === 'close') inst.close();
+        else if (action === 'toggle') inst.toggle();
+      });
+    })();
+  </script>
+{% endblock %}

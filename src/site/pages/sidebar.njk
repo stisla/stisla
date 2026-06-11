@@ -13,7 +13,7 @@
     <h2>Basic</h2>
     <p>One content slot, one group, one list. The current page is marked with <code>aria-current="page"</code> on the matching button.</p>
     {% call ui.demo() %}
-    <aside class="sidebar" style="width: 16rem;">
+    <aside data-stisla-sidebar class="sidebar" style="width: 16rem;">
       <div class="sidebar__content">
         <nav class="sidebar__menu">
           <div class="sidebar__group">
@@ -54,7 +54,7 @@
     <h2>With header + footer</h2>
     <p>Use <code>.sidebar__header</code> for the brand mark. The <code>.sidebar__brand</code> helper lines up an icon and a wordmark. <code>.sidebar__footer</code> pins to the bottom via <code>margin-top: auto</code>.</p>
     {% call ui.demo() %}
-    <aside class="sidebar" style="width: 16rem; height: 22rem;">
+    <aside data-stisla-sidebar class="sidebar" style="width: 16rem; height: 22rem;">
       <header class="sidebar__header">
         <a class="sidebar__brand" href="#">
           <i data-lucide="hexagon"></i>
@@ -87,7 +87,7 @@
     <p>Three sizes: <code>.sidebar--sm</code>, default, and <code>.sidebar--lg</code>. The modifier retunes button height, padding, and group gap. Outer panel padding stays the same so gutters read identically across sizes.</p>
     {% call ui.demo() %}
     <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-start;">
-      <aside class="sidebar sidebar--sm" style="width: 14rem;">
+      <aside data-stisla-sidebar class="sidebar sidebar--sm" style="width: 14rem;">
         <div class="sidebar__content">
           <nav class="sidebar__menu">
             <div class="sidebar__group">
@@ -102,7 +102,7 @@
         </div>
       </aside>
 
-      <aside class="sidebar" style="width: 14rem;">
+      <aside data-stisla-sidebar class="sidebar" style="width: 14rem;">
         <div class="sidebar__content">
           <nav class="sidebar__menu">
             <div class="sidebar__group">
@@ -117,7 +117,7 @@
         </div>
       </aside>
 
-      <aside class="sidebar sidebar--lg" style="width: 14rem;">
+      <aside data-stisla-sidebar class="sidebar sidebar--lg" style="width: 14rem;">
         <div class="sidebar__content">
           <nav class="sidebar__menu">
             <div class="sidebar__group">
@@ -139,7 +139,7 @@
     <h2>Groups + group action</h2>
     <p><code>.sidebar__group-title</code> labels each list. An optional <code>.sidebar__group-action</code> sits to the right of the title — useful for an add or filter button. Its contents collapse to a uniform 24×24 regardless of the button modifiers passed in; pick a tone via <code>.btn--ghost.btn--neutral</code> (or similar) and the slot handles the chrome.</p>
     {% call ui.demo() %}
-    <aside class="sidebar" style="width: 17rem;">
+    <aside data-stisla-sidebar class="sidebar" style="width: 17rem;">
       <div class="sidebar__content">
         <nav class="sidebar__menu">
           <div class="sidebar__group">
@@ -172,7 +172,7 @@
     <h2>Active state</h2>
     <p>Two hooks. <code>aria-current="page"</code> marks the current page on a navigation link — the standard a11y attribute. <code>data-state="active"</code> covers non-link rows (a button toggling a panel, for example). Both paint the highlight chip; the difference is semantic, not visual.</p>
     {% call ui.demo() %}
-    <aside class="sidebar" style="width: 16rem;">
+    <aside data-stisla-sidebar class="sidebar" style="width: 16rem;">
       <div class="sidebar__content">
         <nav class="sidebar__menu">
           <div class="sidebar__group">
@@ -193,7 +193,7 @@
     <h2>Item actions</h2>
     <p>Place a <code>.sidebar__item-action</code> after the button to drop a badge or a quiet button into the right edge of the row. The button keeps its full click area; the action overlays only its own pixels. Add the <code>--reveal</code> modifier to show the action only on row hover or keyboard focus — good for dense lists where always-visible actions feel noisy.</p>
     {% call ui.demo() %}
-    <aside class="sidebar" style="width: 18rem;">
+    <aside data-stisla-sidebar class="sidebar" style="width: 18rem;">
       <div class="sidebar__content">
         <nav class="sidebar__menu">
           <div class="sidebar__group">
@@ -243,10 +243,10 @@
 
   <section>
     <h2>Nested submenu</h2>
-    <p>Add <code>data-sidebar-submenu-toggle</code> to the parent button. Wrap the child <code>.sidebar__list</code> in a <code>.sidebar__submenu</code> inside the same <code>.sidebar__item</code>. The item carries <code>data-state="open"</code> or <code>data-state="closed"</code> — the framework JS flips both this and <code>aria-expanded</code> on the trigger when the toggle is clicked. The chevron rotates 180° in the open state.</p>
+    <p>Add <code>data-stisla-sidebar-submenu-toggle</code> to the parent button. Wrap the child <code>.sidebar__list</code> in a <code>.sidebar__submenu</code> inside the same <code>.sidebar__item</code>. The item carries <code>data-state="open"</code> or <code>data-state="closed"</code> — the framework JS flips both this and <code>aria-expanded</code> on the trigger when the toggle is clicked. The chevron rotates 180° in the open state.</p>
     <p>Closed submenus snap shut via <code>display: none</code> in this release. Animated height transitions land with <code>Stisla.Sidebar</code> in Step 4.</p>
     {% call ui.demo() %}
-    <aside class="sidebar" style="width: 18rem;">
+    <aside data-stisla-sidebar class="sidebar" style="width: 18rem;">
       <div class="sidebar__content">
         <nav class="sidebar__menu">
           <div class="sidebar__group">
@@ -257,7 +257,7 @@
                 </a>
               </li>
               <li class="sidebar__item" data-state="open">
-                <button type="button" class="sidebar__button" data-sidebar-submenu-toggle aria-expanded="true" aria-controls="demo-reports">
+                <button type="button" class="sidebar__button" data-stisla-sidebar-submenu-toggle aria-expanded="true" aria-controls="demo-reports">
                   <i data-lucide="bar-chart-3"></i>Reports
                 </button>
                 <div class="sidebar__submenu" id="demo-reports">
@@ -269,7 +269,7 @@
                 </div>
               </li>
               <li class="sidebar__item" data-state="closed">
-                <button type="button" class="sidebar__button" data-sidebar-submenu-toggle aria-expanded="false" aria-controls="demo-billing">
+                <button type="button" class="sidebar__button" data-stisla-sidebar-submenu-toggle aria-expanded="false" aria-controls="demo-billing">
                   <i data-lucide="credit-card"></i>Billing
                 </button>
                 <div class="sidebar__submenu" id="demo-billing">
@@ -291,7 +291,7 @@
     <h2>As a panel</h2>
     <p>The sidebar background is transparent by default. To frame it as a standalone panel, set <code>--sidebar-bg</code> to a surface token, add a border, and round the corners.</p>
     {% call ui.demo() %}
-    <aside class="sidebar" style="width: 17rem; border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
+    <aside data-stisla-sidebar class="sidebar" style="width: 17rem; border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
       <header class="sidebar__header">
         <a class="sidebar__brand" href="#">
           <i data-lucide="hexagon"></i>
@@ -329,7 +329,7 @@
     <h2>Recolor</h2>
     <p>Every visible part wires to a <code>--sidebar-*</code> CSS variable. Override on the panel itself, on a scoped class, or on <code>:root</code>. The example below tints the sidebar with the primary brand color, paired with <code>--st-primary-foreground</code> for the chip text.</p>
     {% call ui.demo() %}
-    <aside class="sidebar" style="
+    <aside data-stisla-sidebar class="sidebar" style="
       width: 17rem;
       border-radius: var(--st-radius);
       --sidebar-bg: var(--st-primary);
@@ -357,7 +357,7 @@
               <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="inbox"></i>Inbox</a></li>
               <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="users"></i>Customers</a></li>
               <li class="sidebar__item" data-state="open">
-                <button type="button" class="sidebar__button" data-sidebar-submenu-toggle aria-expanded="true" aria-controls="demo-recolor-reports">
+                <button type="button" class="sidebar__button" data-stisla-sidebar-submenu-toggle aria-expanded="true" aria-controls="demo-recolor-reports">
                   <i data-lucide="bar-chart-3"></i>Reports
                 </button>
                 <div class="sidebar__submenu" id="demo-recolor-reports">
@@ -389,7 +389,7 @@
     <p>The button size follows <code>.sidebar--sm</code> and <code>.sidebar--lg</code>. The panel <code>width</code> is the layout's job — match it to the button size for a clean square cell. The recipe is <code>(button-height + 2 × --sidebar-padding-x) × --st-density</code>, which gives 4rem (sm), 4.25rem (default), 4.5rem (lg) at density 1, and scales proportionally at <code>0.875</code> or <code>1.125</code>. Add 2 × border-width on top when the panel carries a border (<code>box-sizing: border-box</code> trims the interior by the border, squeezing the icon cell); the demos below use <code>calc(4rem * var(--st-density) + 2px)</code> for a 1px border at the sm size.</p>
     {% call ui.demo() %}
     <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-start;">
-      <aside class="sidebar sidebar--sm is-collapsed" style="width: calc(4rem * var(--st-density) + 2px); border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
+      <aside data-stisla-sidebar class="sidebar sidebar--sm is-collapsed" style="width: calc(4rem * var(--st-density) + 2px); border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
         <header class="sidebar__header">
           <a class="sidebar__brand" href="#" aria-label="Stisla"><i data-lucide="hexagon"></i><span>Stisla</span></a>
         </header>
@@ -407,7 +407,7 @@
         </div>
       </aside>
 
-      <aside class="sidebar is-collapsed" style="width: calc(4.25rem * var(--st-density) + 2px); border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
+      <aside data-stisla-sidebar class="sidebar is-collapsed" style="width: calc(4.25rem * var(--st-density) + 2px); border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
         <header class="sidebar__header">
           <a class="sidebar__brand" href="#" aria-label="Stisla"><i data-lucide="hexagon"></i><span>Stisla</span></a>
         </header>
@@ -425,7 +425,7 @@
         </div>
       </aside>
 
-      <aside class="sidebar sidebar--lg is-collapsed" style="width: calc(4.5rem * var(--st-density) + 2px); border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
+      <aside data-stisla-sidebar class="sidebar sidebar--lg is-collapsed" style="width: calc(4.5rem * var(--st-density) + 2px); border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
         <header class="sidebar__header">
           <a class="sidebar__brand" href="#" aria-label="Stisla"><i data-lucide="hexagon"></i><span>Stisla</span></a>
         </header>
@@ -474,7 +474,7 @@
                 </a>
               </li>
               <li class="sidebar__item" data-state="open">
-                <button type="button" class="sidebar__button" data-sidebar-submenu-toggle aria-expanded="true" aria-controls="demo-toggleable-analytics">
+                <button type="button" class="sidebar__button" data-stisla-sidebar-submenu-toggle aria-expanded="true" aria-controls="demo-toggleable-analytics">
                   <i data-lucide="bar-chart-3"></i><span>Analytics</span>
                 </button>
                 <div class="sidebar__submenu" id="demo-toggleable-analytics">
@@ -531,7 +531,7 @@
                 </a>
               </li>
               <li class="sidebar__item" data-state="closed">
-                <button type="button" class="sidebar__button" data-sidebar-submenu-toggle aria-expanded="false" aria-controls="demo-toggleable-settings">
+                <button type="button" class="sidebar__button" data-stisla-sidebar-submenu-toggle aria-expanded="false" aria-controls="demo-toggleable-settings">
                   <i data-lucide="settings"></i><span>Settings</span>
                 </button>
                 <div class="sidebar__submenu" id="demo-toggleable-settings">
