@@ -43,6 +43,12 @@
 // Rail toggling lives at the .app-shell layer:
 // data-app-shell-toggle="collapse" flips both .app-shell.is-sidebar-collapsed
 // and the descendant .sidebar.is-collapsed in one click.
+//
+// Standalone rail toggling (no shell): Stisla.Sidebar owns
+// data-stisla-sidebar-toggle="collapse", which flips .is-collapsed on the
+// closest [data-stisla-sidebar] (or the one referenced by aria-controls).
+// Pair it with the opt-in --sidebar-width / --sidebar-width-collapsed
+// vars below and the width animates pure-CSS.
 
 .sidebar {
   // === Shell vars ========================================================
@@ -55,6 +61,11 @@
   --sidebar-gap: calc(
     1rem * var(--st-density)
   ); //  16 — header ↔ content ↔ footer
+  // Width vars are opt-in (no defaults). Set them when you want the
+  // sidebar to own its width + animate between expanded and collapsed
+  // through .is-collapsed. Layouts that size the panel externally (an
+  // .app-shell, an inline style, a flex parent) can ignore both — the
+  // var() fallbacks resolve to `auto`, which loses to any explicit width.
 
   // === Brand vars ========================================================
   --sidebar-brand-color: var(--sidebar-color);
@@ -97,8 +108,10 @@
   display: flex;
   flex-direction: column;
   gap: var(--sidebar-gap);
+  width: var(--sidebar-width, auto);
   background-color: var(--sidebar-bg);
   color: var(--sidebar-color);
+  transition: width var(--sidebar-transition);
   // Padding intentionally lives on the child slots (header / content /
   // footer), not on the root. That keeps .sidebar__content's padding
   // box flush with the panel's right edge so the scrollbar rides the
@@ -499,6 +512,12 @@
   // labels, partially-visible chrome) without per-leaf display: none.
   overflow: hidden;
 
+  // Opt-in collapsed width — paired with --sidebar-width on the
+  // expanded panel, the class flip animates pure-CSS. Falls back to
+  // `auto` when unset so layouts that drive width externally (e.g.,
+  // .app-shell, inline style) keep working unchanged.
+  width: var(--sidebar-width-collapsed, auto);
+
   // Brand-column re-center: trim the header's inline padding by half
   // the delta between brand-icon and button-icon so the larger brand
   // icon shares the menu-icon column's center axis. Padding is on the
@@ -549,8 +568,13 @@
 
   // Submenu stays hidden in rail mode — a vertical strip of labels
   // reads broken at rail width. data-state on the parent item still
-  // tracks open/closed for when the rail expands again.
-  .sidebar__submenu {
+  // tracks open/closed for when the rail expands again. The
+  // :not(.is-collapsing) carve-out lets a Collapsible mid-close
+  // animation run to completion alongside the sidebar's width transition
+  // (Sidebar.collapse() closes any open submenus concurrently); the
+  // class clears at transitionend, by which point height has already
+  // animated to 0, and display: none snaps in invisibly.
+  .sidebar__submenu:not(.is-collapsing) {
     display: none;
   }
 }
