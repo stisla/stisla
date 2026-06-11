@@ -26,9 +26,11 @@
 //              Collapsible.
 //
 // Events (bubbling, detail: { sidebar: this, item, open }):
-//   stisla:sidebar:submenu-change — after a submenu opens or closes
+//   stisla:sidebar:submenu-change — after a submenu's transition settles
 //
-// Each submenu's Collapsible still emits stisla:collapsible:*.
+// Sourced from bubbling stisla:collapsible:opened/closed so user-clicks
+// and programmatic calls funnel through the same point — same shape as
+// Accordion. Each submenu's Collapsible still emits stisla:collapsible:*.
 
 import { Component } from '../core/component.js';
 import { Collapsible } from './collapsible.js';
@@ -43,6 +45,11 @@ export class Sidebar extends Component {
     super(el, opts);
     this._submenus = [];
     this._buildSubmenus();
+
+    this._onOpened = this._onOpened.bind(this);
+    this._onClosed = this._onClosed.bind(this);
+    this.on(el, 'stisla:collapsible:opened', this._onOpened);
+    this.on(el, 'stisla:collapsible:closed', this._onClosed);
   }
 
   // === public API ========================================================
@@ -54,18 +61,14 @@ export class Sidebar extends Component {
   openSubmenu(target) {
     const entry = this._resolve(target);
     if (!entry || entry.collapsible.isOpen()) return this;
-    Promise.resolve(entry.collapsible.open()).then(() =>
-      this._emitChange(entry, true),
-    );
+    entry.collapsible.open();
     return this;
   }
 
   closeSubmenu(target) {
     const entry = this._resolve(target);
     if (!entry || !entry.collapsible.isOpen()) return this;
-    Promise.resolve(entry.collapsible.close()).then(() =>
-      this._emitChange(entry, false),
-    );
+    entry.collapsible.close();
     return this;
   }
 
@@ -91,6 +94,16 @@ export class Sidebar extends Component {
   }
 
   // === internals =========================================================
+
+  _onOpened(e) {
+    const entry = this._submenus.find(({ submenu }) => submenu === e.target);
+    if (entry) this._emitChange(entry, true);
+  }
+
+  _onClosed(e) {
+    const entry = this._submenus.find(({ submenu }) => submenu === e.target);
+    if (entry) this._emitChange(entry, false);
+  }
 
   _buildSubmenus() {
     const triggers = this.el.querySelectorAll(
