@@ -46,11 +46,17 @@ export default defineConfig(({ command }) => {
   // the basename "stisla"). The hooks below run on every emit, including
   // the post-rename Vite re-emit, so they have to be idempotent — pass
   // through any name that already matches a final filename.
+  // Individual integration bundles (V3.md §3.12 à-la-carte path) land
+  // under `integrations/<name>.{css,js}` so the same shape works for
+  // CDN + zip distribution. Each new integration adds one CSS + one JS
+  // entry to the inputs map and two lines to the renames map.
   const renames = {
     'js-core': 'stisla.js',
     'js-full': 'stisla-full.js',
     'css-core.css': 'stisla.css',
     'css-full.css': 'stisla-full.css',
+    'integration-js-carousel': 'integrations/carousel.js',
+    'integration-css-carousel.css': 'integrations/carousel.css',
   };
   const finalNames = new Set(Object.values(renames));
 
@@ -65,17 +71,25 @@ export default defineConfig(({ command }) => {
           'css-full': 'src/scss/bundles/stisla-full.scss',
           'js-core': 'src/js/index.js',
           'js-full': 'src/js/index-full.js',
+          'integration-css-carousel': 'src/scss/bundles/integrations/carousel.scss',
+          'integration-js-carousel': 'src/js/integrations/carousel.js',
           site: 'src/site/scripts/site.js',
           'site-styles': 'src/site/styles/site.scss',
         },
         output: {
           entryFileNames: (chunk) => renames[chunk.name] ?? '[name].js',
+          // Shared chunks (e.g. Component class shared by stisla.js and
+          // integrations/carousel.js) land at the same level as the entry
+          // bundles so the dist tree stays flat: `chunks/<name>-<hash>.js`.
+          // Hash + path are stable across versions, suitable for CDN
+          // immutable cache headers.
+          chunkFileNames: 'chunks/[name]-[hash].js',
           assetFileNames: ({ name }) => {
-            if (!name) return 'assets/[name]-[hash][extname]';
+            if (!name) return 'chunks/[name]-[hash][extname]';
             if (finalNames.has(name)) return name;
             if (renames[name]) return renames[name];
             if (name.endsWith('.css')) return '[name][extname]';
-            return 'assets/[name]-[hash][extname]';
+            return 'chunks/[name]-[hash][extname]';
           },
         },
       },

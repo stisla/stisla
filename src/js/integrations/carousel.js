@@ -333,3 +333,17 @@ export class Carousel extends Component {
     return Boolean(v);
   }
 }
+
+// Auto-register when this module loads after `window.Stisla` is already
+// present (e.g. CDN / zip use: `<script src="stisla.js">` then
+// `<script src="integrations/carousel.js">`). Also calls `init()` so any
+// pre-existing `[data-stisla-carousel]` element on the page picks up the
+// newly-registered class — the core's microtask `init()` would have
+// already fired before this script runs. Bundler / npm consumers that
+// import without a `window.Stisla` global no-op here and register
+// explicitly.
+if (typeof window !== 'undefined' && window.Stisla?.register) {
+  window.Stisla.register('carousel', Carousel);
+  window.Stisla.Carousel = Carousel;
+  if (typeof window.Stisla.init === 'function') window.Stisla.init();
+}
