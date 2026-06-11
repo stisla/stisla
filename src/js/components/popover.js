@@ -45,6 +45,7 @@ import {
 import { createFocusTrap } from 'focus-trap';
 import { Component, getInstance } from '../core/component.js';
 import { readOpts } from '../core/init.js';
+import { waitForTransition } from '../core/transition.js';
 
 const OPEN = 'open';
 const CLOSED = 'closed';
@@ -198,7 +199,7 @@ export class Popover extends Component {
 
       document.addEventListener('keydown', this._onDocKeydown, true);
 
-      this._waitForTransition(this.el).then(() => {
+      waitForTransition(this.el).then(() => {
         if (!this.el) return;
         this.emit('opened', {}, { cancelable: false });
       });
@@ -233,7 +234,7 @@ export class Popover extends Component {
     this.el.dataset.state = CLOSED;
     if (this._trigger) this._trigger.setAttribute('aria-expanded', 'false');
 
-    this._waitForTransition(this.el).then(() => {
+    waitForTransition(this.el).then(() => {
       if (!this.el) return;
       this.el.style.display = '';
       // Restore original DOM position so the markup author's tree is intact
@@ -398,40 +399,6 @@ export class Popover extends Component {
     }
   }
 
-  _waitForTransition(el) {
-    return new Promise((resolve) => {
-      if (!el) return resolve();
-      const reduced =
-        typeof matchMedia === 'function' &&
-        matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduced) {
-        requestAnimationFrame(() => resolve());
-        return;
-      }
-      const cs = getComputedStyle(el);
-      const durations = cs.transitionDuration
-        .split(',')
-        .map((s) => parseFloat(s) || 0);
-      const total = durations.length ? Math.max(...durations) : 0;
-      if (total === 0) {
-        requestAnimationFrame(() => resolve());
-        return;
-      }
-      let done = false;
-      const finish = () => {
-        if (done) return;
-        done = true;
-        el.removeEventListener('transitionend', onEnd);
-        clearTimeout(fallback);
-        resolve();
-      };
-      const onEnd = (e) => {
-        if (e.target === el) finish();
-      };
-      el.addEventListener('transitionend', onEnd);
-      const fallback = setTimeout(finish, total * 1000 * 1.5 + 50);
-    });
-  }
 }
 
 // Global delegated click handler — bound once per page load.

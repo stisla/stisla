@@ -25,6 +25,8 @@
 import { createFocusTrap } from 'focus-trap';
 import { Component, getInstance } from '../core/component.js';
 import { readOpts } from '../core/init.js';
+import { waitForTransition } from '../core/transition.js';
+import { inertSiblings } from '../core/inert.js';
 
 const SCROLL_LOCK_CLASS = 'is-dialog-open';
 const OPEN = 'open';
@@ -60,7 +62,7 @@ export class Dialog extends Component {
     }
     this._returnFocusEl = null;
     this._trap = null;
-    this._inertCleanup = null;
+    this._releaseInert = null;
     this._onKeydown = this._onKeydown.bind(this);
 
     // Initial state defaults to closed.
@@ -73,7 +75,7 @@ export class Dialog extends Component {
     if (!this.emit('opening')) return;
 
     this._returnFocusEl = document.activeElement;
-    this._inertSiblings(true);
+    this._releaseInert = inertSiblings(this.el);
 
     if (openCount === 0) document.documentElement.classList.add(SCROLL_LOCK_CLASS);
     openCount++;
@@ -110,7 +112,7 @@ export class Dialog extends Component {
         document.addEventListener('keydown', this._onKeydown);
       }
 
-      this._waitForTransition(this._panel).then(() => {
+      waitForTransition(this._panel).then(() => {
         if (!this.el) return;
         this.emit('opened', {}, { cancelable: false });
       });
@@ -132,10 +134,11 @@ export class Dialog extends Component {
     this.el.dataset.state = CLOSED;
     this.el.setAttribute('aria-hidden', 'true');
 
-    this._waitForTransition(this._panel).then(() => {
+    waitForTransition(this._panel).then(() => {
       if (!this.el) return;
       this.el.style.display = '';
-      this._inertSiblings(false);
+      this._releaseInert?.();
+      this._releaseInert = null;
       openCount = Math.max(0, openCount - 1);
       if (openCount === 0) document.documentElement.classList.remove(SCROLL_LOCK_CLASS);
 
@@ -164,7 +167,8 @@ export class Dialog extends Component {
     if (this.el?.dataset.state === OPEN) {
       if (this._trap) { try { this._trap.deactivate(); } catch (e) { /* noop */ } this._trap = null; }
       if (this.opts.keyboard) document.removeEventListener('keydown', this._onKeydown);
-      this._inertSiblings(false);
+      this._releaseInert?.();
+      this._releaseInert = null;
       openCount = Math.max(0, openCount - 1);
       if (openCount === 0) document.documentElement.classList.remove(SCROLL_LOCK_CLASS);
     }
@@ -184,61 +188,6 @@ export class Dialog extends Component {
     );
   }
 
-  // Walks from dialog up to <body>, inerting siblings at each level so the
-  // dialog's ancestor chain stays interactive and everything outside it
-  // drops out of the focus + AT tree.
-  _inertSiblings(on) {
-    if (on) {
-      this._inertCleanup = [];
-      let cur = this.el;
-      while (cur && cur.parentElement) {
-        const parent = cur.parentElement;
-        for (const sibling of parent.children) {
-          if (sibling === cur) continue;
-          if (!sibling.hasAttribute('inert')) {
-            sibling.setAttribute('inert', '');
-            this._inertCleanup.push(sibling);
-          }
-        }
-        if (parent === document.body || parent === document.documentElement) break;
-        cur = parent;
-      }
-    } else if (this._inertCleanup) {
-      for (const el of this._inertCleanup) el.removeAttribute('inert');
-      this._inertCleanup = null;
-    }
-  }
-
-  _waitForTransition(el) {
-    return new Promise((resolve) => {
-      if (!el) return resolve();
-      const reduced =
-        typeof matchMedia === 'function' &&
-        matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduced) {
-        requestAnimationFrame(() => resolve());
-        return;
-      }
-      const cs = getComputedStyle(el);
-      const durations = cs.transitionDuration.split(',').map((s) => parseFloat(s) || 0);
-      const total = durations.length ? Math.max(...durations) : 0;
-      if (total === 0) {
-        requestAnimationFrame(() => resolve());
-        return;
-      }
-      let done = false;
-      const finish = () => {
-        if (done) return;
-        done = true;
-        el.removeEventListener('transitionend', onEnd);
-        clearTimeout(fallback);
-        resolve();
-      };
-      const onEnd = (e) => { if (e.target === el) finish(); };
-      el.addEventListener('transitionend', onEnd);
-      const fallback = setTimeout(finish, total * 1000 * 1.5 + 50);
-    });
-  }
 }
 
 // Global delegated click handler — bound once per page load.

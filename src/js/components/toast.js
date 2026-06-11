@@ -39,6 +39,7 @@
 
 import { Component, getInstance } from "../core/component.js";
 import { readOpts } from "../core/init.js";
+import { waitForTransition } from "../core/transition.js";
 
 const STATE_OPEN = "open";
 const STATE_CLOSED = "closed";
@@ -116,7 +117,7 @@ export class Toast extends Component {
 
       if (this.opts.autohide) this._startTimer(this.opts.delay);
 
-      this._waitForTransition(this.el).then(() => {
+      waitForTransition(this.el).then(() => {
         if (!this.el) return;
         this.emit("opened", {}, { cancelable: false });
       });
@@ -133,7 +134,7 @@ export class Toast extends Component {
     this.el.dataset.state = STATE_CLOSED;
     this.el.setAttribute("aria-hidden", "true");
 
-    this._waitForTransition(this.el).then(() => {
+    waitForTransition(this.el).then(() => {
       if (!this.el) return;
       const node = this.el;
       const owned = this._owned;
@@ -271,40 +272,6 @@ export class Toast extends Component {
     content.appendChild(node);
   }
 
-  _waitForTransition(el) {
-    return new Promise((resolve) => {
-      if (!el) return resolve();
-      const reduced =
-        typeof matchMedia === "function" &&
-        matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (reduced) {
-        requestAnimationFrame(() => resolve());
-        return;
-      }
-      const cs = getComputedStyle(el);
-      const durations = cs.transitionDuration
-        .split(",")
-        .map((s) => parseFloat(s) || 0);
-      const total = durations.length ? Math.max(...durations) : 0;
-      if (total === 0) {
-        requestAnimationFrame(() => resolve());
-        return;
-      }
-      let done = false;
-      const finish = () => {
-        if (done) return;
-        done = true;
-        el.removeEventListener("transitionend", onEnd);
-        clearTimeout(fallback);
-        resolve();
-      };
-      const onEnd = (e) => {
-        if (e.target === el) finish();
-      };
-      el.addEventListener("transitionend", onEnd);
-      const fallback = setTimeout(finish, total * 1000 * 1.5 + 50);
-    });
-  }
 }
 
 // === Imperative helper ===================================================

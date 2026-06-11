@@ -34,6 +34,7 @@
 
 import { computePosition, autoUpdate, offset, flip, shift, arrow } from '@floating-ui/dom';
 import { Component } from '../core/component.js';
+import { waitForTransition } from '../core/transition.js';
 
 const OPEN = 'open';
 const CLOSED = 'closed';
@@ -148,7 +149,7 @@ export class Tooltip extends Component {
     requestAnimationFrame(() => {
       if (!this.el || !this._tooltipEl) return;
       this._tooltipEl.dataset.state = OPEN;
-      this._waitForTransition(this._tooltipEl).then(() => {
+      waitForTransition(this._tooltipEl).then(() => {
         if (!this.el) return;
         this.emit('opened', {}, { cancelable: false });
       });
@@ -163,7 +164,7 @@ export class Tooltip extends Component {
     this._tooltipEl.dataset.state = CLOSED;
     this._trigger.removeAttribute('aria-describedby');
 
-    this._waitForTransition(this._tooltipEl).then(() => {
+    waitForTransition(this._tooltipEl).then(() => {
       if (!this.el || !this._tooltipEl) return;
       this._tooltipEl.style.display = '';
       if (this._cleanupAutoUpdate) {
@@ -276,40 +277,6 @@ export class Tooltip extends Component {
     }
   }
 
-  _waitForTransition(el) {
-    return new Promise((resolve) => {
-      if (!el) return resolve();
-      const reduced =
-        typeof matchMedia === 'function' &&
-        matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduced) {
-        requestAnimationFrame(() => resolve());
-        return;
-      }
-      const cs = getComputedStyle(el);
-      const durations = cs.transitionDuration
-        .split(',')
-        .map((s) => parseFloat(s) || 0);
-      const total = durations.length ? Math.max(...durations) : 0;
-      if (total === 0) {
-        requestAnimationFrame(() => resolve());
-        return;
-      }
-      let done = false;
-      const finish = () => {
-        if (done) return;
-        done = true;
-        el.removeEventListener('transitionend', onEnd);
-        clearTimeout(fallback);
-        resolve();
-      };
-      const onEnd = (e) => {
-        if (e.target === el) finish();
-      };
-      el.addEventListener('transitionend', onEnd);
-      const fallback = setTimeout(finish, total * 1000 * 1.5 + 50);
-    });
-  }
 }
 
 // No module-level delegated handler — tooltip listeners are wired per-instance
