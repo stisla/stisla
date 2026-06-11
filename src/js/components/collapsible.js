@@ -2,12 +2,15 @@
 //
 // The shared engine behind .accordion (Stisla.Accordion), .sidebar submenus
 // (Stisla.Sidebar), .navbar__menu (Stisla.Navbar), and any consumer that
-// wants the same Radix-shaped open/closed model. The CSS owns the
-// display:none on the closed state; this class measures scrollHeight and
-// animates inline height between 0 and that measurement around the state
-// flip, so the transition runs cleanly across the display: none / block
-// boundary that CSS alone can't bridge until interpolate-size ships
-// universally.
+// wants the same Radix-shaped open/closed model.
+//
+// Animation pattern follows Bootstrap's .collapsing class: the CSS owns
+// the transition (via .is-collapsible-content on the animated element);
+// JS toggles the class around a reflow-bracketed height change. Putting
+// the transition spec in CSS — instead of writing inline transition
+// values from JS — sidesteps the foot-gun where same-task transition +
+// property changes can fall through to the previous (none) transition
+// computation in some browsers.
 //
 // Anatomy:
 //   <button data-stisla-collapsible-trigger="my-id"
@@ -31,9 +34,10 @@
 //   triggers — explicit trigger element list. Defaults to scanning the
 //              document for [data-stisla-collapsible-trigger="<el.id>"].
 //   open — initial state if data-state isn't already set.
-//   duration — transition duration override in ms. Null reads
-//              --collapsible-transition-duration on stateEl (CSS computed
-//              style) and falls back to 200ms.
+//   duration — transition duration override in ms. When set, mirrors the
+//              value to inline --collapsible-duration so CSS and JS use
+//              the same number. Null reads --collapsible-duration from
+//              the element's computed style and falls back to 200ms.
 //
 // Events (bubbling, detail: { collapsible: this }):
 //   stisla:collapsible:opening  — before flip (cancelable; preventDefault aborts)
@@ -42,6 +46,8 @@
 //   stisla:collapsible:closed   — after transitionend
 
 import { Component } from '../core/component.js';
+
+const COLLAPSING_CLASS = 'is-collapsing';
 
 const REDUCED_MOTION = () =>
   typeof window !== 'undefined' &&
@@ -62,6 +68,15 @@ export class Collapsible extends Component {
     this._stateEl = this.opts.stateEl ?? el;
     this._triggers = this._resolveTriggers();
     this._transitioning = null; // 'open' | 'close' | null
+
+    // Mirror opts.duration to an inline CSS var so the CSS transition
+    // and the JS fallback timeout agree on the value.
+    if (typeof this.opts.duration === 'number') {
+      this.el.style.setProperty(
+        '--collapsible-duration',
+        `${this.opts.duration}ms`,
+      );
+    }
 
     // Initial state — explicit opt > existing data-state > default false.
     const existing = this._stateEl.dataset.state;
@@ -96,6 +111,8 @@ export class Collapsible extends Component {
     this._cancelTransition();
     this._transitioning = 'open';
 
+    // Flip the state hook so CSS removes display:none and the body has
+    // a measurable natural height for scrollHeight.
     this._stateEl.dataset.state = 'open';
     this._syncTriggers(true);
 
@@ -105,29 +122,23 @@ export class Collapsible extends Component {
       return this;
     }
 
-    // The CSS just removed display:none — measure the now-natural height,
-    // pin to 0, then in the next frame set the transition spec, then in
-    // the frame AFTER set the target. The frame split between transition
-    // and target is the canonical kick-off pattern: it guarantees the
-    // browser registers the new transition spec before the height change,
-    // so a same-task spec+value change can't fall through to the previous
-    // (none) transition computation.
-    const duration = this._duration();
+    // 1. Pin inline height to 0 as the transition start. Add the
+    //    .is-collapsing class so the CSS transition rule applies.
+    // 2. Read scrollHeight — accessing it forces layout, committing
+    //    the 0 start state to the CSSOM.
+    // 3. Set inline height to the measured target. The class's
+    //    transition rule is in effect; the browser interpolates.
+    this.el.style.height = '0px';
+    this.el.classList.add(COLLAPSING_CLASS);
     const target = this._measureHeight();
-    this._setInline({ height: '0px', overflow: 'hidden', willChange: 'height' });
-    requestAnimationFrame(() => {
-      if (this._transitioning !== 'open' || !this.el) return;
-      this.el.style.transition = `height ${duration}ms ease`;
-      requestAnimationFrame(() => {
-        if (this._transitioning !== 'open' || !this.el) return;
-        this.el.style.height = `${target}px`;
-        this._awaitTransition(duration, () => {
-          if (!this.el) return;
-          this._clearInline();
-          this._transitioning = null;
-          this.emit('opened', {}, { cancelable: false });
-        });
-      });
+    this.el.style.height = `${target}px`;
+
+    this._awaitTransition(this._duration(), () => {
+      if (!this.el) return;
+      this.el.classList.remove(COLLAPSING_CLASS);
+      this.el.style.height = '';
+      this._transitioning = null;
+      this.emit('opened', {}, { cancelable: false });
     });
     return this;
   }
@@ -148,31 +159,25 @@ export class Collapsible extends Component {
       return this;
     }
 
-    // The element is currently display:block at natural height. Pin the
-    // measured value, then animate to 0 — same frame split as open() so
-    // the transition spec lands before the property change.
-    const duration = this._duration();
+    // 1. Pin the current natural height as the inline starting value
+    //    so the next change has a fixed start to interpolate FROM.
+    // 2. Add .is-collapsing so the CSS transition rule applies.
+    // 3. Read scrollHeight to force the layout commit.
+    // 4. Change inline height to 0 — the transition runs.
     const start = this._measureHeight();
-    this._setInline({
-      height: `${start}px`,
-      overflow: 'hidden',
-      willChange: 'height',
-    });
-    requestAnimationFrame(() => {
-      if (this._transitioning !== 'close' || !this.el) return;
-      this.el.style.transition = `height ${duration}ms ease`;
-      requestAnimationFrame(() => {
-        if (this._transitioning !== 'close' || !this.el) return;
-        this.el.style.height = '0px';
-        this._awaitTransition(duration, () => {
-          if (!this.el) return;
-          this._clearInline();
-          this._stateEl.dataset.state = 'closed';
-          this._syncTriggers(false);
-          this._transitioning = null;
-          this.emit('closed', {}, { cancelable: false });
-        });
-      });
+    this.el.style.height = `${start}px`;
+    this.el.classList.add(COLLAPSING_CLASS);
+    void this.el.offsetHeight;
+    this.el.style.height = '0px';
+
+    this._awaitTransition(this._duration(), () => {
+      if (!this.el) return;
+      this.el.classList.remove(COLLAPSING_CLASS);
+      this.el.style.height = '';
+      this._stateEl.dataset.state = 'closed';
+      this._syncTriggers(false);
+      this._transitioning = null;
+      this.emit('closed', {}, { cancelable: false });
     });
     return this;
   }
@@ -183,6 +188,11 @@ export class Collapsible extends Component {
 
   destroy() {
     this._cancelTransition();
+    if (this.el) {
+      this.el.classList.remove(COLLAPSING_CLASS);
+      this.el.style.height = '';
+      this.el.style.removeProperty('--collapsible-duration');
+    }
     super.destroy();
     this._stateEl = null;
     this._triggers = [];
@@ -215,30 +225,17 @@ export class Collapsible extends Component {
   }
 
   _measureHeight() {
-    // scrollHeight gives the full content height including padding, which
-    // is what `height: auto` would resolve to. Border-box on the element
-    // is fine — scrollHeight already accounts for it.
+    // scrollHeight gives the full content height including padding,
+    // which is what `height: auto` would resolve to. Reading it forces
+    // layout, which doubles as the reflow that commits the inline
+    // start-state height to the CSSOM before the next change.
     return this.el.scrollHeight;
-  }
-
-  _setInline(styles) {
-    for (const [key, value] of Object.entries(styles)) {
-      this.el.style[key] = value;
-    }
-  }
-
-  _clearInline() {
-    this.el.style.height = '';
-    this.el.style.overflow = '';
-    this.el.style.transition = '';
-    this.el.style.willChange = '';
   }
 
   _duration() {
     if (typeof this.opts.duration === 'number') return this.opts.duration;
-    // Read the consumer's CSS knob if it set one. Falls back to 200ms.
-    const computed = getComputedStyle(this._stateEl).getPropertyValue(
-      '--collapsible-transition-duration',
+    const computed = getComputedStyle(this.el).getPropertyValue(
+      '--collapsible-duration',
     );
     if (computed) {
       const parsed = parseFloat(computed);
@@ -264,9 +261,9 @@ export class Collapsible extends Component {
       finish();
     };
     el.addEventListener('transitionend', onEnd);
-    // Safety net: if the transition never fires (display: none mid-flight,
-    // browser quirk, fractional pixel rounding), wake up after duration ×
-    // 1.5 + 50 ms so we don't strand the instance in a transitioning state.
+    // Safety net: if transitionend never fires (interrupted by display:
+    // none mid-flight, browser quirk, fractional pixel rounding), wake
+    // up after duration × 1.5 + 50 ms so we don't strand the instance.
     const fallback = setTimeout(finish, duration * 1.5 + 50);
     this._pendingTransition = finish;
   }

@@ -1,0 +1,26 @@
+// Stisla v3 — Collapsible animation behavior.
+//
+// CSS half of the Stisla.Collapsible primitive. The JS toggles
+// .is-collapsing to enable height transitions during open/close, then
+// sets the inline height before and after a reflow. Putting the
+// transition spec in CSS — instead of inline via JS — sidesteps the
+// foot-gun where same-task transition + property changes can fall
+// through to the previous (none) computation in some browsers.
+//
+// Override duration globally via --collapsible-duration on :root, on a
+// consumer element, or pass opts.duration to a Collapsible instance
+// (the JS will mirror it to inline --collapsible-duration so CSS and
+// JS use the same value).
+
+.is-collapsing {
+  transition-property: height;
+  transition-duration: var(--collapsible-duration, 0.2s);
+  transition-timing-function: ease;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .is-collapsing {
+    transition-duration: 0s;
+  }
+}
