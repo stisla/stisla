@@ -175,9 +175,18 @@
   transform: rotate(180deg);
 }
 
+// The body itself is a pure container with no padding — the height
+// transition (Stisla.Accordion) animates this element, and padding on
+// the animating element causes content reflow during the transition.
+// Padding sits on the inner element instead so the inner stays at its
+// natural size while the body's height clips it via overflow: hidden.
+// Matches the Radix Accordion.Content + inner-div convention.
 .accordion__body {
-  padding: var(--accordion-body-padding-y) var(--accordion-body-padding-x);
   color: var(--accordion-body-color);
+}
+
+.accordion__body-inner {
+  padding: var(--accordion-body-padding-y) var(--accordion-body-padding-x);
 }
 
 // CSS-only collapse. Step 4 swaps in a JS-measured height transition

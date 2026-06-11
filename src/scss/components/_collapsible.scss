@@ -12,6 +12,15 @@
 // (the JS will mirror it to inline --collapsible-duration so CSS and
 // JS use the same value).
 
+// Closed state for self-mounted Collapsibles. Composers (accordion,
+// sidebar, navbar) own their own rules: state lives on a parent chip,
+// and the body is hidden via the composer's CSS instead of this rule.
+// :not(.is-collapsing) keeps the animation visible while the JS is
+// running the close transition — display: none kicks in only after.
+[data-stisla-collapsible][data-state="closed"]:not(.is-collapsing) {
+  display: none;
+}
+
 .is-collapsing {
   transition-property: height;
   transition-duration: var(--collapsible-duration, 0.2s);

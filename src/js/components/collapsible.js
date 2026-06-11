@@ -66,6 +66,14 @@ export class Collapsible extends Component {
     super(el, opts);
 
     this._stateEl = this.opts.stateEl ?? el;
+    // Composed when the caller (Accordion / Sidebar / Navbar) passed
+    // triggers explicitly. Self-mounted otherwise. The two modes have
+    // different click-handling: composed mode binds per-trigger listeners
+    // since the module-level handler only sees data-stisla-collapsible-
+    // trigger, which composed triggers don't carry. Self-mounted mode
+    // skips the per-instance bind and lets the module-level handler do
+    // the work — binding both would double-fire toggle().
+    this._composed = Array.isArray(this.opts.triggers);
     this._triggers = this._resolveTriggers();
     this._transitioning = null; // 'open' | 'close' | null
 
@@ -89,9 +97,11 @@ export class Collapsible extends Component {
     this._stateEl.dataset.state = initial ? 'open' : 'closed';
     this._syncTriggers(initial);
 
-    this._onTriggerClick = this._onTriggerClick.bind(this);
-    for (const trigger of this._triggers) {
-      this.on(trigger, 'click', this._onTriggerClick);
+    if (this._composed) {
+      this._onTriggerClick = this._onTriggerClick.bind(this);
+      for (const trigger of this._triggers) {
+        this.on(trigger, 'click', this._onTriggerClick);
+      }
     }
   }
 
