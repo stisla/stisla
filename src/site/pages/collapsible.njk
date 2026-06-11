@@ -161,7 +161,10 @@
   </section>
 
   <script>
-    (function () {
+    // The Stisla bundle is loaded as a deferred module, so it runs after
+    // the rest of the HTML is parsed but before DOMContentLoaded. Waiting
+    // for that event ensures window.Stisla is populated.
+    document.addEventListener('DOMContentLoaded', function () {
       var el = document.getElementById('collapsible-programmatic');
       if (!el || !window.Stisla) return;
       var inst = window.Stisla.Collapsible.getOrCreate(el);
@@ -173,6 +176,6 @@
         else if (action === 'close') inst.close();
         else if (action === 'toggle') inst.toggle();
       });
-    })();
+    });
   </script>
 {% endblock %}
