@@ -204,7 +204,7 @@ export class Carousel extends Component {
 
   _onPointerUp() {
     this._resumeAutoplay('pointer');
-    if (this._normalizeAutoplay().stopOnInteraction) this._autoplayKilled = true;
+    if (this._normalizeAutoplay()?.stopOnInteraction) this._autoplayKilled = true;
   }
 
   _onVisibility() {
@@ -240,7 +240,7 @@ export class Carousel extends Component {
   }
 
   _userScroll(target) {
-    if (this._normalizeAutoplay().stopOnInteraction) this._autoplayKilled = true;
+    if (this._normalizeAutoplay()?.stopOnInteraction) this._autoplayKilled = true;
     if (target === 'prev') this.scrollPrev();
     else if (target === 'next') this.scrollNext();
     else if (typeof target === 'number') this.scrollTo(target);
