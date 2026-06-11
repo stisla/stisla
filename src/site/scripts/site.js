@@ -103,6 +103,22 @@ document.addEventListener("change", (e) => {
   });
 });
 
+// data-install-tabs — listen for the wrapped toggle-group's changed event and
+// flip the matching `[data-install-tab-panel]` child visible (others hidden).
+// Used by integration pages' Installation section so consumers can switch
+// between the script-tag and package-manager flows. The wrapped toggle-group
+// is a normal Stisla.ToggleGroup in single-select mode; this handler only
+// handles the panel visibility swap.
+document.addEventListener("stisla:toggle-group:changed", (e) => {
+  const root = e.target.closest("[data-install-tabs]");
+  if (!root) return;
+  const value = e.detail?.value;
+  if (typeof value !== "string") return;
+  root.querySelectorAll("[data-install-tab-panel]").forEach((panel) => {
+    panel.hidden = panel.dataset.installTabPanel !== value;
+  });
+});
+
 // data-demo-loading="<ms>" — toggle .btn-loading on click, auto-clear after the given duration.
 // <button class="btn btn-primary" data-demo-loading="2000">Click to save</button>
 document.addEventListener("click", (e) => {
