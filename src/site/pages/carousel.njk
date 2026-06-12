@@ -17,13 +17,13 @@
     <h2>Installation</h2>
     <p>Carousel is an integration component. It's already in the kitchen-sink <code>stisla-full</code> bundle; install it alongside the core <code>stisla</code> bundle either as script tags or via your package manager.</p>
 
-    <div class="install-tabs mt-4" data-install-tabs>
-      <div class="toggle-group" role="radiogroup" aria-label="Installation method" data-stisla-toggle-group>
-        <button type="button" class="toggle" role="radio" aria-checked="true" data-state="active" data-value="compiled">Compiled</button>
-        <button type="button" class="toggle" role="radio" aria-checked="false" data-value="manual">Manual</button>
+    <div class="tabs mt-4" data-stisla-tabs>
+      <div class="tabs__list">
+        <button class="tabs__trigger" data-value="compiled">Compiled</button>
+        <button class="tabs__trigger" data-value="manual">Manual</button>
       </div>
 
-      <div class="mt-4" data-install-tab-panel="compiled">
+      <div class="tabs__panel" data-value="compiled">
         <p>Add the integration's stylesheet and script next to the ones loading the core bundle.</p>
         {% call ui.code(lang='html') %}
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/vanilla@3/dist/integrations/carousel.css">
@@ -32,7 +32,7 @@
         <p>The integration script auto-registers on the global <code>Stisla</code> instance, so no extra wiring is needed.</p>
       </div>
 
-      <div class="mt-4" data-install-tab-panel="manual" hidden>
+      <div class="tabs__panel" data-value="manual">
         <p>Install Embla:</p>
         {% call ui.code(lang='bash') %}
         npm install embla-carousel
