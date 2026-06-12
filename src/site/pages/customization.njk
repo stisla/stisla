@@ -4,12 +4,10 @@
 {% block title %}Customization · Stisla v3{% endblock %}
 
 {#
-  Architecture proof for Phase 1 (V3.md). One showcase, replayed under five
-  presets applied via inline --st-* overrides. If any preset doesn't reshape
-  the components correctly, the token model has a hole.
-
-  Each preset wraps `showcase()` in a scoped `<div style="--st-…">` block so
-  the override applies only to that subtree.
+  Phase 1 architecture proof (V3.md). The preset demos at the bottom render
+  the same showcase under each `.preset-*` wrapper class. The wrappers live
+  in `src/site/styles/_customization-presets.scss` so dark-mode deltas can
+  be expressed (inline `style` can only carry light-mode token swaps).
 #}
 
 {%- macro showcase() -%}
@@ -50,150 +48,212 @@
 {% block content %}
   <header>
     <h1>Customization</h1>
-    <p class="lead">
-      Reshape every component by overriding root tokens. No CSS edits.
-    </p>
+    <p class="lead">Override CSS custom properties at runtime to retheme every component. No build step for the common case.</p>
   </header>
 
   <section>
-    <h2>How it works</h2>
-    <p>
-      All visual decisions live in 30 <code>--st-*</code> tokens. Set one or
-      more at <code>:root</code> and every component picks up the change.
-      Scope them to a wrapper to theme one subtree. Components inside read
-      their tokens via <code>var()</code>, so they pick up whatever values
-      are in scope without rebuilding.
-    </p>
-    <p>
-      Each preset below applies overrides via an inline <code>style</code>
-      attribute on the section wrapper. The component markup is identical
-      in every preset.
-    </p>
+    <h2>Tokens</h2>
+    <p>Every visual decision lives in a small set of CSS custom properties named with the <code>--st-*</code> prefix. Set one on <code>:root</code> to retheme the whole app. Scope the override to a wrapper class to retheme only that subtree. Components read their tokens via <code>var()</code>, so they pick up new values without a rebuild.</p>
+
+    <p>Values are authored in OKLCH because hover and active states derive at runtime via <code>color-mix(in oklch, …)</code>. OKLCH mixing stays vivid through the midpoints; sRGB mixing muddies on the brand colors you would pick. Override <code>--st-primary</code> and every state of every primary-toned component picks up the new hue automatically.</p>
+
+    <p>Every background-providing token has a paired <code>-foreground</code>. Override one, override the other. The pairing keeps text contrast safe when a base hue changes.</p>
+
+    <p>Below is the full set as it ships. Copy into your own stylesheet, change the values you want, and load it after the framework bundle. Sourced from <code>src/scss/tokens/_theme.scss</code>.</p>
+
+    {% call ui.code(lang='css', title='src/scss/tokens/_theme.scss') %}
+:root {
+  /* Intent — 5 pairs. Intents stay put across themes; foregrounds flip per
+     the pairing rule, except --st-warning-foreground which stays dark in
+     both themes (yellow stays yellow, text on it stays dark). */
+  --st-primary:             oklch(0.639 0.1844 257.69);
+  --st-primary-foreground:  oklch(1 0 0);
+  --st-success:             oklch(0.6966 0.1853 149.54);
+  --st-success-foreground:  oklch(1 0 0);
+  --st-warning:             oklch(0.7697 0.1645 70.61);
+  --st-warning-foreground:  oklch(0.27 0 0);
+  --st-danger:              oklch(0.6155 0.2229 26.82);
+  --st-danger-foreground:   oklch(1 0 0);
+  --st-info:                oklch(0.677589 0.148143 238.1044);
+  --st-info-foreground:     oklch(1 0 0);
+
+  /* Surface tier. Default neutrals are pure gray. To retint warm or cool,
+     override these tokens in a parent scope (see Warm neutrals preset). */
+  --st-background:          oklch(1    0 0);
+  --st-foreground:          oklch(0.27 0 0);
+  --st-surface:             oklch(1    0 0);
+  --st-surface-2:           oklch(0.98 0 0);
+  --st-surface-3:           oklch(0.97 0 0);
+  --st-border:              oklch(0.93 0 0);
+  --st-muted-foreground:    oklch(0.52 0 0);
+
+  /* Interactional. neutral = rest fill for filled-neutral elements.
+     accent  = hover bg over neutral or transparent surfaces.
+     highlight = persistent selected / current bg (soft primary tint). */
+  --st-neutral:             oklch(0.91 0 0);
+  --st-neutral-foreground:  var(--st-foreground);
+  --st-accent:              oklch(0.96 0 0);
+  --st-accent-foreground:   var(--st-foreground);
+  --st-highlight:           color-mix(in oklch, var(--st-primary) 12%, transparent);
+  --st-highlight-foreground: var(--st-primary);
+
+  /* Focus. Defaults to --st-primary so brand swaps repaint focus rings. */
+  --st-ring:                var(--st-primary);
+
+  /* Geometry. radius: 0 = brutalist, 0.75rem = default, 1rem = soft.
+     density: 1 default, 0.875 compact, 1.125 comfortable. */
+  --st-radius:              0.75rem;
+  --st-shadow:              0 1px 3px rgba(0, 0, 0, 0.05),
+                            0 1px 2px rgba(0, 0, 0, 0.03);
+  --st-density:             1;
+
+  /* Derived siblings (not customization knobs). Smaller / larger size
+     variants reach for these so brutalist (--st-radius: 0) cascades to 0
+     for every size; additive offsets would leave lg with a stray corner. */
+  --st-radius-sm:           calc(var(--st-radius) * 0.667);
+  --st-radius-lg:           calc(var(--st-radius) * 1.333);
+
+  /* Type. */
+  --st-font-sans:           "Inter", system-ui, sans-serif;
+  --st-font-mono:           "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* Dark mode. Intents stay; surface and interactional tiers flip. */
+[data-theme="dark"],
+.dark {
+  --st-background:          oklch(0.155 0 0);
+  --st-foreground:          oklch(0.97  0 0);
+  --st-surface:             oklch(0.18  0 0);
+  --st-surface-2:           oklch(0.21  0 0);
+  --st-surface-3:           oklch(0.23  0 0);
+  --st-border:              oklch(0.27  0 0);
+  --st-muted-foreground:    oklch(0.72  0 0);
+  --st-neutral:             oklch(0.27  0 0);
+  --st-accent:              oklch(0.26  0 0);
+}
+    {% endcall %}
+
+    <p>The defaults are a starting point. OKLCH is convenient because <code>color-mix(in oklch, …)</code> interpolates perceptually, but you can use any color representation in your overrides (HSL, hex, sRGB). A well-balanced theme takes time. Don&rsquo;t expect to land it on the first pass.</p>
   </section>
 
   <section>
-    <h2>Default</h2>
-    <p>The token surface as it ships. Reference for comparison.</p>
+    <h2>How to customize</h2>
+    <p>Four ways, in order of effort. Pick the lowest one that does the job.</p>
+
+    <h3>1. Override a root token</h3>
+    <p>Covers most cases. Brand color, radius, shadow, density, dark deltas. One block in your stylesheet, every component retunes.</p>
+    {% call ui.code(lang='css') %}
+:root {
+  --st-primary: oklch(0.58 0.22 285);
+  --st-radius: 0.5rem;
+  --st-density: 0.875;
+}
+    {% endcall %}
+
+    <h3>2. Override a component-scoped variable</h3>
+    <p>Every component exposes its own knobs that fall back to the global token. Set <code>--btn-radius</code> to give buttons a different radius without retuning cards. Each component page lists its own variables in a Customization section at the bottom.</p>
+    {% call ui.code(lang='css') %}
+:root {
+  --btn-radius: 9999px;     /* pilled buttons, default radius everywhere else */
+  --card-radius: 1rem;      /* softer cards, default radius for buttons */
+}
+    {% endcall %}
+
+    <h3>3. Use a utility class</h3>
+    <p>For one-off tweaks to an existing component. A heading muted in one place. A button needing more gap to its neighbor. A card row that needs to be flex. See <a class="link" href="/utilities">Utilities</a> for the shipped set (text, layout, spacing, sizing).</p>
+    <p>Utilities are for tweaking existing shapes, not building new ones. Stacking <code>.d-flex .gap-3 .p-4 .rounded .border</code> on a <code>&lt;div&gt;</code> to assemble something card-shaped is the wrong tool. Build a component instead. See <em>Building new components</em> below.</p>
+
+    <h3>4. Edit the Sass source</h3>
+    <p>For what tokens and utilities can&rsquo;t reach. Three common cases:</p>
+    <ul>
+      <li><strong>Bundle size.</strong> Drop component imports you don&rsquo;t use from <code>src/scss/bundles/stisla.scss</code> and rebuild. Components are imported one per line; deleting any line removes its CSS.</li>
+      <li><strong>Breakpoints.</strong> Media queries can&rsquo;t read CSS variables. Edit the Sass map in <code>src/scss/tokens/_breakpoints.scss</code> and rebuild.</li>
+      <li><strong>Spacing scale.</strong> The fixed utility step ramp lives in <code>src/scss/utilities/_utilities.scss</code> as <code>$spacing-scale</code>. Override via <code>$utilities-config</code> or fork the file. See <a class="link" href="/utilities">Utilities</a>.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>When to formalize</h2>
+    <p>Components feel complete by default. When the same adjustment keeps appearing, the change isn&rsquo;t a tweak. It&rsquo;s a missing variant.</p>
+
+    <p>Two outcomes:</p>
+    <ul>
+      <li><strong>Contextual.</strong> A <code>.btn</code> reads too tight inside a card header but works on its own. Handle it locally with a utility or a context-scoped override. Don&rsquo;t add a new variant for a single place.</li>
+      <li><strong>Meaningful.</strong> The same <code>.btn</code> needs to be smaller across tables, toolbars, and dense layouts. That&rsquo;s a variant. Refine the default or add a modifier (<code>.btn--xs</code>, <code>.card--compact</code>) in the component file.</li>
+    </ul>
+
+    <p>The threshold is recurrence across contexts, not visual difference at a single call site. Variants live in the component&rsquo;s Sass file. They cost nothing once you&rsquo;re already in there.</p>
+  </section>
+
+  <section>
+    <h2>Building new components</h2>
+    <p>Before reaching for a new component, see whether composition of existing parts gets you there. A comment row is an avatar inside a list-group item with a title, timestamp, and description. A stats tile is a card with a heading and a number. Most "I need a new X" turns out to be card + list-group, card + form-control, or list-group + badge.</p>
+
+    <p>When composition won&rsquo;t do it, write a real component. The conventions:</p>
+
+    <ul>
+      <li><strong>One Sass file</strong> per component under <code>src/scss/components/</code>. Name it after the block: <code>_my-thing.scss</code> defines <code>.my-thing</code>.</li>
+      <li><strong>BEM naming.</strong> <code>.block</code>, <code>.block__element</code>, <code>.block--modifier</code>. Lowercase, hyphen-separated. Multiple modifiers compose flat on the root, not nested.</li>
+      <li><strong>Read tokens via component-scoped fallback.</strong> <code>border-radius: var(--my-thing-radius, var(--st-radius))</code>. Users get a component knob and a global default for free.</li>
+      <li><strong>Wrap padding in <code>calc(N * var(--st-density))</code>.</strong> Density retunes every component proportionally. Without this, your component opts out of the density knob.</li>
+      <li><strong>States via <code>color-mix(in oklch, …)</code>.</strong> No per-state tokens. Hover is <code>color-mix(in oklch, var(--st-primary) 88%, black)</code>. The base hue is the only knob; states derive at runtime.</li>
+      <li><strong>Runtime state hooks.</strong> <code>[data-state="open|active"]</code> for Radix-aligned concepts (open / closed, active, highlighted, orientation). <code>.is-*</code> classes for Stisla-original states (<code>.is-loading</code>, <code>.is-collapsed</code>). Never both for the same concept.</li>
+      <li><strong>Every background var has a paired <code>-foreground</code>.</strong> Same rule as the root tokens.</li>
+      <li><strong>Document the variables.</strong> Add a Customization section to your component&rsquo;s demo page that tables the <code>--my-thing-*</code> variables (Variable / Default / Use). Reference shape: <a class="link" href="/slider#customization">Slider</a>.</li>
+    </ul>
+
+    <p>The component file ends up small, scoped, and deletable. The next person reading the codebase sees what the thing actually is by reading one file. Read any of the existing components under <code>src/scss/components/</code> for a template.</p>
+  </section>
+
+  <section>
+    <h2>Presets</h2>
+    <p>Same markup in every demo. Only the wrapper class changes. Sources live in <code>src/site/styles/_customization-presets.scss</code>. Copy a block, swap the wrapper class for <code>:root</code> to apply globally, or keep the wrapper to scope it to a subtree.</p>
+
+    <h3>Default</h3>
+    <p>Reference for comparison. No overrides.</p>
     {% call ui.demo() %}
     {{ showcase() }}
     {% endcall %}
-  </section>
 
-  <section>
-    <h2>Brutalist</h2>
-    <p>
-      Zero radius and a solid offset shadow. Identity flip from two knobs.
-    </p>
+    <h3>Brutalist</h3>
+    <p>Radius 0 and a solid offset shadow that tracks the foreground color. Two knobs reshape every surface. The shadow stays high-contrast in both themes because it resolves to <code>--st-foreground</code>, which flips per the dark block above.</p>
     {% call ui.demo() %}
-    <div style="--st-radius: 0; --st-shadow: 4px 4px 0 black;">
+    <div class="preset-brutalist">
       {{ showcase() }}
     </div>
     {% endcall %}
-  </section>
+    {% call ui.code(lang='css', title='_customization-presets.scss') %}
+.preset-brutalist {
+  --st-radius: 0;
+  --st-shadow: 4px 4px 0 var(--st-foreground);
+}
+    {% endcall %}
 
-  <section>
-    <h2>Soft</h2>
-    <p>Larger radius, softer ambient shadow.</p>
+    <h3>Violet primary</h3>
+    <p>Swap one token. Every primary-toned surface picks up the new hue. Hover, active, focus, and the soft <code>--st-highlight</code> tint derive at runtime via <code>color-mix</code>. No extra overrides needed.</p>
     {% call ui.demo() %}
-    <div style="--st-radius: 1rem; --st-shadow: 0 12px 32px rgba(0,0,0,.10), 0 4px 8px rgba(0,0,0,.04);">
+    <div class="preset-violet">
       {{ showcase() }}
     </div>
     {% endcall %}
-  </section>
+    {% call ui.code(lang='css', title='_customization-presets.scss') %}
+.preset-violet {
+  --st-primary: oklch(0.58 0.22 285);
+  --st-primary-foreground: oklch(1 0 0);
+}
+    {% endcall %}
 
-  <section>
-    <h2>Dense</h2>
-    <p>
-      Density at <code>0.875</code> shrinks padding proportionally across
-      every component.
-    </p>
+    <h3>Dense</h3>
+    <p>One knob. Every padding, gap, and height value wraps <code>calc(X * var(--st-density))</code>, so 0.875 shrinks the whole system proportionally without per-component overrides.</p>
     {% call ui.demo() %}
-    <div style="--st-density: 0.875;">
+    <div class="preset-dense">
       {{ showcase() }}
     </div>
     {% endcall %}
-  </section>
-
-  <section>
-    <h2>Violet primary</h2>
-    <p>
-      Swap the brand color. Every primary-toned surface picks up the new
-      hue, including ghost and light variants that derive from it.
-    </p>
-    {% call ui.demo() %}
-    <div style="--st-primary: oklch(0.58 0.22 285);">
-      {{ showcase() }}
-    </div>
-    {% endcall %}
-  </section>
-
-  <section>
-    <h2>Warm neutrals</h2>
-    <p>
-      Default neutrals ship as pure gray. To retint, override the nine
-      neutral tokens on a wrapper. Components inside read those tokens via
-      <code>var()</code> and pick up the new values automatically. Intents
-      (primary, success, warning, danger, info) stay vivid at their
-      authored values. Only the neutral tier shifts.
-    </p>
-    {% call ui.demo() %}
-    <div style="
-      --st-background:       oklch(0.97  0.018 30);
-      --st-foreground:       oklch(0.27  0.018 30);
-      --st-surface:          oklch(0.985 0.012 30);
-      --st-surface-2:        oklch(0.95  0.025 30);
-      --st-surface-3:        oklch(0.92  0.030 30);
-      --st-border:           oklch(0.88  0.028 30);
-      --st-muted-foreground: oklch(0.52  0.060 30);
-      --st-neutral:          oklch(0.90  0.022 30);
-      --st-accent:           oklch(0.96  0.018 30);
-      background: var(--st-background);
-      padding: 1.5rem;
-      border-radius: var(--st-radius);
-    ">
-      {{ showcase() }}
-    </div>
-    {% endcall %}
-  </section>
-
-  <section>
-    <h2>Cool neutrals</h2>
-    <p>
-      Same shape, different hue. Swap <code>30</code> for <code>240</code>
-      in each OKLCH literal. Any hue from 0 to 360 works. Match it to the
-      brand color (or anything else) and the whole UI follows.
-    </p>
-    {% call ui.demo() %}
-    <div style="
-      --st-background:       oklch(0.97  0.018 240);
-      --st-foreground:       oklch(0.27  0.018 240);
-      --st-surface:          oklch(0.985 0.012 240);
-      --st-surface-2:        oklch(0.95  0.025 240);
-      --st-surface-3:        oklch(0.92  0.030 240);
-      --st-border:           oklch(0.88  0.028 240);
-      --st-muted-foreground: oklch(0.52  0.060 240);
-      --st-neutral:          oklch(0.90  0.022 240);
-      --st-accent:           oklch(0.96  0.018 240);
-      background: var(--st-background);
-      padding: 1.5rem;
-      border-radius: var(--st-radius);
-    ">
-      {{ showcase() }}
-    </div>
-    {% endcall %}
-  </section>
-
-  <section>
-    <h2>Per-component override</h2>
-    <p>
-      Set a component-scoped token to retune one family without touching
-      the global radius. Here the buttons get a fully rounded silhouette
-      while cards keep the default radius.
-    </p>
-    {% call ui.demo() %}
-    <div style="--st-btn-radius: 9999px;">
-      {{ showcase() }}
-    </div>
+    {% call ui.code(lang='css', title='_customization-presets.scss') %}
+.preset-dense {
+  --st-density: 0.875;
+}
     {% endcall %}
   </section>
 {% endblock %}

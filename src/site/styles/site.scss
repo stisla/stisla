@@ -1,3 +1,5 @@
+@use 'customization-presets';
+
 // Site-only chrome for stisla.dev — never bundled into the framework CSS.
 // Behaviors live alongside in src/site/scripts/site.js. Runtime tokens come
 // from the framework bundle (--st-*).
