@@ -27,11 +27,11 @@
           </button>
         </div>
         <div class="drawer__body">
-          <div style="margin-bottom: 1rem;">
+          <div class="mb-4">
             <label for="taskTitle" class="form-label">Title</label>
             <input type="text" class="form-control" id="taskTitle" placeholder="Write the launch announcement">
           </div>
-          <div style="margin-bottom: 1rem;">
+          <div class="mb-4">
             <label for="taskDesc" class="form-label">Description</label>
             <textarea class="form-control" id="taskDesc" rows="4" placeholder="Anything the assignee should know before they start."></textarea>
           </div>
@@ -63,7 +63,7 @@
     <h2>Placements</h2>
     <p>Four modifiers anchor the panel to a viewport edge. <code>.drawer--start</code> slides in from the left, <code>.drawer--end</code> from the right, <code>.drawer--top</code> from above, <code>.drawer--bottom</code> from below. Start and end take a fixed width, top and bottom take a fixed height. Bare <code>.drawer</code> behaves as end.</p>
     {% call ui.demo() %}
-    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+    <div class="d-flex flex-wrap gap-2">
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-drawer-trigger="drawerStart">Start</button>
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-drawer-trigger="drawerEnd">End</button>
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-drawer-trigger="drawerTop">Top</button>
@@ -77,37 +77,37 @@
           <h3 class="drawer__title">Account</h3>
           <button type="button" class="drawer__close" data-stisla-drawer-dismiss aria-label="Close"><i data-lucide="x"></i></button>
         </div>
-        <div class="drawer__body" style="padding: 0;">
+        <div class="drawer__body p-0">
           <ul class="list-group list-group--flush">
-            <li class="list-group__item" style="display: flex; align-items: center; gap: 0.75rem;">
+            <li class="list-group__item d-flex align-items-center gap-3">
               <span class="icon-box icon-box--primary"><i data-lucide="user"></i></span>
-              <div style="flex: 1;">
-                <div style="font-weight: 500;">Profile</div>
-                <div style="font-size: 0.875rem;" class="text-muted-foreground">Name, avatar, bio</div>
+              <div class="flex-fill">
+                <div class="fw-medium">Profile</div>
+                <div class="fs-2 text-muted-foreground">Name, avatar, bio</div>
               </div>
               <i data-lucide="chevron-right" width="18" class="text-muted-foreground"></i>
             </li>
-            <li class="list-group__item" style="display: flex; align-items: center; gap: 0.75rem;">
+            <li class="list-group__item d-flex align-items-center gap-3">
               <span class="icon-box icon-box--info"><i data-lucide="bell"></i></span>
-              <div style="flex: 1;">
-                <div style="font-weight: 500;">Notifications</div>
-                <div style="font-size: 0.875rem;" class="text-muted-foreground">Email, push, digest</div>
+              <div class="flex-fill">
+                <div class="fw-medium">Notifications</div>
+                <div class="fs-2 text-muted-foreground">Email, push, digest</div>
               </div>
               <i data-lucide="chevron-right" width="18" class="text-muted-foreground"></i>
             </li>
-            <li class="list-group__item" style="display: flex; align-items: center; gap: 0.75rem;">
+            <li class="list-group__item d-flex align-items-center gap-3">
               <span class="icon-box icon-box--warning"><i data-lucide="credit-card"></i></span>
-              <div style="flex: 1;">
-                <div style="font-weight: 500;">Billing</div>
-                <div style="font-size: 0.875rem;" class="text-muted-foreground">Plan, invoices, payment method</div>
+              <div class="flex-fill">
+                <div class="fw-medium">Billing</div>
+                <div class="fs-2 text-muted-foreground">Plan, invoices, payment method</div>
               </div>
               <i data-lucide="chevron-right" width="18" class="text-muted-foreground"></i>
             </li>
-            <li class="list-group__item" style="display: flex; align-items: center; gap: 0.75rem;">
+            <li class="list-group__item d-flex align-items-center gap-3">
               <span class="icon-box"><i data-lucide="shield"></i></span>
-              <div style="flex: 1;">
-                <div style="font-weight: 500;">Security</div>
-                <div style="font-size: 0.875rem;" class="text-muted-foreground">Password, 2FA, sessions</div>
+              <div class="flex-fill">
+                <div class="fw-medium">Security</div>
+                <div class="fs-2 text-muted-foreground">Password, 2FA, sessions</div>
               </div>
               <i data-lucide="chevron-right" width="18" class="text-muted-foreground"></i>
             </li>
@@ -124,28 +124,28 @@
           <button type="button" class="drawer__close" data-stisla-drawer-dismiss aria-label="Close"><i data-lucide="x"></i></button>
         </div>
         <div class="drawer__body">
-          <div style="display: flex; gap: 0.75rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--st-border);">
-            <span class="icon-box icon-box--success icon-box--round" style="flex-shrink: 0;"><i data-lucide="check"></i></span>
+          <div class="d-flex gap-3 mb-4 pb-4" style="border-bottom: 1px solid var(--st-border);">
+            <span class="icon-box icon-box--success icon-box--round flex-shrink-0"><i data-lucide="check"></i></span>
             <div>
-              <div style="font-weight: 500;">Deploy finished</div>
-              <p class="text-muted-foreground" style="margin: 0 0 0.25rem; font-size: 0.875rem;">Build #2147 shipped to production in 4m 12s.</p>
-              <span style="font-size: 0.875rem;" class="text-muted-foreground">2 minutes ago</span>
+              <div class="fw-medium">Deploy finished</div>
+              <p class="text-muted-foreground m-0 mb-1 fs-2">Build #2147 shipped to production in 4m 12s.</p>
+              <span class="fs-2 text-muted-foreground">2 minutes ago</span>
             </div>
           </div>
-          <div style="display: flex; gap: 0.75rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--st-border);">
-            <span class="icon-box icon-box--info icon-box--round" style="flex-shrink: 0;"><i data-lucide="message-square"></i></span>
+          <div class="d-flex gap-3 mb-4 pb-4" style="border-bottom: 1px solid var(--st-border);">
+            <span class="icon-box icon-box--info icon-box--round flex-shrink-0"><i data-lucide="message-square"></i></span>
             <div>
-              <div style="font-weight: 500;">Amelia replied</div>
-              <p class="text-muted-foreground" style="margin: 0 0 0.25rem; font-size: 0.875rem;">"Let's pair on the cart bug tomorrow morning."</p>
-              <span style="font-size: 0.875rem;" class="text-muted-foreground">12 minutes ago</span>
+              <div class="fw-medium">Amelia replied</div>
+              <p class="text-muted-foreground m-0 mb-1 fs-2">"Let's pair on the cart bug tomorrow morning."</p>
+              <span class="fs-2 text-muted-foreground">12 minutes ago</span>
             </div>
           </div>
-          <div style="display: flex; gap: 0.75rem;">
-            <span class="icon-box icon-box--warning icon-box--round" style="flex-shrink: 0;"><i data-lucide="alert-triangle"></i></span>
+          <div class="d-flex gap-3">
+            <span class="icon-box icon-box--warning icon-box--round flex-shrink-0"><i data-lucide="alert-triangle"></i></span>
             <div>
-              <div style="font-weight: 500;">Disk above 80%</div>
-              <p class="text-muted-foreground" style="margin: 0 0 0.25rem; font-size: 0.875rem;">db-primary-2 is at 84% used. Consider expanding the volume.</p>
-              <span style="font-size: 0.875rem;" class="text-muted-foreground">35 minutes ago</span>
+              <div class="fw-medium">Disk above 80%</div>
+              <p class="text-muted-foreground m-0 mb-1 fs-2">db-primary-2 is at 84% used. Consider expanding the volume.</p>
+              <span class="fs-2 text-muted-foreground">35 minutes ago</span>
             </div>
           </div>
         </div>
@@ -162,19 +162,19 @@
         <div class="drawer__body">
           <div class="row g-3">
             <div class="col-md-4">
-              <span class="badge badge--primary" style="margin-bottom: 0.5rem;">New</span>
-              <div style="font-weight: 500; margin-bottom: 0.25rem;">Bulk reassign</div>
-              <p class="text-muted-foreground" style="margin: 0; font-size: 0.875rem;">Move many tasks to a new owner in one go from the board view.</p>
+              <span class="badge badge--primary mb-2">New</span>
+              <div class="fw-medium mb-1">Bulk reassign</div>
+              <p class="text-muted-foreground m-0 fs-2">Move many tasks to a new owner in one go from the board view.</p>
             </div>
             <div class="col-md-4">
-              <span class="badge badge--success" style="margin-bottom: 0.5rem;">Improved</span>
-              <div style="font-weight: 500; margin-bottom: 0.25rem;">Faster search</div>
-              <p class="text-muted-foreground" style="margin: 0; font-size: 0.875rem;">Workspace search now returns results in under 100ms for most queries.</p>
+              <span class="badge badge--success mb-2">Improved</span>
+              <div class="fw-medium mb-1">Faster search</div>
+              <p class="text-muted-foreground m-0 fs-2">Workspace search now returns results in under 100ms for most queries.</p>
             </div>
             <div class="col-md-4">
-              <span class="badge badge--warning" style="margin-bottom: 0.5rem;">Fixed</span>
-              <div style="font-weight: 500; margin-bottom: 0.25rem;">Recurring task DST</div>
-              <p class="text-muted-foreground" style="margin: 0; font-size: 0.875rem;">Recurring tasks no longer drift by an hour around daylight saving.</p>
+              <span class="badge badge--warning mb-2">Fixed</span>
+              <div class="fw-medium mb-1">Recurring task DST</div>
+              <p class="text-muted-foreground m-0 fs-2">Recurring tasks no longer drift by an hour around daylight saving.</p>
             </div>
           </div>
         </div>
@@ -185,18 +185,18 @@
       <div class="drawer__backdrop" data-stisla-drawer-dismiss></div>
       <div class="drawer__content">
         <div class="drawer__header">
-          <div style="margin: 0 auto; width: 100%; max-width: 30rem; display: flex; align-items: center;">
+          <div class="mx-auto w-100 d-flex align-items-center" style="max-width: 30rem;">
             <h3 class="drawer__title">Share this report</h3>
             <button type="button" class="drawer__close" data-stisla-drawer-dismiss aria-label="Close"><i data-lucide="x"></i></button>
           </div>
         </div>
         <div class="drawer__body">
-          <div style="margin: 0 auto; width: 100%; max-width: 30rem;">
-            <div class="input-group" style="margin-bottom: 1rem;">
+          <div class="mx-auto w-100" style="max-width: 30rem;">
+            <div class="input-group mb-4">
               <input type="text" class="form-control" value="https://app.example.com/r/q3-revenue" readonly>
               <button class="btn btn--outline btn--neutral" type="button">Copy link</button>
             </div>
-            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+            <div class="d-flex flex-wrap gap-2">
               <button type="button" class="btn btn--outline btn--neutral"><i data-lucide="mail"></i>Email</button>
               <button type="button" class="btn btn--outline btn--neutral"><i data-lucide="message-circle"></i>Slack</button>
               <button type="button" class="btn btn--outline btn--neutral"><i data-lucide="download"></i>Download PDF</button>
@@ -269,41 +269,41 @@
           <button type="button" class="drawer__close" data-stisla-drawer-dismiss aria-label="Close"><i data-lucide="x"></i></button>
         </div>
         <div class="drawer__body">
-          <ol style="list-style: none; padding: 0; margin: 0;">
-            <li style="display: flex; gap: 0.75rem; margin-bottom: 1rem;">
-              <div class="icon-box icon-box--primary icon-box--round" style="flex-shrink: 0; --icon-box-size: 2rem;"><i data-lucide="git-commit"></i></div>
+          <ol class="p-0 m-0" style="list-style: none;">
+            <li class="d-flex gap-3 mb-4">
+              <div class="icon-box icon-box--primary icon-box--round flex-shrink-0" style="--icon-box-size: 2rem;"><i data-lucide="git-commit"></i></div>
               <div>
-                <div><span style="font-weight: 500;">Amelia</span> pushed 3 commits to <code>main</code></div>
-                <span style="font-size: 0.875rem;" class="text-muted-foreground">9:42 AM</span>
+                <div><span class="fw-medium">Amelia</span> pushed 3 commits to <code>main</code></div>
+                <span class="fs-2 text-muted-foreground">9:42 AM</span>
               </div>
             </li>
-            <li style="display: flex; gap: 0.75rem; margin-bottom: 1rem;">
-              <div class="icon-box icon-box--success icon-box--round" style="flex-shrink: 0; --icon-box-size: 2rem;"><i data-lucide="check"></i></div>
+            <li class="d-flex gap-3 mb-4">
+              <div class="icon-box icon-box--success icon-box--round flex-shrink-0" style="--icon-box-size: 2rem;"><i data-lucide="check"></i></div>
               <div>
-                <div><span style="font-weight: 500;">Jonas</span> completed "Audit checkout copy"</div>
-                <span style="font-size: 0.875rem;" class="text-muted-foreground">9:31 AM</span>
+                <div><span class="fw-medium">Jonas</span> completed "Audit checkout copy"</div>
+                <span class="fs-2 text-muted-foreground">9:31 AM</span>
               </div>
             </li>
-            <li style="display: flex; gap: 0.75rem; margin-bottom: 1rem;">
-              <div class="icon-box icon-box--info icon-box--round" style="flex-shrink: 0; --icon-box-size: 2rem;"><i data-lucide="message-square"></i></div>
+            <li class="d-flex gap-3 mb-4">
+              <div class="icon-box icon-box--info icon-box--round flex-shrink-0" style="--icon-box-size: 2rem;"><i data-lucide="message-square"></i></div>
               <div>
-                <div><span style="font-weight: 500;">Priya</span> commented on "Onboarding redesign"</div>
-                <p class="text-muted-foreground" style="margin: 0 0 0.25rem; font-size: 0.875rem;">"Step 3 looks good. The empty state on step 4 still needs a copy pass."</p>
-                <span style="font-size: 0.875rem;" class="text-muted-foreground">9:18 AM</span>
+                <div><span class="fw-medium">Priya</span> commented on "Onboarding redesign"</div>
+                <p class="text-muted-foreground m-0 mb-1 fs-2">"Step 3 looks good. The empty state on step 4 still needs a copy pass."</p>
+                <span class="fs-2 text-muted-foreground">9:18 AM</span>
               </div>
             </li>
-            <li style="display: flex; gap: 0.75rem; margin-bottom: 1rem;">
-              <div class="icon-box icon-box--warning icon-box--round" style="flex-shrink: 0; --icon-box-size: 2rem;"><i data-lucide="user-plus"></i></div>
+            <li class="d-flex gap-3 mb-4">
+              <div class="icon-box icon-box--warning icon-box--round flex-shrink-0" style="--icon-box-size: 2rem;"><i data-lucide="user-plus"></i></div>
               <div>
-                <div><span style="font-weight: 500;">Lena</span> joined the workspace</div>
-                <span style="font-size: 0.875rem;" class="text-muted-foreground">Yesterday</span>
+                <div><span class="fw-medium">Lena</span> joined the workspace</div>
+                <span class="fs-2 text-muted-foreground">Yesterday</span>
               </div>
             </li>
-            <li style="display: flex; gap: 0.75rem;">
-              <div class="icon-box icon-box--danger icon-box--round" style="flex-shrink: 0; --icon-box-size: 2rem;"><i data-lucide="alert-circle"></i></div>
+            <li class="d-flex gap-3">
+              <div class="icon-box icon-box--danger icon-box--round flex-shrink-0" style="--icon-box-size: 2rem;"><i data-lucide="alert-circle"></i></div>
               <div>
                 <div>Build #2143 failed on <code>release/v2</code></div>
-                <span style="font-size: 0.875rem;" class="text-muted-foreground">Yesterday</span>
+                <span class="fs-2 text-muted-foreground">Yesterday</span>
               </div>
             </li>
           </ol>
@@ -329,11 +329,11 @@
         </div>
         <div class="drawer__body">
           <p class="text-muted-foreground">A few details so teammates know who they're working with.</p>
-          <div style="margin-bottom: 1rem;">
+          <div class="mb-4">
             <label for="setupName" class="form-label">Full name</label>
             <input type="text" class="form-control" id="setupName" value="Nauval Azhar">
           </div>
-          <div style="margin-bottom: 1rem;">
+          <div class="mb-4">
             <label for="setupRole" class="form-label">Role</label>
             <select class="form-control" id="setupRole">
               <option>Engineering</option>
@@ -353,7 +353,7 @@
           </div>
         </div>
         <div class="drawer__footer">
-          <button type="button" class="btn btn--primary" style="width: 100%;" data-stisla-drawer-dismiss>Save and continue</button>
+          <button type="button" class="btn btn--primary w-100" data-stisla-drawer-dismiss>Save and continue</button>
         </div>
       </div>
     </div>
@@ -376,8 +376,8 @@
           <button type="button" class="drawer__close" data-stisla-drawer-dismiss aria-label="Close"><i data-lucide="x"></i></button>
         </div>
         <div class="drawer__body">
-          <div style="margin-bottom: 1.5rem;">
-            <div style="font-weight: 500; margin-bottom: 0.5rem;">Status</div>
+          <div class="mb-6">
+            <div class="fw-medium mb-2">Status</div>
             <div class="form-check">
               <input class="form-check__input" type="checkbox" id="fStatusOpen" checked>
               <label class="form-check__label" for="fStatusOpen">Open</label>
@@ -395,8 +395,8 @@
               <label class="form-check__label" for="fStatusDone">Done</label>
             </div>
           </div>
-          <div style="margin-bottom: 1.5rem;">
-            <div style="font-weight: 500; margin-bottom: 0.5rem;">Priority</div>
+          <div class="mb-6">
+            <div class="fw-medium mb-2">Priority</div>
             <div class="form-check">
               <input class="form-check__input" type="checkbox" id="fPriorityHigh" checked>
               <label class="form-check__label" for="fPriorityHigh">High</label>
@@ -411,7 +411,7 @@
             </div>
           </div>
           <div>
-            <label for="fAssignee" class="form-label" style="font-weight: 500;">Assignee</label>
+            <label for="fAssignee" class="form-label fw-medium">Assignee</label>
             <select class="form-control" id="fAssignee">
               <option selected>Anyone</option>
               <option>Me</option>

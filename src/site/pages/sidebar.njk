@@ -86,7 +86,7 @@
     <h2>Sizes</h2>
     <p>Three sizes: <code>.sidebar--sm</code>, default, and <code>.sidebar--lg</code>. The modifier retunes button height, padding, and group gap. Outer panel padding stays the same so gutters read identically across sizes.</p>
     {% call ui.demo() %}
-    <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-start;">
+    <div class="d-flex flex-wrap gap-3 align-items-start">
       <aside data-stisla-sidebar class="sidebar sidebar--sm" style="width: 14rem;">
         <div class="sidebar__content">
           <nav class="sidebar__menu">
@@ -391,7 +391,7 @@
     <p>Add <code>.is-collapsed</code> to the panel to shrink it to icons only. Each button becomes a square with its icon centered. Labels, submenus, and chevrons fade out coordinated with whatever width transition your layout runs. Wrap label text in a <code>&lt;span&gt;</code> so it can be hidden cleanly — bare text nodes get clipped as a fallback but produce a less smooth transition.</p>
     <p>The button size follows <code>.sidebar--sm</code> and <code>.sidebar--lg</code>. The panel <code>width</code> is the layout's job — match it to the button size for a clean square cell. The recipe is <code>(button-height + 2 × --sidebar-padding-x) × --st-density</code>, which gives 4rem (sm), 4.25rem (default), 4.5rem (lg) at density 1, and scales proportionally at <code>0.875</code> or <code>1.125</code>. Add 2 × border-width on top when the panel carries a border (<code>box-sizing: border-box</code> trims the interior by the border, squeezing the icon cell); the demos below use <code>calc(4rem * var(--st-density) + 2px)</code> for a 1px border at the sm size.</p>
     {% call ui.demo() %}
-    <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-start;">
+    <div class="d-flex flex-wrap gap-3 align-items-start">
       <aside data-stisla-sidebar class="sidebar sidebar--sm is-collapsed" style="width: calc(4rem * var(--st-density) + 2px); border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
         <header class="sidebar__header">
           <a class="sidebar__brand" href="#" aria-label="Stisla"><i data-lucide="hexagon"></i><span>Stisla</span></a>
@@ -455,7 +455,7 @@
     <p>Pair the toggle with the opt-in <code>--sidebar-width</code> and <code>--sidebar-width-collapsed</code> variables and the width animates pure-CSS — no inline width changes, no script. The width transition rides <code>--sidebar-transition</code>.</p>
     <p>Inside an <code>.app-shell</code>, prefer <code>data-stisla-app-shell-toggle="collapse"</code> instead — <code>Stisla.AppShell</code> flips <code>.is-sidebar-collapsed</code> on the shell and delegates to the sidebar's <code>collapse()</code>/<code>expand()</code> API in one click, keeping the panel's <code>.is-collapsed</code> + submenu close + ARIA all in sync.</p>
     {% call ui.demo() %}
-    <aside id="demo-toggleable-sidebar" data-stisla-sidebar class="sidebar" style="position: absolute; inset: 0 auto 0 0; --sidebar-width: 18rem; --sidebar-width-collapsed: calc(4.25rem * var(--st-density) + 1px); border-right: 1px solid var(--st-border); --sidebar-bg: var(--st-surface);">
+    <aside id="demo-toggleable-sidebar" data-stisla-sidebar class="sidebar position-absolute" style="inset: 0 auto 0 0; --sidebar-width: 18rem; --sidebar-width-collapsed: calc(4.25rem * var(--st-density) + 1px); border-right: 1px solid var(--st-border); --sidebar-bg: var(--st-surface);">
       <header class="sidebar__header">
         <a class="sidebar__brand" href="#">
           <i data-lucide="hexagon"></i>

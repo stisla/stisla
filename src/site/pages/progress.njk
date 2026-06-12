@@ -13,8 +13,8 @@
     <h2>Example</h2>
     <p>Pair the bar with a label and a percentage above. The label states the action; the percentage sits muted on the trailing edge so the eye reads the action first.</p>
     {% call ui.demo() %}
-    <div style="width: 100%;">
-      <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+    <div class="w-100">
+      <div class="d-flex justify-content-between mb-1">
         <span class="fw-medium">Uploading</span>
         <span class="text-muted-foreground">72%</span>
       </div>
@@ -29,7 +29,7 @@
     <h2>Basic</h2>
     <p>Wrap the bar in <code>.progress</code> and place a single <code>.progress__bar</code> inside. The wrapper carries <code>role="progressbar"</code> and the <code>aria-valuenow</code> / <code>aria-valuemin</code> / <code>aria-valuemax</code> attributes; the inner element paints the fill via <code>width</code>.</p>
     {% call ui.demo() %}
-    <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%;">
+    <div class="d-flex flex-column gap-4 w-100">
       <div class="progress" role="progressbar" aria-label="Zero" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
         <div class="progress__bar" style="width: 0%"></div>
       </div>
@@ -53,7 +53,7 @@
     <h2>Intents</h2>
     <p>Recolor the fill with an intent modifier on <code>.progress__bar</code>. The track stays on the neutral tier so contrast holds in both themes.</p>
     {% call ui.demo() %}
-    <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%;">
+    <div class="d-flex flex-column gap-4 w-100">
       <div class="progress" role="progressbar" aria-label="Primary" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
         <div class="progress__bar progress__bar--primary" style="width: 60%"></div>
       </div>
@@ -77,7 +77,7 @@
     <h2>Sizes</h2>
     <p>Three sizes cover the typical range. Default sits at a thin strip; <code>--sm</code> compresses to a hairline; <code>--lg</code> grows to label-friendly height.</p>
     {% call ui.demo() %}
-    <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%;">
+    <div class="d-flex flex-column gap-4 w-100">
       <div class="progress progress--sm" role="progressbar" aria-label="Small" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
         <div class="progress__bar" style="width: 60%"></div>
       </div>
@@ -95,7 +95,7 @@
     <h2>Animated</h2>
     <p>Add <code>.progress__bar--animated</code> for a soft sheen that sweeps across the fill every few seconds. Meant as a quiet "still working" signal, not a constant treadmill. <code>prefers-reduced-motion</code> turns the animation off.</p>
     {% call ui.demo() %}
-    <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%;">
+    <div class="d-flex flex-column gap-4 w-100">
       <div class="progress progress--lg" role="progressbar" aria-label="Animated primary" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
         <div class="progress__bar progress__bar--animated" style="width: 60%"></div>
       </div>
@@ -110,7 +110,7 @@
     <h2>Indeterminate</h2>
     <p>Add <code>.is-indeterminate</code> on <code>.progress</code> when the duration is unknown. A partial bar slides across the track on loop; drop the inline width on the bar, the CSS owns it. Skip <code>aria-valuenow</code> so assistive tech announces the bar as indeterminate.</p>
     {% call ui.demo() %}
-    <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%;">
+    <div class="d-flex flex-column gap-4 w-100">
       <div class="progress is-indeterminate" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100">
         <div class="progress__bar"></div>
       </div>

@@ -17,13 +17,13 @@
     <h2>Installation</h2>
     <p>Carousel is an integration component. It's already in the kitchen-sink <code>stisla-full</code> bundle; install it alongside the core <code>stisla</code> bundle either as script tags or via your package manager.</p>
 
-    <div class="install-tabs" data-install-tabs style="margin-top: 1rem;">
+    <div class="install-tabs mt-4" data-install-tabs>
       <div class="toggle-group" role="radiogroup" aria-label="Installation method" data-stisla-toggle-group>
         <button type="button" class="toggle" role="radio" aria-checked="true" data-state="active" data-value="compiled">Compiled</button>
         <button type="button" class="toggle" role="radio" aria-checked="false" data-value="manual">Manual</button>
       </div>
 
-      <div data-install-tab-panel="compiled" style="margin-top: 1rem;">
+      <div class="mt-4" data-install-tab-panel="compiled">
         <p>Add the integration's stylesheet and script next to the ones loading the core bundle.</p>
         {% call ui.code(lang='html') %}
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/vanilla@3/dist/integrations/carousel.css">
@@ -32,7 +32,7 @@
         <p>The integration script auto-registers on the global <code>Stisla</code> instance, so no extra wiring is needed.</p>
       </div>
 
-      <div data-install-tab-panel="manual" style="margin-top: 1rem;" hidden>
+      <div class="mt-4" data-install-tab-panel="manual" hidden>
         <p>Install Embla:</p>
         {% call ui.code(lang='bash') %}
         npm install embla-carousel
@@ -143,22 +143,22 @@
           <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="1 of 3">
             <img src="{{ img_1 }}" alt="" />
             <div class="carousel__caption">
-              <h3 style="margin: 0 0 0.25rem 0; font-size: 1.125rem; font-weight: 600;">Above the clouds</h3>
-              <p style="margin: 0; font-size: 0.875rem;">A break in the weather over the eastern alps.</p>
+              <h3 class="m-0 mb-1 fs-4 fw-semibold">Above the clouds</h3>
+              <p class="m-0 fs-2">A break in the weather over the eastern alps.</p>
             </div>
           </div>
           <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="2 of 3">
             <img src="{{ img_2 }}" alt="" />
             <div class="carousel__caption">
-              <h3 style="margin: 0 0 0.25rem 0; font-size: 1.125rem; font-weight: 600;">City after dark</h3>
-              <p style="margin: 0; font-size: 0.875rem;">Lights up just as the last of the day fades out.</p>
+              <h3 class="m-0 mb-1 fs-4 fw-semibold">City after dark</h3>
+              <p class="m-0 fs-2">Lights up just as the last of the day fades out.</p>
             </div>
           </div>
           <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="3 of 3">
             <img src="{{ img_3 }}" alt="" />
             <div class="carousel__caption">
-              <h3 style="margin: 0 0 0.25rem 0; font-size: 1.125rem; font-weight: 600;">Iron lattice</h3>
-              <p style="margin: 0; font-size: 0.875rem;">Paris in the gold hour from the Trocadero.</p>
+              <h3 class="m-0 mb-1 fs-4 fw-semibold">Iron lattice</h3>
+              <p class="m-0 fs-2">Paris in the gold hour from the Trocadero.</p>
             </div>
           </div>
         </div>
@@ -187,34 +187,34 @@
       <div class="carousel__viewport">
         <div class="carousel__track">
           <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="1 of 3">
-            <div class="card" style="margin: 0;">
-              <div class="card__body" style="padding: 2rem;">
-                <p style="font-size: 1.0625rem; line-height: 1.6; margin: 0;">"Stisla took the headache out of rebuilding our internal admin tool. The token system meant we could ship a brand refresh in a single PR — no per-component overrides."</p>
-                <div style="margin-top: 1.25rem;">
+            <div class="card m-0">
+              <div class="card__body p-8">
+                <p class="m-0" style="font-size: 1.0625rem; line-height: 1.6;">"Stisla took the headache out of rebuilding our internal admin tool. The token system meant we could ship a brand refresh in a single PR — no per-component overrides."</p>
+                <div class="mt-5">
                   <strong>Maya Tanaka</strong>
-                  <div class="text-muted-foreground" style="font-size: 0.875rem;">Engineering Lead, Northwind Labs</div>
+                  <div class="text-muted-foreground fs-2">Engineering Lead, Northwind Labs</div>
                 </div>
               </div>
             </div>
           </div>
           <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="2 of 3">
-            <div class="card" style="margin: 0;">
-              <div class="card__body" style="padding: 2rem;">
-                <p style="font-size: 1.0625rem; line-height: 1.6; margin: 0;">"We bought into the BS5 version for a client project two years ago. The v3 rewrite kept everything we liked and dropped the bits we were already hacking around."</p>
-                <div style="margin-top: 1.25rem;">
+            <div class="card m-0">
+              <div class="card__body p-8">
+                <p class="m-0" style="font-size: 1.0625rem; line-height: 1.6;">"We bought into the BS5 version for a client project two years ago. The v3 rewrite kept everything we liked and dropped the bits we were already hacking around."</p>
+                <div class="mt-5">
                   <strong>Diego Romero</strong>
-                  <div class="text-muted-foreground" style="font-size: 0.875rem;">Design Engineer, Forge &amp; Tide</div>
+                  <div class="text-muted-foreground fs-2">Design Engineer, Forge &amp; Tide</div>
                 </div>
               </div>
             </div>
           </div>
           <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="3 of 3">
-            <div class="card" style="margin: 0;">
-              <div class="card__body" style="padding: 2rem;">
-                <p style="font-size: 1.0625rem; line-height: 1.6; margin: 0;">"Dark mode used to be a quarterly bug ticket. Now it's a single <code>[data-theme]</code> flip on the root element and we don't think about it again."</p>
-                <div style="margin-top: 1.25rem;">
+            <div class="card m-0">
+              <div class="card__body p-8">
+                <p class="m-0" style="font-size: 1.0625rem; line-height: 1.6;">"Dark mode used to be a quarterly bug ticket. Now it's a single <code>[data-theme]</code> flip on the root element and we don't think about it again."</p>
+                <div class="mt-5">
                   <strong>Priya Reddy</strong>
-                  <div class="text-muted-foreground" style="font-size: 0.875rem;">Product Engineer, Helix Health</div>
+                  <div class="text-muted-foreground fs-2">Product Engineer, Helix Health</div>
                 </div>
               </div>
             </div>

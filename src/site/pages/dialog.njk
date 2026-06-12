@@ -46,7 +46,7 @@
     <h2>Sizes</h2>
     <p>Add <code>.dialog--sm</code>, <code>.dialog--lg</code>, or <code>.dialog--xl</code> on the <code>.dialog</code> root to swap widths. The default sits in the middle of the scale. <code>.dialog--almost-fullscreen</code> keeps a 2.5rem breathing strip around the panel so the page still hints through; <code>.dialog--fullscreen</code> edge-bleeds the panel to the viewport.</p>
     {% call ui.demo() %}
-    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+    <div class="d-flex flex-wrap gap-2">
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogSm">Small</button>
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogDefault">Default</button>
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogLg">Large</button>
@@ -62,7 +62,7 @@
           <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
           <div class="dialog__header"><h3 class="dialog__title">Small</h3></div>
           <div class="dialog__body">
-            <p style="margin: 0;">A compact card for confirmations and lightweight pickers.</p>
+            <p class="m-0">A compact card for confirmations and lightweight pickers.</p>
           </div>
         </div>
       </div>
@@ -75,7 +75,7 @@
           <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
           <div class="dialog__header"><h3 class="dialog__title">Default</h3></div>
           <div class="dialog__body">
-            <p style="margin: 0;">The canonical width for an invite form, an edit dialog, or a focused capture.</p>
+            <p class="m-0">The canonical width for an invite form, an edit dialog, or a focused capture.</p>
           </div>
         </div>
       </div>
@@ -88,7 +88,7 @@
           <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
           <div class="dialog__header"><h3 class="dialog__title">Large</h3></div>
           <div class="dialog__body">
-            <p style="margin: 0;">Room for a settings panel, a property inspector, or a small dashboard.</p>
+            <p class="m-0">Room for a settings panel, a property inspector, or a small dashboard.</p>
           </div>
         </div>
       </div>
@@ -101,7 +101,7 @@
           <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
           <div class="dialog__header"><h3 class="dialog__title">Extra large</h3></div>
           <div class="dialog__body">
-            <p style="margin: 0;">A canvas for media, rich detail views, or a side-by-side comparison.</p>
+            <p class="m-0">A canvas for media, rich detail views, or a side-by-side comparison.</p>
           </div>
         </div>
       </div>
@@ -114,7 +114,7 @@
           <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
           <div class="dialog__header"><h3 class="dialog__title">Almost fullscreen</h3></div>
           <div class="dialog__body">
-            <p style="margin: 0;">A breathing strip around the panel so the page still hints through. Useful when you want immersion without losing the surrounding context entirely.</p>
+            <p class="m-0">A breathing strip around the panel so the page still hints through. Useful when you want immersion without losing the surrounding context entirely.</p>
           </div>
         </div>
       </div>
@@ -127,7 +127,7 @@
           <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
           <div class="dialog__header"><h3 class="dialog__title">Fullscreen</h3></div>
           <div class="dialog__body">
-            <p style="margin: 0;">Edge to edge for an immersive flow. Useful for onboarding or a focused editor.</p>
+            <p class="m-0">Edge to edge for an immersive flow. Useful for onboarding or a focused editor.</p>
           </div>
         </div>
       </div>
@@ -139,7 +139,7 @@
     <h2>Positioning</h2>
     <p>The panel centers vertically by default. Add <code>.dialog__panel--top</code> to drop in from above, or <code>.dialog__panel--bottom</code> to anchor it to the lower edge.</p>
     {% call ui.demo() %}
-    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+    <div class="d-flex flex-wrap gap-2">
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogTop">Top</button>
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogCenter">Center</button>
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogBottom">Bottom</button>
@@ -152,7 +152,7 @@
           <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
           <div class="dialog__header"><h3 class="dialog__title">Pinned to top</h3></div>
           <div class="dialog__body">
-            <p style="margin: 0;">Reads as a notification surface dropping in from above.</p>
+            <p class="m-0">Reads as a notification surface dropping in from above.</p>
           </div>
         </div>
       </div>
@@ -165,7 +165,7 @@
           <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
           <div class="dialog__header"><h3 class="dialog__title">Centered</h3></div>
           <div class="dialog__body">
-            <p style="margin: 0;">The standard choice for confirmations and focused tasks.</p>
+            <p class="m-0">The standard choice for confirmations and focused tasks.</p>
           </div>
         </div>
       </div>
@@ -178,7 +178,7 @@
           <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
           <div class="dialog__header"><h3 class="dialog__title">Pinned to bottom</h3></div>
           <div class="dialog__body">
-            <p style="margin: 0;">Reads as a sheet on mobile, an action drawer on desktop.</p>
+            <p class="m-0">Reads as a sheet on mobile, an action drawer on desktop.</p>
           </div>
         </div>
       </div>
@@ -211,7 +211,7 @@
             <p>We may update these terms. If we do, we'll tell you in-app and give you a chance to read the new version before it takes effect.</p>
             <p>Questions go to <a href="#" class="link">support@example.com</a>. We try to respond within one business day.</p>
             <p>Last updated 12 May 2026.</p>
-            <p style="margin: 0;">Thanks for being here.</p>
+            <p class="m-0">Thanks for being here.</p>
           </div>
           <div class="dialog__footer">
             <button type="button" class="btn btn--ghost btn--neutral" data-stisla-dialog-dismiss>Decline</button>
@@ -241,7 +241,7 @@
           <div class="dialog__body">
             <label for="staticPwd" class="form-label">New password</label>
             <input type="password" class="form-control" id="staticPwd" autocomplete="new-password">
-            <p class="form-text" style="margin-top: 0.25rem;">At least twelve characters. Mix letters, numbers, and a symbol.</p>
+            <p class="form-text mt-1">At least twelve characters. Mix letters, numbers, and a symbol.</p>
           </div>
           <div class="dialog__footer">
             <button type="button" class="btn btn--ghost btn--neutral" data-stisla-dialog-dismiss>Cancel</button>
@@ -268,10 +268,10 @@
           <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close">
             <i data-lucide="x"></i>
           </button>
-          <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80" alt="" style="display: block; width: 100%; height: auto;">
+          <img class="d-block w-100" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80" alt="" style="height: auto;">
           <div class="dialog__body">
-            <h4 id="dialogHeroLabel" style="margin: 0 0 0.25rem; font-size: 1.0625rem; font-weight: 600;">Autumn release</h4>
-            <p class="text-muted-foreground" style="margin: 0;">A round-up of what's new this season, with notes on what's still in flight.</p>
+            <h4 class="m-0 mb-1 fw-semibold" id="dialogHeroLabel" style="font-size: 1.0625rem;">Autumn release</h4>
+            <p class="text-muted-foreground m-0">A round-up of what's new this season, with notes on what's still in flight.</p>
           </div>
         </div>
       </div>
@@ -283,7 +283,7 @@
     <h2>Lightbox</h2>
     <p>Override the surface vars on a single dialog to turn it into a frame for media. The blurred backdrop and the floating <code>.dialog__close</code> carry the affordance.</p>
     {% call ui.demo() %}
-    <a href="#" data-stisla-dialog-trigger="dialogLightbox" style="display: inline-block; cursor: zoom-in;">
+    <a class="d-inline-block" href="#" data-stisla-dialog-trigger="dialogLightbox" style="cursor: zoom-in;">
       <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt="" width="240" height="160" style="border-radius: var(--st-radius); object-fit: cover;">
     </a>
 
@@ -294,7 +294,7 @@
           <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close">
             <i data-lucide="x"></i>
           </button>
-          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=2000&q=85" alt="" style="display: block; width: 100%; height: auto; max-height: calc(100dvh - 5rem); object-fit: contain; border-radius: var(--st-radius);">
+          <img class="d-block w-100" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=2000&q=85" alt="" style="height: auto; max-height: calc(100dvh - 5rem); object-fit: contain; border-radius: var(--st-radius);">
         </div>
       </div>
     </div>
@@ -314,14 +314,14 @@
       <div class="dialog__panel">
         <div class="dialog__content">
           <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
-          <div class="dialog__body" style="text-align: center; padding-top: 1.5rem;">
-            <span class="icon-box icon-box--danger icon-box--round" style="--icon-box-size: 3rem; --icon-box-icon-size: 1.25rem; margin-bottom: 0.75rem;">
+          <div class="dialog__body text-center pt-6">
+            <span class="icon-box icon-box--danger icon-box--round mb-3" style="--icon-box-size: 3rem; --icon-box-icon-size: 1.25rem;">
               <i data-lucide="trash-2"></i>
             </span>
-            <h3 class="dialog__title" id="dialogConfirmLabel" style="margin: 0 0 0.25rem;">Delete this workspace?</h3>
-            <p class="text-muted-foreground" id="dialogConfirmDesc" style="margin: 0;">This removes every project, file, and member. The action can't be undone.</p>
+            <h3 class="dialog__title m-0 mb-1" id="dialogConfirmLabel">Delete this workspace?</h3>
+            <p class="text-muted-foreground m-0" id="dialogConfirmDesc">This removes every project, file, and member. The action can't be undone.</p>
           </div>
-          <div class="dialog__footer" style="justify-content: center;">
+          <div class="dialog__footer justify-content-center">
             <button type="button" class="btn btn--ghost btn--neutral" data-stisla-dialog-dismiss>Cancel</button>
             <button type="button" class="btn btn--danger" data-stisla-dialog-dismiss>Delete</button>
           </div>
@@ -346,15 +346,15 @@
           <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close">
             <i data-lucide="x"></i>
           </button>
-          <div class="dialog__body" style="text-align: center; padding-top: 1.5rem;">
-            <span class="icon-box icon-box--success icon-box--round" style="--icon-box-size: 3.5rem; --icon-box-icon-size: 1.5rem; margin-bottom: 0.75rem;">
+          <div class="dialog__body text-center pt-6">
+            <span class="icon-box icon-box--success icon-box--round mb-3" style="--icon-box-size: 3.5rem; --icon-box-icon-size: 1.5rem;">
               <i data-lucide="check"></i>
             </span>
-            <h3 class="dialog__title" id="dialogSuccessLabel" style="margin: 0 0 0.25rem;">Order placed</h3>
-            <p class="text-muted-foreground" style="margin: 0;">We've emailed the receipt and a tracking link. Delivery lands in two to three business days.</p>
+            <h3 class="dialog__title m-0 mb-1" id="dialogSuccessLabel">Order placed</h3>
+            <p class="text-muted-foreground m-0">We've emailed the receipt and a tracking link. Delivery lands in two to three business days.</p>
           </div>
           <div class="dialog__footer">
-            <button type="button" class="btn" data-stisla-dialog-dismiss style="--btn-tone: var(--st-success); --btn-color: var(--st-success-foreground); width: 100%;">View order</button>
+            <button type="button" class="btn w-100" data-stisla-dialog-dismiss style="--btn-tone: var(--st-success); --btn-color: var(--st-success-foreground);">View order</button>
           </div>
         </div>
       </div>

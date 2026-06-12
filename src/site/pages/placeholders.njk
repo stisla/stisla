@@ -44,7 +44,7 @@
     <h2>Basic</h2>
     <p>Apply <code>.placeholder</code> to any inline element and size it via an inline style. The bar fills with the current text color at half opacity and shows a wait cursor.</p>
     {% call ui.demo() %}
-    <p class="text-muted-foreground" aria-hidden="true" style="margin: 0;">
+    <p class="text-muted-foreground m-0" aria-hidden="true">
       <span class="placeholder" style="width: 50%"></span>
     </p>
     {% endcall %}
@@ -83,11 +83,11 @@
     <p>Wrap a group in <code>.placeholder--glow</code> for a pulsing opacity loop, or <code>.placeholder--wave</code> for a shimmer that sweeps left to right.</p>
     {% call ui.demo() %}
     <div class="demo-stack text-muted-foreground" aria-hidden="true">
-      <p class="placeholder--glow" style="margin: 0;">
+      <p class="placeholder--glow m-0">
         <span class="placeholder" style="width: 100%"></span>
         <span class="placeholder" style="width: 70%"></span>
       </p>
-      <p class="placeholder--wave" style="margin: 0;">
+      <p class="placeholder--wave m-0">
         <span class="placeholder" style="width: 100%"></span>
         <span class="placeholder" style="width: 70%"></span>
       </p>

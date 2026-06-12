@@ -17,9 +17,9 @@
     <h2>Basic</h2>
     <p><code>.app-shell</code> wraps a <code>.sidebar</code> and an <code>.app-shell__main</code>. The shell sets the sidebar's width via <code>--app-shell-sidebar-width</code> (default <code>16rem</code>), and main fills the rest with <code>flex-grow: 1</code>.</p>
     {% call ui.demo() %}
-    <div class="app-shell" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); overflow: hidden; width: 100%; min-height: 0; transform: translate(0); height: 22rem;">
-      <aside class="sidebar" style="background: var(--st-surface-2); border-right: 1px solid var(--st-border); display: flex; align-items: center; justify-content: center; color: var(--st-muted-foreground); font-size: 0.875rem;">Sidebar</aside>
-      <main class="app-shell__main" style="padding: 1rem;">
+    <div class="app-shell overflow-hidden w-100" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); min-height: 0; transform: translate(0); height: 22rem;">
+      <aside class="sidebar d-flex align-items-center justify-content-center text-muted-foreground fs-2" style="background: var(--st-surface-2); border-right: 1px solid var(--st-border);">Sidebar</aside>
+      <main class="app-shell__main p-4">
         <h3 class="h6">Dashboard</h3>
         <p class="text-muted-foreground">Page content goes here.</p>
       </main>
@@ -32,11 +32,11 @@
     <h2>With top navbar</h2>
     <p>Add a direct <code>.navbar</code> child to the shell and wrap the sidebar and main in an <code>.app-shell__body</code>. The shell auto-detects this shape via <code>:has()</code> and switches to flex-column. No modifier class needed.</p>
     {% call ui.demo() %}
-    <div class="app-shell" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); overflow: hidden; width: 100%; min-height: 0; transform: translate(0); height: 24rem;">
-      <nav class="navbar" style="background: var(--st-surface-2); border-bottom: 1px solid var(--st-border); padding: 0.75rem 1rem; color: var(--st-muted-foreground); font-size: 0.875rem;">Navbar</nav>
+    <div class="app-shell overflow-hidden w-100" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); min-height: 0; transform: translate(0); height: 24rem;">
+      <nav class="navbar py-3 px-4 text-muted-foreground fs-2" style="background: var(--st-surface-2); border-bottom: 1px solid var(--st-border);">Navbar</nav>
       <div class="app-shell__body">
-        <aside class="sidebar" style="background: var(--st-surface-2); border-right: 1px solid var(--st-border); display: flex; align-items: center; justify-content: center; color: var(--st-muted-foreground); font-size: 0.875rem;">Sidebar</aside>
-        <main class="app-shell__main" style="padding: 1rem;">
+        <aside class="sidebar d-flex align-items-center justify-content-center text-muted-foreground fs-2" style="background: var(--st-surface-2); border-right: 1px solid var(--st-border);">Sidebar</aside>
+        <main class="app-shell__main p-4">
           <h3 class="h6">Dashboard</h3>
           <p class="text-muted-foreground">Page content goes here.</p>
         </main>
@@ -47,11 +47,11 @@
     <h3>Navbar inside the main column</h3>
     <p>To keep the sidebar at the full page height with its own brand, leave the shell as a flex-row and put the navbar inside <code>.app-shell__main</code>. The navbar never extends across the sidebar.</p>
     {% call ui.demo() %}
-    <div class="app-shell" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); overflow: hidden; width: 100%; min-height: 0; transform: translate(0); height: 24rem;">
-      <aside class="sidebar" style="background: var(--st-surface-2); border-right: 1px solid var(--st-border); display: flex; align-items: center; justify-content: center; color: var(--st-muted-foreground); font-size: 0.875rem;">Sidebar</aside>
+    <div class="app-shell overflow-hidden w-100" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); min-height: 0; transform: translate(0); height: 24rem;">
+      <aside class="sidebar d-flex align-items-center justify-content-center text-muted-foreground fs-2" style="background: var(--st-surface-2); border-right: 1px solid var(--st-border);">Sidebar</aside>
       <main class="app-shell__main">
-        <nav class="navbar" style="background: var(--st-surface-2); border-bottom: 1px solid var(--st-border); padding: 0.75rem 1rem; color: var(--st-muted-foreground); font-size: 0.875rem;">Navbar</nav>
-        <div style="padding: 1rem; flex: 1 1 auto;">
+        <nav class="navbar py-3 px-4 text-muted-foreground fs-2" style="background: var(--st-surface-2); border-bottom: 1px solid var(--st-border);">Navbar</nav>
+        <div class="p-4 flex-fill">
           <h3 class="h6">Dashboard</h3>
           <p class="text-muted-foreground">Page content goes here.</p>
         </div>
@@ -64,14 +64,14 @@
     <h2>With footer</h2>
     <p>Drop a <code>&lt;footer&gt;</code> at the end of <code>.app-shell__main</code>. Main is already a flex column, so <code>margin-top: auto</code> on the footer pushes it to the bottom even when content is short.</p>
     {% call ui.demo() %}
-    <div class="app-shell" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); overflow: hidden; width: 100%; min-height: 0; transform: translate(0); height: 22rem;">
-      <aside class="sidebar" style="background: var(--st-surface-2); border-right: 1px solid var(--st-border); display: flex; align-items: center; justify-content: center; color: var(--st-muted-foreground); font-size: 0.875rem;">Sidebar</aside>
+    <div class="app-shell overflow-hidden w-100" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); min-height: 0; transform: translate(0); height: 22rem;">
+      <aside class="sidebar d-flex align-items-center justify-content-center text-muted-foreground fs-2" style="background: var(--st-surface-2); border-right: 1px solid var(--st-border);">Sidebar</aside>
       <main class="app-shell__main">
-        <div style="padding: 1rem;">
+        <div class="p-4">
           <h3 class="h6">Dashboard</h3>
           <p class="text-muted-foreground">Page content goes here.</p>
         </div>
-        <footer class="small text-muted-foreground" style="margin-top: auto; border-top: 1px solid var(--st-border); padding: 0.75rem 1rem;">
+        <footer class="fs-2 text-muted-foreground mt-auto py-3 px-4" style="border-top: 1px solid var(--st-border);">
           &copy; 2026 Acme. Built with Stisla.
         </footer>
       </main>
@@ -104,15 +104,15 @@
     <h2>Desktop collapse (rail)</h2>
     <p>Add <code>.is-sidebar-collapsed</code> to <code>.app-shell</code> to swap the sidebar to its rail width (<code>--app-shell-sidebar-width-collapsed</code>, default <code>4.25rem</code>). Pair it with <code>.is-collapsed</code> on the sidebar itself for the rail visuals. Any button can wire the toggle with <code>data-stisla-app-shell-toggle="collapse"</code>; <code>Stisla.AppShell</code> delegates the rail flip to the descendant <code>Stisla.Sidebar</code> instance so its rail visuals, ARIA, and submenu close-on-collapse stay in sync.</p>
     {% call ui.demo() %}
-    <div class="app-shell" data-stisla-app-shell style="border: 1px solid var(--st-border); border-radius: var(--st-radius); overflow: hidden; width: 100%; min-height: 0; transform: translate(0); height: 22rem;">
-      <aside class="sidebar" style="background: var(--st-surface-2); border-right: 1px solid var(--st-border); display: flex; align-items: center; justify-content: center; color: var(--st-muted-foreground); font-size: 0.875rem;">Sidebar</aside>
+    <div class="app-shell overflow-hidden w-100" data-stisla-app-shell style="border: 1px solid var(--st-border); border-radius: var(--st-radius); min-height: 0; transform: translate(0); height: 22rem;">
+      <aside class="sidebar d-flex align-items-center justify-content-center text-muted-foreground fs-2" style="background: var(--st-surface-2); border-right: 1px solid var(--st-border);">Sidebar</aside>
       <main class="app-shell__main">
-        <nav style="border-bottom: 1px solid var(--st-border); padding: 0.5rem 0.75rem;">
+        <nav class="py-2 px-3" style="border-bottom: 1px solid var(--st-border);">
           <button class="btn btn--ghost btn--neutral btn--icon-only btn--sm" type="button" data-stisla-app-shell-toggle="collapse" aria-label="Toggle sidebar">
             <i data-lucide="panel-left"></i>
           </button>
         </nav>
-        <div style="padding: 1rem; flex: 1 1 auto;">
+        <div class="p-4 flex-fill">
           <p class="text-muted-foreground">Click the icon to collapse the sidebar to a rail.</p>
         </div>
       </main>
@@ -124,15 +124,15 @@
     <h2>Mobile drawer</h2>
     <p>Below the <code>lg</code> breakpoint, the sidebar leaves the flex flow and sits fixed off-screen. Setting <code>.is-sidebar-visible</code> on the shell slides it in and shows a backdrop. Any button can flip the class with <code>data-stisla-app-shell-toggle="visibility"</code>. Backdrop clicks and the Escape key dismiss the drawer; opt out per shell with <code>{ dismissOnBackdrop: false }</code> or <code>{ dismissOnEscape: false }</code> via <code>data-stisla-app-shell-opts</code>.</p>
     {% call ui.demo() %}
-    <div class="app-shell" data-stisla-app-shell style="border: 1px solid var(--st-border); border-radius: var(--st-radius); overflow: hidden; width: 100%; min-height: 0; transform: translate(0); height: 22rem;">
-      <aside class="sidebar" style="background: var(--st-surface-2); border-right: 1px solid var(--st-border); display: flex; align-items: center; justify-content: center; color: var(--st-muted-foreground); font-size: 0.875rem;">Sidebar</aside>
+    <div class="app-shell overflow-hidden w-100" data-stisla-app-shell style="border: 1px solid var(--st-border); border-radius: var(--st-radius); min-height: 0; transform: translate(0); height: 22rem;">
+      <aside class="sidebar d-flex align-items-center justify-content-center text-muted-foreground fs-2" style="background: var(--st-surface-2); border-right: 1px solid var(--st-border);">Sidebar</aside>
       <main class="app-shell__main">
-        <nav style="border-bottom: 1px solid var(--st-border); padding: 0.5rem 0.75rem;">
+        <nav class="py-2 px-3" style="border-bottom: 1px solid var(--st-border);">
           <button class="btn btn--ghost btn--neutral btn--icon-only btn--sm" type="button" data-stisla-app-shell-toggle="visibility" aria-label="Open sidebar">
             <i data-lucide="menu"></i>
           </button>
         </nav>
-        <div style="padding: 1rem; flex: 1 1 auto;">
+        <div class="p-4 flex-fill">
           <p class="text-muted-foreground">Resize the browser below <code>lg</code> (992px) and tap the menu icon. A backdrop covers the rest of the shell while open; tap anywhere outside the sidebar or press <kbd>Esc</kbd> to dismiss.</p>
         </div>
       </main>
@@ -144,15 +144,15 @@
     <h2>Auto toggle (responsive)</h2>
     <p><code>data-stisla-app-shell-toggle="auto"</code> picks the right action per viewport — <code>visibility</code> below the <code>lg</code> breakpoint, <code>collapse</code> above. Use this for the single hamburger / menu button most dashboards ship in their top bar. The trigger's <code>aria-expanded</code> tracks whichever state matches the current viewport and re-syncs when the user resizes across the breakpoint. Programmatic equivalent: <code>Stisla.AppShell.getOrCreate(shell).toggleSidebarAuto()</code>.</p>
     {% call ui.demo() %}
-    <div class="app-shell" data-stisla-app-shell style="border: 1px solid var(--st-border); border-radius: var(--st-radius); overflow: hidden; width: 100%; min-height: 0; transform: translate(0); height: 22rem;">
-      <aside class="sidebar" style="background: var(--st-surface-2); border-right: 1px solid var(--st-border); display: flex; align-items: center; justify-content: center; color: var(--st-muted-foreground); font-size: 0.875rem;">Sidebar</aside>
+    <div class="app-shell overflow-hidden w-100" data-stisla-app-shell style="border: 1px solid var(--st-border); border-radius: var(--st-radius); min-height: 0; transform: translate(0); height: 22rem;">
+      <aside class="sidebar d-flex align-items-center justify-content-center text-muted-foreground fs-2" style="background: var(--st-surface-2); border-right: 1px solid var(--st-border);">Sidebar</aside>
       <main class="app-shell__main">
-        <nav style="border-bottom: 1px solid var(--st-border); padding: 0.5rem 0.75rem;">
+        <nav class="py-2 px-3" style="border-bottom: 1px solid var(--st-border);">
           <button class="btn btn--ghost btn--neutral btn--icon-only btn--sm" type="button" data-stisla-app-shell-toggle="auto" aria-label="Toggle sidebar">
             <i data-lucide="panel-left"></i>
           </button>
         </nav>
-        <div style="padding: 1rem; flex: 1 1 auto;">
+        <div class="p-4 flex-fill">
           <p class="text-muted-foreground">On desktop, the icon rails the sidebar. On mobile, it opens the drawer.</p>
         </div>
       </main>
