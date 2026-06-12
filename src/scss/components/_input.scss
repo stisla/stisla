@@ -13,7 +13,7 @@
 // Validation: [aria-invalid="true"] + :user-invalid (see form-field-base).
 
 .input {
-  @include form-field-base('input');
+  @include form-field-base("input");
 }
 
 // === <input type="file"> ================================================
@@ -32,6 +32,7 @@
 // Style the selector button to mirror .btn--sm.btn--neutral. The shadow
 // DOM blocks .btn classes from reaching it, so the rules are inlined.
 .input[type="file"]::file-selector-button {
+  margin-block-start: 0.4063rem;
   margin-inline-end: 0.625rem;
   padding: 0.125rem 0.5rem;
   font-family: inherit;
@@ -40,10 +41,11 @@
   line-height: 1.2;
   color: var(--st-neutral-foreground);
   background: var(--st-neutral);
-  border: 1px solid color-mix(in oklch, var(--st-neutral) 85%, var(--st-muted-foreground));
+  border: 1px solid
+    color-mix(in oklch, var(--st-neutral) 85%, var(--st-muted-foreground));
   border-radius: calc(var(--input-radius) - 0.25rem);
   cursor: pointer;
-  transition: background-color .12s ease;
+  transition: background-color 0.12s ease;
 }
 .input[type="file"]::file-selector-button:hover {
   background: color-mix(in oklch, var(--st-neutral) 88%, black);
@@ -72,11 +74,13 @@
   height: 1rem;
   background-color: var(--st-muted-foreground);
   background-image: none;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 2v4'/%3E%3Cpath d='M16 2v4'/%3E%3Crect width='18' height='18' x='3' y='4' rx='2'/%3E%3Cpath d='M3 10h18'/%3E%3C/svg%3E") no-repeat center / contain;
-          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 2v4'/%3E%3Cpath d='M16 2v4'/%3E%3Crect width='18' height='18' x='3' y='4' rx='2'/%3E%3Cpath d='M3 10h18'/%3E%3C/svg%3E") no-repeat center / contain;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 2v4'/%3E%3Cpath d='M16 2v4'/%3E%3Crect width='18' height='18' x='3' y='4' rx='2'/%3E%3Cpath d='M3 10h18'/%3E%3C/svg%3E")
+    no-repeat center / contain;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 2v4'/%3E%3Cpath d='M16 2v4'/%3E%3Crect width='18' height='18' x='3' y='4' rx='2'/%3E%3Cpath d='M3 10h18'/%3E%3C/svg%3E")
+    no-repeat center / contain;
   cursor: pointer;
   opacity: 1;
-  transition: background-color .12s ease;
+  transition: background-color 0.12s ease;
 }
 
 .input[type="time"]::-webkit-calendar-picker-indicator {
@@ -84,11 +88,13 @@
   height: 1rem;
   background-color: var(--st-muted-foreground);
   background-image: none;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolyline points='12 6 12 12 16 14'/%3E%3C/svg%3E") no-repeat center / contain;
-          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolyline points='12 6 12 12 16 14'/%3E%3C/svg%3E") no-repeat center / contain;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolyline points='12 6 12 12 16 14'/%3E%3C/svg%3E")
+    no-repeat center / contain;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolyline points='12 6 12 12 16 14'/%3E%3C/svg%3E")
+    no-repeat center / contain;
   cursor: pointer;
   opacity: 1;
-  transition: background-color .12s ease;
+  transition: background-color 0.12s ease;
 }
 
 .input::-webkit-calendar-picker-indicator:hover {
@@ -121,16 +127,16 @@
 // --input-height is the same nominal value at every size; the density
 // multiplier on the base resolves it.
 .input--sm {
-  --input-radius:    var(--st-input-radius, var(--st-radius-sm));
-  --input-height:    1.75rem;                                // 28
-  --input-padding-x: calc(0.5rem * var(--st-density));       //  8
+  --input-radius: var(--st-input-radius, var(--st-radius-sm));
+  --input-height: 1.75rem; // 28
+  --input-padding-x: calc(0.5rem * var(--st-density)); //  8
   --input-font-size: 0.8125rem;
 }
 
 .input--lg {
-  --input-radius:    var(--st-input-radius, var(--st-radius-lg));
-  --input-height:    2.75rem;                                // 44
-  --input-padding-x: calc(0.875rem * var(--st-density));     // 14
+  --input-radius: var(--st-input-radius, var(--st-radius-lg));
+  --input-height: 2.75rem; // 44
+  --input-padding-x: calc(0.875rem * var(--st-density)); // 14
   --input-font-size: 1rem;
 }
 

@@ -333,23 +333,19 @@ $utilities-config: (
 // === Margin ==================================================================
 @include utility-group('margin') using ($i) {
   @each $suffix, $prop in $margin-axes {
-    $sep: if($suffix == '', '', '-');
-
     @each $step, $value in $spacing-scale {
-      .m#{$sep}#{$suffix}#{$i}-#{$step} { #{$prop}: $value !important; }
+      .m#{$suffix}#{$i}-#{$step} { #{$prop}: $value !important; }
     }
 
-    .m#{$sep}#{$suffix}#{$i}-auto { #{$prop}: auto !important; }
+    .m#{$suffix}#{$i}-auto { #{$prop}: auto !important; }
   }
 }
 
 // === Padding =================================================================
 @include utility-group('padding') using ($i) {
   @each $suffix, $prop in $padding-axes {
-    $sep: if($suffix == '', '', '-');
-
     @each $step, $value in $spacing-scale {
-      .p#{$sep}#{$suffix}#{$i}-#{$step} { #{$prop}: $value !important; }
+      .p#{$suffix}#{$i}-#{$step} { #{$prop}: $value !important; }
     }
   }
 }

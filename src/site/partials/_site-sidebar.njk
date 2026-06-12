@@ -1,7 +1,7 @@
 {#
   Site navigation sidebar. Grouped by purpose: prologue / foundation / layout /
-  forms / components (alphabetical) / overlays. Every entry is a real link;
-  unbuilt pages 404 for now and become live as their templates land.
+  forms / components / overlays / integrations (all alphabetical). Every entry
+  is a real link; unbuilt pages 404 for now and become live as their templates land.
 
   The current page is highlighted at runtime in site.js (compares each link's
   pathname to location.pathname), so we don't need to pass a page key in.
@@ -50,14 +50,14 @@
       <div class="sidebar__group">
         <span class="sidebar__group-title">Forms</span>
         <ul class="sidebar__list">
-          <li class="sidebar__item"><a class="sidebar__button" href="/input"><span>Input</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/select"><span>Select</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/textarea"><span>Textarea</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/checkbox"><span>Checkbox</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/radio"><span>Radio</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/switch"><span>Switch</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/slider"><span>Slider</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/input"><span>Input</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/input-group"><span>Input group</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/radio"><span>Radio</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/select"><span>Select</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/slider"><span>Slider</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/switch"><span>Switch</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/textarea"><span>Textarea</span></a></li>
         </ul>
       </div>
 
@@ -71,7 +71,6 @@
           <li class="sidebar__item"><a class="sidebar__button" href="/button"><span>Button</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/button-group"><span>Button group</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/card"><span>Card</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/carousel"><span>Carousel</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/collapsible"><span>Collapsible</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/icon-box"><span>Icon box</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/kbd"><span>Kbd</span></a></li>
@@ -97,6 +96,13 @@
           <li class="sidebar__item"><a class="sidebar__button" href="/popover"><span>Popover</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/toast"><span>Toast</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/tooltip"><span>Tooltip</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__group">
+        <span class="sidebar__group-title">Integrations</span>
+        <ul class="sidebar__list">
+          <li class="sidebar__item"><a class="sidebar__button" href="/carousel"><span>Carousel</span></a></li>
         </ul>
       </div>
     </nav>
