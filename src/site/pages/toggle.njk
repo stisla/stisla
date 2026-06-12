@@ -42,7 +42,7 @@
     <h2>Sizes</h2>
     <p>Add <code>.toggle--sm</code> or <code>.toggle--lg</code> to match the <code>.btn</code> size cadence (28 / 36 / 44 px under default density).</p>
     {% call ui.demo() %}
-    <div style="display: flex; gap: 0.5rem; align-items: center;">
+    <div class="d-flex gap-2 align-items-center">
       <button type="button" class="toggle toggle--sm" data-stisla-toggle aria-pressed="true">Bold</button>
       <button type="button" class="toggle" data-stisla-toggle aria-pressed="true">Bold</button>
       <button type="button" class="toggle toggle--lg" data-stisla-toggle aria-pressed="true">Bold</button>
@@ -54,7 +54,7 @@
     <h2>Icon-only</h2>
     <p>Add <code>.toggle--icon-only</code> for a square slot (mirrors <code>.btn--icon-only</code>). Add an <code>aria-label</code> so the affordance is named for assistive tech.</p>
     {% call ui.demo() %}
-    <div style="display: flex; gap: 0.5rem; align-items: center;">
+    <div class="d-flex gap-2 align-items-center">
       <button type="button" class="toggle toggle--icon-only" data-stisla-toggle aria-pressed="false" aria-label="Bold">
         <i data-lucide="bold"></i>
       </button>
@@ -72,7 +72,7 @@
     <h2>Icon-round</h2>
     <p>Add <code>.toggle--icon-round</code> alongside <code>.toggle--icon-only</code> for a circular silhouette. Same opt-out as <code>.btn--icon-round</code> — radius forces 9999px, ignoring <code>--st-radius</code>.</p>
     {% call ui.demo() %}
-    <div style="display: flex; gap: 0.5rem; align-items: center;">
+    <div class="d-flex gap-2 align-items-center">
       <button type="button" class="toggle toggle--icon-only toggle--icon-round" data-stisla-toggle aria-pressed="false" aria-label="Like">
         <i data-lucide="thumbs-up"></i>
       </button>
@@ -90,7 +90,7 @@
     <h2>Disabled</h2>
     <p>Native <code>:disabled</code> on the button (or on the paired <code>.toggle-input</code>) dims the chip and blocks pointer events.</p>
     {% call ui.demo() %}
-    <div style="display: flex; gap: 0.5rem; align-items: center;">
+    <div class="d-flex gap-2 align-items-center">
       <button type="button" class="toggle" data-stisla-toggle aria-pressed="false" disabled>Off, disabled</button>
       <button type="button" class="toggle" data-stisla-toggle aria-pressed="true" disabled>On, disabled</button>
       <input type="checkbox" class="toggle-input" id="toggleDisabledForm" disabled>

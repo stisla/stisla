@@ -17,7 +17,7 @@
     <h2>The page wrapper</h2>
     <p>Drop a <code>.page</code> inside <code>.app-shell__main</code>. Top-level children stack vertically with the section gap.</p>
     {% call ui.demo() %}
-    <div class="page" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); padding: 1rem; background: var(--st-background); width: 100%;">
+    <div class="page p-4 w-100" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); background: var(--st-background);">
       <header class="page__header">
         <div class="page__title">
           <h1 class="h3">Customers</h1>
@@ -37,7 +37,7 @@
     <h2>Page header</h2>
     <p><code>.page__header</code> is a flex row with a <code>.page__title</code> slot on the leading edge and a <code>.page__action</code> slot on the trailing edge. Both slots are passthrough. Title takes a heading with an optional subtitle, actions takes any button row.</p>
     {% call ui.demo() %}
-    <div class="page" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); padding: 1rem; background: var(--st-background); width: 100%;">
+    <div class="page p-4 w-100" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); background: var(--st-background);">
       <header class="page__header">
         <div class="page__title">
           <h1 class="h3">Customers</h1>
@@ -54,7 +54,7 @@
     <h3>Without actions</h3>
     <p>Drop the action slot. The title block sits alone.</p>
     {% call ui.demo() %}
-    <div class="page" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); padding: 1rem; background: var(--st-background); width: 100%;">
+    <div class="page p-4 w-100" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); background: var(--st-background);">
       <header class="page__header">
         <div class="page__title">
           <h1 class="h3">Settings</h1>
@@ -83,7 +83,7 @@
     <h2>Sections</h2>
     <p><code>.page__section</code> is a flex-column for each block inside the page. The <code>.page</code> parent supplies the gap between sections; each section supplies its own inner gap via <code>--page-section-inner-gap</code>.</p>
     {% call ui.demo() %}
-    <div class="page" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); padding: 1rem; background: var(--st-background); width: 100%;">
+    <div class="page p-4 w-100" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); background: var(--st-background);">
       <section class="page__section">
         <h2 class="page__section-title">Overview</h2>
         <p class="text-muted-foreground">Headline stats and the period selector live here.</p>
@@ -102,7 +102,7 @@
     <h3>With section header + actions</h3>
     <p>For sections that need their own action row, wrap the title in <code>.page__section-header</code> and reuse <code>.page__action</code> as the slot. Same flex recipe at a tighter scale.</p>
     {% call ui.demo() %}
-    <div class="page" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); padding: 1rem; background: var(--st-background); width: 100%;">
+    <div class="page p-4 w-100" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); background: var(--st-background);">
       <section class="page__section">
         <header class="page__section-header">
           <h2 class="page__section-title">Active customers</h2>
@@ -128,17 +128,17 @@
     {% call ui.code() %}
     <!-- Full width -->
     <main class="app-shell__main">
-      <div class="page container-fluid" style="padding: 1rem;">...</div>
+      <div class="page container-fluid p-4">...</div>
     </main>
 
     <!-- Breakpoint-clamped -->
     <main class="app-shell__main">
-      <div class="page container" style="padding: 1rem;">...</div>
+      <div class="page container p-4">...</div>
     </main>
 
     <!-- Custom narrow column for reading -->
     <main class="app-shell__main">
-      <div class="page" style="margin-inline: auto; padding: 1rem; max-width: 48rem;">...</div>
+      <div class="page p-4" style="margin-inline: auto; max-width: 48rem;">...</div>
     </main>
     {% endcall %}
   </section>
@@ -147,7 +147,7 @@
     <h2>Putting it together</h2>
     <p>Page header, sections, and a section with its own header, all inside one <code>.page</code> that supplies the rhythm.</p>
     {% call ui.demo() %}
-    <div class="page" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); padding: 1rem; background: var(--st-background); width: 100%;">
+    <div class="page p-4 w-100" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); background: var(--st-background);">
       <header class="page__header">
         <div class="page__title">
           <h1 class="h3">Customers</h1>

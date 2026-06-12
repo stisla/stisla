@@ -40,3 +40,161 @@
     }
   }
 }
+
+// Shared field shape for .input / .select / .textarea.
+//
+// The visual contract — border, height, padding, focus halo, validation,
+// hover, disabled, readonly — is identical across the three. Each consumer
+// keeps its own --<prefix>-* runtime surface so docs and overrides stay
+// per-component; this mixin emits the rule body using `var(--#{$prefix}-…)`.
+// Type-specific concerns (chevron on <select>, multi-line opt-outs on
+// textarea, file/color/date pickers on <input>) layer on at the call site.
+//
+// $prefix selects the public custom-property namespace ("input", "select",
+// "textarea"). The --st-input-radius cross-field token survives as a fallback
+// so a single root override still retunes every field type.
+@mixin form-field-base($prefix) {
+  --#{$prefix}-radius:      var(--st-input-radius, var(--st-radius));
+  --#{$prefix}-height:      2.25rem;                              // 36
+  --#{$prefix}-padding-x:   calc(0.625rem * var(--st-density));   // 10
+  --#{$prefix}-font-size:   0.875rem;
+  --#{$prefix}-bg:          var(--st-surface);
+  --#{$prefix}-color:       var(--st-foreground);
+  --#{$prefix}-border:      var(--st-border);
+  --#{$prefix}-placeholder: var(--st-muted-foreground);
+
+  display: block;
+  width: 100%;
+  // Hard height × density. Single-line shape — padding-block: 0 lets the
+  // UA's native vertical centering handle the text. Multi-line consumers
+  // (textarea, multi-line selects) opt out at the call site.
+  height: calc(var(--#{$prefix}-height) * var(--st-density));
+  padding: 0 var(--#{$prefix}-padding-x);
+  font-family: inherit;
+  font-size: var(--#{$prefix}-font-size);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--#{$prefix}-color);
+  background: var(--#{$prefix}-bg);
+  border: 1px solid var(--#{$prefix}-border);
+  border-radius: var(--#{$prefix}-radius);
+  // Strips UA chrome (search cancel, select chevron, number spinner). Each
+  // type that wants an indicator paints it back at the call site.
+  appearance: none;
+  transition: border-color .12s ease, box-shadow .12s ease,
+              background-color .12s ease;
+
+  &::placeholder {
+    color: var(--#{$prefix}-placeholder);
+    opacity: 1;
+  }
+
+  // Hover — only when idle. Focus owns the ring; invalid owns the red rim;
+  // disabled rejects the cue.
+  &:hover:not(:disabled, :focus-visible, [aria-invalid="true"], :user-invalid) {
+    border-color: color-mix(in oklch, var(--st-border) 80%, var(--st-foreground));
+  }
+
+  // Focus — soft halo + primary border. Different vocabulary from .btn's
+  // opaque outline because the field already wears a border; offset+outline
+  // reads aggressive against a continuously-bordered shape.
+  &:focus-visible {
+    outline: none;
+    border-color: var(--st-primary);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--st-ring) 25%, transparent);
+  }
+
+  // Validation. aria-invalid for server / JS / explicit; :user-invalid
+  // for native browser validation (fires only after user interaction).
+  // Drops BS5's .is-valid / .is-invalid / .was-validated wrappers.
+  &[aria-invalid="true"],
+  &:user-invalid {
+    border-color: var(--st-danger);
+  }
+  &[aria-invalid="true"]:focus-visible,
+  &:user-invalid:focus-visible {
+    border-color: var(--st-danger);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--st-danger) 25%, transparent);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  // Readonly (not disabled) — keep opacity, swap bg one tier so the field
+  // reads "selectable, not editable". [readonly] not :read-only — the
+  // pseudo matches <select> / <output> too; the attribute selector only
+  // matches inputs/textareas that opt in.
+  &[readonly]:not(:disabled) {
+    background: var(--st-surface-2);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+// Shared box shape for .checkbox / .radio.
+//
+// Native input painted as a small box: own bg, border, focus halo, checked
+// fill, indicator slot, validation hook. The checked-state fill is shared
+// because both controls collapse to "primary background + glyph". Indicator
+// SVGs (checkmark, dash, dot) belong to the call site since each shape
+// carries its own glyph. Indeterminate is checkbox-only and lives there too.
+//
+// $prefix selects the public custom-property namespace ("checkbox", "radio").
+// --<prefix>-radius defaults at the call site (0.25rem for checkbox,
+// 50% for radio) so the same mixin produces both shapes.
+@mixin form-check-base($prefix) {
+  --#{$prefix}-bg:             var(--st-surface);
+  --#{$prefix}-border:         var(--st-border);
+  --#{$prefix}-checked-bg:     var(--st-primary);
+  --#{$prefix}-checked-color:  var(--st-primary-foreground);
+
+  flex-shrink: 0;
+  width:  var(--#{$prefix}-size);
+  height: var(--#{$prefix}-size);
+  margin: 0;
+  vertical-align: middle;
+  background-color: var(--#{$prefix}-bg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  border: 1px solid var(--#{$prefix}-border);
+  border-radius: var(--#{$prefix}-radius);
+  appearance: none;
+  cursor: pointer;
+  transition: background-color .12s ease, background-position .15s ease,
+              border-color .12s ease, box-shadow .12s ease;
+  print-color-adjust: exact;
+
+  &:focus-visible {
+    outline: none;
+    border-color: var(--st-primary);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--st-ring) 25%, transparent);
+  }
+
+  // Validation — same hooks + visual vocabulary as form-field-base.
+  // Touches the border only; the fill (transparent unchecked, primary
+  // checked) is independent so the "this is selected" signal stays
+  // readable. shadcn / MUI / Tailwind UI convention.
+  &[aria-invalid="true"],
+  &:user-invalid {
+    border-color: var(--st-danger);
+  }
+  &[aria-invalid="true"]:focus-visible,
+  &:user-invalid:focus-visible {
+    border-color: var(--st-danger);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--st-danger) 25%, transparent);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}

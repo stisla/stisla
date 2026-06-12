@@ -1,0 +1,37 @@
+// Stisla v3 — radio.
+//
+// Native <input type="radio"> styled as a small round dot. Base shape
+// comes from `form-check-base` (foundation/_mixins.scss), shared with
+// .checkbox. Radio-specific concerns layer on here: the 50% radius and
+// the checked-state dot indicator.
+//
+// BEM: .radio (no modifiers — size scales by --st-density, the wrapper
+// `.field-row` owns layout, validation lives on the input itself).
+//
+// :indeterminate is intentionally NOT styled here. Per Selectors L4 a
+// radio matches :indeterminate when no radio in its group is checked,
+// and that "no selection yet" state should keep the unchecked
+// affordance (and accept hover). The hover exclusion below leaves
+// :indeterminate out for the same reason.
+
+.radio {
+  --radio-size:   calc(1rem * var(--st-density));         // 16
+  --radio-radius: 50%;
+
+  @include form-check-base('radio');
+
+  // Hover — only when idle. Skip when focus / invalid / checked / disabled
+  // owns the border. :indeterminate is intentionally absent (see above).
+  &:hover:not(:disabled, :focus-visible, :checked, [aria-invalid="true"], :user-invalid) {
+    border-color: color-mix(in oklch, var(--st-border) 80%, var(--st-foreground));
+  }
+
+  // Checked — solid primary fill, dot painted via background-image. The
+  // SVG fill is literal white (same reason as .checkbox — V3.md §3.2).
+  &:checked {
+    --radio-indicator: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='4' fill='white'/%3E%3C/svg%3E");
+    background-color: var(--radio-checked-bg);
+    border-color:     var(--radio-checked-bg);
+    background-image: var(--radio-indicator);
+  }
+}

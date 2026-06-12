@@ -62,16 +62,16 @@ document.addEventListener("click", (e) => {
 // descendant [data-demo-select-count] gets its text replaced with the current
 // selection count, so the "<n> of <total> selected" headline ticks live
 // without a per-demo handler.
-// <table data-demo-select-rows>…<tbody>… <tr><td><input class="form-check-input" …></td>… </tr> …</tbody></table>
+// <table data-demo-select-rows>…<tbody>… <tr><td><input class="checkbox" type="checkbox" …></td>… </tr> …</tbody></table>
 document.addEventListener("change", (e) => {
-  const input = e.target.closest(".form-check-input");
+  const input = e.target.closest(".checkbox");
   if (!input || input.type !== "checkbox") return;
   const root = input.closest("[data-demo-select-rows]");
   if (!root) return;
 
-  const head = root.querySelector("thead .form-check-input");
+  const head = root.querySelector("thead .checkbox");
   const bodyBoxes = Array.from(
-    root.querySelectorAll("tbody .form-check-input"),
+    root.querySelectorAll("tbody .checkbox"),
   );
 
   const setRowActive = (tr, on) => {

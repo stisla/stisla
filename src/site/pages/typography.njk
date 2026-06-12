@@ -66,7 +66,7 @@
     {% call ui.demo(prose=true) %}
 <article style="max-width: 36rem;">
   <div class="prose">
-    <p class="text-muted-foreground small">June 4, 2026 &middot; Engineering &middot; 6 min read</p>
+    <p class="text-muted-foreground fs-2">June 4, 2026 &middot; Engineering &middot; 6 min read</p>
     <h1>Shipping a 14px baseline</h1>
     <p class="lead">Why we dropped the body text by two pixels and what changed downstream.</p>
     <p>The framework used to render body copy at <code>16px</code>, the common web default. That reads fine on a marketing page but feels heavy in a <strong>dashboard</strong> where every row counts. We took the baseline to <code>14px</code> and let the heading scale follow, <em>without</em> touching <code>html</code>. <code>1rem</code> stays anchored at 16px and every component&rsquo;s rem-based math keeps its pixel meaning. The whole change is one <a href="#">commit on the v3 branch</a>.</p>
@@ -125,7 +125,7 @@ background-color: var(--st-background);
     </ol>
 
     <figure>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 220" style="display: block; width: 100%; height: auto; background: var(--st-surface-2); border-radius: calc(var(--st-radius) - 1px);">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 220" class="d-block w-100" style="height: auto; background: var(--st-surface-2); border-radius: calc(var(--st-radius) - 1px);">
         <rect x="24" y="24"  width="200" height="28" fill="var(--st-primary)" opacity="0.85" rx="4"/>
         <text x="232" y="44" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="var(--st-foreground)">h1 &middot; 32px</text>
         <rect x="24" y="62"  width="150" height="22" fill="var(--st-primary)" opacity="0.72" rx="4"/>
@@ -163,7 +163,7 @@ background-color: var(--st-background);
       <li>Density presets still target the same physical control heights as before, just relative to the new baseline.</li>
     </ul>
 
-    <p class="text-muted-foreground small">Published in <a href="#">Engineering Notes</a> &middot; Edited 2 weeks later</p>
+    <p class="text-muted-foreground fs-2">Published in <a href="#">Engineering Notes</a> &middot; Edited 2 weeks later</p>
   </div>
 </article>
     {% endcall %}

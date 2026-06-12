@@ -97,6 +97,15 @@ body {
   width: 100%;
 }
 
+// Placeholder bars are sized via `style="width: N%"` inline, which is
+// relative to the parent box. .demo-preview centers via flex, so a bare
+// wrapper around the bars shrink-fits to ~0 and the bars collapse to
+// 1em-tall pills. Stretch any wrapper that hosts a placeholder anywhere
+// in its subtree.
+.demo-preview > :has(.placeholder) {
+  width: 100%;
+}
+
 .demo-code {
   position: relative;
   border-top: 1px solid var(--st-border);

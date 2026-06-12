@@ -59,7 +59,7 @@
   --dropdown-shadow: var(--st-shadow);
 
   // Item — single-line chip; density multiplies min-height alongside btn /
-  // form-control / icon-box (V3.md §3.4 height-aware components).
+  // input / icon-box (V3.md §3.4 height-aware components).
   --dropdown-item-padding-y: calc(0.125rem * var(--st-density));
   --dropdown-item-padding-x: calc(0.75rem * var(--st-density));
   --dropdown-item-min-height: calc(2rem * var(--st-density));

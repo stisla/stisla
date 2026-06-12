@@ -52,7 +52,7 @@
     <h2>Placements</h2>
     <p><code>data-stisla-popover-placement</code> picks the resting side. Floating UI flips automatically when the chosen side would overflow the viewport.</p>
     {% call ui.demo() %}
-    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+    <div class="d-flex flex-wrap gap-2">
       <button type="button" class="btn btn--outline btn--neutral"
               data-stisla-popover-trigger="popover-top"
               aria-haspopup="dialog" aria-expanded="false" aria-controls="popover-top">Top</button>
@@ -122,10 +122,10 @@
     <div class="popover" id="popover-rich" data-stisla-popover data-stisla-popover-placement="bottom-start"
          aria-labelledby="popover-rich-title" style="min-width: 17rem;">
       <h3 class="popover__title" id="popover-rich-title">Invite by email</h3>
-      <div class="popover__body" style="color: var(--st-foreground);">
-        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-          <input type="email" class="form-control" placeholder="name@example.com" aria-label="Email address">
-          <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+      <div class="popover__body text-foreground">
+        <div class="d-flex flex-column gap-2">
+          <input type="email" class="input" placeholder="name@example.com" aria-label="Email address">
+          <div class="d-flex gap-2 justify-content-end">
             <button type="button" class="btn btn--sm btn--ghost btn--neutral" data-stisla-popover-dismiss>Cancel</button>
             <button type="button" class="btn btn--sm btn--primary">Send invite</button>
           </div>
@@ -139,7 +139,7 @@
     <h2>Imperative</h2>
     <p>Mark a popover with an <code>id</code> and reach it via <code>Stisla.get(document.getElementById('&lt;id&gt;'))</code>. Call <code>Stisla.Popover.getOrCreate(el).open()</code> if you need to drive it from script without a click trigger.</p>
     {% call ui.demo() %}
-    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+    <div class="d-flex flex-wrap gap-2 align-items-center">
       <button type="button" class="btn btn--neutral" data-demo-popover-open="popover-imperative">
         Open via JS
       </button>
@@ -199,7 +199,7 @@
           <tr><td><code>--popover-title-color</code></td><td>var(--st-foreground)</td><td>Heading color.</td></tr>
           <tr><td><code>--popover-title-font-weight</code></td><td>600</td><td>Heading weight.</td></tr>
           <tr><td><code>--popover-title-font-size</code></td><td>0.9375rem</td><td>Slightly larger than body for hierarchy.</td></tr>
-          <tr><td><code>--popover-title-margin-bottom</code></td><td>0.5rem</td><td>Gap between title and body. Sized so a bare-text body and a form-control body both read cleanly under the title.</td></tr>
+          <tr><td><code>--popover-title-margin-bottom</code></td><td>0.5rem</td><td>Gap between title and body. Sized so a bare-text body and an input body both read cleanly under the title.</td></tr>
         </tbody>
       </table>
 

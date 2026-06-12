@@ -1,0 +1,38 @@
+// Stisla v3 — textarea.
+//
+// Multi-line opt-out from the hard-height contract. Restores padding-block
+// so text doesn't sit flush against the top edge, and lets the rows
+// attribute / content drive height. The --textarea-height var becomes a
+// min-height floor so a tiny textarea doesn't collapse below an
+// input-equivalent height. Inherits border, focus, validation, hover,
+// disabled, readonly from `form-field-base`.
+//
+// BEM: .textarea (base) + .textarea--{sm,lg}.
+// Validation: [aria-invalid="true"] + :user-invalid (see form-field-base).
+
+.textarea {
+  @include form-field-base('textarea');
+
+  height: auto;
+  min-height: calc(var(--textarea-height) * var(--st-density));
+  padding-block: calc(0.375rem * var(--st-density));   // 6 at density 1
+  line-height: 1.5;
+  resize: vertical;
+}
+
+// === Sizes ==============================================================
+// Mirror the .input scale so a textarea sits in a form row beside inputs
+// without breaking rhythm.
+.textarea--sm {
+  --textarea-radius:    var(--st-input-radius, var(--st-radius-sm));
+  --textarea-height:    1.75rem;                                // 28
+  --textarea-padding-x: calc(0.5rem * var(--st-density));       //  8
+  --textarea-font-size: 0.8125rem;
+}
+
+.textarea--lg {
+  --textarea-radius:    var(--st-input-radius, var(--st-radius-lg));
+  --textarea-height:    2.75rem;                                // 44
+  --textarea-padding-x: calc(0.875rem * var(--st-density));     // 14
+  --textarea-font-size: 1rem;
+}

@@ -166,7 +166,7 @@
         Theme
       </button>
       <div class="dropdown-menu" id="ddRadio" data-stisla-dropdown data-stisla-dropdown-auto-close="outside" role="menu" data-state="closed">
-        <div role="group" aria-labelledby="ddRadioHeader" style="display: flex; flex-direction: column; gap: 2px;">
+        <div role="group" aria-labelledby="ddRadioHeader" class="d-flex flex-column" style="gap: 2px;">
           <h3 class="dropdown-menu__header" id="ddRadioHeader">Appearance</h3>
           <button type="button" class="dropdown-menu__item" role="menuitemradio" data-state="checked" aria-checked="true">
             <span class="dropdown-menu__indicator"><i data-lucide="check"></i></span>
@@ -225,20 +225,20 @@
       <button type="button" class="btn btn--primary" data-stisla-dropdown-trigger="ddForm" aria-haspopup="menu" aria-expanded="false" aria-controls="ddForm">
         Sign in
       </button>
-      <form class="dropdown-menu" id="ddForm" data-stisla-dropdown data-stisla-dropdown-auto-close="outside" data-state="closed" style="min-width: 18rem; gap: 0.75rem; padding: 0.75rem;">
-        <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+      <form class="dropdown-menu gap-3 p-3" id="ddForm" data-stisla-dropdown data-stisla-dropdown-auto-close="outside" data-state="closed" style="min-width: 18rem;">
+        <div class="d-flex flex-column gap-1">
           <label for="ddFormEmail" class="form-label">Email</label>
-          <input type="email" class="form-control" id="ddFormEmail" placeholder="you@example.com">
+          <input type="email" class="input" id="ddFormEmail" placeholder="you@example.com">
         </div>
-        <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+        <div class="d-flex flex-column gap-1">
           <label for="ddFormPassword" class="form-label">Password</label>
-          <input type="password" class="form-control" id="ddFormPassword">
+          <input type="password" class="input" id="ddFormPassword">
         </div>
-        <label class="form-check" for="ddFormRemember">
-          <input type="checkbox" class="form-check__input" id="ddFormRemember">
-          <span class="form-check__label">Remember me</span>
+        <label class="field-row" for="ddFormRemember">
+          <input type="checkbox" class="checkbox" id="ddFormRemember">
+          <span class="field-row__label">Remember me</span>
         </label>
-        <button type="submit" class="btn btn--primary" style="width: 100%;">Sign in</button>
+        <button type="submit" class="btn btn--primary w-100">Sign in</button>
       </form>
     </div>
     {% endcall %}
@@ -248,7 +248,7 @@
     <h2>Placement</h2>
     <p>Set <code>data-stisla-dropdown-placement</code> on the menu to override the default <code>bottom-start</code>. Floating UI flips the menu automatically when it would overflow the viewport, so the value is a preference, not a constraint.</p>
     {% call ui.demo() %}
-    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+    <div class="d-flex flex-wrap gap-2">
       <div class="dropdown">
         <button type="button" class="btn btn--outline btn--neutral" data-stisla-dropdown-trigger="ddTop" aria-haspopup="menu" aria-expanded="false" aria-controls="ddTop">
           Top
@@ -301,7 +301,7 @@
         <tbody>
           <tr><td><code>--dropdown-width-min</code></td><td>10rem</td><td>Lower bound on menu width. Long labels grow past it.</td></tr>
           <tr><td><code>--dropdown-padding</code></td><td>0.25rem</td><td>Inner padding around the row stack. Drives the concentric inset.</td></tr>
-          <tr><td><code>--dropdown-radius</code></td><td>var(--st-radius)</td><td>Outer chip radius. Medium tier, matches btn / form-control / popover.</td></tr>
+          <tr><td><code>--dropdown-radius</code></td><td>var(--st-radius)</td><td>Outer chip radius. Medium tier, matches btn / input / popover.</td></tr>
           <tr><td><code>--dropdown-item-radius</code></td><td>calc(var(--dropdown-radius) - var(--dropdown-padding))</td><td>Row radius. Derived; rarely overridden directly.</td></tr>
           <tr><td><code>--dropdown-gap</code></td><td>2px</td><td>Vertical gap between rows.</td></tr>
           <tr><td><code>--dropdown-z-index</code></td><td>1030</td><td>Stack level. Below drawer (1045) and dialog (1055).</td></tr>

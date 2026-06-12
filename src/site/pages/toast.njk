@@ -121,7 +121,7 @@
     <h2>Intent variants</h2>
     <p>Five modifiers shift the leading-icon color: <code>.toast--primary</code>, <code>.toast--success</code>, <code>.toast--warning</code>, <code>.toast--danger</code>, <code>.toast--info</code>. The surface stays neutral so stacked toasts of mixed intent read as one family. For danger toasts, bump the live region to <code>role="alert"</code> and <code>aria-live="assertive"</code> so screen readers announce them immediately.</p>
     {% call ui.demo() %}
-    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+    <div class="d-flex flex-column gap-3">
       <div class="toast toast--success" data-state="open" role="status" aria-live="polite" aria-atomic="true">
         <div class="toast__icon"><i data-lucide="check-circle-2"></i></div>
         <div class="toast__content">
@@ -170,12 +170,12 @@
     <h2>Leading slot</h2>
     <p>The icon column takes any leading visual. Drop in an avatar, a glyph at full tone, an <code>.icon-box</code>, a spinner, or an emoji. Override <code>--toast-icon-size</code> to grow the slot for heavier visuals, and <code>--toast-icon-color</code> to recolor monochrome content.</p>
     {% call ui.demo() %}
-    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+    <div class="d-flex flex-column gap-3">
 
       {# Avatar — share-with-you / activity feed pattern. The slot grows
          and the consumer paints background + radius directly on it. #}
       <div class="toast" data-state="open" role="status" aria-live="polite" aria-atomic="true" style="--toast-icon-size: 2.25rem;">
-        <div class="toast__icon" style="background-color: #6366f1; color: white; border-radius: 50%; font-size: 0.75rem; font-weight: 600;">MS</div>
+        <div class="toast__icon fs-1 fw-semibold" style="background-color: #6366f1; color: white; border-radius: 50%;">MS</div>
         <div class="toast__content">
           <div class="toast__header">
             Maya Singh
@@ -237,7 +237,7 @@
       {# Emoji — casual / celebratory brand voice. Slot grows a touch so
          the unicode glyph isn't clipped at the default 18px footprint. #}
       <div class="toast" data-state="open" role="status" aria-live="polite" aria-atomic="true" style="--toast-icon-size: 1.5rem;">
-        <div class="toast__icon" style="font-size: 1.25rem; line-height: 1;">🎉</div>
+        <div class="toast__icon fs-5 lh-1">🎉</div>
         <div class="toast__content">
           <div class="toast__header">First sale!</div>
           <div class="toast__body">Pro plan subscription from sarah@acme.co. Cha-ching.</div>
@@ -276,7 +276,7 @@
     <h2>Auto-hide and persistent</h2>
     <p>Auto-hide is on by default with a 4-second delay. Hovering or focusing the toast pauses the timer (WCAG 2.2.1) and leaving resumes it. Set <code>data-stisla-toast-autohide="false"</code> for a sticky toast that only the close button dismisses — useful for errors and confirmations.</p>
     {% call ui.demo() %}
-    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+    <div class="d-flex flex-wrap gap-2">
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-toast-trigger="autoHideToast">Auto-hide (4s)</button>
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-toast-trigger="persistentToast">Persistent</button>
     </div>
@@ -315,7 +315,7 @@
     <h2>Position</h2>
     <p>Six modifiers on <code>.toast-region</code> set the corner: <code>--top-start</code>, <code>--top-center</code> (default), <code>--top-end</code>, <code>--bottom-start</code>, <code>--bottom-center</code>, <code>--bottom-end</code>. Bottom regions stack newest-first at the bottom edge. Name each region with <code>data-stisla-toast-region</code> so <code>Stisla.toast({ region })</code> can target it.</p>
     {% call ui.demo() %}
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem;">
+    <div class="d-grid gap-2" style="grid-template-columns: repeat(3, 1fr);">
       <button type="button" class="btn btn--outline btn--neutral" data-demo-toast-position="top-start">Top start</button>
       <button type="button" class="btn btn--outline btn--neutral" data-demo-toast-position="top-center">Top center</button>
       <button type="button" class="btn btn--outline btn--neutral" data-demo-toast-position="top-end">Top end</button>
@@ -348,7 +348,7 @@
     {% endcall %}
 
     {% call ui.demo() %}
-    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+    <div class="d-flex flex-wrap gap-2">
       <button type="button" class="btn btn--ghost btn--neutral" data-demo-toast-shortcut="success">Success</button>
       <button type="button" class="btn btn--ghost btn--neutral" data-demo-toast-shortcut="error">Error</button>
       <button type="button" class="btn btn--ghost btn--neutral" data-demo-toast-shortcut="warning">Warning</button>

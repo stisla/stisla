@@ -1,44 +1,33 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Form control · Stisla v3{% endblock %}
+{% block title %}Input · Stisla v3{% endblock %}
 
 {% block content %}
   <header>
-    <h1>Form control</h1>
-    <p class="lead">A single class for every text-like form field (inputs, selects, textareas).</p>
+    <h1>Input</h1>
+    <p class="lead">A text-like form field for any <code>&lt;input&gt;</code>.</p>
   </header>
 
   <section>
     <h2>Basic</h2>
-    <p>Add <code>.form-control</code> to any <code>&lt;input&gt;</code>. Pair with a <code>&lt;label&gt;</code> tied via <code>for</code>/<code>id</code> so the field is reachable. The same class works on <code>&lt;select&gt;</code> (see <a class="link" href="/select">/select</a>) and <code>&lt;textarea&gt;</code> below.</p>
+    <p>Add <code>.input</code> to any <code>&lt;input&gt;</code>. Pair with a <code>&lt;label&gt;</code> tied via <code>for</code>/<code>id</code> so the field is reachable. The same shape extends to <a class="link" href="/select">Select</a> and <a class="link" href="/textarea">Textarea</a> so they line up in a form row.</p>
     {% call ui.demo() %}
-    <div style="width: 100%; max-width: 24rem;">
+    <div class="w-100" style="max-width: 24rem;">
       <label for="basicInput" class="form-label">Email</label>
-      <input type="email" class="form-control" id="basicInput" placeholder="you@example.com" />
+      <input type="email" class="input" id="basicInput" placeholder="you@example.com" />
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>Sizes</h2>
-    <p>Three sizes match the <code>.btn</code> scale. Add <code>.form-control--sm</code> or <code>.form-control--lg</code>.</p>
+    <p>Three sizes match the <code>.btn</code> scale. Add <code>.input--sm</code> or <code>.input--lg</code>.</p>
     {% call ui.demo() %}
-    <div class="demo-stack" style="width: 100%; max-width: 24rem;">
-      <input type="text" class="form-control form-control--sm" placeholder="Small" />
-      <input type="text" class="form-control" placeholder="Default" />
-      <input type="text" class="form-control form-control--lg" placeholder="Large" />
-    </div>
-    {% endcall %}
-  </section>
-
-  <section>
-    <h2>Textarea</h2>
-    <p>The same class works on <code>&lt;textarea&gt;</code>. The min-height clamp drops so the <code>rows</code> attribute and content drive the height. The textarea handle is vertical-only, so width tracks the parent.</p>
-    {% call ui.demo() %}
-    <div style="width: 100%; max-width: 24rem;">
-      <label for="basicTextarea" class="form-label">Notes</label>
-      <textarea class="form-control" id="basicTextarea" rows="3" placeholder="Anything else we should know?"></textarea>
+    <div class="demo-stack w-100" style="max-width: 24rem;">
+      <input type="text" class="input input--sm" placeholder="Small" />
+      <input type="text" class="input" placeholder="Default" />
+      <input type="text" class="input input--lg" placeholder="Large" />
     </div>
     {% endcall %}
   </section>
@@ -47,12 +36,12 @@
     <h2>Input types</h2>
     <p>The class applies to every text-like input: <code>text</code>, <code>email</code>, <code>password</code>, <code>number</code>, <code>search</code>, <code>tel</code>, <code>url</code>, <code>date</code>, <code>time</code>.</p>
     {% call ui.demo() %}
-    <div class="demo-stack" style="width: 100%; max-width: 24rem;">
-      <input type="email" class="form-control" placeholder="email" />
-      <input type="password" class="form-control" placeholder="password" value="hunter2" />
-      <input type="number" class="form-control" placeholder="number" />
-      <input type="search" class="form-control" placeholder="search" />
-      <input type="date" class="form-control" />
+    <div class="demo-stack w-100" style="max-width: 24rem;">
+      <input type="email" class="input" placeholder="email" />
+      <input type="password" class="input" placeholder="password" value="hunter2" />
+      <input type="number" class="input" placeholder="number" />
+      <input type="search" class="input" placeholder="search" />
+      <input type="date" class="input" />
     </div>
     {% endcall %}
   </section>
@@ -61,9 +50,9 @@
     <h2>Helper text</h2>
     <p>Use <code>.form-text</code> below the input for short hints. Wire it to the input with <code>aria-describedby</code> so screen readers announce it.</p>
     {% call ui.demo() %}
-    <div style="width: 100%; max-width: 24rem;">
+    <div class="w-100" style="max-width: 24rem;">
       <label for="passwordInput" class="form-label">Password</label>
-      <input type="password" class="form-control" id="passwordInput" aria-describedby="passwordHelp" />
+      <input type="password" class="input" id="passwordInput" aria-describedby="passwordHelp" />
       <div id="passwordHelp" class="form-text">At least 8 characters, one number.</div>
     </div>
     {% endcall %}
@@ -73,10 +62,10 @@
     <h2>Browser validation</h2>
     <p>Pair native constraint attributes (<code>required</code>, <code>type="email"</code>, <code>pattern</code>, <code>min</code>, <code>max</code>) with the <code>:user-invalid</code> pseudo. The browser fires it after the user interacts with the field, and clears it the moment the value satisfies the constraints. Use for inline validation where the field owns its own state.</p>
     {% call ui.demo() %}
-    <form class="demo-stack" style="width: 100%; max-width: 24rem;" onsubmit="event.preventDefault()">
+    <form class="demo-stack w-100" style="max-width: 24rem;" onsubmit="event.preventDefault()">
       <div>
         <label for="reqEmail" class="form-label">Email</label>
-        <input type="email" class="form-control" id="reqEmail" required placeholder="you@example.com" />
+        <input type="email" class="input" id="reqEmail" required placeholder="you@example.com" />
         <div class="form-text">Hit Submit to trigger <code>:user-invalid</code>. Enter a valid email and the red clears on its own.</div>
       </div>
       <button type="submit" class="btn btn--primary">Submit</button>
@@ -88,12 +77,12 @@
     <h2>Server validation</h2>
     <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky. Frameworks like React Hook Form, Formik, vee-validate, and Rails / Django / Laravel form helpers manage this based on their own error state. Pair with a <code>.form-text--error</code> message tied via <code>aria-describedby</code> so the error reaches assistive tech.</p>
     {% call ui.demo() %}
-    <div class="demo-stack" style="width: 100%; max-width: 24rem;">
+    <div class="demo-stack w-100" style="max-width: 24rem;">
       <div>
         <label for="srvEmail" class="form-label">Email</label>
         <input
           type="email"
-          class="form-control"
+          class="input"
           id="srvEmail"
           value="not-an-email"
           aria-invalid="true"
@@ -109,31 +98,31 @@
     <h2>Disabled &amp; readonly</h2>
     <p><code>disabled</code> blocks interaction and dims the field. <code>readonly</code> keeps the value reachable for copy but rejects edits. The bg shifts a tier to signal "selectable, not editable".</p>
     {% call ui.demo() %}
-    <div class="demo-stack" style="width: 100%; max-width: 24rem;">
-      <input type="text" class="form-control" value="Disabled" disabled />
-      <input type="text" class="form-control" value="Readonly" readonly />
+    <div class="demo-stack w-100" style="max-width: 24rem;">
+      <input type="text" class="input" value="Disabled" disabled />
+      <input type="text" class="input" value="Readonly" readonly />
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>Plain text</h2>
-    <p>Swap <code>.form-control</code> for <code>.form-control--plaintext</code> to render a readonly value as bare text. No border and no background, but it still aligns with neighboring inputs in a form row. Pair with <code>readonly</code> on the input.</p>
+    <p>Swap <code>.input</code> for <code>.input--plaintext</code> to render a readonly value as bare text. No border and no background, but it still aligns with neighboring inputs in a form row. Pair with <code>readonly</code> on the input.</p>
     {% call ui.demo() %}
-    <div style="width: 100%; max-width: 24rem;">
+    <div class="w-100" style="max-width: 24rem;">
       <label for="plainEmail" class="form-label">Email</label>
-      <input type="email" readonly class="form-control--plaintext" id="plainEmail" value="you@example.com" />
+      <input type="email" readonly class="input--plaintext" id="plainEmail" value="you@example.com" />
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>Color picker</h2>
-    <p>Add <code>.form-control</code> to any <code>&lt;input type="color"&gt;</code>. The type selector handles the shape, no modifier class needed. The field collapses to a small swatch (no full-width stretch) and the native chip wears the field's inner radius (outer minus padding, V3.md §3.4) so the swatch and the frame share a center.</p>
+    <p>Add <code>.input</code> to any <code>&lt;input type="color"&gt;</code>. The type selector handles the shape, no modifier class needed. The field collapses to a small swatch (no full-width stretch) and the native chip wears the field's inner radius (outer minus padding, V3.md §3.4) so the swatch and the frame share a center.</p>
     {% call ui.demo() %}
-    <div style="width: 100%; max-width: 24rem;">
+    <div class="w-100" style="max-width: 24rem;">
       <label for="brandColor" class="form-label">Brand</label>
-      <input type="color" class="form-control" id="brandColor" value="#3b82f6" />
+      <input type="color" class="input" id="brandColor" value="#3b82f6" />
     </div>
     {% endcall %}
   </section>
@@ -142,16 +131,16 @@
     <h2>File input</h2>
     <p>The same class styles <code>type="file"</code>. The selector button sits as a small inset chip inside the field (same shape as a <code>.btn--sm.btn--neutral</code>) and the filename trails after it.</p>
     {% call ui.demo() %}
-    <div style="width: 100%; max-width: 24rem;">
+    <div class="w-100" style="max-width: 24rem;">
       <label for="fileInput" class="form-label">Upload</label>
-      <input type="file" class="form-control" id="fileInput" />
+      <input type="file" class="input" id="fileInput" />
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>Customization</h2>
-    <p>Nine variables retune <code>.form-control</code> without touching component CSS. Override on the field itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
+    <p>Eight variables retune <code>.input</code> without touching component CSS. Override on the field itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change. The same surface appears on <a class="link" href="/select">.select</a> and <a class="link" href="/textarea">.textarea</a> under their own prefix so each field component can be tuned independently.</p>
     <div class="prose">
       <table>
         <thead>
@@ -163,53 +152,47 @@
         </thead>
         <tbody>
           <tr>
-            <td><code>--form-control-radius</code></td>
-            <td>var(--st-radius)</td>
+            <td><code>--input-radius</code></td>
+            <td>var(--st-input-radius, var(--st-radius))</td>
             <td>Corner radius (per-component override via <code>--st-input-radius</code>; sizes pull <code>--st-radius-sm</code> / <code>-lg</code>)</td>
           </tr>
           <tr>
-            <td><code>--form-control-height</code></td>
+            <td><code>--input-height</code></td>
             <td>2.25rem</td>
             <td>Single-line height; sm and lg reassign this. Multiplied by <code>--st-density</code> at the component level</td>
           </tr>
           <tr>
-            <td><code>--form-control-padding-x</code></td>
+            <td><code>--input-padding-x</code></td>
             <td>calc(0.625rem * var(--st-density))</td>
             <td>Horizontal padding; sm and lg reassign this</td>
           </tr>
           <tr>
-            <td><code>--form-control-font-size</code></td>
+            <td><code>--input-font-size</code></td>
             <td>0.875rem</td>
             <td>Text size; sm and lg reassign this</td>
           </tr>
           <tr>
-            <td><code>--form-control-bg</code></td>
+            <td><code>--input-bg</code></td>
             <td>var(--st-surface)</td>
             <td>Background; <code>readonly</code> shifts a tier</td>
           </tr>
           <tr>
-            <td><code>--form-control-color</code></td>
+            <td><code>--input-color</code></td>
             <td>var(--st-foreground)</td>
             <td>Text color</td>
           </tr>
           <tr>
-            <td><code>--form-control-border</code></td>
+            <td><code>--input-border</code></td>
             <td>var(--st-border)</td>
             <td>Border color; validation hooks flip this to <code>--st-danger</code></td>
           </tr>
           <tr>
-            <td><code>--form-control-placeholder</code></td>
+            <td><code>--input-placeholder</code></td>
             <td>var(--st-muted-foreground)</td>
             <td>Placeholder text color</td>
-          </tr>
-          <tr>
-            <td><code>--form-control-indicator</code></td>
-            <td>SVG data URL (chevron)</td>
-            <td>Native chevron painted on <code>&lt;select&gt;</code>; <code>multiple</code> and <code>size</code> drop it</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>The chevron SVG carries a literal stroke color (one per theme) because <code>data:</code> URLs can't read CSS variables. To recolor the chevron, replace the whole URL with one whose stroke matches the new color.</p>
   </section>
 {% endblock %}

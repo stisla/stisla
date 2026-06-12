@@ -92,7 +92,6 @@ $utilities-config: (
   text-transform:   (enabled: true, responsive: false),
   text-wrap:        (enabled: true, responsive: false),
   text-align:       (enabled: true, responsive: true),
-  link:             (enabled: true, responsive: false),
 
   // A11y
   visually-hidden:  (enabled: true, responsive: false),
@@ -206,23 +205,6 @@ $utilities-config: (
   .text#{$i}-start  { text-align: start  !important; }
   .text#{$i}-end    { text-align: end    !important; }
   .text#{$i}-center { text-align: center !important; }
-}
-
-// === Link ====================================================================
-// Reboot strips <a> color + underline globally; .link is the opt-back-in
-// for inline links in app UI prose (demo explainers, helper text,
-// "see X" cross-references). Long-form content uses .prose, which
-// auto-styles every <a> inside it.
-@include utility-group('link') using ($i) {
-  .link#{$i} {
-    color: var(--st-primary);
-    text-decoration: underline;
-    text-underline-offset: 2px;
-    text-decoration-thickness: 1px;
-  }
-  .link#{$i}:hover {
-    color: color-mix(in oklch, var(--st-primary) 80%, black);
-  }
 }
 
 // === Accessibility ===========================================================

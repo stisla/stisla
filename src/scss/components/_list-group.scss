@@ -105,7 +105,7 @@
   // Local stacking context — needed so a focus halo (z-index: 1 below)
   // sits above neighbor row backgrounds without jumping out of the frame.
   position: relative;
-  // Smooth hover + selection transitions. Tracks the .btn / .form-control
+  // Smooth hover + selection transitions. Tracks the .btn / .input
   // baseline (.12s ease). Zeroed under reduced-motion at the bottom of
   // this file.
   transition: var(--list-group-transition);

@@ -1,0 +1,28 @@
+// Stisla v3 — .link inline link.
+//
+// Reboot strips <a> color + underline globally so anchors are unstyled by
+// default; .link is the opt-back-in for inline links in app UI prose
+// (helper text, demo explainers, cross-references). Long-form content
+// uses .prose, which restyles every <a> inside it without a class —
+// .link's recipe is intentionally the visual twin of .prose a so a link
+// reads the same whether it sits in a UI explainer or a docs paragraph.
+//
+// --link-hover-color resolves at definition time, so overriding
+// --link-color also moves the hover. Override --link-hover-color directly
+// to break that derivation.
+
+.link {
+  --link-color:                var(--st-primary);
+  --link-decoration-offset:    2px;
+  --link-decoration-thickness: 1px;
+  --link-hover-color:          color-mix(in oklch, var(--link-color) 80%, black);
+
+  color: var(--link-color);
+  text-decoration: underline;
+  text-underline-offset: var(--link-decoration-offset);
+  text-decoration-thickness: var(--link-decoration-thickness);
+}
+
+.link:hover {
+  color: var(--link-hover-color);
+}

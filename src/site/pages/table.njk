@@ -554,13 +554,13 @@
 
   <section>
     <h2>Selectable rows</h2>
-    <p>Put a <code>.form-check__input</code> in the first column to let people pick rows. The header checkbox is the bulk toggle; flip <code>data-state="active"</code> on the row to mark it selected. The <code>data-demo-select-rows</code> hook on the table wires the live behavior.</p>
+    <p>Put a <code>.checkbox</code> in the first column to let people pick rows. The header checkbox is the bulk toggle; flip <code>data-state="active"</code> on the row to mark it selected. The <code>data-demo-select-rows</code> hook on the table wires the live behavior.</p>
     {% call ui.demo() %}
     <table class="table table--hover table--align-middle" data-demo-select-rows>
       <thead class="table__head--alt">
         <tr>
           <th scope="col" style="width: 1rem;">
-            <input class="form-check__input" type="checkbox" aria-label="Select all subscribers" />
+            <input class="checkbox" type="checkbox" aria-label="Select all subscribers" />
           </th>
           <th scope="col">Email</th>
           <th scope="col">Source</th>
@@ -570,35 +570,35 @@
       </thead>
       <tbody>
         <tr>
-          <td><input class="form-check__input" type="checkbox" aria-label="Select maya@acme.co" /></td>
+          <td><input class="checkbox" type="checkbox" aria-label="Select maya@acme.co" /></td>
           <td>maya@acme.co</td>
           <td>Landing page</td>
           <td>Jun 02</td>
           <td><span class="badge badge--soft badge--success">Confirmed</span></td>
         </tr>
         <tr data-state="active">
-          <td><input class="form-check__input" type="checkbox" aria-label="Select mateo@acme.co" checked /></td>
+          <td><input class="checkbox" type="checkbox" aria-label="Select mateo@acme.co" checked /></td>
           <td>mateo@acme.co</td>
           <td>Referral · Sara</td>
           <td>Jun 01</td>
           <td><span class="badge badge--soft badge--success">Confirmed</span></td>
         </tr>
         <tr data-state="active">
-          <td><input class="form-check__input" type="checkbox" aria-label="Select sara@acme.co" checked /></td>
+          <td><input class="checkbox" type="checkbox" aria-label="Select sara@acme.co" checked /></td>
           <td>sara@acme.co</td>
           <td>Webinar · Q2 launch</td>
           <td>May 28</td>
           <td><span class="badge badge--soft badge--warning">Pending</span></td>
         </tr>
         <tr>
-          <td><input class="form-check__input" type="checkbox" aria-label="Select theo@acme.co" /></td>
+          <td><input class="checkbox" type="checkbox" aria-label="Select theo@acme.co" /></td>
           <td>theo@acme.co</td>
           <td>Import · Mailchimp</td>
           <td>May 22</td>
           <td><span class="badge badge--soft">Unsubscribed</span></td>
         </tr>
         <tr>
-          <td><input class="form-check__input" type="checkbox" aria-label="Select alex@acme.co" /></td>
+          <td><input class="checkbox" type="checkbox" aria-label="Select alex@acme.co" /></td>
           <td>alex@acme.co</td>
           <td>Landing page</td>
           <td>May 19</td>
@@ -632,7 +632,7 @@
         <thead>
           <tr>
             <th scope="col" style="width: 1rem;">
-              <input class="form-check__input" type="checkbox" aria-label="Select all messages" />
+              <input class="checkbox" type="checkbox" aria-label="Select all messages" />
             </th>
             <th scope="col">From</th>
             <th scope="col">Subject</th>
@@ -641,25 +641,25 @@
         </thead>
         <tbody>
           <tr data-state="active">
-            <td><input class="form-check__input" type="checkbox" aria-label="Select message from Maya Singh" checked /></td>
+            <td><input class="checkbox" type="checkbox" aria-label="Select message from Maya Singh" checked /></td>
             <td>Maya Singh</td>
             <td>Re: Q3 roadmap draft</td>
             <td class="text-end">9:42 AM</td>
           </tr>
           <tr data-state="active">
-            <td><input class="form-check__input" type="checkbox" aria-label="Select message from Mateo Reyes" checked /></td>
+            <td><input class="checkbox" type="checkbox" aria-label="Select message from Mateo Reyes" checked /></td>
             <td>Mateo Reyes</td>
             <td>Auth migration status</td>
             <td class="text-end">8:18 AM</td>
           </tr>
           <tr>
-            <td><input class="form-check__input" type="checkbox" aria-label="Select message from Sara Lin" /></td>
+            <td><input class="checkbox" type="checkbox" aria-label="Select message from Sara Lin" /></td>
             <td>Sara Lin</td>
             <td>Pipeline retry logic</td>
             <td class="text-end">Yesterday</td>
           </tr>
           <tr>
-            <td><input class="form-check__input" type="checkbox" aria-label="Select message from Theo Wright" /></td>
+            <td><input class="checkbox" type="checkbox" aria-label="Select message from Theo Wright" /></td>
             <td>Theo Wright</td>
             <td>Vendor renewal · Jun 30</td>
             <td class="text-end">Yesterday</td>

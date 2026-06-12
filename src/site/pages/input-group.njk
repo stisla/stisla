@@ -11,15 +11,15 @@
 
   <section>
     <h2>Basic</h2>
-    <p>Wrap an addon and a <code>.form-control</code> in <code>.input-group</code>. The addon sits flush against the input on a shared surface, with a single focus state on the wrapper.</p>
+    <p>Wrap an addon and a field component — <code>.input</code>, <code>.select</code>, or <code>.textarea</code> — in <code>.input-group</code>. The addon sits flush against the input on a shared surface, with a single focus state on the wrapper.</p>
     {% call ui.demo() %}
     <div class="demo-stack" style="max-width: 24rem;">
       <div class="input-group">
         <span class="input-group__text">https://</span>
-        <input type="text" class="form-control" placeholder="example.com" />
+        <input type="text" class="input" placeholder="example.com" />
       </div>
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="yourname" />
+        <input type="text" class="input" placeholder="yourname" />
         <span class="input-group__text">@company.com</span>
       </div>
     </div>
@@ -33,7 +33,7 @@
     <div style="max-width: 24rem;">
       <div class="input-group">
         <span class="input-group__text"><i data-lucide="search"></i></span>
-        <input type="search" class="form-control" placeholder="Search" />
+        <input type="search" class="input" placeholder="Search" />
       </div>
     </div>
     {% endcall %}
@@ -41,20 +41,20 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Add <code>.input-group--sm</code> or <code>.input-group--lg</code> on the wrapper and the matching <code>.form-control--sm</code> / <code>--lg</code> on the input to scale every member together.</p>
+    <p>Add <code>.input-group--sm</code> or <code>.input-group--lg</code> on the wrapper and the matching size modifier on the field child (e.g. <code>.input--sm</code>, <code>.select--lg</code>) to scale every member together.</p>
     {% call ui.demo() %}
     <div class="demo-stack" style="max-width: 24rem;">
       <div class="input-group input-group--sm">
         <span class="input-group__text"><i data-lucide="at-sign"></i></span>
-        <input type="text" class="form-control form-control--sm" placeholder="Small" />
+        <input type="text" class="input input--sm" placeholder="Small" />
       </div>
       <div class="input-group">
         <span class="input-group__text"><i data-lucide="at-sign"></i></span>
-        <input type="text" class="form-control" placeholder="Default" />
+        <input type="text" class="input" placeholder="Default" />
       </div>
       <div class="input-group input-group--lg">
         <span class="input-group__text"><i data-lucide="at-sign"></i></span>
-        <input type="text" class="form-control form-control--lg" placeholder="Large" />
+        <input type="text" class="input input--lg" placeholder="Large" />
       </div>
     </div>
     {% endcall %}
@@ -66,12 +66,12 @@
     {% call ui.demo() %}
     <div class="demo-stack" style="max-width: 24rem;">
       <div class="input-group">
-        <input type="search" class="form-control" placeholder="Search" />
+        <input type="search" class="input" placeholder="Search" />
         <button type="button" class="btn btn--primary">Go</button>
       </div>
       <div class="input-group">
         <button type="button" class="btn btn--outline btn--neutral">Copy</button>
-        <input type="text" class="form-control" value="https://stisla.dev/v3" readonly />
+        <input type="text" class="input" value="https://stisla.dev/v3" readonly />
       </div>
     </div>
     {% endcall %}
@@ -79,15 +79,15 @@
     {% call ui.demo() %}
     <div class="demo-stack" style="max-width: 24rem;">
       <div class="input-group input-group--sm">
-        <input type="search" class="form-control form-control--sm" placeholder="Small" />
+        <input type="search" class="input input--sm" placeholder="Small" />
         <button type="button" class="btn btn--sm btn--primary">Go</button>
       </div>
       <div class="input-group">
-        <input type="search" class="form-control" placeholder="Default" />
+        <input type="search" class="input" placeholder="Default" />
         <button type="button" class="btn btn--primary">Go</button>
       </div>
       <div class="input-group input-group--lg">
-        <input type="search" class="form-control form-control--lg" placeholder="Large" />
+        <input type="search" class="input input--lg" placeholder="Large" />
         <button type="button" class="btn btn--lg btn--primary">Go</button>
       </div>
     </div>
@@ -96,17 +96,17 @@
 
   <section>
     <h2>Select</h2>
-    <p>A <code>&lt;select class="form-control"&gt;</code> stands in for the input. Same class as every other form control; the wrapper strips its border the same way.</p>
+    <p>A <code>&lt;select class="select"&gt;</code> stands in for the input. The wrapper strips its border the same way it does for <code>.input</code>.</p>
     {% call ui.demo() %}
     <div style="max-width: 24rem;">
       <div class="input-group">
-        <select class="form-control" aria-label="Currency" style="max-width: 5.5rem;">
+        <select class="select" aria-label="Currency" style="max-width: 5.5rem;">
           <option selected>USD</option>
           <option>EUR</option>
           <option>GBP</option>
           <option>JPY</option>
         </select>
-        <input type="number" class="form-control" placeholder="Amount" />
+        <input type="number" class="input" placeholder="Amount" />
       </div>
     </div>
     {% endcall %}
@@ -119,7 +119,7 @@
     <div class="demo-stack" style="max-width: 24rem;">
       <div class="input-group">
         <label class="input-group__text" for="currencyOnly">Currency</label>
-        <select class="form-control" id="currencyOnly">
+        <select class="select" id="currencyOnly">
           <option selected>USD</option>
           <option>EUR</option>
           <option>GBP</option>
@@ -128,7 +128,7 @@
       </div>
       <div class="input-group">
         <span class="input-group__text"><i data-lucide="globe"></i></span>
-        <select class="form-control" aria-label="Language">
+        <select class="select" aria-label="Language">
           <option selected>English</option>
           <option>Bahasa Indonesia</option>
           <option>日本語</option>
@@ -146,8 +146,8 @@
     <div style="max-width: 24rem;">
       <div class="input-group">
         <label class="input-group__text" for="amountCurrency">$</label>
-        <input type="number" class="form-control" id="amountCurrency" placeholder="Amount" />
-        <select class="form-control" aria-label="Currency" style="max-width: 5.5rem;">
+        <input type="number" class="input" id="amountCurrency" placeholder="Amount" />
+        <select class="select" aria-label="Currency" style="max-width: 5.5rem;">
           <option selected>USD</option>
           <option>EUR</option>
           <option>GBP</option>
@@ -166,7 +166,7 @@
       <div class="input-group">
         <span class="input-group__text">$</span>
         <span class="input-group__text">0.00</span>
-        <input type="text" class="form-control" />
+        <input type="text" class="input" />
       </div>
     </div>
     {% endcall %}
@@ -179,7 +179,7 @@
     <div style="max-width: 24rem;">
       <div class="input-group">
         <span class="input-group__text"><i data-lucide="message-square"></i></span>
-        <textarea class="form-control" rows="3" placeholder="Leave a note"></textarea>
+        <textarea class="textarea" rows="3" placeholder="Leave a note"></textarea>
       </div>
     </div>
     {% endcall %}
@@ -192,11 +192,11 @@
     <div class="demo-stack" style="max-width: 24rem;">
       <div class="input-group">
         <span class="input-group__text"><i data-lucide="at-sign"></i></span>
-        <input type="email" class="form-control" value="not-an-email" aria-invalid="true" />
+        <input type="email" class="input" value="not-an-email" aria-invalid="true" />
       </div>
       <div class="input-group">
         <span class="input-group__text">$</span>
-        <input type="number" class="form-control" min="0" value="-5" aria-invalid="true" />
+        <input type="number" class="input" min="0" value="-5" aria-invalid="true" />
       </div>
     </div>
     {% endcall %}
@@ -209,7 +209,7 @@
     <div style="max-width: 24rem;">
       <div class="input-group">
         <span class="input-group__text">https://</span>
-        <input type="text" class="form-control" value="example.com" disabled />
+        <input type="text" class="input" value="example.com" disabled />
       </div>
     </div>
     {% endcall %}
@@ -251,7 +251,7 @@
           <tr>
             <td><code>--input-group-padding-x</code></td>
             <td>calc(0.625rem * var(--st-density))</td>
-            <td>Addon horizontal padding; matches <code>.form-control</code> at each size so an addon's text baseline aligns with the input's</td>
+            <td>Addon horizontal padding; matches the field child's padding-x at each size so an addon's text baseline aligns with the input's</td>
           </tr>
           <tr>
             <td><code>--input-group-inset</code></td>
@@ -266,6 +266,6 @@
         </tbody>
       </table>
     </div>
-    <p>The wrapper owns the chrome. Child <code>.form-control</code> elements clear their own background, border, and focus halo so only the wrapper's surface and focus state are visible.</p>
+    <p>The wrapper owns the chrome. Child <code>.input</code>, <code>.select</code>, and <code>.textarea</code> elements clear their own background, border, and focus halo so only the wrapper's surface and focus state are visible.</p>
   </section>
 {% endblock %}

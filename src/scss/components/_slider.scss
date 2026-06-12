@@ -1,7 +1,7 @@
 // Stisla v3 — slider.
 //
 // <input type="range"> styled as a filled-track + vertical-pill-thumb.
-// Track height matches .form-control so the slider lives in form rows
+// Track height matches .input so the slider lives in form rows
 // with the same vertical rhythm as inputs. The track shows progress
 // directly — filled (primary) from start to thumb, unfilled (neutral)
 // from thumb to end. Thumb sits centered as a narrow vertical pill.
@@ -21,7 +21,7 @@
 //
 // Side effect: overflow: hidden on the track would also clip a thumb-
 // based focus halo. So the halo moves to the shell — same 3px primary
-// vocabulary as .form-control:focus-visible, just wrapping the track.
+// vocabulary as .input:focus-visible, just wrapping the track.
 //
 // === Cross-browser pseudo footgun =======================================
 // Webkit and Firefox pseudo-elements CANNOT share a selector list —
@@ -31,7 +31,7 @@
 // rules. Same applies to @media (prefers-reduced-motion: reduce).
 
 .slider {
-  --slider-h: 2.25rem; // 36 — matches .form-control
+  --slider-h: 2.25rem; // 36 — matches .input
   --slider-thumb-w: 0.5rem;
   --slider-thumb-h: 1rem; // 16 — shorter than track so the clipped sliver at value extremes is less prominent
   --slider-thumb-gap: 0.2rem; //  4 — visible space between thumb's right edge and unfilled track
@@ -180,7 +180,7 @@
 // === Validation =========================================================
 // aria-invalid covers server / JS / explicit; :user-invalid covers
 // native browser validation (step mismatch, out-of-range value) after
-// first interaction. Same hooks as form-control + form-check + switch.
+// first interaction. Same hooks as the field components + switch.
 //
 // Treatment: paint a 1px danger border around the track. Fill and
 // thumb keep brand colors; the border carries the invalid signal.
@@ -210,7 +210,7 @@
 }
 
 // === Sizes ==============================================================
-// Track height matches .form-control--sm / --lg so sliders sit cleanly
+// Track height matches .input--sm / --lg so sliders sit cleanly
 // next to inputs in the same row. Thumb width + height scale with the
 // track so the proportions stay consistent.
 .slider--sm {

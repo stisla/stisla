@@ -1,0 +1,149 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Textarea · Stisla v3{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Textarea</h1>
+    <p class="lead">A multi-line text field that grows with its content.</p>
+  </header>
+
+  <section>
+    <h2>Basic</h2>
+    <p>Add <code>.textarea</code> to any <code>&lt;textarea&gt;</code>. The fixed-height contract from <a class="link" href="/input">.input</a> drops, so <code>rows</code> and content drive the height. The handle is vertical-only, so the width tracks the parent.</p>
+    {% call ui.demo() %}
+    <div class="w-100" style="max-width: 24rem;">
+      <label for="basicTextarea" class="form-label">Notes</label>
+      <textarea class="textarea" id="basicTextarea" rows="3" placeholder="Anything else we should know?"></textarea>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Sizes</h2>
+    <p>Three sizes match the input scale so a textarea sits beside an input in the same row. Add <code>.textarea--sm</code> or <code>.textarea--lg</code>.</p>
+    {% call ui.demo() %}
+    <div class="demo-stack w-100" style="max-width: 24rem;">
+      <textarea class="textarea textarea--sm" rows="2" placeholder="Small"></textarea>
+      <textarea class="textarea" rows="2" placeholder="Default"></textarea>
+      <textarea class="textarea textarea--lg" rows="2" placeholder="Large"></textarea>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Helper text</h2>
+    <p>Use <code>.form-text</code> below the field for short hints. Wire it to the textarea with <code>aria-describedby</code> so screen readers announce it.</p>
+    {% call ui.demo() %}
+    <div class="w-100" style="max-width: 24rem;">
+      <label for="bioTextarea" class="form-label">Bio</label>
+      <textarea class="textarea" id="bioTextarea" rows="3" aria-describedby="bioHelp"></textarea>
+      <div id="bioHelp" class="form-text">A sentence or two — visible on your public profile.</div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Browser validation</h2>
+    <p>Pair native constraint attributes (<code>required</code>, <code>minlength</code>, <code>maxlength</code>) with the <code>:user-invalid</code> pseudo. The browser fires it after the user interacts with the field, and clears it the moment the value satisfies the constraints.</p>
+    {% call ui.demo() %}
+    <form class="demo-stack w-100" style="max-width: 24rem;" onsubmit="event.preventDefault()">
+      <div>
+        <label for="reqMessage" class="form-label">Message</label>
+        <textarea class="textarea" id="reqMessage" rows="3" required minlength="10" placeholder="At least 10 characters"></textarea>
+        <div class="form-text">Hit Submit with fewer than 10 characters to trigger <code>:user-invalid</code>. Type past 10 and the red clears on its own.</div>
+      </div>
+      <button type="submit" class="btn btn--primary">Submit</button>
+    </form>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Server validation</h2>
+    <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky; Stisla just paints while it's present. Pair with a <code>.form-text--error</code> message tied via <code>aria-describedby</code>.</p>
+    {% call ui.demo() %}
+    <div class="demo-stack w-100" style="max-width: 24rem;">
+      <div>
+        <label for="srvFeedback" class="form-label">Feedback</label>
+        <textarea
+          class="textarea"
+          id="srvFeedback"
+          rows="3"
+          aria-invalid="true"
+          aria-describedby="srvFeedbackError">Way too short.</textarea>
+        <div id="srvFeedbackError" class="form-text form-text--error">Please write at least 50 characters.</div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Disabled &amp; readonly</h2>
+    <p><code>disabled</code> blocks interaction and dims the field. <code>readonly</code> keeps the value selectable for copy but rejects edits. The bg shifts a tier to signal "selectable, not editable".</p>
+    {% call ui.demo() %}
+    <div class="demo-stack w-100" style="max-width: 24rem;">
+      <textarea class="textarea" rows="2" disabled>Disabled</textarea>
+      <textarea class="textarea" rows="2" readonly>Readonly</textarea>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>Eight variables retune <code>.textarea</code> independently of <code>.input</code>. Override on the field itself, on a parent scope, or on <code>:root</code>. <code>--textarea-height</code> acts as a min-height floor (the field grows past it as content fills in).</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--textarea-radius</code></td>
+            <td>var(--st-input-radius, var(--st-radius))</td>
+            <td>Corner radius; sizes pull <code>--st-radius-sm</code> / <code>-lg</code></td>
+          </tr>
+          <tr>
+            <td><code>--textarea-height</code></td>
+            <td>2.25rem</td>
+            <td>Min-height floor; the field grows past this with content. sm and lg reassign this</td>
+          </tr>
+          <tr>
+            <td><code>--textarea-padding-x</code></td>
+            <td>calc(0.625rem * var(--st-density))</td>
+            <td>Horizontal padding; sm and lg reassign this</td>
+          </tr>
+          <tr>
+            <td><code>--textarea-font-size</code></td>
+            <td>0.875rem</td>
+            <td>Text size; sm and lg reassign this</td>
+          </tr>
+          <tr>
+            <td><code>--textarea-bg</code></td>
+            <td>var(--st-surface)</td>
+            <td>Background; <code>readonly</code> shifts a tier</td>
+          </tr>
+          <tr>
+            <td><code>--textarea-color</code></td>
+            <td>var(--st-foreground)</td>
+            <td>Text color</td>
+          </tr>
+          <tr>
+            <td><code>--textarea-border</code></td>
+            <td>var(--st-border)</td>
+            <td>Border color; validation hooks flip this to <code>--st-danger</code></td>
+          </tr>
+          <tr>
+            <td><code>--textarea-placeholder</code></td>
+            <td>var(--st-muted-foreground)</td>
+            <td>Placeholder text color</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+{% endblock %}

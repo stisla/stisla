@@ -46,16 +46,6 @@
       </table>
     </div>
 
-    <h3>Link</h3>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Class</th><th>Effect</th><th>Use</th></tr></thead>
-        <tbody>
-          <tr><td><code>.link</code></td><td>Primary-colored underline with hover mix.</td><td>Inline link in app UI (helper text, cross-references). Long-form content uses <code>.prose</code>, which restyles every <code>&lt;a&gt;</code> automatically.</td></tr>
-        </tbody>
-      </table>
-    </div>
-
     <h3>Weight</h3>
     <div class="prose">
       <table>
@@ -146,7 +136,7 @@
     {% call ui.demo() %}
     <div class="d-flex flex-column gap-2" style="max-width: 18rem;">
       <label for="email" class="form-label">Email</label>
-      <input type="email" id="email" class="form-control" placeholder="you@example.com" />
+      <input type="email" id="email" class="input" placeholder="you@example.com" />
       <p class="text-muted-foreground fs-2 mb-0">We'll never share your address.</p>
     </div>
     {% endcall %}
@@ -353,7 +343,7 @@
         </tbody>
       </table>
     </div>
-    <p>Base-only by default: flex grow / shrink, align self, height, max-width / max-height, position, overflow, text color, font weight, line height, text transform, link, visually-hidden. Flip any of them on in <code>$utilities-config</code>.</p>
+    <p>Base-only by default: flex grow / shrink, align self, height, max-width / max-height, position, overflow, text color, font weight, line height, text transform, visually-hidden. Flip any of them on in <code>$utilities-config</code>.</p>
   </section>
 
   <section id="customizing-the-set">
@@ -403,7 +393,6 @@
           <tr><td><code>text-transform</code></td><td><code>.text-lowercase</code>, <code>.text-uppercase</code>, <code>.text-capitalize</code></td><td>no</td></tr>
           <tr><td><code>text-wrap</code></td><td><code>.text-nowrap</code>, <code>.text-truncate</code>, <code>.text-break</code></td><td>no</td></tr>
           <tr><td><code>text-align</code></td><td><code>.text-start</code>, <code>.text-end</code>, <code>.text-center</code></td><td>yes</td></tr>
-          <tr><td><code>link</code></td><td><code>.link</code></td><td>no</td></tr>
           <tr><td><code>visually-hidden</code></td><td><code>.visually-hidden</code></td><td>no</td></tr>
           <tr><td><code>display</code></td><td><code>.d-*</code></td><td>yes</td></tr>
           <tr><td><code>position</code></td><td><code>.position-*</code></td><td>no</td></tr>

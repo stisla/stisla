@@ -18,7 +18,7 @@
 // is a white literal — pure white in both themes regardless of how a
 // consumer retunes --st-surface or --st-primary-foreground.
 //
-// Validation hooks match .form-check: [aria-invalid="true"] for sticky
+// Validation hooks match .checkbox / .radio: [aria-invalid="true"] for sticky
 // server-rendered errors, :user-invalid for native browser validation
 // after first interaction (pair with required on the input). The red
 // signal lives on the track border; the fill follows the on/off state
@@ -109,7 +109,7 @@
   }
 
   // Validation. Invalid touches border only; fill follows on/off so both
-  // signals compose. Same convention as .form-check (shadcn / MUI / Tailwind).
+  // signals compose. Same convention as .checkbox (shadcn / MUI / Tailwind).
   &[aria-invalid="true"],
   &:user-invalid {
     border-color: var(--st-danger);

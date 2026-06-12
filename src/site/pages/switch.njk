@@ -48,11 +48,11 @@
     <p>Push the switch to the row's trailing edge with <code>.switch--reverse</code> + <code>justify-content: space-between</code>. The label sits on the left as row content; the switch pins right as the affordance.</p>
     {% call ui.demo() %}
     <div class="demo-stack" style="max-width: 24rem;">
-      <div class="switch switch--lg switch--reverse" style="justify-content: space-between;">
+      <div class="switch switch--lg switch--reverse justify-content-between">
         <label class="switch__label" for="settingEmail">Email notifications</label>
         <input class="switch__input" type="checkbox" role="switch" id="settingEmail" checked />
       </div>
-      <div class="switch switch--lg switch--reverse" style="justify-content: space-between;">
+      <div class="switch switch--lg switch--reverse justify-content-between">
         <label class="switch__label" for="settingPush">Push notifications</label>
         <input class="switch__input" type="checkbox" role="switch" id="settingPush" />
       </div>

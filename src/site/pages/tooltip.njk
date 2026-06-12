@@ -23,7 +23,7 @@
     <h2>Placements</h2>
     <p><code>data-stisla-tooltip-placement</code> picks the resting side. Floating UI flips automatically when the chosen side would overflow the viewport; the <code>-start</code> and <code>-end</code> variants align the tooltip to the corresponding edge of the trigger.</p>
     {% call ui.demo() %}
-    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+    <div class="d-flex flex-wrap gap-2">
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-placement="top" data-stisla-tooltip-title="Anchored above">Top</button>
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-placement="right" data-stisla-tooltip-title="Anchored right">Right</button>
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-placement="bottom" data-stisla-tooltip-title="Anchored below">Bottom</button>
@@ -40,7 +40,7 @@
     <h2>Triggers</h2>
     <p>Default is <code>hover focus</code> — opens on either. Pass <code>data-stisla-tooltip-trigger</code> to opt for one. <code>manual</code> wires nothing and leaves <code>show()</code> / <code>hide()</code> to a consumer script.</p>
     {% call ui.demo() %}
-    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+    <div class="d-flex flex-wrap gap-2">
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-trigger="hover" data-stisla-tooltip-title="Hover only — keyboard focus skips this">
         Hover only
       </button>
@@ -58,7 +58,7 @@
     <h2>Delay</h2>
     <p>The 600ms default <code>delay</code> prevents flash on incidental pointer crossings. Drop to <code>0</code> for instant feedback or raise it for chips that should only show on deliberate hover.</p>
     {% call ui.demo() %}
-    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+    <div class="d-flex flex-wrap gap-2">
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-delay="0" data-stisla-tooltip-title="Instant — no open delay">
         Instant
       </button>
@@ -77,7 +77,7 @@
     <p>Tooltips work on any element. Inline anchors are the common case for jargon, acronyms, or external pointers.</p>
     {% call ui.demo(prose=true) %}
     <div class="prose">
-      <p style="margin: 0;">
+      <p class="m-0">
         The release pipeline runs on
         <a href="#" data-stisla-tooltip data-stisla-tooltip-title="GitHub Actions">CI</a>
         and announces the cut in
@@ -91,7 +91,7 @@
     <h2>Icon-only triggers</h2>
     <p>Icon buttons rely on tooltips for their label. Always pair the tooltip with an <code>aria-label</code> on the trigger so screen readers without hover get the same name.</p>
     {% call ui.demo() %}
-    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+    <div class="d-flex flex-wrap gap-2">
       <button type="button" class="btn btn--outline btn--neutral btn--icon" data-stisla-tooltip data-stisla-tooltip-title="Edit" aria-label="Edit">
         <i data-lucide="pencil"></i>
       </button>
@@ -132,7 +132,7 @@
     <h2>Disabled trigger</h2>
     <p>Disabled buttons don't fire pointer events, so the tooltip attributes go on a focusable wrapper that takes the hover and focus instead.</p>
     {% call ui.demo() %}
-    <span tabindex="0" data-stisla-tooltip data-stisla-tooltip-title="Upgrade to enable exports" style="display: inline-block;">
+    <span tabindex="0" data-stisla-tooltip data-stisla-tooltip-title="Upgrade to enable exports" class="d-inline-block">
       <button type="button" class="btn btn--primary" disabled style="pointer-events: none;">Export CSV</button>
     </span>
     {% endcall %}

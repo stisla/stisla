@@ -7,19 +7,21 @@
 // outline.
 //
 // Members: .input-group__text (icon/text addon, transparent — paints
-// through the wrapper). .form-control children paint the field shape via
-// the wrapper. .btn children sit inset (--input-group-inset margin on
-// all sides) with concentric inner radius — a chip floating inside the
-// field rather than a slab welded to its edge.
+// through the wrapper). Field children — .input / .select / .textarea —
+// paint the field shape via the wrapper. .btn children sit inset
+// (--input-group-inset margin on all sides) with concentric inner radius
+// — a chip floating inside the field rather than a slab welded to its
+// edge.
 //
 // BEM (V3.md §3.6):
 //   <div class="input-group">
 //     <span class="input-group__text">https://</span>
-//     <input class="form-control" type="text">
+//     <input class="input" type="text">
 //   </div>
 //
-// Sizes pair with .form-control--{sm,lg} on the child input. Pull
-// --st-radius-{sm,lg} so corners scale with --st-radius proportionally.
+// Sizes pair with the field child's own size modifier (.input--sm, etc.).
+// Pull --st-radius-{sm,lg} so corners scale with --st-radius
+// proportionally.
 
 .input-group {
   --input-group-radius:        var(--st-input-radius, var(--st-radius));
@@ -38,18 +40,17 @@
   border-radius: var(--input-group-radius);
   transition: border-color .12s ease, box-shadow .12s ease;
 
-  // Focus the whole group when an editable child is focused. Drops the
-  // .form-select / .form-floating branches from BS5 — neither exists in
-  // v3 (select folds into .form-control; .form-floating is out of scope).
-  &:has(> .form-control:focus-visible) {
+  // Focus the whole group when an editable child is focused. Matches any
+  // of the three field types (.form-floating is out of scope for v3).
+  &:has(> :is(.input, .select, .textarea):focus-visible) {
     border-color: var(--st-primary);
     box-shadow: 0 0 0 3px color-mix(in oklch, var(--st-ring) 25%, transparent);
   }
 
   // Validation forwarding — an invalid child paints the wrapper red so
-  // the border message reads on one row. Same hooks as .form-control
-  // (3.3a): aria-invalid for server / JS / explicit; :user-invalid for
-  // native browser validation after first interaction.
+  // the border message reads on one row. Same hooks as the field
+  // components: aria-invalid for server / JS / explicit; :user-invalid
+  // for native browser validation after first interaction.
   &:has(> [aria-invalid="true"]),
   &:has(> :user-invalid) {
     border-color: var(--st-danger);
@@ -59,12 +60,12 @@
     box-shadow: 0 0 0 3px color-mix(in oklch, var(--st-danger) 25%, transparent);
   }
 
-  // Strip chrome from form controls inside — wrapper owns it. Zero only
+  // Strip chrome from field children — wrapper owns it. Zero only
   // background-color (not the `background` shorthand) so a <select>'s
   // chevron background-image survives; the shorthand would wipe it too.
-  // Also reset hover + focus so .form-control's own halo / hover border
+  // Also reset hover + focus so the field's own halo / hover border
   // doesn't fight the wrapper's group focus.
-  > .form-control {
+  > :is(.input, .select, .textarea) {
     background-color: transparent;
     border-color: transparent;
     box-shadow: none;
@@ -78,11 +79,11 @@
   }
 
   // Readonly inputs repaint themselves with --st-surface-2 over the
-  // wrapper bg (see .form-control[readonly]:not(:disabled) in
-  // _form-control.scss — specificity (0,3,0)). Match that specificity
-  // here so the wrapper's single surface shows through; differentiation
-  // lives at the wrapper scope, not on a sub-area.
-  > .form-control[readonly] {
+  // wrapper bg (see [readonly]:not(:disabled) in form-field-base —
+  // specificity (0,3,0)). Match that specificity here so the wrapper's
+  // single surface shows through; differentiation lives at the wrapper
+  // scope, not on a sub-area.
+  > :is(.input, .select, .textarea)[readonly] {
     background-color: transparent;
   }
 
@@ -106,17 +107,17 @@
 
   // Textareas grow past the height floor; anchor addons to the first line
   // instead of letting flex center them through the full field height.
-  &:has(> textarea) > .input-group__text {
+  &:has(> .textarea) > .input-group__text {
     align-self: flex-start;
     height: var(--input-group-height);
   }
 
   // Disabled forwarding — the transparent inner field can't show its own
   // dim, so move it to the wrapper. Reset the child's opacity (set in
-  // _form-control.scss) so the dim doesn't compound.
+  // form-field-base) so the dim doesn't compound.
   &:has(> :disabled) {
     opacity: 0.55;
-    > .form-control:disabled {
+    > :is(.input, .select, .textarea):disabled {
       opacity: 1;
     }
   }
@@ -127,9 +128,10 @@
 }
 
 // === Sizes ==============================================================
-// Pair with .form-control--{sm,lg} on the child input. Padding-x matches
-// .form-control padding-x at each size so a leading addon's text x baseline
-// aligns with the input's text x baseline across sizes.
+// Pair with the field child's own size modifier (.input--sm, etc.).
+// Padding-x matches the field's padding-x at each size so a leading
+// addon's text x baseline aligns with the input's text x baseline
+// across sizes.
 .input-group--sm {
   --input-group-radius:    var(--st-input-radius, var(--st-radius-sm));
   --input-group-height:    calc(1.75rem * var(--st-density));            // 28

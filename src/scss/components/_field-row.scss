@@ -1,0 +1,51 @@
+// Stisla v3 — field row.
+//
+// Thin layout wrapper for an input + label pair. Originally lived as the
+// `.form-check` wrapper around checkbox/radio rows in v2/BS5, but the
+// wrapper itself is type-agnostic — it just flexes an input next to a
+// label — so it ships as a standalone primitive. Used by .checkbox /
+// .radio docs and anywhere a small input wants to sit beside its label
+// (settings rows, table filters).
+//
+// BEM:
+//   <div class="field-row">
+//     <input type="checkbox" class="checkbox" id="x">
+//     <label class="field-row__label" for="x">Notifications</label>
+//   </div>
+//
+// Modifiers:
+//   .field-row--inline   render as inline-flex (rows on a line)
+//   .field-row--reverse  label first, input last (right-edge affordance)
+
+.field-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-block: 0.125rem;
+}
+
+.field-row--inline {
+  display: inline-flex;
+}
+
+// Label-first, input-last. justify-content keeps the input pinned to the
+// end of the row (useful in settings rows where the affordance lives on
+// the right edge).
+.field-row--reverse {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+.field-row__label {
+  cursor: pointer;
+  line-height: 1.4;
+  user-select: none;
+}
+
+// Disabled input dims its label. :has() is well-supported per V3.md §2.
+// Covers .checkbox + .radio (the form-check-base inputs); .switch ships
+// its own label-disabled logic since the track-and-thumb shape differs.
+.field-row:has(> :is(.checkbox, .radio):disabled) .field-row__label {
+  cursor: not-allowed;
+  opacity: 0.55;
+}

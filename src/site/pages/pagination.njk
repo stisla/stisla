@@ -109,7 +109,7 @@
     <h2>Sizes</h2>
     <p>Add <code>.pagination--sm</code> or <code>.pagination--lg</code> for compact or large chips. Heights match the button scale at 28 / 36 / 44 px under default density.</p>
     {% call ui.demo() %}
-    <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%;">
+    <div class="d-flex flex-column gap-4 w-100">
       <nav aria-label="Small page navigation">
         <ul class="pagination pagination--sm">
           <li><a class="pagination__button" href="#">Previous</a></li>
@@ -145,7 +145,7 @@
     <h2>Alignment</h2>
     <p>Add <code>.pagination--center</code> or <code>.pagination--end</code> to flip the row's <code>justify-content</code>. Default is start.</p>
     {% call ui.demo() %}
-    <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%;">
+    <div class="d-flex flex-column gap-4 w-100">
       <nav aria-label="Centered page navigation">
         <ul class="pagination pagination--center">
           <li><a class="pagination__button" href="#">Previous</a></li>

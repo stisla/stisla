@@ -29,20 +29,20 @@
         <div class="drawer__body">
           <div class="mb-4">
             <label for="taskTitle" class="form-label">Title</label>
-            <input type="text" class="form-control" id="taskTitle" placeholder="Write the launch announcement">
+            <input type="text" class="input" id="taskTitle" placeholder="Write the launch announcement">
           </div>
           <div class="mb-4">
             <label for="taskDesc" class="form-label">Description</label>
-            <textarea class="form-control" id="taskDesc" rows="4" placeholder="Anything the assignee should know before they start."></textarea>
+            <textarea class="textarea" id="taskDesc" rows="4" placeholder="Anything the assignee should know before they start."></textarea>
           </div>
           <div class="row g-3">
             <div class="col-6">
               <label for="taskDue" class="form-label">Due</label>
-              <input type="date" class="form-control" id="taskDue">
+              <input type="date" class="input" id="taskDue">
             </div>
             <div class="col-6">
               <label for="taskPriority" class="form-label">Priority</label>
-              <select class="form-control" id="taskPriority">
+              <select class="select" id="taskPriority">
                 <option>Low</option>
                 <option selected>Medium</option>
                 <option>High</option>
@@ -193,7 +193,7 @@
         <div class="drawer__body">
           <div class="mx-auto w-100" style="max-width: 30rem;">
             <div class="input-group mb-4">
-              <input type="text" class="form-control" value="https://app.example.com/r/q3-revenue" readonly>
+              <input type="text" class="input" value="https://app.example.com/r/q3-revenue" readonly>
               <button class="btn btn--outline btn--neutral" type="button">Copy link</button>
             </div>
             <div class="d-flex flex-wrap gap-2">
@@ -228,19 +228,19 @@
           <div class="row g-3">
             <div class="col-6">
               <label for="profileFirst" class="form-label">First name</label>
-              <input type="text" class="form-control" id="profileFirst" value="Nauval">
+              <input type="text" class="input" id="profileFirst" value="Nauval">
             </div>
             <div class="col-6">
               <label for="profileLast" class="form-label">Last name</label>
-              <input type="text" class="form-control" id="profileLast" value="Azhar">
+              <input type="text" class="input" id="profileLast" value="Azhar">
             </div>
             <div class="col-12">
               <label for="profileBio" class="form-label">Bio</label>
-              <textarea class="form-control" id="profileBio" rows="3">Designer and maintainer of Stisla.</textarea>
+              <textarea class="textarea" id="profileBio" rows="3">Designer and maintainer of Stisla.</textarea>
             </div>
             <div class="col-12">
               <label for="profileEmail" class="form-label">Email</label>
-              <input type="email" class="form-control" id="profileEmail" value="nauvalazhar2@gmail.com">
+              <input type="email" class="input" id="profileEmail" value="nauvalazhar2@gmail.com">
             </div>
           </div>
         </div>
@@ -331,11 +331,11 @@
           <p class="text-muted-foreground">A few details so teammates know who they're working with.</p>
           <div class="mb-4">
             <label for="setupName" class="form-label">Full name</label>
-            <input type="text" class="form-control" id="setupName" value="Nauval Azhar">
+            <input type="text" class="input" id="setupName" value="Nauval Azhar">
           </div>
           <div class="mb-4">
             <label for="setupRole" class="form-label">Role</label>
-            <select class="form-control" id="setupRole">
+            <select class="select" id="setupRole">
               <option>Engineering</option>
               <option selected>Design</option>
               <option>Product</option>
@@ -344,7 +344,7 @@
           </div>
           <div>
             <label for="setupTimezone" class="form-label">Timezone</label>
-            <select class="form-control" id="setupTimezone">
+            <select class="select" id="setupTimezone">
               <option>UTC−05:00 New York</option>
               <option>UTC+00:00 London</option>
               <option selected>UTC+07:00 Jakarta</option>
@@ -378,41 +378,41 @@
         <div class="drawer__body">
           <div class="mb-6">
             <div class="fw-medium mb-2">Status</div>
-            <div class="form-check">
-              <input class="form-check__input" type="checkbox" id="fStatusOpen" checked>
-              <label class="form-check__label" for="fStatusOpen">Open</label>
+            <div class="field-row">
+              <input class="checkbox" type="checkbox" id="fStatusOpen" checked>
+              <label class="field-row__label" for="fStatusOpen">Open</label>
             </div>
-            <div class="form-check">
-              <input class="form-check__input" type="checkbox" id="fStatusProgress" checked>
-              <label class="form-check__label" for="fStatusProgress">In progress</label>
+            <div class="field-row">
+              <input class="checkbox" type="checkbox" id="fStatusProgress" checked>
+              <label class="field-row__label" for="fStatusProgress">In progress</label>
             </div>
-            <div class="form-check">
-              <input class="form-check__input" type="checkbox" id="fStatusReview">
-              <label class="form-check__label" for="fStatusReview">In review</label>
+            <div class="field-row">
+              <input class="checkbox" type="checkbox" id="fStatusReview">
+              <label class="field-row__label" for="fStatusReview">In review</label>
             </div>
-            <div class="form-check">
-              <input class="form-check__input" type="checkbox" id="fStatusDone">
-              <label class="form-check__label" for="fStatusDone">Done</label>
+            <div class="field-row">
+              <input class="checkbox" type="checkbox" id="fStatusDone">
+              <label class="field-row__label" for="fStatusDone">Done</label>
             </div>
           </div>
           <div class="mb-6">
             <div class="fw-medium mb-2">Priority</div>
-            <div class="form-check">
-              <input class="form-check__input" type="checkbox" id="fPriorityHigh" checked>
-              <label class="form-check__label" for="fPriorityHigh">High</label>
+            <div class="field-row">
+              <input class="checkbox" type="checkbox" id="fPriorityHigh" checked>
+              <label class="field-row__label" for="fPriorityHigh">High</label>
             </div>
-            <div class="form-check">
-              <input class="form-check__input" type="checkbox" id="fPriorityMed">
-              <label class="form-check__label" for="fPriorityMed">Medium</label>
+            <div class="field-row">
+              <input class="checkbox" type="checkbox" id="fPriorityMed">
+              <label class="field-row__label" for="fPriorityMed">Medium</label>
             </div>
-            <div class="form-check">
-              <input class="form-check__input" type="checkbox" id="fPriorityLow">
-              <label class="form-check__label" for="fPriorityLow">Low</label>
+            <div class="field-row">
+              <input class="checkbox" type="checkbox" id="fPriorityLow">
+              <label class="field-row__label" for="fPriorityLow">Low</label>
             </div>
           </div>
           <div>
             <label for="fAssignee" class="form-label fw-medium">Assignee</label>
-            <select class="form-control" id="fAssignee">
+            <select class="select" id="fAssignee">
               <option selected>Anyone</option>
               <option>Me</option>
               <option>Amelia</option>

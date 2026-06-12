@@ -32,7 +32,7 @@
     <h2>Basic</h2>
     <p>Three triggers, three panels. The first enabled trigger activates on init.</p>
     {% call ui.demo() %}
-    <div class="tabs" data-stisla-tabs style="width: 100%;">
+    <div class="tabs w-100" data-stisla-tabs>
       <div class="tabs__list">
         <button class="tabs__trigger" data-value="overview">Overview</button>
         <button class="tabs__trigger" data-value="activity">Activity</button>
@@ -55,7 +55,7 @@
     <h2>With icons</h2>
     <p>Drop an <code>&lt;i&gt;</code> next to the trigger label. Icons scale with the trigger's font-size (1em), so a custom size flows through.</p>
     {% call ui.demo() %}
-    <div class="tabs" data-stisla-tabs style="width: 100%;">
+    <div class="tabs w-100" data-stisla-tabs>
       <div class="tabs__list">
         <button class="tabs__trigger" data-value="inbox">
           <i data-lucide="inbox"></i>
@@ -87,7 +87,7 @@
     <h2>Vertical</h2>
     <p>Add <code>.tabs--vertical</code> to flip the layout. The rail becomes a column on the inline-start side; panels fill the remaining row. Arrow keys swap to <kbd class="kbd">↑</kbd> / <kbd class="kbd">↓</kbd>.</p>
     {% call ui.demo() %}
-    <div class="tabs tabs--vertical" data-stisla-tabs style="width: 100%;">
+    <div class="tabs tabs--vertical w-100" data-stisla-tabs>
       <div class="tabs__list">
         <button class="tabs__trigger" data-value="account">
           <i data-lucide="user"></i>
@@ -126,7 +126,7 @@
     <h2>Disabled trigger</h2>
     <p>Mark a trigger with <code>data-disabled</code> or the native <code>disabled</code> attribute. The class skips it for click, arrow navigation, and initial activation.</p>
     {% call ui.demo() %}
-    <div class="tabs" data-stisla-tabs style="width: 100%;">
+    <div class="tabs w-100" data-stisla-tabs>
       <div class="tabs__list">
         <button class="tabs__trigger" data-value="home">Home</button>
         <button class="tabs__trigger" data-value="archive" data-disabled>Archive</button>
@@ -149,7 +149,7 @@
     <h2>Manual activation</h2>
     <p>Set <code>data-stisla-tabs-activation-mode="manual"</code> to decouple focus from selection. Arrow keys move focus only; <kbd class="kbd">Space</kbd> or <kbd class="kbd">Enter</kbd> commits via native button click.</p>
     {% call ui.demo() %}
-    <div class="tabs" data-stisla-tabs data-stisla-tabs-activation-mode="manual" style="width: 100%;">
+    <div class="tabs w-100" data-stisla-tabs data-stisla-tabs-activation-mode="manual">
       <div class="tabs__list">
         <button class="tabs__trigger" data-value="one">One</button>
         <button class="tabs__trigger" data-value="two">Two</button>
@@ -172,7 +172,7 @@
     <h2>Programmatic control</h2>
     <p>Resolve an instance via <code>Stisla.Tabs.getOrCreate(el)</code> and drive it with <code>setValue(value)</code>. The instance fires <code>stisla:tabs:changing</code> (cancelable) and <code>stisla:tabs:changed</code> on every flip.</p>
     {% call ui.demo() %}
-    <div style="display: flex; flex-direction: column; gap: 0.75rem; width: 100%;">
+    <div class="d-flex flex-column gap-3 w-100">
       <div id="tabsDemoProgrammatic" class="tabs" data-stisla-tabs>
         <div class="tabs__list">
           <button class="tabs__trigger" data-value="alpha">Alpha</button>
@@ -183,12 +183,12 @@
         <div class="tabs__panel" data-value="beta"><p>Beta pane.</p></div>
         <div class="tabs__panel" data-value="gamma"><p>Gamma pane.</p></div>
       </div>
-      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+      <div class="d-flex gap-2 flex-wrap">
         <button type="button" class="btn btn--outline btn--neutral btn--sm" data-tabs-demo="alpha">Open Alpha</button>
         <button type="button" class="btn btn--outline btn--neutral btn--sm" data-tabs-demo="beta">Open Beta</button>
         <button type="button" class="btn btn--outline btn--neutral btn--sm" data-tabs-demo="gamma">Open Gamma</button>
       </div>
-      <pre id="tabsDemoLog" class="kbd" style="display: block; padding: 0.5rem 0.75rem; min-height: 2.25rem; white-space: pre-wrap;">Listening for stisla:tabs:changed…</pre>
+      <pre id="tabsDemoLog" class="kbd d-block" style="padding: 0.5rem 0.75rem; min-height: 2.25rem; white-space: pre-wrap;">Listening for stisla:tabs:changed…</pre>
     </div>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
@@ -217,8 +217,8 @@
     <p>Any element on the page can drive a tabs instance declaratively. Carry <code>aria-controls="&lt;tabsRootId&gt;"</code> + <code>data-stisla-tabs-value="&lt;value&gt;"</code> on the trigger; the click delegate flips the matching panel without imperative JS. The tabs root needs an explicit <code>id</code> for the wire-up.</p>
     <p>Useful for sidebar links, toolbar buttons, command-palette entries, even a <code>.toggle-group</code> member that doubles as a tab switcher. Native click semantics carry — buttons fire on click + Enter + Space, anchors fire on click + Enter.</p>
     {% call ui.demo() %}
-    <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%;">
-      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+    <div class="d-flex flex-column gap-4 w-100">
+      <div class="d-flex gap-2 flex-wrap">
         <button type="button" class="btn btn--outline btn--neutral btn--sm" aria-controls="tabsDemoExternal" data-stisla-tabs-value="overview">Jump to Overview</button>
         <button type="button" class="btn btn--outline btn--neutral btn--sm" aria-controls="tabsDemoExternal" data-stisla-tabs-value="activity">Jump to Activity</button>
         <button type="button" class="btn btn--outline btn--neutral btn--sm" aria-controls="tabsDemoExternal" data-stisla-tabs-value="settings">Jump to Settings</button>
