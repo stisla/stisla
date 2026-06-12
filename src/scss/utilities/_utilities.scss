@@ -1,0 +1,398 @@
+// Stisla v3 — utilities.
+//
+// One file. Config-driven via $utilities-config: each group has an
+// `enabled` flag and a `responsive` flag.
+//   - enabled: false   → skip the group entirely
+//   - responsive: true → also emit .group-sm-*, .group-md-* breakpoint variants
+//
+// Override BEFORE @import-ing this file. Either redefine the whole map or
+// map-merge in just the groups you're changing:
+//
+//   $utilities-config: map-merge($utilities-config, (
+//     overflow:        (enabled: true,  responsive: true),
+//     visually-hidden: (enabled: false, responsive: false),
+//   ));
+//   @import '../utilities/utilities';
+//
+// To add a brand-new utility, add its entry to $utilities-config, then add
+// a matching `@include utility-group('name') using ($i) { ... }` block at
+// the bottom — $i is '' at base, '-sm'/'-md'/... at breakpoints.
+//
+// Spacing scale — Tailwind 4 px linear, density-multiplied so the global
+// --st-density knob retunes the whole rhythm alongside component padding
+// (V3.md §3.4). 0 / 1 / 2 / 3 / 4 / 5 / 6 / 8 = 0 / 4 / 8 / 12 / 16 / 20 /
+// 24 / 32 px under default density.
+//
+// Font-size scale — numeric 1..7, ascending small → large. .fs-1 = 12 px
+// (the Tailwind text-xs equivalent), .fs-7 = 32 px. Numeric over t-shirt
+// because t-shirt names collide with breakpoint names (sm/lg/xl), making
+// .fs-sm-md genuinely ambiguous.
+//
+// Margin + padding use CSS logical properties (block-start / inline-end /
+// ...) so RTL flips automatically — matches v3 component convention.
+//
+// Per V3.md §3.1: utilities are tweaks, not building blocks. If you find
+// yourself stacking these to assemble a new component, write a component
+// in SCSS instead.
+
+// === Scales ==================================================================
+
+$spacing-scale: (
+  0: 0,
+  1: calc(0.25rem * var(--st-density)),
+  2: calc(0.5rem  * var(--st-density)),
+  3: calc(0.75rem * var(--st-density)),
+  4: calc(1rem    * var(--st-density)),
+  5: calc(1.25rem * var(--st-density)),
+  6: calc(1.5rem  * var(--st-density)),
+  8: calc(2rem    * var(--st-density)),
+);
+
+$font-sizes: (
+  1: 0.75rem,
+  2: 0.875rem,
+  3: 1rem,
+  4: 1.125rem,
+  5: 1.25rem,
+  6: 1.5rem,
+  7: 2rem,
+);
+
+$margin-axes: (
+  '':  margin,
+  't': margin-block-start,
+  'b': margin-block-end,
+  's': margin-inline-start,
+  'e': margin-inline-end,
+  'x': margin-inline,
+  'y': margin-block,
+);
+
+$padding-axes: (
+  '':  padding,
+  't': padding-block-start,
+  'b': padding-block-end,
+  's': padding-inline-start,
+  'e': padding-inline-end,
+  'x': padding-inline,
+  'y': padding-block,
+);
+
+// === Config ==================================================================
+// Defaults mirror the previous hand-written file. Groups currently keyed
+// `responsive: false` were intentionally base-only; flip them to `true`
+// if you need breakpoint variants.
+
+$utilities-config: (
+  // Text
+  text-color:       (enabled: true, responsive: false),
+  font-weight:      (enabled: true, responsive: false),
+  font-size:        (enabled: true, responsive: true),
+  line-height:      (enabled: true, responsive: false),
+  text-transform:   (enabled: true, responsive: false),
+  text-wrap:        (enabled: true, responsive: false),
+  text-align:       (enabled: true, responsive: true),
+  link:             (enabled: true, responsive: false),
+
+  // A11y
+  visually-hidden:  (enabled: true, responsive: false),
+
+  // Layout
+  display:          (enabled: true, responsive: true),
+  position:         (enabled: true, responsive: false),
+  overflow:         (enabled: true, responsive: false),
+
+  // Flexbox
+  flex-fill:        (enabled: true, responsive: false),
+  flex-direction:   (enabled: true, responsive: true),
+  flex-wrap:        (enabled: true, responsive: true),
+  justify-content:  (enabled: true, responsive: true),
+  align-items:      (enabled: true, responsive: true),
+  align-self:       (enabled: true, responsive: false),
+
+  // Spacing
+  gap:              (enabled: true, responsive: true),
+  margin:           (enabled: true, responsive: true),
+  padding:          (enabled: true, responsive: true),
+
+  // Sizing
+  width:            (enabled: true, responsive: true),
+  height:           (enabled: true, responsive: false),
+  max-size:         (enabled: true, responsive: false),
+) !default;
+
+// === Emission helper =========================================================
+// Each `@include utility-group('name') using ($i)` block runs once at base
+// (infix = '') and, if the group is responsive, again inside each
+// min-width media query (infix = '-sm', '-md', ...).
+
+@mixin utility-group($name) {
+  $config: map-get($utilities-config, $name);
+
+  @if $config and map-get($config, enabled) {
+    @content('');
+
+    @if map-get($config, responsive) {
+      @each $bp in (sm, md, lg, xl, xxl) {
+        @include media-up($bp) {
+          @content(breakpoint-infix($bp));
+        }
+      }
+    }
+  }
+}
+
+// === Text color ==============================================================
+@include utility-group('text-color') using ($i) {
+  .text#{$i}-foreground       { color: var(--st-foreground)       !important; }
+  .text#{$i}-muted-foreground { color: var(--st-muted-foreground) !important; }
+
+  .text#{$i}-primary          { color: var(--st-primary)          !important; }
+  .text#{$i}-success          { color: var(--st-success)          !important; }
+  .text#{$i}-warning          { color: var(--st-warning)          !important; }
+  .text#{$i}-danger           { color: var(--st-danger)           !important; }
+  .text#{$i}-info             { color: var(--st-info)             !important; }
+}
+
+// === Font weight =============================================================
+// Inter ships at 400, 500, 600, 700. .fw-light degrades to the nearest
+// available weight at the browser's discretion.
+@include utility-group('font-weight') using ($i) {
+  .fw#{$i}-light    { font-weight: 300 !important; }
+  .fw#{$i}-normal   { font-weight: 400 !important; }
+  .fw#{$i}-medium   { font-weight: 500 !important; }
+  .fw#{$i}-semibold { font-weight: 600 !important; }
+  .fw#{$i}-bold     { font-weight: 700 !important; }
+}
+
+// === Font size ===============================================================
+@include utility-group('font-size') using ($i) {
+  @each $step, $value in $font-sizes {
+    .fs#{$i}-#{$step} { font-size: $value !important; }
+  }
+}
+
+// === Line height =============================================================
+@include utility-group('line-height') using ($i) {
+  .lh#{$i}-1    { line-height: 1    !important; }
+  .lh#{$i}-sm   { line-height: 1.25 !important; }
+  .lh#{$i}-base { line-height: 1.5  !important; }
+  .lh#{$i}-lg   { line-height: 2    !important; }
+}
+
+// === Text transform ==========================================================
+@include utility-group('text-transform') using ($i) {
+  .text#{$i}-lowercase  { text-transform: lowercase  !important; }
+  .text#{$i}-uppercase  { text-transform: uppercase  !important; }
+  .text#{$i}-capitalize { text-transform: capitalize !important; }
+}
+
+// === Text wrap / overflow ====================================================
+@include utility-group('text-wrap') using ($i) {
+  .text#{$i}-nowrap   { white-space: nowrap !important; }
+  .text#{$i}-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .text#{$i}-break {
+    word-wrap: break-word !important;
+    word-break: break-word !important;
+  }
+}
+
+// === Text alignment ==========================================================
+@include utility-group('text-align') using ($i) {
+  .text#{$i}-start  { text-align: start  !important; }
+  .text#{$i}-end    { text-align: end    !important; }
+  .text#{$i}-center { text-align: center !important; }
+}
+
+// === Link ====================================================================
+// Reboot strips <a> color + underline globally; .link is the opt-back-in
+// for inline links in app UI prose (demo explainers, helper text,
+// "see X" cross-references). Long-form content uses .prose, which
+// auto-styles every <a> inside it.
+@include utility-group('link') using ($i) {
+  .link#{$i} {
+    color: var(--st-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 1px;
+  }
+  .link#{$i}:hover {
+    color: color-mix(in oklch, var(--st-primary) 80%, black);
+  }
+}
+
+// === Accessibility ===========================================================
+// Visually hide content while keeping it accessible to screen readers.
+// Used for spinner labels, icon-only button labels, skip-link text.
+@include utility-group('visually-hidden') using ($i) {
+  .visually-hidden#{$i} {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+}
+
+// === Display =================================================================
+@include utility-group('display') using ($i) {
+  .d#{$i}-none         { display: none         !important; }
+  .d#{$i}-inline       { display: inline       !important; }
+  .d#{$i}-inline-block { display: inline-block !important; }
+  .d#{$i}-block        { display: block        !important; }
+  .d#{$i}-flex         { display: flex         !important; }
+  .d#{$i}-inline-flex  { display: inline-flex  !important; }
+  .d#{$i}-grid         { display: grid         !important; }
+  .d#{$i}-inline-grid  { display: inline-grid  !important; }
+}
+
+// === Position ================================================================
+@include utility-group('position') using ($i) {
+  .position#{$i}-static   { position: static   !important; }
+  .position#{$i}-relative { position: relative !important; }
+  .position#{$i}-absolute { position: absolute !important; }
+  .position#{$i}-fixed    { position: fixed    !important; }
+  .position#{$i}-sticky   { position: sticky   !important; }
+}
+
+// === Overflow ================================================================
+// Axis variants (.overflow-x-*, .overflow-y-*) are base-only by design —
+// flip overflow.responsive to also emit responsive forms of the
+// non-axis classes.
+@include utility-group('overflow') using ($i) {
+  .overflow#{$i}-hidden  { overflow: hidden  !important; }
+  .overflow#{$i}-auto    { overflow: auto    !important; }
+  .overflow#{$i}-scroll  { overflow: scroll  !important; }
+  .overflow#{$i}-visible { overflow: visible !important; }
+
+  @if $i == '' {
+    .overflow-x-hidden  { overflow-x: hidden  !important; }
+    .overflow-x-auto    { overflow-x: auto    !important; }
+    .overflow-x-scroll  { overflow-x: scroll  !important; }
+    .overflow-x-visible { overflow-x: visible !important; }
+
+    .overflow-y-hidden  { overflow-y: hidden  !important; }
+    .overflow-y-auto    { overflow-y: auto    !important; }
+    .overflow-y-scroll  { overflow-y: scroll  !important; }
+    .overflow-y-visible { overflow-y: visible !important; }
+  }
+}
+
+// === Flex grow / shrink ======================================================
+@include utility-group('flex-fill') using ($i) {
+  .flex#{$i}-fill     { flex: 1 1 auto !important; }
+  .flex#{$i}-grow-0   { flex-grow: 0   !important; }
+  .flex#{$i}-grow-1   { flex-grow: 1   !important; }
+  .flex#{$i}-shrink-0 { flex-shrink: 0 !important; }
+  .flex#{$i}-shrink-1 { flex-shrink: 1 !important; }
+}
+
+// === Flex direction ==========================================================
+@include utility-group('flex-direction') using ($i) {
+  .flex#{$i}-row            { flex-direction: row            !important; }
+  .flex#{$i}-row-reverse    { flex-direction: row-reverse    !important; }
+  .flex#{$i}-column         { flex-direction: column         !important; }
+  .flex#{$i}-column-reverse { flex-direction: column-reverse !important; }
+}
+
+// === Flex wrap ===============================================================
+@include utility-group('flex-wrap') using ($i) {
+  .flex#{$i}-wrap         { flex-wrap: wrap         !important; }
+  .flex#{$i}-nowrap       { flex-wrap: nowrap       !important; }
+  .flex#{$i}-wrap-reverse { flex-wrap: wrap-reverse !important; }
+}
+
+// === Justify content =========================================================
+@include utility-group('justify-content') using ($i) {
+  .justify-content#{$i}-start   { justify-content: flex-start    !important; }
+  .justify-content#{$i}-end     { justify-content: flex-end      !important; }
+  .justify-content#{$i}-center  { justify-content: center        !important; }
+  .justify-content#{$i}-between { justify-content: space-between !important; }
+  .justify-content#{$i}-around  { justify-content: space-around  !important; }
+  .justify-content#{$i}-evenly  { justify-content: space-evenly  !important; }
+}
+
+// === Align items =============================================================
+@include utility-group('align-items') using ($i) {
+  .align-items#{$i}-start    { align-items: flex-start !important; }
+  .align-items#{$i}-end      { align-items: flex-end   !important; }
+  .align-items#{$i}-center   { align-items: center     !important; }
+  .align-items#{$i}-baseline { align-items: baseline   !important; }
+  .align-items#{$i}-stretch  { align-items: stretch    !important; }
+}
+
+// === Align self ==============================================================
+@include utility-group('align-self') using ($i) {
+  .align-self#{$i}-start    { align-self: flex-start !important; }
+  .align-self#{$i}-end      { align-self: flex-end   !important; }
+  .align-self#{$i}-center   { align-self: center     !important; }
+  .align-self#{$i}-baseline { align-self: baseline   !important; }
+  .align-self#{$i}-stretch  { align-self: stretch    !important; }
+  .align-self#{$i}-auto     { align-self: auto       !important; }
+}
+
+// === Gap =====================================================================
+@include utility-group('gap') using ($i) {
+  @each $step, $value in $spacing-scale {
+    .gap#{$i}-#{$step}        { gap:        $value !important; }
+    .row-gap#{$i}-#{$step}    { row-gap:    $value !important; }
+    .column-gap#{$i}-#{$step} { column-gap: $value !important; }
+  }
+}
+
+// === Margin ==================================================================
+@include utility-group('margin') using ($i) {
+  @each $suffix, $prop in $margin-axes {
+    $sep: if($suffix == '', '', '-');
+
+    @each $step, $value in $spacing-scale {
+      .m#{$sep}#{$suffix}#{$i}-#{$step} { #{$prop}: $value !important; }
+    }
+
+    .m#{$sep}#{$suffix}#{$i}-auto { #{$prop}: auto !important; }
+  }
+}
+
+// === Padding =================================================================
+@include utility-group('padding') using ($i) {
+  @each $suffix, $prop in $padding-axes {
+    $sep: if($suffix == '', '', '-');
+
+    @each $step, $value in $spacing-scale {
+      .p#{$sep}#{$suffix}#{$i}-#{$step} { #{$prop}: $value !important; }
+    }
+  }
+}
+
+// === Width ===================================================================
+@include utility-group('width') using ($i) {
+  .w#{$i}-25   { width: 25%  !important; }
+  .w#{$i}-50   { width: 50%  !important; }
+  .w#{$i}-75   { width: 75%  !important; }
+  .w#{$i}-100  { width: 100% !important; }
+  .w#{$i}-auto { width: auto !important; }
+}
+
+// === Height ==================================================================
+// .h-* needs a sized parent for percentage heights to be meaningful.
+@include utility-group('height') using ($i) {
+  .h#{$i}-25   { height: 25%  !important; }
+  .h#{$i}-50   { height: 50%  !important; }
+  .h#{$i}-75   { height: 75%  !important; }
+  .h#{$i}-100  { height: 100% !important; }
+  .h#{$i}-auto { height: auto !important; }
+}
+
+// === Max sizing ==============================================================
+@include utility-group('max-size') using ($i) {
+  .mw#{$i}-100 { max-width:  100% !important; }
+  .mh#{$i}-100 { max-height: 100% !important; }
+}
