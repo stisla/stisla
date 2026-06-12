@@ -453,7 +453,7 @@
     <h2>Collapse toggle</h2>
     <p>Add <code>data-stisla-sidebar-toggle="collapse"</code> to any element to flip the panel between expanded and rail. The framework JS toggles <code>.is-collapsed</code> on the closest <code>[data-stisla-sidebar]</code>, or — when the trigger lives outside the sidebar — on the panel referenced by <code>aria-controls</code>. The trigger's <code>aria-expanded</code> stays in sync; bubble up <code>stisla:sidebar:collapse-change</code> to react to the state in your own code.</p>
     <p>Pair the toggle with the opt-in <code>--sidebar-width</code> and <code>--sidebar-width-collapsed</code> variables and the width animates pure-CSS — no inline width changes, no script. The width transition rides <code>--sidebar-transition</code>.</p>
-    <p>Inside an <code>.app-shell</code>, prefer <code>data-app-shell-toggle="collapse"</code> instead — it flips both <code>.is-sidebar-collapsed</code> on the shell (which retunes the grid column) and <code>.is-collapsed</code> on the sidebar in one click.</p>
+    <p>Inside an <code>.app-shell</code>, prefer <code>data-stisla-app-shell-toggle="collapse"</code> instead — <code>Stisla.AppShell</code> flips <code>.is-sidebar-collapsed</code> on the shell and delegates to the sidebar's <code>collapse()</code>/<code>expand()</code> API in one click, keeping the panel's <code>.is-collapsed</code> + submenu close + ARIA all in sync.</p>
     {% call ui.demo() %}
     <aside id="demo-toggleable-sidebar" data-stisla-sidebar class="sidebar" style="position: absolute; inset: 0 auto 0 0; --sidebar-width: 18rem; --sidebar-width-collapsed: calc(4.25rem * var(--st-density) + 1px); border-right: 1px solid var(--st-border); --sidebar-bg: var(--st-surface);">
       <header class="sidebar__header">

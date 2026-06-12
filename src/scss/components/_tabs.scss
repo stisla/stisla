@@ -1,0 +1,194 @@
+// Stisla v3 — tabs.
+//
+// Content-panel switcher. A muted rail hosts triggers; the active one
+// rises out of the rail as a paper pill. Mirrors shadcn-ui / Radix Tabs.
+//
+//   ┌──────────────────────────────────┐
+//   │ ┌────────┐                       │   list   @ --st-surface-2
+//   │ │ Active │  Overview   Activity  │   active @ --st-surface + shadow
+//   │ └────────┘                       │   rest   @ transparent text
+//   └──────────────────────────────────┘
+//   ┌──────────────────────────────────┐
+//   │ panel content                    │
+//   └──────────────────────────────────┘
+//
+// Anatomy:
+//   .tabs                root (`data-stisla-tabs`)
+//     .tabs__list        role="tablist" — the muted rail
+//       .tabs__trigger   role="tab" — paper pill when active
+//     .tabs__panel       role="tabpanel" — content block, matched by data-value
+//
+// State (Radix-aligned, V3.md §3.6):
+//   .tabs[data-orientation="horizontal|vertical"]
+//   .tabs__list[data-orientation]
+//   .tabs__trigger[data-state="active|inactive"], [data-disabled], [data-orientation]
+//   .tabs__panel[data-state="active|inactive"], [data-orientation]
+//
+// Height + concentric corners (V3.md §3.4):
+//   outer rail height — --tabs-list-height (default 2.25rem = 36 px raw)
+//   rail padding      — --tabs-list-padding (default 0.25rem = 4 raw)
+//   inner trigger     — flex stretch + height: 100% so the box model
+//                       computes (height - 2*padding) automatically.
+//                       28 raw default → matches .btn--sm cadence.
+//   inner radius      — outer radius - padding (concentric).
+//
+// Vertical mode: list flips to a column on the inline-start side; panel
+// fills the remaining row. List uses border-right + right-side marker
+// position via logical properties (RTL-safe).
+
+.tabs {
+  --tabs-orientation:                 row;
+  --tabs-gap:                         0.75rem;       // list ↔ panel
+
+  --tabs-list-radius:                 var(--st-tabs-radius, var(--st-radius));
+  --tabs-list-height:                 2.25rem;       // 36 raw
+  --tabs-list-padding:                0.25rem;       // 4 raw
+  --tabs-list-gap:                    0.125rem;      // 2 raw — trigger ↔ trigger
+  --tabs-list-bg:                     var(--st-surface-2);
+  --tabs-list-color:                  var(--st-muted-foreground);
+
+  --tabs-trigger-radius:              calc(var(--tabs-list-radius) - var(--tabs-list-padding));
+  --tabs-trigger-padding-x:           calc(0.75rem * var(--st-density));
+  --tabs-trigger-gap:                 0.5rem;        // icon ↔ label
+  --tabs-trigger-font-size:           0.875rem;
+  --tabs-trigger-font-weight:         500;
+  --tabs-trigger-hover-color:         var(--st-foreground);
+  // Active paint mirrors .toggle / .toggle-group active member: highlight
+  // bg + highlight-foreground color + border matches bg for a clean solid
+  // chip with no visible rim. Cohesive with the segmented-control family
+  // and reads cleanly in both themes without a drop shadow.
+  --tabs-trigger-active-bg:           var(--st-highlight);
+  --tabs-trigger-active-color:        var(--st-highlight-foreground);
+  --tabs-trigger-active-border-color: var(--tabs-trigger-active-bg);
+
+  --tabs-ring:                        var(--st-ring);
+  --tabs-transition-duration:         0.15s;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--tabs-gap);
+}
+
+// === List (the muted rail) =============================================
+.tabs__list {
+  display: inline-flex;
+  align-items: stretch;
+  align-self: flex-start;          // pill hugs content, doesn't stretch
+  flex-direction: var(--tabs-orientation);
+  height: calc(var(--tabs-list-height) * var(--st-density));
+  padding: calc(var(--tabs-list-padding) * var(--st-density));
+  gap: calc(var(--tabs-list-gap) * var(--st-density));
+  background: var(--tabs-list-bg);
+  border-radius: var(--tabs-list-radius);
+  color: var(--tabs-list-color);
+}
+
+// === Trigger ============================================================
+.tabs__trigger {
+  // Reset native button defaults. Border lives at 1px transparent at rest
+  // so the active state's painted border doesn't shift the layout by 1px.
+  appearance: none;
+  background: transparent;
+  border: 1px solid transparent;
+  font: inherit;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--tabs-trigger-gap);
+  height: 100%;                    // fills rail's inner area via box model
+  padding: 0 var(--tabs-trigger-padding-x);
+  color: inherit;                  // inherits rail's muted-foreground
+  font-size: var(--tabs-trigger-font-size);
+  font-weight: var(--tabs-trigger-font-weight);
+  line-height: 1;
+  border-radius: var(--tabs-trigger-radius);
+  text-decoration: none;
+  transition:
+    background-color var(--tabs-transition-duration) ease,
+    color var(--tabs-transition-duration) ease,
+    border-color var(--tabs-transition-duration) ease;
+
+  &:hover:not([data-state="active"]) {
+    color: var(--tabs-trigger-hover-color);
+  }
+
+  &[data-state="active"] {
+    background: var(--tabs-trigger-active-bg);
+    color: var(--tabs-trigger-active-color);
+    border-color: var(--tabs-trigger-active-border-color);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--tabs-ring);
+    outline-offset: 2px;
+  }
+
+  &[data-disabled],
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+}
+
+// Icons inside trigger scale with its font-size (1em, not 1rem) so a
+// custom --tabs-trigger-font-size retunes both glyph + icon together.
+.tabs__trigger :is(svg, i) {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}
+
+// === Panel ==============================================================
+.tabs__panel {
+  &[data-state="inactive"] {
+    display: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--tabs-ring);
+    outline-offset: 2px;
+    border-radius: var(--st-radius-sm);
+  }
+}
+
+// === Vertical orientation ==============================================
+// Root flips to a row layout — rail on the inline-start, panels fill the
+// remaining inline-end. List drops its hard height + becomes a column.
+.tabs--vertical {
+  --tabs-orientation: column;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.tabs--vertical .tabs__list {
+  height: auto;
+  flex-direction: column;
+  align-self: stretch;
+}
+
+// Vertical triggers stretch to the rail's inline-size + read left-aligned
+// so labels scan top-to-bottom like a menu list. The list switches to
+// `height: auto` in vertical mode (children stack), so the base
+// `height: 100%` collapses to content height — replace with a concrete
+// row height. 32 raw matches toggle-group's vertical cadence (Notion /
+// Linear / shadcn sidebar rhythm).
+.tabs--vertical .tabs__trigger {
+  width: 100%;
+  height: calc(2rem * var(--st-density));
+  justify-content: flex-start;
+  text-align: start;
+}
+
+// Vertical panels fill the remaining row.
+.tabs--vertical .tabs__panel {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tabs { --tabs-transition-duration: 0s; }
+}

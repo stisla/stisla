@@ -6,171 +6,364 @@
 {% block content %}
   <header>
     <h1>Tabs</h1>
-    <p class="lead">A tab strip that swaps a panel of content on click.</p>
+    <p class="lead">A content-panel switcher. Active trigger paints with the highlight tint over a muted rail.</p>
   </header>
 
   <section>
+    <p>For a segmented control with no content panels, see <a class="link" href="/toggle-group">Toggle group</a>. The active trigger paints the same way in both (highlight bg matching the trigger's border); the difference is the rail and the panel switching. Toggle group is an outline-neutral cluster on a transparent rim; tabs sits on a <code>--st-surface-2</code> bed and switches a matching <code>.tabs__panel</code> below the rail.</p>
+  </section>
+
+  <section>
+    <h2>Anatomy</h2>
+    <p>The component scans for triggers and panels inside the root and matches them by <code>data-value</code>. Author writes <code>data-stisla-tabs</code> and the value pairs; the class wires every ARIA attribute (<code>role</code>, <code>aria-selected</code>, <code>aria-controls</code>, <code>aria-labelledby</code>, roving <code>tabindex</code>) on init. IDs auto-generate when missing.</p>
+    {% call ui.code(lang='html') %}
+    <div class="tabs" data-stisla-tabs>
+      <div class="tabs__list">
+        <button class="tabs__trigger" data-value="overview">Overview</button>
+        <button class="tabs__trigger" data-value="activity">Activity</button>
+      </div>
+      <div class="tabs__panel" data-value="overview">…</div>
+      <div class="tabs__panel" data-value="activity">…</div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
     <h2>Basic</h2>
-    <p>Use buttons as the tab triggers and pair them with a <code>.tab-content</code> wrapper. Each trigger needs <code>data-bs-toggle="tab"</code> and a <code>data-bs-target</code> pointing at its pane. See <a href="/navs">Navs</a> for the static row variants.</p>
+    <p>Three triggers, three panels. The first enabled trigger activates on init.</p>
     {% call ui.demo() %}
-    <div class="w-100">
-      <ul class="nav nav-tabs" id="tabsBasic" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="tabsBasic-home-tab" data-bs-toggle="tab" data-bs-target="#tabsBasic-home" type="button" role="tab" aria-controls="tabsBasic-home" aria-selected="true">Home</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="tabsBasic-profile-tab" data-bs-toggle="tab" data-bs-target="#tabsBasic-profile" type="button" role="tab" aria-controls="tabsBasic-profile" aria-selected="false">Profile</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="tabsBasic-contact-tab" data-bs-toggle="tab" data-bs-target="#tabsBasic-contact" type="button" role="tab" aria-controls="tabsBasic-contact" aria-selected="false">Contact</button>
-        </li>
-      </ul>
-      <div class="tab-content border border-top-0 rounded-bottom p-3" id="tabsBasicContent">
-        <div class="tab-pane show active" id="tabsBasic-home" role="tabpanel" aria-labelledby="tabsBasic-home-tab" tabindex="0">
-          <p class="mb-0">Home pane. Swap to another tab and this stays in the DOM.</p>
-        </div>
-        <div class="tab-pane" id="tabsBasic-profile" role="tabpanel" aria-labelledby="tabsBasic-profile-tab" tabindex="0">
-          <p class="mb-0">Profile pane content.</p>
-        </div>
-        <div class="tab-pane" id="tabsBasic-contact" role="tabpanel" aria-labelledby="tabsBasic-contact-tab" tabindex="0">
-          <p class="mb-0">Contact pane content.</p>
-        </div>
+    <div class="tabs" data-stisla-tabs style="width: 100%;">
+      <div class="tabs__list">
+        <button class="tabs__trigger" data-value="overview">Overview</button>
+        <button class="tabs__trigger" data-value="activity">Activity</button>
+        <button class="tabs__trigger" data-value="settings">Settings</button>
+      </div>
+      <div class="tabs__panel" data-value="overview">
+        <p>The overview pane gives you the big picture — at a glance metrics and recent changes.</p>
+      </div>
+      <div class="tabs__panel" data-value="activity">
+        <p>Activity log lists every recent event in reverse chronological order.</p>
+      </div>
+      <div class="tabs__panel" data-value="settings">
+        <p>Settings content lives here — name, preferences, integrations.</p>
       </div>
     </div>
     {% endcall %}
   </section>
 
   <section>
-    <h2>Pills</h2>
-    <p>Swap <code>.nav-tabs</code> for <code>.nav-pills</code> and use <code>data-bs-toggle="pill"</code> on the triggers. The pane container can drop the border for a flush look.</p>
+    <h2>With icons</h2>
+    <p>Drop an <code>&lt;i&gt;</code> next to the trigger label. Icons scale with the trigger's font-size (1em), so a custom size flows through.</p>
     {% call ui.demo() %}
-    <div class="w-100">
-      <ul class="nav nav-pills mb-3" id="tabsPills" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="tabsPills-home-tab" data-bs-toggle="pill" data-bs-target="#tabsPills-home" type="button" role="tab" aria-controls="tabsPills-home" aria-selected="true">Home</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="tabsPills-profile-tab" data-bs-toggle="pill" data-bs-target="#tabsPills-profile" type="button" role="tab" aria-controls="tabsPills-profile" aria-selected="false">Profile</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="tabsPills-contact-tab" data-bs-toggle="pill" data-bs-target="#tabsPills-contact" type="button" role="tab" aria-controls="tabsPills-contact" aria-selected="false">Contact</button>
-        </li>
-      </ul>
-      <div class="tab-content" id="tabsPillsContent">
-        <div class="tab-pane show active" id="tabsPills-home" role="tabpanel" aria-labelledby="tabsPills-home-tab" tabindex="0">
-          <p class="mb-0">Home pane.</p>
-        </div>
-        <div class="tab-pane" id="tabsPills-profile" role="tabpanel" aria-labelledby="tabsPills-profile-tab" tabindex="0">
-          <p class="mb-0">Profile pane.</p>
-        </div>
-        <div class="tab-pane" id="tabsPills-contact" role="tabpanel" aria-labelledby="tabsPills-contact-tab" tabindex="0">
-          <p class="mb-0">Contact pane.</p>
-        </div>
+    <div class="tabs" data-stisla-tabs style="width: 100%;">
+      <div class="tabs__list">
+        <button class="tabs__trigger" data-value="inbox">
+          <i data-lucide="inbox"></i>
+          Inbox
+        </button>
+        <button class="tabs__trigger" data-value="drafts">
+          <i data-lucide="file-text"></i>
+          Drafts
+        </button>
+        <button class="tabs__trigger" data-value="sent">
+          <i data-lucide="send"></i>
+          Sent
+        </button>
+      </div>
+      <div class="tabs__panel" data-value="inbox">
+        <p>3 unread messages.</p>
+      </div>
+      <div class="tabs__panel" data-value="drafts">
+        <p>1 draft saved.</p>
+      </div>
+      <div class="tabs__panel" data-value="sent">
+        <p>Last sent 2 hours ago.</p>
       </div>
     </div>
     {% endcall %}
   </section>
 
   <section>
-    <h2>Underline</h2>
-    <p>The <code>.nav-underline</code> variant pairs the same way as tabs and pills. The active trigger gets an underline marker.</p>
+    <h2>Vertical</h2>
+    <p>Add <code>.tabs--vertical</code> to flip the layout. The rail becomes a column on the inline-start side; panels fill the remaining row. Arrow keys swap to <kbd class="kbd">↑</kbd> / <kbd class="kbd">↓</kbd>.</p>
     {% call ui.demo() %}
-    <div class="w-100">
-      <ul class="nav nav-underline mb-3" id="tabsUnderline" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="tabsUnderline-overview-tab" data-bs-toggle="tab" data-bs-target="#tabsUnderline-overview" type="button" role="tab" aria-controls="tabsUnderline-overview" aria-selected="true">Overview</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="tabsUnderline-activity-tab" data-bs-toggle="tab" data-bs-target="#tabsUnderline-activity" type="button" role="tab" aria-controls="tabsUnderline-activity" aria-selected="false">Activity</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="tabsUnderline-settings-tab" data-bs-toggle="tab" data-bs-target="#tabsUnderline-settings" type="button" role="tab" aria-controls="tabsUnderline-settings" aria-selected="false">Settings</button>
-        </li>
-      </ul>
-      <div class="tab-content" id="tabsUnderlineContent">
-        <div class="tab-pane show active" id="tabsUnderline-overview" role="tabpanel" aria-labelledby="tabsUnderline-overview-tab" tabindex="0">
-          <p class="mb-0">Overview pane.</p>
-        </div>
-        <div class="tab-pane" id="tabsUnderline-activity" role="tabpanel" aria-labelledby="tabsUnderline-activity-tab" tabindex="0">
-          <p class="mb-0">Activity pane.</p>
-        </div>
-        <div class="tab-pane" id="tabsUnderline-settings" role="tabpanel" aria-labelledby="tabsUnderline-settings-tab" tabindex="0">
-          <p class="mb-0">Settings pane.</p>
-        </div>
+    <div class="tabs tabs--vertical" data-stisla-tabs style="width: 100%;">
+      <div class="tabs__list">
+        <button class="tabs__trigger" data-value="account">
+          <i data-lucide="user"></i>
+          Account
+        </button>
+        <button class="tabs__trigger" data-value="billing">
+          <i data-lucide="credit-card"></i>
+          Billing
+        </button>
+        <button class="tabs__trigger" data-value="team">
+          <i data-lucide="users"></i>
+          Team
+        </button>
+        <button class="tabs__trigger" data-value="notifications">
+          <i data-lucide="bell"></i>
+          Notifications
+        </button>
+      </div>
+      <div class="tabs__panel" data-value="account">
+        <p>Name, avatar, and login details.</p>
+      </div>
+      <div class="tabs__panel" data-value="billing">
+        <p>Invoices, payment methods, and subscription plan.</p>
+      </div>
+      <div class="tabs__panel" data-value="team">
+        <p>Members of your workspace.</p>
+      </div>
+      <div class="tabs__panel" data-value="notifications">
+        <p>Email and in-app notification preferences.</p>
       </div>
     </div>
     {% endcall %}
   </section>
 
   <section>
-    <h2>Fade animation</h2>
-    <p>Add <code>.fade</code> to every <code>.tab-pane</code> and keep <code>.show</code> on the initially active pane. Bootstrap cross-fades the panels on switch.</p>
+    <h2>Disabled trigger</h2>
+    <p>Mark a trigger with <code>data-disabled</code> or the native <code>disabled</code> attribute. The class skips it for click, arrow navigation, and initial activation.</p>
     {% call ui.demo() %}
-    <div class="w-100">
-      <ul class="nav nav-tabs" id="tabsFade" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="tabsFade-home-tab" data-bs-toggle="tab" data-bs-target="#tabsFade-home" type="button" role="tab" aria-controls="tabsFade-home" aria-selected="true">Home</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="tabsFade-profile-tab" data-bs-toggle="tab" data-bs-target="#tabsFade-profile" type="button" role="tab" aria-controls="tabsFade-profile" aria-selected="false">Profile</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="tabsFade-contact-tab" data-bs-toggle="tab" data-bs-target="#tabsFade-contact" type="button" role="tab" aria-controls="tabsFade-contact" aria-selected="false">Contact</button>
-        </li>
-      </ul>
-      <div class="tab-content border border-top-0 rounded-bottom p-3" id="tabsFadeContent">
-        <div class="tab-pane fade show active" id="tabsFade-home" role="tabpanel" aria-labelledby="tabsFade-home-tab" tabindex="0">
-          <p class="mb-0">Home pane fades in.</p>
-        </div>
-        <div class="tab-pane fade" id="tabsFade-profile" role="tabpanel" aria-labelledby="tabsFade-profile-tab" tabindex="0">
-          <p class="mb-0">Profile pane fades in.</p>
-        </div>
-        <div class="tab-pane fade" id="tabsFade-contact" role="tabpanel" aria-labelledby="tabsFade-contact-tab" tabindex="0">
-          <p class="mb-0">Contact pane fades in.</p>
-        </div>
+    <div class="tabs" data-stisla-tabs style="width: 100%;">
+      <div class="tabs__list">
+        <button class="tabs__trigger" data-value="home">Home</button>
+        <button class="tabs__trigger" data-value="archive" data-disabled>Archive</button>
+        <button class="tabs__trigger" data-value="trash">Trash</button>
+      </div>
+      <div class="tabs__panel" data-value="home">
+        <p>Home pane.</p>
+      </div>
+      <div class="tabs__panel" data-value="archive">
+        <p>Archive pane (disabled trigger).</p>
+      </div>
+      <div class="tabs__panel" data-value="trash">
+        <p>Trash pane.</p>
       </div>
     </div>
     {% endcall %}
   </section>
 
   <section>
-    <h2>Vertical pills</h2>
-    <p>Combine <code>.flex-column</code> with <code>.nav-pills</code> and seat the pane container beside the strip in a grid row. Add <code>aria-orientation="vertical"</code> on the tab list for assistive tech.</p>
+    <h2>Manual activation</h2>
+    <p>Set <code>data-stisla-tabs-activation-mode="manual"</code> to decouple focus from selection. Arrow keys move focus only; <kbd class="kbd">Space</kbd> or <kbd class="kbd">Enter</kbd> commits via native button click.</p>
     {% call ui.demo() %}
-    <div class="row g-3 w-100">
-      <div class="col-sm-4 col-md-3">
-        <ul class="nav nav-pills flex-column" id="tabsVertical" role="tablist" aria-orientation="vertical">
-          <li class="nav-item" role="presentation">
-            <button class="nav-link active w-100 text-start" id="tabsVertical-account-tab" data-bs-toggle="pill" data-bs-target="#tabsVertical-account" type="button" role="tab" aria-controls="tabsVertical-account" aria-selected="true">Account</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link w-100 text-start" id="tabsVertical-billing-tab" data-bs-toggle="pill" data-bs-target="#tabsVertical-billing" type="button" role="tab" aria-controls="tabsVertical-billing" aria-selected="false">Billing</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link w-100 text-start" id="tabsVertical-team-tab" data-bs-toggle="pill" data-bs-target="#tabsVertical-team" type="button" role="tab" aria-controls="tabsVertical-team" aria-selected="false">Team</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link w-100 text-start" id="tabsVertical-notifications-tab" data-bs-toggle="pill" data-bs-target="#tabsVertical-notifications" type="button" role="tab" aria-controls="tabsVertical-notifications" aria-selected="false">Notifications</button>
-          </li>
-        </ul>
+    <div class="tabs" data-stisla-tabs data-stisla-tabs-activation-mode="manual" style="width: 100%;">
+      <div class="tabs__list">
+        <button class="tabs__trigger" data-value="one">One</button>
+        <button class="tabs__trigger" data-value="two">Two</button>
+        <button class="tabs__trigger" data-value="three">Three</button>
       </div>
-      <div class="col-sm-8 col-md-9">
-        <div class="tab-content" id="tabsVerticalContent">
-          <div class="tab-pane fade show active" id="tabsVertical-account" role="tabpanel" aria-labelledby="tabsVertical-account-tab" tabindex="0">
-            <p class="mb-0">Account settings live here.</p>
-          </div>
-          <div class="tab-pane fade" id="tabsVertical-billing" role="tabpanel" aria-labelledby="tabsVertical-billing-tab" tabindex="0">
-            <p class="mb-0">Billing details, invoices, and payment methods.</p>
-          </div>
-          <div class="tab-pane fade" id="tabsVertical-team" role="tabpanel" aria-labelledby="tabsVertical-team-tab" tabindex="0">
-            <p class="mb-0">Members of your workspace.</p>
-          </div>
-          <div class="tab-pane fade" id="tabsVertical-notifications" role="tabpanel" aria-labelledby="tabsVertical-notifications-tab" tabindex="0">
-            <p class="mb-0">Email and in-app notification preferences.</p>
-          </div>
-        </div>
+      <div class="tabs__panel" data-value="one">
+        <p>Pane one — arrow keys move focus without changing the active panel.</p>
+      </div>
+      <div class="tabs__panel" data-value="two">
+        <p>Pane two.</p>
+      </div>
+      <div class="tabs__panel" data-value="three">
+        <p>Pane three.</p>
       </div>
     </div>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Programmatic control</h2>
+    <p>Resolve an instance via <code>Stisla.Tabs.getOrCreate(el)</code> and drive it with <code>setValue(value)</code>. The instance fires <code>stisla:tabs:changing</code> (cancelable) and <code>stisla:tabs:changed</code> on every flip.</p>
+    {% call ui.demo() %}
+    <div style="display: flex; flex-direction: column; gap: 0.75rem; width: 100%;">
+      <div id="tabsDemoProgrammatic" class="tabs" data-stisla-tabs>
+        <div class="tabs__list">
+          <button class="tabs__trigger" data-value="alpha">Alpha</button>
+          <button class="tabs__trigger" data-value="beta">Beta</button>
+          <button class="tabs__trigger" data-value="gamma">Gamma</button>
+        </div>
+        <div class="tabs__panel" data-value="alpha"><p>Alpha pane.</p></div>
+        <div class="tabs__panel" data-value="beta"><p>Beta pane.</p></div>
+        <div class="tabs__panel" data-value="gamma"><p>Gamma pane.</p></div>
+      </div>
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <button type="button" class="btn btn--outline btn--neutral btn--sm" data-tabs-demo="alpha">Open Alpha</button>
+        <button type="button" class="btn btn--outline btn--neutral btn--sm" data-tabs-demo="beta">Open Beta</button>
+        <button type="button" class="btn btn--outline btn--neutral btn--sm" data-tabs-demo="gamma">Open Gamma</button>
+      </div>
+      <pre id="tabsDemoLog" class="kbd" style="display: block; padding: 0.5rem 0.75rem; min-height: 2.25rem; white-space: pre-wrap;">Listening for stisla:tabs:changed…</pre>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const root = document.getElementById('tabsDemoProgrammatic');
+        const log = document.getElementById('tabsDemoLog');
+        if (!root || !log) return;
+
+        const inst = Stisla.Tabs.getOrCreate(root);
+
+        document.querySelectorAll('[data-tabs-demo]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            inst.setValue(btn.dataset.tabsDemo);
+          });
+        });
+
+        root.addEventListener('stisla:tabs:changed', (e) => {
+          log.textContent = `changed → ${e.detail.value} (from ${e.detail.previousValue})`;
+        });
+      });
+    </script>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>External triggers</h2>
+    <p>Any element on the page can drive a tabs instance declaratively. Carry <code>aria-controls="&lt;tabsRootId&gt;"</code> + <code>data-stisla-tabs-value="&lt;value&gt;"</code> on the trigger; the click delegate flips the matching panel without imperative JS. The tabs root needs an explicit <code>id</code> for the wire-up.</p>
+    <p>Useful for sidebar links, toolbar buttons, command-palette entries, even a <code>.toggle-group</code> member that doubles as a tab switcher. Native click semantics carry — buttons fire on click + Enter + Space, anchors fire on click + Enter.</p>
+    {% call ui.demo() %}
+    <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%;">
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <button type="button" class="btn btn--outline btn--neutral btn--sm" aria-controls="tabsDemoExternal" data-stisla-tabs-value="overview">Jump to Overview</button>
+        <button type="button" class="btn btn--outline btn--neutral btn--sm" aria-controls="tabsDemoExternal" data-stisla-tabs-value="activity">Jump to Activity</button>
+        <button type="button" class="btn btn--outline btn--neutral btn--sm" aria-controls="tabsDemoExternal" data-stisla-tabs-value="settings">Jump to Settings</button>
+      </div>
+      <div id="tabsDemoExternal" class="tabs" data-stisla-tabs>
+        <div class="tabs__list">
+          <button class="tabs__trigger" data-value="overview">Overview</button>
+          <button class="tabs__trigger" data-value="activity">Activity</button>
+          <button class="tabs__trigger" data-value="settings">Settings</button>
+        </div>
+        <div class="tabs__panel" data-value="overview"><p>Overview pane — open me from the external buttons above.</p></div>
+        <div class="tabs__panel" data-value="activity"><p>Activity pane.</p></div>
+        <div class="tabs__panel" data-value="settings"><p>Settings pane.</p></div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>Tabs ship 17 component variables across three groups. Concentric inner radius is derived from the outer radius minus the rail padding (V3.md §3.4).</p>
+    <div class="prose">
+      <h3>List (the rail)</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--tabs-list-radius</code></td>
+            <td>var(--st-tabs-radius, var(--st-radius))</td>
+            <td>Outer rail radius. Trigger radius derives from this minus the rail padding for concentric corners.</td>
+          </tr>
+          <tr>
+            <td><code>--tabs-list-height</code></td>
+            <td>2.25rem</td>
+            <td>Outer rail height (density multiplies once). Trigger height fills via flex stretch.</td>
+          </tr>
+          <tr>
+            <td><code>--tabs-list-padding</code></td>
+            <td>0.25rem</td>
+            <td>Padding around triggers. Subtracts from the trigger's effective height and the concentric inner radius.</td>
+          </tr>
+          <tr>
+            <td><code>--tabs-list-gap</code></td>
+            <td>0.125rem</td>
+            <td>Space between adjacent triggers.</td>
+          </tr>
+          <tr>
+            <td><code>--tabs-list-bg</code></td>
+            <td>var(--st-surface-2)</td>
+            <td>Rail fill. Surface-2 is the canonical muted bed that lets the active paper rise.</td>
+          </tr>
+          <tr>
+            <td><code>--tabs-list-color</code></td>
+            <td>var(--st-muted-foreground)</td>
+            <td>Default trigger text color. Triggers inherit; the active state overrides to <code>--st-foreground</code>.</td>
+          </tr>
+          <tr>
+            <td><code>--tabs-gap</code></td>
+            <td>0.75rem</td>
+            <td>Space between the rail and the panel below it (or beside it in vertical mode).</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Trigger</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--tabs-trigger-padding-x</code></td>
+            <td>calc(0.75rem * var(--st-density))</td>
+            <td>Horizontal padding inside each trigger.</td>
+          </tr>
+          <tr>
+            <td><code>--tabs-trigger-gap</code></td>
+            <td>0.5rem</td>
+            <td>Space between an icon and its label inside the trigger.</td>
+          </tr>
+          <tr>
+            <td><code>--tabs-trigger-font-size</code></td>
+            <td>0.875rem</td>
+            <td>Trigger label size. Icons scale with this via 1em sizing.</td>
+          </tr>
+          <tr>
+            <td><code>--tabs-trigger-font-weight</code></td>
+            <td>500</td>
+            <td>Trigger label weight.</td>
+          </tr>
+          <tr>
+            <td><code>--tabs-trigger-hover-color</code></td>
+            <td>var(--st-foreground)</td>
+            <td>Color applied on hover for non-active triggers (no bg change — the active paper stays distinct).</td>
+          </tr>
+          <tr>
+            <td><code>--tabs-trigger-active-bg</code></td>
+            <td>var(--st-highlight)</td>
+            <td>Background of the active trigger. Highlight tint matches <code>.toggle</code>'s active member paint, so a tab strip baselines with a toggle-group cluster on the same surface.</td>
+          </tr>
+          <tr>
+            <td><code>--tabs-trigger-active-color</code></td>
+            <td>var(--st-highlight-foreground)</td>
+            <td>Active trigger text color, paired with the highlight bg.</td>
+          </tr>
+          <tr>
+            <td><code>--tabs-trigger-active-border-color</code></td>
+            <td>var(--tabs-trigger-active-bg)</td>
+            <td>Active border color. Defaults to match the bg for a clean solid chip with no visible rim. Rest triggers carry a transparent 1px border so the active border doesn't reflow the layout — override to add a distinct ring.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Motion + focus</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--tabs-transition-duration</code></td>
+            <td>0.15s</td>
+            <td>Trigger color and bg transition speed. Zeroed under <code>prefers-reduced-motion: reduce</code>.</td>
+          </tr>
+          <tr>
+            <td><code>--tabs-ring</code></td>
+            <td>var(--st-ring)</td>
+            <td>Focus outline color on triggers and panels.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 {% endblock %}

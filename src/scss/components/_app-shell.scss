@@ -18,18 +18,23 @@
 //
 // === State hooks (V3.md §3.6 — .is-* for Stisla-original states) =========
 //   .is-sidebar-collapsed — desktop rail. Swaps the sidebar width to
-//     --app-shell-sidebar-width-collapsed. Pair with .is-collapsed on
-//     the .sidebar itself for the rail visuals (Step 4 JS toggles both;
-//     until then, the site JS in src/js/index.js wires them in tandem).
+//     --app-shell-sidebar-width-collapsed. Stisla.AppShell pairs it
+//     with .is-collapsed on the .sidebar itself by calling the
+//     Stisla.Sidebar instance's collapse()/expand() API, which owns
+//     the rail visuals + submenu close + ARIA sync.
 //   .is-sidebar-visible — mobile drawer. Below `lg`, the sidebar is
 //     position: fixed and translated off-screen by default; this class
 //     slides it in and shows a backdrop.
 //
-// JS: shell ships site-level toggle JS today (src/js/index.js scans
-// for data-app-shell-toggle="collapse|visibility" and flips the
-// matching class on the closest .app-shell + the sidebar's own
-// .is-collapsed). Step 4 promotes it into Stisla.AppShell with the
-// full class + destroy + custom-events contract.
+// JS: src/js/components/app-shell.js. The class scans
+// [data-stisla-app-shell-toggle="collapse|visibility|auto"] (delegated,
+// document-level) and exposes collapseSidebar() / expandSidebar() /
+// showSidebar() / hideSidebar() / toggleSidebarAuto() programmatic API
+// plus cancelable stisla:app-shell:sidebar-*-changing events. The `auto`
+// mode picks per viewport — visibility below `lg`, collapse above —
+// powering the single-button dashboard hamburger pattern. Backdrop +
+// Escape dismiss for the mobile drawer are per-instance, opt-out via
+// { dismissOnBackdrop: false, dismissOnEscape: false }.
 
 .app-shell {
   --app-shell-bg:                      var(--st-background);
@@ -112,29 +117,43 @@
     z-index: var(--app-shell-sidebar-z);
     // Floating drawer needs an opaque surface (the sidebar component's own
     // bg defaults to transparent for the desktop inline-in-shell layout).
-    // Shadow cast right-ward signals the slide-from-left motion.
     background-color: var(--app-shell-sidebar-mobile-bg);
-    box-shadow: var(--app-shell-sidebar-mobile-shadow);
     transform: translateX(-100%);
+    // Shadow cast right-ward — lives only on the visible state so it
+    // doesn't peek into the viewport while the panel is translated
+    // off-screen (the shadow's blur radius would otherwise paint a faint
+    // halo at left: 0). Fades in with the slide via the transition list.
     transition:
-      transform var(--app-shell-transition-duration) ease,
-      width     var(--app-shell-transition-duration) ease;
+      transform  var(--app-shell-transition-duration) ease,
+      box-shadow var(--app-shell-transition-duration) ease,
+      width      var(--app-shell-transition-duration) ease;
   }
 
   .app-shell.is-sidebar-visible > .sidebar,
   .app-shell.is-sidebar-visible > .app-shell__body > .sidebar {
     transform: translateX(0);
+    box-shadow: var(--app-shell-sidebar-mobile-shadow);
   }
 
   // Backdrop — pseudo-element on the shell, one z-index below the
-  // sidebar's fixed layer. Click-to-dismiss is handled by the site
-  // JS in src/js/index.js (event delegated on document).
-  .app-shell.is-sidebar-visible::before {
+  // sidebar's fixed layer. Always rendered so opacity can transition;
+  // pointer-events flip on/off so the closed state doesn't block clicks
+  // on the main column. Click-to-dismiss + Escape live on
+  // Stisla.AppShell (src/js/components/app-shell.js).
+  .app-shell::before {
     content: "";
     position: fixed;
     inset: 0;
     z-index: calc(var(--app-shell-sidebar-z) - 1);
     background-color: var(--app-shell-backdrop-bg);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--app-shell-transition-duration) ease;
+  }
+
+  .app-shell.is-sidebar-visible::before {
+    opacity: 1;
+    pointer-events: auto;
   }
 }
 
