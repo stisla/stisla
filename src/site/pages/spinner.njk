@@ -1,11 +1,11 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Spinners · Stisla v3{% endblock %}
+{% block title %}Spinner · Stisla v3{% endblock %}
 
 {% block content %}
   <header>
-    <h1>Spinners</h1>
+    <h1>Spinner</h1>
     <p class="lead">A lightweight indicator for in-flight work.</p>
   </header>
 
@@ -95,7 +95,7 @@
 
     <p>Center one inside a card or empty state by wrapping it in a flex container.</p>
     {% call ui.demo() %}
-    <div class="card w-100">
+    <div class="card">
       <div class="card__body" style="display: flex; justify-content: center; padding-block: 2.5rem;">
         <div class="spinner spinner--lg text-primary" role="status">
           <span class="visually-hidden">Loading…</span>
@@ -107,7 +107,7 @@
 
   <section>
     <h2>In buttons</h2>
-    <p>For the canonical icon-aware loading state, use <code>.is-loading</code> on the button itself. It swaps any leading or trailing icon for the spinner without shifting the label. See <a class="link" href="/buttons">Buttons</a>.</p>
+    <p>For the canonical icon-aware loading state, use <code>.is-loading</code> on the button itself. It swaps any leading or trailing icon for the spinner without shifting the label. See <a class="link" href="/button">Button</a>.</p>
     {% call ui.demo() %}
     <div class="demo-row">
       <button type="button" class="btn btn--primary is-loading" aria-busy="true">Saving</button>

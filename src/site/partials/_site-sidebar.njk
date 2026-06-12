@@ -1,8 +1,7 @@
 {#
-  Site navigation sidebar. Mirrors Bootstrap 5.3's docs nav, trimmed to what
-  Stisla v3 actually documents: prologue + content + forms + components +
-  single-page explainers for layout/utilities/helpers. Every entry is a real
-  link; unbuilt pages 404 for now and become live as their templates land.
+  Site navigation sidebar. Grouped by purpose: prologue / foundation / layout /
+  forms / components (alphabetical) / overlays. Every entry is a real link;
+  unbuilt pages 404 for now and become live as their templates land.
 
   The current page is highlighted at runtime in site.js (compares each link's
   pathname to location.pathname), so we don't need to pass a page key in.
@@ -34,8 +33,17 @@
         <span class="sidebar__group-title">Foundation</span>
         <ul class="sidebar__list">
           <li class="sidebar__item"><a class="sidebar__button" href="/typography"><span>Typography</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/utilities"><span>Utilities</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__group">
+        <span class="sidebar__group-title">Layout</span>
+        <ul class="sidebar__list">
           <li class="sidebar__item"><a class="sidebar__button" href="/app-shell"><span>App shell</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/navbar"><span>Navbar</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/page-structure"><span>Page structure</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/sidebar"><span>Sidebar</span></a></li>
         </ul>
       </div>
 
@@ -44,7 +52,7 @@
         <ul class="sidebar__list">
           <li class="sidebar__item"><a class="sidebar__button" href="/form-control"><span>Form control</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/select"><span>Select</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/checks-radios"><span>Checks &amp; radios</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/form-check"><span>Form check</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/switch"><span>Switch</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/slider"><span>Slider</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/input-group"><span>Input group</span></a></li>
@@ -55,34 +63,35 @@
         <span class="sidebar__group-title">Components</span>
         <ul class="sidebar__list">
           <li class="sidebar__item"><a class="sidebar__button" href="/accordion"><span>Accordion</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/alerts"><span>Alerts</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/alert"><span>Alert</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/badge"><span>Badge</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/breadcrumb"><span>Breadcrumb</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/buttons"><span>Buttons</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/toggle"><span>Toggle</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/toggle-group"><span>Toggle group</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/button"><span>Button</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/button-group"><span>Button group</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/cards"><span>Card</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/card"><span>Card</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/carousel"><span>Carousel</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/collapsible"><span>Collapsible</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/icon-box"><span>Icon box</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/kbd"><span>Kbd</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/list-group"><span>List group</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/pagination"><span>Pagination</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/placeholders"><span>Placeholders</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/progress"><span>Progress</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/spinner"><span>Spinner</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/table"><span>Table</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/tabs"><span>Tabs</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/toggle"><span>Toggle</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/toggle-group"><span>Toggle group</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__group">
+        <span class="sidebar__group-title">Overlays</span>
+        <ul class="sidebar__list">
           <li class="sidebar__item"><a class="sidebar__button" href="/dialog"><span>Dialog</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/drawer"><span>Drawer</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/dropdown"><span>Dropdown</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/icon-box"><span>Icon box</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/images"><span>Images</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/kbd"><span>Kbd</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/list-group"><span>List group</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/navbar"><span>Navbar</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/navs"><span>Navs</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/pagination"><span>Pagination</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/placeholders"><span>Placeholders</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/popover"><span>Popover</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/progress"><span>Progress</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/scrollspy"><span>Scrollspy</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/sidebar"><span>Sidebar</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/spinners"><span>Spinners</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/tables"><span>Tables</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/tabs"><span>Tabs</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/toast"><span>Toast</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/tooltip"><span>Tooltip</span></a></li>
         </ul>
