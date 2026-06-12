@@ -202,6 +202,67 @@
       <li><strong>Document the variables.</strong> Add a Customization section to your component&rsquo;s demo page that tables the <code>--my-thing-*</code> variables (Variable / Default / Use). Reference shape: <a class="link" href="/slider#customization">Slider</a>.</li>
     </ul>
 
+    <p>For example, a <code>.stat</code> tile component pulling every convention together:</p>
+
+    {% call ui.code(lang='scss', title='src/scss/components/_stat.scss') %}
+.stat {
+  // Component-scoped vars fall back to global tokens.
+  --stat-radius:     var(--st-stat-radius, var(--st-radius));
+  --stat-padding:    calc(1.25rem * var(--st-density));
+  --stat-bg:         var(--st-surface);
+  --stat-foreground: var(--st-foreground);
+  --stat-border:     var(--st-border);
+
+  display: block;
+  padding: var(--stat-padding);
+  background: var(--stat-bg);
+  color: var(--stat-foreground);
+  border: 1px solid var(--stat-border);
+  border-radius: var(--stat-radius);
+  text-decoration: none;
+}
+
+.stat__label {
+  font-size: 0.8125rem;
+  color: var(--st-muted-foreground);
+}
+
+.stat__value {
+  margin-block-start: 0.25rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+// Intent modifier — paired bg + foreground derive from --st-primary at
+// runtime, so a brand swap repaints this variant cleanly.
+.stat--primary {
+  --stat-bg:         color-mix(in oklch, var(--st-primary) 8%, var(--st-surface));
+  --stat-foreground: var(--st-primary);
+  --stat-border:     color-mix(in oklch, var(--st-primary) 25%, transparent);
+}
+
+// Interactive opt-in via element selector. Only a.stat / button.stat
+// gets hover. A static <div class="stat"> stays inert.
+a.stat:hover,
+button.stat:hover {
+  background: color-mix(in oklch, var(--stat-bg) 92%, var(--st-foreground));
+}
+
+// Stisla-original runtime state — the .is-* prefix signals JS-driven
+// mutability, distinct from Radix-aligned [data-state] hooks.
+.stat.is-loading {
+  opacity: 0.55;
+  pointer-events: none;
+}
+    {% endcall %}
+
+    {% call ui.code(lang='html') %}
+<a class="stat stat--primary" href="/orders">
+  <span class="stat__label">Open orders</span>
+  <span class="stat__value">128</span>
+</a>
+    {% endcall %}
+
     <p>The component file ends up small, scoped, and deletable. The next person reading the codebase sees what the thing actually is by reading one file. Read any of the existing components under <code>src/scss/components/</code> for a template.</p>
   </section>
 
