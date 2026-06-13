@@ -50,7 +50,7 @@ if (typeof document !== 'undefined') {
 }
 
 export const Stisla = {
-  version: '3.0.0-alpha.0',
+  version: '3.0.0-beta.1',
   Component,
   Dialog,
   Drawer,
