@@ -555,13 +555,6 @@ $shell-max: 90rem;
   }
 }
 
-@include bp.media-down(md) {
-  [data-theme="dark"] .site-toc-mobile,
-  .dark .site-toc-mobile {
-    background: #121417;
-  }
-}
-
 .site-toc-mobile__trigger {
   display: flex;
   width: 100%;

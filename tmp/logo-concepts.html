@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Stisla — Angular S (dark / light)</title>
+<style>
+  :root { color-scheme: light; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    color: #18181b;
+    margin: 0;
+    padding: 56px 48px 96px;
+    background: #f7f7f8;
+  }
+  h1 { font-size: 22px; font-weight: 600; margin: 0 0 6px; letter-spacing: -0.01em; }
+  .lede { color: #71717a; max-width: 680px; font-size: 14px; line-height: 1.55; margin: 0 0 40px; }
+  .stage {
+    border-radius: 20px;
+    padding: 56px 48px;
+    margin-bottom: 24px;
+  }
+  .stage.light { background: #ffffff; border: 1px solid #e4e4e7; }
+  .stage.dark  { background: #0a0a0a; }
+  .stage h2 { font-size: 13px; font-weight: 600; margin: 0 0 4px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .stage.light h2 { color: #18181b; }
+  .stage.dark h2 { color: #fafafa; }
+  .stage p { font-size: 13px; line-height: 1.55; margin: 0 0 32px; max-width: 520px; }
+  .stage.light p { color: #71717a; }
+  .stage.dark p { color: #a1a1aa; }
+
+  .sizes { display: flex; align-items: center; gap: 36px; }
+  .sizes svg { display: block; flex-shrink: 0; }
+  .xl  { width: 128px; height: 128px; }
+  .lg  { width: 80px; height: 80px; }
+  .md  { width: 48px; height: 48px; }
+  .sm  { width: 32px; height: 32px; }
+  .xs  { width: 20px; height: 20px; }
+  .px  { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; text-align: center; margin-top: 8px; }
+  .stage.light .px { color: #a1a1aa; }
+  .stage.dark  .px { color: #52525b; }
+  .stack { display: flex; flex-direction: column; align-items: center; }
+
+  .wordmark { display: flex; align-items: center; gap: 16px; margin-top: 48px; }
+  .wordmark .name {
+    font-size: 32px; font-weight: 600; letter-spacing: -0.02em;
+  }
+  .stage.light .name { color: #0a0a0a; }
+  .stage.dark  .name { color: #fafafa; }
+
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 900px) { .row2 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+
+  <!-- Angular S — DARK variant (for light surfaces): black tile, white S -->
+  <symbol id="logo-dark" viewBox="0 0 512 512">
+    <rect width="512" height="512" rx="112" fill="#0a0a0a"/>
+    <path d="M 392 144 H 200 A 56 56 0 0 0 200 256 H 312 A 56 56 0 0 1 312 368 H 120"
+          stroke="#ffffff" stroke-width="76" fill="none"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- Angular S — LIGHT variant (for dark surfaces): white tile, black S -->
+  <symbol id="logo-light" viewBox="0 0 512 512">
+    <rect width="512" height="512" rx="112" fill="#fafafa"/>
+    <path d="M 392 144 H 200 A 56 56 0 0 0 200 256 H 312 A 56 56 0 0 1 312 368 H 120"
+          stroke="#0a0a0a" stroke-width="76" fill="none"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+</svg>
+
+<h1>Stisla — angular S, dark / light pair</h1>
+<p class="lede">Same mark, two surfaces. On light pages the dark tile carries; on dark pages the light tile carries. Pure neutrals — no brand blue — lets it sit comfortably next to any colored content.</p>
+
+<div class="row2">
+
+  <div class="stage light">
+    <h2>On light · use dark tile</h2>
+    <p>White page, off-white card, neutral toolbar. The dark tile cuts through cleanly.</p>
+
+    <div class="sizes">
+      <div class="stack"><svg class="xl"><use href="#logo-dark"/></svg><div class="px">128 px</div></div>
+      <div class="stack"><svg class="lg"><use href="#logo-dark"/></svg><div class="px">80 px</div></div>
+      <div class="stack"><svg class="md"><use href="#logo-dark"/></svg><div class="px">48 px</div></div>
+      <div class="stack"><svg class="sm"><use href="#logo-dark"/></svg><div class="px">32 px</div></div>
+      <div class="stack"><svg class="xs"><use href="#logo-dark"/></svg><div class="px">20 px</div></div>
+    </div>
+
+    <div class="wordmark">
+      <svg class="md"><use href="#logo-dark"/></svg>
+      <span class="name">Stisla</span>
+    </div>
+  </div>
+
+  <div class="stage dark">
+    <h2>On dark · use light tile</h2>
+    <p>Dark mode page, black hero, footer. The light tile carries without glaring.</p>
+
+    <div class="sizes">
+      <div class="stack"><svg class="xl"><use href="#logo-light"/></svg><div class="px">128 px</div></div>
+      <div class="stack"><svg class="lg"><use href="#logo-light"/></svg><div class="px">80 px</div></div>
+      <div class="stack"><svg class="md"><use href="#logo-light"/></svg><div class="px">48 px</div></div>
+      <div class="stack"><svg class="sm"><use href="#logo-light"/></svg><div class="px">32 px</div></div>
+      <div class="stack"><svg class="xs"><use href="#logo-light"/></svg><div class="px">20 px</div></div>
+    </div>
+
+    <div class="wordmark">
+      <svg class="md"><use href="#logo-light"/></svg>
+      <span class="name">Stisla</span>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
