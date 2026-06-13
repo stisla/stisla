@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Table · Stisla v3{% endblock %}
+{% block title %}Table · Stisla{% endblock %}
 
 {% set img_maya = "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=facearea&facepad=2.5&w=120&h=120&q=80" %}
 {% set img_mateo = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=facearea&facepad=2.5&w=120&h=120&q=80" %}
@@ -60,7 +60,7 @@
 
   <section>
     <h2>Row variants</h2>
-    <p>Add <code>.table__row--{intent}</code> to a <code>&lt;tr&gt;</code> to call out a row that needs attention. Below: a job queue where one job is mid-retry and another has failed. Available intents are <code>primary</code>, <code>success</code>, <code>info</code>, <code>warning</code>, <code>danger</code>, plus <code>neutral</code> for a quiet emphasis.</p>
+    <p>Add <code>.table__row--{intent}</code> to a <code>&lt;tr&gt;</code> to call out a row that needs attention. Below is a job queue where one job is mid-retry and another has failed. Available intents are <code>primary</code>, <code>success</code>, <code>info</code>, <code>warning</code>, <code>danger</code>, plus <code>neutral</code> for a quiet emphasis.</p>
     {% call ui.demo() %}
     <table class="table table--align-middle">
       <thead>
@@ -930,7 +930,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Seventeen variables retune <code>.table</code> without touching component CSS. Override on <code>.table</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
+    <p>Seventeen variables retune <code>.table</code> without touching component CSS. Override on <code>.table</code> itself, on a parent scope, or on <code>:root</code>, and the cascade scopes the change.</p>
 
     <h3>Geometry</h3>
     <div class="prose">
@@ -1066,6 +1066,6 @@
       </table>
     </div>
 
-    <p>The cell paint chain reads <code>--table-bg-state</code> (hover, active) over <code>--table-bg-type</code> (variant, striped) over <code>--table-bg</code>. Variants set <code>-type</code>, runtime states set <code>-state</code>, so hover lights a striped row without erasing the stripe underneath.</p>
+    <p>The cell paint chain reads <code>--table-bg-state</code> (hover, active) over <code>--table-bg-type</code> (variant, striped) over <code>--table-bg</code>. Variants set <code>-type</code> and runtime states set <code>-state</code>, so hover lights a striped row without erasing the stripe underneath.</p>
   </section>
 {% endblock %}

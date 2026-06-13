@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Radio · Stisla v3{% endblock %}
+{% block title %}Radio · Stisla{% endblock %}
 
 {% block content %}
   <header>
@@ -11,7 +11,7 @@
 
   <section>
     <h2>Basic</h2>
-    <p>Add <code>.radio</code> to the input. Wrap the input + label in <code>.field-row</code>. Group radios by giving them a shared <code>name</code>; the browser handles single-selection within the group.</p>
+    <p>Add <code>.radio</code> to the input. Wrap the input and label in <code>.field-row</code>. Group radios by giving them a shared <code>name</code>, and the browser handles single-selection within the group.</p>
     {% call ui.demo() %}
     <div class="demo-stack" style="max-width: 24rem;">
       <div class="field-row">
@@ -102,7 +102,7 @@
 
   <section>
     <h2>Server validation</h2>
-    <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky. Stisla just paints the red while the attribute is present; remove it when your validator considers the field resolved.</p>
+    <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky. Stisla just paints the red while the attribute is present. Remove it when your validator considers the field resolved.</p>
     {% call ui.demo() %}
     <div class="demo-stack" style="max-width: 24rem;">
       <div class="field-row">
@@ -115,7 +115,7 @@
       </div>
     </div>
     {% endcall %}
-    <p>The red rim stays even after you pick. The checked variant shows both signals composing at once: primary fill says "this is selected", red rim says "and the server still considers it invalid".</p>
+    <p>The red rim stays even after you pick. The checked variant shows both signals at once. Primary fill says "this is selected", red rim says "and the server still considers it invalid".</p>
   </section>
 
   <section>
@@ -165,7 +165,7 @@
           <tr>
             <td><code>--radio-indicator</code></td>
             <td>SVG data URL (dot)</td>
-            <td>Glyph painted over <code>--radio-checked-bg</code>. The fill color is a literal because <code>data:</code> URLs can't read CSS variables — to recolor, replace the URL with one whose fill matches the new color</td>
+            <td>Glyph painted over <code>--radio-checked-bg</code>. The fill color is a literal because <code>data:</code> URLs can't read CSS variables. To recolor, replace the URL with one whose fill matches the new color</td>
           </tr>
         </tbody>
       </table>

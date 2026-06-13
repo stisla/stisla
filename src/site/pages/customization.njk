@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Customization · Stisla v3{% endblock %}
+{% block title %}Customization · Stisla{% endblock %}
 
 {#
   Phase 1 architecture proof (V3.md). The preset demos at the bottom render
@@ -48,18 +48,18 @@
 {% block content %}
   <header>
     <h1>Customization</h1>
-    <p class="lead">Override CSS custom properties at runtime to retheme every component. No build step for the common case.</p>
+    <p class="lead">Override CSS custom properties at runtime and every component picks up the change. No build step in most cases.</p>
   </header>
 
   <section>
     <h2>Tokens</h2>
     <p>Every visual decision lives in a small set of CSS custom properties named with the <code>--st-*</code> prefix. Set one on <code>:root</code> to retheme the whole app. Scope the override to a wrapper class to retheme only that subtree. Components read their tokens via <code>var()</code>, so they pick up new values without a rebuild.</p>
 
-    <p>Values are authored in OKLCH because hover and active states derive at runtime via <code>color-mix(in oklch, …)</code>. OKLCH mixing stays vivid through the midpoints; sRGB mixing muddies on the brand colors you would pick. Override <code>--st-primary</code> and every state of every primary-toned component picks up the new hue automatically.</p>
+    <p>Values are authored in OKLCH because hover and active states derive at runtime via <code>color-mix(in oklch, …)</code>. OKLCH mixing stays vivid through the midpoints, while sRGB mixing tends to muddy the brand colors you would actually pick. Override <code>--st-primary</code> and every state of every primary-toned component picks up the new hue automatically.</p>
 
-    <p>Every background-providing token has a paired <code>-foreground</code>. Override one, override the other. The pairing keeps text contrast safe when a base hue changes.</p>
+    <p>Every background-providing token has a paired <code>-foreground</code>. If you override one, override the other. The pairing keeps text contrast safe when a base hue changes.</p>
 
-    <p>Below is the full set as it ships. Copy into your own stylesheet, change the values you want, and load it after the framework bundle. Sourced from <code>src/scss/tokens/_theme.scss</code>.</p>
+    <p>Below is the full set as it ships. Copy it into your own stylesheet, change the values you want, and load it after the framework bundle. The source is <code>src/scss/tokens/_theme.scss</code>.</p>
 
     {% call ui.code(lang='css', title='src/scss/tokens/_theme.scss') %}
 :root {
@@ -133,7 +133,7 @@
 }
     {% endcall %}
 
-    <p>The defaults are a starting point. OKLCH is convenient because <code>color-mix(in oklch, …)</code> interpolates perceptually, but you can use any color representation in your overrides (HSL, hex, sRGB). A well-balanced theme takes time. Don&rsquo;t expect to land it on the first pass.</p>
+    <p>The defaults are a starting point. OKLCH is convenient because <code>color-mix(in oklch, …)</code> interpolates perceptually, but your overrides can use any color representation (HSL, hex, sRGB). A well-balanced theme takes time, so don&rsquo;t expect to land it on the first pass.</p>
   </section>
 
   <section>
@@ -141,7 +141,7 @@
     <p>Four ways, in order of effort. Pick the lowest one that does the job.</p>
 
     <h3>1. Override a root token</h3>
-    <p>Covers most cases. Brand color, radius, shadow, density, dark deltas. One block in your stylesheet, every component retunes.</p>
+    <p>This covers most cases (brand color, radius, shadow, density, dark deltas). One block in your stylesheet, and every component retunes.</p>
     {% call ui.code(lang='css') %}
 :root {
   --st-primary: oklch(0.58 0.22 285);
@@ -160,11 +160,11 @@
     {% endcall %}
 
     <h3>3. Use a utility class</h3>
-    <p>For one-off tweaks to an existing component. A heading muted in one place. A button needing more gap to its neighbor. A card row that needs to be flex. See <a class="link" href="/utilities">Utilities</a> for the shipped set (text, layout, spacing, sizing).</p>
-    <p>Utilities are for tweaking existing shapes, not building new ones. Stacking <code>.d-flex .gap-3 .p-4 .rounded .border</code> on a <code>&lt;div&gt;</code> to assemble something card-shaped is the wrong tool. Build a component instead. See <em>Building new components</em> below.</p>
+    <p>For one-off tweaks to an existing component. You might want a heading muted in one place, a button with more gap to its neighbor, or a card row that needs to be flex. See <a class="link" href="/utilities">Utilities</a> for the shipped set (text, layout, spacing, sizing).</p>
+    <p>Utilities are made for tweaking shapes you already have. They aren&rsquo;t a way to build new ones. Stacking <code>.d-flex .gap-3 .p-4 .rounded .border</code> on a <code>&lt;div&gt;</code> to assemble something card-shaped is the wrong tool. Build a component instead; see <em>Building new components</em> below.</p>
 
     <h3>4. Edit the Sass source</h3>
-    <p>For what tokens and utilities can&rsquo;t reach. Three common cases:</p>
+    <p>For things that tokens and utilities can&rsquo;t reach. Three common cases.</p>
     <ul>
       <li><strong>Bundle size.</strong> Drop component imports you don&rsquo;t use from <code>src/scss/bundles/stisla.scss</code> and rebuild. Components are imported one per line; deleting any line removes its CSS.</li>
       <li><strong>Breakpoints.</strong> Media queries can&rsquo;t read CSS variables. Edit the Sass map in <code>src/scss/tokens/_breakpoints.scss</code> and rebuild.</li>
@@ -174,35 +174,35 @@
 
   <section>
     <h2>When to formalize</h2>
-    <p>Components feel complete by default. When the same adjustment keeps appearing, the change isn&rsquo;t a tweak. It&rsquo;s a missing variant.</p>
+    <p>Components feel complete by default. When the same adjustment keeps showing up, the change isn&rsquo;t really a tweak any more. It&rsquo;s a missing variant.</p>
 
-    <p>Two outcomes:</p>
+    <p>Two outcomes to expect.</p>
     <ul>
-      <li><strong>Contextual.</strong> A <code>.btn</code> reads too tight inside a card header but works on its own. Handle it locally with a utility or a context-scoped override. Don&rsquo;t add a new variant for a single place.</li>
-      <li><strong>Meaningful.</strong> The same <code>.btn</code> needs to be smaller across tables, toolbars, and dense layouts. That&rsquo;s a variant. Refine the default or add a modifier (<code>.btn--xs</code>, <code>.card--compact</code>) in the component file.</li>
+      <li><strong>Contextual.</strong> A <code>.btn</code> reads too tight inside a card header but works on its own. Handle it locally with a utility or a context-scoped override. Adding a new variant for a single place is overkill.</li>
+      <li><strong>Meaningful.</strong> The same <code>.btn</code> needs to be smaller across tables, toolbars, and dense layouts. That&rsquo;s a real variant. Refine the default or add a modifier (<code>.btn--xs</code>, <code>.card--compact</code>) in the component file.</li>
     </ul>
 
-    <p>The threshold is recurrence across contexts, not visual difference at a single call site. Variants live in the component&rsquo;s Sass file. They cost nothing once you&rsquo;re already in there.</p>
+    <p>The line between them is how often the adjustment shows up across contexts. A one-off difference at a single call site doesn&rsquo;t qualify. Variants live in the component&rsquo;s Sass file and cost nothing once you&rsquo;re already in there.</p>
   </section>
 
   <section>
     <h2>Building new components</h2>
-    <p>Before reaching for a new component, see whether composition of existing parts gets you there. A comment row is an avatar inside a list-group item with a title, timestamp, and description. A stats tile is a card with a heading and a number. Most "I need a new X" turns out to be card + list-group, card + form-control, or list-group + badge.</p>
+    <p>Before you reach for a new component, check if you can build it from parts you already have. A comment row is an avatar inside a list-group item with a title, timestamp, and description. A stats tile is a card with a heading and a number. Most &ldquo;I need a new X&rdquo; turns out to be card + list-group, card + form-control, or list-group + badge.</p>
 
-    <p>When composition won&rsquo;t do it, write a real component. The conventions:</p>
+    <p>When composition won&rsquo;t do it, write a real component. A few conventions to follow.</p>
 
     <ul>
-      <li><strong>One Sass file</strong> per component under <code>src/scss/components/</code>. Name it after the block: <code>_my-thing.scss</code> defines <code>.my-thing</code>.</li>
-      <li><strong>BEM naming.</strong> <code>.block</code>, <code>.block__element</code>, <code>.block--modifier</code>. Lowercase, hyphen-separated. Multiple modifiers compose flat on the root, not nested.</li>
+      <li><strong>One Sass file</strong> per component under <code>src/scss/components/</code>. Name it after the block. <code>_my-thing.scss</code> defines <code>.my-thing</code>.</li>
+      <li><strong>BEM naming.</strong> <code>.block</code>, <code>.block__element</code>, <code>.block--modifier</code>. Lowercase, hyphen-separated. Multiple modifiers stack flat on the root and never nest.</li>
       <li><strong>Read tokens via component-scoped fallback.</strong> <code>border-radius: var(--my-thing-radius, var(--st-radius))</code>. Users get a component knob and a global default for free.</li>
-      <li><strong>Wrap padding in <code>calc(N * var(--st-density))</code>.</strong> Density retunes every component proportionally. Without this, your component opts out of the density knob.</li>
-      <li><strong>States via <code>color-mix(in oklch, …)</code>.</strong> No per-state tokens. Hover is <code>color-mix(in oklch, var(--st-primary) 88%, black)</code>. The base hue is the only knob; states derive at runtime.</li>
-      <li><strong>Runtime state hooks.</strong> <code>[data-state="open|active"]</code> for Radix-aligned concepts (open / closed, active, highlighted, orientation). <code>.is-*</code> classes for Stisla-original states (<code>.is-loading</code>, <code>.is-collapsed</code>). Never both for the same concept.</li>
+      <li><strong>Wrap padding in <code>calc(N * var(--st-density))</code>.</strong> Density retunes every component proportionally. Skip this, and your component opts out of the density knob.</li>
+      <li><strong>States via <code>color-mix(in oklch, …)</code>.</strong> No per-state tokens. Hover is <code>color-mix(in oklch, var(--st-primary) 88%, black)</code>. The base hue is the only knob you set, and the states derive at runtime.</li>
+      <li><strong>Runtime state hooks.</strong> <code>[data-state="open|active"]</code> for Radix-aligned concepts (open / closed, active, highlighted, orientation). <code>.is-*</code> classes for Stisla-original states (<code>.is-loading</code>, <code>.is-collapsed</code>). Pick one per concept and stick to it.</li>
       <li><strong>Every background var has a paired <code>-foreground</code>.</strong> Same rule as the root tokens.</li>
-      <li><strong>Document the variables.</strong> Add a Customization section to your component&rsquo;s demo page that tables the <code>--my-thing-*</code> variables (Variable / Default / Use). Reference shape: <a class="link" href="/slider#customization">Slider</a>.</li>
+      <li><strong>Document the variables.</strong> Add a Customization section to your component&rsquo;s demo page that tables the <code>--my-thing-*</code> variables (Variable / Default / Use). Look at <a class="link" href="/slider#customization">Slider</a> for the shape.</li>
     </ul>
 
-    <p>For example, a <code>.stat</code> tile component pulling every convention together:</p>
+    <p>Here&rsquo;s a <code>.stat</code> tile component that pulls every convention together.</p>
 
     {% call ui.code(lang='scss', title='src/scss/components/_stat.scss') %}
 .stat {
@@ -263,12 +263,12 @@ button.stat:hover {
 </a>
     {% endcall %}
 
-    <p>The component file ends up small, scoped, and deletable. The next person reading the codebase sees what the thing actually is by reading one file. Read any of the existing components under <code>src/scss/components/</code> for a template.</p>
+    <p>The component file ends up small, scoped, and easy to delete. The next person reading the codebase can see what the thing actually is from one file. Open any of the existing components under <code>src/scss/components/</code> for a template.</p>
   </section>
 
   <section>
     <h2>Presets</h2>
-    <p>Same markup in every demo. Only the wrapper class changes. Sources live in <code>src/site/styles/_customization-presets.scss</code>. Copy a block, swap the wrapper class for <code>:root</code> to apply globally, or keep the wrapper to scope it to a subtree.</p>
+    <p>Every demo below uses the same markup. Only the wrapper class changes. The sources live in <code>src/site/styles/_customization-presets.scss</code>. Copy a block, swap the wrapper class for <code>:root</code> to apply globally, or keep the wrapper to scope it to a subtree.</p>
 
     <h3>Default</h3>
     <p>Reference for comparison. No overrides.</p>
@@ -277,7 +277,7 @@ button.stat:hover {
     {% endcall %}
 
     <h3>Brutalist</h3>
-    <p>Radius 0 and a solid offset shadow that tracks the foreground color. Two knobs reshape every surface. The shadow stays high-contrast in both themes because it resolves to <code>--st-foreground</code>, which flips per the dark block above.</p>
+    <p>Radius zero and a solid offset shadow that tracks the foreground color. Two knobs reshape every surface. The shadow stays high-contrast in both themes because it resolves to <code>--st-foreground</code>, which flips per the dark block above.</p>
     {% call ui.demo() %}
     <div class="preset-brutalist">
       {{ showcase() }}
@@ -291,7 +291,7 @@ button.stat:hover {
     {% endcall %}
 
     <h3>Violet primary</h3>
-    <p>Swap one token. Every primary-toned surface picks up the new hue. Hover, active, focus, and the soft <code>--st-highlight</code> tint derive at runtime via <code>color-mix</code>. No extra overrides needed.</p>
+    <p>Swap one token and every primary-toned surface picks up the new hue. Hover, active, focus, and the soft <code>--st-highlight</code> tint derive at runtime via <code>color-mix</code>. No extra overrides needed.</p>
     {% call ui.demo() %}
     <div class="preset-violet">
       {{ showcase() }}
@@ -305,7 +305,7 @@ button.stat:hover {
     {% endcall %}
 
     <h3>Dense</h3>
-    <p>One knob. Every padding, gap, and height value wraps <code>calc(X * var(--st-density))</code>, so 0.875 shrinks the whole system proportionally without per-component overrides.</p>
+    <p>One knob. Every padding, gap, and height value wraps <code>calc(X * var(--st-density))</code>, so 0.875 shrinks the whole system proportionally with no per-component overrides.</p>
     {% call ui.demo() %}
     <div class="preset-dense">
       {{ showcase() }}

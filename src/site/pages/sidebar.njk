@@ -1,12 +1,12 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Sidebar · Stisla v3{% endblock %}
+{% block title %}Sidebar · Stisla{% endblock %}
 
 {% block content %}
   <header>
     <h1>Sidebar</h1>
-    <p class="lead">Vertical navigation panel for app layouts. No fixed positioning, width, or background by default — the layout decides where it sits.</p>
+    <p class="lead">Vertical navigation panel for app layouts. No fixed positioning, width, or background by default. The layout decides where it sits.</p>
   </header>
 
   <section>
@@ -84,7 +84,7 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Three sizes: <code>.sidebar--sm</code>, default, and <code>.sidebar--lg</code>. The modifier retunes button height, padding, and group gap. Outer panel padding stays the same so gutters read identically across sizes.</p>
+    <p>Three sizes are available. <code>.sidebar--sm</code>, default, and <code>.sidebar--lg</code>. The modifier retunes button height, padding, and group gap. Outer panel padding stays the same so gutters read identically across sizes.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-wrap gap-3 align-items-start">
       <aside data-stisla-sidebar class="sidebar sidebar--sm" style="width: 14rem;">
@@ -137,7 +137,7 @@
 
   <section>
     <h2>Groups + group action</h2>
-    <p><code>.sidebar__group-title</code> labels each list. An optional <code>.sidebar__group-action</code> sits to the right of the title — useful for an add or filter button. Its contents collapse to a uniform 24×24 regardless of the button modifiers passed in; pick a tone via <code>.btn--ghost.btn--neutral</code> (or similar) and the slot handles the chrome.</p>
+    <p><code>.sidebar__group-title</code> labels each list. An optional <code>.sidebar__group-action</code> sits to the right of the title, useful for an add or filter button. Its contents collapse to a uniform 24×24 regardless of the button modifiers passed in. Pick a tone via <code>.btn--ghost.btn--neutral</code> (or similar) and the slot handles the chrome.</p>
     {% call ui.demo() %}
     <aside data-stisla-sidebar class="sidebar" style="width: 17rem;">
       <div class="sidebar__content">
@@ -170,7 +170,7 @@
 
   <section>
     <h2>Active state</h2>
-    <p>Two hooks. <code>aria-current="page"</code> marks the current page on a navigation link — the standard a11y attribute. <code>data-state="active"</code> covers non-link rows (a button toggling a panel, for example). Both paint the highlight chip; the difference is semantic, not visual.</p>
+    <p>Two hooks. <code>aria-current="page"</code> marks the current page on a navigation link, the standard a11y attribute. <code>data-state="active"</code> covers non-link rows (a button toggling a panel, for example). Both paint the highlight chip. The difference is semantic. It looks the same.</p>
     {% call ui.demo() %}
     <aside data-stisla-sidebar class="sidebar" style="width: 16rem;">
       <div class="sidebar__content">
@@ -191,7 +191,7 @@
 
   <section>
     <h2>Item actions</h2>
-    <p>Place a <code>.sidebar__item-action</code> after the button to drop a badge or a quiet button into the right edge of the row. The button keeps its full click area; the action overlays only its own pixels. Add the <code>--reveal</code> modifier to show the action only on row hover or keyboard focus — good for dense lists where always-visible actions feel noisy.</p>
+    <p>Place a <code>.sidebar__item-action</code> after the button to drop a badge or a quiet button into the right edge of the row. The button keeps its full click area; the action overlays only its own pixels. Add the <code>--reveal</code> modifier to show the action only on row hover or keyboard focus. This works well in dense lists where always-visible actions feel noisy.</p>
     {% call ui.demo() %}
     <aside data-stisla-sidebar class="sidebar" style="width: 18rem;">
       <div class="sidebar__content">
@@ -243,8 +243,8 @@
 
   <section>
     <h2>Nested submenu</h2>
-    <p>Add <code>data-stisla-sidebar-submenu-toggle</code> to the parent button. Wrap the child <code>.sidebar__list</code> in a <code>.sidebar__submenu</code> inside the same <code>.sidebar__item</code>. The item carries <code>data-state="open"</code> or <code>data-state="closed"</code> — the framework JS flips both this and <code>aria-expanded</code> on the trigger when the toggle is clicked, with an animated height transition.</p>
-    <p>Drop an empty <code>&lt;span class="sidebar__caret"&gt;&lt;/span&gt;</code> inside the trigger button to render a chevron indicator. The span defaults to the right edge via <code>margin-left: auto</code> and rotates 180° when the parent reports <code>aria-expanded="true"</code>. Placement is yours — put it after the label for the common right-aligned look, or use your own positioning if you want it elsewhere in the row.</p>
+    <p>Add <code>data-stisla-sidebar-submenu-toggle</code> to the parent button. Wrap the child <code>.sidebar__list</code> in a <code>.sidebar__submenu</code> inside the same <code>.sidebar__item</code>. The item carries <code>data-state="open"</code> or <code>data-state="closed"</code>. The framework JS flips both this and <code>aria-expanded</code> on the trigger when the toggle is clicked, with an animated height transition.</p>
+    <p>Drop an empty <code>&lt;span class="sidebar__caret"&gt;&lt;/span&gt;</code> inside the trigger button to render a chevron indicator. The span defaults to the right edge via <code>margin-left: auto</code> and rotates 180° when the parent reports <code>aria-expanded="true"</code>. Placement is up to you. Put it after the label for the common right-aligned look, or use your own positioning if you want it elsewhere in the row.</p>
     {% call ui.demo() %}
     <aside data-stisla-sidebar class="sidebar" style="width: 18rem;">
       <div class="sidebar__content">
@@ -388,8 +388,8 @@
 
   <section>
     <h2>Rail / mini mode</h2>
-    <p>Add <code>.is-collapsed</code> to the panel to shrink it to icons only. Each button becomes a square with its icon centered. Labels, submenus, and chevrons fade out coordinated with whatever width transition your layout runs. Wrap label text in a <code>&lt;span&gt;</code> so it can be hidden cleanly — bare text nodes get clipped as a fallback but produce a less smooth transition.</p>
-    <p>The button size follows <code>.sidebar--sm</code> and <code>.sidebar--lg</code>. The panel <code>width</code> is the layout's job — match it to the button size for a clean square cell. The recipe is <code>(button-height + 2 × --sidebar-padding-x) × --st-density</code>, which gives 4rem (sm), 4.25rem (default), 4.5rem (lg) at density 1, and scales proportionally at <code>0.875</code> or <code>1.125</code>. Add 2 × border-width on top when the panel carries a border (<code>box-sizing: border-box</code> trims the interior by the border, squeezing the icon cell); the demos below use <code>calc(4rem * var(--st-density) + 2px)</code> for a 1px border at the sm size.</p>
+    <p>Add <code>.is-collapsed</code> to the panel to shrink it to icons only. Each button becomes a square with its icon centered. Labels, submenus, and chevrons fade out coordinated with whatever width transition your layout runs. Wrap label text in a <code>&lt;span&gt;</code> so it can be hidden cleanly. Bare text nodes get clipped as a fallback but produce a less smooth transition.</p>
+    <p>The button size follows <code>.sidebar--sm</code> and <code>.sidebar--lg</code>. The panel <code>width</code> is the layout's job. Match it to the button size for a clean square cell. The recipe is <code>(button-height + 2 × --sidebar-padding-x) × --st-density</code>, which gives 4rem (sm), 4.25rem (default), 4.5rem (lg) at density 1, and scales proportionally at <code>0.875</code> or <code>1.125</code>. Add 2 × border-width on top when the panel carries a border (<code>box-sizing: border-box</code> trims the interior by the border, squeezing the icon cell). The demos below use <code>calc(4rem * var(--st-density) + 2px)</code> for a 1px border at the sm size.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-wrap gap-3 align-items-start">
       <aside data-stisla-sidebar class="sidebar sidebar--sm is-collapsed" style="width: calc(4rem * var(--st-density) + 2px); border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
@@ -451,9 +451,9 @@
 
   <section>
     <h2>Collapse toggle</h2>
-    <p>Add <code>data-stisla-sidebar-toggle="collapse"</code> to any element to flip the panel between expanded and rail. The framework JS toggles <code>.is-collapsed</code> on the closest <code>[data-stisla-sidebar]</code>, or — when the trigger lives outside the sidebar — on the panel referenced by <code>aria-controls</code>. The trigger's <code>aria-expanded</code> stays in sync; bubble up <code>stisla:sidebar:collapse-change</code> to react to the state in your own code.</p>
-    <p>Pair the toggle with the opt-in <code>--sidebar-width</code> and <code>--sidebar-width-collapsed</code> variables and the width animates pure-CSS — no inline width changes, no script. The width transition rides <code>--sidebar-transition</code>.</p>
-    <p>Inside an <code>.app-shell</code>, prefer <code>data-stisla-app-shell-toggle="collapse"</code> instead — <code>Stisla.AppShell</code> flips <code>.is-sidebar-collapsed</code> on the shell and delegates to the sidebar's <code>collapse()</code>/<code>expand()</code> API in one click, keeping the panel's <code>.is-collapsed</code> + submenu close + ARIA all in sync.</p>
+    <p>Add <code>data-stisla-sidebar-toggle="collapse"</code> to any element to flip the panel between expanded and rail. The framework JS toggles <code>.is-collapsed</code> on the closest <code>[data-stisla-sidebar]</code>, or, when the trigger lives outside the sidebar, on the panel referenced by <code>aria-controls</code>. The trigger's <code>aria-expanded</code> stays in sync; bubble up <code>stisla:sidebar:collapse-change</code> to react to the state in your own code.</p>
+    <p>Pair the toggle with the opt-in <code>--sidebar-width</code> and <code>--sidebar-width-collapsed</code> variables and the width animates pure-CSS, with no inline width changes and no script. The width transition rides <code>--sidebar-transition</code>.</p>
+    <p>Inside an <code>.app-shell</code>, prefer <code>data-stisla-app-shell-toggle="collapse"</code> instead. <code>Stisla.AppShell</code> flips <code>.is-sidebar-collapsed</code> on the shell and delegates to the sidebar's <code>collapse()</code>/<code>expand()</code> API in one click, keeping the panel's <code>.is-collapsed</code> + submenu close + ARIA all in sync.</p>
     {% call ui.demo() %}
     <aside id="demo-toggleable-sidebar" data-stisla-sidebar class="sidebar position-absolute" style="inset: 0 auto 0 0; --sidebar-width: 18rem; --sidebar-width-collapsed: calc(4.25rem * var(--st-density) + 1px); border-right: 1px solid var(--st-border); --sidebar-bg: var(--st-surface);">
       <header class="sidebar__header">
@@ -571,11 +571,11 @@
     </aside>
     <div style="height: 500px"></div>
     {% endcall %}
-    <p>Any open submenus close in sync with the width transition — the framework calls <code>closeAllSubmenus()</code> as part of the collapse so each height animation runs alongside the rail shrink. Expanding back doesn't reopen them; the user clicks back in to whichever menu they want. To drive the toggle from outside the sidebar (a topbar button, a keyboard shortcut) point at it with <code>aria-controls</code>:</p>
+    <p>Any open submenus close in sync with the width transition. The framework calls <code>closeAllSubmenus()</code> as part of the collapse so each height animation runs alongside the rail shrink. Expanding back doesn't reopen them; the user clicks back in to whichever menu they want. To drive the toggle from outside the sidebar (a topbar button, a keyboard shortcut), point at it with <code>aria-controls</code>.</p>
     <pre><code>&lt;button data-stisla-sidebar-toggle="collapse"
         aria-controls="my-sidebar"
         aria-expanded="true"&gt;Toggle sidebar&lt;/button&gt;</code></pre>
-    <p>Or call the API directly — <code>Stisla.get(sidebarEl).toggleCollapsed()</code>, <code>.collapse()</code>, <code>.expand()</code>, <code>.isCollapsed()</code>. Persist the state to <code>localStorage</code> by listening for <code>stisla:sidebar:collapse-change</code>.</p>
+    <p>Or call the API directly with <code>Stisla.get(sidebarEl).toggleCollapsed()</code>, <code>.collapse()</code>, <code>.expand()</code>, <code>.isCollapsed()</code>. Persist the state to <code>localStorage</code> by listening for <code>stisla:sidebar:collapse-change</code>.</p>
   </section>
 
   <section>
@@ -611,7 +611,7 @@
           <tr>
             <td><code>--sidebar-padding-x</code></td>
             <td>calc(1rem * var(--st-density))</td>
-            <td>Panel outer gutter — feeds the rail-width recipe</td>
+            <td>Panel outer gutter. Feeds the rail-width recipe.</td>
           </tr>
           <tr>
             <td><code>--sidebar-gap</code></td>
@@ -621,7 +621,7 @@
           <tr>
             <td><code>--sidebar-width</code></td>
             <td>auto</td>
-            <td>Expanded panel width. Opt-in — set it when you want the sidebar to own its width and animate the collapse toggle. Loses to inline <code>width</code> and to a parent that sizes the panel externally.</td>
+            <td>Expanded panel width. Opt-in. Set it when you want the sidebar to own its width and animate the collapse toggle. Loses to inline <code>width</code> and to a parent that sizes the panel externally.</td>
           </tr>
           <tr>
             <td><code>--sidebar-width-collapsed</code></td>
@@ -681,7 +681,7 @@
           <tr>
             <td><code>--sidebar-button-padding-x</code></td>
             <td>calc(0.625rem * var(--st-density))</td>
-            <td>Horizontal inset. Load-bearing for rail symmetry: <code>padding-x + icon-size + padding-x</code> equals <code>button-height</code> so the icon centers naturally at rail width without any <code>justify-content</code> override.</td>
+            <td>Horizontal inset. Load-bearing for rail symmetry. <code>padding-x + icon-size + padding-x</code> equals <code>button-height</code> so the icon centers naturally at rail width without any <code>justify-content</code> override.</td>
           </tr>
           <tr>
             <td><code>--sidebar-button-radius</code></td>
@@ -836,7 +836,7 @@
           <tr>
             <td><code>--sidebar-transition</code></td>
             <td>0.3s ease</td>
-            <td>Rail-mode soft-hide transition; zeroed under <code>prefers-reduced-motion</code></td>
+            <td>Rail-mode soft-hide transition. Zeroed under <code>prefers-reduced-motion</code>.</td>
           </tr>
         </tbody>
       </table>

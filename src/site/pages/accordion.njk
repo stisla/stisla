@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Accordion · Stisla v3{% endblock %}
+{% block title %}Accordion · Stisla{% endblock %}
 
 {% block content %}
   <header>
@@ -25,7 +25,7 @@
         </h3>
         <div class="accordion__body" id="acc-default-1" role="region" aria-labelledby="acc-default-1-trigger">
           <div class="accordion__body-inner">
-            A shared vocabulary of tokens, primitives, and patterns that lets every screen in a product look like it was made by the same hand. Stisla v3 is one — implemented first as a vanilla CSS + JS layer, with React and Vue layers to follow.
+            A shared vocabulary of tokens, primitives, and patterns that lets every screen in a product look like it was made by the same hand. Stisla is one of them, implemented first as a vanilla CSS + JS layer, with React and Vue layers to follow.
           </div>
         </div>
       </div>
@@ -40,7 +40,7 @@
         </h3>
         <div class="accordion__body" id="acc-default-2" role="region" aria-labelledby="acc-default-2-trigger">
           <div class="accordion__body-inner">
-            The frame owns a single radius. Each item subtracts the wrapper padding from that radius so the inner arc shares a centre with the outer arc. Change <code>--accordion-radius</code> on a parent and every nested item keeps the rhythm.
+            The frame owns a single radius. Each item subtracts the wrapper padding from that radius so the inner arc shares a center with the outer arc. Change <code>--accordion-radius</code> on a parent and every nested item keeps the rhythm.
           </div>
         </div>
       </div>
@@ -55,7 +55,7 @@
         </h3>
         <div class="accordion__body" id="acc-default-3" role="region" aria-labelledby="acc-default-3-trigger">
           <div class="accordion__body-inner">
-            The chevron rotates today. The height transition lands with the Stisla.Accordion JS class in Step 4 — same shape as the upcoming Sidebar and Dialog classes.
+            The chevron rotates today. The height transition lands with the Stisla.Accordion JS class in Step 4, same shape as the upcoming Sidebar and Dialog classes.
           </div>
         </div>
       </div>
@@ -109,7 +109,7 @@
         </h3>
         <div class="accordion__body" id="acc-single-3" role="region" aria-labelledby="acc-single-3-trigger">
           <div class="accordion__body-inner">
-            Closing the current one without opening another is fine too — click an open header again.
+            Closing the current one without opening another is fine too. Just click an open header again.
           </div>
         </div>
       </div>
@@ -248,7 +248,7 @@
 
   <section>
     <h2>Disabled item</h2>
-    <p>Mark a header <code>disabled</code> to keep it visible without a toggle target. The chevron stops responding and the row reads in the muted text colour.</p>
+    <p>Mark a header <code>disabled</code> to keep it visible without a toggle target. The chevron stops responding and the row reads in the muted text color.</p>
     {% call ui.demo() %}
     <div class="accordion" data-stisla-accordion>
       <div class="accordion__item" data-state="closed">
@@ -287,7 +287,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Override any variable on the element, on a parent scope, or on <code>:root</code> — the cascade scopes the change. Geometry values multiply through <code>var(--st-density)</code>, so the global density knob rescales the whole accordion.</p>
+    <p>Override any variable on the element, on a parent scope, or on <code>:root</code>, and the cascade scopes the change. Geometry values multiply through <code>var(--st-density)</code>, so the global density knob rescales the whole accordion.</p>
     <div class="prose">
       <h3>Geometry</h3>
       <table>
@@ -302,7 +302,7 @@
           <tr>
             <td><code>--accordion-radius</code></td>
             <td>var(--st-radius-lg)</td>
-            <td>Outer frame radius. Large-surface tier, so it picks up <code>--st-radius-lg</code> (16 px under default density). The inner item radius derives concentrically — with the 4 px wrapper inset, the inner chip lands at 12 px = the standalone <code>--st-radius</code> default.</td>
+            <td>Outer frame radius. Large-surface tier, so it picks up <code>--st-radius-lg</code> (16 px under default density). The inner item radius derives concentrically. With the 4 px wrapper inset, the inner chip lands at 12 px, matching the standalone <code>--st-radius</code> default.</td>
           </tr>
           <tr>
             <td><code>--accordion-padding</code></td>
@@ -335,7 +335,7 @@
           <tr>
             <td><code>--accordion-border-color</code></td>
             <td>var(--st-border)</td>
-            <td>Frame border colour.</td>
+            <td>Frame border color.</td>
           </tr>
           <tr>
             <td><code>--accordion-shadow</code></td>
@@ -386,7 +386,7 @@
           <tr>
             <td><code>--accordion-header-padding-x</code></td>
             <td>calc(1rem * var(--st-density))</td>
-            <td>Horizontal padding inside the trigger row. Pairs with the 4 px frame inset for 20 px from frame edge to content — aligns with card content padding.</td>
+            <td>Horizontal padding inside the trigger row. Pairs with the 4 px frame inset for 20 px from frame edge to content, which aligns with card content padding.</td>
           </tr>
           <tr>
             <td><code>--accordion-header-font-size</code></td>
@@ -401,7 +401,7 @@
           <tr>
             <td><code>--accordion-header-color</code></td>
             <td>var(--st-foreground)</td>
-            <td>Trigger label colour. Stays the same in both states.</td>
+            <td>Trigger label color. Stays the same in both states.</td>
           </tr>
           <tr>
             <td><code>--accordion-header-bg</code></td>
@@ -439,7 +439,7 @@
           <tr>
             <td><code>--accordion-icon-color</code></td>
             <td>currentColor</td>
-            <td>Chevron stroke. Tracks the header colour by default.</td>
+            <td>Chevron stroke. Tracks the header color by default.</td>
           </tr>
           <tr>
             <td><code>--accordion-icon-transition-duration</code></td>
@@ -472,7 +472,7 @@
           <tr>
             <td><code>--accordion-body-color</code></td>
             <td>var(--st-foreground)</td>
-            <td>Body text colour.</td>
+            <td>Body text color.</td>
           </tr>
           <tr>
             <td><code>--accordion-body-transition-duration</code></td>
@@ -495,7 +495,7 @@
           <tr>
             <td><code>--accordion-ring</code></td>
             <td>var(--st-ring)</td>
-            <td>Keyboard focus outline colour on the header.</td>
+            <td>Keyboard focus outline color on the header.</td>
           </tr>
         </tbody>
       </table>

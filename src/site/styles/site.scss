@@ -115,6 +115,14 @@ body {
   background-color: var(--st-surface-2);
 }
 
+// Wide lines (CDN URLs, long imports) must scroll instead of clipping under
+// .demo's overflow: hidden. Baseline lets short snippets and standalone
+// ui.code blocks scroll on their own; the collapsed/expanded rules below
+// are more specific and still override for long {% call ui.demo() %} blocks.
+.demo-code-source {
+  overflow-x: auto;
+}
+
 // Clip + scroll only apply to "long" demos flagged with [data-demo-code].
 // Short snippets render at their natural height with no toggle.
 .demo-code[data-demo-code] .demo-code-source {
@@ -125,7 +133,7 @@ body {
 
 .demo-code[data-demo-code][data-expanded] .demo-code-source {
   max-height: 24rem;
-  overflow-y: auto;
+  overflow: auto;
 }
 
 // Shiki <pre>: drop inline bg so the demo surface shows through.
@@ -309,7 +317,7 @@ body {
 //       sidebar            bare nav on page bg (off-canvas below md)
 //       main               holds the rounded content-card on page bg
 //         content-card     the actual readable surface
-//       rail               bare ToC + sponsor on page bg (lg+ only)
+//       rail               bare ToC + partners on page bg (lg+ only)
 //
 // Page bg is a hardcoded site-chrome literal — not framework surface, so
 // it doesn't track --st-* tokens.
@@ -327,13 +335,13 @@ $shell-max: 90rem;
   margin-inline: auto;
 
   @include bp.media-up(md) {
-    grid-template-columns: 16rem minmax(0, 1fr);
+    grid-template-columns: 13rem minmax(0, 1fr);
     column-gap: 1.5rem;
     padding: 0 1.5rem 4rem;
   }
 
   @include bp.media-up(lg) {
-    grid-template-columns: 16rem minmax(0, 1fr) 16rem;
+    grid-template-columns: 13rem minmax(0, 1fr) 16rem;
     column-gap: 2rem;
   }
 }
@@ -368,12 +376,28 @@ $shell-max: 90rem;
 
 .site-navbar__brand {
   display: inline-flex;
-  align-items: baseline;
-  gap: 0.375rem;
+  align-items: center;
+  gap: 0.5rem;
   font-weight: 600;
   font-size: 1.125rem;
   color: var(--st-foreground);
   text-decoration: none;
+}
+
+// Tile + S invert with the theme by tracking the same tokens as page bg/fg.
+.site-navbar__brand-mark {
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+}
+
+.site-navbar__brand-tile {
+  fill: var(--st-foreground);
+}
+
+.site-navbar__brand-s {
+  stroke: var(--st-background);
 }
 
 .site-navbar__version {
@@ -566,7 +590,7 @@ $shell-max: 90rem;
   padding: 0 1rem 1rem;
 }
 
-// === Right rail (ToC + sponsor) ===
+// === Right rail (ToC + partners) ===
 // lg+ only. Bare on the page bg, sticky.
 
 .site-rail {
@@ -580,8 +604,18 @@ $shell-max: 90rem;
     position: sticky;
     top: $navbar-height;
     align-self: start;
-    max-height: calc(100vh - #{$navbar-height});
-    overflow-y: auto;
+    height: calc(100vh - #{$navbar-height});
+  }
+
+  // ToC sits at its natural height with partners right below. If the
+  // combined height would push partners out, the ToC shrinks and scrolls
+  // internally so partners stay in view. min-height: 0 unlocks shrinking
+  // below content size; default flex-shrink: 1 does the rest.
+  > .site-toc {
+    @include bp.media-up(lg) {
+      min-height: 0;
+      overflow-y: auto;
+    }
   }
 }
 
@@ -634,18 +668,24 @@ $shell-max: 90rem;
   }
 }
 
-// === Sponsor card ===
+// === Partners ===
 // Below the ToC at ≥ lg. On smaller viewports the right rail is hidden
-// entirely, so the sponsor disappears there too — by design for the beta.
+// entirely, so the partners block disappears there too — by design for the beta.
 
-.site-sponsor {
-  padding: 1rem;
-  border: 1px solid var(--st-border);
-  border-radius: var(--st-radius);
-  background: var(--st-surface-2);
+.site-partners {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
 }
 
-.site-sponsor__label {
+.site-partners__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 0.25rem;
+}
+
+.site-partners__label {
   margin: 0 0 0.5rem;
   font-size: 0.6875rem;
   font-weight: 600;
@@ -654,20 +694,24 @@ $shell-max: 90rem;
   color: var(--st-muted-foreground);
 }
 
-.site-sponsor__card {
+.site-partners__card {
   display: flex;
   flex-direction: column;
   gap: 0.375rem;
+  padding: 1rem;
+  border: 1px solid var(--st-border);
+  border-radius: var(--st-radius);
+  background: var(--st-surface-2);
   color: var(--st-foreground);
   text-decoration: none;
 }
 
-.site-sponsor__brand {
+.site-partners__brand {
   font-weight: 600;
   font-size: 0.9375rem;
 }
 
-.site-sponsor__blurb {
+.site-partners__blurb {
   font-size: 0.8125rem;
   line-height: 1.5;
   color: var(--st-muted-foreground);
@@ -677,4 +721,146 @@ $shell-max: 90rem;
 html[data-site-sidebar="open"],
 body[data-site-sidebar="open"] {
   overflow: hidden;
+}
+
+// === Landing layout ===
+// Drops the right rail entirely. Sidebar still in place; the main column
+// is the hero and the features grid, both centered on the page bg with no
+// content-card chrome.
+
+.site-layout--landing {
+  @include bp.media-up(lg) {
+    grid-template-columns: 16rem minmax(0, 1fr);
+  }
+}
+
+.site-main--landing {
+  gap: 0;
+}
+
+// === Hero ===
+
+.site-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 3rem 1rem 2.5rem;
+
+  @include bp.media-up(md) {
+    padding: 6rem 1rem 4rem;
+  }
+}
+
+.site-hero__title {
+  margin: 0 0 1.25rem;
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--st-foreground);
+
+  @include bp.media-up(md) {
+    font-size: 3.25rem;
+  }
+
+  @include bp.media-up(lg) {
+    font-size: 3.75rem;
+  }
+}
+
+.site-hero__lead {
+  margin: 0 0 2rem;
+  max-width: 36rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--st-muted-foreground);
+
+  @include bp.media-up(md) {
+    font-size: 1.0625rem;
+  }
+
+  code {
+    font-family: var(--st-font-mono);
+    font-size: 0.875em;
+    padding: 0.0625rem 0.25rem;
+    border-radius: var(--st-radius-sm);
+    background: var(--st-surface-2);
+    color: var(--st-foreground);
+  }
+}
+
+.site-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+// === Features grid ===
+// Three equal columns at md+, stacks on small viewports. Each card sits
+// on the page bg as a bordered surface.
+
+.site-features {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  padding: 0 0 3rem;
+  max-width: 64rem;
+  margin-inline: auto;
+
+  @include bp.media-up(md) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+    padding: 0 0 5rem;
+  }
+}
+
+.site-feature {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  border: 1px solid var(--st-border);
+  border-radius: var(--st-radius-lg);
+  background: var(--st-surface);
+}
+
+.site-feature__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--st-radius);
+  background: var(--st-surface-2);
+  color: var(--st-foreground);
+
+  svg {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+}
+
+.site-feature__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--st-foreground);
+}
+
+.site-feature__body {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--st-muted-foreground);
+
+  code {
+    font-family: var(--st-font-mono);
+    font-size: 0.875em;
+    padding: 0.0625rem 0.25rem;
+    border-radius: var(--st-radius-sm);
+    background: var(--st-surface-2);
+    color: var(--st-foreground);
+  }
 }

@@ -58,17 +58,46 @@ NPM package shape.
 
 Biggest engineering item. Blocks Phase D.
 
-- [ ] Decide package layout. Likely options:
-  - Single `@stisla/core` with subpath exports (`@stisla/core/button`,
-    `@stisla/core/scss/components/button`)
-  - Multiple packages under a scope (`@stisla/button`, `@stisla/dialog`, …)
-- [ ] Wire `package.json` `exports` map so individual SCSS partials and JS
-  modules can be imported standalone. Goal: users can fork `stisla.scss` and
-  drop `@use`s to shrink the bundle.
-- [ ] Publish workflow (changesets or similar; manual `npm publish` for
-  beta.2).
-- [ ] Smoke test: a fresh project that installs only what it needs and
-  produces a working button + dialog.
+- [x] **Package layout** — `@stisla/css` (universal CSS + SCSS source) +
+  `@stisla/vanilla` (vanilla JS impl). Two scoped packages, single tree, no
+  monorepo tools — matches V3.md §2 row 60 and §3.11. Staged under
+  `packages/*` from one root build.
+- [x] **`exports` maps** — each package exposes its pre-compiled bundle as
+  the default subpath, `./full` for the full kitchen-sink bundle,
+  `./integrations/<name>` per integration, plus raw-source access
+  (`./scss/*` for SCSS forking, `./src/*` for tree-shakable ESM).
+- [x] **Smoke test** — `npm run smoke:packages` builds, packs, installs both
+  tarballs into a temp consumer, and resolves every declared export subpath
+  + verifies the dist's internal chunk imports point at real files.
+- [ ] **Beta.2 publish** — manual flow (see "Publish workflow" below). No
+  changesets yet; lockstep version across both packages means one bump per
+  release in each `packages/*/package.json` + root `package.json`.
+- [ ] **Working-page smoke** — fresh project that imports both packages and
+  renders a working button + dialog in a real browser. Punted from the unit
+  smoke; needs CI infra or manual run.
+
+### Publish workflow (beta.2, manual)
+
+```bash
+# 1. Bump version in three places (root + both sub-packages):
+#    package.json, packages/css/package.json, packages/vanilla/package.json
+#    Keep them in lockstep — peerDeps from @stisla/vanilla pin @stisla/css exactly.
+
+# 2. Build + smoke.
+npm run smoke:packages   # build → pack → install → resolve every export
+
+# 3. Publish from each subdirectory.
+cd packages/css     && npm publish --access public
+cd ../vanilla       && npm publish --access public
+
+# 4. Tag the release.
+git tag v3.0.0-beta.2 && git push --tags
+```
+
+`build:packages` stages `site-dist/assets/*` (Vite output) plus the raw
+`src/scss/` and `src/js/` trees into `packages/css/` and `packages/vanilla/`.
+The Vite build is the single source of truth for both — no per-package build
+configs to drift.
 
 See `project_distribution_model` memory: 3.0.0 primary surface is the
 pre-compiled `stisla.{css,js}` + `stisla-full.{css,js}` bundles. Per-component
@@ -80,14 +109,15 @@ files come *after* the package layout is decided here.
 
 Unblocked by Phase C.
 
-- [ ] **Installation page** — CDN snippet, NPM install, both the
-  zero-config bundle path and the "fork `stisla.scss`" path. Cross-link the
-  Sass advanced guide.
-- [ ] **Optimization page** (or a section on the Sass guide) — how to purge
-  unused CSS (PurgeCSS / LightningCSS / Tailwind-style content scanning
-  against rendered HTML), how to drop unused components by editing
-  `stisla.scss`, how to change breakpoint sizes / tokens at the Sass entry
-  point. Real before/after byte counts.
+- [x] **Installation page** — `src/site/pages/installation.njk`. npm install
+  for `@stisla/css` + `@stisla/vanilla` (peerDep lockstep), pre-compiled
+  bundle imports (default, `/full`, `/integrations/<name>`), CDN snippet,
+  Sass-source forking path. Cross-links to `/optimization` for the recipe.
+- [x] **Optimization page** — `src/site/pages/optimization.njk`. Three
+  levers: PurgeCSS / LightningCSS purge against rendered HTML, fork
+  `stisla.scss` and drop component imports, change Sass-level knobs
+  (breakpoints, baked tokens). Worked example with real before/after:
+  41 → 7 components saves ~64 KB raw / ~13 KB gz.
 
 ---
 

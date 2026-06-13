@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Toast · Stisla v3{% endblock %}
+{% block title %}Toast · Stisla{% endblock %}
 
 {% block content %}
   {# Pre-mounted regions for the JS-helper demos. Empty regions are
@@ -78,7 +78,7 @@
 
   <section>
     <h2>Basic</h2>
-    <p>A toast carries a leading icon, a title, and an optional body. The icon column is required so the toast keeps a consistent visual anchor — use a Lucide icon, an <code>.icon-box</code>, or an image. Drop one inside a <code>.toast-region</code> to position it; the region holds the stack and the corner placement. For static demos like this one, the toast sits inline with <code>data-state="open"</code> so it stays visible.</p>
+    <p>A toast carries a leading icon, a title, and an optional body. The icon column is required so the toast keeps a consistent visual anchor. Use a Lucide icon, an <code>.icon-box</code>, or an image. Drop one inside a <code>.toast-region</code> to position it; the region holds the stack and the corner placement. For static demos like this one, the toast sits inline with <code>data-state="open"</code> so it stays visible.</p>
     {% call ui.demo() %}
     <div class="toast" data-state="open" role="status" aria-live="polite" aria-atomic="true">
       <div class="toast__icon"><i data-lucide="bell"></i></div>
@@ -95,7 +95,7 @@
 
   <section>
     <h2>Anatomy</h2>
-    <p>Three columns in one row: <code>.toast__icon</code> leading slot, <code>.toast__content</code> vertical stack, <code>.toast__close</code> chip. The content stack carries <code>.toast__header</code> with an optional <code>.toast__timestamp</code>, <code>.toast__body</code> for the description, and <code>.toast__action</code> for inline buttons. The stack owns its own gap so spacing stays consistent regardless of which parts are present.</p>
+    <p>The row has three columns. A <code>.toast__icon</code> leading slot, a <code>.toast__content</code> vertical stack, and a <code>.toast__close</code> chip. The content stack carries <code>.toast__header</code> with an optional <code>.toast__timestamp</code>, <code>.toast__body</code> for the description, and <code>.toast__action</code> for inline buttons. The stack owns its own gap so spacing stays consistent regardless of which parts are present.</p>
     {% call ui.demo() %}
     <div class="toast" data-state="open" role="status" aria-live="polite" aria-atomic="true">
       <div class="toast__icon"><i data-lucide="shield-check"></i></div>
@@ -119,7 +119,7 @@
 
   <section>
     <h2>Intent variants</h2>
-    <p>Five modifiers shift the leading-icon color: <code>.toast--primary</code>, <code>.toast--success</code>, <code>.toast--warning</code>, <code>.toast--danger</code>, <code>.toast--info</code>. The surface stays neutral so stacked toasts of mixed intent read as one family. For danger toasts, bump the live region to <code>role="alert"</code> and <code>aria-live="assertive"</code> so screen readers announce them immediately.</p>
+    <p>Five modifiers shift the leading-icon color. <code>.toast--primary</code>, <code>.toast--success</code>, <code>.toast--warning</code>, <code>.toast--danger</code>, and <code>.toast--info</code>. The surface stays neutral so stacked toasts of mixed intent read as one family. For danger toasts, bump the live region to <code>role="alert"</code> and <code>aria-live="assertive"</code> so screen readers announce them immediately.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-column gap-3">
       <div class="toast toast--success" data-state="open" role="status" aria-live="polite" aria-atomic="true">
@@ -251,7 +251,7 @@
 
   <section>
     <h2>Trigger</h2>
-    <p>Markup-first toasts always live inside a <code>.toast-region</code> — the region is <code>position: fixed</code> and pins to a viewport corner. The trigger button then points at a toast by id, calls <code>open()</code>, and starts the autohide timer; re-clicking restarts the timer. Use <code>data-stisla-toast-autohide</code> and <code>data-stisla-toast-delay</code> on the toast root to retune per-instance.</p>
+    <p>Markup-first toasts always live inside a <code>.toast-region</code>. The region is <code>position: fixed</code> and pins to a viewport corner. The trigger button then points at a toast by id, calls <code>open()</code>, and starts the autohide timer; re-clicking restarts the timer. Use <code>data-stisla-toast-autohide</code> and <code>data-stisla-toast-delay</code> on the toast root to retune per-instance.</p>
     {% call ui.demo() %}
     <button type="button" class="btn btn--primary" data-stisla-toast-trigger="triggerToast">Show toast</button>
 
@@ -274,7 +274,7 @@
 
   <section>
     <h2>Auto-hide and persistent</h2>
-    <p>Auto-hide is on by default with a 4-second delay. Hovering or focusing the toast pauses the timer (WCAG 2.2.1) and leaving resumes it. Set <code>data-stisla-toast-autohide="false"</code> for a sticky toast that only the close button dismisses — useful for errors and confirmations.</p>
+    <p>Auto-hide is on by default with a 4-second delay. Hovering or focusing the toast pauses the timer (WCAG 2.2.1) and leaving resumes it. Set <code>data-stisla-toast-autohide="false"</code> for a sticky toast that only the close button dismisses, useful for errors and confirmations.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-wrap gap-2">
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-toast-trigger="autoHideToast">Auto-hide (4s)</button>
@@ -313,7 +313,7 @@
 
   <section>
     <h2>Position</h2>
-    <p>Six modifiers on <code>.toast-region</code> set the corner: <code>--top-start</code>, <code>--top-center</code> (default), <code>--top-end</code>, <code>--bottom-start</code>, <code>--bottom-center</code>, <code>--bottom-end</code>. Bottom regions stack newest-first at the bottom edge. Name each region with <code>data-stisla-toast-region</code> so <code>Stisla.toast({ region })</code> can target it.</p>
+    <p>Six modifiers on <code>.toast-region</code> set the corner. <code>--top-start</code>, <code>--top-center</code> (default), <code>--top-end</code>, <code>--bottom-start</code>, <code>--bottom-center</code>, and <code>--bottom-end</code>. Bottom regions stack newest-first at the bottom edge. Name each region with <code>data-stisla-toast-region</code> so <code>Stisla.toast({ region })</code> can target it.</p>
     {% call ui.demo() %}
     <div class="d-grid gap-2" style="grid-template-columns: repeat(3, 1fr);">
       <button type="button" class="btn btn--outline btn--neutral" data-demo-toast-position="top-start">Top start</button>
@@ -360,7 +360,7 @@
 
   <section>
     <h2>Promise</h2>
-    <p><code>Stisla.toast.promise()</code> shows a loading toast (spinner icon, autohide off), then patches it in place when the promise settles. The success and error fields accept strings or functions of <code>(data)</code> / <code>(err)</code>. The original promise is not intercepted — callers still await and <code>.catch()</code> as usual.</p>
+    <p><code>Stisla.toast.promise()</code> shows a loading toast (spinner icon, autohide off), then patches it in place when the promise settles. The success and error fields accept strings or functions of <code>(data)</code> / <code>(err)</code>. The original promise is not intercepted. Callers still await and <code>.catch()</code> as usual.</p>
 
     {% call ui.code(lang='js') %}
     Stisla.toast.promise(savePromise, {

@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}App shell · Stisla v3{% endblock %}
+{% block title %}App shell · Stisla{% endblock %}
 
 {% block content %}
   <header>
@@ -10,7 +10,7 @@
   </header>
 
   <section>
-    <p>The shell composes <code>.sidebar</code> and <code>.app-shell__main</code> into a layout. It owns where the pieces sit and how the layout responds to viewport size; sidebar and navbar internals live on their own pages. Demos below use placeholder slots in place of the rich panels.</p>
+    <p>The shell composes <code>.sidebar</code> and <code>.app-shell__main</code> into a layout. It owns where the pieces sit and how the layout responds to viewport size. Sidebar and navbar internals live on their own pages. Demos below use placeholder slots in place of the rich panels.</p>
   </section>
 
   <section>
@@ -97,12 +97,12 @@
       </main>
     </div>
     {% endcall %}
-    <p>For a Gmail-style locked shell (no window scroll, main is the scroll container), use <code>height: 100vh; overflow: hidden</code> on the shell and <code>overflow: auto</code> on main. Both patterns are opt-in via inline style, and the shell stays unopinionated.</p>
+    <p>For a Gmail-style locked shell (no window scroll, main is the scroll container), use <code>height: 100vh; overflow: hidden</code> on the shell and <code>overflow: auto</code> on main. Both patterns are opt-in via inline style, and the shell stays out of the way.</p>
   </section>
 
   <section>
     <h2>Desktop collapse (rail)</h2>
-    <p>Add <code>.is-sidebar-collapsed</code> to <code>.app-shell</code> to swap the sidebar to its rail width (<code>--app-shell-sidebar-width-collapsed</code>, default <code>4.25rem</code>). Pair it with <code>.is-collapsed</code> on the sidebar itself for the rail visuals. Any button can wire the toggle with <code>data-stisla-app-shell-toggle="collapse"</code>; <code>Stisla.AppShell</code> delegates the rail flip to the descendant <code>Stisla.Sidebar</code> instance so its rail visuals, ARIA, and submenu close-on-collapse stay in sync.</p>
+    <p>Add <code>.is-sidebar-collapsed</code> to <code>.app-shell</code> to swap the sidebar to its rail width (<code>--app-shell-sidebar-width-collapsed</code>, default <code>4.25rem</code>). Pair it with <code>.is-collapsed</code> on the sidebar itself for the rail visuals. Any button can wire the toggle with <code>data-stisla-app-shell-toggle="collapse"</code>. <code>Stisla.AppShell</code> delegates the rail flip to the descendant <code>Stisla.Sidebar</code> instance so its rail visuals, ARIA, and submenu close-on-collapse stay in sync.</p>
     {% call ui.demo() %}
     <div class="app-shell overflow-hidden w-100" data-stisla-app-shell style="border: 1px solid var(--st-border); border-radius: var(--st-radius); min-height: 0; transform: translate(0); height: 22rem;">
       <aside class="sidebar d-flex align-items-center justify-content-center text-muted-foreground fs-2" style="background: var(--st-surface-2); border-right: 1px solid var(--st-border);">Sidebar</aside>
@@ -122,7 +122,7 @@
 
   <section>
     <h2>Mobile drawer</h2>
-    <p>Below the <code>lg</code> breakpoint, the sidebar leaves the flex flow and sits fixed off-screen. Setting <code>.is-sidebar-visible</code> on the shell slides it in and shows a backdrop. Any button can flip the class with <code>data-stisla-app-shell-toggle="visibility"</code>. Backdrop clicks and the Escape key dismiss the drawer; opt out per shell with <code>{ dismissOnBackdrop: false }</code> or <code>{ dismissOnEscape: false }</code> via <code>data-stisla-app-shell-opts</code>.</p>
+    <p>Below the <code>lg</code> breakpoint, the sidebar leaves the flex flow and sits fixed off-screen. Setting <code>.is-sidebar-visible</code> on the shell slides it in and shows a backdrop. Any button can flip the class with <code>data-stisla-app-shell-toggle="visibility"</code>. Backdrop clicks and the Escape key dismiss the drawer. Opt out per shell with <code>{ dismissOnBackdrop: false }</code> or <code>{ dismissOnEscape: false }</code> via <code>data-stisla-app-shell-opts</code>.</p>
     {% call ui.demo() %}
     <div class="app-shell overflow-hidden w-100" data-stisla-app-shell style="border: 1px solid var(--st-border); border-radius: var(--st-radius); min-height: 0; transform: translate(0); height: 22rem;">
       <aside class="sidebar d-flex align-items-center justify-content-center text-muted-foreground fs-2" style="background: var(--st-surface-2); border-right: 1px solid var(--st-border);">Sidebar</aside>
@@ -142,7 +142,7 @@
 
   <section>
     <h2>Auto toggle (responsive)</h2>
-    <p><code>data-stisla-app-shell-toggle="auto"</code> picks the right action per viewport — <code>visibility</code> below the <code>lg</code> breakpoint, <code>collapse</code> above. Use this for the single hamburger / menu button most dashboards ship in their top bar. The trigger's <code>aria-expanded</code> tracks whichever state matches the current viewport and re-syncs when the user resizes across the breakpoint. Programmatic equivalent: <code>Stisla.AppShell.getOrCreate(shell).toggleSidebarAuto()</code>.</p>
+    <p><code>data-stisla-app-shell-toggle="auto"</code> picks the right action per viewport. <code>visibility</code> below the <code>lg</code> breakpoint, <code>collapse</code> above. Use this for the single hamburger or menu button most dashboards ship in their top bar. The trigger's <code>aria-expanded</code> tracks whichever state matches the current viewport and re-syncs when the user resizes across the breakpoint. Call <code>Stisla.AppShell.getOrCreate(shell).toggleSidebarAuto()</code> for the programmatic equivalent.</p>
     {% call ui.demo() %}
     <div class="app-shell overflow-hidden w-100" data-stisla-app-shell style="border: 1px solid var(--st-border); border-radius: var(--st-radius); min-height: 0; transform: translate(0); height: 22rem;">
       <aside class="sidebar d-flex align-items-center justify-content-center text-muted-foreground fs-2" style="background: var(--st-surface-2); border-right: 1px solid var(--st-border);">Sidebar</aside>

@@ -1,0 +1,17 @@
+{#
+  Landing layout. Same head/navbar/sidebar/scripts as base, but the main
+  column is a hero + features grid: no content-card chrome, no right rail,
+  no mobile ToC strip. Pages that extend this fill `block landing`.
+#}
+{% extends "layouts/base.njk" %}
+
+{% block layout %}
+<div class="site-layout site-layout--landing">
+  {% include "partials/_site-sidebar.njk" %}
+  <div class="site-backdrop" data-site-sidebar-close hidden></div>
+
+  <main class="site-main site-main--landing">
+    {% block landing %}{% endblock %}
+  </main>
+</div>
+{% endblock %}

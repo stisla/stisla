@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}List group · Stisla v3{% endblock %}
+{% block title %}List group · Stisla{% endblock %}
 
 {% block content %}
   <header>
@@ -11,7 +11,7 @@
 
   <section>
     <h2>Basic</h2>
-    <p>Add <code>.list-group</code> to the wrapper and <code>.list-group__item</code> to each row. Use any list element — <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, or a plain <code>&lt;div&gt;</code>.</p>
+    <p>Add <code>.list-group</code> to the wrapper and <code>.list-group__item</code> to each row. Use any list element you like, such as <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, or a plain <code>&lt;div&gt;</code>.</p>
     {% call ui.demo() %}
     <ul class="list-group w-100" style="max-width: 24rem;">
       <li class="list-group__item">Frontend platform</li>
@@ -38,7 +38,7 @@
 
   <section>
     <h2>Links and buttons</h2>
-    <p>Swap <code>&lt;li&gt;</code> for <code>&lt;a&gt;</code> or <code>&lt;button&gt;</code> and the rows pick up hover and focus automatically — no opt-in class. Mark the current page with <code>aria-current="page"</code>. A first-child <code>&lt;svg&gt;</code> or <code>&lt;i&gt;</code> pins as a leading icon at <code>--list-group-item-icon-size</code>.</p>
+    <p>Swap <code>&lt;li&gt;</code> for <code>&lt;a&gt;</code> or <code>&lt;button&gt;</code> and the rows pick up hover and focus automatically. No opt-in class needed. Mark the current page with <code>aria-current="page"</code>. A first-child <code>&lt;svg&gt;</code> or <code>&lt;i&gt;</code> pins as a leading icon at <code>--list-group-item-icon-size</code>.</p>
     {% call ui.demo() %}
     <div class="list-group w-100" style="max-width: 24rem;">
       <a href="#" class="list-group__item"><i data-lucide="layout-dashboard"></i>Dashboard</a>
@@ -133,7 +133,7 @@
       <li class="list-group__item list-group__item--success">Nightly database backup completed</li>
       <li class="list-group__item list-group__item--info">Maintenance window scheduled for Friday 02:00 UTC</li>
       <li class="list-group__item list-group__item--warning">API requests approaching the hourly limit</li>
-      <li class="list-group__item list-group__item--danger">Payment processor returned a 503 — retrying</li>
+      <li class="list-group__item list-group__item--danger">Payment processor returned a 503, retrying</li>
       <li class="list-group__item list-group__item--neutral">Cron job last ran 2 hours ago</li>
     </ul>
     {% endcall %}
@@ -141,7 +141,7 @@
 
   <section>
     <h2>Custom content</h2>
-    <p>A row can hold whatever you need: a title, a subhead, a timestamp. Override <code>align-items</code> and <code>flex-direction</code> on the row when content stacks vertically.</p>
+    <p>A row can hold whatever you need. A title, a subhead, a timestamp. Override <code>align-items</code> and <code>flex-direction</code> on the row when content stacks vertically.</p>
     {% call ui.demo() %}
     <div class="list-group w-100" style="max-width: 32rem;">
       <a href="#" class="list-group__item flex-column align-items-stretch gap-1" aria-current="page">
@@ -165,7 +165,7 @@
           <span class="fw-semibold">Hideo Tanaka left a review on #1241</span>
           <small class="text-muted-foreground">1 hour ago</small>
         </div>
-        <p>Two small comments on the new <code>useReducedMotion</code> hook — otherwise looks good to merge.</p>
+        <p>Two small comments on the new <code>useReducedMotion</code> hook, otherwise looks good to merge.</p>
         <small class="text-muted-foreground">design system · 2 comments</small>
       </a>
     </div>
@@ -181,7 +181,7 @@
         <img class="flex-shrink-0" src="https://i.pravatar.cc/80?img=12" alt="" width="40" height="40" style="border-radius: 50%;">
         <div class="flex-fill" style="min-width: 0;">
           <div class="fw-medium">Mariam Saidova</div>
-          <div class="text-muted-foreground fs-2 text-truncate">Sure, I'll push the branch in a few minutes — just running the tests one more time…</div>
+          <div class="text-muted-foreground fs-2 text-truncate">Sure, I'll push the branch in a few minutes. Just running the tests one more time…</div>
         </div>
         <div class="d-flex flex-column align-items-end gap-1 flex-shrink-0">
           <small>12:04</small>
@@ -221,7 +221,7 @@
 
   <section>
     <h2>Settings</h2>
-    <p>Drop a <code>.list-group</code> as a direct child of a <code>.card</code> and the outer chrome auto-merges with the card. No <code>--flush</code> modifier needed — the card owns the frame, the list-group owns the inner rows.</p>
+    <p>Drop a <code>.list-group</code> as a direct child of a <code>.card</code> and the outer chrome auto-merges with the card. No <code>--flush</code> modifier needed. The card owns the frame, the list-group owns the inner rows.</p>
     {% call ui.demo() %}
     <div class="card w-100" style="max-width: 36rem;">
       <div class="card__header">

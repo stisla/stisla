@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Utilities · Stisla v3{% endblock %}
+{% block title %}Utilities · Stisla{% endblock %}
 
 {% block content %}
   <header>
@@ -13,13 +13,13 @@
     <h2>Philosophy</h2>
     <p>A utility class changes <em>one</em> property on an <em>existing</em> shape. A button that needs a custom height. A card row that needs to be flex. A stack that needs more gap. A heading that needs muted color in one specific place. That&rsquo;s what utilities are for.</p>
     <p>What utilities are <strong>not</strong> for: assembling a new component from scratch. If you find yourself stacking <code>.d-flex .gap-3 .p-4 .rounded .border</code> on a <code>&lt;div&gt;</code> to build something that looks like a card, you&rsquo;re using the wrong tool. Build the component in SCSS with its own BEM class, tokens, and <code>color-mix</code> states. The component file is small, scoped, deletable, and lets the next person reading your codebase see what the thing actually is.</p>
-    <p>Stisla is a design spec realized as components. Utilities are escape hatches, not Lego bricks. If composing utilities into components is your preferred workflow, <a class="link" href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer">Tailwind</a> is the right tool for you, not Stisla.</p>
-    <p>The shipped set is small on purpose. Text (color, weight, size, line-height, alignment, transform, overflow). Layout (display, flex, gap, margin, padding, sizing, position, overflow). If a property isn&rsquo;t in those two lists, the answer isn&rsquo;t &ldquo;add a new utility&rdquo; &mdash; it&rsquo;s &ldquo;the component owns this&rdquo;.</p>
+    <p>Stisla is a design spec realized as components. Utilities are escape hatches. They aren&rsquo;t Lego bricks. If composing utilities into components is your preferred workflow, reach for <a class="link" href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer">Tailwind</a> instead.</p>
+    <p>The shipped set is small on purpose. Text (color, weight, size, line-height, alignment, transform, overflow). Layout (display, flex, gap, margin, padding, sizing, position, overflow). If a property isn&rsquo;t in those two lists, the answer isn&rsquo;t &ldquo;add a new utility&rdquo;. It&rsquo;s &ldquo;the component owns this&rdquo;.</p>
   </section>
 
   <section>
     <h2>Text</h2>
-    <p>Typography tweaks. Class names track the underlying property: <code>.fw-*</code> for weight, <code>.fs-*</code> for size, <code>.lh-*</code> for line height, <code>.text-*</code> for color, alignment, transform, and overflow.</p>
+    <p>Typography tweaks. Class names track the underlying property. Use <code>.fw-*</code> for weight, <code>.fs-*</code> for size, <code>.lh-*</code> for line height, and <code>.text-*</code> for color, alignment, transform, and overflow.</p>
 
     {% call ui.demo() %}
     <div class="d-flex flex-column">
@@ -31,6 +31,7 @@
     {% endcall %}
 
     <h3>Color</h3>
+
     <div class="prose">
       <table>
         <thead><tr><th>Class</th><th>Reads</th><th>Use</th></tr></thead>
@@ -121,7 +122,7 @@
 
   <section>
     <h2>Layout</h2>
-    <p>Spacing values use a Tailwind-style 4&nbsp;px linear scale (<code>1</code>=4&nbsp;px, <code>2</code>=8&nbsp;px, <code>3</code>=12&nbsp;px, <code>4</code>=16&nbsp;px, <code>5</code>=20&nbsp;px, <code>6</code>=24&nbsp;px, <code>8</code>=32&nbsp;px). Every value multiplies by <code>--st-density</code> so the global density knob retunes spacing alongside component padding.</p>
+    <p>Spacing uses a Tailwind-style 4&nbsp;px linear scale (<code>1</code>=4&nbsp;px, <code>2</code>=8&nbsp;px, <code>3</code>=12&nbsp;px, <code>4</code>=16&nbsp;px, <code>5</code>=20&nbsp;px, <code>6</code>=24&nbsp;px, <code>8</code>=32&nbsp;px). Every value multiplies by <code>--st-density</code> so the global density knob retunes spacing alongside component padding.</p>
     <p>Margin and padding use CSS logical properties (<code>margin-block-start</code>, <code>margin-inline-end</code>, ...) so the same class works in LTR and RTL.</p>
 
     {% call ui.demo() %}
@@ -131,7 +132,7 @@
       <span class="text-muted-foreground fs-2 ms-auto">Edited 2 min ago</span>
     </div>
     {% endcall %}
-    <p>One flex row with a 12&nbsp;px gap and an end-aligned timestamp pushed by <code>.ms-auto</code>. No new component &mdash; just three buttons and a span getting a layout tweak.</p>
+    <p>One flex row with a 12&nbsp;px gap and an end-aligned timestamp pushed by <code>.ms-auto</code>. No new component, just three buttons and a span getting a layout tweak.</p>
 
     {% call ui.demo() %}
     <div class="d-flex flex-column gap-2" style="max-width: 18rem;">
@@ -140,7 +141,7 @@
       <p class="text-muted-foreground fs-2 mb-0">We'll never share your address.</p>
     </div>
     {% endcall %}
-    <p>A vertical stack with an 8&nbsp;px gap between rows. Note the helper text uses <code>.mb-0</code> to kill its natural bottom margin &mdash; the gap owns the rhythm now.</p>
+    <p>A vertical stack with an 8&nbsp;px gap between rows. Note the helper text uses <code>.mb-0</code> to kill its natural bottom margin so the gap owns the rhythm.</p>
 
     <h3>Display</h3>
     <div class="prose">
@@ -290,7 +291,7 @@
 
   <section id="responsive">
     <h2>Responsive</h2>
-    <p>Insert a breakpoint name into any responsive-enabled class to make it apply from that width up. The mobile-first base lays the default; each breakpoint cascades on top via <code>min-width</code>.</p>
+    <p>Insert a breakpoint name into any responsive-enabled class to make it apply from that width up. The mobile-first base lays the default. Each breakpoint cascades on top via <code>min-width</code>.</p>
 
     {% call ui.demo() %}
     <div class="d-flex flex-column flex-md-row gap-3 align-items-md-center">
@@ -325,7 +326,7 @@
     </div>
 
     <h3>What gets a responsive variant</h3>
-    <p>Defaults. Every group is toggleable through <a class="link" href="#customizing-the-set"><code>$utilities-config</code></a>, so this table shows what ships when the bundle is imported untouched.</p>
+    <p>These are the defaults. Every group is toggleable through <a class="link" href="#customizing-the-set"><code>$utilities-config</code></a>, so this table shows what ships when the bundle is imported untouched.</p>
     <div class="prose">
       <table>
         <thead><tr><th>Group</th><th>Pattern</th><th>Example</th></tr></thead>
@@ -365,7 +366,7 @@
     <p>Emits <code>.overflow-md-hidden</code>, <code>.position-lg-sticky</code>, etc., and drops every <code>.visually-hidden*</code> class from the output. Disabled groups cost zero bytes.</p>
 
     <h3>Adding a new utility</h3>
-    <p>Two pieces: an entry in <code>$utilities-config</code>, and a matching <code>@include utility-group(&hellip;)</code> block. The helper handles base and breakpoint emission. <code>$i</code> is the empty string at base, and <code>-sm</code> / <code>-md</code> / &hellip; inside each breakpoint media query.</p>
+    <p>You need two pieces. An entry in <code>$utilities-config</code>, and a matching <code>@include utility-group(&hellip;)</code> block. The helper handles base and breakpoint emission. <code>$i</code> is the empty string at base, and <code>-sm</code> / <code>-md</code> / &hellip; inside each breakpoint media query.</p>
     {% call ui.code(lang='scss', title='your-utilities.scss') %}
     @import '@stisla/css/utilities/utilities';
 

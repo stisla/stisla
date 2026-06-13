@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Button group · Stisla v3{% endblock %}
+{% block title %}Button group · Stisla{% endblock %}
 
 {% block content %}
   <header>
@@ -10,7 +10,7 @@
   </header>
 
   <section>
-    <p>For press toggles, segmented controls, and toggle-style checkbox / radio groups, see <a class="link" href="/toggle">Toggle</a> and <a class="link" href="/toggle-group">Toggle group</a>. <code>.btn-group</code> is purely visual grouping for action buttons — no state hooks, no JS.</p>
+    <p>For press toggles, segmented controls, and toggle-style checkbox / radio groups, see <a class="link" href="/toggle">Toggle</a> and <a class="link" href="/toggle-group">Toggle group</a>. <code>.btn-group</code> is purely visual grouping for action buttons, with no state hooks and no JS.</p>
   </section>
 
   <section>
@@ -27,7 +27,7 @@
 
   <section>
     <h2>Outline</h2>
-    <p>Outline members work the same way — adjacent borders dedupe at the seam.</p>
+    <p>Outline members work the same way, with adjacent borders deduping at the seam.</p>
     {% call ui.demo() %}
     <div class="btn-group" role="group" aria-label="Outline example">
       <button type="button" class="btn btn--outline btn--neutral">Left</button>
@@ -140,7 +140,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Two variables retune <code>.btn-group</code> + <code>.btn-toolbar</code>. Sizes retune the child <code>--btn-*</code> vars in modifier scope rather than introducing per-size vars on the group — same model as <code>.btn--sm</code> / <code>.btn--lg</code>. Override on the wrapper, a parent scope, or <code>:root</code>; the cascade scopes the change.</p>
+    <p>Two variables retune <code>.btn-group</code> + <code>.btn-toolbar</code>. Sizes retune the child <code>--btn-*</code> vars in modifier scope rather than introducing per-size vars on the group, the same model as <code>.btn--sm</code> / <code>.btn--lg</code>. Override on the wrapper, a parent scope, or <code>:root</code>; the cascade scopes the change.</p>
     <div class="prose">
       <table>
         <thead>
@@ -164,6 +164,6 @@
         </tbody>
       </table>
     </div>
-    <p>The group's chrome — members' borders, fills, hover and active paint — lives on the child <code>.btn</code>. To recolor a cluster, set <code>--btn-bg</code> / <code>--btn-tone</code> on the members, not on the wrapper. See the <a class="link" href="/button">button</a> page for the full <code>.btn</code> variable surface.</p>
+    <p>The group's chrome (members' borders, fills, hover and active paint) lives on the child <code>.btn</code>. To recolor a cluster, set <code>--btn-bg</code> / <code>--btn-tone</code> on the members. Don't set them on the wrapper. See the <a class="link" href="/button">button</a> page for the full <code>.btn</code> variable surface.</p>
   </section>
 {% endblock %}

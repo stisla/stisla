@@ -1,0 +1,27 @@
+main {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+section + section {
+  margin-top: 3rem;
+}
+
+.demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.carousel {
+  max-width: 100%;
+}
+
+.carousel__slide img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+}

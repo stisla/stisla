@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Textarea · Stisla v3{% endblock %}
+{% block title %}Textarea · Stisla{% endblock %}
 
 {% block content %}
   <header>
@@ -11,7 +11,7 @@
 
   <section>
     <h2>Basic</h2>
-    <p>Add <code>.textarea</code> to any <code>&lt;textarea&gt;</code>. The fixed-height contract from <a class="link" href="/input">.input</a> drops, so <code>rows</code> and content drive the height. The handle is vertical-only, so the width tracks the parent.</p>
+    <p>Add <code>.textarea</code> to any <code>&lt;textarea&gt;</code>. The fixed-height contract from <a class="link" href="/input">.input</a> drops, so <code>rows</code> and content drive the height. The resize handle is vertical only, so the width tracks the parent.</p>
     {% call ui.demo() %}
     <div class="w-100" style="max-width: 24rem;">
       <label for="basicTextarea" class="form-label">Notes</label>
@@ -39,7 +39,7 @@
     <div class="w-100" style="max-width: 24rem;">
       <label for="bioTextarea" class="form-label">Bio</label>
       <textarea class="textarea" id="bioTextarea" rows="3" aria-describedby="bioHelp"></textarea>
-      <div id="bioHelp" class="form-text">A sentence or two — visible on your public profile.</div>
+      <div id="bioHelp" class="form-text">A sentence or two. Visible on your public profile.</div>
     </div>
     {% endcall %}
   </section>
@@ -61,7 +61,7 @@
 
   <section>
     <h2>Server validation</h2>
-    <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky; Stisla just paints while it's present. Pair with a <code>.form-text--error</code> message tied via <code>aria-describedby</code>.</p>
+    <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky, and Stisla just paints while it's present. Pair with a <code>.form-text--error</code> message tied via <code>aria-describedby</code>.</p>
     {% call ui.demo() %}
     <div class="demo-stack w-100" style="max-width: 24rem;">
       <div>
@@ -80,7 +80,7 @@
 
   <section>
     <h2>Disabled &amp; readonly</h2>
-    <p><code>disabled</code> blocks interaction and dims the field. <code>readonly</code> keeps the value selectable for copy but rejects edits. The bg shifts a tier to signal "selectable, not editable".</p>
+    <p><code>disabled</code> blocks interaction and dims the field. <code>readonly</code> keeps the value selectable for copy but rejects edits. The bg shifts a tier so you can see at a glance that the field is selectable but not editable.</p>
     {% call ui.demo() %}
     <div class="demo-stack w-100" style="max-width: 24rem;">
       <textarea class="textarea" rows="2" disabled>Disabled</textarea>

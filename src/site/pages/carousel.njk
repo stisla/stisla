@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Carousel · Stisla v3{% endblock %}
+{% block title %}Carousel · Stisla{% endblock %}
 
 {% set img_1 = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&h=900&q=70" %}
 {% set img_2 = "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&w=1600&h=900&q=70" %}
@@ -52,7 +52,7 @@
 
   <section>
     <h2>Basic</h2>
-    <p>Three parts: a <code>.carousel</code> root, a <code>.carousel__viewport</code> with a <code>.carousel__track</code> inside, and one <code>.carousel__slide</code> per item. Drag to scrub.</p>
+    <p>Three parts. A <code>.carousel</code> root, a <code>.carousel__viewport</code> with a <code>.carousel__track</code> inside, and one <code>.carousel__slide</code> per item. Drag to scrub.</p>
     {% call ui.demo() %}
     <div class="carousel" data-stisla-carousel role="region" aria-roledescription="carousel" aria-label="Travel destinations">
       <div class="carousel__viewport">
@@ -180,7 +180,7 @@
 
   <section>
     <h2>Card content</h2>
-    <p>Slides aren't limited to images. Add <code>.carousel--no-aspect</code> on the root and the viewport sizes to its tallest slide instead of locking to <code>16 / 9</code>. The chrome tokens can be retuned to track theme surfaces so the controls and indicators read on light + dark.</p>
+    <p>Slides aren't limited to images. Add <code>.carousel--no-aspect</code> on the root and the viewport sizes to its tallest slide instead of locking to <code>16 / 9</code>. The chrome tokens can be retuned to track theme surfaces so the controls and indicators read on both light and dark.</p>
     {% call ui.demo() %}
     <div class="carousel carousel--no-aspect" data-stisla-carousel data-stisla-carousel-loop="true" role="region" aria-roledescription="carousel" aria-label="Customer stories"
          style="--carousel-control-bg: var(--st-surface); --carousel-control-bg-hover: var(--st-accent); --carousel-control-color: var(--st-foreground); --carousel-indicator-bg: var(--st-border); --carousel-indicator-active-bg: var(--st-primary); --carousel-indicators-inset: -1rem;">
@@ -189,7 +189,7 @@
           <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="1 of 3">
             <div class="card m-0">
               <div class="card__body p-8">
-                <p class="m-0" style="font-size: 1.0625rem; line-height: 1.6;">"Stisla took the headache out of rebuilding our internal admin tool. The token system meant we could ship a brand refresh in a single PR — no per-component overrides."</p>
+                <p class="m-0" style="font-size: 1.0625rem; line-height: 1.6;">"Stisla took the headache out of rebuilding our internal admin tool. The token system meant we could ship a brand refresh in a single PR, with no per-component overrides."</p>
                 <div class="mt-5">
                   <strong>Maya Tanaka</strong>
                   <div class="text-muted-foreground fs-2">Engineering Lead, Northwind Labs</div>
@@ -238,7 +238,7 @@
 
   <section>
     <h2>Autoplay</h2>
-    <p>Pass <code>data-stisla-carousel-autoplay="true"</code> for a 4 s tick, or <code>{ "delay": 6000 }</code> for a custom delay. Autoplay pauses on hover, on focus, while dragging, and while the tab is hidden. Reduced motion disables it entirely.</p>
+    <p>Pass <code>data-stisla-carousel-autoplay="true"</code> for a 4 s tick, or <code>{ "delay": 6000 }</code> for a custom delay. Autoplay pauses on hover, on focus, while dragging, and while the tab is hidden. Reduced motion turns it off entirely.</p>
     {% call ui.demo() %}
     <div class="carousel" data-stisla-carousel data-stisla-carousel-autoplay="true" data-stisla-carousel-loop="true" role="region" aria-roledescription="carousel" aria-label="Travel destinations">
       <div class="carousel__viewport">
@@ -293,7 +293,7 @@
 
   <section>
     <h2>Keyboard</h2>
-    <p>The root is focusable. Once focus is on the carousel itself (not on a slide child), these keys move the track:</p>
+    <p>The root is focusable. Once focus lands on the carousel itself (not on a slide child), these keys move the track.</p>
     <table>
       <thead>
         <tr><th>Key</th><th>Action</th></tr>

@@ -1,0 +1,160 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Installation · Stisla{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Installation</h1>
+    <p class="lead">Stisla ships in two pieces. A universal stylesheet and a vanilla JS runtime. Drop them in via CDN, install from npm, or fork the Sass source.</p>
+  </header>
+
+  <section>
+    <h2>Pick a bundle</h2>
+    <p>Stisla ships two bundles, the same pair of packages with two different entry files. Pick one before you start.</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Bundle</th>
+            <th>What&rsquo;s in it</th>
+            <th width="30%">Gzip CSS + JS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Core</strong></td>
+            <td>Every component except integrations (carousel, date-picker, command palette, etc.).</td>
+            <td>~27 KB + ~27 KB</td>
+          </tr>
+          <tr>
+            <td><strong>Full</strong></td>
+            <td>Core plus every shipped integration in one bundle. One install line that gives you everything.</td>
+            <td>~28 KB + ~37 KB</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>If you&rsquo;re not sure, pick core. Adding an integration later is just one extra import; you don&rsquo;t need to swap the bundle.</p>
+  </section>
+
+  <section>
+    <h2>CDN</h2>
+    <p>No build step. Drop the bundles into a plain HTML page.</p>
+
+    <h3>Core</h3>
+    {% call ui.code(title='index.html') %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stisla starter</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@3/dist/stisla.css">
+  </head>
+  <body>
+    <button type="button" class="btn btn--primary">Hello</button>
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@3/dist/stisla.js"></script>
+  </body>
+</html>
+    {% endcall %}
+
+    <h3>Full</h3>
+    {% call ui.code() %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@3/dist/stisla-full.css">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@3/dist/stisla-full.js"></script>
+    {% endcall %}
+
+    <p>The <code>@3</code> tag follows the latest 3.x release. Pin to <code>@3.0.0-beta.1</code> (or any future exact version) for reproducible builds.</p>
+  </section>
+
+  <section>
+    <h2>npm</h2>
+    <p>The same two bundles, installed and bundled by your tool of choice. Stisla ships two scoped packages. <code>@stisla/css</code> holds the universal stylesheet, and <code>@stisla/vanilla</code> is the JS runtime that drives it.</p>
+    {% call ui.code(lang='bash') %}
+npm install @stisla/css @stisla/vanilla
+    {% endcall %}
+    <p>The two packages share a version. <code>@stisla/vanilla</code> declares <code>@stisla/css</code> as a peer dependency pinned to the matching version, so if the pair doesn&rsquo;t match you find out at install time instead of silently at runtime.</p>
+
+    <h3>Core</h3>
+    {% call ui.code(lang='js') %}
+import '@stisla/css';
+import '@stisla/vanilla';
+    {% endcall %}
+    <p>Importing <code>@stisla/vanilla</code> registers every core component and walks the DOM on the next microtask. Mark up with the standard classes and <code>data-stisla-*</code> attributes, and the scanner does the rest. There&rsquo;s no <code>init()</code> call to make.</p>
+
+    <h3>Full</h3>
+    {% call ui.code(lang='js') %}
+import '@stisla/css/full';
+import '@stisla/vanilla/full';
+    {% endcall %}
+
+    <h3>Core plus à la carte integrations</h3>
+    <p>Start from core and add one extra import per integration you actually use. The bundle stays small for everything you skip.</p>
+    {% call ui.code(lang='js') %}
+import '@stisla/css';
+import '@stisla/vanilla';
+
+import '@stisla/css/integrations/carousel';
+import '@stisla/vanilla/integrations/carousel';
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>JS runtime</h2>
+    <p>Importing <code>@stisla/vanilla</code> (or loading <code>stisla.js</code> via the CDN snippet above) does three things in one go. It registers every component class, exposes them on <code>window.Stisla</code>, and walks the document on the next microtask to wire up anything marked with a <code>data-stisla-*</code> attribute. There is no <code>init()</code> call to make at startup.</p>
+
+    <h3>Declarative</h3>
+    <p>The runtime is driven mostly from HTML. Mark a component root with <code>data-stisla-&lt;name&gt;</code>, give triggers and dismissers their matching attributes, and the scanner wires the behavior on first paint.</p>
+    {% call ui.code() %}
+<button type="button" class="btn btn--primary" data-stisla-dialog-trigger="hello">
+  Open
+</button>
+
+<div class="dialog" id="hello" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" tabindex="-1">
+  <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+  <div class="dialog__content">
+    <div class="dialog__body">Hello.</div>
+  </div>
+</div>
+    {% endcall %}
+    <p>Every component page documents the attributes it understands. Options serialize as per-attribute kebab-case (<code>data-stisla-dialog-close-on-backdrop="false"</code>), or as a single JSON blob on <code>data-stisla-opts</code> for values that don&rsquo;t fit cleanly in an attribute.</p>
+
+    <h3>Programmatic</h3>
+    <p>If you need a handle to open from JS, listen for events, or destroy on unmount, construct the class directly. Each component class is also a named export on the bundle.</p>
+    {% call ui.code(lang='js') %}
+const dialog = new Stisla.Dialog(document.getElementById('hello'));
+dialog.show();
+dialog.root.addEventListener('stisla:dialog:hidden', () => {
+  // ...
+});
+    {% endcall %}
+
+    <h3>Re-scanning</h3>
+    <p>The initial scan runs once per page load. For dynamic content like SPA route changes, AJAX-injected fragments, or server-streamed HTML, call <code>Stisla.init()</code> against the affected subtree to wire up anything new. The scanner is idempotent, so elements that already have an instance are skipped.</p>
+    {% call ui.code(lang='js') %}
+// After fetching and inserting HTML into a container:
+Stisla.init(document.getElementById('panel'));
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Sass source</h2>
+    <p>The pre-compiled bundle is the recommended path. Most customization is a single CSS variable override at runtime, and you don&rsquo;t need Sass for that. The Sass source ships inside <code>@stisla/css</code> for the harder cases. Forking <code>stisla.scss</code> to drop unused components, changing breakpoint sizes, or rewriting a component from the ground up.</p>
+    {% call ui.code(lang='scss', title='your-app.scss') %}
+@use '@stisla/css/scss/bundles/stisla';
+    {% endcall %}
+    <p>Or fork the bundle entry and comment out the components you don&rsquo;t use. The <a class="link" href="/optimization">Optimization</a> page has the recipe and real before/after byte counts.</p>
+  </section>
+
+  <section>
+    <h2>Browser support</h2>
+    <p>Safari 16.4 or newer, Chrome 111 or newer, and Firefox 121 or newer. No polyfills. The features Stisla relies on (OKLCH, <code>color-mix</code>, <code>:has()</code>, <code>@layer</code>, container queries, <code>inert</code>) are stable across that range. If you need to support older browsers, falling back to an earlier version of the framework won&rsquo;t help, because the runtime token surface is what makes Stisla what it is.</p>
+  </section>
+
+  <section>
+    <h2>What&rsquo;s next</h2>
+    <p>Pick a <a class="link" href="/customization">primary color</a>, walk the <a class="link" href="/button">component pages</a>, or read the <a class="link" href="/introduction">introduction</a> if you want the why before the how.</p>
+  </section>
+{% endblock %}

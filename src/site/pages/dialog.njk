@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Dialog · Stisla v3{% endblock %}
+{% block title %}Dialog · Stisla{% endblock %}
 
 {% block content %}
   <header>
@@ -101,7 +101,7 @@
           <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
           <div class="dialog__header"><h3 class="dialog__title">Extra large</h3></div>
           <div class="dialog__body">
-            <p class="m-0">A canvas for media, rich detail views, or a side-by-side comparison.</p>
+            <p class="m-0">A canvas for media, detail views, or a side-by-side comparison.</p>
           </div>
         </div>
       </div>
@@ -480,12 +480,12 @@
           </tr>
           <tr>
             <td><code>--dialog-close-bg</code></td>
-            <td>oklch(0 0 0 / 0.55) light, oklch(1 0 0 / 0.1) dark</td>
-            <td>Frosted chip background. Solid dark over light surface; subtle light translucent over dark surface.</td>
+            <td>oklch(0 0 0 / 0.35) light, oklch(1 0 0 / 0.1) dark</td>
+            <td>Frosted chip background. Translucent dark over light surface; subtle light translucent over dark surface.</td>
           </tr>
           <tr>
             <td><code>--dialog-close-bg-hover</code></td>
-            <td>oklch(0 0 0 / 0.7) light, oklch(1 0 0 / 0.18) dark</td>
+            <td>oklch(0 0 0 / 0.55) light, oklch(1 0 0 / 0.18) dark</td>
             <td>Hover fill. Same inversion logic as the rest state.</td>
           </tr>
           <tr>

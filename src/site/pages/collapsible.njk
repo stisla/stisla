@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Collapsible · Stisla v3{% endblock %}
+{% block title %}Collapsible · Stisla{% endblock %}
 
 {% block content %}
   <header>
@@ -11,8 +11,8 @@
 
   <section>
     <h2>Anatomy</h2>
-    <p>A trigger button and a content region tied by id. The trigger points at the region via <code>data-stisla-collapsible-trigger</code>; ARIA attributes wire up screen readers in the usual way. The region carries <code>data-stisla-collapsible</code> so the scanner picks it up and <code>data-state="open"</code> or <code>"closed"</code> drives the paint.</p>
-    <p>The height transition runs around the state flip — the CSS <code>display: none</code> on the closed state stays put; the JS measures, animates, and clears the inline height once it lands.</p>
+    <p>A trigger button and a content region tied by id. The trigger points at the region via <code>data-stisla-collapsible-trigger</code>, and ARIA attributes wire up screen readers in the usual way. The region carries <code>data-stisla-collapsible</code> so the scanner picks it up, and <code>data-state="open"</code> or <code>"closed"</code> drives the paint.</p>
+    <p>The height transition runs around the state flip. The CSS <code>display: none</code> on the closed state stays put. The JS measures, animates, and clears the inline height once it lands.</p>
   </section>
 
   <section>
@@ -55,7 +55,7 @@
 
   <section>
     <h2>Inside a card</h2>
-    <p>A common shape — a card with extra detail hidden behind a chevron. The region's content owns its own surface so the card body doesn't paint inside the collapsed footprint.</p>
+    <p>A common shape. A card with extra detail hidden behind a chevron. The region's content owns its own surface so the card body doesn't paint inside the collapsed footprint.</p>
     {% call ui.demo() %}
     <div class="card" style="max-width: 24rem;">
       <div class="card__body">
@@ -82,7 +82,7 @@
 
   <section>
     <h2>Programmatic control</h2>
-    <p>Construct a <code>Stisla.Collapsible</code> directly to drive a region from code. Pass any element as <code>opts.triggers</code>, or let the constructor scan for matching <code>data-stisla-collapsible-trigger</code>s by id.</p>
+    <p>Build a <code>Stisla.Collapsible</code> directly to drive a region from code. Pass any element as <code>opts.triggers</code>, or let the constructor scan for matching <code>data-stisla-collapsible-trigger</code>s by id.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-column gap-3 align-items-start">
       <div class="d-flex gap-2">
@@ -101,7 +101,7 @@
 
   <section>
     <h2>Events</h2>
-    <p>Four events bubble from the region element. <code>opening</code> and <code>closing</code> are cancelable — call <code>preventDefault()</code> on the event to abort.</p>
+    <p>Four events bubble from the region element. <code>opening</code> and <code>closing</code> are cancelable. Call <code>preventDefault()</code> on the event to abort.</p>
     <div class="prose">
       <table>
         <thead>

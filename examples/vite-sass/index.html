@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Stisla — custom Sass</title>
+    <script type="module" src="/src/main.js"></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Custom Sass bundle + token overrides</h1>
+        <p class="text-muted-foreground">
+          Bundle compiled from <code>@stisla/css/scss/*</code> with only three
+          components (button, dialog, dropdown). Primary is green and corners
+          are sharp via <code>--st-*</code> overrides on <code>:root</code>.
+        </p>
+      </header>
+
+      <section>
+        <h2>Buttons</h2>
+        <div class="demo">
+          <button class="btn btn--primary">Should be green</button>
+          <button class="btn btn--outline btn--neutral">Outline</button>
+          <button class="btn btn--ghost btn--neutral">Ghost</button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Dialog</h2>
+        <div class="demo">
+          <button
+            type="button"
+            class="btn btn--primary"
+            data-stisla-dialog-trigger="sassDialog"
+          >
+            Open dialog
+          </button>
+        </div>
+
+        <div
+          class="dialog"
+          id="sassDialog"
+          data-stisla-dialog
+          data-state="closed"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="sassDialogLabel"
+          aria-hidden="true"
+          tabindex="-1"
+        >
+          <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+          <div class="dialog__panel">
+            <div class="dialog__content">
+              <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close">×</button>
+              <div class="dialog__header">
+                <h3 class="dialog__title" id="sassDialogLabel">Custom bundle</h3>
+              </div>
+              <div class="dialog__body">
+                <p class="m-0">
+                  Compiled from Sass source. Card / accordion / tabs aren't in
+                  this bundle — try adding their classes and you'll see no
+                  styling apply.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Dropdown</h2>
+        <div class="demo">
+          <div class="dropdown">
+            <button
+              type="button"
+              class="btn btn--outline btn--neutral"
+              data-stisla-dropdown-trigger="sassDd"
+              aria-haspopup="menu"
+              aria-expanded="false"
+              aria-controls="sassDd"
+            >
+              Open menu
+            </button>
+
+            <div
+              class="dropdown-menu"
+              id="sassDd"
+              data-stisla-dropdown
+              data-state="closed"
+              role="menu"
+            >
+              <button type="button" class="dropdown-menu__item" role="menuitem">Profile</button>
+              <button type="button" class="dropdown-menu__item" role="menuitem">Settings</button>
+              <hr class="dropdown-menu__divider" role="separator">
+              <button type="button" class="dropdown-menu__item" role="menuitem">Sign out</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

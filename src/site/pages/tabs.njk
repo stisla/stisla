@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Tabs · Stisla v3{% endblock %}
+{% block title %}Tabs · Stisla{% endblock %}
 
 {% block content %}
   <header>
@@ -39,13 +39,13 @@
         <button class="tabs__trigger" data-value="settings">Settings</button>
       </div>
       <div class="tabs__panel" data-value="overview">
-        <p>The overview pane gives you the big picture — at a glance metrics and recent changes.</p>
+        <p>The overview pane gives you the big picture. At-a-glance metrics and recent changes.</p>
       </div>
       <div class="tabs__panel" data-value="activity">
         <p>Activity log lists every recent event in reverse chronological order.</p>
       </div>
       <div class="tabs__panel" data-value="settings">
-        <p>Settings content lives here — name, preferences, integrations.</p>
+        <p>Settings content lives here. Name, preferences, integrations.</p>
       </div>
     </div>
     {% endcall %}
@@ -156,7 +156,7 @@
         <button class="tabs__trigger" data-value="three">Three</button>
       </div>
       <div class="tabs__panel" data-value="one">
-        <p>Pane one — arrow keys move focus without changing the active panel.</p>
+        <p>Pane one. Arrow keys move focus without changing the active panel.</p>
       </div>
       <div class="tabs__panel" data-value="two">
         <p>Pane two.</p>
@@ -215,7 +215,7 @@
   <section>
     <h2>External triggers</h2>
     <p>Any element on the page can drive a tabs instance declaratively. Carry <code>aria-controls="&lt;tabsRootId&gt;"</code> + <code>data-stisla-tabs-value="&lt;value&gt;"</code> on the trigger; the click delegate flips the matching panel without imperative JS. The tabs root needs an explicit <code>id</code> for the wire-up.</p>
-    <p>Useful for sidebar links, toolbar buttons, command-palette entries, even a <code>.toggle-group</code> member that doubles as a tab switcher. Native click semantics carry — buttons fire on click + Enter + Space, anchors fire on click + Enter.</p>
+    <p>Useful for sidebar links, toolbar buttons, command-palette entries, even a <code>.toggle-group</code> member that doubles as a tab switcher. Native click semantics carry, so buttons fire on click + Enter + Space, and anchors fire on click + Enter.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-column gap-4 w-100">
       <div class="d-flex gap-2 flex-wrap">
@@ -229,7 +229,7 @@
           <button class="tabs__trigger" data-value="activity">Activity</button>
           <button class="tabs__trigger" data-value="settings">Settings</button>
         </div>
-        <div class="tabs__panel" data-value="overview"><p>Overview pane — open me from the external buttons above.</p></div>
+        <div class="tabs__panel" data-value="overview"><p>Overview pane. Open me from the external buttons above.</p></div>
         <div class="tabs__panel" data-value="activity"><p>Activity pane.</p></div>
         <div class="tabs__panel" data-value="settings"><p>Settings pane.</p></div>
       </div>
@@ -322,7 +322,7 @@
           <tr>
             <td><code>--tabs-trigger-hover-color</code></td>
             <td>var(--st-foreground)</td>
-            <td>Color applied on hover for non-active triggers (no bg change — the active paper stays distinct).</td>
+            <td>Color applied on hover for non-active triggers (no bg change, so the active paper stays distinct).</td>
           </tr>
           <tr>
             <td><code>--tabs-trigger-active-bg</code></td>
@@ -337,12 +337,12 @@
           <tr>
             <td><code>--tabs-trigger-active-border-color</code></td>
             <td>var(--tabs-trigger-active-bg)</td>
-            <td>Active border color. Defaults to match the bg for a clean solid chip with no visible rim. Rest triggers carry a transparent 1px border so the active border doesn't reflow the layout — override to add a distinct ring.</td>
+            <td>Active border color. Defaults to match the bg for a clean solid chip with no visible rim. Rest triggers carry a transparent 1px border so the active border doesn't reflow the layout. Override to add a distinct ring.</td>
           </tr>
         </tbody>
       </table>
 
-      <h3>Motion + focus</h3>
+      <h3>Motion and focus</h3>
       <table>
         <thead>
           <tr>

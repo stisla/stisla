@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Dropdown · Stisla v3{% endblock %}
+{% block title %}Dropdown · Stisla{% endblock %}
 
 {% block content %}
   <header>
@@ -11,7 +11,7 @@
 
   <section>
     <h2>Basic</h2>
-    <p>A trigger opens the menu via <code>data-stisla-dropdown-trigger="&lt;id&gt;"</code>; the menu carries the matching <code>id</code> plus <code>data-stisla-dropdown</code>. The wrapper <code>.dropdown</code> only provides positioning context — Floating UI computes the actual placement and keeps the menu anchored on scroll or resize.</p>
+    <p>A trigger opens the menu via <code>data-stisla-dropdown-trigger="&lt;id&gt;"</code>. The menu carries the matching <code>id</code> plus <code>data-stisla-dropdown</code>. The wrapper <code>.dropdown</code> only provides positioning context. Floating UI computes the actual placement and keeps the menu anchored on scroll or resize.</p>
     {% call ui.demo() %}
     <div class="dropdown">
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-dropdown-trigger="ddBasic" aria-haspopup="menu" aria-expanded="false" aria-controls="ddBasic">
@@ -84,7 +84,7 @@
 
   <section>
     <h2>Active and disabled</h2>
-    <p>Mark the user's currently-applied choice with <code>aria-current="true"</code> or <code>data-state="active"</code> — both paint <code>--st-highlight</code> as the persistent selected fill. Disabled rows take <code>aria-disabled="true"</code> on anchors or the native <code>disabled</code> attribute on buttons.</p>
+    <p>Mark the user's currently-applied choice with <code>aria-current="true"</code> or <code>data-state="active"</code>. Both paint <code>--st-highlight</code> as the persistent selected fill. Disabled rows take <code>aria-disabled="true"</code> on anchors or the native <code>disabled</code> attribute on buttons.</p>
     {% call ui.demo() %}
     <div class="dropdown">
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-dropdown-trigger="ddSort" aria-haspopup="menu" aria-expanded="false" aria-controls="ddSort">
@@ -159,7 +159,7 @@
 
   <section>
     <h2>Radio items</h2>
-    <p>Items with <code>role="menuitemradio"</code> inside a <code>role="group"</code> behave like a radio group. Clicking one item checks it and unchecks every sibling in the same group. Same indicator slot as checkbox items.</p>
+    <p>Items with <code>role="menuitemradio"</code> inside a <code>role="group"</code> behave like a radio group. Clicking one item checks it and unchecks every sibling in the same group. They use the same indicator slot as checkbox items.</p>
     {% call ui.demo() %}
     <div class="dropdown">
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-dropdown-trigger="ddRadio" aria-haspopup="menu" aria-expanded="false" aria-controls="ddRadio">
@@ -219,7 +219,7 @@
 
   <section>
     <h2>Form inside</h2>
-    <p>Drop a form into the menu and set <code>data-stisla-dropdown-auto-close="outside"</code> so clicks inside don't dismiss the menu while the user fills out fields. The menu auto-sizes its height to the viewport — long content scrolls inside.</p>
+    <p>Drop a form into the menu and set <code>data-stisla-dropdown-auto-close="outside"</code> so clicks inside don't dismiss the menu while the user fills out fields. The menu auto-sizes its height to the viewport, so long content scrolls inside.</p>
     {% call ui.demo() %}
     <div class="dropdown">
       <button type="button" class="btn btn--primary" data-stisla-dropdown-trigger="ddForm" aria-haspopup="menu" aria-expanded="false" aria-controls="ddForm">
@@ -246,7 +246,7 @@
 
   <section>
     <h2>Placement</h2>
-    <p>Set <code>data-stisla-dropdown-placement</code> on the menu to override the default <code>bottom-start</code>. Floating UI flips the menu automatically when it would overflow the viewport, so the value is a preference, not a constraint.</p>
+    <p>Set <code>data-stisla-dropdown-placement</code> on the menu to override the default <code>bottom-start</code>. Floating UI flips the menu automatically when it would overflow the viewport, so the value is a preference. It isn't a hard constraint.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-wrap gap-2">
       <div class="dropdown">

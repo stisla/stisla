@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Stisla — Vite core</title>
+    <script type="module" src="/src/main.js"></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Vite + core bundles</h1>
+        <p class="text-muted-foreground">
+          <code>import '@stisla/css'</code> +
+          <code>import '@stisla/vanilla'</code>. Vite resolves both from
+          <code>node_modules</code>.
+        </p>
+      </header>
+
+      <section>
+        <h2>Buttons</h2>
+        <div class="demo">
+          <button class="btn btn--primary">Primary</button>
+          <button class="btn btn--outline btn--neutral">Secondary</button>
+          <button class="btn btn--ghost btn--neutral">Ghost</button>
+          <button class="btn btn--primary" disabled>Disabled</button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Dialog</h2>
+        <div class="demo">
+          <button
+            type="button"
+            class="btn btn--primary"
+            data-stisla-dialog-trigger="coreDialog"
+          >
+            Open dialog
+          </button>
+        </div>
+
+        <div
+          class="dialog"
+          id="coreDialog"
+          data-stisla-dialog
+          data-state="closed"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="coreDialogLabel"
+          aria-hidden="true"
+          tabindex="-1"
+        >
+          <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+          <div class="dialog__panel">
+            <div class="dialog__content">
+              <button
+                type="button"
+                class="dialog__close"
+                data-stisla-dialog-dismiss
+                aria-label="Close"
+              >
+                ×
+              </button>
+              <div class="dialog__header">
+                <h3 class="dialog__title" id="coreDialogLabel">Core bundle</h3>
+              </div>
+              <div class="dialog__body">
+                <p class="m-0">
+                  Imported from <code>@stisla/vanilla</code>. Auto-scanner picked
+                  this up on mount.
+                </p>
+              </div>
+              <div class="dialog__footer">
+                <button
+                  type="button"
+                  class="btn btn--ghost btn--neutral"
+                  data-stisla-dialog-dismiss
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Dropdown</h2>
+        <div class="demo">
+          <div class="dropdown">
+            <button
+              type="button"
+              class="btn btn--outline btn--neutral"
+              data-stisla-dropdown-trigger="coreDd"
+              aria-haspopup="menu"
+              aria-expanded="false"
+              aria-controls="coreDd"
+            >
+              Open menu
+            </button>
+
+            <div
+              class="dropdown-menu"
+              id="coreDd"
+              data-stisla-dropdown
+              data-state="closed"
+              role="menu"
+            >
+              <button type="button" class="dropdown-menu__item" role="menuitem">Profile</button>
+              <button type="button" class="dropdown-menu__item" role="menuitem">Settings</button>
+              <hr class="dropdown-menu__divider" role="separator">
+              <button type="button" class="dropdown-menu__item" role="menuitem">Sign out</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

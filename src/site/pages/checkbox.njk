@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Checkbox · Stisla v3{% endblock %}
+{% block title %}Checkbox · Stisla{% endblock %}
 
 {% block content %}
   <header>
@@ -110,7 +110,7 @@
 
   <section>
     <h2>Server validation</h2>
-    <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky. Stisla just paints the red while the attribute is present; remove it when your validator considers the field resolved.</p>
+    <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky. Stisla just paints the red while the attribute is present. Remove it when your validator considers the field resolved.</p>
     {% call ui.demo() %}
     <div class="demo-stack" style="max-width: 24rem;">
       <div class="field-row">
@@ -123,7 +123,7 @@
       </div>
     </div>
     {% endcall %}
-    <p>The red border stays even after you check. That is the point — server errors should not dismiss themselves on touch. The checked variant shows both signals composing at once: primary fill says "this is selected", red rim says "and the server still considers it invalid".</p>
+    <p>The red border stays even after you check. That's the point. Server errors shouldn't dismiss themselves on touch. The checked variant shows both signals at once. Primary fill says "this is selected", red rim says "and the server still considers it invalid".</p>
   </section>
 
   <section>
@@ -178,7 +178,7 @@
           <tr>
             <td><code>--checkbox-indicator</code></td>
             <td>SVG data URL (checkmark or dash)</td>
-            <td>Glyph painted over <code>--checkbox-checked-bg</code>; checked and indeterminate each set their own SVG. The fill color is a literal because <code>data:</code> URLs can't read CSS variables — to recolor, replace the URL with one whose fill matches the new color</td>
+            <td>Glyph painted over <code>--checkbox-checked-bg</code>. Checked and indeterminate each set their own SVG. The fill color is a literal because <code>data:</code> URLs can't read CSS variables. To recolor, replace the URL with one whose fill matches the new color</td>
           </tr>
         </tbody>
       </table>

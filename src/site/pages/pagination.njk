@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Pagination · Stisla v3{% endblock %}
+{% block title %}Pagination · Stisla{% endblock %}
 
 {% block content %}
   <header>
@@ -11,7 +11,7 @@
 
   <section>
     <h2>Basic</h2>
-    <p>Wrap a list of <code>.pagination__button</code> in <code>.pagination</code>. Mark the current page with <code>data-state="active"</code> and <code>aria-current="page"</code>; the active chip paints <code>--st-highlight</code> while hover paints the lighter <code>--st-accent</code>.</p>
+    <p>Wrap a list of <code>.pagination__button</code> in <code>.pagination</code>. Mark the current page with <code>data-state="active"</code> and <code>aria-current="page"</code>. The active chip paints <code>--st-highlight</code> while hover paints the lighter <code>--st-accent</code>.</p>
     {% call ui.demo() %}
     <nav aria-label="Page navigation">
       <ul class="pagination">
@@ -53,7 +53,7 @@
 
   <section>
     <h2>Disabled</h2>
-    <p>Set <code>aria-disabled="true"</code> on the chip — or use <code>&lt;button disabled&gt;</code> — to gray it out and turn off pointer events. Drop the <code>href</code> too so screen readers don't announce it as a link. Use on the leading or trailing chip when the user is at the start or end of the range.</p>
+    <p>Set <code>aria-disabled="true"</code> on the chip (or use <code>&lt;button disabled&gt;</code>) to gray it out and turn off pointer events. Drop the <code>href</code> too so screen readers don't announce it as a link. Use on the leading or trailing chip when the user is at the start or end of the range.</p>
     {% call ui.demo() %}
     <nav aria-label="Page navigation">
       <ul class="pagination">
@@ -170,7 +170,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Sixteen variables retune <code>.pagination</code> without touching component CSS. Override on <code>.pagination</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change. Size modifiers <code>--sm</code> / <code>--lg</code> retune the chip height + padding + font size in their own scope — no per-size vars to maintain.</p>
+    <p>Sixteen variables retune <code>.pagination</code> without touching component CSS. Override on <code>.pagination</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change. Size modifiers <code>--sm</code> / <code>--lg</code> retune the chip height, padding, and font size in their own scope, so there are no per-size vars to maintain.</p>
     <div class="prose">
       <table>
         <thead>

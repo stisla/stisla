@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Input · Stisla v3{% endblock %}
+{% block title %}Input · Stisla{% endblock %}
 
 {% block content %}
   <header>
@@ -96,7 +96,7 @@
 
   <section>
     <h2>Disabled &amp; readonly</h2>
-    <p><code>disabled</code> blocks interaction and dims the field. <code>readonly</code> keeps the value reachable for copy but rejects edits. The bg shifts a tier to signal "selectable, not editable".</p>
+    <p><code>disabled</code> blocks interaction and dims the field. <code>readonly</code> keeps the value reachable for copy but rejects edits. The bg shifts a tier to signal that you can select the value but you can't edit it.</p>
     {% call ui.demo() %}
     <div class="demo-stack w-100" style="max-width: 24rem;">
       <input type="text" class="input" value="Disabled" disabled />

@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Progress · Stisla v3{% endblock %}
+{% block title %}Progress · Stisla{% endblock %}
 
 {% block content %}
   <header>
@@ -93,7 +93,7 @@
 
   <section>
     <h2>Animated</h2>
-    <p>Add <code>.progress__bar--animated</code> for a soft sheen that sweeps across the fill every few seconds. Meant as a quiet "still working" signal, not a constant treadmill. <code>prefers-reduced-motion</code> turns the animation off.</p>
+    <p>Add <code>.progress__bar--animated</code> for a soft sheen that sweeps across the fill every few seconds. It's a quiet "still working" signal. It isn't a constant treadmill. <code>prefers-reduced-motion</code> turns the animation off.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-column gap-4 w-100">
       <div class="progress progress--lg" role="progressbar" aria-label="Animated primary" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
@@ -182,6 +182,6 @@
         </tbody>
       </table>
     </div>
-    <p>Track opts out of <code>--st-radius</code>. Pill is semantic for a progress strip, not stylistic. Override <code>--progress-radius</code> per-component if a square track is genuinely wanted (e.g. on a brutalist preset).</p>
+    <p>Track opts out of <code>--st-radius</code>. Pill is semantic for a progress strip. It isn't a style choice. Override <code>--progress-radius</code> per-component if you really want a square track (e.g. on a brutalist preset).</p>
   </section>
 {% endblock %}

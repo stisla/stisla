@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Toggle · Stisla v3{% endblock %}
+{% block title %}Toggle · Stisla{% endblock %}
 
 {% block content %}
   <header>
@@ -15,7 +15,7 @@
 
   <section>
     <h2>Press button</h2>
-    <p>Add <code>data-stisla-toggle</code> to a <code>&lt;button class="toggle"&gt;</code>. Clicking flips <code>aria-pressed</code>; listen for <code>stisla:toggle:changed</code> to react.</p>
+    <p>Add <code>data-stisla-toggle</code> to a <code>&lt;button class="toggle"&gt;</code>. Clicking flips <code>aria-pressed</code>. Listen for <code>stisla:toggle:changed</code> to react.</p>
     {% call ui.demo() %}
     <button type="button" class="toggle" data-stisla-toggle aria-pressed="true">
       <i data-lucide="bell"></i>
@@ -26,7 +26,7 @@
 
   <section>
     <h2>Form data</h2>
-    <p>For a toggle whose state submits with a form, use a hidden <code>&lt;input class="toggle-input"&gt;</code> paired with a sibling <code>&lt;label class="toggle"&gt;</code>. The browser owns selection; no JS required.</p>
+    <p>For a toggle whose state submits with a form, use a hidden <code>&lt;input class="toggle-input"&gt;</code> paired with a sibling <code>&lt;label class="toggle"&gt;</code>. The browser owns selection, so no JS is needed.</p>
     {% call ui.demo() %}
     <div>
       <input type="checkbox" class="toggle-input" id="newsletterToggle" name="newsletter" checked>
@@ -70,7 +70,7 @@
 
   <section>
     <h2>Icon-round</h2>
-    <p>Add <code>.toggle--icon-round</code> alongside <code>.toggle--icon-only</code> for a circular silhouette. Same opt-out as <code>.btn--icon-round</code> — radius forces 9999px, ignoring <code>--st-radius</code>.</p>
+    <p>Add <code>.toggle--icon-round</code> alongside <code>.toggle--icon-only</code> for a circular silhouette. Same opt-out as <code>.btn--icon-round</code>. Radius forces 9999px and ignores <code>--st-radius</code>.</p>
     {% call ui.demo() %}
     <div class="d-flex gap-2 align-items-center">
       <button type="button" class="toggle toggle--icon-only toggle--icon-round" data-stisla-toggle aria-pressed="false" aria-label="Like">
@@ -101,7 +101,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Twelve variables retune <code>.toggle</code>. Geometry mirrors <code>.btn</code>; surface variables follow the v3 interactional trio (rest → accent hover → highlight active) — the same vocabulary sidebar, list-group, table and pagination use for selected state.</p>
+    <p>Twelve variables retune <code>.toggle</code>. Geometry mirrors <code>.btn</code>. Surface variables follow the interactional trio (rest, accent hover, highlight active). It's the same vocabulary sidebar, list-group, table and pagination use for selected state.</p>
     <div class="prose">
       <table>
         <thead>
@@ -170,7 +170,7 @@
           <tr>
             <td><code>--toggle-active-border-color</code></td>
             <td>var(--toggle-active-bg)</td>
-            <td>Active rim. Default matches the bg so the chip reads as a clean solid fill. Override for a distinct rim.</td>
+            <td>Active rim. Default matches the bg so the chip reads as a clean solid fill. Override it for a distinct rim.</td>
           </tr>
         </tbody>
       </table>

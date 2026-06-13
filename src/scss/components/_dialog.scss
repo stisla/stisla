@@ -40,14 +40,13 @@
   --dialog-title-font-size: 1.125rem;
   --dialog-title-font-weight: 600;
 
-  // Close chip — literal dark chip with white icon in light mode; the
-  // dark-mode block at the bottom flips to a subtle light chip + white
-  // icon (matches the prior v3 BS5 overlay). The icon stays white in
-  // both themes so the chip reads against any surface — including the
-  // photo-bg media-hero variant.
+  // Close chip — frosted translucent dark chip with white icon in light
+  // mode; the dark-mode block at the bottom flips to a subtle light chip
+  // + white icon. The icon stays white in both themes so the chip reads
+  // against any surface — including the photo-bg media-hero variant.
   --dialog-close-size: 1.75rem;
-  --dialog-close-bg: oklch(0 0 0 / 0.55);
-  --dialog-close-bg-hover: oklch(0 0 0 / 0.7);
+  --dialog-close-bg: oklch(0 0 0 / 0.35);
+  --dialog-close-bg-hover: oklch(0 0 0 / 0.55);
   --dialog-close-color: oklch(1 0 0 / 0.92);
   --dialog-close-color-hover: oklch(1 0 0);
 

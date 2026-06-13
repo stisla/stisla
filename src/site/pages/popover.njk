@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Popover · Stisla v3{% endblock %}
+{% block title %}Popover · Stisla{% endblock %}
 
 {% block content %}
   <header>
@@ -29,7 +29,7 @@
 
   <section>
     <h2>Anatomy</h2>
-    <p>An optional <code>.popover__close</code> chip sits in the top-right corner. Wire it with <code>data-stisla-popover-dismiss</code> so the delegated handler closes the popover without needing per-instance JS.</p>
+    <p>An optional <code>.popover__close</code> chip sits in the top-right corner. Wire it with <code>data-stisla-popover-dismiss</code> so the delegated handler closes the popover without per-instance JS.</p>
     {% call ui.demo() %}
     <button type="button" class="btn btn--outline btn--neutral"
             data-stisla-popover-trigger="popover-anatomy"
@@ -111,7 +111,7 @@
 
   <section>
     <h2>Rich content</h2>
-    <p>Author the body with whatever markup the popover needs. Paragraphs, links, buttons, and form bits all work — there's no string-content opt-in.</p>
+    <p>Author the body with whatever markup the popover needs. Paragraphs, links, buttons, and form bits all work. There's no string-content opt-in.</p>
     {% call ui.demo() %}
     <button type="button" class="btn btn--primary"
             data-stisla-popover-trigger="popover-rich"
@@ -137,7 +137,7 @@
 
   <section>
     <h2>Imperative</h2>
-    <p>Mark a popover with an <code>id</code> and reach it via <code>Stisla.get(document.getElementById('&lt;id&gt;'))</code>. Call <code>Stisla.Popover.getOrCreate(el).open()</code> if you need to drive it from script without a click trigger.</p>
+    <p>Mark a popover with an <code>id</code> and reach it via <code>Stisla.get(document.getElementById('&lt;id&gt;'))</code>. Call <code>Stisla.Popover.getOrCreate(el).open()</code> when you need to drive it from script without a click trigger.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-wrap gap-2 align-items-center">
       <button type="button" class="btn btn--neutral" data-demo-popover-open="popover-imperative">
@@ -184,7 +184,7 @@
         <tbody>
           <tr><td><code>--popover-bg</code></td><td>var(--st-surface)</td><td>Panel background.</td></tr>
           <tr><td><code>--popover-color</code></td><td>var(--st-foreground)</td><td>Default text color inside the panel.</td></tr>
-          <tr><td><code>--popover-border-color</code></td><td>var(--st-border)</td><td>Frame outline. Solid, not translucent.</td></tr>
+          <tr><td><code>--popover-border-color</code></td><td>var(--st-border)</td><td>Frame outline. Solid fill, no transparency.</td></tr>
           <tr><td><code>--popover-border-width</code></td><td>1px</td><td>Frame thickness. Arrow border thickness tracks this.</td></tr>
           <tr><td><code>--popover-shadow</code></td><td>var(--st-shadow)</td><td>Elevation off the page.</td></tr>
         </tbody>
@@ -209,7 +209,7 @@
           <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
         </thead>
         <tbody>
-          <tr><td><code>--popover-body-color</code></td><td>var(--st-muted-foreground)</td><td>Default body color. Override to <code>--st-foreground</code> inside rich-content popovers.</td></tr>
+          <tr><td><code>--popover-body-color</code></td><td>var(--st-muted-foreground)</td><td>Default body color. Override it to <code>--st-foreground</code> inside rich-content popovers.</td></tr>
           <tr><td><code>--popover-body-font-size</code></td><td>0.875rem</td><td>Body text size.</td></tr>
           <tr><td><code>--popover-body-line-height</code></td><td>1.5</td><td>Wrapping rhythm.</td></tr>
         </tbody>

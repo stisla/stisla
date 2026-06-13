@@ -2,8 +2,9 @@
 
 Vanilla JS implementation of the [Stisla](https://stisla.dev) v3 spec. Pairs
 with [`@stisla/css`](https://www.npmjs.com/package/@stisla/css). Composed
-primitives ([Floating UI](https://floating-ui.com/), [focus-trap](https://github.com/focus-trap/focus-trap),
-[Embla](https://www.embla-carousel.com/)) plus Stisla's own component classes.
+primitives ([Floating UI](https://floating-ui.com/),
+[focus-trap](https://github.com/focus-trap/focus-trap)) plus Stisla's own
+component classes.
 
 ```bash
 npm install @stisla/css @stisla/vanilla

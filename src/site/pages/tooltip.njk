@@ -1,7 +1,7 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/_demo.njk" as ui %}
 
-{% block title %}Tooltip · Stisla v3{% endblock %}
+{% block title %}Tooltip · Stisla{% endblock %}
 
 {% block content %}
   <header>
@@ -38,16 +38,16 @@
 
   <section>
     <h2>Triggers</h2>
-    <p>Default is <code>hover focus</code> — opens on either. Pass <code>data-stisla-tooltip-trigger</code> to opt for one. <code>manual</code> wires nothing and leaves <code>show()</code> / <code>hide()</code> to a consumer script.</p>
+    <p>The default is <code>hover focus</code>, which opens on either. Pass <code>data-stisla-tooltip-trigger</code> to opt for one. <code>manual</code> wires nothing and leaves <code>show()</code> / <code>hide()</code> to a consumer script.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-wrap gap-2">
-      <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-trigger="hover" data-stisla-tooltip-title="Hover only — keyboard focus skips this">
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-trigger="hover" data-stisla-tooltip-title="Hover only. Keyboard focus skips this.">
         Hover only
       </button>
-      <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-trigger="focus" data-stisla-tooltip-title="Focus only — try Tab to reach this">
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-trigger="focus" data-stisla-tooltip-title="Focus only. Try Tab to reach this.">
         Focus only
       </button>
-      <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-title="Default — opens on hover or focus">
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-title="Default. Opens on hover or focus.">
         Hover and focus
       </button>
     </div>
@@ -59,13 +59,13 @@
     <p>The 600ms default <code>delay</code> prevents flash on incidental pointer crossings. Drop to <code>0</code> for instant feedback or raise it for chips that should only show on deliberate hover.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-wrap gap-2">
-      <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-delay="0" data-stisla-tooltip-title="Instant — no open delay">
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-delay="0" data-stisla-tooltip-title="Instant. No open delay.">
         Instant
       </button>
-      <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-title="Default — 600ms before opening">
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-title="Default. 600ms before opening.">
         Default
       </button>
-      <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-delay="1200" data-stisla-tooltip-title="Lazy — 1.2s before opening">
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-delay="1200" data-stisla-tooltip-title="Lazy. 1.2s before opening.">
         Lazy
       </button>
     </div>
@@ -110,7 +110,7 @@
 
   <section>
     <h2>HTML content</h2>
-    <p>Pass <code>data-stisla-tooltip-html="true"</code> to render the title as HTML. Keep it short — anything beyond a chip or two belongs in a popover.</p>
+    <p>Pass <code>data-stisla-tooltip-html="true"</code> to render the title as HTML. Keep it short. Anything beyond a chip or two belongs in a popover.</p>
     {% call ui.demo() %}
     <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-html="true" data-stisla-tooltip-title="Press <kbd class='kbd'>⌘</kbd>+<kbd class='kbd'>K</kbd> to search">
       Search
@@ -120,7 +120,7 @@
 
   <section>
     <h2>Long content</h2>
-    <p>Content past <code>--tooltip-max-width</code> (240px) wraps. Two lines is the practical ceiling — anything longer belongs in a popover.</p>
+    <p>Content past <code>--tooltip-max-width</code> (240px) wraps. Two lines is the practical ceiling. Anything longer belongs in a popover.</p>
     {% call ui.demo() %}
     <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-title="Only workspace owners can change billing details and downgrade the plan">
       Hover for the rule
@@ -151,7 +151,7 @@
           <tr><td><code>--tooltip-max-width</code></td><td>240px</td><td>Wrap point. Long content past this folds to a second line.</td></tr>
           <tr><td><code>--tooltip-padding-y</code></td><td>6px</td><td>Top and bottom inset on <code>.tooltip__inner</code>.</td></tr>
           <tr><td><code>--tooltip-padding-x</code></td><td>10px</td><td>Left and right inset on <code>.tooltip__inner</code>.</td></tr>
-          <tr><td><code>--tooltip-radius</code></td><td>var(--st-radius-sm)</td><td>Chip radius. Small tier — matches kbd and badge.</td></tr>
+          <tr><td><code>--tooltip-radius</code></td><td>var(--st-radius-sm)</td><td>Chip radius. Small tier. Matches kbd and badge.</td></tr>
           <tr><td><code>--tooltip-z-index</code></td><td>1050</td><td>Stack level. Between drawer (1045) and dialog (1055).</td></tr>
           <tr><td><code>--tooltip-font-size</code></td><td>0.8125rem</td><td>Label text size.</td></tr>
           <tr><td><code>--tooltip-line-height</code></td><td>1.4</td><td>Wrapping rhythm.</td></tr>
@@ -164,7 +164,7 @@
           <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
         </thead>
         <tbody>
-          <tr><td><code>--tooltip-bg</code></td><td>var(--st-foreground)</td><td>Chip background. Inverse — flips with theme via the token swap.</td></tr>
+          <tr><td><code>--tooltip-bg</code></td><td>var(--st-foreground)</td><td>Chip background. Inverse. Flips with theme via the token swap.</td></tr>
           <tr><td><code>--tooltip-color</code></td><td>var(--st-background)</td><td>Label text color. Inverse pair.</td></tr>
           <tr><td><code>--tooltip-shadow</code></td><td>0 4px 12px -2px (foreground 12% mix)</td><td>Lift off the page.</td></tr>
         </tbody>
