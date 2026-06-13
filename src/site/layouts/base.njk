@@ -23,13 +23,44 @@
   {% endif %}
 </head>
 <body>
+  {% include "partials/_site-navbar.njk" %}
+
   <div class="site-layout">
     {% include "partials/_site-sidebar.njk" %}
+    <div class="site-backdrop" data-site-sidebar-close hidden></div>
+
     <main class="site-main">
-      <div class="main-container prose">
-        {% block content %}{% endblock %}
+      <div class="site-toc-mobile">
+        <button type="button"
+                class="site-toc-mobile__trigger"
+                data-stisla-collapsible-trigger="site-toc-mobile-body"
+                aria-controls="site-toc-mobile-body"
+                aria-expanded="false">
+          <span>On this page</span>
+          <i data-lucide="chevron-down" class="site-toc-mobile__chevron"></i>
+        </button>
+        <div id="site-toc-mobile-body"
+             class="site-toc-mobile__body collapsible"
+             data-stisla-collapsible
+             data-state="closed"
+             role="region">
+          <div class="site-toc-mobile__inner">
+            <!-- TOC -->
+          </div>
+        </div>
       </div>
+
+      <article class="content-card">
+        <div class="main-container prose">
+          {% block content %}{% endblock %}
+        </div>
+      </article>
     </main>
+
+    <aside class="site-rail">
+      <!-- TOC -->
+      {% include "partials/_site-sponsor.njk" %}
+    </aside>
   </div>
 
   {% if dev %}

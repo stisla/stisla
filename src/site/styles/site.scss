@@ -1,4 +1,5 @@
-@use 'customization-presets';
+@use "customization-presets";
+@use "../../scss/tokens/breakpoints" as bp;
 
 // Site-only chrome for stisla.dev — never bundled into the framework CSS.
 // Behaviors live alongside in src/site/scripts/site.js. Runtime tokens come
@@ -235,16 +236,28 @@ body {
     margin: 0 0 0.5rem;
   }
 
+  // Clear navbar (3.5rem) + sticky ToC trigger (~3rem) on mobile; just the
+  // navbar on lg+ where the rail replaces the mobile ToC strip.
   :where(h2)#{$opt-out} {
     font-size: 1.125rem;
     line-height: 1.4;
     margin: 0 0 0.5rem;
+    scroll-margin-top: 7.5rem;
+
+    @include bp.media-up(lg) {
+      scroll-margin-top: 5rem;
+    }
   }
 
   :where(h3)#{$opt-out} {
     font-size: 1rem;
     line-height: 1.4;
     margin: 1.5rem 0 0.5rem;
+    scroll-margin-top: 7.5rem;
+
+    @include bp.media-up(lg) {
+      scroll-margin-top: 5rem;
+    }
   }
 
   // Muted body color for docs paragraphs — page chrome stays quiet so
@@ -277,52 +290,391 @@ body {
 }
 
 .main-container {
-  max-width: 48rem;
+  max-width: 44rem;
   margin-left: auto;
   margin-right: auto;
-  padding-inline: 1.5rem;
+  padding: 1.5rem 0;
+
+  @include bp.media-up(md) {
+    padding: 4rem 2.5rem;
+  }
 }
 
-// === Site shell: sidebar + main column ===
-// Sidebar is sticky-fixed at the viewport's left edge; main scrolls. The
-// `min-width: 0` on .site-main keeps long preformatted blocks (Shiki <pre>)
-// from blowing out the flex track and forcing a horizontal page scroll.
+// === Site shell ===
 //
-// .site-layout (outer frame) sits a tier above the page bg so the rounded
-// content card visually pops. Hardcoded site-shell literals — these are
-// site chrome, not framework surface, and don't track --st-* tokens.
+// Visual hierarchy:
+//   page bg (#f5f7fa / dark #121417) ← sits behind everything
+//     navbar               full-width, sticky, sits on page bg
+//     site-layout grid     sidebar | main | rail
+//       sidebar            bare nav on page bg (off-canvas below md)
+//       main               holds the rounded content-card on page bg
+//         content-card     the actual readable surface
+//       rail               bare ToC + sponsor on page bg (lg+ only)
+//
+// Page bg is a hardcoded site-chrome literal — not framework surface, so
+// it doesn't track --st-* tokens.
+
+$navbar-height: 4rem;
+$shell-max: 90rem;
 
 .site-layout {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr;
   align-items: stretch;
-  min-height: 100vh;
-  background: #f5f7fa;
+  min-height: calc(100vh - #{$navbar-height});
+  padding: 0 1rem 3rem;
+  max-width: $shell-max;
+  margin-inline: auto;
+
+  @include bp.media-up(md) {
+    grid-template-columns: 16rem minmax(0, 1fr);
+    column-gap: 1.5rem;
+    padding: 0 1.5rem 4rem;
+  }
+
+  @include bp.media-up(lg) {
+    grid-template-columns: 16rem minmax(0, 1fr) 16rem;
+    column-gap: 2rem;
+  }
 }
 
-[data-theme="dark"] .site-layout,
-.dark .site-layout {
-  background: #121417;
-}
+// === Navbar ===
+// Full-width sticky bar above the layout grid. Carries the brand, the
+// hamburger (mobile), GitHub link, and theme toggle.
 
-.site-sidebar {
+.site-navbar {
   position: sticky;
   top: 0;
-  flex-shrink: 0;
-  width: 16rem;
+  z-index: 1030;
+  height: $navbar-height;
+  background-color: color-mix(in oklch, var(--st-background), transparent 15%);
+  backdrop-filter: blur(5px);
+}
+
+.site-navbar__inner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 100%;
+  padding: 0 calc(1rem - 8px);
+  max-width: $shell-max;
+  margin-inline: auto;
+
+  @include bp.media-up(md) {
+    padding: 0 3rem;
+    gap: 0.75rem;
+  }
+}
+
+.site-navbar__brand {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.375rem;
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: var(--st-foreground);
+  text-decoration: none;
+}
+
+.site-navbar__version {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  padding: 0.125rem 0.375rem;
+  border-radius: 999px;
+  color: var(--st-muted-foreground);
+  background: var(--st-surface-2);
+}
+
+.site-navbar__spacer {
+  flex: 1;
+}
+
+.site-navbar__trigger {
+  @include bp.media-up(md) {
+    display: none;
+  }
+}
+
+.site-navbar__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  color: var(--st-muted-foreground);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--st-foreground);
+    background: var(--st-surface-2);
+  }
+}
+
+// === Sidebar ===
+// Desktop: bare sticky column on the page bg (no card chrome).
+// Mobile: fixed off-canvas drawer.
+
+.site-sidebar {
+  // Mobile: off-canvas
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: min(18rem, calc(100vw - 3rem));
   height: 100vh;
+  transform: translateX(-100%);
+  transition: transform 0.25s ease;
+  background: var(--st-background);
+  border-right: 1px solid var(--st-border);
+  overflow-y: auto;
+
+  &[data-state="open"] {
+    transform: translateX(0);
+  }
+
   .sidebar__button {
     width: auto;
   }
   &.sidebar--sm {
     --sidebar-group-gap: 1.75rem;
   }
+
+  // Desktop: in-flow sticky column on the page bg
+  @include bp.media-up(md) {
+    position: sticky;
+    top: $navbar-height;
+    transform: none;
+    width: auto;
+    height: calc(100vh - #{$navbar-height});
+    z-index: auto;
+    border-right: 0;
+    background: transparent;
+  }
 }
 
+// Backdrop dims content while the mobile sidebar is open. site.js toggles
+// the [hidden] attribute. Click closes the drawer.
+.site-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1035;
+  background: oklch(0 0 0 / 0.4);
+  backdrop-filter: blur(2px);
+
+  @include bp.media-up(md) {
+    display: none;
+  }
+}
+
+// === Main column + content card ===
+// Main is a transparent track that hosts the rounded content card. The
+// card is the actual readable surface and the only place that wears the
+// --st-background tone — sidebar and rail sit on the page bg.
+
 .site-main {
-  flex-grow: 1;
   min-width: 0;
-  padding: 5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.content-card {
+  // Mobile: edge-to-edge content on the page bg — no card chrome.
+  background: transparent;
+  border: 0;
+
+  @include bp.media-up(md) {
+    background: var(--st-background);
+    border: 1px solid var(--st-border);
+    border-radius: 2rem;
+    overflow: hidden;
+  }
+}
+
+// === Mobile ToC (Stisla.Collapsible) ===
+// Sits between the navbar and the content card on small viewports.
+// Hidden at lg+ where the right rail takes over. If the page has no ToC,
+// the wrapper collapses to nothing via :has().
+
+.site-toc-mobile {
+  // Sticky strip just under the navbar. Spans the .site-main column;
+  // background hides the page content as it scrolls underneath the trigger.
+  position: sticky;
+  top: $navbar-height;
+  z-index: 1020;
+  background: color-mix(in oklch, var(--st-background), transparent 15%);
+  backdrop-filter: blur(5px);
+  border-top: 1px solid var(--st-border);
+  border-bottom: 1px solid var(--st-border);
+  // Bleed beyond .site-main's padding so the strip kisses the layout edge.
+  margin-inline: -1rem;
+  margin-block-start: -1rem;
+
+  @include bp.media-up(md) {
+    margin-inline: 0;
+    background: var(--st-background);
+    border: 1px solid var(--st-border);
+    border-radius: 1rem;
+    position: static;
+  }
+
+  @include bp.media-up(lg) {
+    display: none;
+  }
+
+  &:not(:has(.site-toc)) {
+    display: none;
+  }
+}
+
+@include bp.media-down(md) {
+  [data-theme="dark"] .site-toc-mobile,
+  .dark .site-toc-mobile {
+    background: #121417;
+  }
+}
+
+.site-toc-mobile__trigger {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  font-weight: 500;
+  font-size: 0.75rem;
+  border: 0;
+  cursor: pointer;
+  svg {
+    width: 1.125rem;
+  }
+}
+
+.site-toc-mobile__chevron {
+  transition: transform 0.2s ease;
+  color: var(--st-muted-foreground);
+}
+
+.site-toc-mobile__trigger[aria-expanded="true"] .site-toc-mobile__chevron {
+  transform: rotate(180deg);
+}
+
+.site-toc-mobile__inner {
+  padding: 0 1rem 1rem;
+}
+
+// === Right rail (ToC + sponsor) ===
+// lg+ only. Bare on the page bg, sticky.
+
+.site-rail {
+  display: none;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem 0;
+
+  @include bp.media-up(lg) {
+    display: flex;
+    position: sticky;
+    top: $navbar-height;
+    align-self: start;
+    max-height: calc(100vh - #{$navbar-height});
+    overflow-y: auto;
+  }
+}
+
+// === ToC ===
+
+.site-toc {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.site-toc__title {
+  margin: 0 0 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--st-muted-foreground);
+  display: none;
+
+  @include bp.media-up(lg) {
+    display: block;
+  }
+}
+
+.site-toc__list,
+.site-toc__sublist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-toc__sublist {
+  margin: 0.25rem 0 0.5rem 0.0625rem;
+  padding-left: 1rem;
   border-left: 1px solid var(--st-border);
-  border-radius: 2rem 0 0 2rem;
-  background: var(--st-background);
+}
+
+.site-toc__link {
+  display: block;
+  padding: 0.25rem 0;
+  color: var(--st-muted-foreground);
+  text-decoration: none;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: var(--st-foreground);
+  }
+
+  &[aria-current="true"] {
+    color: var(--st-foreground);
+    font-weight: 500;
+  }
+}
+
+// === Sponsor card ===
+// Below the ToC at ≥ lg. On smaller viewports the right rail is hidden
+// entirely, so the sponsor disappears there too — by design for the beta.
+
+.site-sponsor {
+  padding: 1rem;
+  border: 1px solid var(--st-border);
+  border-radius: var(--st-radius);
+  background: var(--st-surface-2);
+}
+
+.site-sponsor__label {
+  margin: 0 0 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--st-muted-foreground);
+}
+
+.site-sponsor__card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  color: var(--st-foreground);
+  text-decoration: none;
+}
+
+.site-sponsor__brand {
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.site-sponsor__blurb {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--st-muted-foreground);
+}
+
+// Lock background scroll when the mobile sidebar is open.
+html[data-site-sidebar="open"],
+body[data-site-sidebar="open"] {
+  overflow: hidden;
 }

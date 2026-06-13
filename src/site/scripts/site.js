@@ -25,6 +25,111 @@ document.addEventListener("click", (e) => {
   localStorage.setItem("stisla-theme", next);
 });
 
+// Mobile sidebar drawer. The top bar's [data-site-sidebar-trigger] opens
+// it; the backdrop or any sidebar link click closes it. We don't watch
+// resize → the off-canvas state only matters below md; if the viewport
+// grows past md the CSS unsets transform regardless of [data-state].
+(function wireMobileSidebar() {
+  const sidebar = document.getElementById("site-sidebar");
+  const trigger = document.querySelector("[data-site-sidebar-trigger]");
+  const backdrop = document.querySelector(".site-backdrop");
+  if (!sidebar || !trigger) return;
+
+  const setOpen = (open) => {
+    sidebar.dataset.state = open ? "open" : "closed";
+    trigger.setAttribute("aria-expanded", String(open));
+    if (backdrop) backdrop.hidden = !open;
+    document.body.dataset.siteSidebar = open ? "open" : "";
+  };
+
+  trigger.addEventListener("click", () => {
+    setOpen(sidebar.dataset.state !== "open");
+  });
+  if (backdrop) backdrop.addEventListener("click", () => setOpen(false));
+  // Tapping a nav link inside the drawer dismisses it so the destination
+  // page paints without the drawer overlaying it.
+  sidebar.addEventListener("click", (e) => {
+    if (e.target.closest("a.sidebar__button")) setOpen(false);
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && sidebar.dataset.state === "open") setOpen(false);
+  });
+})();
+
+// Mobile ToC auto-close on link click. The sticky drawer would otherwise
+// cover the heading the user just jumped to. Defer one tick so the anchor
+// scroll fires first, then ask the framework's Collapsible to close.
+document.addEventListener("click", (e) => {
+  const link = e.target.closest(".site-toc-mobile a.site-toc__link");
+  if (!link) return;
+  const region = document.getElementById("site-toc-mobile-body");
+  if (!region || !window.Stisla?.Collapsible) return;
+  setTimeout(() => {
+    window.Stisla.Collapsible.getOrCreate(region).close();
+  }, 0);
+});
+
+// ToC active-section highlight. Watch every heading[id] inside the main
+// content; the one closest to the top of the viewport (within a band that
+// reaches a third of the way down) gets aria-current="true" on its ToC
+// link. The page renders the same ToC twice — desktop rail + mobile
+// &lt;details&gt; — so we collect links from every .site-toc on the page.
+// Skip silently if the page has no ToC nav (e.g. short pages).
+(function wireTocHighlight() {
+  const tocs = document.querySelectorAll(".site-toc");
+  if (!tocs.length) return;
+  const headings = document.querySelectorAll(
+    ".main-container h2[id], .main-container h3[id]",
+  );
+  if (!headings.length) return;
+
+  const linksFor = new Map();
+  tocs.forEach((toc) => {
+    toc.querySelectorAll("a.site-toc__link").forEach((a) => {
+      const id = decodeURIComponent((a.getAttribute("href") || "").slice(1));
+      if (!id) return;
+      if (!linksFor.has(id)) linksFor.set(id, []);
+      linksFor.get(id).push(a);
+    });
+  });
+
+  let activeId = null;
+  const setActive = (id) => {
+    if (id === activeId) return;
+    if (activeId) linksFor.get(activeId)?.forEach((a) => a.removeAttribute("aria-current"));
+    activeId = id;
+    if (activeId) linksFor.get(activeId)?.forEach((a) => a.setAttribute("aria-current", "true"));
+  };
+
+  // Track which headings are above the trigger line (~ top third of the
+  // viewport). The last one above wins — that's the section currently being
+  // read. Falls back to the first heading when the page is scrolled to the
+  // very top.
+  const visible = new Set();
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) visible.add(entry.target.id);
+        else visible.delete(entry.target.id);
+      }
+      // Pick the topmost visible heading; if none visible, pick the
+      // closest one above the viewport.
+      const ids = Array.from(headings, (h) => h.id);
+      let pick = ids.find((id) => visible.has(id));
+      if (!pick) {
+        const above = ids.filter((id) => {
+          const el = document.getElementById(id);
+          return el && el.getBoundingClientRect().top < 0;
+        });
+        pick = above[above.length - 1] || ids[0];
+      }
+      setActive(pick);
+    },
+    { rootMargin: "0px 0px -66% 0px", threshold: 0 },
+  );
+  headings.forEach((h) => io.observe(h));
+})();
+
 // data-demo-code-toggle — expand/collapse the closest [data-demo-code] container.
 // Pure presentational toggle: state lives in data-expanded + aria-expanded.
 document.addEventListener("click", (e) => {
