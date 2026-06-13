@@ -1,0 +1,43 @@
+{
+  "name": "@stisla/css",
+  "version": "3.0.0-beta.1",
+  "description": "Stisla v3 — universal CSS. The framework-agnostic stylesheet that any implementation (vanilla, React, Vue, Svelte) reads from.",
+  "license": "MIT",
+  "author": "Nauval Azhar <nauvalazhar2@gmail.com> (https://stisla.dev)",
+  "homepage": "https://stisla.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stisla/stisla.git",
+    "directory": "packages/css"
+  },
+  "bugs": "https://github.com/stisla/stisla/issues",
+  "keywords": [
+    "stisla",
+    "css",
+    "admin",
+    "dashboard",
+    "design-system",
+    "bem",
+    "oklch"
+  ],
+  "style": "dist/stisla.css",
+  "sass": "scss/bundles/stisla.scss",
+  "exports": {
+    ".": "./dist/stisla.css",
+    "./full": "./dist/stisla-full.css",
+    "./integrations/carousel": "./dist/integrations/carousel.css",
+    "./dist/*": "./dist/*",
+    "./scss/*": "./scss/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "scss",
+    "README.md",
+    "LICENSE",
+    "LICENSES"
+  ],
+  "sideEffects": [
+    "*.css"
+  ]
+}

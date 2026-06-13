@@ -1,7 +1,8 @@
 {
-  "name": "stisla",
+  "name": "stisla-monorepo",
+  "private": true,
   "version": "3.0.0-beta.1",
-  "description": "Stisla v3 — CSS-first admin framework. Design spec + vanilla implementation.",
+  "description": "Stisla v3 dev tree. Publishable packages live under packages/* — see @stisla/css and @stisla/vanilla.",
   "license": "MIT",
   "author": "Nauval Azhar <nauvalazhar2@gmail.com> (https://stisla.dev)",
   "homepage": "https://stisla.dev",
@@ -11,7 +12,10 @@
     "dev": "vite",
     "build:assets": "vite build",
     "build:site": "node tools/render-site.mjs",
+    "build:packages": "npm run build:assets && node tools/build-packages.mjs",
     "build": "npm run build:assets && npm run build:site",
+    "pack:packages": "npm run build:packages && cd packages/css && npm pack && cd ../vanilla && npm pack",
+    "smoke:packages": "node tools/smoke-packages.mjs",
     "preview": "vite preview --outDir site-dist"
   },
   "dependencies": {

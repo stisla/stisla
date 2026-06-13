@@ -1,0 +1,54 @@
+{
+  "name": "@stisla/vanilla",
+  "version": "3.0.0-beta.1",
+  "description": "Stisla v3 — vanilla JS implementation. Pairs with @stisla/css. Composed primitives (Floating UI, focus-trap, Embla) plus Stisla's own component classes.",
+  "license": "MIT",
+  "author": "Nauval Azhar <nauvalazhar2@gmail.com> (https://stisla.dev)",
+  "homepage": "https://stisla.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stisla/stisla.git",
+    "directory": "packages/vanilla"
+  },
+  "bugs": "https://github.com/stisla/stisla/issues",
+  "keywords": [
+    "stisla",
+    "vanilla",
+    "admin",
+    "dashboard",
+    "design-system",
+    "bem"
+  ],
+  "type": "module",
+  "main": "./dist/stisla.js",
+  "module": "./dist/stisla.js",
+  "exports": {
+    ".": "./dist/stisla.js",
+    "./full": "./dist/stisla-full.js",
+    "./integrations/carousel": "./dist/integrations/carousel.js",
+    "./dist/*": "./dist/*",
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": [
+    "./dist/stisla.js",
+    "./dist/stisla-full.js",
+    "./src/index.js",
+    "./src/index-full.js"
+  ],
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "@floating-ui/dom": "^1.7.6",
+    "embla-carousel": "^8.6.0",
+    "focus-trap": "^8.2.1",
+    "tabbable": "^6.4.0"
+  },
+  "peerDependencies": {
+    "@stisla/css": "3.0.0-beta.1"
+  }
+}
