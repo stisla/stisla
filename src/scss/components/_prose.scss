@@ -108,7 +108,7 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
   :where(ul, ol)#{$skip} {
     margin-top: 0;
     margin-bottom: calc(1.25em * var(--st-density));
-    padding-left: 1.5em;
+    padding-inline-start: 1.5em;
   }
 
   :where(ul)#{$skip} { list-style: disc; }
@@ -135,14 +135,14 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
   }
   :where(dd)#{$skip} {
     margin-top: calc(0.25em * var(--st-density));
-    padding-left: 1.5em;
+    padding-inline-start: 1.5em;
   }
 
   // === Blockquote ===
   :where(blockquote)#{$skip} {
     margin-block: calc(1.6em * var(--st-density));
-    padding-left: 1em;
-    border-left: 3px solid var(--st-prose-quote-border);
+    padding-inline-start: 1em;
+    border-inline-start: 3px solid var(--st-prose-quote-border);
     color: var(--st-muted-foreground);
     font-style: italic;
   }

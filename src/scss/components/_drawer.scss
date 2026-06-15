@@ -165,6 +165,21 @@
   }
 }
 
+// RTL flip — inset-inline-* already anchors the panel on the right
+// physical edge in dir="rtl", but translateX is physical and can't be
+// expressed logically (SPEC §15). One narrow override flips the sign
+// for the two inline-axis placements; --top / --bottom stay unchanged
+// because translateY is block-axis and direction-agnostic.
+[dir="rtl"] {
+  .drawer .drawer__content,
+  .drawer--end .drawer__content {
+    transform: translateX(-100%);
+  }
+  .drawer--start .drawer__content {
+    transform: translateX(100%);
+  }
+}
+
 // Open state — slide into place.
 .drawer[data-state='open'] .drawer__content {
   transform: none;

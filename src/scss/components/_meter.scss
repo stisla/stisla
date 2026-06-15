@@ -1,0 +1,191 @@
+// Stisla v3 — meter.
+//
+// A bar that visualizes a value within a known range. Storage used,
+// score against a target, fuel level — anything where the question is
+// "how much of the budget is consumed" rather than "how far along is
+// this task." Meter is to progress what a fuel gauge is to a loading
+// indicator: static measurement vs. work in motion. The two share an
+// anatomy, but meter drops every in-motion modifier (shimmer,
+// indeterminate, width-transition) and adds segmented stacking plus an
+// optional legend.
+//
+// === Anatomy =============================================================
+//   .meter                 wrapper — owns the caption + track + legend grid
+//   .meter__label          optional caption (left column of the header row)
+//   .meter__value          optional value text (right column)
+//   .meter__track          recessed pill, flex row hosting one or more bars
+//   .meter__bar            filled segment (sized by inline width %)
+//   .meter__legend         optional row beneath the track
+//   .meter__legend-item    one entry per segment
+//   .meter__legend-dot     colored swatch (inherits --meter-bar-bg)
+//
+// === Modifiers ===========================================================
+//   .meter--sm                          compact track
+//   .meter--lg                          label-friendly track
+//   .meter__bar--primary                default intent (explicit form)
+//   .meter__bar--success
+//   .meter__bar--warning
+//   .meter__bar--danger
+//   .meter__bar--info
+//
+// === Layout ==============================================================
+// Same 2-column grid as progress (label left, value right, track spans
+// both). The legend, when present, also spans both columns and sits
+// beneath the track. Either caption may be omitted; the bare
+// .meter > .meter__track shape works for chrome-only meters.
+//
+// role="meter" sits on .meter (the wrapper); pair with aria-valuenow /
+// aria-valuemin / aria-valuemax, and aria-valuetext when the raw number
+// hides the unit (e.g. "203.95 GB of 245.11 GB used" reads better than
+// "80"). aria-labelledby points at the caption rather than duplicating
+// it as aria-label.
+//
+// === Segmented ===========================================================
+// Drop multiple .meter__bar children inside .meter__track to break the
+// fill into segments. The track is a flex row, so each bar sits next to
+// the last. --meter-segment-gap puts a small visible gap between
+// adjacent bars so distinct slices read as distinct categories. Widths
+// are inline (style="width: X%") and must sum to ≤ 100%; remaining
+// space exposes the track bg (the "unused" portion).
+//
+// === Radius ==============================================================
+// .meter__track opts out of --st-radius. Pill matches progress + badge +
+// slider (V3.md §3.4). Override --meter-radius for a one-off square
+// track.
+
+.meter {
+  // === Geometry ========================================================
+  --meter-height:                       calc(0.5rem * var(--st-density));
+  --meter-radius:                       9999px;
+  --meter-margin-bottom:                0;
+  --meter-header-gap:                   0.25rem;
+  --meter-segment-gap:                  1px;
+
+  // === Track ===========================================================
+  --meter-bg:                           var(--st-neutral);
+
+  // === Bar =============================================================
+  --meter-bar-bg:                       var(--st-primary);
+
+  // === Caption =========================================================
+  --meter-label-font-size:              0.875rem;
+  --meter-label-font-weight:            500;
+  --meter-label-color:                  var(--st-foreground);
+  --meter-value-color:                  var(--st-muted-foreground);
+
+  // === Legend ==========================================================
+  --meter-legend-row-gap:               0.5rem;
+  --meter-legend-item-gap:              0.875rem;
+  --meter-legend-dot-size:              0.5rem;
+  --meter-legend-font-size:             0.75rem;
+  --meter-legend-color:                 var(--st-muted-foreground);
+
+  // Grid: label left, value right, track spanning both. Legend (when
+  // present) tacks onto a third row that also spans the grid.
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 1rem;
+  row-gap: var(--meter-header-gap);
+  margin-bottom: var(--meter-margin-bottom);
+}
+
+// === Caption =============================================================
+
+.meter__label {
+  grid-column: 1;
+  font-size: var(--meter-label-font-size);
+  font-weight: var(--meter-label-font-weight);
+  color: var(--meter-label-color);
+  line-height: 1.4;
+}
+
+.meter__value {
+  grid-column: 2;
+  font-size: var(--meter-label-font-size);
+  color: var(--meter-value-color);
+  line-height: 1.4;
+}
+
+// === Track ===============================================================
+// Flex row so multiple bars sit side by side. --meter-segment-gap puts a
+// small visible gap between adjacent bars; gap doesn't apply at the
+// edges, so a single-bar meter looks identical to the progress track.
+
+.meter__track {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: var(--meter-segment-gap);
+  height: var(--meter-height);
+  background-color: var(--meter-bg);
+  border-radius: var(--meter-radius);
+  overflow: hidden;
+}
+
+// === Bar =================================================================
+// Sized by inline `style="width: X%"`. Default width 0 so a bar authored
+// without an inline width sits invisible rather than filling the track
+// (flex item with width: auto would grow to fit content; with width: 0
+// it stays out of the way).
+
+.meter__bar {
+  display: block;
+  width: 0;
+  height: 100%;
+  background-color: var(--meter-bar-bg);
+  flex-shrink: 0;
+}
+
+// === Intent modifiers ====================================================
+
+.meter__bar--primary { --meter-bar-bg: var(--st-primary); }
+.meter__bar--success { --meter-bar-bg: var(--st-success); }
+.meter__bar--warning { --meter-bar-bg: var(--st-warning); }
+.meter__bar--danger  { --meter-bar-bg: var(--st-danger); }
+.meter__bar--info    { --meter-bar-bg: var(--st-info); }
+
+// === Legend ==============================================================
+// Optional caption row beneath the track. Each item carries a dot that
+// reuses --meter-bar-bg, so an inline override on the item (or an intent
+// modifier on the dot) styles both at once.
+
+.meter__legend {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--meter-legend-item-gap);
+  row-gap: 0.25rem;
+  margin-top: var(--meter-legend-row-gap);
+  font-size: var(--meter-legend-font-size);
+  color: var(--meter-legend-color);
+  line-height: 1.4;
+}
+
+.meter__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.meter__legend-dot {
+  display: inline-block;
+  width: var(--meter-legend-dot-size);
+  height: var(--meter-legend-dot-size);
+  background-color: var(--meter-bar-bg);
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
+.meter__legend-dot--primary { --meter-bar-bg: var(--st-primary); }
+.meter__legend-dot--success { --meter-bar-bg: var(--st-success); }
+.meter__legend-dot--warning { --meter-bar-bg: var(--st-warning); }
+.meter__legend-dot--danger  { --meter-bar-bg: var(--st-danger); }
+.meter__legend-dot--info    { --meter-bar-bg: var(--st-info); }
+
+// === Size modifiers ======================================================
+// Retune --meter-height in modifier scope. Matches the progress cadence
+// (4 / 8 / 16 at default density) and the broader sm / default / lg
+// family across the component set.
+
+.meter--sm { --meter-height: calc(0.25rem * var(--st-density)); } //  4
+.meter--lg { --meter-height: calc(1rem    * var(--st-density)); } // 16

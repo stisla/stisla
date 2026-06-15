@@ -1,0 +1,63 @@
+// Stisla v3 — avatar group.
+//
+// A row of overlapping .avatar children that reads as a cluster — team
+// row, attendee list, recent-viewers stack. Last avatar can carry a
+// "+N" label to summarize overflow:
+//
+//   <div class="avatar-group">
+//     <span class="avatar"><img class="avatar__image" src="..." alt=""></span>
+//     <span class="avatar"><img class="avatar__image" src="..." alt=""></span>
+//     <span class="avatar"><img class="avatar__image" src="..." alt=""></span>
+//     <span class="avatar avatar-group__more">+2</span>
+//   </div>
+//
+// Members keep their own paint. The group owns the overlap (negative
+// inline margin) and turns the per-avatar ring on so adjacent shapes
+// read as separate objects. Hovered / focused member lifts so its rim +
+// ring paint over its right-hand neighbour — same z-index ladder as
+// .btn-group.
+//
+// .avatar-group__more is a plain .avatar with neutral surface paint —
+// no separate component, just a content slot. Style overrides go on the
+// element directly.
+
+.avatar-group {
+  --avatar-group-overlap:     0.625rem;              // 10 — half of md size
+  --avatar-group-ring-width:  2px;
+  --avatar-group-ring-color:  var(--st-background);
+
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+// Turn the ring on for every member so adjacent shapes are visually
+// separated. Members declare --avatar-ring-* slots; the group just
+// publishes values into them.
+.avatar-group > .avatar {
+  --avatar-ring-width: var(--avatar-group-ring-width);
+  --avatar-ring-color: var(--avatar-group-ring-color);
+  position: relative;
+}
+
+// Negative inline margin collapses each member onto its left neighbour.
+// Density-scaled so a compact / comfortable theme retunes the overlap
+// together with the avatar size.
+.avatar-group > .avatar + .avatar {
+  margin-inline-start: calc(-1 * var(--avatar-group-overlap) * var(--st-density));
+}
+
+// Stacking order matches .btn-group — hovered / focused member rises so
+// its ring paints over the following neighbour. Without this the right
+// neighbour's edge bisects the hovered ring at the overlap.
+.avatar-group > .avatar:hover         { z-index: 1; }
+.avatar-group > .avatar:focus-visible { z-index: 2; }
+
+// === Overflow tail ====================================================
+// Plain .avatar member; this modifier just retunes its paint to read as
+// "more" rather than a missing portrait. Sits at the end of the row by
+// convention — the negative-margin selector above still applies, so the
+// tail lands on top of the last portrait.
+.avatar-group__more {
+  --avatar-bg:    var(--st-surface-3);
+  --avatar-color: var(--st-muted-foreground);
+}

@@ -232,7 +232,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  padding-right: calc(var(--sidebar-button-padding-x) - 0.25rem);
+  padding-inline-end: calc(var(--sidebar-button-padding-x) - 0.25rem);
   color: var(--sidebar-group-title-color);
 }
 
@@ -337,13 +337,13 @@
 // carve-out triggered only when an action is present.
 
 .sidebar__item:has(> .sidebar__item-action) > .sidebar__button {
-  padding-right: calc(var(--sidebar-item-action-size) + 0.25rem);
+  padding-inline-end: calc(var(--sidebar-item-action-size) + 0.25rem);
 }
 
 .sidebar__item-action {
   position: absolute;
   top: 50%;
-  right: var(--sidebar-button-padding-x);
+  inset-inline-end: var(--sidebar-button-padding-x);
   transform: translateY(-50%);
   display: inline-flex;
   align-items: center;
@@ -393,9 +393,9 @@
 // width, centering the line on the icon column.
 
 .sidebar__submenu {
-  margin-left: var(--sidebar-submenu-margin-start);
-  padding-left: var(--sidebar-submenu-padding-start);
-  border-left: 1px solid var(--sidebar-submenu-border-color);
+  margin-inline-start: var(--sidebar-submenu-margin-start);
+  padding-inline-start: var(--sidebar-submenu-padding-start);
+  border-inline-start: 1px solid var(--sidebar-submenu-border-color);
 }
 
 .sidebar__item[data-state="closed"] > .sidebar__submenu {
@@ -411,16 +411,17 @@
 
 // Submenu caret — opt-in indicator placed inside a submenu-toggle button.
 // Empty <span class="sidebar__caret"></span>; CSS draws the chevron via a
-// mask so the glyph follows --sidebar-button-icon-color and stays crisp at
-// any size. Defaults to the right edge via margin-left: auto; override
-// with margin or a wrapper if you want it elsewhere in the row. Rotates
-// 180° when the parent button reports aria-expanded="true".
+// mask so the glyph follows --sidebar-button-icon-color and stays crisp
+// at any size. Defaults to the inline-end edge via margin-inline-start:
+// auto; override with margin or a wrapper if you want it elsewhere in
+// the row. Rotates 180° when the parent button reports
+// aria-expanded="true".
 .sidebar__caret {
   display: inline-block;
   flex-shrink: 0;
   width: var(--sidebar-button-icon-size);
   height: var(--sidebar-button-icon-size);
-  margin-left: auto;
+  margin-inline-start: auto;
   background-color: var(--sidebar-button-icon-color);
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")
     no-repeat center / contain;

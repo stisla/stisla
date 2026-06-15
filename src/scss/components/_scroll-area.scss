@@ -1,0 +1,64 @@
+// Stisla v3 — scroll-area. Vanilla-optional per SPEC.md §10.
+//
+// Anatomy:
+//   .scroll-area[data-stisla-scroll-area][data-state="ready"]
+//     (your content)
+//
+// OverlayScrollbars instruments the root: it inserts an .os-viewport
+// wrapper around the content and absolutely-positioned .os-scrollbar
+// nodes for each axis. Its own CSS paints the bars from a --os-* var
+// surface that defaults every dimension and color to 0 / `none`, so a
+// fresh plugin instance is invisible until those vars get values. We
+// keep our public knobs in the .scroll-area namespace and forward them
+// down to the plugin vars, so consumers override one tier and the paint
+// rules below don't have to mention .os-* selectors.
+
+.scroll-area {
+  --scroll-area-radius: var(--st-radius);
+
+  --scroll-area-bar-size: 0.625rem;
+  --scroll-area-bar-padding: 0.125rem;
+  --scroll-area-bar-radius: 999px;
+  --scroll-area-handle-min-size: 1.5rem;
+
+  --scroll-area-track-bg: transparent;
+  --scroll-area-handle-bg:        color-mix(in oklch, var(--st-foreground) 25%, transparent);
+  --scroll-area-handle-bg-hover:  color-mix(in oklch, var(--st-foreground) 45%, transparent);
+  --scroll-area-handle-bg-active: color-mix(in oklch, var(--st-foreground) 65%, transparent);
+
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--scroll-area-radius);
+}
+
+// === Forward our tokens to OverlayScrollbars' var surface ============
+// The plugin's bundled CSS resets every --os-* var to 0 / `none` on
+// `.os-scrollbar`, which blocks inheritance from the host. The JS class
+// injects the plugin's stylesheet inside `@layer foundation` so this
+// rule (in @layer components) outranks the reset; specificity then
+// resolves cleanly. See scroll-area.js for the injection.
+.scroll-area .os-scrollbar {
+  --os-size: var(--scroll-area-bar-size);
+  --os-padding-perpendicular: var(--scroll-area-bar-padding);
+  --os-padding-axis: var(--scroll-area-bar-padding);
+  --os-track-bg: var(--scroll-area-track-bg);
+  --os-handle-bg: var(--scroll-area-handle-bg);
+  --os-handle-bg-hover: var(--scroll-area-handle-bg-hover);
+  --os-handle-bg-active: var(--scroll-area-handle-bg-active);
+  --os-handle-border-radius: var(--scroll-area-bar-radius);
+  --os-handle-min-size: var(--scroll-area-handle-min-size);
+}
+
+.scroll-area--bordered {
+  border: 1px solid var(--st-border);
+}
+
+// The plugin transitions the handle on its own (opacity, background-color,
+// height) but doesn't gate the transition behind prefers-reduced-motion.
+// Zero it ourselves so the cross-system reduced-motion commitment holds.
+@media (prefers-reduced-motion: reduce) {
+  .scroll-area .os-scrollbar-handle,
+  .scroll-area .os-scrollbar {
+    transition: none;
+  }
+}

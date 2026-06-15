@@ -108,9 +108,10 @@
 }
 
 // Edge-cell bump. Lines the first/last column up with .card's 20px gutter
-// so a table drops into a .card flush.
-.table > :not(caption) > * > :first-child { padding-left:  var(--table-edge-padding); }
-.table > :not(caption) > * > :last-child  { padding-right: var(--table-edge-padding); }
+// so a table drops into a .card flush. Logical inset-start/end so dir="rtl"
+// keeps the heavier padding on the visual edges of the row.
+.table > :not(caption) > * > :first-child { padding-inline-start: var(--table-edge-padding); }
+.table > :not(caption) > * > :last-child  { padding-inline-end:   var(--table-edge-padding); }
 // stylelint-enable selector-max-universal
 
 .table > thead { vertical-align: bottom; }
@@ -205,8 +206,8 @@
 .table--sm > :not(caption) > * > * {
   padding: var(--table-cell-padding-sm);
 }
-.table--sm > :not(caption) > * > :first-child { padding-left:  var(--table-edge-padding); }
-.table--sm > :not(caption) > * > :last-child  { padding-right: var(--table-edge-padding); }
+.table--sm > :not(caption) > * > :first-child { padding-inline-start: var(--table-edge-padding); }
+.table--sm > :not(caption) > * > :last-child  { padding-inline-end:   var(--table-edge-padding); }
 
 // === Align middle ===
 // Opt cells onto vertical-align: middle. Useful when rows mix multi-line

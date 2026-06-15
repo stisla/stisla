@@ -83,7 +83,7 @@
   // Preflight already zeroes padding/margin/list-style globally; this
   // re-asserts in case a consumer wraps the row in .prose or any scope
   // that re-adds list defaults.
-  padding-left: 0;
+  padding-inline-start: 0;
   list-style: none;
 }
 

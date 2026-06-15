@@ -45,9 +45,8 @@ $gutters: (
   --st-grid-gutter-y: 0;
   display: flex;
   flex-wrap: wrap;
-  margin-top: calc(-1 * var(--st-grid-gutter-y));
-  margin-right: calc(-0.5 * var(--st-grid-gutter-x));
-  margin-left: calc(-0.5 * var(--st-grid-gutter-x));
+  margin-block-start: calc(-1 * var(--st-grid-gutter-y));
+  margin-inline: calc(-0.5 * var(--st-grid-gutter-x));
 }
 
 @mixin make-col-ready() {
@@ -55,9 +54,8 @@ $gutters: (
   flex-shrink: 0;
   width: 100%;
   max-width: 100%;
-  padding-right: calc(var(--st-grid-gutter-x) * 0.5);
-  padding-left: calc(var(--st-grid-gutter-x) * 0.5);
-  margin-top: var(--st-grid-gutter-y);
+  padding-inline: calc(var(--st-grid-gutter-x) * 0.5);
+  margin-block-start: var(--st-grid-gutter-y);
 }
 
 @mixin make-col($size: false, $columns: $grid-columns) {
@@ -77,7 +75,7 @@ $gutters: (
 
 @mixin make-col-offset($size, $columns: $grid-columns) {
   $num: math.div($size, $columns);
-  margin-left: if($num == 0, 0, math.percentage($num));
+  margin-inline-start: if($num == 0, 0, math.percentage($num));
 }
 
 @mixin row-cols($count) {

@@ -19,32 +19,56 @@
 // a link near the bottom. Persist scrollTop to sessionStorage on click and
 // rehydrate on load. If the active item isn't visible after restore (or no
 // saved value yet — fresh tab, deep-linked), scroll it into view centered.
-// The actual scroller is .sidebar__content (the framework's middle flex
-// slot with overflow: hidden auto), not #site-sidebar itself.
+//
+// .sidebar__content is wired as a Stisla.ScrollArea here; OverlayScrollbars
+// inserts an .os-viewport child that owns the real scrollTop. Drive everything
+// off that viewport — the host's scrollTop is pinned at 0.
 (function wireSidebarScrollRestore() {
   const sidebar = document.getElementById("site-sidebar");
-  const scroller = sidebar?.querySelector(".sidebar__content");
-  if (!scroller) return;
+  const host = sidebar?.querySelector(".sidebar__content");
+  if (!host) return;
   const KEY = "stisla-sidebar-scroll";
 
-  const saved = sessionStorage.getItem(KEY);
-  if (saved !== null) scroller.scrollTop = parseInt(saved, 10) || 0;
+  const wire = (viewport) => {
+    const saved = sessionStorage.getItem(KEY);
+    if (saved !== null) viewport.scrollTop = parseInt(saved, 10) || 0;
 
-  const active = scroller.querySelector('a.sidebar__button[aria-current="page"]');
-  if (active) {
-    const linkBox = active.getBoundingClientRect();
-    const box = scroller.getBoundingClientRect();
-    if (linkBox.top < box.top || linkBox.bottom > box.bottom) {
-      const offset = linkBox.top - box.top + scroller.scrollTop;
-      scroller.scrollTop = offset - scroller.clientHeight / 2 + active.clientHeight / 2;
+    const active = host.querySelector('a.sidebar__button[aria-current="page"]');
+    if (active) {
+      const linkBox = active.getBoundingClientRect();
+      const box = viewport.getBoundingClientRect();
+      if (linkBox.top < box.top || linkBox.bottom > box.bottom) {
+        const offset = linkBox.top - box.top + viewport.scrollTop;
+        viewport.scrollTop = offset - viewport.clientHeight / 2 + active.clientHeight / 2;
+      }
     }
+
+    sidebar.addEventListener("click", (e) => {
+      if (e.target.closest("a.sidebar__button")) {
+        sessionStorage.setItem(KEY, String(viewport.scrollTop));
+      }
+    });
+  };
+
+  const viewportOf = () =>
+    window.Stisla?.ScrollArea?.getOrCreate(host)?.instance()?.elements()?.viewport;
+
+  // If the component already initialized (scroll-area sets data-state="ready"
+  // synchronously at the end of construction), wire immediately; otherwise
+  // wait for the bubbled ready event.
+  if (host.dataset.state === "ready") {
+    const viewport = viewportOf();
+    if (viewport) wire(viewport);
+  } else {
+    host.addEventListener(
+      "stisla:scroll-area:ready",
+      () => {
+        const viewport = viewportOf();
+        if (viewport) wire(viewport);
+      },
+      { once: true },
+    );
   }
-
-  sidebar.addEventListener("click", (e) => {
-    if (e.target.closest("a.sidebar__button")) {
-      sessionStorage.setItem(KEY, String(scroller.scrollTop));
-    }
-  });
 })();
 
 // data-theme-toggle — flip [data-theme] on <html>, persist to localStorage.

@@ -104,29 +104,41 @@
 
 // === Mobile drawer state ================================================
 // Below the mobile breakpoint, the sidebar leaves the flex flow, sits
-// fixed against the viewport's left edge, and slides in / out on the
-// .is-sidebar-visible flip. A semi-transparent backdrop covers the
-// rest of the shell while open.
+// fixed against the viewport's inline-start edge, and slides in / out
+// on the .is-sidebar-visible flip. A semi-transparent backdrop covers
+// the rest of the shell while open. In dir="rtl", the inline-start
+// edge is the right edge, so the panel anchors and slides from there;
+// the [dir="rtl"] block below flips the transform sign accordingly
+// (translateX is the one physical CSS bit that can't be expressed
+// logically — SPEC §15).
 @include media-down(lg) {
   .app-shell > .sidebar,
   .app-shell__body > .sidebar {
     position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
+    inset-block: 0;
+    inset-inline-start: 0;
     z-index: var(--app-shell-sidebar-z);
     // Floating drawer needs an opaque surface (the sidebar component's own
     // bg defaults to transparent for the desktop inline-in-shell layout).
     background-color: var(--app-shell-sidebar-mobile-bg);
     transform: translateX(-100%);
-    // Shadow cast right-ward — lives only on the visible state so it
-    // doesn't peek into the viewport while the panel is translated
+    // Shadow cast inline-end-ward — lives only on the visible state so
+    // it doesn't peek into the viewport while the panel is translated
     // off-screen (the shadow's blur radius would otherwise paint a faint
-    // halo at left: 0). Fades in with the slide via the transition list.
+    // halo at the anchored edge). Fades in with the slide via the
+    // transition list.
     transition:
       transform  var(--app-shell-transition-duration) ease,
       box-shadow var(--app-shell-transition-duration) ease,
       width      var(--app-shell-transition-duration) ease;
+  }
+
+  // RTL flip — the panel anchors at the visual right edge in dir="rtl",
+  // so the off-screen position is +100% instead of −100%. One narrow
+  // physical override per SPEC §15.
+  [dir="rtl"] .app-shell > .sidebar,
+  [dir="rtl"] .app-shell__body > .sidebar {
+    transform: translateX(100%);
   }
 
   .app-shell.is-sidebar-visible > .sidebar,

@@ -210,6 +210,21 @@ visibly worse in sRGB.
 always under the block (`.card__header`, not `.header`). Variants use
 `--modifier`. Multiple modifiers compose flat on the root, not nested.
 
+**Scope: BEM governs components only.** Files under `scss/components/`
+are strict BEM. Utilities (`scss/utilities/`) and the grid + containers
+in `scss/foundation/` follow flat hyphenated naming with an optional
+responsive infix:
+
+- Utilities — `.d-flex`, `.text-end`, `.gap-3`, `.mb-md-4`, `.fw-semibold`.
+- Grid — `.col-md-6`, `.container-fluid`, `.row-cols-3`, `.offset-md-2`,
+  `.g-md-3`, `.gx-0`.
+
+Atomic helpers stay BS5-conventional. Forcing them into BEM
+(`.text--end-md`, `.col--md-6`, `.d--flex`) breaks every consumer's
+muscle memory from BS5 / Tailwind / Tachyons and models nothing the
+flat form doesn't already model. Treat utilities + grid as a separate
+naming family that the BEM rule above does not constrain.
+
 **Runtime state: split by origin.**
 
 - `[data-state="open|closed|active"]`, `[data-highlighted]`,
@@ -360,7 +375,7 @@ is per-implementation (§10) and lives in each impl's docs, not here.
 
 - **Action.** btn, btn-group, toggle, toggle-group, dropdown, link
 - **Display.** card, badge, icon-box, alert, kbd, avatar, preview-card
-- **Status.** progress, spinner, placeholders, toast, tooltip
+- **Status.** progress, meter, spinner, placeholders, toast, tooltip
 - **Form.** input, select, textarea, checkbox, radio, switch, slider,
   field, input-group, otp, custom-select, autocomplete,
   combobox, command, date-picker, color-picker, file-upload
@@ -402,8 +417,9 @@ UI / bits-ui doing it for them).
   rings. Components do not style `:focus` (mouse + keyboard) since that
   shows a ring on click — only `:focus-visible`.
 
-Out of scope for the spec at 3.0: RTL, print stylesheet, screen-reader
-behaviour in legacy AT (NVDA + IE, etc.).
+Out of scope for the spec at 3.0: print stylesheet, screen-reader
+behaviour in legacy AT (NVDA + IE, etc.). RTL is handled at the CSS
+layer via logical properties (§15); no implementation work required.
 
 ## 13. Dark mode
 
@@ -430,9 +446,44 @@ spec relies on — OKLCH, `color-mix`, `:has()`, `@layer`, container
 queries, `inert`, `100dvh`, `env(safe-area-inset-*)` — are all
 well-supported in those versions.
 
-## 15. Out of scope for the spec at 3.0
+## 15. Direction-agnostic CSS
 
-- RTL — not required of implementations
+Stisla CSS is authored with CSS logical properties throughout. Components
+use `padding-inline`, `margin-inline-start`, `inset-inline-end`,
+`border-inline-start`, `text-align: start` rather than their physical
+counterparts (`padding-left`, `right: 0`, `border-left`, `text-align:
+left`). The grid and containers in `foundation/` follow the same rule
+(`padding-inline`, `margin-inline: auto`, `margin-inline-start` on
+`.offset-*`).
+
+Consequence: applying `dir="rtl"` to any region — the `<html>` root, a
+single sidebar, one dialog — flips the layout correctly without RTL
+override stylesheets, build-time `rtlcss` postprocessing, or
+component-level `[dir="rtl"]` selectors in the common path.
+
+Narrow, principled exceptions:
+
+- **Overlay placement.** Popover, tooltip, and dropdown arrows are
+  rendered off the `[data-placement]` attribute set by Floating UI.
+  Placement is geometric, not directional — a popover anchored to the
+  right of its trigger has its arrow on the left edge regardless of
+  writing direction. Selectors driven by `[data-placement]` use
+  physical `left` / `right` / `border-left` / `border-right`
+  deliberately.
+
+- **Slide-off-screen transforms.** `transform: translateX(-100%)` is a
+  physical translation; CSS has no logical-aware equivalent. Components
+  that slide off-screen (drawer, mobile app-shell sidebar) author the
+  LTR transform inline and a single `[dir="rtl"]` block flips the sign.
+  Keep these blocks to the file owning the transform, not in a global
+  RTL override sheet.
+
+Sass mixins (`media-up`, `media-down`, `media-between`, `media-only`)
+and the breakpoint table are direction-agnostic — viewport size is
+independent of writing direction.
+
+## 16. Out of scope for the spec at 3.0
+
 - Print stylesheet — not required
 - v2 originals (`.metric`, `.invoice-summary`, etc.) — those become
   recipes, not components
@@ -443,7 +494,7 @@ well-supported in those versions.
   by the per-component contracts; a formal test suite is a later
   artefact
 
-## 16. Where to look next
+## 17. Where to look next
 
 - **`spec/components/<name>.md`** — the per-component contract. Anatomy,
   parts, states, keyboard interactions, a11y, tokens.

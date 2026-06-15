@@ -1,0 +1,208 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Scroll area · Stisla{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Scroll area</h1>
+    <p class="lead">An overflowed region with a custom scrollbar that overlays without taking layout space.</p>
+  </header>
+
+  <section>
+    <h2>Installation</h2>
+    <p>Skip this step if you're on the <code>stisla-full</code> bundle, it already ships with Scroll area. On the core <code>stisla</code> bundle, add it alongside as a script tag or via your package manager.</p>
+
+    <div class="tabs mt-4" data-stisla-tabs>
+      <div class="tabs__list">
+        <button class="tabs__trigger" data-value="compiled">Compiled</button>
+        <button class="tabs__trigger" data-value="manual">Manual</button>
+      </div>
+
+      <div class="tabs__panel" data-value="compiled">
+        <p>Add the component's stylesheet and script next to the ones loading the core bundle.</p>
+        {% call ui.code(lang='html') %}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/vanilla@3/dist/components/scroll-area.css">
+        <script type="module" src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@3/dist/components/scroll-area.js"></script>
+        {% endcall %}
+        <p>The script auto-registers on the global <code>Stisla</code> instance, so no extra wiring is needed.</p>
+      </div>
+
+      <div class="tabs__panel" data-value="manual">
+        <p>Install OverlayScrollbars:</p>
+        {% call ui.code(lang='bash') %}
+        npm install overlayscrollbars
+        {% endcall %}
+        <p>Import the CSS + class, register it, then call <code>Stisla.init()</code>:</p>
+        {% call ui.code(lang='js') %}
+        import '@stisla/vanilla/dist/components/scroll-area.css';
+        import { Stisla } from '@stisla/vanilla';
+        import { ScrollArea } from '@stisla/vanilla/components/scroll-area';
+
+        Stisla.register('scroll-area', ScrollArea);
+        Stisla.init();
+        {% endcall %}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Basic</h2>
+    <p>Drop <code>.scroll-area</code> on any bounded element and tag it with <code>data-stisla-scroll-area</code>. The native scrollbar disappears; the overlay bar fades in on hover and while scrolling.</p>
+    {% call ui.demo() %}
+    <div class="scroll-area scroll-area--bordered" data-stisla-scroll-area style="height: 16rem;">
+      <div style="padding: 1rem;">
+        <h3 class="m-0 mb-2 fs-4 fw-semibold">Release notes</h3>
+        <p>The new token system retunes every component from a single root override. Brand color, radius, density, shadow, dark mode. One file, no per-component tweaks. The cascade picks the change up wherever the override lands.</p>
+        <p>State derivation moved off Sass color math and onto runtime <code>color-mix(in oklch, ...)</code>. Hover and active percentages live next to the component, where reviewers can see them.</p>
+        <p>BEM stays for static structure. Runtime state splits two ways. <code>[data-state]</code> for concepts that mainstream primitive libraries also surface, <code>.is-*</code> for everything else. Same CSS, every implementation.</p>
+        <p>Forms got the long-promised reset. Inputs, selects, textareas and switches all read from one shared field-row partial. The <code>.field</code> family wraps label, control, help and error in a single block with consistent spacing.</p>
+        <p>Sidebar collapses to icon-only with a single class flip. App-shell handles the full layout: pinned navbar, scrolling sidebar, content area that respects safe-area insets on mobile Safari.</p>
+        <p>Dialog, drawer, dropdown and popover share the same focus-trap and scroll-lock plumbing. Backdrops are <code>inert</code> so screen readers skip them. Reduced-motion users get instant open and close, no animation.</p>
+        <p>Toast lives at the top level. Stack from any corner. Auto-dismiss with a hover pause, swipe to dismiss on touch, programmatic <code>toast()</code> helper for one-liners from anywhere in your app.</p>
+        <p>Carousel runs on Embla. Slides, controls, indicators, captions, autoplay. Optional bundle, so dashboards that don't need it don't pay for it.</p>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Horizontal</h2>
+    <p>Set <code>overflow-y</code> to <code>hidden</code> for a track that scrolls along the x axis only. The card row stays one row at any width.</p>
+    {% call ui.demo() %}
+    <div class="scroll-area scroll-area--bordered" data-stisla-scroll-area data-stisla-scroll-area-overflow-y="hidden">
+      <div style="display: flex; gap: 0.75rem; padding: 1rem; min-width: max-content;">
+        <div class="card m-0" style="min-width: 14rem;"><div class="card__body"><strong>Acme Inc</strong><div class="text-muted-foreground fs-2">Active project</div></div></div>
+        <div class="card m-0" style="min-width: 14rem;"><div class="card__body"><strong>Helix Health</strong><div class="text-muted-foreground fs-2">Active project</div></div></div>
+        <div class="card m-0" style="min-width: 14rem;"><div class="card__body"><strong>Northwind Labs</strong><div class="text-muted-foreground fs-2">Active project</div></div></div>
+        <div class="card m-0" style="min-width: 14rem;"><div class="card__body"><strong>Forge &amp; Tide</strong><div class="text-muted-foreground fs-2">Paused</div></div></div>
+        <div class="card m-0" style="min-width: 14rem;"><div class="card__body"><strong>Quill Press</strong><div class="text-muted-foreground fs-2">Active project</div></div></div>
+        <div class="card m-0" style="min-width: 14rem;"><div class="card__body"><strong>Mariner Logistics</strong><div class="text-muted-foreground fs-2">Archived</div></div></div>
+        <div class="card m-0" style="min-width: 14rem;"><div class="card__body"><strong>Oryx Systems</strong><div class="text-muted-foreground fs-2">Active project</div></div></div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Both axes</h2>
+    <p>A bounded box with content larger than its viewport scrolls in both directions. The two bars share the same skin.</p>
+    {% call ui.demo() %}
+    <div class="scroll-area scroll-area--bordered" data-stisla-scroll-area style="height: 18rem;">
+      <table class="table" style="min-width: 48rem; margin: 0;">
+        <thead>
+          <tr><th>Project</th><th>Owner</th><th>Stage</th><th>Region</th><th>Updated</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Acme Inc</td><td>Maya Tanaka</td><td>Discovery</td><td>APAC</td><td>2 days ago</td><td><span class="badge badge--success">Active</span></td></tr>
+          <tr><td>Helix Health</td><td>Priya Reddy</td><td>Implementation</td><td>EMEA</td><td>4 hours ago</td><td><span class="badge badge--success">Active</span></td></tr>
+          <tr><td>Northwind Labs</td><td>Diego Romero</td><td>Discovery</td><td>AMER</td><td>1 week ago</td><td><span class="badge badge--warning">Stalled</span></td></tr>
+          <tr><td>Forge &amp; Tide</td><td>Lin Wei</td><td>Onboarding</td><td>APAC</td><td>3 weeks ago</td><td><span class="badge">Paused</span></td></tr>
+          <tr><td>Quill Press</td><td>Rafiq Ahmad</td><td>Implementation</td><td>EMEA</td><td>Yesterday</td><td><span class="badge badge--success">Active</span></td></tr>
+          <tr><td>Mariner Logistics</td><td>Sofia Costa</td><td>Closeout</td><td>AMER</td><td>2 months ago</td><td><span class="badge">Archived</span></td></tr>
+          <tr><td>Oryx Systems</td><td>Ida Pham</td><td>Discovery</td><td>EMEA</td><td>5 hours ago</td><td><span class="badge badge--success">Active</span></td></tr>
+          <tr><td>Atlas &amp; Vine</td><td>Theo Becker</td><td>Implementation</td><td>AMER</td><td>1 day ago</td><td><span class="badge badge--success">Active</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Always visible</h2>
+    <p>Pass <code>auto-hide="never"</code> for a bar that stays painted. Useful when the affordance is more important than the chrome budget.</p>
+    {% call ui.demo() %}
+    <div class="scroll-area scroll-area--bordered" data-stisla-scroll-area data-stisla-scroll-area-auto-hide="never" style="height: 14rem;">
+      <div style="padding: 1rem;">
+        <p>A persistent scrollbar reads more like a native desktop pattern, and pairs well with long content that benefits from a visible position indicator at rest.</p>
+        <p>Trade-off is a permanent chrome stripe along the edge, even when the content has nothing to scroll past the fold. Pick based on the surface.</p>
+        <p>The cascade still respects per-axis overrides, so a track that hides on x and stays on y is one extra attribute.</p>
+        <p>Reduced-motion users skip the fade entirely either way, since the transition runs through the same prefers-reduced-motion gate as the rest of the system.</p>
+        <p>The handle still grows and shrinks with the viewport-to-content ratio, so the position read stays honest as content updates.</p>
+        <p>Click-to-track jumps the handle to the position you clicked. Hold a click on the track to keep paging in that direction.</p>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Tinted</h2>
+    <p>Override the handle vars in a parent scope to retune the bar paint to the surface's accent. The cascade scopes the change.</p>
+    {% call ui.demo() %}
+    <div class="scroll-area scroll-area--bordered" data-stisla-scroll-area data-stisla-scroll-area-auto-hide="never"
+         style="height: 14rem;
+                --scroll-area-bar-size: 0.875rem;
+                --scroll-area-handle-bg: color-mix(in oklch, var(--st-primary) 35%, transparent);
+                --scroll-area-handle-bg-hover: color-mix(in oklch, var(--st-primary) 55%, transparent);
+                --scroll-area-handle-bg-active: var(--st-primary);">
+      <div style="padding: 1rem;">
+        <p>The handle paints from a primary mix at rest, deepens on hover, and lands on the solid intent on active. The track sits transparent so the parent surface reads through.</p>
+        <p>Same pattern works for success, danger, info, or any custom token a parent scope publishes. Set the three handle vars once and every scroll-area inside the scope picks the new tone up.</p>
+        <p>The bar width here is bumped a notch to make the color read at a glance. Defaults stay narrow so the chrome reads as plumbing, not decoration.</p>
+        <p>Density still applies through the surrounding scale, so a compact view shrinks the surface around the bar without retuning the bar itself.</p>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>Override the <code>--scroll-area-*</code> vars on the element, in a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
+
+    <h3>Surface</h3>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>--scroll-area-radius</code></td><td><code>var(--st-radius)</code></td><td>Root corner radius. The clip prevents content from bleeding past rounded corners.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Bar geometry</h3>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>--scroll-area-bar-size</code></td><td><code>0.625rem</code></td><td>Handle thickness. Track grows by the padding on either side.</td></tr>
+          <tr><td><code>--scroll-area-bar-padding</code></td><td><code>0.125rem</code></td><td>Gap between handle and viewport edge.</td></tr>
+          <tr><td><code>--scroll-area-bar-radius</code></td><td><code>999px</code></td><td>Track and handle corner radius. Pill is intentional.</td></tr>
+          <tr><td><code>--scroll-area-handle-min-size</code></td><td><code>1.5rem</code></td><td>Floor on handle length so the affordance stays grabbable even with long content.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Paint</h3>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>--scroll-area-track-bg</code></td><td><code>transparent</code></td><td>Track fill. Default lets the parent surface read through.</td></tr>
+          <tr><td><code>--scroll-area-handle-bg</code></td><td>foreground mix 25%</td><td>Handle rest fill.</td></tr>
+          <tr><td><code>--scroll-area-handle-bg-hover</code></td><td>foreground mix 45%</td><td>Handle hover fill.</td></tr>
+          <tr><td><code>--scroll-area-handle-bg-active</code></td><td>foreground mix 65%</td><td>Handle dragging fill.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Motion</h3>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>--scroll-area-transition-duration</code></td><td><code>0.15s</code></td><td>Handle background transition. Reduced motion zeros it.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><code>.scroll-area--bordered</code> adds a one-pixel border in <code>--st-border</code> for surfaces that need a frame around the scrolling region.</p>
+  </section>
+{% endblock %}

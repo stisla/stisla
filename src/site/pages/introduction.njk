@@ -21,20 +21,20 @@
   <section>
     <h2>What Stisla isn&rsquo;t</h2>
     <p>It isn&rsquo;t a utility-class library. Stisla ships real components with BEM classes like <code>.btn</code>, <code>.btn--primary</code>, <code>.card</code>, and <code>.card__header</code>. When you read the HTML, you see what the page does instead of a long list of style classes.</p>
-    <p>It isn&rsquo;t a wrapper around Bootstrap. Stisla v2 was Bootstrap 4, but v3 dropped Bootstrap and rebuilt every component from scratch. The only forked code is the grid and breakpoint mixins, both credited under <code>LICENSES/</code>. The rest is hand-written.</p>
+    <p>It isn&rsquo;t a wrapper around Bootstrap. Stisla v2 was Bootstrap 4. The current release dropped Bootstrap and rebuilt every component from scratch. The only forked code is the grid and breakpoint mixins, both credited under <code>LICENSES/</code>. The rest is hand-written.</p>
     <p>And it doesn&rsquo;t come in different flavors or themes. Stisla has one spec. Density, radius, and brand are knobs you turn on top of that one spec.</p>
   </section>
 
   <section>
     <h2>Why this approach</h2>
     <p>Two ideas shape the rest of the system. Stisla is spec-first and runtime-first.</p>
-    <p><strong>Spec-first</strong> means every implementation should feel like the same product. A button in the React port and a button in the vanilla port agree on what they mean. They don&rsquo;t just happen to look alike. The only honest way to keep that true is to write the spec before any of the implementations. v3 is one implementation. Future ports fill the same spec.</p>
+    <p><strong>Spec-first</strong> means every implementation should feel like the same product. A button in the React port and a button in the vanilla port agree on what they mean. They don&rsquo;t just happen to look alike. The only honest way to keep that true is to write the spec before any of the implementations. The vanilla CSS port is one implementation. Future ports fill the same spec.</p>
     <p><strong>Runtime-first</strong> means most customization should not need a build step. Pick a primary color, set a radius, adjust density, or drop a brand-tinted preset on a wrapper class. Each one is a single CSS variable override that flows through <code>var(--st-*)</code> and <code>color-mix(in oklch, …)</code>. The harder cases (changing breakpoints, dropping unused components, rewriting a component) still need Sass.</p>
   </section>
 
   <section>
     <h2>Why not Bootstrap</h2>
-    <p>We tried. Stisla v2 was Bootstrap 4, and the original plan for v3 was Bootstrap 5.3. Both were a rough fit, and the trouble was always in the same place. The token surface.</p>
+    <p>We tried. Stisla v2 was Bootstrap 4, and the original plan for the current release was Bootstrap 5.3. Both were a rough fit, and the trouble was always in the same place. The token surface.</p>
     <p>Bootstrap mixes Sass variables (compile time), CSS custom properties (runtime), and SCSS functions that read from theme maps. When you override a color at runtime, it often doesn&rsquo;t reach the code that derives the hover state, because that code runs at build time in Sass. So your override goes one layer deep and stops. The button repaints, but the hover stays the old color. The alert tint updates, but the focus ring is left behind.</p>
     <p>We wanted overrides to flow all the way through. Pick a primary color and get a matching hover, a matching active state, a matching focus ring, and matching soft fills. No rebuild. For that to work, every derivation has to happen at runtime, which means <code>color-mix(in oklch, …)</code> instead of Sass color functions, and a flat token surface that components read from directly.</p>
     <p>The trade-off is that breakpoints can&rsquo;t live in CSS variables, because media queries can&rsquo;t read them. Stisla accepts that. Breakpoints are the only Sass-level knob. Everything else runs at runtime.</p>

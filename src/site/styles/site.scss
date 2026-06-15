@@ -41,6 +41,47 @@
   width: 100%;
 }
 
+// Grid demo previews pin the row to the top of .demo-preview at natural
+// height and drop the 24rem min-height floor. Layout structure reads
+// cleanest at its own size, not floated inside a tall centered band.
+.demo-preview:has(> .row.grid-demo, > .container-demo) {
+  align-items: flex-start;
+  min-height: auto;
+}
+
+// Column visualization for /grid demos. Combo class on a .row so column
+// behavior shows directly on the .col element instead of wrapping every
+// cell in an inner styled div. Bg fills the whole col box including its
+// inline padding (the gutter half), matching the cell pattern Bootstrap
+// uses in its grid docs. Adjacent cells touch at their borders.
+.row.grid-demo {
+  width: 100%;
+
+  > [class*="col"] {
+    padding-block: 0.75rem;
+    text-align: center;
+    color: var(--st-foreground);
+    background-color: color-mix(in oklch, var(--st-primary) 14%, transparent);
+    border: 1px solid color-mix(in oklch, var(--st-primary) 30%, transparent);
+    border-radius: var(--st-radius-sm);
+    font-size: 0.8125rem;
+    font-family: var(--st-font-mono);
+  }
+}
+
+// Container visualization for /grid demos. Single-band variant of the
+// column cell. Same fill and border.
+.container-demo {
+  padding-block: 0.75rem;
+  text-align: center;
+  color: var(--st-foreground);
+  background-color: color-mix(in oklch, var(--st-primary) 14%, transparent);
+  border: 1px solid color-mix(in oklch, var(--st-primary) 30%, transparent);
+  border-radius: var(--st-radius-sm);
+  font-size: 0.8125rem;
+  font-family: var(--st-font-mono);
+}
+
 // === Demo viewer ===
 // Layout: framed preview on top, collapsible source below. Source is
 // collapsed by default with a fade-out + "View Code" pill; expanded grows
@@ -230,6 +271,7 @@ body {
 
 .main-container.prose {
   $opt-out: ":not(:where(.not-prose, .not-prose *, .prose .prose, .prose .prose *))";
+  --st-prose-link-color: var(--st-foreground);
 
   // Quieter reading rhythm for reference docs.
   line-height: 1.7;
@@ -467,6 +509,13 @@ $shell-max: 90rem;
   background: var(--st-background);
   border-right: 1px solid var(--st-border);
   overflow-y: auto;
+
+  // .sidebar__content carries .scroll-area for the OverlayScrollbars
+  // overlay bar. Drop the radius so the menu doesn't get a rounded clip
+  // at the panel edge.
+  .sidebar__content {
+    --scroll-area-radius: 0;
+  }
 
   &[data-state="open"] {
     transform: translateX(0);
@@ -727,18 +776,29 @@ body[data-site-sidebar="open"] {
 }
 
 // === Landing layout ===
-// Drops the right rail entirely. Sidebar still in place; the main column
-// is the hero and the features grid, both centered on the page bg with no
-// content-card chrome.
+// Drops the sidebar and the right rail entirely — single full-width
+// column hosting the hero and features grid on the page bg, no
+// content-card chrome. The navbar hamburger is also suppressed since
+// there is no sidebar to open.
 
 .site-layout--landing {
+  grid-template-columns: minmax(0, 1fr);
+
+  @include bp.media-up(md) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   @include bp.media-up(lg) {
-    grid-template-columns: 16rem minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
 .site-main--landing {
   gap: 0;
+}
+
+body:has(.site-layout--landing) .site-navbar__trigger {
+  display: none;
 }
 
 // === Hero ===
@@ -819,29 +879,35 @@ body[data-site-sidebar="open"] {
   }
 }
 
+// Framed card: thin outer wrapper on --st-surface-2 acts as a 4px mat
+// around the actual content panel. The inner panel carries the real
+// background and the visible padding.
 .site-feature {
+  padding: 4px;
+  border: 1px solid var(--st-border);
+  border-radius: var(--st-radius-lg);
+  background: var(--st-surface-2);
+}
+
+.site-feature__inner {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   padding: 1.5rem;
   border: 1px solid var(--st-border);
-  border-radius: var(--st-radius-lg);
+  border-radius: calc(var(--st-radius-lg) - 4px);
   background: var(--st-surface);
+  height: 100%;
 }
 
 .site-feature__icon {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: var(--st-radius);
-  background: var(--st-surface-2);
-  color: var(--st-foreground);
+  margin-bottom: 0.75rem;
+  color: var(--st-muted-foreground);
 
   svg {
-    width: 1.125rem;
-    height: 1.125rem;
+    width: 1.25rem;
+    height: 1.25rem;
   }
 }
 

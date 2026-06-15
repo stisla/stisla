@@ -1,19 +1,24 @@
 // Stisla v3 — progress.
 //
-// A thin horizontal bar that fills as work completes. Pill-shaped track
-// recessed into the neutral tier; filled portion paints in primary by
-// default, intent modifiers retune. Sizes match the modern thin-progress
-// cadence (4 / 8 / 16 px under default density). Single-bar only — the
-// stacked / segmented model isn't carried over (no real-world use cases
-// in v3's scope; use a separate component if you genuinely need it).
+// A thin horizontal bar that fills as work completes, with optional
+// label + value caption above. The wrapper owns the layout; the track
+// is the pill-shaped recess; the bar paints the filled portion in
+// primary by default (intent modifiers retune). Sizes match the
+// modern thin-progress cadence (4 / 8 / 16 px under default density).
+// Single-bar only — the stacked / segmented model isn't carried over
+// (no real-world use cases in v3's scope; use a separate component if
+// you genuinely need it).
 //
 // === Anatomy =============================================================
-//   .progress              the track (overflow: hidden, pill, recessed)
+//   .progress              wrapper — owns the caption-row + track layout
+//   .progress__label       optional caption (left column of the header row)
+//   .progress__value       optional value/percentage (right column)
+//   .progress__track       the recessed pill (overflow: hidden)
 //   .progress__bar         the filled portion (sized by inline width %)
 //
 // === Modifiers ===========================================================
-//   .progress--sm                          4px height (compact)
-//   .progress--lg                         16px height (label-friendly)
+//   .progress--sm                          4px track (compact)
+//   .progress--lg                         16px track (label-friendly)
 //   .progress__bar--primary               default intent (explicit form)
 //   .progress__bar--success
 //   .progress__bar--warning
@@ -23,6 +28,18 @@
 //
 // === State hooks (V3.md §3.6) ============================================
 //   .progress.is-indeterminate   unknown value — sliding bar replaces fill
+//
+// === Layout ==============================================================
+// .progress is a 2-column grid: label left, value right, track spanning
+// both. Either caption element may be omitted; the grid still resolves
+// because the track lives in its own row. The simple no-caption case
+// is just `<div class="progress"><div class="progress__track">…` — one
+// extra div over the pre-caption shape, the cost of making label/value
+// first-class.
+//
+// role="progressbar" sits on .progress (the wrapper); the label text
+// can be referenced via aria-labelledby on the same node so the screen
+// reader announces the visible caption rather than a duplicate aria-label.
 //
 // === Animated shimmer ====================================================
 // A narrow gradient band sweeps across the bar over 3s, then sits
@@ -37,15 +54,17 @@
 // the inline width on the bar in indeterminate markup; the CSS owns it.
 //
 // === Radius ==============================================================
-// .progress opts out of --st-radius. Pill is semantic for a progress
-// strip (same family as .badge, .slider — V3.md §3.4). Brutalist users
-// who want sharp progress override --progress-radius per-component.
+// .progress__track opts out of --st-radius. Pill is semantic for a
+// progress strip (same family as .badge, .slider — V3.md §3.4).
+// Brutalist users who want sharp progress override --progress-radius
+// per-component.
 
 .progress {
   // === Geometry ========================================================
   --progress-height:                    calc(0.5rem * var(--st-density));
   --progress-radius:                    9999px;
   --progress-margin-bottom:             0;
+  --progress-header-gap:                0.25rem;
 
   // === Track ===========================================================
   --progress-bg:                        var(--st-neutral);
@@ -54,14 +73,54 @@
   --progress-bar-bg:                    var(--st-primary);
   --progress-bar-transition-duration:   0.6s;
 
+  // === Caption =========================================================
+  --progress-label-font-size:           0.875rem;
+  --progress-label-font-weight:         500;
+  --progress-label-color:               var(--st-foreground);
+  --progress-value-color:               var(--st-muted-foreground);
+
   // === Animation =======================================================
   --progress-shimmer-color:             color-mix(in oklch, white 30%, transparent);
   --progress-shimmer-duration:          3s;
   --progress-indeterminate-duration:    1.5s;
 
+  // Grid: label left, value right, track spanning both. The header row
+  // collapses to nothing when both caption elements are absent.
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 1rem;
+  row-gap: var(--progress-header-gap);
+  margin-bottom: var(--progress-margin-bottom);
+}
+
+// === Caption =============================================================
+// Label sits left-aligned; value mirrors to the right edge. Either may
+// be omitted; the track spans both columns either way.
+
+.progress__label {
+  grid-column: 1;
+  font-size: var(--progress-label-font-size);
+  font-weight: var(--progress-label-font-weight);
+  color: var(--progress-label-color);
+  line-height: 1.4;
+}
+
+.progress__value {
+  grid-column: 2;
+  font-size: var(--progress-label-font-size);
+  color: var(--progress-value-color);
+  line-height: 1.4;
+}
+
+// === Track ===============================================================
+// The recessed pill — what was .progress in earlier shapes. Owns the
+// height, the neutral bg, the pill radius, and the overflow clip that
+// keeps the bar inside.
+
+.progress__track {
+  grid-column: 1 / -1;
   display: block;
   height: var(--progress-height);
-  margin-bottom: var(--progress-margin-bottom);
   background-color: var(--progress-bg);
   border-radius: var(--progress-radius);
   overflow: hidden;

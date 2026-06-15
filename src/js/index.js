@@ -20,6 +20,7 @@ import { Accordion } from './components/accordion.js';
 import { Sidebar } from './components/sidebar.js';
 import { Navbar } from './components/navbar.js';
 import { AppShell } from './components/app-shell.js';
+import { Avatar } from './components/avatar.js';
 
 register('dialog', Dialog);
 register('drawer', Drawer);
@@ -35,6 +36,7 @@ register('accordion', Accordion);
 register('sidebar', Sidebar);
 register('navbar', Navbar);
 register('app-shell', AppShell);
+register('avatar', Avatar);
 
 // Auto-init runs in a microtask so that an importer (e.g. index-full.js)
 // can register additional components synchronously after this module
@@ -67,6 +69,7 @@ export const Stisla = {
   Sidebar,
   Navbar,
   AppShell,
+  Avatar,
   register,
   init,
   get: getInstance,

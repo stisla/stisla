@@ -57,6 +57,8 @@ export default defineConfig(({ command }) => {
     'css-full.css': 'stisla-full.css',
     'component-js-carousel': 'components/carousel.js',
     'component-css-carousel.css': 'components/carousel.css',
+    'component-js-scroll-area': 'components/scroll-area.js',
+    'component-css-scroll-area.css': 'components/scroll-area.css',
   };
   const finalNames = new Set(Object.values(renames));
 
@@ -73,6 +75,8 @@ export default defineConfig(({ command }) => {
           'js-full': 'src/js/index-full.js',
           'component-css-carousel': 'src/scss/bundles/components/carousel.scss',
           'component-js-carousel': 'src/js/components/carousel.js',
+          'component-css-scroll-area': 'src/scss/bundles/components/scroll-area.scss',
+          'component-js-scroll-area': 'src/js/components/scroll-area.js',
           site: 'src/site/scripts/site.js',
           'site-styles': 'src/site/styles/site.scss',
         },

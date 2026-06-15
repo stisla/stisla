@@ -123,7 +123,7 @@
 // Clear the close chip when both title and close are present. :has() is
 // baseline per V3.md §2 (Safari 16.4+).
 .popover:has(.popover__close) .popover__title {
-  padding-right: calc(var(--popover-close-size) + 0.5rem);
+  padding-inline-end: calc(var(--popover-close-size) + 0.5rem);
 }
 
 // === Body ==================================================================
@@ -148,7 +148,7 @@
 .popover__close {
   position: absolute;
   top: var(--popover-padding);
-  right: var(--popover-padding);
+  inset-inline-end: var(--popover-padding);
   display: inline-flex;
   align-items: center;
   justify-content: center;

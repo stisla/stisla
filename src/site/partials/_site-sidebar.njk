@@ -1,7 +1,7 @@
 {#
-  Site navigation sidebar. Grouped by purpose: prologue / foundation / layout /
-  forms / components / overlays / media (all alphabetical). Every entry is a
-  real link; unbuilt pages 404 for now and become live as their templates land.
+  Site navigation sidebar. Grouped by purpose: prologue / foundation / forms /
+  components / overlays / media (all alphabetical). Every entry is a real link;
+  unbuilt pages 404 for now and become live as their templates land.
 
   Optional components (not in the vanilla core bundle — see SPEC.md §10) get
   a muted "Optional" indicator inline. The grouping reflects component family,
@@ -11,7 +11,7 @@
   pathname to location.pathname), so we don't need to pass a page key in.
 #}
 <aside id="site-sidebar" class="site-sidebar sidebar sidebar--sm" data-state="closed">
-  <div class="sidebar__content">
+  <div class="sidebar__content scroll-area" data-stisla-scroll-area>
     <nav class="sidebar__menu">
 
       <div class="sidebar__group">
@@ -30,18 +30,11 @@
       <div class="sidebar__group">
         <span class="sidebar__group-title">Foundation</span>
         <ul class="sidebar__list">
+          <li class="sidebar__item"><a class="sidebar__button" href="/breakpoints"><span>Breakpoints</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/grid"><span>Grid</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/typography"><span>Typography</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/utilities"><span>Utilities</span></a></li>
-        </ul>
-      </div>
-
-      <div class="sidebar__group">
-        <span class="sidebar__group-title">Layout</span>
-        <ul class="sidebar__list">
-          <li class="sidebar__item"><a class="sidebar__button" href="/app-shell"><span>App shell</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/navbar"><span>Navbar</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/page-structure"><span>Page structure</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/sidebar"><span>Sidebar</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/z-index"><span>Z-index</span></a></li>
         </ul>
       </div>
 
@@ -65,6 +58,9 @@
         <ul class="sidebar__list">
           <li class="sidebar__item"><a class="sidebar__button" href="/accordion"><span>Accordion</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/alert"><span>Alert</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/app-shell"><span>App shell</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/avatar"><span>Avatar</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/avatar-group"><span>Avatar group</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/badge"><span>Badge</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/breadcrumb"><span>Breadcrumb</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/button"><span>Button</span></a></li>
@@ -76,9 +72,14 @@
           <li class="sidebar__item"><a class="sidebar__button" href="/kbd"><span>Kbd</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/link"><span>Link</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/list-group"><span>List group</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/meter"><span>Meter</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/navbar"><span>Navbar</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/page-structure"><span>Page structure</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/pagination"><span>Pagination</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/placeholders"><span>Placeholders</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/progress"><span>Progress</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/scroll-area"><span>Scroll area</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/sidebar"><span>Sidebar</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/spinner"><span>Spinner</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/table"><span>Table</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/tabs"><span>Tabs</span></a></li>

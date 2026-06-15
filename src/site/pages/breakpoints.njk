@@ -1,0 +1,158 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Breakpoints · Stisla{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Breakpoints</h1>
+    <p class="lead">Six named viewport widths, mobile-first.</p>
+  </header>
+
+  <section>
+    <p>Stisla uses the same six breakpoints as Bootstrap 5 so the grid classes (<code>.col-md-6</code>, <code>.container-lg</code>) and the Sass mixins (<code>media-up</code>, <code>media-down</code>) read the same map. Every media rule applies from the named width upward unless the mixin says otherwise. That is the mobile-first default.</p>
+  </section>
+
+  <section>
+    <h2>The breakpoints</h2>
+    <p>There are six tiers. <code>xs</code> is the implicit baseline; any rule that doesn&rsquo;t name a breakpoint applies at every width.</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Min-width</th>
+            <th>Typical device</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>xs</code></td><td>0</td><td>Portrait phones</td></tr>
+          <tr><td><code>sm</code></td><td>576px</td><td>Landscape phones</td></tr>
+          <tr><td><code>md</code></td><td>768px</td><td>Tablets</td></tr>
+          <tr><td><code>lg</code></td><td>992px</td><td>Small laptops</td></tr>
+          <tr><td><code>xl</code></td><td>1200px</td><td>Desktops</td></tr>
+          <tr><td><code>xxl</code></td><td>1400px</td><td>Wide desktops</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>The infix convention</h2>
+    <p>Every responsive class (grid columns, gutters, alignment utilities, display utilities, font sizes) uses the breakpoint name as an infix between the property prefix and the value. You&rsquo;ll see this in <code>.col-md-6</code>, <code>.gx-lg-3</code>, <code>.d-md-flex</code>, <code>.fs-xl-5</code>, and so on.</p>
+    <p><code>xs</code> is the implicit baseline and has <em>no</em> infix. There&rsquo;s no <code>.col-xs-6</code>; the bare <code>.col-6</code> is the <code>xs</code> form. Every other tier (<code>sm</code>, <code>md</code>, <code>lg</code>, <code>xl</code>, <code>xxl</code>) gets a <code>-{name}-</code> segment. The Sass helper <code>breakpoint-infix($name)</code> returns the empty string for <code>xs</code> and <code>-sm</code>, <code>-md</code>, &hellip; for everything else.</p>
+  </section>
+
+  <section>
+    <h2>Sass mixins</h2>
+    <p>Four mixins cover the common shapes. Import the foundation file and call them with a breakpoint name.</p>
+    {% call ui.code(lang='scss') %}
+    @use 'stisla/scss/foundation/breakpoints' as *;
+
+    .example {
+      // At or above the named breakpoint.
+      @include media-up(md) {
+        // applies from 768px upward
+      }
+
+      // Below the named breakpoint (note: 0.02px adjustment to avoid
+      // overlap with media-up at the boundary).
+      @include media-down(md) {
+        // applies up to 767.98px
+      }
+
+      // Between two named breakpoints, inclusive on both ends.
+      @include media-between(sm, lg) {
+        // applies from 576px through 1199.98px
+      }
+
+      // Only the named breakpoint (no overlap above or below).
+      @include media-only(md) {
+        // applies from 768px through 991.98px
+      }
+    }
+    {% endcall %}
+    <p>The <code>media-breakpoint-up</code> / <code>media-breakpoint-down</code> spellings still work as shims, but the short forms above are the canonical names.</p>
+
+    <h3>What they compile to</h3>
+    <p>The four mixins produce these media queries at each tier. <code>media-down</code> and <code>media-only</code> subtract <code>0.02px</code> from the next breakpoint to avoid overlapping with the matching <code>media-up</code> at the boundary (a one-pixel limitation of <code>min-width</code> + <code>max-width</code>).</p>
+    {% call ui.code(lang='css') %}
+    /* media-up */
+    @media (min-width: 576px)  { ... }  /* sm */
+    @media (min-width: 768px)  { ... }  /* md */
+    @media (min-width: 992px)  { ... }  /* lg */
+    @media (min-width: 1200px) { ... }  /* xl */
+    @media (min-width: 1400px) { ... }  /* xxl */
+
+    /* media-down */
+    @media (max-width: 575.98px)  { ... }  /* sm */
+    @media (max-width: 767.98px)  { ... }  /* md */
+    @media (max-width: 991.98px)  { ... }  /* lg */
+    @media (max-width: 1199.98px) { ... }  /* xl */
+    @media (max-width: 1399.98px) { ... }  /* xxl */
+
+    /* media-only(md) */
+    @media (min-width: 768px) and (max-width: 991.98px) { ... }
+
+    /* media-between(sm, lg) */
+    @media (min-width: 576px) and (max-width: 1199.98px) { ... }
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Why media queries can&rsquo;t read CSS vars</h2>
+    <p>The breakpoint table lives as Sass values. <code>@media (min-width: var(--bp-md))</code> doesn&rsquo;t work in any browser because CSS variables resolve per-element while a media rule has to evaluate at the document level before any element exists. So breakpoints stay in Sass; gutters, container max-widths, and the rest live on CSS vars.</p>
+  </section>
+
+  <section>
+    <h2>Override the map</h2>
+    <p>Set <code>$breakpoints</code> before importing the foundation. The grid, container, and every <code>media-*</code> mixin call read the override.</p>
+    {% call ui.code(lang='scss') %}
+    // _my-overrides.scss
+    $breakpoints: (
+      xs:  0,
+      sm:  640px,
+      md:  768px,
+      lg:  1024px,
+      xl:  1280px,
+      xxl: 1536px,
+    );
+
+    @use 'stisla/scss/bundles/stisla';
+    {% endcall %}
+    <p>Renaming or removing a tier breaks the grid utility classes (there's no <code>.col-2xl-6</code> if you don't have <code>2xl</code>). Add tiers; don't subtract.</p>
+  </section>
+
+  <section>
+    <h2>RTL</h2>
+    <p>Viewport size is independent of writing direction. The breakpoint table and every <code>media-*</code> mixin work the same way whether <code>&lt;html&gt;</code> carries <code>dir="ltr"</code> or <code>dir="rtl"</code>. Layout primitives like the grid, container, and offsets are authored with logical properties so they flip automatically. See the <a href="/grid">Grid page</a> for the full surface.</p>
+  </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>Two Sass maps drive every responsive behaviour. Override before importing.</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>$breakpoints</code></td>
+            <td>xs 0, sm 576px, md 768px, lg 992px, xl 1200px, xxl 1400px</td>
+            <td>Named viewport widths used by every <code>media-*</code> mixin and every responsive class suffix.</td>
+          </tr>
+          <tr>
+            <td><code>$container-max-widths</code></td>
+            <td>sm 540px, md 720px, lg 960px, xl 1140px, xxl 1320px</td>
+            <td>Maximum content widths the <code>.container</code> classes clamp to at each breakpoint. See <a href="/grid">Grid</a>.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+{% endblock %}

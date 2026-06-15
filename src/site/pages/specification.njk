@@ -102,6 +102,7 @@
   <section>
     <h2>Component anatomy</h2>
     <p>Every component is a BEM block with a fixed set of element slots. A port can render those slots with any tag or framework primitive it likes, but the slot names are the contract. A user who learns Card on the vanilla port should find the same parts on the React port.</p>
+    <p>The BEM rule covers <code>scss/components/</code> only. Utilities (<code>.d-flex</code>, <code>.text-end</code>, <code>.gap-3</code>, <code>.mb-md-4</code>) and the <a class="link" href="/grid">grid</a> (<code>.col-md-6</code>, <code>.container-fluid</code>, <code>.offset-md-2</code>, <code>.row-cols-3</code>, <code>.g-md-3</code>) follow flat hyphenated naming with an optional responsive infix. Atomic helpers stay Bootstrap-conventional so the shape matches what consumers already know.</p>
 
     <h3>Forms</h3>
     <table>

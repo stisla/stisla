@@ -18,4 +18,5 @@
 // registered from `src/js/index-full.js` against the same name.
 @layer components {
   @import '../components/carousel';
+  @import '../components/scroll-area';
 }

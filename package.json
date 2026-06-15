@@ -22,6 +22,7 @@
     "@floating-ui/dom": "^1.7.6",
     "embla-carousel": "^8.6.0",
     "focus-trap": "^8.2.1",
+    "overlayscrollbars": "^2.16.0",
     "tabbable": "^6.4.0"
   },
   "devDependencies": {

@@ -108,6 +108,7 @@ $utilities-config: (
   justify-content:  (enabled: true, responsive: true),
   align-items:      (enabled: true, responsive: true),
   align-self:       (enabled: true, responsive: false),
+  order:            (enabled: true, responsive: true),
 
   // Spacing
   gap:              (enabled: true, responsive: true),
@@ -118,6 +119,12 @@ $utilities-config: (
   width:            (enabled: true, responsive: true),
   height:           (enabled: true, responsive: false),
   max-size:         (enabled: true, responsive: false),
+
+  // Surface
+  background:       (enabled: true, responsive: false),
+  border:           (enabled: true, responsive: false),
+  border-color:     (enabled: true, responsive: false),
+  rounded:          (enabled: true, responsive: false),
 ) !default;
 
 // === Emission helper =========================================================
@@ -321,6 +328,21 @@ $utilities-config: (
   .align-self#{$i}-auto     { align-self: auto       !important; }
 }
 
+// === Order ===================================================================
+// Reorders flex children visually without changing source order. Useful on
+// .row / .col when the mobile reading order differs from the desktop layout
+// (e.g., sidebar after content in DOM, before content at lg+).
+@include utility-group('order') using ($i) {
+  .order#{$i}-first { order: -1 !important; }
+  .order#{$i}-0     { order:  0 !important; }
+  .order#{$i}-1     { order:  1 !important; }
+  .order#{$i}-2     { order:  2 !important; }
+  .order#{$i}-3     { order:  3 !important; }
+  .order#{$i}-4     { order:  4 !important; }
+  .order#{$i}-5     { order:  5 !important; }
+  .order#{$i}-last  { order:  6 !important; }
+}
+
 // === Gap =====================================================================
 @include utility-group('gap') using ($i) {
   @each $step, $value in $spacing-scale {
@@ -373,4 +395,63 @@ $utilities-config: (
 @include utility-group('max-size') using ($i) {
   .mw#{$i}-100 { max-width:  100% !important; }
   .mh#{$i}-100 { max-height: 100% !important; }
+}
+
+// === Background ==============================================================
+// Single-property: sets background only. For readable text on a semantic
+// surface, pair with the matching --st-{intent}-foreground (or use a
+// component — that's what they're for).
+@include utility-group('background') using ($i) {
+  .bg#{$i}-transparent { background-color: transparent          !important; }
+  .bg#{$i}-background  { background-color: var(--st-background) !important; }
+  .bg#{$i}-surface     { background-color: var(--st-surface)    !important; }
+  .bg#{$i}-surface-2   { background-color: var(--st-surface-2)  !important; }
+  .bg#{$i}-surface-3   { background-color: var(--st-surface-3)  !important; }
+
+  .bg#{$i}-primary     { background-color: var(--st-primary)    !important; }
+  .bg#{$i}-success     { background-color: var(--st-success)    !important; }
+  .bg#{$i}-warning     { background-color: var(--st-warning)    !important; }
+  .bg#{$i}-danger      { background-color: var(--st-danger)     !important; }
+  .bg#{$i}-info        { background-color: var(--st-info)       !important; }
+}
+
+// === Border ==================================================================
+// Logical sides so RTL flips inline-start / inline-end automatically,
+// matching the margin / padding convention. The -0 variants zero only the
+// width, leaving the other sides set by the base .border shorthand intact.
+@include utility-group('border') using ($i) {
+  .border#{$i}   { border: 1px solid var(--st-border) !important; }
+  .border#{$i}-0 { border: 0 !important; }
+
+  .border#{$i}-top    { border-block-start:  1px solid var(--st-border) !important; }
+  .border#{$i}-bottom { border-block-end:    1px solid var(--st-border) !important; }
+  .border#{$i}-start  { border-inline-start: 1px solid var(--st-border) !important; }
+  .border#{$i}-end    { border-inline-end:   1px solid var(--st-border) !important; }
+
+  .border#{$i}-top-0    { border-block-start-width:  0 !important; }
+  .border#{$i}-bottom-0 { border-block-end-width:    0 !important; }
+  .border#{$i}-start-0  { border-inline-start-width: 0 !important; }
+  .border#{$i}-end-0    { border-inline-end-width:   0 !important; }
+}
+
+// === Border color ============================================================
+@include utility-group('border-color') using ($i) {
+  .border#{$i}-primary { border-color: var(--st-primary) !important; }
+  .border#{$i}-success { border-color: var(--st-success) !important; }
+  .border#{$i}-warning { border-color: var(--st-warning) !important; }
+  .border#{$i}-danger  { border-color: var(--st-danger)  !important; }
+  .border#{$i}-info    { border-color: var(--st-info)    !important; }
+}
+
+// === Rounded =================================================================
+// Tracks --st-radius and its derived siblings so the brutalist preset
+// (--st-radius: 0) cascades through .rounded-sm / .rounded-lg without
+// leaving stray corners.
+@include utility-group('rounded') using ($i) {
+  .rounded#{$i}        { border-radius: var(--st-radius)    !important; }
+  .rounded#{$i}-0      { border-radius: 0                   !important; }
+  .rounded#{$i}-sm     { border-radius: var(--st-radius-sm) !important; }
+  .rounded#{$i}-lg     { border-radius: var(--st-radius-lg) !important; }
+  .rounded#{$i}-pill   { border-radius: 9999px              !important; }
+  .rounded#{$i}-circle { border-radius: 50%                 !important; }
 }

@@ -1,0 +1,178 @@
+// Stisla v3 — avatar.
+//
+// BEM: .avatar root + .avatar__image, .avatar__fallback, .avatar__indicator
+// elements. Compose flat at the root:
+//
+//   <span class="avatar">RF</span>                              initials only
+//   <span class="avatar" data-stisla-avatar>
+//     <img class="avatar__image" src="..." alt="…">             image + fallback
+//     <span class="avatar__fallback">RF</span>
+//   </span>
+//
+// Default shape is rounded square (via --st-radius) — matches the v3
+// surface vocabulary. .avatar--circle opts into the pill for portrait /
+// chat / org-list patterns where the round read is conventional.
+//
+// === Image loading model (avatar.js) ===================================
+// The JS preloads the .avatar__image src via `new Image()` and writes
+// data-status="idle|loading|loaded|error" on the root. CSS reveals the
+// image only on "loaded" — until then (and on error) the fallback paints
+// underneath. Prevents the broken-image icon flash and lets the fallback
+// be the canonical paint when the network is slow.
+//
+// Without data-stisla-avatar (initials-only avatars, app icons, etc.) the
+// fallback paints unconditionally — no JS, no preload.
+
+.avatar {
+  --avatar-size:         2.5rem;                    // 40 — md default
+  --avatar-radius:       var(--st-radius);
+  --avatar-bg:           var(--st-neutral);
+  --avatar-color:        var(--st-neutral-foreground);
+  --avatar-font-size:    0.875rem;
+  --avatar-font-weight:  600;
+  // Ring is the outline used to separate stacked avatars from each other
+  // (or from a busy surface). Off by default; .avatar-group turns it on
+  // in modifier scope. Override on a lone .avatar if a manual ring is
+  // genuinely wanted.
+  --avatar-ring-width:   0;
+  --avatar-ring-color:   var(--st-background);
+
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width:  calc(var(--avatar-size) * var(--st-density));
+  height: calc(var(--avatar-size) * var(--st-density));
+  font-family: inherit;
+  font-size: var(--avatar-font-size);
+  font-weight: var(--avatar-font-weight);
+  line-height: 1;
+  color: var(--avatar-color);
+  background: var(--avatar-bg);
+  border-radius: var(--avatar-radius);
+  vertical-align: middle;
+  user-select: none;
+  // No overflow: hidden on the root — the .avatar__image clips itself via
+  // border-radius (and object-fit: cover), and the fallback's content
+  // doesn't overflow. Keeping the root unclipped lets the indicator
+  // translate past the corner without being chopped.
+  box-shadow: 0 0 0 var(--avatar-ring-width) var(--avatar-ring-color);
+}
+
+// === Image ============================================================
+// Absolutely positioned over the fallback. Hidden until data-status flips
+// to "loaded" — preserves the fallback paint during idle / loading /
+// error states. object-fit: cover keeps non-square sources framed.
+.avatar__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.12s ease-out;
+}
+
+// Reveal the image only once the preloader confirms a successful load.
+// Without data-stisla-avatar the attribute is never set, so a static
+// <img class="avatar__image"> stays hidden — by design. Mark the avatar
+// with data-status="loaded" inline to skip the preloader for known-good
+// sources.
+.avatar[data-status="loaded"] .avatar__image {
+  opacity: 1;
+}
+
+// === Fallback =========================================================
+// Sized to the root via the flex parent — 100%/100% fills cleanly without
+// position:absolute, so it participates in document flow and the avatar
+// collapses to the fallback's natural read.
+.avatar__fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+// Inline icons in the fallback scale to its font-size. Same convention
+// as .btn and .badge.
+.avatar__fallback :is(svg, i) {
+  width:  1em;
+  height: 1em;
+  flex-shrink: 0;
+}
+
+// === Size modifiers ===================================================
+// Retune --avatar-size + --avatar-font-size; density still applies on
+// top of the modifier so a comfortable theme scales sm/md/lg uniformly.
+.avatar--sm { --avatar-size: 2rem;   --avatar-font-size: 0.75rem;  }
+.avatar--lg { --avatar-size: 3rem;   --avatar-font-size: 1rem;     }
+.avatar--xl { --avatar-size: 4rem;   --avatar-font-size: 1.25rem;  }
+
+// === Shape modifier ===================================================
+// Default is rounded square (--st-radius). Circle is the modifier —
+// matches the chat / org / contact-card convention without forcing the
+// shape on app-style square tiles.
+.avatar--circle { --avatar-radius: 9999px; }
+
+// === Indicator =========================================================
+// Small pip pinned to a corner — status dot, counter, verified mark,
+// anything that fits an em-sized slot. Positions are top-end / bottom-end
+// (the two visually balanced corners next to a face); sizes scale the
+// pip independently of the avatar size. Ring punches the indicator out
+// of the avatar surface so it reads as a separate object.
+.avatar__indicator {
+  --avatar-indicator-size:        0.625rem;          // 10 — md default
+  --avatar-indicator-bg:          var(--st-success);
+  --avatar-indicator-color:       var(--st-success-foreground);
+  --avatar-indicator-font-size:   0.625rem;
+  --avatar-indicator-ring-width:  2px;
+  --avatar-indicator-ring-color:  var(--st-background);
+
+  // Default position: bottom-end. The 25% translate lifts the pip half-
+  // out of the avatar so the ring reads as a clean separator, not an
+  // inside-edge stripe. .avatar__indicator--top overrides this below.
+  position: absolute;
+  bottom: 0;
+  inset-inline-end: 0;
+  transform: translate(25%, 25%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--avatar-indicator-size);
+  height: var(--avatar-indicator-size);
+  padding: 0 0.25em;
+  font-size: var(--avatar-indicator-font-size);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--avatar-indicator-color);
+  background: var(--avatar-indicator-bg);
+  border-radius: 9999px;
+  box-shadow: 0 0 0 var(--avatar-indicator-ring-width) var(--avatar-indicator-ring-color);
+  z-index: 1;
+}
+
+// Inline content (icon, digit) scales with the indicator font-size.
+.avatar__indicator :is(svg, i) {
+  width:  1em;
+  height: 1em;
+  flex-shrink: 0;
+}
+
+// Position modifier — flip to top-end. .avatar__indicator--bottom is a
+// no-op alias for the base default; it's available for explicit markup
+// when an author wants the position written out.
+.avatar__indicator--top {
+  top: 0;
+  bottom: auto;
+  transform: translate(25%, -25%);
+}
+
+// Indicator sizes — pip diameter + font-size retune together so a digit
+// or icon stays legible at every size.
+.avatar__indicator--sm { --avatar-indicator-size: 0.5rem;   --avatar-indicator-font-size: 0.5rem;   }
+.avatar__indicator--lg { --avatar-indicator-size: 0.875rem; --avatar-indicator-font-size: 0.625rem; }
+.avatar__indicator--xl { --avatar-indicator-size: 1.125rem; --avatar-indicator-font-size: 0.75rem;  }

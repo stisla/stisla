@@ -1,43 +1,49 @@
 {% extends "layouts/landing.njk" %}
 
-{% block title %}Stisla v3 · A design spec for user interfaces{% endblock %}
+{% block title %}Stisla · A design spec for user interfaces{% endblock %}
 
 {% block landing %}
-  <div class="content-card">
+  <div>
     <section class="site-hero">
       <h1 class="site-hero__title">A design spec<br />for user interfaces</h1>
       <p class="site-hero__lead">
         Stisla is framework-agnostic by design. One spec, with a native implementation for each framework.
       </p>
       <div class="site-hero__actions">
-        <a href="/introduction" class="btn btn--primary btn--lg">Get started</a>
-        <a href="/customization" class="btn btn--ghost btn--neutral btn--lg">Customization</a>
+        <a href="/introduction" class="btn btn--primary">Get started</a>
+        <a href="/customization" class="btn btn--ghost btn--neutral">Customization</a>
       </div>
     </section>
 
     <section class="site-features" aria-label="What's in 3.0.0-beta.1">
       <article class="site-feature">
-        <span class="site-feature__icon" aria-hidden="true">
-          <i data-lucide="palette"></i>
-        </span>
-        <h2 class="site-feature__title">Repaintable in CSS</h2>
-        <p class="site-feature__body">30 OKLCH tokens. Set one on <code>:root</code> and every component retunes at runtime. No rebuild, no Sass.</p>
+        <div class="site-feature__inner">
+          <span class="site-feature__icon" aria-hidden="true">
+            <i data-lucide="layers"></i>
+          </span>
+          <h2 class="site-feature__title">A spec, with code</h2>
+          <p class="site-feature__body">Framework-agnostic by design. The vanilla CSS port is the first implementation. React and Vue ports come later, all against the same spec.</p>
+        </div>
       </article>
 
       <article class="site-feature">
-        <span class="site-feature__icon" aria-hidden="true">
-          <i data-lucide="layers"></i>
-        </span>
-        <h2 class="site-feature__title">A spec, with code</h2>
-        <p class="site-feature__body">v3 is the first implementation. React, Vue, and Base UI ports come later, all against the same spec.</p>
+        <div class="site-feature__inner">
+          <span class="site-feature__icon" aria-hidden="true">
+            <i data-lucide="blocks"></i>
+          </span>
+          <h2 class="site-feature__title">Components for real apps</h2>
+          <p class="site-feature__body">Buttons, forms, dialogs, popovers, tables, navigation, and more. The components you actually reach for when building user interfaces.</p>
+        </div>
       </article>
 
       <article class="site-feature">
-        <span class="site-feature__icon" aria-hidden="true">
-          <i data-lucide="code"></i>
-        </span>
-        <h2 class="site-feature__title">Vanilla and small</h2>
-        <p class="site-feature__body">No Bootstrap, no jQuery. BEM classes with Radix-aligned <code>[data-state]</code>. Around 28 KB gzipped for core.</p>
+        <div class="site-feature__inner">
+          <span class="site-feature__icon" aria-hidden="true">
+            <i data-lucide="heart"></i>
+          </span>
+          <h2 class="site-feature__title">Open source</h2>
+          <p class="site-feature__body">MIT-licensed and developed in the open on GitHub. Issues, ideas, and contributions are welcome.</p>
+        </div>
       </article>
     </section>
   </div>
