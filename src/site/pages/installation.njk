@@ -48,12 +48,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Stisla starter</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@3/dist/stisla.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@beta/dist/stisla.css">
   </head>
   <body>
     <button type="button" class="btn btn--primary">Hello</button>
 
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@3/dist/stisla.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@beta/dist/stisla.js"></script>
   </body>
 </html>
     {% endcall %}
@@ -61,21 +61,21 @@
     <h3>Full</h3>
     <p>The same two tags, swapped to the <code>-full</code> filenames. You get every component, optionals included, with no extra setup.</p>
     {% call ui.code() %}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@3/dist/stisla-full.css">
-<script type="module" src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@3/dist/stisla-full.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@beta/dist/stisla-full.css">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@beta/dist/stisla-full.js"></script>
     {% endcall %}
 
     <h3>Core plus individual optionals</h3>
     <p>Load the core bundle and tack on the optional components you actually use. Each optional ships its own CSS and JS file under <code>dist/components/</code>, next to the main bundle.</p>
     {% call ui.code() %}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@3/dist/stisla.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@3/dist/components/carousel.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@beta/dist/stisla.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@beta/dist/components/carousel.css">
 
-<script type="module" src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@3/dist/stisla.js"></script>
-<script type="module" src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@3/dist/components/carousel.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@beta/dist/stisla.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@beta/dist/components/carousel.js"></script>
     {% endcall %}
 
-    <p>The <code>@3</code> tag follows the latest 3.x release. Pin to <code>@3.0.0-beta.1</code> (or any future exact version) for reproducible builds.</p>
+    <p>The <code>@beta</code> tag follows the latest pre-release. Once 3.0.0 stable ships, swap to <code>@3</code> for the latest 3.x release. Pin to an exact version like <code>@3.0.0-beta.2</code> for reproducible builds.</p>
   </section>
 
   <section>
