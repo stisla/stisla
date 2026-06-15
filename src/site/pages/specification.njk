@@ -100,6 +100,14 @@
   </section>
 
   <section>
+    <h2>Preflight</h2>
+    <p>Every HTML element starts visually blank. Headings, paragraphs, lists, <code>&lt;strong&gt;</code>, <code>&lt;small&gt;</code>, <code>&lt;a&gt;</code> flatten to the body font and weight, with no margins, no markers, no underlines. Visual treatment is opt-in via classes (<code>.h1</code>, <code>.fw-semibold</code>) and via <a class="link" href="/typography#prose"><code>.prose</code></a> for long-form regions. The reset is adapted from Tailwind Preflight and ships in every implementation, not only the vanilla bundle.</p>
+    <p>The reason is structural. Anything that styles an HTML tag at the document scope is a global rule by definition, and a global rule reaches into every component that contains the element. Preflight removes those colliders so a component&rsquo;s CSS expresses only what the component contributes. A card footer using <code>&lt;small&gt;</code> does not pick up a surprise font size, and a button containing <code>&lt;strong&gt;</code> does not bold.</p>
+    <p>Element-targeting rules are allowed when scoped under a class. <code>.prose</code> restores reading defaults inside long-form regions (<code>.prose h2</code>, <code>.prose ul</code>, <code>.prose blockquote</code>), and any future component that needs the same does the same. The wrapping class makes the intent explicit and the reach bounded. At document scope, element-targeting rules do not exist.</p>
+    <p>A narrow set of element defaults is kept where no class would ever opt in. <code>&lt;mark&gt;</code> carries the highlight tint, <code>&lt;abbr title&gt;</code> carries the dotted underline, <code>&lt;hr&gt;</code> carries a rule in <code>--st-border</code>, <code>:focus-visible</code> carries the ring in <code>--st-ring</code>.</p>
+  </section>
+
+  <section>
     <h2>Component anatomy</h2>
     <p>Every component is a BEM block with a fixed set of element slots. A port can render those slots with any tag or framework primitive it likes, but the slot names are the contract. A user who learns Card on the vanilla port should find the same parts on the React port.</p>
     <p>The BEM rule covers <code>scss/components/</code> only. Utilities (<code>.d-flex</code>, <code>.text-end</code>, <code>.gap-3</code>, <code>.mb-md-4</code>) and the <a class="link" href="/grid">grid</a> (<code>.col-md-6</code>, <code>.container-fluid</code>, <code>.offset-md-2</code>, <code>.row-cols-3</code>, <code>.g-md-3</code>) follow flat hyphenated naming with an optional responsive infix. Atomic helpers stay Bootstrap-conventional so the shape matches what consumers already know.</p>

@@ -273,15 +273,15 @@ button.stat:hover {
     <h3>Default</h3>
     <p>Reference for comparison. No overrides.</p>
     {% call ui.demo() %}
-    {{ showcase() }}
+{{ showcase() }}
     {% endcall %}
 
     <h3>Brutalist</h3>
     <p>Radius zero and a solid offset shadow that tracks the foreground color. Two knobs reshape every surface. The shadow stays high-contrast in both themes because it resolves to <code>--st-foreground</code>, which flips per the dark block above.</p>
     {% call ui.demo() %}
-    <div class="preset-brutalist">
-      {{ showcase() }}
-    </div>
+<div class="preset-brutalist">
+  {{ showcase() }}
+</div>
     {% endcall %}
     {% call ui.code(lang='css', title='_customization-presets.scss') %}
 .preset-brutalist {
@@ -293,9 +293,9 @@ button.stat:hover {
     <h3>Violet primary</h3>
     <p>Swap one token and every primary-toned surface picks up the new hue. Hover, active, focus, and the soft <code>--st-highlight</code> tint derive at runtime via <code>color-mix</code>. No extra overrides needed.</p>
     {% call ui.demo() %}
-    <div class="preset-violet">
-      {{ showcase() }}
-    </div>
+<div class="preset-violet">
+  {{ showcase() }}
+</div>
     {% endcall %}
     {% call ui.code(lang='css', title='_customization-presets.scss') %}
 .preset-violet {
@@ -307,9 +307,9 @@ button.stat:hover {
     <h3>Dense</h3>
     <p>One knob. Every padding, gap, and height value wraps <code>calc(X * var(--st-density))</code>, so 0.875 shrinks the whole system proportionally with no per-component overrides.</p>
     {% call ui.demo() %}
-    <div class="preset-dense">
-      {{ showcase() }}
-    </div>
+<div class="preset-dense">
+  {{ showcase() }}
+</div>
     {% endcall %}
     {% call ui.code(lang='css', title='_customization-presets.scss') %}
 .preset-dense {

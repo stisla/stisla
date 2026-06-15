@@ -93,8 +93,8 @@ contract is documented in that implementation's README, not here.
 | Vue | `@stisla/reka` (future) |
 | Svelte | `@stisla/bits` (future) |
 
-The CSS source library is shared across implementations (§9). Each
-implementation curates which component partials it ships (§10).
+The CSS source library is shared across implementations (§10). Each
+implementation curates which component partials it ships (§11).
 
 ## 4. Token surface — `--st-*`
 
@@ -140,7 +140,7 @@ breaks the moment someone overrides `--st-primary`.
 
 No spacing ramp. Padding is component-local, expressed as
 `calc(<literal> * var(--st-density))` so the one density knob retunes
-the system (§7).
+the system (§9).
 
 ## 5. Colour model
 
@@ -196,7 +196,33 @@ component CSS. Do not surface as tokens.
 where brand colours live. Hover states for primary/info/danger look
 visibly worse in sRGB.
 
-## 7. BEM + state hooks
+## 7. Preflight (bare HTML by default)
+
+A reset layer that strips default visual treatment from every HTML element before any component CSS loads. Adapted from Tailwind Preflight, applied on top of the vendored `modern-normalize`. Lives in `foundation/_reboot.scss` and reads only `--st-*` tokens.
+
+```
+* { margin: 0; padding: 0; border: 0 solid }
+h1–h6                    inherit body size + weight
+a                        inherits colour + text-decoration
+b, strong, em, i, small  lose visual treatment
+ul, ol, menu             lose markers
+button, input, select…   inherit font, colour
+img, svg, video…         display: block; max-width: 100%
+```
+
+After Preflight an unstyled `<h1>` is body-sized, `<strong>` reads at the surrounding weight, `<ul>` carries no bullets and no indent. Visual treatment is opt-in via classes (`.h1` for the heading scale, `.fw-semibold` for weight), and via `.prose` for long-form regions that want element defaults back.
+
+The reasoning is structural, not stylistic.
+
+Components start from a known floor. Their CSS expresses only what the component contributes, with no counter-rules to undo a browser default. A card footer using `<small>` does not pick up a surprise font-size. A button containing `<strong>` does not bold.
+
+No global rule collides with a component. Anything that styles an HTML tag at the document scope is a global rule by definition, and a global rule will always reach into every component that contains the element. Preflight removes those colliders so component selectors operate on a blank slate.
+
+Bare-element styling is allowed when scoped. `.prose` restores element defaults inside long-form regions (`.prose h2`, `.prose ul`, `.prose blockquote`). The wrapping class makes the intent explicit and the reach bounded. A future component that needs element-targeting rules does the same and wraps them under its own class. At document scope, element-targeting rules do not exist.
+
+Narrow chrome remains where no class would ever opt in. `<mark>` keeps the highlight tint, `<abbr title>` keeps the dotted underline, `<hr>` keeps a rule in `--st-border`, `:focus-visible` keeps the ring in `--st-ring`. Every other element default is gone.
+
+## 8. BEM + state hooks
 
 ```
 .block                       component root
@@ -251,7 +277,7 @@ State hook by component family:
 | Button loading | `.is-loading` |
 | Sidebar collapsed | `.is-collapsed` |
 
-## 8. Component-scoped fallback pattern
+## 9. Component-scoped fallback pattern
 
 Every component reads a component-scoped var that falls back to the
 matching global token:
@@ -281,7 +307,7 @@ component's hard `height` (`.btn`, `.form-control`, `.icon-box`,
 components opt out via `height: auto` + `min-height` floor +
 their own `padding-block`.
 
-## 9. Source organisation
+## 10. Source organisation
 
 The CSS source library is **shared across implementations**. Each
 component has one canonical `_<name>.scss` partial under
@@ -337,7 +363,7 @@ alongside `bits-ui`). The DOM differences live in the primitive library,
 not the framework. `vanilla` is the exception since it's its own
 primitive layer.
 
-## 10. Packaging — bundle exports
+## 11. Packaging — bundle exports
 
 One CSS package, multiple curated bundle exports. Each implementation
 recommends which entry to install.
@@ -368,10 +394,10 @@ The JS implementation packages are separate, one per implementation:
 @stisla/base-ui/<name>                   per-component imports
 ```
 
-## 11. Component catalogue
+## 12. Component catalogue
 
 The spec'd components, grouped by family. Optional / core classification
-is per-implementation (§10) and lives in each impl's docs, not here.
+is per-implementation (§11) and lives in each impl's docs, not here.
 
 - **Action.** btn, btn-group, toggle, toggle-group, dropdown, link
 - **Display.** card, badge, icon-box, alert, kbd, avatar, preview-card
@@ -390,7 +416,7 @@ The contract names anatomy, parts, states, keyboard interactions, a11y
 requirements, and token usage. Implementations test against the
 per-component contract, not against any reference implementation.
 
-## 12. A11y baseline
+## 13. A11y baseline
 
 The spec's a11y commitments. Implementations must satisfy these; how they
 satisfy them is the implementation's choice (vanilla code; Base UI / Reka
@@ -419,9 +445,9 @@ UI / bits-ui doing it for them).
 
 Out of scope for the spec at 3.0: print stylesheet, screen-reader
 behaviour in legacy AT (NVDA + IE, etc.). RTL is handled at the CSS
-layer via logical properties (§15); no implementation work required.
+layer via logical properties (§16); no implementation work required.
 
-## 13. Dark mode
+## 14. Dark mode
 
 Two selectors, both supported out of the box:
 
@@ -438,7 +464,7 @@ chip flips luminance to read against the deep surface).
 Asymmetry: `--st-warning-foreground` stays dark in both themes. Yellow
 stays yellow; text on it stays dark.
 
-## 14. Browser support
+## 15. Browser support
 
 Evergreen Chromium, Firefox, Safari from mid-2023. Minimum versions:
 Safari 16.4+, Chrome 111+, Firefox 121+. No polyfills. Features the
@@ -446,7 +472,7 @@ spec relies on — OKLCH, `color-mix`, `:has()`, `@layer`, container
 queries, `inert`, `100dvh`, `env(safe-area-inset-*)` — are all
 well-supported in those versions.
 
-## 15. Direction-agnostic CSS
+## 16. Direction-agnostic CSS
 
 Stisla CSS is authored with CSS logical properties throughout. Components
 use `padding-inline`, `margin-inline-start`, `inset-inline-end`,
@@ -482,7 +508,7 @@ Sass mixins (`media-up`, `media-down`, `media-between`, `media-only`)
 and the breakpoint table are direction-agnostic — viewport size is
 independent of writing direction.
 
-## 16. Out of scope for the spec at 3.0
+## 17. Out of scope for the spec at 3.0
 
 - Print stylesheet — not required
 - v2 originals (`.metric`, `.invoice-summary`, etc.) — those become
@@ -494,7 +520,7 @@ independent of writing direction.
   by the per-component contracts; a formal test suite is a later
   artefact
 
-## 17. Where to look next
+## 18. Where to look next
 
 - **`spec/components/<name>.md`** — the per-component contract. Anatomy,
   parts, states, keyboard interactions, a11y, tokens.
