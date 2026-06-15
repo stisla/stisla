@@ -1,0 +1,83 @@
+// Stisla v3 — field.
+//
+// Wrapper that groups a label + control + helper text under one root,
+// plus an item element for inline input + label rows. Pairs with any
+// form control (.input, .select, .textarea, .checkbox, .radio, .switch,
+// .slider) and owns the layout contract; consumers wire `for`/`id` and
+// `aria-describedby` to the control inside.
+//
+// .field                root — vertical stack (label / control / helper)
+// .field--inline        root flips to a wrapping flex row. Use for
+//                       groups of .field__item that sit on one line
+//                       (radio sets, inline checkbox lists, toolbar
+//                       filters).
+// .field__label         label slot (stacked above, or beside in an item)
+// .field__description   helper text below the control
+// .field__error         error-tone helper, pair with [aria-invalid="true"]
+//                       on the control via aria-describedby so the screen
+//                       reader announces both
+// .field__item          inline input + label row (checkbox, radio,
+//                       settings row). Lives inside .field.
+// .field__item--reverse label first, input last (right-edge affordance)
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--field-gap, 0.375rem);
+}
+
+.field--inline {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  --field-gap: 1rem;
+}
+
+.field__label {
+  font-size: var(--field-label-font-size, 0.875rem);
+  font-weight: var(--field-label-font-weight, 500);
+  color: var(--field-label-color, var(--st-foreground));
+}
+
+.field__description {
+  font-size: var(--field-helper-font-size, 0.8125rem);
+  color: var(--field-helper-color, var(--st-muted-foreground));
+}
+
+.field__error {
+  font-size: var(--field-helper-font-size, 0.8125rem);
+  color: var(--field-error-color, var(--st-danger));
+}
+
+.field__item {
+  display: flex;
+  align-items: center;
+  gap: var(--field-item-gap, 0.5rem);
+  padding-block: var(--field-item-padding-y, 0.125rem);
+}
+
+// Label-first, input-last. justify-content keeps the input pinned to
+// the end of the row (useful in settings rows where the affordance
+// lives on the right edge).
+.field__item--reverse {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+// Inside an item, the label flips to the row-typography contract:
+// regular weight, clickable, and unselectable. Overrides the stacked-
+// label rules above.
+.field__item > .field__label {
+  font-weight: var(--field-item-label-font-weight, 400);
+  cursor: pointer;
+  line-height: 1.4;
+  user-select: none;
+}
+
+// Disabled input dims its label. :has() is well-supported per V3.md §2.
+// Covers .checkbox + .radio (the form-check-base inputs); .switch ships
+// its own label-disabled logic since the track-and-thumb shape differs.
+.field__item:has(> :is(.checkbox, .radio):disabled) > .field__label {
+  cursor: not-allowed;
+  opacity: var(--field-item-disabled-opacity, 0.55);
+}

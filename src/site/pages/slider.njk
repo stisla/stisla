@@ -13,8 +13,8 @@
     <h2>Default</h2>
     <p>Add <code>.slider</code> to an <code>&lt;input type="range"&gt;</code>. The filled portion paints in primary; the thumb sits as a narrow vertical pill at the value's position.</p>
     {% call ui.demo() %}
-    <div style="max-width: 24rem;">
-      <label for="basicSlider" class="form-label">Brightness</label>
+    <div class="field" style="max-width: 24rem;">
+      <label for="basicSlider" class="field__label">Brightness</label>
       <input type="range" class="slider" id="basicSlider" value="40" />
     </div>
     {% endcall %}
@@ -24,13 +24,13 @@
     <h2>Value display</h2>
     <p>Pair with <code>&lt;output&gt;</code> for a live readout. A one-line <code>oninput</code> handler keeps the display reactive; no framework required.</p>
     {% call ui.demo() %}
-    <div style="max-width: 24rem;">
-      <div class="d-flex justify-content-between align-items-baseline" style="margin-bottom: 0.375rem;">
-        <label for="outputSlider" class="form-label mb-0">Opacity</label>
+    <div class="field" style="max-width: 24rem;">
+      <div class="d-flex justify-content-between align-items-baseline">
+        <label for="outputSlider" class="field__label">Opacity</label>
         <output for="outputSlider" class="text-muted-foreground">30</output>
       </div>
       <input type="range" class="slider" id="outputSlider" value="30"
-             oninput="this.parentElement.querySelector('output').value = this.value" />
+             oninput="this.closest('.field').querySelector('output').value = this.value" />
     </div>
     {% endcall %}
   </section>
@@ -39,8 +39,8 @@
     <h2>Min and max</h2>
     <p>Set <code>min</code> and <code>max</code> to bound the slider. Defaults to <code>0</code> through <code>100</code>.</p>
     {% call ui.demo() %}
-    <div style="max-width: 24rem;">
-      <label for="minMaxSlider" class="form-label">Year</label>
+    <div class="field" style="max-width: 24rem;">
+      <label for="minMaxSlider" class="field__label">Year</label>
       <input type="range" class="slider" min="2000" max="2030" value="2026" id="minMaxSlider" />
     </div>
     {% endcall %}
@@ -50,8 +50,8 @@
     <h2>Steps</h2>
     <p>Add <code>step</code> to snap the thumb to fixed increments. Drop it (or use <code>any</code>) for fully continuous movement.</p>
     {% call ui.demo() %}
-    <div style="max-width: 24rem;">
-      <label for="stepSlider" class="form-label">Rating</label>
+    <div class="field" style="max-width: 24rem;">
+      <label for="stepSlider" class="field__label">Rating</label>
       <input type="range" class="slider" min="0" max="5" step="0.5" value="3" id="stepSlider" />
     </div>
     {% endcall %}
@@ -62,16 +62,16 @@
     <p>Three sizes match the <code>.input</code> family. The thumb is shorter than the track so the clipped sliver at value extremes is less prominent, and every dimension scales with <code>--st-density</code>.</p>
     {% call ui.demo() %}
     <div class="demo-stack" style="max-width: 24rem;">
-      <div>
-        <label for="smSlider" class="form-label">Small</label>
+      <div class="field">
+        <label for="smSlider" class="field__label">Small</label>
         <input type="range" class="slider slider--sm" id="smSlider" value="40" />
       </div>
-      <div>
-        <label for="defaultSlider" class="form-label">Default</label>
+      <div class="field">
+        <label for="defaultSlider" class="field__label">Default</label>
         <input type="range" class="slider" id="defaultSlider" value="60" />
       </div>
-      <div>
-        <label for="lgSlider" class="form-label">Large</label>
+      <div class="field">
+        <label for="lgSlider" class="field__label">Large</label>
         <input type="range" class="slider slider--lg" id="lgSlider" value="80" />
       </div>
     </div>
@@ -82,8 +82,8 @@
     <h2>Disabled</h2>
     <p>Add the <code>disabled</code> attribute to dim the track and thumb and block interaction.</p>
     {% call ui.demo() %}
-    <div style="max-width: 24rem;">
-      <label for="disabledSlider" class="form-label">Playback speed</label>
+    <div class="field" style="max-width: 24rem;">
+      <label for="disabledSlider" class="field__label">Playback speed</label>
       <input type="range" class="slider" id="disabledSlider" value="40" disabled />
     </div>
     {% endcall %}
@@ -93,8 +93,8 @@
     <h2>Browser validation</h2>
     <p>Native <code>:user-invalid</code> fires after the user moves the thumb past the allowed range. Usually a <code>step</code> mismatch on a constrained input. A danger border paints around the track; fill and thumb keep their brand colors.</p>
     {% call ui.demo() %}
-    <div style="max-width: 24rem;">
-      <label for="invalidSlider" class="form-label">Quantity (must land on a multiple of 10)</label>
+    <div class="field" style="max-width: 24rem;">
+      <label for="invalidSlider" class="field__label">Quantity (must land on a multiple of 10)</label>
       <input type="range" class="slider" id="invalidSlider" min="0" max="100" step="10" value="35" />
     </div>
     {% endcall %}
@@ -105,8 +105,8 @@
     <h2>Server validation</h2>
     <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky, so the red border persists until the library clears it.</p>
     {% call ui.demo() %}
-    <div style="max-width: 24rem;">
-      <label for="srvSlider" class="form-label">Threshold</label>
+    <div class="field" style="max-width: 24rem;">
+      <label for="srvSlider" class="field__label">Threshold</label>
       <input type="range" class="slider" id="srvSlider" aria-invalid="true" value="60" />
     </div>
     {% endcall %}

@@ -27,21 +27,21 @@
           </button>
         </div>
         <div class="drawer__body">
-          <div class="mb-4">
-            <label for="taskTitle" class="form-label">Title</label>
+          <div class="field mb-4">
+            <label for="taskTitle" class="field__label">Title</label>
             <input type="text" class="input" id="taskTitle" placeholder="Write the launch announcement">
           </div>
-          <div class="mb-4">
-            <label for="taskDesc" class="form-label">Description</label>
+          <div class="field mb-4">
+            <label for="taskDesc" class="field__label">Description</label>
             <textarea class="textarea" id="taskDesc" rows="4" placeholder="Anything the assignee should know before they start."></textarea>
           </div>
           <div class="row g-3">
-            <div class="col-6">
-              <label for="taskDue" class="form-label">Due</label>
+            <div class="col-6 field">
+              <label for="taskDue" class="field__label">Due</label>
               <input type="date" class="input" id="taskDue">
             </div>
-            <div class="col-6">
-              <label for="taskPriority" class="form-label">Priority</label>
+            <div class="col-6 field">
+              <label for="taskPriority" class="field__label">Priority</label>
               <select class="select" id="taskPriority">
                 <option>Low</option>
                 <option selected>Medium</option>
@@ -226,20 +226,20 @@
         </div>
         <div class="drawer__body">
           <div class="row g-3">
-            <div class="col-6">
-              <label for="profileFirst" class="form-label">First name</label>
+            <div class="col-6 field">
+              <label for="profileFirst" class="field__label">First name</label>
               <input type="text" class="input" id="profileFirst" value="Nauval">
             </div>
-            <div class="col-6">
-              <label for="profileLast" class="form-label">Last name</label>
+            <div class="col-6 field">
+              <label for="profileLast" class="field__label">Last name</label>
               <input type="text" class="input" id="profileLast" value="Azhar">
             </div>
-            <div class="col-12">
-              <label for="profileBio" class="form-label">Bio</label>
+            <div class="col-12 field">
+              <label for="profileBio" class="field__label">Bio</label>
               <textarea class="textarea" id="profileBio" rows="3">Designer and maintainer of Stisla.</textarea>
             </div>
-            <div class="col-12">
-              <label for="profileEmail" class="form-label">Email</label>
+            <div class="col-12 field">
+              <label for="profileEmail" class="field__label">Email</label>
               <input type="email" class="input" id="profileEmail" value="nauvalazhar2@gmail.com">
             </div>
           </div>
@@ -329,12 +329,12 @@
         </div>
         <div class="drawer__body">
           <p class="text-muted-foreground">A few details so teammates know who they're working with.</p>
-          <div class="mb-4">
-            <label for="setupName" class="form-label">Full name</label>
+          <div class="field mb-4">
+            <label for="setupName" class="field__label">Full name</label>
             <input type="text" class="input" id="setupName" value="Nauval Azhar">
           </div>
-          <div class="mb-4">
-            <label for="setupRole" class="form-label">Role</label>
+          <div class="field mb-4">
+            <label for="setupRole" class="field__label">Role</label>
             <select class="select" id="setupRole">
               <option>Engineering</option>
               <option selected>Design</option>
@@ -342,8 +342,8 @@
               <option>Operations</option>
             </select>
           </div>
-          <div>
-            <label for="setupTimezone" class="form-label">Timezone</label>
+          <div class="field">
+            <label for="setupTimezone" class="field__label">Timezone</label>
             <select class="select" id="setupTimezone">
               <option>UTC−05:00 New York</option>
               <option>UTC+00:00 London</option>
@@ -378,40 +378,44 @@
         <div class="drawer__body">
           <div class="mb-6">
             <div class="fw-medium mb-2">Status</div>
-            <div class="field-row">
-              <input class="checkbox" type="checkbox" id="fStatusOpen" checked>
-              <label class="field-row__label" for="fStatusOpen">Open</label>
-            </div>
-            <div class="field-row">
-              <input class="checkbox" type="checkbox" id="fStatusProgress" checked>
-              <label class="field-row__label" for="fStatusProgress">In progress</label>
-            </div>
-            <div class="field-row">
-              <input class="checkbox" type="checkbox" id="fStatusReview">
-              <label class="field-row__label" for="fStatusReview">In review</label>
-            </div>
-            <div class="field-row">
-              <input class="checkbox" type="checkbox" id="fStatusDone">
-              <label class="field-row__label" for="fStatusDone">Done</label>
+            <div class="field">
+              <div class="field__item">
+                <input class="checkbox" type="checkbox" id="fStatusOpen" checked>
+                <label class="field__label" for="fStatusOpen">Open</label>
+              </div>
+              <div class="field__item">
+                <input class="checkbox" type="checkbox" id="fStatusProgress" checked>
+                <label class="field__label" for="fStatusProgress">In progress</label>
+              </div>
+              <div class="field__item">
+                <input class="checkbox" type="checkbox" id="fStatusReview">
+                <label class="field__label" for="fStatusReview">In review</label>
+              </div>
+              <div class="field__item">
+                <input class="checkbox" type="checkbox" id="fStatusDone">
+                <label class="field__label" for="fStatusDone">Done</label>
+              </div>
             </div>
           </div>
           <div class="mb-6">
             <div class="fw-medium mb-2">Priority</div>
-            <div class="field-row">
-              <input class="checkbox" type="checkbox" id="fPriorityHigh" checked>
-              <label class="field-row__label" for="fPriorityHigh">High</label>
-            </div>
-            <div class="field-row">
-              <input class="checkbox" type="checkbox" id="fPriorityMed">
-              <label class="field-row__label" for="fPriorityMed">Medium</label>
-            </div>
-            <div class="field-row">
-              <input class="checkbox" type="checkbox" id="fPriorityLow">
-              <label class="field-row__label" for="fPriorityLow">Low</label>
+            <div class="field">
+              <div class="field__item">
+                <input class="checkbox" type="checkbox" id="fPriorityHigh" checked>
+                <label class="field__label" for="fPriorityHigh">High</label>
+              </div>
+              <div class="field__item">
+                <input class="checkbox" type="checkbox" id="fPriorityMed">
+                <label class="field__label" for="fPriorityMed">Medium</label>
+              </div>
+              <div class="field__item">
+                <input class="checkbox" type="checkbox" id="fPriorityLow">
+                <label class="field__label" for="fPriorityLow">Low</label>
+              </div>
             </div>
           </div>
-          <div>
-            <label for="fAssignee" class="form-label fw-medium">Assignee</label>
+          <div class="field">
+            <label for="fAssignee" class="field__label fw-medium">Assignee</label>
             <select class="select" id="fAssignee">
               <option selected>Anyone</option>
               <option>Me</option>

@@ -11,16 +11,16 @@
 
   <section>
     <h2>Basic</h2>
-    <p>Add <code>.checkbox</code> to the input. Wrap the input + label in <code>.field-row</code> so they sit on a flex row with the right gap.</p>
+    <p>Add <code>.checkbox</code> to the input. Wrap each input + label pair in <code>.field__item</code>, and group items inside a <code>.field</code> so the rows pick up consistent vertical rhythm. See <a class="link" href="/field">Field</a> for the full element family.</p>
     {% call ui.demo() %}
-    <div class="demo-stack" style="max-width: 24rem;">
-      <div class="field-row">
+    <div class="field" style="max-width: 24rem;">
+      <div class="field__item">
         <input class="checkbox" type="checkbox" id="defaultCheck" />
-        <label class="field-row__label" for="defaultCheck">Default checkbox</label>
+        <label class="field__label" for="defaultCheck">Default checkbox</label>
       </div>
-      <div class="field-row">
+      <div class="field__item">
         <input class="checkbox" type="checkbox" id="checkedCheck" checked />
-        <label class="field-row__label" for="checkedCheck">Checked by default</label>
+        <label class="field__label" for="checkedCheck">Checked by default</label>
       </div>
     </div>
     {% endcall %}
@@ -28,20 +28,20 @@
 
   <section>
     <h2>Inline</h2>
-    <p>Add <code>.field-row--inline</code> to line items up on the same row.</p>
+    <p>Add <code>.field--inline</code> on the field root to lay items on one row with wrap.</p>
     {% call ui.demo() %}
-    <div class="demo-row">
-      <div class="field-row field-row--inline">
+    <div class="field field--inline">
+      <div class="field__item">
         <input class="checkbox" type="checkbox" id="inlineCheck1" />
-        <label class="field-row__label" for="inlineCheck1">One</label>
+        <label class="field__label" for="inlineCheck1">One</label>
       </div>
-      <div class="field-row field-row--inline">
+      <div class="field__item">
         <input class="checkbox" type="checkbox" id="inlineCheck2" />
-        <label class="field-row__label" for="inlineCheck2">Two</label>
+        <label class="field__label" for="inlineCheck2">Two</label>
       </div>
-      <div class="field-row field-row--inline">
+      <div class="field__item">
         <input class="checkbox" type="checkbox" id="inlineCheck3" />
-        <label class="field-row__label" for="inlineCheck3">Three</label>
+        <label class="field__label" for="inlineCheck3">Three</label>
       </div>
     </div>
     {% endcall %}
@@ -51,10 +51,10 @@
     <h2>Indeterminate</h2>
     <p>The indeterminate state is set from script. There's no HTML attribute for it. Useful as a parent of a partially-selected group.</p>
     {% call ui.demo() %}
-    <div class="demo-stack" style="max-width: 24rem;">
-      <div class="field-row">
+    <div class="field" style="max-width: 24rem;">
+      <div class="field__item">
         <input class="checkbox" type="checkbox" id="indeterminateCheck" />
-        <label class="field-row__label" for="indeterminateCheck">Select all</label>
+        <label class="field__label" for="indeterminateCheck">Select all</label>
       </div>
       <script>
         document.getElementById('indeterminateCheck').indeterminate = true;
@@ -65,12 +65,12 @@
 
   <section>
     <h2>Reverse</h2>
-    <p>Add <code>.field-row--reverse</code> to flip the label to the start and the input to the end. Useful for settings rows where the affordance sits on the right edge.</p>
+    <p>Add <code>.field__item--reverse</code> to flip the label to the start and the input to the end. Useful for settings rows where the affordance sits on the right edge.</p>
     {% call ui.demo() %}
-    <div class="demo-stack" style="max-width: 24rem;">
-      <div class="field-row field-row--reverse">
+    <div class="field" style="max-width: 24rem;">
+      <div class="field__item field__item--reverse">
         <input class="checkbox" type="checkbox" id="reverseCheck" />
-        <label class="field-row__label" for="reverseCheck">Reversed checkbox</label>
+        <label class="field__label" for="reverseCheck">Reversed checkbox</label>
       </div>
     </div>
     {% endcall %}
@@ -80,14 +80,14 @@
     <h2>Disabled</h2>
     <p>Add <code>disabled</code> to dim the input and its label, and block interaction.</p>
     {% call ui.demo() %}
-    <div class="demo-stack" style="max-width: 24rem;">
-      <div class="field-row">
+    <div class="field" style="max-width: 24rem;">
+      <div class="field__item">
         <input class="checkbox" type="checkbox" id="disabledCheck" disabled />
-        <label class="field-row__label" for="disabledCheck">Disabled checkbox</label>
+        <label class="field__label" for="disabledCheck">Disabled checkbox</label>
       </div>
-      <div class="field-row">
+      <div class="field__item">
         <input class="checkbox" type="checkbox" id="disabledCheckedCheck" checked disabled />
-        <label class="field-row__label" for="disabledCheckedCheck">Disabled, checked</label>
+        <label class="field__label" for="disabledCheckedCheck">Disabled, checked</label>
       </div>
     </div>
     {% endcall %}
@@ -98,9 +98,11 @@
     <p>Pair <code>required</code> with the native <code>:user-invalid</code> pseudo. The browser fires it after the user attempts to submit the form, and clears it the moment the constraint is satisfied. Use for inline validation where the affordance owns its own state.</p>
     {% call ui.demo() %}
     <form class="demo-stack" style="max-width: 24rem;" onsubmit="event.preventDefault()">
-      <div class="field-row">
-        <input class="checkbox" type="checkbox" id="reqTerms" required />
-        <label class="field-row__label" for="reqTerms">Accept the terms</label>
+      <div class="field">
+        <div class="field__item">
+          <input class="checkbox" type="checkbox" id="reqTerms" required />
+          <label class="field__label" for="reqTerms">Accept the terms</label>
+        </div>
       </div>
       <button type="submit" class="btn btn--primary align-self-start">Submit</button>
     </form>
@@ -112,14 +114,14 @@
     <h2>Server validation</h2>
     <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky. Stisla just paints the red while the attribute is present. Remove it when your validator considers the field resolved.</p>
     {% call ui.demo() %}
-    <div class="demo-stack" style="max-width: 24rem;">
-      <div class="field-row">
+    <div class="field" style="max-width: 24rem;">
+      <div class="field__item">
         <input class="checkbox" type="checkbox" id="srvTerms" aria-invalid="true" />
-        <label class="field-row__label" for="srvTerms">Accept the terms</label>
+        <label class="field__label" for="srvTerms">Accept the terms</label>
       </div>
-      <div class="field-row">
+      <div class="field__item">
         <input class="checkbox" type="checkbox" id="srvTermsChecked" aria-invalid="true" checked />
-        <label class="field-row__label" for="srvTermsChecked">Accept the terms (checked, server still flagged)</label>
+        <label class="field__label" for="srvTermsChecked">Accept the terms (checked, server still flagged)</label>
       </div>
     </div>
     {% endcall %}
@@ -128,7 +130,7 @@
 
   <section>
     <h2>Without labels</h2>
-    <p>Drop the <code>.field-row</code> wrapper to use a bare <code>.checkbox</code>. Always pair with an <code>aria-label</code> for accessibility. Common in tables (row-select) and toolbars.</p>
+    <p>Drop the <code>.field__item</code> wrapper to use a bare <code>.checkbox</code>. Always pair with an <code>aria-label</code> for accessibility. Common in tables (row-select) and toolbars.</p>
     {% call ui.demo() %}
     <div class="demo-row">
       <input class="checkbox" type="checkbox" aria-label="Bare checkbox" />

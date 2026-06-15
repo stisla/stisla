@@ -13,8 +13,8 @@
     <h2>Basic</h2>
     <p>Add <code>.input</code> to any <code>&lt;input&gt;</code>. Pair with a <code>&lt;label&gt;</code> tied via <code>for</code>/<code>id</code> so the field is reachable. The same shape extends to <a class="link" href="/select">Select</a> and <a class="link" href="/textarea">Textarea</a> so they line up in a form row.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
-      <label for="basicInput" class="form-label">Email</label>
+    <div class="field" style="max-width: 24rem;">
+      <label for="basicInput" class="field__label">Email</label>
       <input type="email" class="input" id="basicInput" placeholder="you@example.com" />
     </div>
     {% endcall %}
@@ -48,12 +48,12 @@
 
   <section>
     <h2>Helper text</h2>
-    <p>Use <code>.form-text</code> below the input for short hints. Wire it to the input with <code>aria-describedby</code> so screen readers announce it.</p>
+    <p>Use <code>.field__description</code> below the input for short hints. Wire it to the input with <code>aria-describedby</code> so screen readers announce it.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
-      <label for="passwordInput" class="form-label">Password</label>
+    <div class="field" style="max-width: 24rem;">
+      <label for="passwordInput" class="field__label">Password</label>
       <input type="password" class="input" id="passwordInput" aria-describedby="passwordHelp" />
-      <div id="passwordHelp" class="form-text">At least 8 characters, one number.</div>
+      <div id="passwordHelp" class="field__description">At least 8 characters, one number.</div>
     </div>
     {% endcall %}
   </section>
@@ -63,10 +63,10 @@
     <p>Pair native constraint attributes (<code>required</code>, <code>type="email"</code>, <code>pattern</code>, <code>min</code>, <code>max</code>) with the <code>:user-invalid</code> pseudo. The browser fires it after the user interacts with the field, and clears it the moment the value satisfies the constraints. Use for inline validation where the field owns its own state.</p>
     {% call ui.demo() %}
     <form class="demo-stack w-100" style="max-width: 24rem;" onsubmit="event.preventDefault()">
-      <div>
-        <label for="reqEmail" class="form-label">Email</label>
+      <div class="field">
+        <label for="reqEmail" class="field__label">Email</label>
         <input type="email" class="input" id="reqEmail" required placeholder="you@example.com" />
-        <div class="form-text">Hit Submit to trigger <code>:user-invalid</code>. Enter a valid email and the red clears on its own.</div>
+        <div class="field__description">Hit Submit to trigger <code>:user-invalid</code>. Enter a valid email and the red clears on its own.</div>
       </div>
       <button type="submit" class="btn btn--primary">Submit</button>
     </form>
@@ -75,11 +75,11 @@
 
   <section>
     <h2>Server validation</h2>
-    <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky. Frameworks like React Hook Form, Formik, vee-validate, and Rails / Django / Laravel form helpers manage this based on their own error state. Pair with a <code>.form-text--error</code> message tied via <code>aria-describedby</code> so the error reaches assistive tech.</p>
+    <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky. Frameworks like React Hook Form, Formik, vee-validate, and Rails / Django / Laravel form helpers manage this based on their own error state. Pair with a <code>.field__error</code> message tied via <code>aria-describedby</code> so the error reaches assistive tech.</p>
     {% call ui.demo() %}
     <div class="demo-stack w-100" style="max-width: 24rem;">
-      <div>
-        <label for="srvEmail" class="form-label">Email</label>
+      <div class="field">
+        <label for="srvEmail" class="field__label">Email</label>
         <input
           type="email"
           class="input"
@@ -87,7 +87,7 @@
           value="not-an-email"
           aria-invalid="true"
           aria-describedby="srvEmailError" />
-        <div id="srvEmailError" class="form-text form-text--error">Please enter a valid email address.</div>
+        <div id="srvEmailError" class="field__error">Please enter a valid email address.</div>
       </div>
     </div>
     {% endcall %}
@@ -109,8 +109,8 @@
     <h2>Plain text</h2>
     <p>Swap <code>.input</code> for <code>.input--plaintext</code> to render a readonly value as bare text. No border and no background, but it still aligns with neighboring inputs in a form row. Pair with <code>readonly</code> on the input.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
-      <label for="plainEmail" class="form-label">Email</label>
+    <div class="field" style="max-width: 24rem;">
+      <label for="plainEmail" class="field__label">Email</label>
       <input type="email" readonly class="input--plaintext" id="plainEmail" value="you@example.com" />
     </div>
     {% endcall %}
@@ -120,8 +120,8 @@
     <h2>Color picker</h2>
     <p>Add <code>.input</code> to any <code>&lt;input type="color"&gt;</code>. The type selector handles the shape, no modifier class needed. The field collapses to a small swatch (no full-width stretch) and the native chip wears the field's inner radius (outer minus padding, V3.md §3.4) so the swatch and the frame share a center.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
-      <label for="brandColor" class="form-label">Brand</label>
+    <div class="field" style="max-width: 24rem;">
+      <label for="brandColor" class="field__label">Brand</label>
       <input type="color" class="input" id="brandColor" value="#3b82f6" />
     </div>
     {% endcall %}
@@ -131,8 +131,8 @@
     <h2>File input</h2>
     <p>The same class styles <code>type="file"</code>. The selector button sits as a small inset chip inside the field (same shape as a <code>.btn--sm.btn--neutral</code>) and the filename trails after it.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
-      <label for="fileInput" class="form-label">Upload</label>
+    <div class="field" style="max-width: 24rem;">
+      <label for="fileInput" class="field__label">Upload</label>
       <input type="file" class="input" id="fileInput" />
     </div>
     {% endcall %}

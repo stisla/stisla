@@ -29,8 +29,10 @@
           </div>
           <div class="dialog__body">
             <p>Send a link by email. The invite expires in seven days.</p>
-            <label for="dialogBasicEmail" class="form-label">Email</label>
-            <input type="email" class="input" id="dialogBasicEmail" placeholder="name@example.com" autocomplete="email" autofocus>
+            <div class="field">
+              <label for="dialogBasicEmail" class="field__label">Email</label>
+              <input type="email" class="input" id="dialogBasicEmail" placeholder="name@example.com" autocomplete="email" autofocus>
+            </div>
           </div>
           <div class="dialog__footer">
             <button type="button" class="btn btn--ghost btn--neutral" data-stisla-dialog-dismiss>Cancel</button>
@@ -239,9 +241,11 @@
             <h3 class="dialog__title" id="dialogStaticLabel">Choose a password</h3>
           </div>
           <div class="dialog__body">
-            <label for="staticPwd" class="form-label">New password</label>
-            <input type="password" class="input" id="staticPwd" autocomplete="new-password">
-            <p class="form-text mt-1">At least twelve characters. Mix letters, numbers, and a symbol.</p>
+            <div class="field">
+              <label for="staticPwd" class="field__label">New password</label>
+              <input type="password" class="input" id="staticPwd" autocomplete="new-password">
+              <p class="field__description">At least twelve characters. Mix letters, numbers, and a symbol.</p>
+            </div>
           </div>
           <div class="dialog__footer">
             <button type="button" class="btn btn--ghost btn--neutral" data-stisla-dialog-dismiss>Cancel</button>

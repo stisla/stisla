@@ -362,7 +362,7 @@ is per-implementation (§10) and lives in each impl's docs, not here.
 - **Display.** card, badge, icon-box, alert, kbd, avatar, preview-card
 - **Status.** progress, spinner, placeholders, toast, tooltip
 - **Form.** input, select, textarea, checkbox, radio, switch, slider,
-  input-group, field-row, form-label, otp, custom-select, autocomplete,
+  field, input-group, otp, custom-select, autocomplete,
   combobox, command, date-picker, color-picker, file-upload
 - **Navigation.** navbar, sidebar, breadcrumb, pagination, tabs, page
 - **Overlay.** dialog, drawer, popover

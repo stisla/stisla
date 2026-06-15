@@ -11,20 +11,20 @@
 
   <section>
     <h2>Basic</h2>
-    <p>Add <code>.radio</code> to the input. Wrap the input and label in <code>.field-row</code>. Group radios by giving them a shared <code>name</code>, and the browser handles single-selection within the group.</p>
+    <p>Add <code>.radio</code> to the input. Wrap each input + label pair in <code>.field__item</code>, and group items inside a <code>.field</code> for consistent vertical rhythm. Give every radio in the group a shared <code>name</code> so the browser handles single-selection. See <a class="link" href="/field">Field</a> for the full element family.</p>
     {% call ui.demo() %}
-    <div class="demo-stack" style="max-width: 24rem;">
-      <div class="field-row">
+    <div class="field" style="max-width: 24rem;">
+      <div class="field__item">
         <input class="radio" type="radio" name="defaultRadio" id="defaultRadio1" checked />
-        <label class="field-row__label" for="defaultRadio1">First option</label>
+        <label class="field__label" for="defaultRadio1">First option</label>
       </div>
-      <div class="field-row">
+      <div class="field__item">
         <input class="radio" type="radio" name="defaultRadio" id="defaultRadio2" />
-        <label class="field-row__label" for="defaultRadio2">Second option</label>
+        <label class="field__label" for="defaultRadio2">Second option</label>
       </div>
-      <div class="field-row">
+      <div class="field__item">
         <input class="radio" type="radio" name="defaultRadio" id="defaultRadio3" />
-        <label class="field-row__label" for="defaultRadio3">Third option</label>
+        <label class="field__label" for="defaultRadio3">Third option</label>
       </div>
     </div>
     {% endcall %}
@@ -32,20 +32,20 @@
 
   <section>
     <h2>Inline</h2>
-    <p>Add <code>.field-row--inline</code> to line items up on the same row.</p>
+    <p>Add <code>.field--inline</code> on the field root to lay items on one row with wrap.</p>
     {% call ui.demo() %}
-    <div class="demo-row">
-      <div class="field-row field-row--inline">
+    <div class="field field--inline">
+      <div class="field__item">
         <input class="radio" type="radio" name="inlineRadio" id="inlineRadio1" checked />
-        <label class="field-row__label" for="inlineRadio1">One</label>
+        <label class="field__label" for="inlineRadio1">One</label>
       </div>
-      <div class="field-row field-row--inline">
+      <div class="field__item">
         <input class="radio" type="radio" name="inlineRadio" id="inlineRadio2" />
-        <label class="field-row__label" for="inlineRadio2">Two</label>
+        <label class="field__label" for="inlineRadio2">Two</label>
       </div>
-      <div class="field-row field-row--inline">
+      <div class="field__item">
         <input class="radio" type="radio" name="inlineRadio" id="inlineRadio3" />
-        <label class="field-row__label" for="inlineRadio3">Three</label>
+        <label class="field__label" for="inlineRadio3">Three</label>
       </div>
     </div>
     {% endcall %}
@@ -53,12 +53,12 @@
 
   <section>
     <h2>Reverse</h2>
-    <p>Add <code>.field-row--reverse</code> to flip the label to the start and the input to the end.</p>
+    <p>Add <code>.field__item--reverse</code> to flip the label to the start and the input to the end.</p>
     {% call ui.demo() %}
-    <div class="demo-stack" style="max-width: 24rem;">
-      <div class="field-row field-row--reverse">
+    <div class="field" style="max-width: 24rem;">
+      <div class="field__item field__item--reverse">
         <input class="radio" type="radio" name="reverseRadio" id="reverseRadio" checked />
-        <label class="field-row__label" for="reverseRadio">Reversed radio</label>
+        <label class="field__label" for="reverseRadio">Reversed radio</label>
       </div>
     </div>
     {% endcall %}
@@ -68,14 +68,14 @@
     <h2>Disabled</h2>
     <p>Add <code>disabled</code> to dim the input and its label, and block interaction.</p>
     {% call ui.demo() %}
-    <div class="demo-stack" style="max-width: 24rem;">
-      <div class="field-row">
+    <div class="field" style="max-width: 24rem;">
+      <div class="field__item">
         <input class="radio" type="radio" name="disabledRadio" id="disabledRadio1" disabled />
-        <label class="field-row__label" for="disabledRadio1">Disabled radio</label>
+        <label class="field__label" for="disabledRadio1">Disabled radio</label>
       </div>
-      <div class="field-row">
+      <div class="field__item">
         <input class="radio" type="radio" name="disabledRadio" id="disabledRadio2" checked disabled />
-        <label class="field-row__label" for="disabledRadio2">Disabled, selected</label>
+        <label class="field__label" for="disabledRadio2">Disabled, selected</label>
       </div>
     </div>
     {% endcall %}
@@ -86,13 +86,15 @@
     <p>Pair <code>required</code> on any radio in the group with the native <code>:user-invalid</code> pseudo. The browser fires it after the user attempts to submit the form, and clears it the moment any radio in the group is selected.</p>
     {% call ui.demo() %}
     <form class="demo-stack" style="max-width: 24rem;" onsubmit="event.preventDefault()">
-      <div class="field-row">
-        <input class="radio" type="radio" name="reqPlan" id="reqPlanBasic" required />
-        <label class="field-row__label" for="reqPlanBasic">Basic plan</label>
-      </div>
-      <div class="field-row">
-        <input class="radio" type="radio" name="reqPlan" id="reqPlanPro" required />
-        <label class="field-row__label" for="reqPlanPro">Pro plan</label>
+      <div class="field">
+        <div class="field__item">
+          <input class="radio" type="radio" name="reqPlan" id="reqPlanBasic" required />
+          <label class="field__label" for="reqPlanBasic">Basic plan</label>
+        </div>
+        <div class="field__item">
+          <input class="radio" type="radio" name="reqPlan" id="reqPlanPro" required />
+          <label class="field__label" for="reqPlanPro">Pro plan</label>
+        </div>
       </div>
       <button type="submit" class="btn btn--primary align-self-start">Submit</button>
     </form>
@@ -104,14 +106,14 @@
     <h2>Server validation</h2>
     <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky. Stisla just paints the red while the attribute is present. Remove it when your validator considers the field resolved.</p>
     {% call ui.demo() %}
-    <div class="demo-stack" style="max-width: 24rem;">
-      <div class="field-row">
+    <div class="field" style="max-width: 24rem;">
+      <div class="field__item">
         <input class="radio" type="radio" name="srvPlan" id="srvPlanBasic" aria-invalid="true" />
-        <label class="field-row__label" for="srvPlanBasic">Basic plan</label>
+        <label class="field__label" for="srvPlanBasic">Basic plan</label>
       </div>
-      <div class="field-row">
+      <div class="field__item">
         <input class="radio" type="radio" name="srvPlan" id="srvPlanPro" aria-invalid="true" checked />
-        <label class="field-row__label" for="srvPlanPro">Pro plan (selected, server still flagged)</label>
+        <label class="field__label" for="srvPlanPro">Pro plan (selected, server still flagged)</label>
       </div>
     </div>
     {% endcall %}
@@ -120,7 +122,7 @@
 
   <section>
     <h2>Without labels</h2>
-    <p>Drop the <code>.field-row</code> wrapper to use a bare <code>.radio</code>. Always pair with an <code>aria-label</code> for accessibility.</p>
+    <p>Drop the <code>.field__item</code> wrapper to use a bare <code>.radio</code>. Always pair with an <code>aria-label</code> for accessibility.</p>
     {% call ui.demo() %}
     <div class="demo-row">
       <input class="radio" type="radio" name="bareRadio" aria-label="Bare radio" />

@@ -13,8 +13,8 @@
     <h2>Basic</h2>
     <p>Add <code>.textarea</code> to any <code>&lt;textarea&gt;</code>. The fixed-height contract from <a class="link" href="/input">.input</a> drops, so <code>rows</code> and content drive the height. The resize handle is vertical only, so the width tracks the parent.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
-      <label for="basicTextarea" class="form-label">Notes</label>
+    <div class="field" style="max-width: 24rem;">
+      <label for="basicTextarea" class="field__label">Notes</label>
       <textarea class="textarea" id="basicTextarea" rows="3" placeholder="Anything else we should know?"></textarea>
     </div>
     {% endcall %}
@@ -34,12 +34,12 @@
 
   <section>
     <h2>Helper text</h2>
-    <p>Use <code>.form-text</code> below the field for short hints. Wire it to the textarea with <code>aria-describedby</code> so screen readers announce it.</p>
+    <p>Use <code>.field__description</code> below the field for short hints. Wire it to the textarea with <code>aria-describedby</code> so screen readers announce it.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
-      <label for="bioTextarea" class="form-label">Bio</label>
+    <div class="field" style="max-width: 24rem;">
+      <label for="bioTextarea" class="field__label">Bio</label>
       <textarea class="textarea" id="bioTextarea" rows="3" aria-describedby="bioHelp"></textarea>
-      <div id="bioHelp" class="form-text">A sentence or two. Visible on your public profile.</div>
+      <div id="bioHelp" class="field__description">A sentence or two. Visible on your public profile.</div>
     </div>
     {% endcall %}
   </section>
@@ -49,10 +49,10 @@
     <p>Pair native constraint attributes (<code>required</code>, <code>minlength</code>, <code>maxlength</code>) with the <code>:user-invalid</code> pseudo. The browser fires it after the user interacts with the field, and clears it the moment the value satisfies the constraints.</p>
     {% call ui.demo() %}
     <form class="demo-stack w-100" style="max-width: 24rem;" onsubmit="event.preventDefault()">
-      <div>
-        <label for="reqMessage" class="form-label">Message</label>
+      <div class="field">
+        <label for="reqMessage" class="field__label">Message</label>
         <textarea class="textarea" id="reqMessage" rows="3" required minlength="10" placeholder="At least 10 characters"></textarea>
-        <div class="form-text">Hit Submit with fewer than 10 characters to trigger <code>:user-invalid</code>. Type past 10 and the red clears on its own.</div>
+        <div class="field__description">Hit Submit with fewer than 10 characters to trigger <code>:user-invalid</code>. Type past 10 and the red clears on its own.</div>
       </div>
       <button type="submit" class="btn btn--primary">Submit</button>
     </form>
@@ -61,18 +61,18 @@
 
   <section>
     <h2>Server validation</h2>
-    <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky, and Stisla just paints while it's present. Pair with a <code>.form-text--error</code> message tied via <code>aria-describedby</code>.</p>
+    <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky, and Stisla just paints while it's present. Pair with a <code>.field__error</code> message tied via <code>aria-describedby</code>.</p>
     {% call ui.demo() %}
     <div class="demo-stack w-100" style="max-width: 24rem;">
-      <div>
-        <label for="srvFeedback" class="form-label">Feedback</label>
+      <div class="field">
+        <label for="srvFeedback" class="field__label">Feedback</label>
         <textarea
           class="textarea"
           id="srvFeedback"
           rows="3"
           aria-invalid="true"
           aria-describedby="srvFeedbackError">Way too short.</textarea>
-        <div id="srvFeedbackError" class="form-text form-text--error">Please write at least 50 characters.</div>
+        <div id="srvFeedbackError" class="field__error">Please write at least 50 characters.</div>
       </div>
     </div>
     {% endcall %}

@@ -6,7 +6,7 @@
 // indeterminate fill, and the checked / indeterminate indicator SVGs.
 //
 // BEM: .checkbox (no modifiers — size scales by --st-density, the wrapper
-// `.field-row` owns layout, validation lives on the input itself).
+// `.field__item` owns layout, validation lives on the input itself).
 //
 // State derivation: native pseudos first (V3.md §3.6). :checked,
 // :indeterminate, :disabled, :focus-visible, plus [aria-invalid="true"]

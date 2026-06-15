@@ -6,7 +6,7 @@
 // the checked-state dot indicator.
 //
 // BEM: .radio (no modifiers — size scales by --st-density, the wrapper
-// `.field-row` owns layout, validation lives on the input itself).
+// `.field__item` owns layout, validation lives on the input itself).
 //
 // :indeterminate is intentionally NOT styled here. Per Selectors L4 a
 // radio matches :indeterminate when no radio in its group is checked,

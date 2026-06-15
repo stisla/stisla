@@ -13,8 +13,8 @@
     <h2>Basic</h2>
     <p>Add <code>.select</code> to any <code>&lt;select&gt;</code>. The field shape matches <a class="link" href="/input">.input</a> and <a class="link" href="/textarea">.textarea</a> so the three line up in a form row. The chevron and appearance reset come from the class. Pair with a <code>&lt;label&gt;</code> tied via <code>for</code>/<code>id</code> so the field is reachable.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
-      <label for="basicSelect" class="form-label">Country</label>
+    <div class="field" style="max-width: 24rem;">
+      <label for="basicSelect" class="field__label">Country</label>
       <select class="select" id="basicSelect">
         <option selected>Pick one</option>
         <option value="id">Indonesia</option>
@@ -53,8 +53,8 @@
     <h2>Option groups</h2>
     <p>Wrap related options in <code>&lt;optgroup&gt;</code> to label sections inside the menu.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
-      <label for="groupedSelect" class="form-label">City</label>
+    <div class="field" style="max-width: 24rem;">
+      <label for="groupedSelect" class="field__label">City</label>
       <select class="select" id="groupedSelect">
         <option selected>Pick one</option>
         <optgroup label="Indonesia">
@@ -75,8 +75,8 @@
     <h2>Multiple</h2>
     <p>Add the <code>multiple</code> attribute to let users select several options. The chevron drops and the control grows past the default height to render the list inline.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
-      <label for="multipleSelect" class="form-label">Tags</label>
+    <div class="field" style="max-width: 24rem;">
+      <label for="multipleSelect" class="field__label">Tags</label>
       <select class="select" id="multipleSelect" multiple aria-label="Multiple select">
         <option value="bug">Bug</option>
         <option value="docs" selected>Docs</option>
@@ -106,17 +106,17 @@
 
   <section>
     <h2>Helper text</h2>
-    <p>Use <code>.form-text</code> below the field for short hints. Wire it to the select with <code>aria-describedby</code> so screen readers announce it.</p>
+    <p>Use <code>.field__description</code> below the field for short hints. Wire it to the select with <code>aria-describedby</code> so screen readers announce it.</p>
     {% call ui.demo() %}
-    <div class="w-100" style="max-width: 24rem;">
-      <label for="planSelect" class="form-label">Plan</label>
+    <div class="field" style="max-width: 24rem;">
+      <label for="planSelect" class="field__label">Plan</label>
       <select class="select" id="planSelect" aria-describedby="planHelp">
         <option selected>Pick one</option>
         <option value="free">Free</option>
         <option value="pro">Pro</option>
         <option value="team">Team</option>
       </select>
-      <div id="planHelp" class="form-text">You can change this later from billing.</div>
+      <div id="planHelp" class="field__description">You can change this later from billing.</div>
     </div>
     {% endcall %}
   </section>
@@ -144,15 +144,15 @@
     <p>Pair <code>required</code> with a placeholder <code>&lt;option value=""&gt;</code> so the user has to pick something with a real value. The native <code>:user-invalid</code> pseudo fires after the user interacts with the field, and clears the moment a valid option is selected.</p>
     {% call ui.demo() %}
     <form class="demo-stack w-100" style="max-width: 24rem;" onsubmit="event.preventDefault()">
-      <div>
-        <label for="reqPlan" class="form-label">Plan</label>
+      <div class="field">
+        <label for="reqPlan" class="field__label">Plan</label>
         <select class="select" id="reqPlan" required>
           <option value="" selected>Pick a plan</option>
           <option value="free">Free</option>
           <option value="pro">Pro</option>
           <option value="team">Team</option>
         </select>
-        <div class="form-text">Hit Submit without picking to trigger <code>:user-invalid</code>. Pick any option and the red clears on its own.</div>
+        <div class="field__description">Hit Submit without picking to trigger <code>:user-invalid</code>. Pick any option and the red clears on its own.</div>
       </div>
       <button type="submit" class="btn btn--primary">Submit</button>
     </form>
@@ -161,11 +161,11 @@
 
   <section>
     <h2>Server validation</h2>
-    <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky; Stisla just paints while it's present. Pair with a <code>.form-text--error</code> message tied via <code>aria-describedby</code>.</p>
+    <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky; Stisla just paints while it's present. Pair with a <code>.field__error</code> message tied via <code>aria-describedby</code>.</p>
     {% call ui.demo() %}
     <div class="demo-stack w-100" style="max-width: 24rem;">
-      <div>
-        <label for="srvPlan" class="form-label">Plan</label>
+      <div class="field">
+        <label for="srvPlan" class="field__label">Plan</label>
         <select
           class="select"
           id="srvPlan"
@@ -176,7 +176,7 @@
           <option value="pro">Pro</option>
           <option value="team">Team</option>
         </select>
-        <div id="srvPlanError" class="form-text form-text--error">This plan isn't available in your region.</div>
+        <div id="srvPlanError" class="field__error">This plan isn't available in your region.</div>
       </div>
     </div>
     {% endcall %}

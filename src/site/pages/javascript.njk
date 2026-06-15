@@ -43,8 +43,8 @@
     <p>If you need a handle to open from JS, listen for events, or destroy on unmount, construct the class directly. Each component class is also a named export on the bundle.</p>
     {% call ui.code(lang='js') %}
 const dialog = new Stisla.Dialog(document.getElementById('hello'));
-dialog.show();
-dialog.root.addEventListener('stisla:dialog:hidden', () => {
+dialog.open();
+dialog.el.addEventListener('stisla:dialog:closed', () => {
   // ...
 });
     {% endcall %}
@@ -59,5 +59,54 @@ dialog.root.addEventListener('stisla:dialog:hidden', () => {
 Stisla.init(document.getElementById('panel'));
     {% endcall %}
     <p>Calling <code>Stisla.init()</code> with no argument re-scans the whole document. Prefer scoping it to the inserted subtree when you can; it&rsquo;s cheaper and avoids touching nodes you didn&rsquo;t change.</p>
+  </section>
+
+  <section>
+    <h2>React and other SPA frameworks</h2>
+    <p>A dedicated <code>@stisla/react</code> implementation is on the roadmap and will expose components as idiomatic React with props, refs, and controlled state. Until it ships, the vanilla classes work from inside <code>useEffect</code>: construct on mount, destroy on cleanup.</p>
+    {% call ui.code(lang='jsx') %}
+import { useEffect, useRef } from 'react';
+import { Dialog } from '@stisla/vanilla';
+
+function HelloDialog() {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const dialog = new Dialog(ref.current);
+    const onOpened = (e) => console.log('opened', e.detail);
+    ref.current.addEventListener('stisla:dialog:opened', onOpened);
+    return () => {
+      ref.current?.removeEventListener('stisla:dialog:opened', onOpened);
+      dialog.destroy();
+    };
+  }, []);
+
+  return (
+    <div ref={ref} className="dialog" data-state="closed" role="dialog" aria-modal="true" tabIndex={-1}>
+      <div className="dialog__backdrop" data-stisla-dialog-dismiss />
+      <div className="dialog__content">
+        <div className="dialog__body">Hello.</div>
+      </div>
+    </div>
+  );
+}
+    {% endcall %}
+    <p>There is no <code>onOpened</code>-style prop yet, so attach listeners with <code>addEventListener</code> against the root element and remove them on cleanup. The constructor auto-destroys any prior instance on the same element, which keeps React&rsquo;s StrictMode double-mount safe. Vue, Svelte, and Solid follow the same shape with their own lifecycle hooks.</p>
+
+    <h3>What works</h3>
+    <ul>
+      <li>Construct, listen, and destroy from a <code>useEffect</code> against a stable ref.</li>
+      <li>Pass options to the constructor as a second argument. They replace the per-attribute <code>data-stisla-*</code> path.</li>
+      <li>Call <code>Stisla.init(ref.current)</code> after rendering server-fetched HTML that already carries <code>data-stisla-*</code> markup. The scanner skips elements that already have an instance, so it&rsquo;s safe to call repeatedly.</li>
+      <li>Render the markup on the server. The runtime guards <code>document</code> access, so importing the bundle is fine in SSR; instances are only constructed once the effect fires on the client.</li>
+    </ul>
+
+    <h3>What to watch</h3>
+    <ul>
+      <li>Some components mutate DOM outside their own subtree. Popover and tooltip portal into <code>body</code>; dialog and drawer set <code>inert</code> on siblings. React does not know about those mutations, so keep the component mounted for its full lifetime rather than toggling it through a parent rerender.</li>
+      <li>Open and close state lives on the instance, which toggles <code>data-state</code> on the root. To drive it from React state, call <code>instance.open()</code> and <code>instance.close()</code> from a <code>useEffect</code> keyed on your value. Don&rsquo;t conditionally unmount the root, or the instance dies with it.</li>
+      <li>The scanner has no <code>destroyAll(root)</code> counterpart. If you used <code>Stisla.init(root)</code> over a subtree, walk that same subtree on cleanup and call <code>Stisla.get(el).destroy()</code> on each one you wired up.</li>
+      <li>This path covers most cases but isn&rsquo;t the long-term story. If a React-first API matters more than shipping today, wait for <code>@stisla/react</code> instead of bridging to vanilla instances.</li>
+    </ul>
   </section>
 {% endblock %}

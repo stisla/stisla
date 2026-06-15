@@ -226,18 +226,20 @@
         Sign in
       </button>
       <form class="dropdown-menu gap-3 p-3" id="ddForm" data-stisla-dropdown data-stisla-dropdown-auto-close="outside" data-state="closed" style="min-width: 18rem;">
-        <div class="d-flex flex-column gap-1">
-          <label for="ddFormEmail" class="form-label">Email</label>
+        <div class="field" style="--field-gap: 0.25rem;">
+          <label for="ddFormEmail" class="field__label">Email</label>
           <input type="email" class="input" id="ddFormEmail" placeholder="you@example.com">
         </div>
-        <div class="d-flex flex-column gap-1">
-          <label for="ddFormPassword" class="form-label">Password</label>
+        <div class="field" style="--field-gap: 0.25rem;">
+          <label for="ddFormPassword" class="field__label">Password</label>
           <input type="password" class="input" id="ddFormPassword">
         </div>
-        <label class="field-row" for="ddFormRemember">
-          <input type="checkbox" class="checkbox" id="ddFormRemember">
-          <span class="field-row__label">Remember me</span>
-        </label>
+        <div class="field">
+          <label class="field__item" for="ddFormRemember">
+            <input type="checkbox" class="checkbox" id="ddFormRemember">
+            <span class="field__label">Remember me</span>
+          </label>
+        </div>
         <button type="submit" class="btn btn--primary w-100">Sign in</button>
       </form>
     </div>
