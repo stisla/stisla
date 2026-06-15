@@ -64,7 +64,7 @@ Biggest engineering item. Blocks Phase D.
   `packages/*` from one root build.
 - [x] **`exports` maps** — each package exposes its pre-compiled bundle as
   the default subpath, `./full` for the full kitchen-sink bundle,
-  `./integrations/<name>` per integration, plus raw-source access
+  `./components/<name>` per individual optional component, plus raw-source access
   (`./scss/*` for SCSS forking, `./src/*` for tree-shakable ESM).
 - [x] **Smoke test** — `npm run smoke:packages` builds, packs, installs both
   tarballs into a temp consumer, and resolves every declared export subpath
@@ -111,7 +111,7 @@ Unblocked by Phase C.
 
 - [x] **Installation page** — `src/site/pages/installation.njk`. npm install
   for `@stisla/css` + `@stisla/vanilla` (peerDep lockstep), pre-compiled
-  bundle imports (default, `/full`, `/integrations/<name>`), CDN snippet,
+  bundle imports (default, `/full`, `/components/<name>`), CDN snippet,
   Sass-source forking path. Cross-links to `/optimization` for the recipe.
 - [x] **Optimization page** — `src/site/pages/optimization.njk`. Three
   levers: PurgeCSS / LightningCSS purge against rendered HTML, fork

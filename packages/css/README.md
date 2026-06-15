@@ -1,7 +1,8 @@
 # @stisla/css
 
-Universal CSS for [Stisla](https://stisla.dev) v3 — the framework-agnostic
-stylesheet that any implementation (vanilla, React, Vue, Svelte) reads from.
+CSS for the vanilla implementation of [Stisla](https://stisla.dev) v3.
+Other implementations (React + Base UI, Vue + Reka UI, Svelte + bits-ui)
+ship their own curated bundle exports from this package — see SPEC.md §10.
 
 ```bash
 npm install @stisla/css
@@ -12,9 +13,9 @@ npm install @stisla/css
 ### Pre-compiled bundle (default)
 
 ```js
-import '@stisla/css';                       // core
-import '@stisla/css/full';                  // core + every integration
-import '@stisla/css/integrations/carousel'; // à la carte
+import '@stisla/css';                     // vanilla core
+import '@stisla/css/full';                // vanilla core + every optional
+import '@stisla/css/components/carousel'; // à la carte
 ```
 
 Or as a `<link>` if you're not bundling:

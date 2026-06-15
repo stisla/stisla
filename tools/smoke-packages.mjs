@@ -4,7 +4,7 @@
 // - `npm pack` produces a tarball with the expected file shape
 // - Every entry in each package's `exports` map resolves to an existing file
 //   after installing the tarballs into a fresh consumer project
-// - The vanilla bundle's relative chunk imports (./chunks/, ./integrations/)
+// - The vanilla bundle's relative chunk imports (./chunks/, ./components/)
 //   point at real files
 //
 // What it does NOT cover (deferred to a real DOM-based smoke once we have
@@ -27,7 +27,7 @@ const VAN_DIR = join(ROOT, 'packages', 'vanilla');
 const EXPECTED_CSS_EXPORTS = [
   '@stisla/css',
   '@stisla/css/full',
-  '@stisla/css/integrations/carousel',
+  '@stisla/css/components/carousel',
   '@stisla/css/dist/stisla.css',
   '@stisla/css/dist/stisla-full.css',
   '@stisla/css/scss/bundles/stisla.scss',
@@ -39,7 +39,7 @@ const EXPECTED_CSS_EXPORTS = [
 const EXPECTED_VAN_EXPORTS = [
   '@stisla/vanilla',
   '@stisla/vanilla/full',
-  '@stisla/vanilla/integrations/carousel',
+  '@stisla/vanilla/components/carousel',
   '@stisla/vanilla/dist/stisla.js',
   '@stisla/vanilla/dist/stisla-full.js',
   '@stisla/vanilla/src/index.js',
@@ -70,15 +70,15 @@ function pack(pkgDir, destDir) {
 }
 
 function checkBundleChunks(distRoot) {
-  // The dist JS files use relative imports across chunks/ and integrations/.
-  // A quick guard: every `./chunks/X.js` or `./integrations/X.js` referenced
-  // from stisla.js / stisla-full.js / integrations/*.js must exist on disk.
+  // The dist JS files use relative imports across chunks/ and components/.
+  // A quick guard: every `./chunks/X.js` or `./components/X.js` referenced
+  // from stisla.js / stisla-full.js / components/*.js must exist on disk.
   const bundles = [
     join(distRoot, 'stisla.js'),
     join(distRoot, 'stisla-full.js'),
-    join(distRoot, 'integrations', 'carousel.js'),
+    join(distRoot, 'components', 'carousel.js'),
   ];
-  const re = /(?:from|import)\s*["']((?:\.\.?\/)+(?:chunks|integrations)\/[^"']+)["']/g;
+  const re = /(?:from|import)\s*["']((?:\.\.?\/)+(?:chunks|components)\/[^"']+)["']/g;
   let problems = 0;
   for (const b of bundles) {
     if (!existsSync(b)) { console.error(`  MISSING bundle: ${b}`); problems++; continue; }

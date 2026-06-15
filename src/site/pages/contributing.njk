@@ -15,7 +15,7 @@
     <div class="prose">
       <ul>
         <li><strong><code>src/scss</code>.</strong> Sass source. <code>tokens/</code> holds the <code>--st-*</code> surface and breakpoints. <code>foundation/</code> holds normalize, reboot, grid, and containers. <code>components/</code> is one file per BEM block. <code>utilities/</code> is the utility layer. <code>bundles/</code> contains the entry files that assemble the shipped <code>stisla.css</code> and <code>stisla-full.css</code>.</li>
-        <li><strong><code>src/js</code>.</strong> JavaScript runtime. <code>core/</code> holds the <code>Stisla.init()</code> walker and shared classes. <code>components/</code> is one file per behavior (<code>Dialog</code>, <code>Dropdown</code>, etc.). <code>integrations/</code> holds à la carte add-ons like the carousel. <code>index.js</code> and <code>index-full.js</code> are the entry files for the two shipped JS bundles.</li>
+        <li><strong><code>src/js</code>.</strong> JavaScript runtime. <code>core/</code> holds the <code>Stisla.init()</code> walker and shared classes. <code>components/</code> is one file per behavior (<code>Dialog</code>, <code>Dropdown</code>, <code>Carousel</code>, etc.) — every component lives here, including the optional ones. <code>index.js</code> registers the vanilla core set; <code>index-full.js</code> adds the vanilla-optional set on top.</li>
         <li><strong><code>src/site</code>.</strong> This docs site. <code>layouts/</code> and <code>partials/</code> are the Nunjucks chrome. <code>pages/</code> is one file per route, including every component demo page. <code>styles/site.scss</code> and <code>scripts/site.js</code> hold site-only chrome that&rsquo;s never bundled into the framework.</li>
         <li><strong><code>tools/</code>.</strong> Vite plugin, build-time ToC injector, Shiki highlighter filter, static-site renderer.</li>
       </ul>
@@ -43,7 +43,7 @@ npm run dev
     <p>Read tokens via component-scoped fallback like <code>border-radius: var(--my-thing-radius, var(--st-radius))</code>. Users get a per-component knob and a global default for free.</p>
     <p>Wrap padding and gap in <code>calc(N * var(--st-density))</code>. Without it, your component opts out of the density knob and feels foreign next to the rest.</p>
     <p>Derive states with <code>color-mix(in oklch, …)</code>, no per-state tokens. Hover is a runtime mix off the base hue, so if a user overrides the base, the hover follows.</p>
-    <p>Import the partial from <code>src/scss/bundles/stisla.scss</code> (or <code>stisla-full.scss</code> for integrations). One <code>@use</code> per line, so deleting any line removes that component from the bundle.</p>
+    <p>Import the partial from <code>src/scss/bundles/stisla.scss</code> (or <code>stisla-full.scss</code> if it&rsquo;s an optional component that ships alongside core). One <code>@import</code> per line, so deleting any line removes that component from the bundle.</p>
 
     <h3>2. Write the behavior (if any)</h3>
     <p>If the component needs JavaScript, add <code>src/js/components/MyThing.js</code> exporting a class with a constructor that takes a root element, a <code>.destroy()</code> method, and DOM custom events for its lifecycle. Register it in <code>src/js/core/init.js</code> against the matching <code>data-stisla-my-thing</code> attribute so <code>Stisla.init()</code> picks it up.</p>
@@ -56,7 +56,7 @@ npm run dev
     <p>End the page with a Customization section. See the next subsection.</p>
 
     <h3>4. Add it to the sidebar</h3>
-    <p>Open <code>src/site/partials/_site-sidebar.njk</code> and add an entry under the matching group (Forms, Components, Overlays, Integrations, &hellip;). Keep groups alphabetical. The active-link highlight is automatic, so there&rsquo;s nothing else to wire.</p>
+    <p>Open <code>src/site/partials/_site-sidebar.njk</code> and add an entry under the matching group (Forms, Components, Overlays, Media, &hellip;). Keep groups alphabetical. The active-link highlight is automatic, so there&rsquo;s nothing else to wire.</p>
   </section>
 
   <section>

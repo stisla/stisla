@@ -1,8 +1,8 @@
-// Stisla public JS entry (core bundle).
+// Stisla public JS entry (vanilla core bundle).
 //
-// Ships every Phase 2 JS-coordinated component except carousel — that's an
-// integration component (V3.md §3.12) and lives in `index-full.js` or the
-// à-la-carte `integrations/carousel.js` path.
+// Ships every Phase 2 JS-coordinated component except carousel — carousel
+// is vanilla-optional (SPEC.md §10 / V3.md §3.12) and lives in
+// `index-full.js` or the à-la-carte `components/carousel.js` path.
 
 import { Component, getInstance } from './core/component.js';
 import { register, init } from './core/init.js';

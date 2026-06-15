@@ -14,8 +14,8 @@ npm install @stisla/css @stisla/vanilla
 
 ```js
 import '@stisla/css';
-import '@stisla/vanilla';            // core
-// import '@stisla/vanilla/full';    // core + every integration
+import '@stisla/vanilla';            // vanilla core
+// import '@stisla/vanilla/full';    // vanilla core + every optional
 ```
 
 Importing `@stisla/vanilla` registers every core component and auto-scans the

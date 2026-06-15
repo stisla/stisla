@@ -1,20 +1,21 @@
-// Stisla v3 — stisla-full bundle (V3.md §3.12).
+// Stisla v3 — stisla-full bundle (vanilla impl, SPEC.md §10 / V3.md §3.12).
 //
-// Kitchen sink: core + every integration in one stylesheet. Use this when
-// you want every component available with one install. À la carte consumers
-// import `stisla.css` + the integrations they need from `integrations/*`.
+// Kitchen sink: vanilla core + every vanilla-optional component in one
+// stylesheet. Use this when you want every component available with one
+// install. À la carte consumers import `stisla.css` + the optional
+// components they need from `components/*`.
 //
 // Layer order is re-declared so Sass knows the precedence even when the
-// integrations chain past the core's own declaration; the second
+// optional partials chain past the core's own declaration; the second
 // `@layer components` block is additive across stylesheets.
 
 @layer foundation, theme, components, utilities;
 
 @import 'stisla';
 
-// === Integrations ======================================================
-// Each integration lands its SCSS here; the matching JS class is registered
-// from `src/js/index-full.js` against the same name.
+// === Optional components ===============================================
+// Each optional component lands its SCSS here; the matching JS class is
+// registered from `src/js/index-full.js` against the same name.
 @layer components {
-  @import '../integrations/carousel';
+  @import '../components/carousel';
 }

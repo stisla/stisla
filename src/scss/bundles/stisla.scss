@@ -1,13 +1,14 @@
-// Stisla v3 — core bundle.
+// Stisla v3 — vanilla core bundle.
 //
-// Core ships every Phase 2 component except carousel, plus Phase 7's avatar /
+// Ships every Phase 2 component except carousel, plus Phase 7's avatar /
 // otp / preview-card (when they land). Reuses primitives already bundled in
 // core JS (Floating UI, focus-trap, tabbable). Hard cap ~24–26 KB gz per
-// V3.md §3.1 + §3.12.
+// V3.md §3.1.
 //
-// Integration components (carousel today; date-picker / custom-select / etc.
+// Optional components (carousel today; date-picker / custom-select / etc.
 // later) ship in `stisla-full.scss` or à la carte from
-// `scss/integrations/_*.scss`. The line is dependency cost, not value.
+// `scss/bundles/components/<name>.scss`. The vanilla core / optional line is
+// a per-impl bundle decision per SPEC.md §10, not a spec decision.
 //
 // Layer order (V3.md §3): foundation -> theme -> components -> utilities.
 

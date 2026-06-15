@@ -2,12 +2,12 @@
 //
 // Run after `npm run build:assets`. Mirrors what `npm publish` will see:
 //
-//   packages/css/dist/{stisla,stisla-full,integrations/carousel}.css
+//   packages/css/dist/{stisla,stisla-full,components/carousel}.css
 //   packages/css/scss/...                ← raw SCSS source (advanced users)
 //   packages/css/LICENSE, LICENSES/
 //
 //   packages/vanilla/dist/{stisla,stisla-full}.js
-//   packages/vanilla/dist/integrations/carousel.js
+//   packages/vanilla/dist/components/carousel.js
 //   packages/vanilla/dist/chunks/*.js    ← shared Component class etc.
 //   packages/vanilla/src/...             ← raw ESM (tree-shakable)
 //   packages/vanilla/LICENSE
@@ -60,8 +60,8 @@ async function stageCss() {
   await copyFile(join(ASSETS, 'stisla.css'), join(dist, 'stisla.css'));
   await copyFile(join(ASSETS, 'stisla-full.css'), join(dist, 'stisla-full.css'));
   await copyFile(
-    join(ASSETS, 'integrations', 'carousel.css'),
-    join(dist, 'integrations', 'carousel.css'),
+    join(ASSETS, 'components', 'carousel.css'),
+    join(dist, 'components', 'carousel.css'),
   );
 
   await copyDir(join(ROOT, 'src', 'scss'), scss);
@@ -80,8 +80,8 @@ async function stageVanilla() {
   await copyFile(join(ASSETS, 'stisla.js'), join(dist, 'stisla.js'));
   await copyFile(join(ASSETS, 'stisla-full.js'), join(dist, 'stisla-full.js'));
   await copyFile(
-    join(ASSETS, 'integrations', 'carousel.js'),
-    join(dist, 'integrations', 'carousel.js'),
+    join(ASSETS, 'components', 'carousel.js'),
+    join(dist, 'components', 'carousel.js'),
   );
   await copyDir(join(ASSETS, 'chunks'), join(dist, 'chunks'));
 
@@ -98,7 +98,7 @@ async function summarize(label, root) {
   const distFiles = [
     'dist/stisla.css', 'dist/stisla-full.css',
     'dist/stisla.js', 'dist/stisla-full.js',
-    'dist/integrations/carousel.css', 'dist/integrations/carousel.js',
+    'dist/components/carousel.css', 'dist/components/carousel.js',
   ];
   console.log(`\n${label}`);
   for (const f of distFiles) {
@@ -112,8 +112,8 @@ async function main() {
   await requireFile(join(ASSETS, 'stisla.js'));
   await requireFile(join(ASSETS, 'stisla-full.css'));
   await requireFile(join(ASSETS, 'stisla-full.js'));
-  await requireFile(join(ASSETS, 'integrations', 'carousel.css'));
-  await requireFile(join(ASSETS, 'integrations', 'carousel.js'));
+  await requireFile(join(ASSETS, 'components', 'carousel.css'));
+  await requireFile(join(ASSETS, 'components', 'carousel.js'));
 
   await stageCss();
   await stageVanilla();

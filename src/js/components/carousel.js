@@ -1,4 +1,4 @@
-// Stisla.Carousel — V3.md §3.7 integration component.
+// Stisla.Carousel — V3.md §3.7. Vanilla-optional per SPEC.md §10.
 //
 // Anatomy:
 //   .carousel[data-stisla-carousel][data-state="ready"]
@@ -336,7 +336,7 @@ export class Carousel extends Component {
 
 // Auto-register when this module loads after `window.Stisla` is already
 // present (e.g. CDN / zip use: `<script src="stisla.js">` then
-// `<script src="integrations/carousel.js">`). Also calls `init()` so any
+// `<script src="components/carousel.js">`). Also calls `init()` so any
 // pre-existing `[data-stisla-carousel]` element on the page picks up the
 // newly-registered class — the core's microtask `init()` would have
 // already fired before this script runs. Bundler / npm consumers that

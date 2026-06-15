@@ -1,0 +1,20 @@
+// Stisla v3 — carousel à-la-carte distribution entry.
+//
+// This is the file Vite emits as `dist/components/carousel.css`. The
+// partial it imports lives next to the rest of the component partials
+// in `src/scss/components/`; this entry sits here in `bundles/components/`
+// next to the library entries (`stisla.scss` / `stisla-full.scss`) so
+// naming stays unambiguous to Sass — `_carousel.scss` (the partial) and
+// `carousel.scss` (this entry) would otherwise collide in the same
+// directory.
+//
+// Consumers loading the vanilla core `stisla.css` + this file get the
+// carousel styling slotted into the same `components` layer. The
+// layer-order re-declaration is idempotent across stylesheets so cascade
+// ordering is preserved no matter the load order.
+
+@layer foundation, theme, components, utilities;
+
+@layer components {
+  @import '../../components/carousel';
+}

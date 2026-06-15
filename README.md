@@ -24,7 +24,7 @@ Docs, live demos, and downloadable templates: **[stisla.dev](https://stisla.dev)
 - 30 OKLCH `--st-*` tokens. One root override recolors the whole system; brutalist / dense / branded presets ship as one-line wrappers.
 - Dark mode via `[data-theme="dark"]` or `.dark`.
 - Vanilla JS built on Floating UI + focus-trap. BEM classes + Radix-aligned `[data-state]` so the same CSS layer can back future React / Vue / Svelte implementations.
-- Small core; integrations (carousel today, more later) ship à la carte.
+- Small core; optional components (carousel today, more later) can be added individually.
 
 v2 stays at [getstisla.com](https://getstisla.com) and is not migrated.
 
