@@ -1,0 +1,107 @@
+// Stisla v3 — item.
+//
+// Two-column media-object row: media (icon / avatar / image) on the
+// inline-start, text column in the middle, action on the inline-end.
+// Multipurpose row primitive — user lists, settings, notifications,
+// payment methods, files, products. The flush modifier strips the
+// border + bg for stacks (typically inside a .card with separators
+// between rows).
+//
+// BEM: .item root + .item__media / __content / __title / __description /
+// __meta / __action. Modifiers stay flat on the root (.item--flush /
+// .item--vertical).
+//
+// Tokens: --st-surface (bg), --st-border, --st-radius, --st-foreground,
+// --st-muted-foreground. 16px padding × --st-density.
+
+.item {
+  --item-radius:        var(--st-radius);
+  --item-padding:       calc(1rem * var(--st-density));
+  --item-gap:           0.75rem;
+  --item-bg:            var(--st-surface);
+  --item-color:         var(--st-foreground);
+  --item-border:        1px solid var(--st-border);
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--item-gap);
+  padding: var(--item-padding);
+  color: var(--item-color);
+  background: var(--item-bg);
+  border: var(--item-border);
+  border-radius: var(--item-radius);
+}
+
+// === Modifiers ========================================================
+
+// Strip chrome. The host parent owns the frame, so a stack of rows
+// reads as one continuous surface. .card > .item--flush further
+// retunes padding to match --card-padding via the integration rule
+// at the bottom of _card.scss.
+.item--flush {
+  --item-bg:     transparent;
+  --item-border: 0;
+  --item-radius: 0;
+}
+
+// Lay parts top-to-bottom (media → content → action). The action's
+// inline-end pin (margin-inline-start: auto) makes no sense on a
+// column, so clear it here.
+.item--vertical {
+  flex-direction: column;
+  align-items: stretch;
+}
+.item--vertical > .item__action { margin-inline-start: 0; }
+
+// === Parts ============================================================
+
+.item__media {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Bare <svg> / <i> dropped into the media slot (no .icon-box / .avatar
+// wrapper) pins to a sensible size so rows align across icon packs.
+// :only-child gate so a media slot with multiple children (avatar +
+// indicator, image + badge) keeps its own sizing.
+.item__media > :is(svg, i):only-child {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex-shrink: 0;
+}
+
+.item__content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;            // allow .text-truncate inside title / desc
+  gap: 0.125rem;
+}
+
+.item__title {
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--st-foreground);
+}
+
+.item__description {
+  color: var(--st-muted-foreground);
+  line-height: 1.5;
+}
+
+.item__meta {
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--st-muted-foreground);
+}
+
+.item__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-inline-start: auto;
+  flex-shrink: 0;
+}

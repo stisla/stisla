@@ -1,0 +1,36 @@
+// Stisla v3 — separator.
+//
+// Hairline divider between content groups. Horizontal sits in flow as a
+// full-width rule; vertical works inside a flex row, where
+// align-self: stretch sizes it to the row's cross axis.
+//
+// The bare element stays untouched by reboot (no-bare-element-styling
+// rule); the .separator class opts in. Use a <hr class="separator"> for
+// horizontal (semantic, implicit role="separator"); use
+// <div class="separator separator--vertical" role="separator"
+//      aria-orientation="vertical"> for vertical, or drop the role
+// attributes entirely if the rule is purely decorative.
+
+.separator {
+  --separator-thickness: 1px;
+  --separator-color:     var(--st-border);
+
+  display: block;
+  flex-shrink: 0;
+  width: 100%;
+  height: var(--separator-thickness);
+  margin: 0;
+  background: var(--separator-color);
+  border: 0;
+}
+
+// Vertical reorients the rule. Inside a flex row align-self: stretch
+// fills the cross axis; the min-height floor keeps the rule visible
+// when the parent is not a flex container (e.g. inline next to short
+// text), without forcing a fixed height that would chop tall siblings.
+.separator--vertical {
+  width: var(--separator-thickness);
+  height: auto;
+  min-height: 1.25rem;
+  align-self: stretch;
+}

@@ -1,0 +1,431 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Item · Stisla{% endblock %}
+
+{% set ava_maya  = "https://i.pravatar.cc/96?img=47" %}
+{% set ava_jaden = "https://i.pravatar.cc/96?img=12" %}
+{% set ava_priya = "https://i.pravatar.cc/96?img=32" %}
+{% set ava_diego = "https://i.pravatar.cc/96?img=15" %}
+{% set ava_lin   = "https://i.pravatar.cc/96?img=44" %}
+
+{% set prod_keychron = "https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=200&h=200" %}
+{% set prod_audio    = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=200&h=200" %}
+{% set prod_lamp     = "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=200&h=200" %}
+
+{% block content %}
+  <header>
+    <h1>Item</h1>
+    <p class="lead">A row that pairs media with text and an action.</p>
+  </header>
+
+  <section>
+    <p>One primitive that covers most "thing on a line" patterns. App listings, settings rows, notifications, payment methods, files, products. Compose the parts you need and skip the ones you don't.</p>
+  </section>
+
+  <section>
+    <h2>Default</h2>
+    <p>Drop <code>.item__media</code>, <code>.item__content</code>, and <code>.item__action</code> as direct children. The row sits on the surface fill with a hairline border at 16px padding.</p>
+    {% call ui.demo() %}
+    <div class="item" style="max-width: 28rem;">
+      <div class="item__media">
+        <span class="icon-box icon-box--primary"><i data-lucide="package"></i></span>
+      </div>
+      <div class="item__content">
+        <div class="item__title">Order #ATL-2918</div>
+        <div class="item__description">Out for delivery, arrives today by 6 PM.</div>
+      </div>
+      <div class="item__action">
+        <button type="button" class="btn btn--primary btn--sm">Track</button>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Title, description, meta</h2>
+    <p>Stack a <code>.item__meta</code> below the description for a secondary line at a smaller font size in muted-foreground. Avatar in the media slot reads as an actor rather than a category.</p>
+    {% call ui.demo() %}
+    <div class="item" style="max-width: 32rem;">
+      <div class="item__media">
+        <span class="avatar avatar--circle" data-stisla-avatar>
+          <img class="avatar__image" src="{{ ava_jaden }}" alt="">
+          <span class="avatar__fallback">JC</span>
+        </span>
+      </div>
+      <div class="item__content">
+        <div class="item__title">Joseph Cooper</div>
+        <div class="item__description">Pushed 3 commits to atlas/main.</div>
+        <div class="item__meta">2 minutes ago</div>
+      </div>
+      <div class="item__action">
+        <button type="button" class="btn btn--ghost btn--neutral btn--sm btn--icon-only" aria-label="Like">
+          <i data-lucide="heart"></i>
+        </button>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Vertical</h2>
+    <p>Add <code>.item--vertical</code> to stack the parts top to bottom. The action's auto inline-end pin drops, and parts align to the row's start. Useful for stat tiles or any block where the action sits below content instead of beside it.</p>
+    {% call ui.demo() %}
+    <div class="demo-row demo-row--gap-md demo-row--top" style="align-items: stretch;">
+      <div class="item item--vertical" style="flex: 1; min-width: 12rem;">
+        <div class="item__meta">Monthly revenue</div>
+        <div class="item__title fs-6">$48,210</div>
+        <div class="item__description text-success">+12.4% from last month</div>
+      </div>
+      <div class="item item--vertical" style="flex: 1; min-width: 12rem;">
+        <div class="item__meta">Churn rate</div>
+        <div class="item__title fs-6">1.8%</div>
+        <div class="item__description text-danger">+0.4% from last month</div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Team members</h2>
+    <p>Stack <code>.item--flush</code> rows inside a <code>.card</code>, separated by <code>.separator</code>. The flush items shed their own border and pick up the card padding so the row edges line up with the card header. Each row stays its own row, the card stays one frame.</p>
+    {% call ui.demo() %}
+    <div class="card" style="max-width: 28rem;">
+      <div class="card__header">Team members</div>
+
+      <div class="item item--flush">
+        <div class="item__media">
+          <span class="avatar avatar--circle" data-stisla-avatar>
+            <img class="avatar__image" src="{{ ava_maya }}" alt="">
+            <span class="avatar__fallback">MT</span>
+          </span>
+        </div>
+        <div class="item__content">
+          <div class="item__title">Maya Tanaka</div>
+          <div class="item__meta">maya@kredibel.com</div>
+        </div>
+        <div class="item__action">
+          <button type="button" class="btn btn--outline btn--neutral btn--sm">Following</button>
+        </div>
+      </div>
+      <hr class="separator">
+
+      <div class="item item--flush">
+        <div class="item__media">
+          <span class="avatar avatar--circle" data-stisla-avatar>
+            <img class="avatar__image" src="{{ ava_priya }}" alt="">
+            <span class="avatar__fallback">PR</span>
+          </span>
+        </div>
+        <div class="item__content">
+          <div class="item__title">Priya Reddy</div>
+          <div class="item__meta">priya@kredibel.com</div>
+        </div>
+        <div class="item__action">
+          <button type="button" class="btn btn--primary btn--sm">Follow</button>
+        </div>
+      </div>
+      <hr class="separator">
+
+      <div class="item item--flush">
+        <div class="item__media">
+          <span class="avatar avatar--circle" data-stisla-avatar>
+            <img class="avatar__image" src="{{ ava_diego }}" alt="">
+            <span class="avatar__fallback">DR</span>
+          </span>
+        </div>
+        <div class="item__content">
+          <div class="item__title">Diego Romero</div>
+          <div class="item__meta">diego@kredibel.com</div>
+        </div>
+        <div class="item__action">
+          <button type="button" class="btn btn--primary btn--sm">Follow</button>
+        </div>
+      </div>
+      <hr class="separator">
+
+      <div class="item item--flush">
+        <div class="item__media">
+          <span class="avatar avatar--circle" data-stisla-avatar>
+            <img class="avatar__image" src="{{ ava_lin }}" alt="">
+            <span class="avatar__fallback">LW</span>
+          </span>
+        </div>
+        <div class="item__content">
+          <div class="item__title">Lin Wei</div>
+          <div class="item__meta">lin@kredibel.com</div>
+        </div>
+        <div class="item__action">
+          <button type="button" class="btn btn--primary btn--sm">Follow</button>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Notification settings</h2>
+    <p>Same flush stack pattern, with an <code>.icon-box</code> in the media slot and a <code>.switch</code> in the action slot. Each row reads as a setting whose state lives in the switch.</p>
+    {% call ui.demo() %}
+    <div class="card" style="max-width: 32rem;">
+      <div class="card__header">Notification preferences</div>
+
+      <div class="item item--flush">
+        <div class="item__media">
+          <span class="icon-box icon-box--primary"><i data-lucide="bell"></i></span>
+        </div>
+        <div class="item__content">
+          <div class="item__title">Push notifications</div>
+          <div class="item__description">Real-time alerts on this device for mentions and direct replies.</div>
+        </div>
+        <div class="item__action">
+          <input class="switch__input" type="checkbox" role="switch" aria-label="Push notifications" checked>
+        </div>
+      </div>
+      <hr class="separator">
+
+      <div class="item item--flush">
+        <div class="item__media">
+          <span class="icon-box icon-box--info"><i data-lucide="mail"></i></span>
+        </div>
+        <div class="item__content">
+          <div class="item__title">Email digest</div>
+          <div class="item__description">A single recap email each Monday with last week's activity.</div>
+        </div>
+        <div class="item__action">
+          <input class="switch__input" type="checkbox" role="switch" aria-label="Email digest" checked>
+        </div>
+      </div>
+      <hr class="separator">
+
+      <div class="item item--flush">
+        <div class="item__media">
+          <span class="icon-box icon-box--warning"><i data-lucide="message-square"></i></span>
+        </div>
+        <div class="item__content">
+          <div class="item__title">SMS alerts</div>
+          <div class="item__description">Critical-only messages, used for billing and account recovery.</div>
+        </div>
+        <div class="item__action">
+          <input class="switch__input" type="checkbox" role="switch" aria-label="SMS alerts">
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Payment methods</h2>
+    <p>Brand glyph in the media slot, last-four in the title, expiry in the meta. The action slot holds a link instead of a button when the action navigates away or sets a flag rather than firing a transaction.</p>
+    {% call ui.demo() %}
+    <div class="card" style="max-width: 30rem;">
+      <div class="card__header">Payment methods</div>
+
+      <div class="item item--flush">
+        <div class="item__media">
+          <span class="icon-box"><i data-lucide="credit-card"></i></span>
+        </div>
+        <div class="item__content">
+          <div class="item__title">Visa ending in 4242</div>
+          <div class="item__meta">Expires 12 / 2027</div>
+        </div>
+        <div class="item__action">
+          <span class="badge badge--success">Default</span>
+        </div>
+      </div>
+      <hr class="separator">
+
+      <div class="item item--flush">
+        <div class="item__media">
+          <span class="icon-box"><i data-lucide="credit-card"></i></span>
+        </div>
+        <div class="item__content">
+          <div class="item__title">Mastercard ending in 1908</div>
+          <div class="item__meta">Expires 04 / 2026</div>
+        </div>
+        <div class="item__action">
+          <a href="#" class="link fs-2">Set as default</a>
+        </div>
+      </div>
+      <hr class="separator">
+
+      <div class="item item--flush">
+        <div class="item__media">
+          <span class="icon-box"><i data-lucide="building-2"></i></span>
+        </div>
+        <div class="item__content">
+          <div class="item__title">Bank transfer · Mandiri</div>
+          <div class="item__meta">Account ending in 0073</div>
+        </div>
+        <div class="item__action">
+          <a href="#" class="link fs-2">Set as default</a>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>File list</h2>
+    <p>Two actions in the action slot work the same as one. The flex gap inside <code>.item__action</code> spaces them; both pin to the inline end as a single group.</p>
+    {% call ui.demo() %}
+    <div class="card" style="max-width: 32rem;">
+      <div class="card__header">Recent files</div>
+
+      <div class="item item--flush">
+        <div class="item__media">
+          <span class="icon-box icon-box--primary"><i data-lucide="file-text"></i></span>
+        </div>
+        <div class="item__content">
+          <div class="item__title">design-brief.pdf</div>
+          <div class="item__meta">2.4 MB · Edited yesterday by Maya</div>
+        </div>
+        <div class="item__action">
+          <button type="button" class="btn btn--ghost btn--neutral btn--sm btn--icon-only" aria-label="Download">
+            <i data-lucide="download"></i>
+          </button>
+          <button type="button" class="btn btn--ghost btn--neutral btn--sm btn--icon-only" aria-label="Delete">
+            <i data-lucide="trash-2"></i>
+          </button>
+        </div>
+      </div>
+      <hr class="separator">
+
+      <div class="item item--flush">
+        <div class="item__media">
+          <span class="icon-box icon-box--success"><i data-lucide="file-spreadsheet"></i></span>
+        </div>
+        <div class="item__content">
+          <div class="item__title">q2-revenue.xlsx</div>
+          <div class="item__meta">812 KB · Edited 3 days ago by Diego</div>
+        </div>
+        <div class="item__action">
+          <button type="button" class="btn btn--ghost btn--neutral btn--sm btn--icon-only" aria-label="Download">
+            <i data-lucide="download"></i>
+          </button>
+          <button type="button" class="btn btn--ghost btn--neutral btn--sm btn--icon-only" aria-label="Delete">
+            <i data-lucide="trash-2"></i>
+          </button>
+        </div>
+      </div>
+      <hr class="separator">
+
+      <div class="item item--flush">
+        <div class="item__media">
+          <span class="icon-box icon-box--info"><i data-lucide="image"></i></span>
+        </div>
+        <div class="item__content">
+          <div class="item__title">launch-hero.png</div>
+          <div class="item__meta">5.1 MB · Edited last week by Priya</div>
+        </div>
+        <div class="item__action">
+          <button type="button" class="btn btn--ghost btn--neutral btn--sm btn--icon-only" aria-label="Download">
+            <i data-lucide="download"></i>
+          </button>
+          <button type="button" class="btn btn--ghost btn--neutral btn--sm btn--icon-only" aria-label="Delete">
+            <i data-lucide="trash-2"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Product rows</h2>
+    <p>Standalone items, with their own border and surface fill, sit well as a freestanding list outside a card. Image in the media slot, price as the meta line, the add-to-cart action pinned to the inline end.</p>
+    {% call ui.demo() %}
+    <div class="demo-stack" style="max-width: 32rem;">
+      <div class="item">
+        <div class="item__media">
+          <img src="{{ prod_keychron }}" alt="" width="56" height="56" style="border-radius: var(--st-radius-sm); object-fit: cover;">
+        </div>
+        <div class="item__content">
+          <div class="item__title">Keychron K2 Pro</div>
+          <div class="item__description">75% wireless mechanical with brown switches.</div>
+          <div class="item__meta">$179.00</div>
+        </div>
+        <div class="item__action">
+          <button type="button" class="btn btn--primary btn--sm">Add to cart</button>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="item__media">
+          <img src="{{ prod_audio }}" alt="" width="56" height="56" style="border-radius: var(--st-radius-sm); object-fit: cover;">
+        </div>
+        <div class="item__content">
+          <div class="item__title">Sony WH-1000XM5</div>
+          <div class="item__description">Wireless noise-cancelling over-ear headphones.</div>
+          <div class="item__meta">$399.00</div>
+        </div>
+        <div class="item__action">
+          <button type="button" class="btn btn--primary btn--sm">Add to cart</button>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="item__media">
+          <img src="{{ prod_lamp }}" alt="" width="56" height="56" style="border-radius: var(--st-radius-sm); object-fit: cover;">
+        </div>
+        <div class="item__content">
+          <div class="item__title">Anglepoise 90 Mini Mini</div>
+          <div class="item__description">Articulated desk lamp in warm olive.</div>
+          <div class="item__meta">$245.00</div>
+        </div>
+        <div class="item__action">
+          <button type="button" class="btn btn--primary btn--sm">Add to cart</button>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>Six variables retune <code>.item</code> without touching component CSS. Override on the item itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change. Inside a <code>.card</code>, the flush variant additionally reads <code>--card-padding</code> so the row's inline edges align with the card header and footer.</p>
+    <div class="prose">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--item-radius</code></td>
+            <td>var(--st-radius)</td>
+            <td>Corner radius. Cleared to <code>0</code> by <code>--flush</code>.</td>
+          </tr>
+          <tr>
+            <td><code>--item-padding</code></td>
+            <td>calc(1rem * var(--st-density))</td>
+            <td>Padding for the row. Retuned to <code>--card-padding</code> when a flush item lives inside a card.</td>
+          </tr>
+          <tr>
+            <td><code>--item-gap</code></td>
+            <td>0.75rem</td>
+            <td>Spacing between media, content, and action.</td>
+          </tr>
+          <tr>
+            <td><code>--item-bg</code></td>
+            <td>var(--st-surface)</td>
+            <td>Background fill. Cleared to <code>transparent</code> by <code>--flush</code>.</td>
+          </tr>
+          <tr>
+            <td><code>--item-color</code></td>
+            <td>var(--st-foreground)</td>
+            <td>Text color.</td>
+          </tr>
+          <tr>
+            <td><code>--item-border</code></td>
+            <td>1px solid var(--st-border)</td>
+            <td>Full border shorthand. Cleared to <code>0</code> by <code>--flush</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+{% endblock %}

@@ -127,3 +127,14 @@
     color: inherit;
   }
 }
+
+// === Item integration =================================================
+// A flushed item inside a card reads as a continuous row of the card's
+// surface. Pick up --card-padding so the row's inline edges align with
+// the header and footer paddings, and drop the radius since the outer
+// card already owns rounded corners. Mirrors the .card > .list-group
+// integration above.
+.card > .item--flush {
+  --item-padding: var(--card-padding);
+  border-radius: 0;
+}
