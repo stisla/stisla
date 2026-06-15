@@ -1,6 +1,6 @@
 {
   "name": "@stisla/css",
-  "version": "3.0.0-beta.1",
+  "version": "3.0.0-beta.2",
   "description": "Stisla v3 — CSS for the vanilla implementation. Other Stisla implementations ship their own curated bundle exports from this package; see SPEC.md §10.",
   "license": "MIT",
   "author": "Nauval Azhar <nauvalazhar2@gmail.com> (https://stisla.dev)",

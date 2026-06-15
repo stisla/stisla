@@ -2,6 +2,27 @@
 
 For Stisla 2.x changes, see [getstisla.com](https://getstisla.com).
 
+## [3.0.0-beta.2] — 2026-06-15
+
+Incremental release. Six new components, RTL via logical properties, a unified field family, the documentation site, and the npm publish pipeline.
+
+### Added
+
+- Components: `avatar`, `avatar-group`, `meter`, `scroll-area`, `item`, `separator`. `.card > .item--flush` retunes its padding to `--card-padding` so item stacks read flush inside a card.
+- RTL via CSS logical properties. `inline-start` / `inline-end` swap automatically under `dir="rtl"`; no `[dir="rtl"]` overrides needed.
+- Documentation site at https://stisla.dev: landing, intro, install, optimization, JavaScript, spec, contributing, and a page per component. Build-time table of contents and a partners section.
+- `SPEC.md` — the cross-implementation contract every Stisla port must satisfy. Lives alongside per-component `spec/components/<name>.md` files.
+- Preflight spec section documenting the modern-normalize + reboot layer.
+
+### Changed
+
+- `.form-label` and `.field-row` unified into the `.field` BEM family. One component owns the label / control / help cluster instead of two cooperating ones.
+- `src/scss/integrations/` flattened into `src/scss/components/`. Bundle tier (core vs full) is a per-bundle decision, not a source-tree shape.
+
+### Build
+
+- `@stisla/css` + `@stisla/vanilla` publish pipeline. Pre-compiled bundles ship as the primary install surface; Sass source is the advanced path.
+
 ## [3.0.0-beta.1] — 2026-06-13
 
 Stisla v3 is a complete rewrite. No migration path from 2.x.

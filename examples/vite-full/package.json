@@ -9,8 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@stisla/css": "3.0.0-beta.1",
-    "@stisla/vanilla": "3.0.0-beta.1"
+    "@stisla/css": "3.0.0-beta.2",
+    "@stisla/vanilla": "3.0.0-beta.2"
   },
   "devDependencies": {
     "vite": "^6.0.0"

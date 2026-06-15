@@ -1,6 +1,6 @@
 {
   "name": "@stisla/vanilla",
-  "version": "3.0.0-beta.1",
+  "version": "3.0.0-beta.2",
   "description": "Stisla v3 — vanilla JS implementation. Pairs with @stisla/css. Composed primitives (Floating UI, focus-trap) plus Stisla's own component classes.",
   "license": "MIT",
   "author": "Nauval Azhar <nauvalazhar2@gmail.com> (https://stisla.dev)",
@@ -49,6 +49,6 @@
     "tabbable": "^6.4.0"
   },
   "peerDependencies": {
-    "@stisla/css": "3.0.0-beta.1"
+    "@stisla/css": "3.0.0-beta.2"
   }
 }
