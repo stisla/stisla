@@ -168,6 +168,7 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
     border: 1px solid var(--st-border);
     border-radius: 0.375rem;
     color: var(--st-foreground);
+    overflow-wrap: anywhere;
   }
 
   // === Pre / code block ===

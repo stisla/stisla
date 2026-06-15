@@ -308,6 +308,18 @@ body {
   }
 }
 
+// Auto-wrapped prose tables (see site.js `wrapDocsTables`). The wrapper
+// takes the table's block margin so inter-element rhythm matches the
+// unwrapped layout; the table itself drops its margin to avoid doubling
+// inside the new scroll container.
+.main-container.prose .table-responsive {
+  margin-block: calc(2em * var(--st-density));
+
+  > table {
+    margin-block: 0;
+  }
+}
+
 // === Site shell ===
 //
 // Visual hierarchy:
@@ -680,10 +692,8 @@ $shell-max: 90rem;
 
 .site-partners__label {
   margin: 0 0 0.5rem;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
   color: var(--st-muted-foreground);
 }
 

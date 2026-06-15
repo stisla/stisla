@@ -45,9 +45,12 @@ export function injectToc(html) {
   const h2Count = entries.filter((e) => e.level === 2).length;
   const tocHtml = h2Count >= 2 ? renderToc(entries) : '';
 
+  // Function form of replace — string form would interpret `$N` / `$&` in
+  // the body as backreferences, scrambling any demo cell that contains a
+  // dollar amount (e.g. `$182k` → `$1` + `82k`).
   return html
-    .replace(CONTAINER_RE, openTag + newBody + closeTag)
-    .replace(MARKER, tocHtml);
+    .replace(CONTAINER_RE, () => openTag + newBody + closeTag)
+    .replace(MARKER, () => tocHtml);
 }
 
 function slugify(text, used) {
@@ -101,5 +104,10 @@ function renderToc(entries) {
 }
 
 function escapeHtml(s) {
-  return String(s).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+  // Leave existing entities (&rsquo;, &amp;, &#39;, etc.) intact — the
+  // headings we read have already been escaped by Nunjucks/markdown.
+  return String(s)
+    .replace(/&(?!#?[a-z0-9]+;)/gi, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 }

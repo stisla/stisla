@@ -14,6 +14,39 @@
     });
 })();
 
+// Sidebar scroll restoration. The sidebar re-renders on every navigation, so
+// without this the user is dumped back at scrollTop=0 every time they click
+// a link near the bottom. Persist scrollTop to sessionStorage on click and
+// rehydrate on load. If the active item isn't visible after restore (or no
+// saved value yet — fresh tab, deep-linked), scroll it into view centered.
+// The actual scroller is .sidebar__content (the framework's middle flex
+// slot with overflow: hidden auto), not #site-sidebar itself.
+(function wireSidebarScrollRestore() {
+  const sidebar = document.getElementById("site-sidebar");
+  const scroller = sidebar?.querySelector(".sidebar__content");
+  if (!scroller) return;
+  const KEY = "stisla-sidebar-scroll";
+
+  const saved = sessionStorage.getItem(KEY);
+  if (saved !== null) scroller.scrollTop = parseInt(saved, 10) || 0;
+
+  const active = scroller.querySelector('a.sidebar__button[aria-current="page"]');
+  if (active) {
+    const linkBox = active.getBoundingClientRect();
+    const box = scroller.getBoundingClientRect();
+    if (linkBox.top < box.top || linkBox.bottom > box.bottom) {
+      const offset = linkBox.top - box.top + scroller.scrollTop;
+      scroller.scrollTop = offset - scroller.clientHeight / 2 + active.clientHeight / 2;
+    }
+  }
+
+  sidebar.addEventListener("click", (e) => {
+    if (e.target.closest("a.sidebar__button")) {
+      sessionStorage.setItem(KEY, String(scroller.scrollTop));
+    }
+  });
+})();
+
 // data-theme-toggle — flip [data-theme] on <html>, persist to localStorage.
 // FOUC prevention runs synchronously in base.njk's <head>.
 document.addEventListener("click", (e) => {
@@ -78,10 +111,11 @@ document.addEventListener("click", (e) => {
 (function wireTocHighlight() {
   const tocs = document.querySelectorAll(".site-toc");
   if (!tocs.length) return;
-  const headings = document.querySelectorAll(
+  const headings = Array.from(document.querySelectorAll(
     ".main-container h2[id], .main-container h3[id]",
-  );
+  ));
   if (!headings.length) return;
+  const ids = headings.map((h) => h.id);
 
   const linksFor = new Map();
   tocs.forEach((toc) => {
@@ -93,41 +127,86 @@ document.addEventListener("click", (e) => {
     });
   });
 
+  // Keep the active link visible inside any ToC whose own list overflows
+  // (the desktop rail caps its height and scrolls internally). scrollTo on
+  // the closest .site-toc — not scrollIntoView — so the page itself never
+  // jumps even if the link is below the viewport.
+  const revealInToc = (link) => {
+    const scroller = link.closest(".site-toc");
+    if (!scroller) return;
+    if (scroller.scrollHeight <= scroller.clientHeight) return;
+    const linkBox = link.getBoundingClientRect();
+    const scrollerBox = scroller.getBoundingClientRect();
+    if (linkBox.top >= scrollerBox.top && linkBox.bottom <= scrollerBox.bottom) return;
+    // Bounding rects, not offsetTop — .site-toc is position: static so
+    // offsetTop would resolve against some ancestor (body), not the scroller.
+    const linkOffset = linkBox.top - scrollerBox.top + scroller.scrollTop;
+    scroller.scrollTo({
+      top: linkOffset - scroller.clientHeight / 2 + link.clientHeight / 2,
+      behavior: "smooth",
+    });
+  };
+
   let activeId = null;
   const setActive = (id) => {
     if (id === activeId) return;
     if (activeId) linksFor.get(activeId)?.forEach((a) => a.removeAttribute("aria-current"));
     activeId = id;
-    if (activeId) linksFor.get(activeId)?.forEach((a) => a.setAttribute("aria-current", "true"));
+    if (!activeId) return;
+    linksFor.get(activeId)?.forEach((a) => {
+      a.setAttribute("aria-current", "true");
+      revealInToc(a);
+    });
   };
 
-  // Track which headings are above the trigger line (~ top third of the
-  // viewport). The last one above wins — that's the section currently being
-  // read. Falls back to the first heading when the page is scrolled to the
-  // very top.
+  // Active-pick rules, in order:
+  //   1. Scrolled to the bottom of the document → last heading wins. A short
+  //      final section's heading may never reach the top-third trigger band,
+  //      so without this override it would never go active.
+  //   2. Topmost heading currently inside the trigger band.
+  //   3. Last heading whose top is above the viewport.
+  //   4. First heading (page is above all of them).
   const visible = new Set();
+  const pickActive = () => {
+    const atBottom =
+      window.innerHeight + window.scrollY >=
+      document.documentElement.scrollHeight - 4;
+    if (atBottom) return ids[ids.length - 1];
+    let pick = ids.find((id) => visible.has(id));
+    if (!pick) {
+      const above = ids.filter((id) => {
+        const el = document.getElementById(id);
+        return el && el.getBoundingClientRect().top < 0;
+      });
+      pick = above[above.length - 1] || ids[0];
+    }
+    return pick;
+  };
+
   const io = new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
         if (entry.isIntersecting) visible.add(entry.target.id);
         else visible.delete(entry.target.id);
       }
-      // Pick the topmost visible heading; if none visible, pick the
-      // closest one above the viewport.
-      const ids = Array.from(headings, (h) => h.id);
-      let pick = ids.find((id) => visible.has(id));
-      if (!pick) {
-        const above = ids.filter((id) => {
-          const el = document.getElementById(id);
-          return el && el.getBoundingClientRect().top < 0;
-        });
-        pick = above[above.length - 1] || ids[0];
-      }
-      setActive(pick);
+      setActive(pickActive());
     },
     { rootMargin: "0px 0px -66% 0px", threshold: 0 },
   );
   headings.forEach((h) => io.observe(h));
+
+  // IO only fires when a heading crosses the trigger band. Reaching the
+  // document bottom on a page whose last heading never crosses it (rule 1
+  // above) wouldn't otherwise re-evaluate, so re-pick on scroll too.
+  let scrollPending = false;
+  window.addEventListener("scroll", () => {
+    if (scrollPending) return;
+    scrollPending = true;
+    requestAnimationFrame(() => {
+      scrollPending = false;
+      setActive(pickActive());
+    });
+  }, { passive: true });
 })();
 
 // data-demo-code-toggle — expand/collapse the closest [data-demo-code] container.

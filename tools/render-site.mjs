@@ -4,6 +4,7 @@ import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { dedent, getHighlighter, makeHighlightFilter } from './nunjucks-filters.mjs';
 import { injectToc } from './toc.mjs';
+import { wrapProseTables } from './wrap-tables.mjs';
 
 const SITE_ROOT = 'src/site';
 const OUT_DIR = 'site-dist';
@@ -22,7 +23,7 @@ const files = await fg(['pages/**/*.njk', 'templates/**/*.njk'], { cwd: SITE_ROO
 
 for (const rel of files) {
   if (path.basename(rel).startsWith('_')) continue;
-  const html = injectToc(env.render(rel));
+  const html = wrapProseTables(injectToc(env.render(rel)));
   const outRel = rel
     .replace(/^pages\//, '')
     .replace(/^templates\//, '')

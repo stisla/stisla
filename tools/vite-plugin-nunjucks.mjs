@@ -3,6 +3,7 @@ import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { dedent, getHighlighter, makeHighlightFilter } from './nunjucks-filters.mjs';
 import { injectToc } from './toc.mjs';
+import { wrapProseTables } from './wrap-tables.mjs';
 
 // Dev-only middleware: maps URLs to .njk files under siteRoot,
 // renders them, and lets Vite inject HMR + asset URL rewriting.
@@ -56,7 +57,7 @@ export default function nunjucksDevPlugin({ siteRoot }) {
           }
           if (!template) return next();
 
-          let html = injectToc(env.render(template));
+          let html = wrapProseTables(injectToc(env.render(template)));
           html = await server.transformIndexHtml(req.url, html);
           res.setHeader('Content-Type', 'text/html; charset=utf-8');
           res.end(html);
