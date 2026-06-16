@@ -146,49 +146,40 @@
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Default</th>
             <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>--input-radius</code></td>
-            <td>var(--st-input-radius, var(--st-radius))</td>
             <td>Corner radius (per-component override via <code>--st-input-radius</code>; sizes pull <code>--st-radius-sm</code> / <code>-lg</code>)</td>
           </tr>
           <tr>
             <td><code>--input-height</code></td>
-            <td>2.25rem</td>
             <td>Single-line height; sm and lg reassign this. Multiplied by <code>--st-density</code> at the component level</td>
           </tr>
           <tr>
             <td><code>--input-padding-x</code></td>
-            <td>calc(0.625rem * var(--st-density))</td>
             <td>Horizontal padding; sm and lg reassign this</td>
           </tr>
           <tr>
             <td><code>--input-font-size</code></td>
-            <td>0.875rem</td>
             <td>Text size; sm and lg reassign this</td>
           </tr>
           <tr>
             <td><code>--input-bg</code></td>
-            <td>var(--st-surface)</td>
             <td>Background; <code>readonly</code> shifts a tier</td>
           </tr>
           <tr>
             <td><code>--input-color</code></td>
-            <td>var(--st-foreground)</td>
             <td>Text color</td>
           </tr>
           <tr>
             <td><code>--input-border</code></td>
-            <td>var(--st-border)</td>
             <td>Border color; validation hooks flip this to <code>--st-danger</code></td>
           </tr>
           <tr>
             <td><code>--input-placeholder</code></td>
-            <td>var(--st-muted-foreground)</td>
             <td>Placeholder text color</td>
           </tr>
         </tbody>

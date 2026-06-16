@@ -66,29 +66,24 @@
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Default</th>
             <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>--kbd-padding-y</code></td>
-            <td>calc(0.1875rem * var(--st-density))</td>
             <td>Vertical padding</td>
           </tr>
           <tr>
             <td><code>--kbd-padding-x</code></td>
-            <td>calc(0.5rem * var(--st-density))</td>
             <td>Horizontal padding</td>
           </tr>
           <tr>
             <td><code>--kbd-radius</code></td>
-            <td>var(--st-kbd-radius, var(--st-radius-sm))</td>
             <td>Corner radius. Set <code>--st-kbd-radius</code> on a parent scope to retune chips beneath it without reaching for the local variable.</td>
           </tr>
           <tr>
             <td><code>--kbd-rim</code></td>
-            <td>color-mix(in oklch, var(--st-neutral) 85%, var(--st-muted-foreground))</td>
             <td>Border + bottom-edge color. Same recipe as <code>.btn--neutral</code> so the rim stays visible in both themes even where <code>--st-neutral</code> and <code>--st-border</code> converge.</td>
           </tr>
         </tbody>
