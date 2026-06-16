@@ -588,44 +588,36 @@
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Default</th>
             <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>--sidebar-bg</code></td>
-            <td>transparent</td>
             <td>Panel background</td>
           </tr>
           <tr>
             <td><code>--sidebar-color</code></td>
-            <td>var(--st-foreground)</td>
             <td>Panel foreground (brand + buttons inherit)</td>
           </tr>
           <tr>
             <td><code>--sidebar-padding-y</code></td>
-            <td>calc(1rem * var(--st-density))</td>
             <td>Top + bottom padding on header / footer</td>
           </tr>
           <tr>
             <td><code>--sidebar-padding-x</code></td>
-            <td>calc(1rem * var(--st-density))</td>
             <td>Panel outer gutter. Feeds the rail-width recipe.</td>
           </tr>
           <tr>
             <td><code>--sidebar-gap</code></td>
-            <td>calc(0.75rem * var(--st-density))</td>
             <td>Space between header, content, footer</td>
           </tr>
           <tr>
             <td><code>--sidebar-width</code></td>
-            <td>auto</td>
             <td>Expanded panel width. Opt-in. Set it when you want the sidebar to own its width and animate the collapse toggle. Loses to inline <code>width</code> and to a parent that sizes the panel externally.</td>
           </tr>
           <tr>
             <td><code>--sidebar-width-collapsed</code></td>
-            <td>auto</td>
             <td>Rail width applied when <code>.is-collapsed</code> is present. Pair with <code>--sidebar-width</code>; the class flip animates pure-CSS via <code>--sidebar-transition</code>.</td>
           </tr>
         </tbody>
@@ -638,24 +630,20 @@
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Default</th>
             <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>--sidebar-brand-color</code></td>
-            <td>var(--sidebar-color)</td>
             <td>Brand text color</td>
           </tr>
           <tr>
             <td><code>--sidebar-brand-icon-size</code></td>
-            <td>1.5rem</td>
             <td>Brand icon dimensions; load-bearing for rail re-center math</td>
           </tr>
           <tr>
             <td><code>--sidebar-brand-gap</code></td>
-            <td>0.625rem</td>
             <td>Space between brand icon and wordmark</td>
           </tr>
         </tbody>
@@ -668,69 +656,56 @@
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Default</th>
             <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>--sidebar-button-height</code></td>
-            <td>2.25rem</td>
             <td>Hard height; multiplied by <code>--st-density</code></td>
           </tr>
           <tr>
             <td><code>--sidebar-button-padding-x</code></td>
-            <td>calc(0.625rem * var(--st-density))</td>
             <td>Horizontal inset. Load-bearing for rail symmetry. <code>padding-x + icon-size + padding-x</code> equals <code>button-height</code> so the icon centers naturally at rail width without any <code>justify-content</code> override.</td>
           </tr>
           <tr>
             <td><code>--sidebar-button-radius</code></td>
-            <td>var(--st-radius-sm)</td>
             <td>Corner radius</td>
           </tr>
           <tr>
             <td><code>--sidebar-button-gap</code></td>
-            <td>calc(1rem * var(--st-density))</td>
             <td>Space between icon and label</td>
           </tr>
           <tr>
             <td><code>--sidebar-button-font-weight</code></td>
-            <td>400</td>
             <td>Label weight</td>
           </tr>
           <tr>
             <td><code>--sidebar-button-color</code></td>
-            <td>var(--sidebar-color)</td>
             <td>Rest text color</td>
           </tr>
           <tr>
             <td><code>--sidebar-button-hover-bg</code></td>
-            <td>var(--st-accent)</td>
             <td>Hover chip fill</td>
           </tr>
           <tr>
             <td><code>--sidebar-button-hover-color</code></td>
-            <td>var(--st-accent-foreground)</td>
             <td>Hover text color</td>
           </tr>
           <tr>
             <td><code>--sidebar-button-active-bg</code></td>
-            <td>var(--st-highlight)</td>
             <td>Active chip fill (aria-current="page" or data-state="active")</td>
           </tr>
           <tr>
             <td><code>--sidebar-button-active-color</code></td>
-            <td>var(--st-highlight-foreground)</td>
             <td>Active text color</td>
           </tr>
           <tr>
             <td><code>--sidebar-button-icon-size</code></td>
-            <td>1rem</td>
             <td>Icon dimensions; load-bearing for rail recipe (see <code>--sidebar-button-padding-x</code>) + chevron</td>
           </tr>
           <tr>
             <td><code>--sidebar-button-icon-color</code></td>
-            <td>var(--st-muted-foreground)</td>
             <td>Icon color at rest + hover. Active rows flip the icon to <code>--sidebar-button-active-color</code> so the row reads unified.</td>
           </tr>
         </tbody>
@@ -743,14 +718,12 @@
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Default</th>
             <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>--sidebar-item-action-size</code></td>
-            <td>2.25rem</td>
             <td>Right-edge slot reserved size (matches button height so the slot occupies the full row vertically). A <code>.btn</code> inside still collapses to 1.5rem × 1.5rem via internal override.</td>
           </tr>
         </tbody>
@@ -763,29 +736,24 @@
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Default</th>
             <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>--sidebar-group-gap</code></td>
-            <td>calc(1rem * var(--st-density))</td>
             <td>Space between groups in the menu</td>
           </tr>
           <tr>
             <td><code>--sidebar-group-title-font-size</code></td>
-            <td>0.75rem</td>
             <td>Caption text size</td>
           </tr>
           <tr>
             <td><code>--sidebar-group-title-font-weight</code></td>
-            <td>400</td>
             <td>Caption weight</td>
           </tr>
           <tr>
             <td><code>--sidebar-group-title-color</code></td>
-            <td>var(--st-muted-foreground)</td>
             <td>Caption color (also tints <code>.sidebar__group-action</code>)</td>
           </tr>
         </tbody>
@@ -798,24 +766,20 @@
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Default</th>
             <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>--sidebar-submenu-border-color</code></td>
-            <td>var(--st-border)</td>
             <td>Guide-line color</td>
           </tr>
           <tr>
             <td><code>--sidebar-submenu-padding-start</code></td>
-            <td>0.5rem</td>
             <td>Space between the guide line and submenu rows</td>
           </tr>
           <tr>
             <td><code>--sidebar-submenu-margin-start</code></td>
-            <td>1.125rem</td>
             <td>Inset from the panel edge; aligns the guide line on the parent icon's center axis</td>
           </tr>
         </tbody>
@@ -828,14 +792,12 @@
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Default</th>
             <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>--sidebar-transition</code></td>
-            <td>0.3s ease</td>
             <td>Rail-mode soft-hide transition. Zeroed under <code>prefers-reduced-motion</code>.</td>
           </tr>
         </tbody>

@@ -191,54 +191,44 @@
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Default</th>
             <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>--select-radius</code></td>
-            <td>var(--st-input-radius, var(--st-radius))</td>
             <td>Corner radius; sizes pull <code>--st-radius-sm</code> / <code>-lg</code></td>
           </tr>
           <tr>
             <td><code>--select-height</code></td>
-            <td>2.25rem</td>
             <td>Single-line height; sm and lg reassign this. Multi-line variants (<code>multiple</code>, <code>size</code>) treat this as a min-height floor</td>
           </tr>
           <tr>
             <td><code>--select-padding-x</code></td>
-            <td>calc(0.625rem * var(--st-density))</td>
             <td>Horizontal padding; sm and lg reassign this</td>
           </tr>
           <tr>
             <td><code>--select-font-size</code></td>
-            <td>0.875rem</td>
             <td>Text size; sm and lg reassign this</td>
           </tr>
           <tr>
             <td><code>--select-bg</code></td>
-            <td>var(--st-surface)</td>
             <td>Background</td>
           </tr>
           <tr>
             <td><code>--select-color</code></td>
-            <td>var(--st-foreground)</td>
             <td>Text color</td>
           </tr>
           <tr>
             <td><code>--select-border</code></td>
-            <td>var(--st-border)</td>
             <td>Border color; validation hooks flip this to <code>--st-danger</code></td>
           </tr>
           <tr>
             <td><code>--select-placeholder</code></td>
-            <td>var(--st-muted-foreground)</td>
             <td>Placeholder text color (selects don't render a true placeholder, but the var is part of the shared field surface)</td>
           </tr>
           <tr>
             <td><code>--select-indicator</code></td>
-            <td>SVG data URL (chevron)</td>
             <td>Native chevron painted in the inline-end padding well; <code>multiple</code> and <code>size</code> drop it. Override with a different SVG to retheme the chevron</td>
           </tr>
         </tbody>
