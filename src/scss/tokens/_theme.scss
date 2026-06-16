@@ -1,9 +1,9 @@
 // Stisla v3 — design tokens.
 //
-// The entire public customization API. 31 --st-* tokens. All values
-// authored as OKLCH literals; this is the only file in the codebase
-// where literal color values are authoritative. No Sass color ramps. No
-// --bs-*.
+// The entire public customization API. Color tokens authored as OKLCH
+// literals; geometry tokens authored as literal rem/number values. This
+// is the only file in the codebase where literal color values are
+// authoritative. No Sass color ramps. No --bs-*.
 //
 // Pairing rule (V3.md §3.2): every background-providing token has a
 // paired -foreground. Without it, hardcoding `color: #fff` on
@@ -75,21 +75,24 @@
   // === Focus (1) ========================================================
   --st-ring: var(--st-primary);
 
-  // === Geometry (3) =====================================================
-  // 0 = brutalist, 0.75rem = default, 1rem = soft.
-  // Solid neo-brutalist shadow: "4px 4px 0 black".
-  // Density: 1 default, 0.875 compact, 1.125 comfortable.
-  --st-radius: 0.75rem;
-  --st-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
-  --st-density: 1;
+  // === Geometry (5) =====================================================
+  // Three radius tiers, all literal values, all first-class customization
+  // knobs. Independent on purpose: a `calc(var(--st-radius) * X)` derivation
+  // declared here would substitute `var(--st-radius)` at `:root` time and
+  // freeze the result, so wrapper overrides of `--st-radius` would not flow
+  // through to `--st-radius-sm` / `--st-radius-lg`. Three independent
+  // literals sidestep that and let a preset (brutalist, soft, …) override
+  // each tier explicitly.
+  --st-radius-sm: 0.5rem;
+  --st-radius:    0.75rem;
+  --st-radius-lg: 1rem;
 
-  // Derived siblings (V3.md §3.4 line 167). Not part of the customization
-  // story — components reach for these via calc() ratios of --st-radius so
-  // smaller / larger size variants scale proportionally. Brutalist preset
-  // (--st-radius: 0) cascades to 0 for every size; additive offsets would
-  // leave lg with a stray corner.
-  --st-radius-sm: calc(var(--st-radius) * 0.667);
-  --st-radius-lg: calc(var(--st-radius) * 1.333);
+  // Default elevated shadow used by cards, dropdowns, popovers, etc.
+  // Heavier and lighter tiers ship as siblings below.
+  --st-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+
+  // Density: 1 default, 0.875 compact, 1.125 comfortable.
+  --st-density: 1;
 
   // === Type (2) =========================================================
   --st-font-sans:

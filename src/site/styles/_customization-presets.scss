@@ -14,12 +14,16 @@
 // stays visible against both background tiers.
 
 // === Brutalist ==============================================================
-// Radius 0, solid offset shadow. Two token swaps reshape every component.
-// `--st-shadow` resolves to the foreground color so the offset reads as
-// near-black on light, near-white on dark.
+// Hard corners + solid offset shadow. The radius tiers are independent
+// literals at :root (see tokens/_theme.scss), so a preset that wants every
+// surface to read square needs to write all three tier tokens. The shadow
+// tracks --st-foreground so the offset reads near-black on light, near-white
+// on dark.
 .preset-brutalist {
-  --st-radius: 0;
-  --st-shadow: 4px 4px 0 var(--st-foreground);
+  --st-radius-sm: 0;
+  --st-radius:    0;
+  --st-radius-lg: 0;
+  --st-shadow:    4px 4px 0 var(--st-foreground);
 }
 
 // === Violet primary =========================================================

@@ -412,9 +412,10 @@ $utilities-config: (
 }
 
 // === Rounded =================================================================
-// Tracks --st-radius and its derived siblings so the brutalist preset
-// (--st-radius: 0) cascades through .rounded-sm / .rounded-lg without
-// leaving stray corners.
+// Each class reads one of the three radius tier tokens. The tiers are
+// independent literals at :root (see tokens/_theme.scss), so a brutalist
+// theme overrides --st-radius-sm / --st-radius / --st-radius-lg together
+// to land hard corners everywhere; the pill / circle variants stay literal.
 @include utility-group('rounded') using ($i) {
   .rounded#{$i}        { border-radius: var(--st-radius)    !important; }
   .rounded#{$i}-0      { border-radius: 0                   !important; }

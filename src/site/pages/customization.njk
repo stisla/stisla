@@ -309,14 +309,23 @@
     <p>The reference is <code>.btn</code>. The same pattern shows up in alert, badge, dialog, kbd, list-group, scroll-area, table, and a dozen other components.</p>
 
     <h3>Level 1. Keep color-mix, swap the source</h3>
-    <p>You like the derivation curve, you want a different brand color. Set <code>--btn-tone</code> (or override <code>--st-primary</code> if you want every primary-toned component to follow). Everything else recomputes through the same recipe.</p>
+    <p>You like the derivation curve, you want a different brand color. Two paths.</p>
+    <p>Override <code>--btn-tone</code> when you want the new hue on this button only. The change stops at the button.</p>
     {% call ui.demo() %}
 <div class="demo-row demo-row--gap-md">
   <button type="button" class="btn btn--primary">Default tone</button>
-  <button type="button" class="btn btn--primary" style="--st-primary: oklch(0.6 0.2 30); --st-primary-foreground: oklch(1 0 0)">Custom hue</button>
+  <button type="button" class="btn btn--primary" style="--btn-tone: oklch(0.6 0.2 30); --btn-color: oklch(1 0 0)">--btn-tone override</button>
+  <button type="button" class="btn btn--primary" style="--btn-tone: oklch(0.68 0.2 142); --btn-color: oklch(1 0 0)">Another tone</button>
 </div>
     {% endcall %}
-    <p>Hover, active, rim, and bevel all recompute through the same recipe (hover at 88%, active at 78%, rim at 85%). One write, full state machinery intact.</p>
+    <p>Override <code>--st-primary</code> when you want every primary-toned component (buttons, links, focus rings, soft highlights) to follow. The change cascades to the whole subtree under the wrapper.</p>
+    {% call ui.demo() %}
+<div class="demo-row demo-row--gap-md">
+  <button type="button" class="btn btn--primary">Default tone</button>
+  <button type="button" class="btn btn--primary" style="--st-primary: oklch(0.6 0.2 30); --st-primary-foreground: oklch(1 0 0)">--st-primary override</button>
+</div>
+    {% endcall %}
+    <p>Either way, hover, active, rim, and bevel all recompute through the same recipe (hover at 88%, active at 78%, rim at 85%). One write, full state machinery intact. Hover the buttons to see it.</p>
 
     <h3>Level 2. Keep the variable surface, bypass color-mix per state</h3>
     <p>You want hand-picked swatches at each state instead of the derived progression. Set each state&rsquo;s background directly. <code>color-mix</code> never runs because you&rsquo;re writing the final value.</p>
@@ -585,14 +594,14 @@
 
   <section>
     <h2>Radius</h2>
-    <p><code>--st-radius</code> is the source. Components reach for <code>--st-radius-sm</code> and <code>--st-radius-lg</code> for their smaller / larger size variants, both derived as fractions of <code>--st-radius</code>. Setting the base to zero cascades to zero for every size; an additive offset would leave the large variant with a stray corner.</p>
+    <p>Three radius tiers ship as independent <code>:root</code> tokens. Components opt into the tier that fits their visual weight (chips and inline shapes read <code>--st-radius-sm</code>, everyday surfaces read <code>--st-radius</code>, elevated surfaces read <code>--st-radius-lg</code>). The tiers are not derived from each other, so a preset that wants every corner square has to write all three.</p>
     <div class="prose">
       <table>
-        <thead><tr><th>Preset</th><th>Value</th><th>Feel</th></tr></thead>
+        <thead><tr><th>Tier</th><th>Read by</th></tr></thead>
         <tbody>
-          <tr><td>Brutalist</td><td><code>0</code></td><td>Hard corners everywhere</td></tr>
-          <tr><td>Default</td><td><code>0.75rem</code></td><td>Soft but not pillowy</td></tr>
-          <tr><td>Soft</td><td><code>1rem</code></td><td>More rounded; reads as friendlier or more playful</td></tr>
+          <tr><td><code>--st-radius-sm</code></td><td>Inline chips (kbd, tooltip, icon-box, breadcrumb, sidebar buttons, checkbox)</td></tr>
+          <tr><td><code>--st-radius</code></td><td>Everyday surfaces (button, alert, input-group, pagination, tabs)</td></tr>
+          <tr><td><code>--st-radius-lg</code></td><td>Elevated surfaces (card, accordion, dialog, popover, toast, list-group)</td></tr>
         </tbody>
       </table>
     </div>
@@ -603,11 +612,13 @@
     {% endcall %}
     {% call ui.code(lang='css', title='_customization-presets.scss') %}
 .preset-brutalist {
-  --st-radius: 0;
-  --st-shadow: 4px 4px 0 var(--st-foreground);
+  --st-radius-sm: 0;
+  --st-radius:    0;
+  --st-radius-lg: 0;
+  --st-shadow:    4px 4px 0 var(--st-foreground);
 }
     {% endcall %}
-    <p>The brutalist preset combines radius zero with a solid offset shadow so every elevated surface picks up the look together. The shadow resolves to <code>--st-foreground</code>, which flips per theme, so the offset reads as near-black in light and near-white in dark without a separate dark delta.</p>
+    <p>The brutalist preset writes all three radius tiers plus a solid offset shadow so every surface picks up the look together. The shadow resolves to <code>--st-foreground</code>, which flips per theme, so the offset reads as near-black in light and near-white in dark without a separate dark delta.</p>
   </section>
 
   <section>
