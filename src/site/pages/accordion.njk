@@ -294,24 +294,20 @@
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Default</th>
             <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>--accordion-radius</code></td>
-            <td>var(--st-radius-lg)</td>
             <td>Outer frame radius. Large-surface tier, so it picks up <code>--st-radius-lg</code> (16 px under default density). The inner item radius derives concentrically. With the 4 px wrapper inset, the inner chip lands at 12 px, matching the standalone <code>--st-radius</code> default.</td>
           </tr>
           <tr>
             <td><code>--accordion-padding</code></td>
-            <td>0.25rem</td>
             <td>Inset between frame edge and items. Drives the concentric inner radius.</td>
           </tr>
           <tr>
             <td><code>--accordion-gap</code></td>
-            <td>0.25rem</td>
             <td>Space between adjacent items.</td>
           </tr>
         </tbody>
@@ -322,24 +318,20 @@
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Default</th>
             <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>--accordion-bg</code></td>
-            <td>var(--st-surface)</td>
             <td>Frame background.</td>
           </tr>
           <tr>
             <td><code>--accordion-border-color</code></td>
-            <td>var(--st-border)</td>
             <td>Frame border color.</td>
           </tr>
           <tr>
             <td><code>--accordion-shadow</code></td>
-            <td>var(--st-shadow)</td>
             <td>Ambient frame shadow. Drop to <code>none</code> for a flat frame.</td>
           </tr>
         </tbody>
@@ -350,19 +342,16 @@
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Default</th>
             <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>--accordion-item-open-bg</code></td>
-            <td>var(--st-surface-2)</td>
             <td>Background of the chip wrapping an open item (header + body together).</td>
           </tr>
           <tr>
             <td><code>--accordion-item-open-border-color</code></td>
-            <td>var(--st-border)</td>
             <td>Border rim of the open-item chip.</td>
           </tr>
         </tbody>
@@ -373,49 +362,40 @@
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Default</th>
             <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>--accordion-header-padding-y</code></td>
-            <td>calc(0.75rem * var(--st-density))</td>
             <td>Vertical padding inside the trigger row.</td>
           </tr>
           <tr>
             <td><code>--accordion-header-padding-x</code></td>
-            <td>calc(1rem * var(--st-density))</td>
             <td>Horizontal padding inside the trigger row. Pairs with the 4 px frame inset for 20 px from frame edge to content, which aligns with card content padding.</td>
           </tr>
           <tr>
             <td><code>--accordion-header-font-size</code></td>
-            <td>inherit</td>
             <td>Trigger label font size.</td>
           </tr>
           <tr>
             <td><code>--accordion-header-font-weight</code></td>
-            <td>500</td>
             <td>Trigger label weight.</td>
           </tr>
           <tr>
             <td><code>--accordion-header-color</code></td>
-            <td>var(--st-foreground)</td>
             <td>Trigger label color. Stays the same in both states.</td>
           </tr>
           <tr>
             <td><code>--accordion-header-bg</code></td>
-            <td>transparent</td>
             <td>Trigger background at rest.</td>
           </tr>
           <tr>
             <td><code>--accordion-header-hover-bg</code></td>
-            <td>var(--st-accent)</td>
             <td>Trigger background under hover. Only paints when the item is closed; the open chip stays flat.</td>
           </tr>
           <tr>
             <td><code>--accordion-header-divider-color</code></td>
-            <td>var(--st-border)</td>
             <td>1 px line between header and body when the item is open.</td>
           </tr>
         </tbody>
@@ -426,24 +406,20 @@
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Default</th>
             <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>--accordion-icon-size</code></td>
-            <td>1rem</td>
             <td>Chevron width and height.</td>
           </tr>
           <tr>
             <td><code>--accordion-icon-color</code></td>
-            <td>currentColor</td>
             <td>Chevron stroke. Tracks the header color by default.</td>
           </tr>
           <tr>
             <td><code>--accordion-icon-transition-duration</code></td>
-            <td>0.15s</td>
             <td>Rotation duration when an item opens or closes.</td>
           </tr>
         </tbody>
@@ -454,29 +430,24 @@
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Default</th>
             <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>--accordion-body-padding-y</code></td>
-            <td>calc(0.75rem * var(--st-density))</td>
             <td>Vertical padding inside the body region.</td>
           </tr>
           <tr>
             <td><code>--accordion-body-padding-x</code></td>
-            <td>calc(1rem * var(--st-density))</td>
             <td>Horizontal padding inside the body region. Matches header padding so the body content lines up flush with the trigger label.</td>
           </tr>
           <tr>
             <td><code>--accordion-body-color</code></td>
-            <td>var(--st-foreground)</td>
             <td>Body text color.</td>
           </tr>
           <tr>
             <td><code>--accordion-body-transition-duration</code></td>
-            <td>0.2s</td>
             <td>Reserved for the Step 4 height transition. No-op today.</td>
           </tr>
         </tbody>
@@ -487,14 +458,12 @@
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Default</th>
             <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>--accordion-ring</code></td>
-            <td>var(--st-ring)</td>
             <td>Keyboard focus outline color on the header.</td>
           </tr>
         </tbody>
