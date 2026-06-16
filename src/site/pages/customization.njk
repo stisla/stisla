@@ -66,43 +66,43 @@
     <p>Five paired tokens for semantic color. Foregrounds flip per-intent so text contrast survives a base swap. <code>--st-warning-foreground</code> stays dark in both themes (yellow stays yellow, text on it stays dark).</p>
     <div class="prose">
       <table>
-        <thead><tr><th>Token</th><th>Pair</th><th>Default</th><th>Use</th></tr></thead>
+        <thead><tr><th>Token</th><th>Pair</th><th>Use</th></tr></thead>
         <tbody>
-          <tr><td><code>--st-primary</code></td><td><code>--st-primary-foreground</code></td><td><code>oklch(0.639 0.1844 257.69)</code></td><td>Brand color. Drives <code>--st-ring</code> and the <code>--st-highlight</code> tint</td></tr>
-          <tr><td><code>--st-success</code></td><td><code>--st-success-foreground</code></td><td><code>oklch(0.6966 0.1853 149.54)</code></td><td>Positive state</td></tr>
-          <tr><td><code>--st-warning</code></td><td><code>--st-warning-foreground</code></td><td><code>oklch(0.7697 0.1645 70.61)</code></td><td>Caution</td></tr>
-          <tr><td><code>--st-danger</code></td><td><code>--st-danger-foreground</code></td><td><code>oklch(0.6155 0.2229 26.82)</code></td><td>Destructive or error</td></tr>
-          <tr><td><code>--st-info</code></td><td><code>--st-info-foreground</code></td><td><code>oklch(0.677589 0.148143 238.1044)</code></td><td>Informational</td></tr>
+          <tr><td><code>--st-primary</code></td><td><code>--st-primary-foreground</code></td><td>Brand color. Drives <code>--st-ring</code> and the <code>--st-highlight</code> tint</td></tr>
+          <tr><td><code>--st-success</code></td><td><code>--st-success-foreground</code></td><td>Positive state</td></tr>
+          <tr><td><code>--st-warning</code></td><td><code>--st-warning-foreground</code></td><td>Caution</td></tr>
+          <tr><td><code>--st-danger</code></td><td><code>--st-danger-foreground</code></td><td>Destructive or error</td></tr>
+          <tr><td><code>--st-info</code></td><td><code>--st-info-foreground</code></td><td>Informational</td></tr>
         </tbody>
       </table>
     </div>
 
     <h3>Surface tier</h3>
-    <p>Page background, primary text, and three stacked surface levels. <code>--st-muted-foreground</code> is the secondary text color paired with every surface.</p>
+    <p>Page background, primary text, and three stacked surface levels. Every surface tier flips per theme; foregrounds flip with them so contrast holds (see <a class="link" href="#dark-mode">Dark mode</a>). <code>--st-muted-foreground</code> is the secondary text color paired with every surface.</p>
     <div class="prose">
       <table>
-        <thead><tr><th>Token</th><th>Default (light)</th><th>Default (dark)</th><th>Use</th></tr></thead>
+        <thead><tr><th>Token</th><th>Use</th></tr></thead>
         <tbody>
-          <tr><td><code>--st-background</code></td><td><code>oklch(1 0 0)</code></td><td><code>oklch(0.155 0 0)</code></td><td>Page background</td></tr>
-          <tr><td><code>--st-foreground</code></td><td><code>oklch(0.27 0 0)</code></td><td><code>oklch(0.97 0 0)</code></td><td>Primary text</td></tr>
-          <tr><td><code>--st-surface</code></td><td><code>oklch(1 0 0)</code></td><td><code>oklch(0.18 0 0)</code></td><td>Default raised surface (cards, dialogs)</td></tr>
-          <tr><td><code>--st-surface-2</code></td><td><code>oklch(0.98 0 0)</code></td><td><code>oklch(0.21 0 0)</code></td><td>Slightly elevated</td></tr>
-          <tr><td><code>--st-surface-3</code></td><td><code>oklch(0.97 0 0)</code></td><td><code>oklch(0.23 0 0)</code></td><td>Most elevated</td></tr>
-          <tr><td><code>--st-border</code></td><td><code>oklch(0.93 0 0)</code></td><td><code>oklch(0.27 0 0)</code></td><td>Hairline borders between surfaces</td></tr>
-          <tr><td><code>--st-muted-foreground</code></td><td><code>oklch(0.52 0 0)</code></td><td><code>oklch(0.72 0 0)</code></td><td>Secondary text on any surface</td></tr>
+          <tr><td><code>--st-background</code></td><td>Page background</td></tr>
+          <tr><td><code>--st-foreground</code></td><td>Primary text</td></tr>
+          <tr><td><code>--st-surface</code></td><td>Default raised surface (cards, dialogs)</td></tr>
+          <tr><td><code>--st-surface-2</code></td><td>Slightly elevated surface</td></tr>
+          <tr><td><code>--st-surface-3</code></td><td>Most elevated surface</td></tr>
+          <tr><td><code>--st-border</code></td><td>Hairline borders between surfaces</td></tr>
+          <tr><td><code>--st-muted-foreground</code></td><td>Secondary text on any surface</td></tr>
         </tbody>
       </table>
     </div>
 
     <h3>Interactional</h3>
-    <p>Three pairs for stateful neutral surfaces. <code>neutral</code> is the rest fill, <code>accent</code> is the hover bg over neutral or transparent surfaces, and <code>highlight</code> is the persistent selected-or-current bg.</p>
+    <p>Three pairs for stateful neutral surfaces.</p>
     <div class="prose">
       <table>
-        <thead><tr><th>Token</th><th>Pair</th><th>Default (light)</th><th>Default (dark)</th></tr></thead>
+        <thead><tr><th>Token</th><th>Pair</th><th>Use</th></tr></thead>
         <tbody>
-          <tr><td><code>--st-neutral</code></td><td><code>--st-neutral-foreground</code></td><td><code>oklch(0.91 0 0)</code></td><td><code>oklch(0.27 0 0)</code></td></tr>
-          <tr><td><code>--st-accent</code></td><td><code>--st-accent-foreground</code></td><td><code>oklch(0.96 0 0)</code></td><td><code>oklch(0.26 0 0)</code></td></tr>
-          <tr><td><code>--st-highlight</code></td><td><code>--st-highlight-foreground</code></td><td>derived from <code>--st-primary</code></td><td>derived from <code>--st-primary</code></td></tr>
+          <tr><td><code>--st-neutral</code></td><td><code>--st-neutral-foreground</code></td><td>Rest fill for filled-neutral elements (<code>.btn--neutral</code>, default badge, kbd, input-group addons)</td></tr>
+          <tr><td><code>--st-accent</code></td><td><code>--st-accent-foreground</code></td><td>Transient hover bg over neutral or transparent surfaces</td></tr>
+          <tr><td><code>--st-highlight</code></td><td><code>--st-highlight-foreground</code></td><td>Persistent selected-or-current bg, a soft primary tint that derives from <code>--st-primary</code></td></tr>
         </tbody>
       </table>
     </div>
@@ -111,33 +111,33 @@
     <p>One pair for chrome that sits on top of imagery (carousel controls, indicators, and captions today, more media surfaces later). Theme-independent on purpose so slide photos read consistently in both light and dark.</p>
     <div class="prose">
       <table>
-        <thead><tr><th>Token</th><th>Pair</th><th>Default</th></tr></thead>
+        <thead><tr><th>Token</th><th>Pair</th><th>Use</th></tr></thead>
         <tbody>
-          <tr><td><code>--st-overlay</code></td><td><code>--st-overlay-foreground</code></td><td><code>oklch(0.155 0 0)</code> / <code>oklch(0.98 0 0)</code></td></tr>
+          <tr><td><code>--st-overlay</code></td><td><code>--st-overlay-foreground</code></td><td>Backdrop scrim and chrome foreground for surfaces that ride imagery</td></tr>
         </tbody>
       </table>
     </div>
 
     <h3>Focus</h3>
-    <p>One token for focus rings. Defaults to <code>--st-primary</code> so a brand swap repaints every focus ring at the same time.</p>
+    <p>One token for focus rings. Tracks <code>--st-primary</code> by default so a brand swap repaints every focus ring at the same time.</p>
     <div class="prose">
       <table>
-        <thead><tr><th>Token</th><th>Default</th><th>Use</th></tr></thead>
+        <thead><tr><th>Token</th><th>Use</th></tr></thead>
         <tbody>
-          <tr><td><code>--st-ring</code></td><td><code>var(--st-primary)</code></td><td>Focus-visible ring color. Components add their own 2&nbsp;px outline using it</td></tr>
+          <tr><td><code>--st-ring</code></td><td>Focus-visible ring color. Components add their own 2&nbsp;px outline using it</td></tr>
         </tbody>
       </table>
     </div>
 
     <h3>Geometry</h3>
-    <p>Three knobs reshape the system proportionally. Density multiplies through every padding, gap, and height value that wraps <code>calc(X * var(--st-density))</code>.</p>
+    <p>Three knobs reshape the system proportionally. Density multiplies through every padding, gap, and height value that wraps <code>calc(X * var(--st-density))</code>. See the <a class="link" href="#radius">Radius</a> and <a class="link" href="#density">Density</a> recipes below for ready-to-paste values.</p>
     <div class="prose">
       <table>
-        <thead><tr><th>Token</th><th>Default</th><th>Common values</th><th>Use</th></tr></thead>
+        <thead><tr><th>Token</th><th>Use</th></tr></thead>
         <tbody>
-          <tr><td><code>--st-radius</code></td><td><code>0.75rem</code></td><td><code>0</code> (brutalist), <code>0.75rem</code>, <code>1rem</code> (soft)</td><td>Corner radius. <code>--st-radius-sm</code> and <code>--st-radius-lg</code> derive from it so the brutalist preset cascades cleanly</td></tr>
-          <tr><td><code>--st-shadow</code></td><td>two-layer subtle</td><td>any <code>box-shadow</code> value</td><td>Default elevated shadow. Override per preset (the brutalist preset uses <code>4px 4px 0 var(--st-foreground)</code>)</td></tr>
-          <tr><td><code>--st-density</code></td><td><code>1</code></td><td><code>0.875</code> (compact), <code>1</code>, <code>1.125</code> (comfortable)</td><td>Multiplier on every component&rsquo;s padding, gap, and height tokens</td></tr>
+          <tr><td><code>--st-radius</code></td><td>Corner radius. <code>--st-radius-sm</code> and <code>--st-radius-lg</code> derive from it so the brutalist preset (radius 0) cascades cleanly to every size variant</td></tr>
+          <tr><td><code>--st-shadow</code></td><td>Default elevated shadow used by cards, dropdowns, and popovers. Swap per preset (the brutalist preset uses an offset solid that tracks <code>--st-foreground</code>)</td></tr>
+          <tr><td><code>--st-density</code></td><td>Multiplier on every component&rsquo;s padding, gap, and height tokens, plus utility-class spacing</td></tr>
         </tbody>
       </table>
     </div>
@@ -145,88 +145,16 @@
     <h3>Type</h3>
     <div class="prose">
       <table>
-        <thead><tr><th>Token</th><th>Default</th><th>Use</th></tr></thead>
+        <thead><tr><th>Token</th><th>Use</th></tr></thead>
         <tbody>
-          <tr><td><code>--st-font-sans</code></td><td>Inter, system fallback</td><td>Default body font</td></tr>
-          <tr><td><code>--st-font-mono</code></td><td>JetBrains Mono, system fallback</td><td>Monospace font for code, kbd, table data</td></tr>
+          <tr><td><code>--st-font-sans</code></td><td>Default body font stack</td></tr>
+          <tr><td><code>--st-font-mono</code></td><td>Monospace font stack for code, kbd, and table data</td></tr>
         </tbody>
       </table>
     </div>
 
-    <h3>Copy-paste starter</h3>
-    <p>The source is <code>src/scss/tokens/_theme.scss</code>. Copy this into your own stylesheet, change the values you want, and load it after the framework bundle.</p>
-    {% call ui.code(lang='css', title='src/scss/tokens/_theme.scss') %}
-:root {
-  /* Intent — 5 pairs. Foregrounds flip per pairing, except warning-foreground
-     which stays dark in both themes. */
-  --st-primary:             oklch(0.639 0.1844 257.69);
-  --st-primary-foreground:  oklch(1 0 0);
-  --st-success:             oklch(0.6966 0.1853 149.54);
-  --st-success-foreground:  oklch(1 0 0);
-  --st-warning:             oklch(0.7697 0.1645 70.61);
-  --st-warning-foreground:  oklch(0.27 0 0);
-  --st-danger:              oklch(0.6155 0.2229 26.82);
-  --st-danger-foreground:   oklch(1 0 0);
-  --st-info:                oklch(0.677589 0.148143 238.1044);
-  --st-info-foreground:     oklch(1 0 0);
-
-  /* Surface tier. Pure-gray neutrals. Retint warm or cool in a parent scope. */
-  --st-background:          oklch(1    0 0);
-  --st-foreground:          oklch(0.27 0 0);
-  --st-surface:             oklch(1    0 0);
-  --st-surface-2:           oklch(0.98 0 0);
-  --st-surface-3:           oklch(0.97 0 0);
-  --st-border:              oklch(0.93 0 0);
-  --st-muted-foreground:    oklch(0.52 0 0);
-
-  /* Overlay. Theme-independent on purpose. Chrome over imagery. */
-  --st-overlay:             oklch(0.155 0 0);
-  --st-overlay-foreground:  oklch(0.98  0 0);
-
-  /* Interactional. neutral = rest fill; accent = transient hover bg;
-     highlight = persistent selected / current bg (soft primary tint). */
-  --st-neutral:             oklch(0.91 0 0);
-  --st-neutral-foreground:  var(--st-foreground);
-  --st-accent:              oklch(0.96 0 0);
-  --st-accent-foreground:   var(--st-foreground);
-  --st-highlight:           color-mix(in oklch, var(--st-primary) 12%, transparent);
-  --st-highlight-foreground: var(--st-primary);
-
-  /* Focus. Defaults to --st-primary so brand swaps repaint focus rings. */
-  --st-ring:                var(--st-primary);
-
-  /* Geometry. radius: 0 = brutalist, 0.75rem = default, 1rem = soft.
-     density: 1 default, 0.875 compact, 1.125 comfortable. */
-  --st-radius:              0.75rem;
-  --st-shadow:              0 1px 3px rgba(0, 0, 0, 0.05),
-                            0 1px 2px rgba(0, 0, 0, 0.03);
-  --st-density:             1;
-
-  /* Derived siblings (not customization knobs). Smaller / larger component
-     sizes reach for these so brutalist (--st-radius: 0) cascades to 0 for
-     every size. */
-  --st-radius-sm:           calc(var(--st-radius) * 0.667);
-  --st-radius-lg:           calc(var(--st-radius) * 1.333);
-
-  /* Type. */
-  --st-font-sans:           "Inter", system-ui, sans-serif;
-  --st-font-mono:           "JetBrains Mono", ui-monospace, monospace;
-}
-
-/* Dark mode. Intents stay; surface and interactional tiers flip. */
-[data-theme="dark"],
-.dark {
-  --st-background:          oklch(0.155 0 0);
-  --st-foreground:          oklch(0.97  0 0);
-  --st-surface:             oklch(0.18  0 0);
-  --st-surface-2:           oklch(0.21  0 0);
-  --st-surface-3:           oklch(0.23  0 0);
-  --st-border:              oklch(0.27  0 0);
-  --st-muted-foreground:    oklch(0.72  0 0);
-  --st-neutral:             oklch(0.27  0 0);
-  --st-accent:              oklch(0.26  0 0);
-}
-    {% endcall %}
+    <h3>Source</h3>
+    <p>The shipped defaults live in <code>src/scss/tokens/_theme.scss</code>. Read that file when you want a starting copy with current values. Override the names you care about in your own stylesheet, loaded after the framework bundle.</p>
   </section>
 
   <section>
@@ -610,20 +538,16 @@
 
   <section>
     <h2>Dark mode</h2>
-    <p>Light and dark are deltas on the same token surface. The dark block in <code>tokens/_theme.scss</code> overrides the surface and interactional tiers; intents stay (a green button is the same green in dark mode). The dark block matches both <code>[data-theme="dark"]</code> on any ancestor and the bare <code>.dark</code> class on <code>&lt;html&gt;</code>, so React or Vue apps with localStorage-based toggling work out of the box.</p>
+    <p>Light and dark are deltas on the same token surface. Stisla ships a dark block that flips every surface and interactional token; intents stay (a green button is the same green in dark mode). The dark block matches both <code>[data-theme="dark"]</code> on any ancestor and the bare <code>.dark</code> class on <code>&lt;html&gt;</code>, so React or Vue apps with localStorage-based toggling work out of the box.</p>
+    <p>To roll your own dark variant, override the same tokens under either selector. You only need to redeclare what you&rsquo;re changing.</p>
     {% call ui.code(lang='css') %}
-/* Idiomatic dark-mode toggle. Apply either selector on <html>. */
 [data-theme="dark"],
 .dark {
-  --st-background:       oklch(0.155 0 0);
-  --st-foreground:       oklch(0.97  0 0);
-  --st-surface:          oklch(0.18  0 0);
-  --st-surface-2:        oklch(0.21  0 0);
-  --st-surface-3:        oklch(0.23  0 0);
-  --st-border:           oklch(0.27  0 0);
-  --st-muted-foreground: oklch(0.72  0 0);
-  --st-neutral:          oklch(0.27  0 0);
-  --st-accent:           oklch(0.26  0 0);
+  --st-background:       /* your dark background */;
+  --st-foreground:       /* your dark foreground */;
+  --st-surface:          /* ... */;
+  /* override any surface or interactional token here;
+     intents (--st-primary, --st-success, ...) stay across themes */
 }
     {% endcall %}
     <p>Two tokens stay theme-independent on purpose. <code>--st-warning-foreground</code> keeps a dark cap because yellow stays yellow and text on it should stay dark in both modes. <code>--st-overlay</code> and <code>--st-overlay-foreground</code> stay constant because they paint chrome on top of imagery, which can be anything.</p>
@@ -644,12 +568,11 @@
   --st-primary-foreground: oklch(1 0 0);
 }
     {% endcall %}
-    <p>The same shape works for any hue. Picking one is a design decision (perceptual lightness, chroma headroom, accessibility against the foreground). A few starting points:</p>
+    <p>The same shape works for any hue. Picking one is a design decision (perceptual lightness, chroma headroom, accessibility against the foreground). A few starting points to paste and tune:</p>
     <div class="prose">
       <table>
         <thead><tr><th>Brand</th><th><code>--st-primary</code></th></tr></thead>
         <tbody>
-          <tr><td>Default blue</td><td><code>oklch(0.639 0.1844 257.69)</code></td></tr>
           <tr><td>Violet</td><td><code>oklch(0.58 0.22 285)</code></td></tr>
           <tr><td>Teal</td><td><code>oklch(0.65 0.13 195)</code></td></tr>
           <tr><td>Amber</td><td><code>oklch(0.78 0.16 75)</code></td></tr>
