@@ -87,9 +87,15 @@
   --st-radius:    0.75rem;
   --st-radius-lg: 1rem;
 
-  // Default elevated shadow used by cards, dropdowns, popovers, etc.
-  // Heavier and lighter tiers ship as siblings below.
-  --st-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+  // Three elevation tiers, independent literals (same rationale as the
+  // radius tiers above). Tooltip-class surfaces read --st-shadow-light;
+  // cards / dropdowns / popovers / toasts / accordion read --st-shadow;
+  // dialog / drawer (modal surfaces) read --st-shadow-heavy. Shadow color
+  // is theme-independent on purpose (dark drop shadow on every theme); use
+  // --st-overlay or a component-scoped knob for theme-tracking effects.
+  --st-shadow-light: 0 4px 12px -2px color-mix(in oklch, black 12%, transparent);
+  --st-shadow:       0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --st-shadow-heavy: 0 10px 40px -10px color-mix(in oklch, black 35%, transparent);
 
   // Density: 1 default, 0.875 compact, 1.125 comfortable.
   --st-density: 1;

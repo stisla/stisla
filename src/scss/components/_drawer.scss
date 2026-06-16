@@ -30,7 +30,7 @@
   --drawer-bg: var(--st-surface);
   --drawer-color: var(--st-foreground);
   --drawer-border-color: var(--st-border);
-  --drawer-shadow: 0 0 40px -10px color-mix(in oklch, black 35%, transparent);
+  --drawer-shadow: var(--st-shadow-heavy);
 
   // Backdrop — solid dark dim, same treatment as dialog so a stacked
   // open (drawer → dialog) reads consistently.
