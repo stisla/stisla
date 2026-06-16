@@ -13,28 +13,44 @@
 // shifts: a "solid offset" shadow has to track `--st-foreground` so it
 // stays visible against both background tiers.
 
-// Space Mono — load via the @stylesheet for the brutalist preset font swap.
-// Imported here rather than as a <link> in the layout head because the font
-// belongs to the preset recipe; a consumer copying this preset into their
-// own theme expects the font import to come with it.
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+// Space Grotesk — load via the @stylesheet for the brutalist preset font
+// swap. Imported here rather than as a <link> in the layout head because
+// the font belongs to the preset recipe; a consumer copying this preset
+// into their own theme expects the font import to come with it.
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap');
 
 // === Brutalist ==============================================================
-// Hard corners, solid offset shadow, raw monospace type. The radius tiers
-// are independent literals at :root (see tokens/_theme.scss), so a preset
-// that wants every surface to read square writes all three tier tokens.
-// The shadow tracks --st-foreground so the offset reads near-black on light
-// and near-white on dark. --st-font-sans + font-family on the wrapper both
-// have to be set: components read --st-font-sans where they explicitly
-// reference it, and inherit font-family from the wrapper otherwise (the
-// foundation reboot already locked the cascade at html).
+// Maximalist neo-brutalism: hard corners, solid offset shadow, heavy black
+// (or white in dark mode) borders, geometric display sans-serif. Each axis
+// pushes one direction. The radius tiers go to 0; the shadow goes from
+// subtle drop to 6px solid offset; the border color goes from soft
+// (--st-border default) to --st-foreground (full contrast); the font goes
+// from neutral sans (Inter) to Space Grotesk at 500 / 700 weight. Border
+// width is bumped to 2px on the common shapes that carry the look (the
+// framework doesn't ship a global --st-border-width token; widening per
+// component inside this wrapper is the targeted alternative).
+//
+// --st-font-sans + font-family on the wrapper both have to be set:
+// components read --st-font-sans where they explicitly reference it, and
+// inherit font-family from the wrapper otherwise (the foundation reboot
+// already locked the cascade at html).
 .preset-brutalist {
-  --st-radius-sm: 0;
-  --st-radius:    0;
-  --st-radius-lg: 0;
-  --st-shadow:    4px 4px 0 var(--st-foreground);
-  --st-font-sans: 'Space Mono', ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --st-radius-sm:    0;
+  --st-radius:       0;
+  --st-radius-lg:    0;
+  --st-shadow:       6px 6px 0 var(--st-foreground);
+  --st-border:       var(--st-foreground);
+  --st-border-width: 2px;
+  --st-font-sans:    'Space Grotesk', system-ui, -apple-system, sans-serif;
   font-family: var(--st-font-sans);
+  font-weight: 500;
+
+  // Headings and labels read heavier to match the display weight.
+  // Component bg / colors stay as the framework defaults so a brand
+  // override layered on top of this preset still flows through.
+  .h1, .h2, .h3, .card__header, .dialog__title, .drawer__title {
+    font-weight: 700;
+  }
 }
 
 // === Violet primary =========================================================

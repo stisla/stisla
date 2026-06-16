@@ -20,7 +20,7 @@
   --item-gap:           0.75rem;
   --item-bg:            var(--st-surface);
   --item-color:         var(--st-foreground);
-  --item-border:        1px solid var(--st-border);
+  --item-border: var(--st-border-width) solid var(--st-border);
 
   position: relative;
   display: flex;

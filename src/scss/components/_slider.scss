@@ -185,7 +185,7 @@
 // Treatment: paint a 1px danger border around the track. Fill and
 // thumb keep brand colors; the border carries the invalid signal.
 @mixin slider-track-invalid {
-  border: 1px solid var(--st-danger);
+  border: var(--st-border-width) solid var(--st-danger);
 }
 .slider[aria-invalid="true"]::-webkit-slider-runnable-track,
 .slider:user-invalid::-webkit-slider-runnable-track {

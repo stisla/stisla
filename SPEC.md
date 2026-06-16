@@ -296,8 +296,11 @@ to radius and shadow — the two properties where designers genuinely
 tune per component family ("pilled buttons, default cards"; "heavier
 dialogs, lighter popovers"). Other component properties (padding, bg,
 font, etc.) don't get a `:root`-level per-component knob; the global
-tier tokens plus wrapper-class scoping cover their use cases. Density
-is `:root`-only — there is no `--st-{name}-density`.
+tier tokens plus wrapper-class scoping cover their use cases.
+
+Border-width is global-only (`--st-border-width`) — every bordered
+shape reads it directly, no per-component knob. Density is global-only
+the same way (`--st-density`, no `--st-{name}-density`).
 
 The fallback chain lives INSIDE the component rule, not at `:root`:
 

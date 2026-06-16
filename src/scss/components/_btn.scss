@@ -90,7 +90,7 @@ $btn-soft-active:    28%;
   line-height: 1;
   color: var(--btn-color);
   background: var(--btn-bg);
-  border: 1px solid var(--btn-border-color);
+  border: var(--st-border-width) solid var(--btn-border-color);
   border-radius: var(--btn-radius);
   box-shadow: var(--btn-bevel);
   cursor: pointer;

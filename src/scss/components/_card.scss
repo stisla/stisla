@@ -13,7 +13,7 @@
   --card-shadow:    var(--st-card-shadow, var(--st-shadow));
   --card-bg:        var(--st-surface);
   --card-color:     var(--st-foreground);
-  --card-border:    1px solid var(--st-border);
+  --card-border: var(--st-border-width) solid var(--st-border);
 
   position: relative;
   display: flex;

@@ -22,15 +22,18 @@
 // rules. Consumers override with plain `.context.prose h2 { … }` at
 // (0,2,1) and win cleanly without `!important`.
 //
-// Customization (5 knobs at the root of .prose; component nested
+// Customization (8 knobs at the root of .prose; component nested
 // overrides happen via the cascade — e.g. .prose { --st-kbd-padding-y: … }
 // retunes the kbd component without inventing new prose vars):
 //
-//   --st-prose-line-height     1.625                          Reading leading
-//   --st-prose-link-color      var(--st-primary)              Inline link color
-//   --st-prose-marker-color    var(--st-muted-foreground)     List bullets / numbers
-//   --st-prose-quote-border    var(--st-border)               Blockquote left rule
-//   --st-prose-headings-color  var(--st-foreground)           Heading color
+//   --prose-color           var(--st-foreground)           Master text color; body / headings / strong cascade from this
+//   --prose-body-color      var(--prose-color)          p, li, dd (applied at .prose root, inherits to descendants)
+//   --prose-headings-color  var(--prose-color)          h1-h6
+//   --prose-strong-color    var(--prose-color)          strong, b, dt
+//   --prose-link-color      var(--st-primary)              Inline link color
+//   --prose-marker-color    var(--st-muted-foreground)     List bullets / numbers
+//   --prose-quote-border    var(--st-border)               Blockquote left rule
+//   --prose-line-height     1.625                          Reading leading
 //
 // Internal scale is em-based so the whole block scales with the parent's
 // font-size if a consumer wants larger prose text. Block margins are
@@ -42,21 +45,24 @@
 $skip: ":not(:where(.not-prose, .not-prose *))";
 
 .prose {
-  --st-prose-line-height:    1.625;
-  --st-prose-link-color:     var(--st-primary);
-  --st-prose-marker-color:   var(--st-muted-foreground);
-  --st-prose-quote-border:   var(--st-border);
-  --st-prose-headings-color: var(--st-foreground);
+  --prose-color:          var(--st-foreground);
+  --prose-body-color:     var(--prose-color);
+  --prose-headings-color: var(--prose-color);
+  --prose-strong-color:   var(--prose-color);
+  --prose-link-color:     var(--st-primary);
+  --prose-marker-color:   var(--st-muted-foreground);
+  --prose-quote-border:   var(--st-border);
+  --prose-line-height:    1.625;
 
-  color: var(--st-foreground);
-  line-height: var(--st-prose-line-height);
+  color: var(--prose-body-color);
+  line-height: var(--prose-line-height);
 
   // === Headings ===
   // em-based so the whole block scales with parent font-size. Same numeric
   // scale as .h1–.h6 utilities, different unit + different margin rhythm
   // (prose owns the rhythm; the utility is spacing-neutral for app UI).
   :where(h1, h2, h3, h4, h5, h6)#{$skip} {
-    color: var(--st-prose-headings-color);
+    color: var(--prose-headings-color);
     font-weight: 600;
     line-height: 1.25;
   }
@@ -86,19 +92,19 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
   // === Inline semantics ===
   // Restore visual treatment that Reboot strips. Inside prose these tags
   // should self-style — they're semantic *and* visual.
-  :where(strong, b)#{$skip} { font-weight: 600; }
+  :where(strong, b)#{$skip} { font-weight: 600; color: var(--prose-strong-color); }
   :where(em, i)#{$skip}     { font-style: italic; }
   :where(small)#{$skip}     { font-size: 0.875em; }
 
   // === Links ===
   :where(a)#{$skip} {
-    color: var(--st-prose-link-color);
+    color: var(--prose-link-color);
     text-decoration: underline;
     text-underline-offset: 2px;
     text-decoration-thickness: 1px;
 
     &:hover {
-      color: color-mix(in oklch, var(--st-prose-link-color) 80%, black);
+      color: color-mix(in oklch, var(--prose-link-color) 80%, black);
     }
   }
 
@@ -121,7 +127,7 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
     margin-block: calc(0.5em * var(--st-density));
   }
   :where(li)#{$skip}::marker {
-    color: var(--st-prose-marker-color);
+    color: var(--prose-marker-color);
   }
 
   // Description lists.
@@ -131,6 +137,7 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
   }
   :where(dt)#{$skip} {
     font-weight: 600;
+    color: var(--prose-strong-color);
     margin-top: calc(1em * var(--st-density));
   }
   :where(dd)#{$skip} {
@@ -142,7 +149,7 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
   :where(blockquote)#{$skip} {
     margin-block: calc(1.6em * var(--st-density));
     padding-inline-start: 1em;
-    border-inline-start: 3px solid var(--st-prose-quote-border);
+    border-inline-start: 3px solid var(--prose-quote-border);
     color: var(--st-muted-foreground);
     font-style: italic;
   }
@@ -165,7 +172,7 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
     font-size: 0.875em;
     padding: 0.125em 0.375em;
     background: var(--st-surface-2);
-    border: 1px solid var(--st-border);
+    border: var(--st-border-width) solid var(--st-border);
     border-radius: 0.375rem;
     color: var(--st-foreground);
     overflow-wrap: anywhere;
@@ -180,7 +187,7 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
     font-size: 0.875em;
     line-height: 1.5;
     background: var(--st-surface-2);
-    border: 1px solid var(--st-border);
+    border: var(--st-border-width) solid var(--st-border);
     border-radius: var(--st-radius);
     color: var(--st-foreground);
   }
@@ -213,7 +220,7 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
     line-height: 1;
     color: var(--st-neutral-foreground);
     background: var(--st-neutral);
-    border: 1px solid var(--kbd-rim);
+    border: var(--st-border-width) solid var(--kbd-rim);
     border-radius: var(--kbd-radius);
     box-shadow: 0 1px 0 var(--kbd-rim);
   }
@@ -267,7 +274,7 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
     width: 100%;
     font-size: 0.875em;
     line-height: 1.5;
-    border: 1px solid var(--st-border);
+    border: var(--st-border-width) solid var(--st-border);
     border-radius: var(--st-radius);
     border-collapse: separate;
     border-spacing: 0;

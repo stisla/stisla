@@ -97,6 +97,11 @@
   --st-shadow:       0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
   --st-shadow-heavy: 0 10px 40px -10px color-mix(in oklch, black 35%, transparent);
 
+  // Border width for the shape outline of every bordered component.
+  // Internal dividers (card section rules, list-group separators, drawer
+  // edges) stay literal 1px because they're hairlines, not the shape.
+  --st-border-width: 1px;
+
   // Density: 1 default, 0.875 compact, 1.125 comfortable.
   --st-density: 1;
 

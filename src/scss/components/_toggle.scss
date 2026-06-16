@@ -81,7 +81,7 @@
   line-height: 1;
   color: var(--toggle-color);
   background: var(--toggle-bg);
-  border: 1px solid var(--toggle-border-color);
+  border: var(--st-border-width) solid var(--toggle-border-color);
   border-radius: var(--toggle-radius);
   cursor: pointer;
   user-select: none;

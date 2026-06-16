@@ -100,7 +100,7 @@
   padding-inline: var(--pagination-button-padding-x);
   background-color: var(--pagination-button-bg);
   color: var(--pagination-button-color);
-  border: 1px solid var(--pagination-button-border-color);
+  border: var(--st-border-width) solid var(--pagination-button-border-color);
   border-radius: var(--pagination-button-radius);
   text-decoration: none;
   font: inherit;

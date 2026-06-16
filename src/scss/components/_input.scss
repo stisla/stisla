@@ -41,7 +41,7 @@
   line-height: 1.2;
   color: var(--st-neutral-foreground);
   background: var(--st-neutral);
-  border: 1px solid
+  border: var(--st-border-width) solid
     color-mix(in oklch, var(--st-neutral) 85%, var(--st-muted-foreground));
   border-radius: calc(var(--input-radius) - 0.25rem);
   cursor: pointer;
@@ -160,7 +160,7 @@
   line-height: 1.2;
   color: var(--st-foreground);
   background: transparent;
-  border: 1px solid transparent;
+  border: var(--st-border-width) solid transparent;
   outline: none;
   appearance: none;
 }

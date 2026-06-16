@@ -85,7 +85,7 @@
   gap: var(--accordion-gap);
   padding: var(--accordion-padding);
   background-color: var(--accordion-bg);
-  border: 1px solid var(--accordion-border-color);
+  border: var(--st-border-width) solid var(--accordion-border-color);
   border-radius: var(--accordion-radius);
   box-shadow: var(--accordion-shadow);
 }
@@ -95,7 +95,7 @@
 // overflow: hidden lets the header background fill the chip without
 // bleeding past the rounded edge while the body is hidden.
 .accordion__item {
-  border: 1px solid transparent;
+  border: var(--st-border-width) solid transparent;
   border-radius: calc(var(--accordion-radius) - var(--accordion-padding));
   overflow: hidden;
   transition:

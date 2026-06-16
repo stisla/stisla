@@ -75,7 +75,7 @@
   height: var(--switch-track-h);
   margin: 0;
   vertical-align: middle;
-  border: 1px solid transparent;
+  border: var(--st-border-width) solid transparent;
   border-radius: 9999px;
   background-color: var(--switch-off-bg);
   background-image: radial-gradient(

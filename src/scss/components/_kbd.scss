@@ -29,7 +29,7 @@
   line-height: 1;
   color: var(--st-neutral-foreground);
   background: var(--st-neutral);
-  border: 1px solid var(--kbd-rim);
+  border: var(--st-border-width) solid var(--kbd-rim);
   border-radius: var(--kbd-radius);
   // Bottom edge in the rim color so the chip reads as a key cap.
   box-shadow: 0 1px 0 var(--kbd-rim);

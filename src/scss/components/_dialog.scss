@@ -115,7 +115,7 @@
   max-height: 100%;
   background-color: var(--dialog-bg);
   color: var(--dialog-color);
-  border: 1px solid var(--dialog-border-color);
+  border: var(--st-border-width) solid var(--dialog-border-color);
   border-radius: var(--dialog-radius);
   box-shadow: var(--dialog-shadow);
   overflow: hidden;

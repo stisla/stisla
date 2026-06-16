@@ -36,7 +36,7 @@
   align-items: stretch;
   width: 100%;
   background: var(--input-group-bg);
-  border: 1px solid var(--input-group-border);
+  border: var(--st-border-width) solid var(--input-group-border);
   border-radius: var(--input-group-radius);
   transition: border-color .12s ease, box-shadow .12s ease;
 

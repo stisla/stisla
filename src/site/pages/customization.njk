@@ -141,6 +141,7 @@
           <tr><td><code>--st-shadow-light</code></td><td>Light elevation. Tooltip-class surfaces</td></tr>
           <tr><td><code>--st-shadow</code></td><td>Default elevation. Cards, dropdowns, popovers, toasts, accordion</td></tr>
           <tr><td><code>--st-shadow-heavy</code></td><td>Heavy elevation. Dialog and drawer (modal surfaces)</td></tr>
+          <tr><td><code>--st-border-width</code></td><td>Width of the shape outline on every bordered component. Internal dividers (card section rules, list-group separators) stay literal 1&nbsp;px</td></tr>
           <tr><td><code>--st-density</code></td><td>Multiplier on every component&rsquo;s padding, gap, and height tokens, plus utility-class spacing</td></tr>
         </tbody>
       </table>
@@ -616,18 +617,25 @@
 </div>
     {% endcall %}
     {% call ui.code(lang='css', title='_customization-presets.scss') %}
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap');
 
 .preset-brutalist {
-  --st-radius-sm: 0;
-  --st-radius:    0;
-  --st-radius-lg: 0;
-  --st-shadow:    4px 4px 0 var(--st-foreground);
-  --st-font-sans: 'Space Mono', ui-monospace, Menlo, monospace;
-  font-family:    var(--st-font-sans);
+  --st-radius-sm:    0;
+  --st-radius:       0;
+  --st-radius-lg:    0;
+  --st-shadow:       6px 6px 0 var(--st-foreground);
+  --st-border:       var(--st-foreground);
+  --st-border-width: 2px;
+  --st-font-sans:    'Space Grotesk', system-ui, sans-serif;
+  font-family: var(--st-font-sans);
+  font-weight: 500;
+
+  .h1, .h2, .h3, .card__header, .dialog__title, .drawer__title {
+    font-weight: 700;
+  }
 }
     {% endcall %}
-    <p>Hard corners across all three radius tiers, a solid offset shadow that tracks <code>--st-foreground</code> (auto-flips per theme), and Space Mono for the raw-computer typography that defines the brutalist web look. <code>--st-font-sans</code> and an explicit <code>font-family</code> on the wrapper both get set — components that read <code>--st-font-sans</code> see the override, and components using <code>font-family: inherit</code> pick it up from the wrapper. Drop the <code>@import</code> if your app already loads Space Mono or pick another mono / display font that fits your brand.</p>
+    <p>The look comes from pushing every axis at once. Radius tiers go to zero; the shadow steps up to a 6&nbsp;px solid offset tracking <code>--st-foreground</code> so it flips per theme; <code>--st-border</code> moves from the soft hairline grey to full-contrast foreground; <code>--st-border-width</code> doubles to 2&nbsp;px so every shape outline reads thicker; Space Grotesk replaces the neutral Inter and runs at 500 / 700 weight. Heading weights bump to 700 inside the wrapper — typographic weight isn&rsquo;t a global token, so the preset overrides those by class.</p>
   </section>
 
   <section>

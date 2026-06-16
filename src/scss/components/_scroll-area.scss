@@ -50,7 +50,7 @@
 }
 
 .scroll-area--bordered {
-  border: 1px solid var(--st-border);
+  border: var(--st-border-width) solid var(--st-border);
 }
 
 // The plugin transitions the handle on its own (opacity, background-color,

@@ -89,7 +89,7 @@
   // so the active state's painted border doesn't shift the layout by 1px.
   appearance: none;
   background: transparent;
-  border: 1px solid transparent;
+  border: var(--st-border-width) solid transparent;
   font: inherit;
   cursor: pointer;
   user-select: none;

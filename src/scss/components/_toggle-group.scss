@@ -67,7 +67,7 @@
   padding: calc(var(--toggle-group-padding) * var(--st-density));
   gap: calc(var(--toggle-group-gap) * var(--st-density));
   background: var(--toggle-group-bg);
-  border: 1px solid var(--toggle-group-border-color);
+  border: var(--st-border-width) solid var(--toggle-group-border-color);
   border-radius: var(--toggle-group-radius);
 
   // Member toggles — concentric inner radius (V3.md §3.4) + ghost rest

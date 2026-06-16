@@ -175,7 +175,7 @@
   padding: var(--toast-padding);
   background-color: var(--toast-bg);
   color: var(--toast-color);
-  border: 1px solid var(--toast-border-color);
+  border: var(--st-border-width) solid var(--toast-border-color);
   border-radius: var(--toast-radius);
   box-shadow: var(--toast-shadow);
   opacity: 1;

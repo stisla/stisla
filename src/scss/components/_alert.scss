@@ -37,7 +37,7 @@
   padding: var(--alert-padding-y) var(--alert-padding-x);
   color: var(--alert-color);
   background: var(--alert-bg);
-  border: 1px solid var(--alert-border-color);
+  border: var(--st-border-width) solid var(--alert-border-color);
   border-radius: var(--alert-radius);
 }
 
