@@ -23,8 +23,10 @@ export function injectToc(html) {
   const [, openTag, body, closeTag] = match;
   const used = new Set();
   const entries = [];
+  const demoRanges = findDemoRanges(body);
 
-  const newBody = body.replace(HEADING_RE, (full, tag, attrs, inner) => {
+  const newBody = body.replace(HEADING_RE, (full, tag, attrs, inner, offset) => {
+    if (isInRange(offset, demoRanges)) return full;
     const text = stripInline(inner);
     if (!text) return full;
     const level = Number(tag[1]);
@@ -70,6 +72,44 @@ function slugify(text, used) {
 
 function stripInline(html) {
   return html.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+}
+
+// Locate the outer wrappers emitted by the demo macro (class starts with
+// "demo" followed by a space or closing quote — "demo-preview" etc. don't
+// match) and return their full [start, end) span by walking <div>/</div>
+// pairs to find each wrapper's matching close. Headings inside demos are
+// component examples, not page sections, so the TOC skips them.
+function findDemoRanges(body) {
+  const ranges = [];
+  const OPEN_RE = /<div class="demo[\s"]/g;
+  let m;
+  while ((m = OPEN_RE.exec(body)) !== null) {
+    const start = m.index;
+    let depth = 1;
+    let i = OPEN_RE.lastIndex;
+    while (i < body.length && depth > 0) {
+      const nextOpen = body.indexOf('<div', i);
+      const nextClose = body.indexOf('</div>', i);
+      if (nextClose === -1) break;
+      if (nextOpen !== -1 && nextOpen < nextClose) {
+        depth++;
+        i = nextOpen + 4;
+      } else {
+        depth--;
+        i = nextClose + 6;
+      }
+    }
+    ranges.push([start, i]);
+    OPEN_RE.lastIndex = i;
+  }
+  return ranges;
+}
+
+function isInRange(offset, ranges) {
+  for (const [s, e] of ranges) {
+    if (offset >= s && offset < e) return true;
+  }
+  return false;
 }
 
 function renderToc(entries) {
