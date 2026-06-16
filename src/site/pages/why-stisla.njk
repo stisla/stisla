@@ -1,0 +1,157 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Why Stisla{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Why Stisla</h1>
+    <p class="lead">Stisla is a design specification. This page covers the implementation paths we considered and why none of them fit our principles.</p>
+  </header>
+
+  <section>
+    <h2>What we need from an implementation</h2>
+    <p>Stisla is a specification first and a library second. Before we wrote a line of code, we asked what an implementation would need to satisfy. The answer is three properties.</p>
+
+    <p><strong class="text-foreground">Framework-agnostic.</strong> It has to work in plain HTML, Rails templates, Django pages, Laravel views, and any environment that does not ship a JavaScript render layer. A JavaScript framework cannot be a requirement.</p>
+
+    <p><strong class="text-foreground">Runtime-customizable.</strong> A designer changes one variable. The whole system retunes. No Sass recompile. No build step. The token swap happens at runtime and repaints the page.</p>
+
+    <p><strong class="text-foreground">Write CSS in CSS files.</strong> Markup goes in templates. Styles go in stylesheets. Behavior goes in scripts. We treat this separation as a feature, not as legacy.</p>
+
+    <p>Every section below covers a candidate we tried, what broke against one of these three properties, and the arguments we heard for keeping it anyway.</p>
+  </section>
+
+  <section>
+    <h2>We tried Bootstrap</h2>
+    <p>Stisla v2 was built on Bootstrap 4. When we started the rewrite, the natural next step was a port to Bootstrap 5.3. We got partway in and the port became a full rewrite. Three pieces of Bootstrap&rsquo;s architecture broke against the specification.</p>
+
+    <h3>Build-time tokens and runtime tokens don&rsquo;t connect</h3>
+    <p>Bootstrap 5 splits theme data across two layers. Sass variables like <code>$primary</code> and <code>$btn-hover-bg-shade-amount</code> live at build time. CSS custom properties like <code>--bs-primary</code> and <code>--bs-btn-hover-bg</code> live at runtime. The two layers connect inside Sass mixins. Button hover, active, and focus backgrounds are computed at build time using Sass functions like <code>shade-color()</code> and <code>tint-color()</code>, and the result is then assigned to a <code>--bs-*</code> CSS variable in the output. The CSS variable exists at runtime. Its value was baked in at compile time.</p>
+    <p>When you override <code>--bs-primary</code> at runtime, the override reaches every component that reads <code>--bs-primary</code> directly. It does not reach <code>--bs-btn-hover-bg</code>, because <code>--bs-btn-hover-bg</code> was derived from <code>$primary</code> at build time, not from <code>--bs-primary</code> at runtime. Your override goes one layer deep and stops. The button base repaints. The hover stays the old color.</p>
+    <p>Our specification asks for one source of truth. Override the base color, every state derives from it, no exceptions. A system that splits theme data across build time and runtime cannot give us that.</p>
+
+    <h3>The reboot leaks into components</h3>
+    <p>Bootstrap&rsquo;s reset (Reboot) styles bare semantic elements. <code>h1</code> through <code>h6</code> get a type scale. <code>strong</code> gets bolded. <code>kbd</code> gets a dark fill. <code>small</code> shrinks to 87.5% of the parent font size. These styles leak into component contexts. A card footer with a <code>&lt;small&gt;</code> inside picks up the 80% size, even when the card already defines its own type scale. A button with <code>&lt;strong&gt;</code> in the label ends up bolder than the button itself.</p>
+    <p>We pulled element-default styling out at the foundation layer. Components start with no element-level visual treatment. App markup opts into typography through classes (<code>.h1</code>, <code>.fw-semibold</code>, <code>.kbd</code>). Long-form content gets element-level styling back inside a <code>.prose</code> scope. The component context stops fighting the reset.</p>
+
+    <h3>Color derivation needs a rebuild</h3>
+    <p>Bootstrap computes hover, active, focus, and tinted variants at build time using Sass functions. Each generated ramp ships in the CSS bundle. Adding a new brand color means recompiling Sass.</p>
+    <p>Our specification asks for runtime derivation. A designer drops in a custom color and every state derives from it without a rebuild. We use <code>color-mix(in oklch, var(--btn-tone) 88%, black)</code> applied to a single source variable. Hover, active, focus ring, border rim, and the soft highlight tint all derive from one place using the same recipe.</p>
+
+    <h3>Why we stopped porting</h3>
+    <p>By the time we worked through these breaks, we noticed a pattern. Bootstrap exposes a color and variable system that is wider than what we needed. Layered Sass maps, theme functions, utility-class plumbing, component partials, each with its own override mechanism. The system is impressive, but for our purposes it was the wrong size. We did not need a theme map a designer extends at compile time. We needed a small token surface a designer overrides at runtime.</p>
+    <p>The work shifted from building Stisla on top of Bootstrap to bending Bootstrap into a shape that satisfies our specification. We were satisfying Bootstrap more than Bootstrap was satisfying us.</p>
+    <p>When the port was mostly done, theming and component variables were still hard to customize end-to-end. The Sass overrides required a rebuild. The runtime overrides went one layer deep. The naming conventions across the two systems kept colliding.</p>
+    <p>The common reply is that Bootstrap is fine and we were using it wrong. That is partly right. Bootstrap is fine. The deeper part is that its architecture mixes build-time Sass with runtime CSS variables. No amount of careful authoring lets a runtime override reach build-time code that already ran. Bootstrap is a good Sass-first, build-time framework. Our specification needs runtime.</p>
+    <p>We counted the remaining work. Writing every component from scratch against our own token surface was about the same effort as continuing to bend Bootstrap. We did that.</p>
+
+  </section>
+
+  <section>
+    <h2>We tried Tailwind</h2>
+    <p>Tailwind&rsquo;s pitch is honest. No naming, no jumping between files, no specificity wars. For a solo developer building a React app on a deadline, that is a strong story. We agreed with the diagnosis that large CSS codebases at many companies are disasters, and we looked at Tailwind as the cure.</p>
+
+    <h3>We agree on the destination</h3>
+    <p>A common defense of Tailwind at scale is that real teams do not write utility chains directly. They wrap the chains inside components, so at the call site you write <code>&lt;Button variant="primary"&gt;</code> instead of seventy classes. That endpoint is where the Tailwind codebases we have worked on tend to land. It is also where Stisla starts. We agree on the destination. The disagreement is about what sits underneath it.</p>
+
+    <h3>The visual declarations don&rsquo;t disappear, they move</h3>
+    <p>The endpoint above does not remove the visual declarations. It moves them. A Tailwind <code>&lt;Button&gt;</code> component still carries <code>bg-blue-500 hover:bg-blue-600 text-white rounded-md px-4 py-2</code> inside a <code>className</code> string. A Stisla button carries the equivalent rules in <code>_btn.scss</code>. Same declarations. Different syntax. Different file. We did not stop writing CSS when we worked in Tailwind. We wrote CSS into JSX strings instead.</p>
+
+    {% call ui.code(lang='jsx', title='Tailwind component') %}
+function Button({ variant, children }) {
+  return (
+    <button className={
+      variant === 'primary'
+        ? 'bg-blue-500 hover:bg-blue-600 text-white rounded-md px-4 py-2'
+        : 'bg-gray-200 hover:bg-gray-300 text-gray-900 rounded-md px-4 py-2'
+    }>
+      {children}
+    </button>
+  );
+}
+    {% endcall %}
+
+    {% call ui.code(lang='css', title='Stisla') %}
+.btn {
+  background: var(--btn-bg);
+  color: var(--btn-color);
+  border-radius: var(--btn-radius);
+  padding: 0 var(--btn-padding-x);
+}
+.btn:hover { --btn-bg: color-mix(in oklch, var(--btn-tone) 88%, black); }
+    {% endcall %}
+
+    <p>The Stisla version reads as five property-value pairs. The Tailwind version reads as twenty-something tokens jammed into a string, with a ternary holding the conditional. Both express the same intent. One is easier to scan.</p>
+
+    <h3>The tooling tax that follows</h3>
+    <p>Conditional class strings got long fast in our work. The ecosystem has helpers for this, and some of them are general. <code>clsx</code> and <code>classnames</code> are sub-kilobyte string joiners useful in any class-based system. The Tailwind-specific tax sits elsewhere.</p>
+    <p><code>tailwind-merge</code> (around 9 KB gzipped) resolves conflicts between competing utility classes when <code>px-4</code> and <code>px-6</code> both apply through cascade order, unpredictably across components. <code>cva</code> (around 1.5 KB) provides the variant grammar long utility chains push you toward, since each Tailwind variant value expands into many classes that need a grammar to manage. Both solve problems specific to Tailwind&rsquo;s vocabulary.</p>
+    <p>In a BEM-based system, the same variants are modifier classes (<code>.btn--primary</code>, <code>.btn--lg</code>). The conflict resolver and the variant grammar do not arise. CSS handles the rest with selectors and the cascade, which already ship in every browser at no install cost.</p>
+
+    <h3>BEM and <code>@apply</code></h3>
+    <p>Stisla is class-based. <code>.btn</code>, <code>.btn--primary</code>, <code>.btn__icon</code>. Tailwind has a path for this. You write <code>@layer components { .btn { @apply px-4 py-2 rounded &hellip; } }</code> and end up with a reusable BEM-style class. We tried it. What we got was CSS rules authored in a constrained Tailwind subset (the utility-name dictionary instead of CSS property names), still requiring the Tailwind build pipeline to compile <code>@apply</code>. The abstraction over plain CSS did not earn its keep once we were already authoring rules. The choice reduced to writing Tailwind-flavored CSS with the build step, or writing plain CSS without it. We picked the second.</p>
+
+    <h3>One variable drives every state</h3>
+    <p>Building Stisla&rsquo;s button surface, we hit the classic design-system challenge. A button needs three sizes, ten colors, and five states (hover, active, focus, disabled, loading). That is more than a hundred fifty visual combinations, and that is before icons enter the picture. In Tailwind, this means generating a class ramp per color and writing a variant prefix per state. Adding a brand color means regenerating the ramp and rebuilding.</p>
+    <p>Stisla handles the whole space from a small number of rules. One state-derivation block reads from a single source variable. Shape modifiers (outline, ghost, soft) override the source. Size variables scale the box.</p>
+
+    {% call ui.code(lang='css', title='Stisla _btn.scss (excerpt)') %}
+.btn {
+  --btn-bg: var(--btn-tone);
+  background: var(--btn-bg);
+}
+.btn:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) 88%, black); }
+.btn:active { --btn-bg: color-mix(in oklch, var(--btn-tone) 78%, black); }
+    {% endcall %}
+
+    <p>Drop in a custom color at the call site and every state recomputes against it. No palette config. No regenerated ramp. The whole state machinery follows from one variable.</p>
+
+    {% call ui.code(lang='html') %}
+<button class="btn" style="--btn-tone: oklch(0.6 0.2 30)">
+  Custom brand
+</button>
+    {% endcall %}
+
+    <h3>Common defenses, answered</h3>
+
+    <p><strong class="text-foreground">&ldquo;CSS doesn&rsquo;t scale.&rdquo;</strong> Only if it stays global. With scoped variables and BEM, each component owns its own variables on its own root selector. Two components cannot interfere unless you write a selector that crosses the boundary. We walk through this on the <a class="link" href="/customization">Customization</a> page.</p>
+
+    <p><strong class="text-foreground">&ldquo;Tailwind is faster to write.&rdquo;</strong> At the start, yes. Tailwind ships a set of pre-decided defaults in short class names. Writing <code>px-4</code> gives you visible padding without picking a value or inventing a class name. That removes the friction of starting and is the reason prototypes come together fast in Tailwind.</p>
+    <p>The speed evens out as the project grows. The decisions you skipped at the start come back. You name the thing you keep building (a <code>Button</code> component, the same naming work you would have done with a <code>.btn</code> class). You jump between the place that uses the component and the file that defines it (the same context switch you would have made between markup and CSS, with different filenames). You outgrow Tailwind&rsquo;s default tokens and set up a real token scale of your own. By the time those pieces are in place, the head start is gone.</p>
+
+    <p><strong class="text-foreground">&ldquo;Tailwind is smaller.&rdquo;</strong> The CSS file is smaller because the bytes moved into the markup. In our projects, the total weight stayed about the same. Two follow-on effects travel with the move that are worth naming.</p>
+    <p>A CSS rule is a static declaration that lives in a stylesheet. A Tailwind component computes its <code>className</code> at render time, often with <code>cn()</code> or <code>cva()</code> mixing in conditionals. Styling decisions move out of stylesheets and into JavaScript render functions, next to the behavioral logic. The two concerns CSS originally separated start merging again.</p>
+    <p>A static CSS file can ship once and live in the browser cache for a year (fingerprinted filenames make this safe). The same bytes inside the markup ship on every page request, because HTML is usually cached less aggressively than assets. For the server-rendered case Stisla targets, that difference compounds across navigations.</p>
+
+    <p><strong class="text-foreground">&ldquo;You need <code>!important</code> to override CSS.&rdquo;</strong> Only in global stylesheets. Override <code>--btn-tone</code> on a wrapper and every descendant button retunes. No specificity fight. We demonstrate this on the <a class="link" href="/customization">Customization</a> page too.</p>
+
+  </section>
+
+  <section>
+    <h2>We considered CSS-in-JS</h2>
+    <p>CSS-in-JS libraries (styled-components, Emotion, vanilla-extract, Pigment, and similar) place style declarations inside JavaScript modules. Each component imports its own styles directly. Build steps extract or inline the result. It is a coherent approach and many teams use it well.</p>
+
+    <p>We did not pick it for two reasons. The first is preference. We like writing CSS in CSS files. Markup belongs in templates. Styles belong in stylesheets. Behavior belongs in scripts. We treat the separation as a feature. CSS-in-JS collapses the three into one. That is a valid trade. It is not ours.</p>
+
+    <p>The second reason is structural. Our specification asks every implementation to work in environments that do not ship a JavaScript render layer. Plain HTML, Rails templates, Django pages, Laravel views. CSS-in-JS by definition requires JavaScript. The vanilla implementation could not be built on top of it.</p>
+  </section>
+
+  <section>
+    <h2>We considered shadcn and Radix</h2>
+    <p>Radix is a library of headless behavior primitives for React. Focus traps, dismiss semantics, keyboard handling, controlled and uncontrolled state, accessibility wiring. The primitives are exactly the kind of thing the specification asks every implementation to satisfy, and Radix solves them cleanly.</p>
+
+    <p>Radix is on the roadmap. The React implementation of Stisla will lean on a primitive library for behavior. Whether that primitive library is Radix or Base UI or another option is an implementation detail. The headless behavior layer is a good fit, and we like the work that has been done there.</p>
+
+    <p>The part we could not adopt is shadcn&rsquo;s open-code distribution model. shadcn calls itself &ldquo;not a component library&rdquo; but &ldquo;how you build your component library.&rdquo; Components ship as a registry of flat files that copy-paste into the consumer&rsquo;s codebase via a CLI. You own each file, you modify it in place, you carry the diff forward by hand. It is a great model when you are starting. It gets hard when we need to ship a token change or a security fix to every consumer at once.</p>
+
+    <p>We could not find a clean answer to &ldquo;how does a 1.2.0 release reach the 200 teams who copied the 1.0.0 button six months ago?&rdquo; So we ship Stisla as a versioned package. Updates arrive through a dependency bump, the same way every other library you depend on works.</p>
+
+  </section>
+
+  <section>
+    <h2>What this means</h2>
+    <p>Stisla is a design specification. The vanilla implementation lives today. React on a primitive library is the next implementation. Vue on Reka and Svelte on bits are on the roadmap. Each implementation honors the same contract.</p>
+    <p>Read the <a class="link" href="/specification">Specification</a> for the cross-implementation contract. Read the <a class="link" href="/customization">Customization</a> page for the full token table, worked examples of the override model, and preset recipes.</p>
+  </section>
+{% endblock %}
