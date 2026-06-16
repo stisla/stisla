@@ -1,8 +1,9 @@
 // Stisla v3 — design tokens.
 //
-// The entire public customization API. 30 --st-* tokens. All values
+// The entire public customization API. 31 --st-* tokens. All values
 // authored as OKLCH literals; this is the only file in the codebase
-// with literal color values. No Sass color ramps. No --bs-*.
+// where literal color values are authoritative. No Sass color ramps. No
+// --bs-*.
 //
 // Pairing rule (V3.md §3.2): every background-providing token has a
 // paired -foreground. Without it, hardcoding `color: #fff` on
@@ -47,6 +48,15 @@
   --st-surface-3:        oklch(0.97 0 0);
   --st-border:           oklch(0.93 0 0);
   --st-muted-foreground: oklch(0.52 0 0);
+
+  // === Overlay (2) — 1 pair =============================================
+  // Theme-independent surface for chrome that sits on top of imagery
+  // (carousel controls/indicators/captions, future media-card chrome).
+  // Doesn't flip per theme on purpose — slide photos can be anything, so
+  // the overlay reads consistently regardless of the user's theme. Pairs
+  // like every other background token.
+  --st-overlay:            oklch(0.155 0 0);
+  --st-overlay-foreground: oklch(0.98  0 0);
 
   // === Interactional (6) — 3 pairs ======================================
   // Neutral   = rest bg for filled-neutral elements (.btn--neutral, kbd,

@@ -19,27 +19,31 @@
   --carousel-aspect-ratio: 16 / 9;
   --carousel-slide-gap: 0;
 
+  // Overlay chrome (controls / indicators / caption) reads
+  // --st-overlay and --st-overlay-foreground. The pair is theme-
+  // independent on purpose — slide imagery can be anything, so the
+  // chrome stays consistent across light + dark.
   --carousel-control-size: 2.25rem;
   --carousel-control-inset: 0.75rem;
-  --carousel-control-bg: color-mix(in oklch, oklch(0.18 0 0) 70%, transparent);
-  --carousel-control-bg-hover: oklch(0.18 0 0);
-  --carousel-control-color: oklch(0.98 0 0);
-  --carousel-control-shadow: 0 1px 2px color-mix(in oklch, oklch(0 0 0) 30%, transparent);
+  --carousel-control-bg: color-mix(in oklch, var(--st-overlay) 70%, transparent);
+  --carousel-control-bg-hover: var(--st-overlay);
+  --carousel-control-color: var(--st-overlay-foreground);
+  --carousel-control-shadow: 0 1px 2px color-mix(in oklch, var(--st-overlay) 30%, transparent);
 
   --carousel-indicators-inset: 0.875rem;
   --carousel-indicator-size: 0.375rem;
   --carousel-indicator-gap: 0.375rem;
-  --carousel-indicator-bg: color-mix(in oklch, oklch(0.98 0 0) 50%, transparent);
-  --carousel-indicator-active-bg: oklch(0.98 0 0);
+  --carousel-indicator-bg: color-mix(in oklch, var(--st-overlay-foreground) 50%, transparent);
+  --carousel-indicator-active-bg: var(--st-overlay-foreground);
   --carousel-indicator-active-width: 1.25rem;
 
   --carousel-caption-padding-y: 1.25rem;
   --carousel-caption-padding-x: 1.25rem;
-  --carousel-caption-color: oklch(0.98 0 0);
+  --carousel-caption-color: var(--st-overlay-foreground);
   --carousel-caption-bg: linear-gradient(
     to bottom,
     transparent,
-    color-mix(in oklch, oklch(0.155 0 0) 70%, transparent)
+    color-mix(in oklch, var(--st-overlay) 70%, transparent)
   );
 
   --carousel-transition-duration: 0.2s;
