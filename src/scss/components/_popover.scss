@@ -34,7 +34,7 @@
   --popover-color: var(--st-foreground);
   --popover-border-color: var(--st-border);
   --popover-border-width: 1px;
-  --popover-shadow: var(--st-shadow);
+  --popover-shadow: var(--st-popover-shadow, var(--st-shadow));
 
   // === Title ================================================================
   --popover-title-color: var(--st-foreground);

@@ -33,7 +33,7 @@
   // no [data-theme] override block needed.
   --tooltip-bg: var(--st-foreground);
   --tooltip-color: var(--st-background);
-  --tooltip-shadow: var(--st-shadow-light);
+  --tooltip-shadow: var(--st-tooltip-shadow, var(--st-shadow-light));
 
   // Arrow — 8px square rotated 45° for the diamond caret. Half buries under
   // .tooltip__inner; the other half sticks out as the visible point.

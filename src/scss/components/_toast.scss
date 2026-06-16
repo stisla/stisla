@@ -122,7 +122,7 @@
   --toast-bg: var(--st-surface);
   --toast-color: var(--st-foreground);
   --toast-border-color: var(--st-border);
-  --toast-shadow: var(--st-shadow);
+  --toast-shadow: var(--st-toast-shadow, var(--st-shadow));
 
   // Column gap (icon | content | close) + vertical gap inside the
   // middle .toast__content stack.

@@ -27,7 +27,7 @@
   --dialog-bg: var(--st-surface);
   --dialog-color: var(--st-foreground);
   --dialog-border-color: var(--st-border);
-  --dialog-shadow: var(--st-shadow-heavy);
+  --dialog-shadow: var(--st-dialog-shadow, var(--st-shadow-heavy));
 
   // Backdrop — solid dark dim in both themes (matches the prior v3). The
   // backdrop-filter blur keeps the frosted character without the per-theme

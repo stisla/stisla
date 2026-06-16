@@ -50,7 +50,7 @@
   // Frame surface
   --accordion-bg: var(--st-surface);
   --accordion-border-color: var(--st-border);
-  --accordion-shadow: var(--st-shadow);
+  --accordion-shadow: var(--st-accordion-shadow, var(--st-shadow));
 
   // Open-item chip
   --accordion-item-open-bg: var(--st-surface-2);

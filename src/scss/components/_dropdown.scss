@@ -56,7 +56,7 @@
   --dropdown-bg: var(--st-surface);
   --dropdown-color: var(--st-foreground);
   --dropdown-border-color: var(--st-border);
-  --dropdown-shadow: var(--st-shadow);
+  --dropdown-shadow: var(--st-dropdown-shadow, var(--st-shadow));
 
   // Item — single-line chip; density multiplies min-height alongside btn /
   // input / icon-box (V3.md §3.4 height-aware components).
