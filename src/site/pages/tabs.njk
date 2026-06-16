@@ -246,44 +246,36 @@
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Default</th>
             <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>--tabs-list-radius</code></td>
-            <td>var(--st-tabs-radius, var(--st-radius))</td>
             <td>Outer rail radius. Trigger radius derives from this minus the rail padding for concentric corners.</td>
           </tr>
           <tr>
             <td><code>--tabs-list-height</code></td>
-            <td>2.25rem</td>
             <td>Outer rail height (density multiplies once). Trigger height fills via flex stretch.</td>
           </tr>
           <tr>
             <td><code>--tabs-list-padding</code></td>
-            <td>0.25rem</td>
             <td>Padding around triggers. Subtracts from the trigger's effective height and the concentric inner radius.</td>
           </tr>
           <tr>
             <td><code>--tabs-list-gap</code></td>
-            <td>0.125rem</td>
             <td>Space between adjacent triggers.</td>
           </tr>
           <tr>
             <td><code>--tabs-list-bg</code></td>
-            <td>var(--st-surface-2)</td>
             <td>Rail fill. Surface-2 is the canonical muted bed that lets the active paper rise.</td>
           </tr>
           <tr>
             <td><code>--tabs-list-color</code></td>
-            <td>var(--st-muted-foreground)</td>
             <td>Default trigger text color. Triggers inherit; the active state overrides to <code>--st-foreground</code>.</td>
           </tr>
           <tr>
             <td><code>--tabs-gap</code></td>
-            <td>0.75rem</td>
             <td>Space between the rail and the panel below it (or beside it in vertical mode).</td>
           </tr>
         </tbody>
@@ -294,49 +286,40 @@
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Default</th>
             <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>--tabs-trigger-padding-x</code></td>
-            <td>calc(0.75rem * var(--st-density))</td>
             <td>Horizontal padding inside each trigger.</td>
           </tr>
           <tr>
             <td><code>--tabs-trigger-gap</code></td>
-            <td>0.5rem</td>
             <td>Space between an icon and its label inside the trigger.</td>
           </tr>
           <tr>
             <td><code>--tabs-trigger-font-size</code></td>
-            <td>0.875rem</td>
             <td>Trigger label size. Icons scale with this via 1em sizing.</td>
           </tr>
           <tr>
             <td><code>--tabs-trigger-font-weight</code></td>
-            <td>500</td>
             <td>Trigger label weight.</td>
           </tr>
           <tr>
             <td><code>--tabs-trigger-hover-color</code></td>
-            <td>var(--st-foreground)</td>
             <td>Color applied on hover for non-active triggers (no bg change, so the active paper stays distinct).</td>
           </tr>
           <tr>
             <td><code>--tabs-trigger-active-bg</code></td>
-            <td>var(--st-highlight)</td>
             <td>Background of the active trigger. Highlight tint matches <code>.toggle</code>'s active member paint, so a tab strip baselines with a toggle-group cluster on the same surface.</td>
           </tr>
           <tr>
             <td><code>--tabs-trigger-active-color</code></td>
-            <td>var(--st-highlight-foreground)</td>
             <td>Active trigger text color, paired with the highlight bg.</td>
           </tr>
           <tr>
             <td><code>--tabs-trigger-active-border-color</code></td>
-            <td>var(--tabs-trigger-active-bg)</td>
             <td>Active border color. Defaults to match the bg for a clean solid chip with no visible rim. Rest triggers carry a transparent 1px border so the active border doesn't reflow the layout. Override to add a distinct ring.</td>
           </tr>
         </tbody>
@@ -347,19 +330,16 @@
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Default</th>
             <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>--tabs-transition-duration</code></td>
-            <td>0.15s</td>
             <td>Trigger color and bg transition speed. Zeroed under <code>prefers-reduced-motion: reduce</code>.</td>
           </tr>
           <tr>
             <td><code>--tabs-ring</code></td>
-            <td>var(--st-ring)</td>
             <td>Focus outline color on triggers and panels.</td>
           </tr>
         </tbody>

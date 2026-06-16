@@ -220,39 +220,32 @@
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Default</th>
             <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>--toggle-group-radius</code></td>
-            <td>var(--st-toggle-group-radius, var(--st-radius))</td>
             <td>Outer corner radius. Inner toggle radius computes as <code>outer - padding</code> (concentric).</td>
           </tr>
           <tr>
             <td><code>--toggle-group-height</code></td>
-            <td>2.25rem</td>
             <td>Outer raw height (density multiplies once). Inner toggle fills via flex stretch, so height resolves to <code>outer − 2 × border − 2 × padding</code> via the box model.</td>
           </tr>
           <tr>
             <td><code>--toggle-group-padding</code></td>
-            <td>0.125rem</td>
             <td>Padding around the children. Subtracts from the inner toggle's effective height and from the concentric inner radius.</td>
           </tr>
           <tr>
             <td><code>--toggle-group-gap</code></td>
-            <td>0.125rem</td>
             <td>Space between adjacent toggles. Lets multi-active members breathe without border collisions.</td>
           </tr>
           <tr>
             <td><code>--toggle-group-bg</code></td>
-            <td>transparent</td>
             <td>Container fill. Set to <code>var(--st-surface-2)</code> for a tinted pill.</td>
           </tr>
           <tr>
             <td><code>--toggle-group-border-color</code></td>
-            <td>var(--st-border)</td>
             <td>Outer rim color.</td>
           </tr>
         </tbody>
