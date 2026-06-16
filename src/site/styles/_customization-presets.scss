@@ -35,13 +35,14 @@
 // inherit font-family from the wrapper otherwise (the foundation reboot
 // already locked the cascade at html).
 .preset-brutalist {
-  --st-radius-sm:    0;
-  --st-radius:       0;
-  --st-radius-lg:    0;
-  --st-shadow:       6px 6px 0 var(--st-foreground);
-  --st-border:       var(--st-foreground);
-  --st-border-width: 2px;
-  --st-font-sans:    'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --st-radius-sm:       0;
+  --st-radius:          0;
+  --st-radius-lg:       0;
+  --st-checkbox-radius: 0;
+  --st-shadow:          6px 6px 0 var(--st-foreground);
+  --st-border:          var(--st-foreground);
+  --st-border-width:    2px;
+  --st-font-sans:       'Space Grotesk', system-ui, -apple-system, sans-serif;
   font-family: var(--st-font-sans);
   font-weight: 500;
 

@@ -50,6 +50,134 @@
 </div>
 {%- endmacro %}
 
+{# Brutalist preset showcase. Mini app-shell that mixes surface-bearing
+   components so the reader sees the preset across navbar / alert /
+   sidebar / card / dropdown menu / item / avatar / input / select /
+   checkbox / button. Navbar and sidebar carry explicit borders because
+   their framework defaults ship borderless; the rest pick the brutalist
+   2px outline up through --st-border-width. The dropdown menu is
+   rendered open and pinned in-flow (position: static) so the floating
+   menu can sit inside the demo preview instead of escaping to the
+   viewport corner. #}
+{%- macro brutalist_showcase() -%}
+<div class="demo-stack" style="width: 100%; gap: 1rem;">
+  <nav class="navbar" style="width: 100%; border: var(--st-border-width) solid var(--st-border);">
+    <a class="navbar__brand" href="#">Acme</a>
+    <div class="navbar__menu" data-state="open">
+      <ul class="navbar__nav">
+        <li><a class="navbar__button" data-state="active" aria-current="page" href="#">Home</a></li>
+        <li><a class="navbar__button" href="#">Pricing</a></li>
+        <li><a class="navbar__button" href="#">About</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="alert alert--warning" style="width: 100%;">
+    <i data-lucide="alert-triangle"></i>
+    <div>Storage is at 89%. Archive old runs to free space.</div>
+  </div>
+
+  <div class="demo-row demo-row--top demo-row--gap-md" style="width: 100%;">
+    <aside class="sidebar" style="width: 11rem; min-height: 18rem; border: var(--st-border-width) solid var(--st-border);">
+      <div class="sidebar__content">
+        <nav class="sidebar__menu">
+          <div class="sidebar__group">
+            <ul class="sidebar__list">
+              <li class="sidebar__item">
+                <a class="sidebar__button" href="#" aria-current="page">
+                  <i data-lucide="home"></i>
+                  Dashboard
+                </a>
+              </li>
+              <li class="sidebar__item">
+                <a class="sidebar__button" href="#">
+                  <i data-lucide="package"></i>
+                  Orders
+                </a>
+              </li>
+              <li class="sidebar__item">
+                <a class="sidebar__button" href="#">
+                  <i data-lucide="users"></i>
+                  Customers
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </aside>
+
+    <div class="demo-stack" style="flex: 1; min-width: 0; gap: 1rem;">
+      <div class="demo-row demo-row--top demo-row--gap-md">
+        <div class="card" style="flex: 1; min-width: 12rem;">
+          <div class="card__header">Order #ATL-2918</div>
+          <div class="card__body">
+            <p class="card__text">Out for delivery, arrives today by 6 PM.</p>
+          </div>
+          <div class="card__footer">
+            <button type="button" class="btn btn--primary btn--sm">Track</button>
+          </div>
+        </div>
+
+        <ul class="dropdown-menu" data-state="open" style="position: static; min-width: 9rem;" role="menu">
+          <li><button type="button" class="dropdown-menu__item" role="menuitem">Edit</button></li>
+          <li><button type="button" class="dropdown-menu__item" data-state="active" role="menuitem">Duplicate</button></li>
+          <li><button type="button" class="dropdown-menu__item" role="menuitem">Share</button></li>
+          <li><hr class="dropdown-menu__divider"></li>
+          <li><button type="button" class="dropdown-menu__item" data-danger role="menuitem">Delete</button></li>
+        </ul>
+      </div>
+
+      <div class="demo-row demo-row--top demo-row--gap-md">
+        <div class="field" style="flex: 1; min-width: 12rem;">
+          <label for="brutalistEmail" class="field__label">Email</label>
+          <input type="email" class="input" id="brutalistEmail" placeholder="you@example.com">
+        </div>
+        <div class="field" style="flex: 1; min-width: 10rem;">
+          <label for="brutalistRegion" class="field__label">Region</label>
+          <select class="select" id="brutalistRegion">
+            <option selected>Pick one</option>
+            <option value="id">Indonesia</option>
+            <option value="my">Malaysia</option>
+            <option value="sg">Singapore</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="demo-row demo-row--gap-md">
+        <div class="field__item">
+          <input class="checkbox" type="checkbox" id="brutalistTos" checked>
+          <label class="field__label" for="brutalistTos">Agree to terms</label>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="item__media">
+          <span class="avatar" data-stisla-avatar>
+            <span class="avatar__fallback">RF</span>
+          </span>
+        </div>
+        <div class="item__content">
+          <div class="item__title">Rosa Frias</div>
+          <div class="item__description">rosa@acme.co</div>
+        </div>
+        <div class="item__action">
+          <button type="button" class="btn btn--ghost btn--neutral btn--sm btn--icon-only" aria-label="More">
+            <i data-lucide="more-horizontal"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="demo-row demo-row--gap-md">
+        <button type="button" class="btn btn--primary">Confirm</button>
+        <button type="button" class="btn btn--outline btn--neutral">Cancel</button>
+        <button type="button" class="btn btn--ghost btn--danger">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+{%- endmacro %}
+
 {% block content %}
   <header>
     <h1>Customization</h1>
@@ -130,7 +258,7 @@
     </div>
 
     <h3>Geometry</h3>
-    <p>Three radius tiers, three shadow tiers, and a single density multiplier. The radius and shadow tiers are independent literals; components opt into the tier that matches their visual weight. See the <a class="link" href="#radius">Radius</a> and <a class="link" href="#density">Density</a> recipes below for ready-to-paste values.</p>
+    <p>Three radius tiers, three shadow tiers, a global border-width knob, and a single density multiplier. The radius and shadow tiers are independent literals; components opt into the tier that matches their visual weight. See the <a class="link" href="#brutalist">Brutalist</a> and <a class="link" href="#density">Density</a> recipes below for complete presets that push multiple axes at once.</p>
     <div class="prose">
       <table>
         <thead><tr><th>Token</th><th>Use</th></tr></thead>
@@ -599,34 +727,25 @@
   </section>
 
   <section>
-    <h2>Radius</h2>
-    <p>Three radius tiers ship as independent <code>:root</code> tokens. Components opt into the tier that fits their visual weight (chips and inline shapes read <code>--st-radius-sm</code>, everyday surfaces read <code>--st-radius</code>, elevated surfaces read <code>--st-radius-lg</code>). The tiers are not derived from each other, so a preset that wants every corner square has to write all three.</p>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Tier</th><th>Read by</th></tr></thead>
-        <tbody>
-          <tr><td><code>--st-radius-sm</code></td><td>Inline chips (kbd, tooltip, icon-box, breadcrumb, sidebar buttons, checkbox)</td></tr>
-          <tr><td><code>--st-radius</code></td><td>Everyday surfaces (button, alert, input-group, pagination, tabs)</td></tr>
-          <tr><td><code>--st-radius-lg</code></td><td>Elevated surfaces (card, accordion, dialog, popover, toast, list-group)</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <h2>Brutalist</h2>
+    <p>A complete preset that retunes multiple axes at once. Radius, shadow, border weight, border color, typography. Shown across a mix of surfaces (navbar, alert, card, dropdown menu, item, avatar, buttons) so the look reads as a system rather than a single-component swap.</p>
     {% call ui.demo() %}
 <div class="preset-brutalist">
-  {{ showcase() }}
+  {{ brutalist_showcase() }}
 </div>
     {% endcall %}
     {% call ui.code(lang='css', title='_customization-presets.scss') %}
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap');
 
 .preset-brutalist {
-  --st-radius-sm:    0;
-  --st-radius:       0;
-  --st-radius-lg:    0;
-  --st-shadow:       6px 6px 0 var(--st-foreground);
-  --st-border:       var(--st-foreground);
-  --st-border-width: 2px;
-  --st-font-sans:    'Space Grotesk', system-ui, sans-serif;
+  --st-radius-sm:       0;
+  --st-radius:          0;
+  --st-radius-lg:       0;
+  --st-checkbox-radius: 0;  /* checkbox sits outside the tier system */
+  --st-shadow:          6px 6px 0 var(--st-foreground);
+  --st-border:          var(--st-foreground);
+  --st-border-width:    2px;
+  --st-font-sans:       'Space Grotesk', system-ui, sans-serif;
   font-family: var(--st-font-sans);
   font-weight: 500;
 

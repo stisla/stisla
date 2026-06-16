@@ -15,6 +15,9 @@
 
 .checkbox {
   --checkbox-size:   calc(1rem * var(--st-density));         // 16
+  // 4 px literal, tighter than --st-radius-sm by design. Checkbox sits
+  // outside the small tier; presets that want every corner square set
+  // --st-checkbox-radius explicitly.
   --checkbox-radius: var(--st-checkbox-radius, 0.25rem);
 
   @include form-check-base('checkbox');
