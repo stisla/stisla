@@ -13,17 +13,28 @@
 // shifts: a "solid offset" shadow has to track `--st-foreground` so it
 // stays visible against both background tiers.
 
+// Space Mono — load via the @stylesheet for the brutalist preset font swap.
+// Imported here rather than as a <link> in the layout head because the font
+// belongs to the preset recipe; a consumer copying this preset into their
+// own theme expects the font import to come with it.
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
 // === Brutalist ==============================================================
-// Hard corners + solid offset shadow. The radius tiers are independent
-// literals at :root (see tokens/_theme.scss), so a preset that wants every
-// surface to read square needs to write all three tier tokens. The shadow
-// tracks --st-foreground so the offset reads near-black on light, near-white
-// on dark.
+// Hard corners, solid offset shadow, raw monospace type. The radius tiers
+// are independent literals at :root (see tokens/_theme.scss), so a preset
+// that wants every surface to read square writes all three tier tokens.
+// The shadow tracks --st-foreground so the offset reads near-black on light
+// and near-white on dark. --st-font-sans + font-family on the wrapper both
+// have to be set: components read --st-font-sans where they explicitly
+// reference it, and inherit font-family from the wrapper otherwise (the
+// foundation reboot already locked the cascade at html).
 .preset-brutalist {
   --st-radius-sm: 0;
   --st-radius:    0;
   --st-radius-lg: 0;
   --st-shadow:    4px 4px 0 var(--st-foreground);
+  --st-font-sans: 'Space Mono', ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--st-font-sans);
 }
 
 // === Violet primary =========================================================

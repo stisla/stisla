@@ -616,14 +616,18 @@
 </div>
     {% endcall %}
     {% call ui.code(lang='css', title='_customization-presets.scss') %}
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
 .preset-brutalist {
   --st-radius-sm: 0;
   --st-radius:    0;
   --st-radius-lg: 0;
   --st-shadow:    4px 4px 0 var(--st-foreground);
+  --st-font-sans: 'Space Mono', ui-monospace, Menlo, monospace;
+  font-family:    var(--st-font-sans);
 }
     {% endcall %}
-    <p>The brutalist preset writes all three radius tiers plus a solid offset shadow so every surface picks up the look together. The shadow resolves to <code>--st-foreground</code>, which flips per theme, so the offset reads as near-black in light and near-white in dark without a separate dark delta.</p>
+    <p>Hard corners across all three radius tiers, a solid offset shadow that tracks <code>--st-foreground</code> (auto-flips per theme), and Space Mono for the raw-computer typography that defines the brutalist web look. <code>--st-font-sans</code> and an explicit <code>font-family</code> on the wrapper both get set — components that read <code>--st-font-sans</code> see the override, and components using <code>font-family: inherit</code> pick it up from the wrapper. Drop the <code>@import</code> if your app already loads Space Mono or pick another mono / display font that fits your brand.</p>
   </section>
 
   <section>
