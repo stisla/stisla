@@ -261,39 +261,32 @@
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Default</th>
             <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>--btn-radius</code></td>
-            <td>var(--st-radius)</td>
             <td>Corner radius (per-component override via <code>--st-btn-radius</code>; sizes pull <code>--st-radius-sm</code> / <code>-lg</code>)</td>
           </tr>
           <tr>
             <td><code>--btn-height</code></td>
-            <td>2.25rem (default), 1.75rem (--sm), 2.75rem (--lg)</td>
             <td>Hard single-line height. Multiplied by <code>--st-density</code> at the component level</td>
           </tr>
           <tr>
             <td><code>--btn-padding-x</code></td>
-            <td>calc(0.75rem * var(--st-density)) (default), 0.625rem (--sm), 1rem (--lg)</td>
             <td>Horizontal padding</td>
           </tr>
           <tr>
             <td><code>--btn-font-size</code></td>
-            <td>0.875rem (default), 0.8125rem (--sm), 1rem (--lg)</td>
             <td>Label size</td>
           </tr>
           <tr>
             <td><code>--btn-font-weight</code></td>
-            <td>500</td>
             <td>Label weight</td>
           </tr>
           <tr>
             <td><code>--btn-icon-size</code></td>
-            <td>1em</td>
             <td>Width and height of inline icons (<code>.btn__icon</code>, bare <code>&lt;svg&gt;</code> / <code>&lt;i&gt;</code>). Bump for icon-prominent UIs without touching label size</td>
           </tr>
         </tbody>
@@ -308,29 +301,24 @@
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Default</th>
             <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>--btn-bg</code></td>
-            <td>var(--btn-tone)</td>
             <td>Background. <code>:hover</code> mixes 88% over black; <code>:active</code> 78%; <code>:disabled</code> 50% over transparent</td>
           </tr>
           <tr>
             <td><code>--btn-color</code></td>
-            <td>(tone-modifier sets it)</td>
             <td>Label color. Pairs with <code>--btn-tone</code> so a white-on-tone button stays legible across token overrides</td>
           </tr>
           <tr>
             <td><code>--btn-border-color</code></td>
-            <td>color-mix(in oklch, var(--btn-tone) 85%, black)</td>
             <td>Rim border. Reads as recessed in light and rim-lit in dark</td>
           </tr>
           <tr>
             <td><code>--btn-bevel</code></td>
-            <td>inset 0 1px 0 rgba(255, 255, 255, 0.15)</td>
             <td>Inset top highlight. Set to <code>none</code> for a flat-button look (outline, ghost, and soft variants do this automatically)</td>
           </tr>
         </tbody>
