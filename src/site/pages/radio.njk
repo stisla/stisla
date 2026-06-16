@@ -139,34 +139,28 @@
         <thead>
           <tr>
             <th>Variable</th>
-            <th>Default</th>
             <th>Use</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>--radio-size</code></td>
-            <td>calc(1rem * var(--st-density))</td>
             <td>Dot diameter; density scales it</td>
           </tr>
           <tr>
             <td><code>--radio-bg</code></td>
-            <td>var(--st-surface)</td>
             <td>Unchecked background</td>
           </tr>
           <tr>
             <td><code>--radio-border</code></td>
-            <td>var(--st-border)</td>
             <td>Unchecked border; validation hooks flip this to <code>--st-danger</code></td>
           </tr>
           <tr>
             <td><code>--radio-checked-bg</code></td>
-            <td>var(--st-primary)</td>
             <td>Selected background</td>
           </tr>
           <tr>
             <td><code>--radio-indicator</code></td>
-            <td>SVG data URL (dot)</td>
             <td>Glyph painted over <code>--radio-checked-bg</code>. The fill color is a literal because <code>data:</code> URLs can't read CSS variables. To recolor, replace the URL with one whose fill matches the new color</td>
           </tr>
         </tbody>
