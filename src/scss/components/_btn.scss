@@ -47,6 +47,7 @@ $btn-soft-active:    28%;
   --btn-padding-x:    calc(0.75rem * var(--st-density));
   --btn-font-size:    0.875rem;
   --btn-font-weight:  500;
+  --btn-icon-size:    1em;
 
   // Derive the rest bg from --btn-tone. Tones with a non-matching bg
   // (neutral fills with --st-neutral, not its tone) override below.
@@ -127,12 +128,14 @@ $btn-soft-active:    28%;
   }
 }
 
-// Icons inside .btn scale to the button's font size. Targets .btn__icon
-// (BEM opt-in) plus inline <svg>/<i> as a convenience so Lucide and
-// Bootstrap-Icons markup just work.
+// Icons inside .btn scale via --btn-icon-size (defaults to 1em, so the
+// glyph tracks the label). Targets .btn__icon (BEM opt-in) plus inline
+// <svg>/<i> as a convenience so Lucide and Bootstrap-Icons markup just
+// work. Override per-instance for icon-prominent UIs:
+//   <button class="btn" style="--btn-icon-size: 1.25em">...</button>
 .btn :is(svg, i, .btn__icon) {
-  width: 1em;
-  height: 1em;
+  width: var(--btn-icon-size);
+  height: var(--btn-icon-size);
   flex-shrink: 0;
 }
 
@@ -324,8 +327,8 @@ $btn-soft-active:    28%;
     content: "";
     display: inline-block;
     flex-shrink: 0;
-    width: 1em;
-    height: 1em;
+    width: var(--btn-icon-size);
+    height: var(--btn-icon-size);
     border: 2px solid currentColor;
     border-right-color: transparent;
     border-radius: 50%;
