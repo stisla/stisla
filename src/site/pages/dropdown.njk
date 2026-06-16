@@ -298,96 +298,96 @@
       <h3>Geometry</h3>
       <table>
         <thead>
-          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+          <tr><th>Variable</th><th>Use</th></tr>
         </thead>
         <tbody>
-          <tr><td><code>--dropdown-width-min</code></td><td>10rem</td><td>Lower bound on menu width. Long labels grow past it.</td></tr>
-          <tr><td><code>--dropdown-padding</code></td><td>0.25rem</td><td>Inner padding around the row stack. Drives the concentric inset.</td></tr>
-          <tr><td><code>--dropdown-radius</code></td><td>var(--st-radius)</td><td>Outer chip radius. Medium tier, matches btn / input / popover.</td></tr>
-          <tr><td><code>--dropdown-item-radius</code></td><td>calc(var(--dropdown-radius) - var(--dropdown-padding))</td><td>Row radius. Derived; rarely overridden directly.</td></tr>
-          <tr><td><code>--dropdown-gap</code></td><td>2px</td><td>Vertical gap between rows.</td></tr>
-          <tr><td><code>--dropdown-z-index</code></td><td>1030</td><td>Stack level. Below drawer (1045) and dialog (1055).</td></tr>
-          <tr><td><code>--dropdown-font-size</code></td><td>0.875rem</td><td>Row text size.</td></tr>
+          <tr><td><code>--dropdown-width-min</code></td><td>Lower bound on menu width. Long labels grow past it.</td></tr>
+          <tr><td><code>--dropdown-padding</code></td><td>Inner padding around the row stack. Drives the concentric inset.</td></tr>
+          <tr><td><code>--dropdown-radius</code></td><td>Outer chip radius. Medium tier, matches btn / input / popover.</td></tr>
+          <tr><td><code>--dropdown-item-radius</code></td><td>Row radius. Derived; rarely overridden directly.</td></tr>
+          <tr><td><code>--dropdown-gap</code></td><td>Vertical gap between rows.</td></tr>
+          <tr><td><code>--dropdown-z-index</code></td><td>Stack level. Below drawer (1045) and dialog (1055).</td></tr>
+          <tr><td><code>--dropdown-font-size</code></td><td>Row text size.</td></tr>
         </tbody>
       </table>
 
       <h3>Surface</h3>
       <table>
         <thead>
-          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+          <tr><th>Variable</th><th>Use</th></tr>
         </thead>
         <tbody>
-          <tr><td><code>--dropdown-bg</code></td><td>var(--st-surface)</td><td>Menu background.</td></tr>
-          <tr><td><code>--dropdown-color</code></td><td>var(--st-foreground)</td><td>Rest text color.</td></tr>
-          <tr><td><code>--dropdown-border-color</code></td><td>var(--st-border)</td><td>Outer rim.</td></tr>
-          <tr><td><code>--dropdown-shadow</code></td><td>var(--st-shadow)</td><td>Lift off the page.</td></tr>
+          <tr><td><code>--dropdown-bg</code></td><td>Menu background.</td></tr>
+          <tr><td><code>--dropdown-color</code></td><td>Rest text color.</td></tr>
+          <tr><td><code>--dropdown-border-color</code></td><td>Outer rim.</td></tr>
+          <tr><td><code>--dropdown-shadow</code></td><td>Lift off the page.</td></tr>
         </tbody>
       </table>
 
       <h3>Item</h3>
       <table>
         <thead>
-          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+          <tr><th>Variable</th><th>Use</th></tr>
         </thead>
         <tbody>
-          <tr><td><code>--dropdown-item-padding-y</code></td><td>calc(0.125rem * var(--st-density))</td><td>Top and bottom inset.</td></tr>
-          <tr><td><code>--dropdown-item-padding-x</code></td><td>calc(0.75rem * var(--st-density))</td><td>Left and right inset.</td></tr>
-          <tr><td><code>--dropdown-item-min-height</code></td><td>calc(2rem * var(--st-density))</td><td>Click-target floor. Density-multiplied.</td></tr>
-          <tr><td><code>--dropdown-item-gap</code></td><td>0.5rem</td><td>Space between icon, label, indicator, shortcut.</td></tr>
-          <tr><td><code>--dropdown-item-icon-size</code></td><td>1rem</td><td>Leading icon and indicator footprint.</td></tr>
+          <tr><td><code>--dropdown-item-padding-y</code></td><td>Top and bottom inset.</td></tr>
+          <tr><td><code>--dropdown-item-padding-x</code></td><td>Left and right inset.</td></tr>
+          <tr><td><code>--dropdown-item-min-height</code></td><td>Click-target floor. Density-multiplied.</td></tr>
+          <tr><td><code>--dropdown-item-gap</code></td><td>Space between icon, label, indicator, shortcut.</td></tr>
+          <tr><td><code>--dropdown-item-icon-size</code></td><td>Leading icon and indicator footprint.</td></tr>
         </tbody>
       </table>
 
       <h3>Item states</h3>
       <table>
         <thead>
-          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+          <tr><th>Variable</th><th>Use</th></tr>
         </thead>
         <tbody>
-          <tr><td><code>--dropdown-item-bg-hover</code></td><td>var(--st-accent)</td><td>Hover and <code>[data-highlighted]</code> fill.</td></tr>
-          <tr><td><code>--dropdown-item-color-hover</code></td><td>var(--st-accent-foreground)</td><td>Hover text.</td></tr>
-          <tr><td><code>--dropdown-item-bg-active</code></td><td>var(--st-highlight)</td><td><code>aria-current</code> / <code>data-state="active"</code> fill.</td></tr>
-          <tr><td><code>--dropdown-item-color-active</code></td><td>var(--st-highlight-foreground)</td><td>Active text.</td></tr>
-          <tr><td><code>--dropdown-item-color-disabled</code></td><td>var(--st-muted-foreground)</td><td>Disabled row color.</td></tr>
-          <tr><td><code>--dropdown-item-color-danger</code></td><td>var(--st-danger)</td><td>Destructive row color.</td></tr>
-          <tr><td><code>--dropdown-item-bg-danger-hover</code></td><td>color-mix(in oklch, var(--st-danger) 12%, transparent)</td><td>Destructive hover fill. Soft tint instead of the standard accent.</td></tr>
+          <tr><td><code>--dropdown-item-bg-hover</code></td><td>Hover and <code>[data-highlighted]</code> fill.</td></tr>
+          <tr><td><code>--dropdown-item-color-hover</code></td><td>Hover text.</td></tr>
+          <tr><td><code>--dropdown-item-bg-active</code></td><td><code>aria-current</code> / <code>data-state="active"</code> fill.</td></tr>
+          <tr><td><code>--dropdown-item-color-active</code></td><td>Active text.</td></tr>
+          <tr><td><code>--dropdown-item-color-disabled</code></td><td>Disabled row color.</td></tr>
+          <tr><td><code>--dropdown-item-color-danger</code></td><td>Destructive row color.</td></tr>
+          <tr><td><code>--dropdown-item-bg-danger-hover</code></td><td>Destructive hover fill. Soft tint instead of the standard accent.</td></tr>
         </tbody>
       </table>
 
       <h3>Header</h3>
       <table>
         <thead>
-          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+          <tr><th>Variable</th><th>Use</th></tr>
         </thead>
         <tbody>
-          <tr><td><code>--dropdown-header-padding-y</code></td><td>0.25rem</td><td>Section label top/bottom inset.</td></tr>
-          <tr><td><code>--dropdown-header-padding-x</code></td><td>0.75rem</td><td>Section label left/right inset.</td></tr>
-          <tr><td><code>--dropdown-header-font-size</code></td><td>0.75rem</td><td>Section label text size.</td></tr>
-          <tr><td><code>--dropdown-header-font-weight</code></td><td>600</td><td>Section label weight.</td></tr>
-          <tr><td><code>--dropdown-header-color</code></td><td>var(--st-muted-foreground)</td><td>Section label color.</td></tr>
+          <tr><td><code>--dropdown-header-padding-y</code></td><td>Section label top/bottom inset.</td></tr>
+          <tr><td><code>--dropdown-header-padding-x</code></td><td>Section label left/right inset.</td></tr>
+          <tr><td><code>--dropdown-header-font-size</code></td><td>Section label text size.</td></tr>
+          <tr><td><code>--dropdown-header-font-weight</code></td><td>Section label weight.</td></tr>
+          <tr><td><code>--dropdown-header-color</code></td><td>Section label color.</td></tr>
         </tbody>
       </table>
 
       <h3>Divider</h3>
       <table>
         <thead>
-          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+          <tr><th>Variable</th><th>Use</th></tr>
         </thead>
         <tbody>
-          <tr><td><code>--dropdown-divider-color</code></td><td>var(--st-border)</td><td>Separator line.</td></tr>
-          <tr><td><code>--dropdown-divider-margin-y</code></td><td>0.5rem</td><td>Breathing space above and below.</td></tr>
+          <tr><td><code>--dropdown-divider-color</code></td><td>Separator line.</td></tr>
+          <tr><td><code>--dropdown-divider-margin-y</code></td><td>Breathing space above and below.</td></tr>
         </tbody>
       </table>
 
       <h3>Shortcut + motion</h3>
       <table>
         <thead>
-          <tr><th>Variable</th><th>Default</th><th>Use</th></tr>
+          <tr><th>Variable</th><th>Use</th></tr>
         </thead>
         <tbody>
-          <tr><td><code>--dropdown-shortcut-color</code></td><td>var(--st-muted-foreground)</td><td>Trailing keystroke chip color.</td></tr>
-          <tr><td><code>--dropdown-shortcut-font-size</code></td><td>0.75rem</td><td>Shortcut chip text size.</td></tr>
-          <tr><td><code>--dropdown-transition-duration</code></td><td>0.15s</td><td>Open and close fade. Zeroed under <code>prefers-reduced-motion</code>.</td></tr>
+          <tr><td><code>--dropdown-shortcut-color</code></td><td>Trailing keystroke chip color.</td></tr>
+          <tr><td><code>--dropdown-shortcut-font-size</code></td><td>Shortcut chip text size.</td></tr>
+          <tr><td><code>--dropdown-transition-duration</code></td><td>Open and close fade. Zeroed under <code>prefers-reduced-motion</code>.</td></tr>
         </tbody>
       </table>
     </div>
