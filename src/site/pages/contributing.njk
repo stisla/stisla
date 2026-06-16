@@ -12,14 +12,12 @@
   <section>
     <h2>Repo layout</h2>
     <p>Three top-level source trees plus a small tooling folder.</p>
-    <div class="prose">
-      <ul>
-        <li><strong><code>src/scss</code>.</strong> Sass source. <code>tokens/</code> holds the <code>--st-*</code> surface and breakpoints. <code>foundation/</code> holds normalize, reboot, grid, and containers. <code>components/</code> is one file per BEM block. <code>utilities/</code> is the utility layer. <code>bundles/</code> contains the entry files that assemble the shipped <code>stisla.css</code> and <code>stisla-full.css</code>.</li>
-        <li><strong><code>src/js</code>.</strong> JavaScript runtime. <code>core/</code> holds the <code>Stisla.init()</code> walker and shared classes. <code>components/</code> is one file per behavior (<code>Dialog</code>, <code>Dropdown</code>, <code>Carousel</code>, etc.). Every component lives here, including the optional ones. <code>index.js</code> registers the vanilla core set; <code>index-full.js</code> adds the vanilla-optional set on top.</li>
-        <li><strong><code>src/site</code>.</strong> This docs site. <code>layouts/</code> and <code>partials/</code> are the Nunjucks chrome. <code>pages/</code> is one file per route, including every component demo page. <code>styles/site.scss</code> and <code>scripts/site.js</code> hold site-only chrome that&rsquo;s never bundled into the framework.</li>
-        <li><strong><code>tools/</code>.</strong> Vite plugin, build-time ToC injector, Shiki highlighter filter, static-site renderer.</li>
-      </ul>
-    </div>
+    <ul>
+      <li><strong><code>src/scss</code>.</strong> Sass source. <code>tokens/</code> holds the <code>--st-*</code> surface and breakpoints. <code>foundation/</code> holds normalize, reboot, grid, and containers. <code>components/</code> is one file per BEM block. <code>utilities/</code> is the utility layer. <code>bundles/</code> contains the entry files that assemble the shipped <code>stisla.css</code> and <code>stisla-full.css</code>.</li>
+      <li><strong><code>src/js</code>.</strong> JavaScript runtime. <code>core/</code> holds the <code>Stisla.init()</code> walker and shared classes. <code>components/</code> is one file per behavior (<code>Dialog</code>, <code>Dropdown</code>, <code>Carousel</code>, etc.). Every component lives here, including the optional ones. <code>index.js</code> registers the vanilla core set; <code>index-full.js</code> adds the vanilla-optional set on top.</li>
+      <li><strong><code>src/site</code>.</strong> This docs site. <code>layouts/</code> and <code>partials/</code> are the Nunjucks chrome. <code>pages/</code> is one file per route, including every component demo page. <code>styles/site.scss</code> and <code>scripts/site.js</code> hold site-only chrome that&rsquo;s never bundled into the framework.</li>
+      <li><strong><code>tools/</code>.</strong> Vite plugin, build-time ToC injector, Shiki highlighter filter, static-site renderer.</li>
+    </ul>
   </section>
 
   <section>
@@ -76,26 +74,24 @@ npm run dev
 }
     {% endcall %}
     <p>Document every knob in the page&rsquo;s Customization section. One row per variable, with columns for Variable, Default, and Use. The <a class="link" href="/slider">slider</a> page is a good reference.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Use</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--my-thing-radius</code></td>
-            <td>Corner radius</td>
-          </tr>
-          <tr>
-            <td><code>--my-thing-thumb-w</code></td>
-            <td>Thumb width</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--my-thing-radius</code></td>
+          <td>Corner radius</td>
+        </tr>
+        <tr>
+          <td><code>--my-thing-thumb-w</code></td>
+          <td>Thumb width</td>
+        </tr>
+      </tbody>
+    </table>
     <p>For components with many knobs, group the table by purpose (sizing, surface, interaction). For components that mostly rely on shared tokens, a short pointer paragraph back to <a class="link" href="/customization">Customization</a> is enough. Don&rsquo;t re-list global tokens per component.</p>
   </section>
 

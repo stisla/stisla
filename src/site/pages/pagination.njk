@@ -171,81 +171,79 @@
   <section>
     <h2>Customization</h2>
     <p>Sixteen variables retune <code>.pagination</code> without touching component CSS. Override on <code>.pagination</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change. Size modifiers <code>--sm</code> / <code>--lg</code> retune the chip height, padding, and font size in their own scope, so there are no per-size vars to maintain.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Use</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--pagination-gap</code></td>
-            <td>Space between chips</td>
-          </tr>
-          <tr>
-            <td><code>--pagination-margin-bottom</code></td>
-            <td>Trailing space below the row</td>
-          </tr>
-          <tr>
-            <td><code>--pagination-font-size</code></td>
-            <td>Chip text size</td>
-          </tr>
-          <tr>
-            <td><code>--pagination-button-height</code></td>
-            <td>Chip height (also doubles as <code>min-width</code> so single-glyph chips land as squares)</td>
-          </tr>
-          <tr>
-            <td><code>--pagination-button-padding-x</code></td>
-            <td>Chip horizontal padding (longer labels grow from this)</td>
-          </tr>
-          <tr>
-            <td><code>--pagination-button-inner-gap</code></td>
-            <td>Space between icon and label inside a chip</td>
-          </tr>
-          <tr>
-            <td><code>--pagination-button-radius</code></td>
-            <td>Chip corner radius (set 9999px for pill chips)</td>
-          </tr>
-          <tr>
-            <td><code>--pagination-button-bg</code></td>
-            <td>Chip rest background</td>
-          </tr>
-          <tr>
-            <td><code>--pagination-button-color</code></td>
-            <td>Chip rest text color</td>
-          </tr>
-          <tr>
-            <td><code>--pagination-button-border-color</code></td>
-            <td>Chip border color (set <code>var(--st-border)</code> for outlined chips)</td>
-          </tr>
-          <tr>
-            <td><code>--pagination-button-hover-bg</code></td>
-            <td>Hover background (interactive chips only)</td>
-          </tr>
-          <tr>
-            <td><code>--pagination-button-hover-color</code></td>
-            <td>Hover text color</td>
-          </tr>
-          <tr>
-            <td><code>--pagination-button-active-bg</code></td>
-            <td>Current page background (<code>data-state="active"</code> / <code>aria-current="page"</code>)</td>
-          </tr>
-          <tr>
-            <td><code>--pagination-button-active-color</code></td>
-            <td>Current page text color</td>
-          </tr>
-          <tr>
-            <td><code>--pagination-button-disabled-color</code></td>
-            <td>Disabled / ellipsis text color</td>
-          </tr>
-          <tr>
-            <td><code>--pagination-button-ring</code></td>
-            <td>Focus outline color</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--pagination-gap</code></td>
+          <td>Space between chips</td>
+        </tr>
+        <tr>
+          <td><code>--pagination-margin-bottom</code></td>
+          <td>Trailing space below the row</td>
+        </tr>
+        <tr>
+          <td><code>--pagination-font-size</code></td>
+          <td>Chip text size</td>
+        </tr>
+        <tr>
+          <td><code>--pagination-button-height</code></td>
+          <td>Chip height (also doubles as <code>min-width</code> so single-glyph chips land as squares)</td>
+        </tr>
+        <tr>
+          <td><code>--pagination-button-padding-x</code></td>
+          <td>Chip horizontal padding (longer labels grow from this)</td>
+        </tr>
+        <tr>
+          <td><code>--pagination-button-inner-gap</code></td>
+          <td>Space between icon and label inside a chip</td>
+        </tr>
+        <tr>
+          <td><code>--pagination-button-radius</code></td>
+          <td>Chip corner radius (set 9999px for pill chips)</td>
+        </tr>
+        <tr>
+          <td><code>--pagination-button-bg</code></td>
+          <td>Chip rest background</td>
+        </tr>
+        <tr>
+          <td><code>--pagination-button-color</code></td>
+          <td>Chip rest text color</td>
+        </tr>
+        <tr>
+          <td><code>--pagination-button-border-color</code></td>
+          <td>Chip border color (set <code>var(--st-border)</code> for outlined chips)</td>
+        </tr>
+        <tr>
+          <td><code>--pagination-button-hover-bg</code></td>
+          <td>Hover background (interactive chips only)</td>
+        </tr>
+        <tr>
+          <td><code>--pagination-button-hover-color</code></td>
+          <td>Hover text color</td>
+        </tr>
+        <tr>
+          <td><code>--pagination-button-active-bg</code></td>
+          <td>Current page background (<code>data-state="active"</code> / <code>aria-current="page"</code>)</td>
+        </tr>
+        <tr>
+          <td><code>--pagination-button-active-color</code></td>
+          <td>Current page text color</td>
+        </tr>
+        <tr>
+          <td><code>--pagination-button-disabled-color</code></td>
+          <td>Disabled / ellipsis text color</td>
+        </tr>
+        <tr>
+          <td><code>--pagination-button-ring</code></td>
+          <td>Focus outline color</td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 {% endblock %}

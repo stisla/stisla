@@ -16,26 +16,24 @@
 
   <section>
     <h2>The scale</h2>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Component</th>
-            <th>Variable</th>
-            <th>Value</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td><a href="/dropdown">Dropdown</a></td><td><code>--dropdown-z-index</code></td><td>1030</td></tr>
-          <tr><td><a href="/app-shell">App-shell sidebar</a></td><td><code>--app-shell-sidebar-z</code></td><td>1030</td></tr>
-          <tr><td><a href="/drawer">Drawer</a></td><td><code>--drawer-z-index</code></td><td>1045</td></tr>
-          <tr><td><a href="/tooltip">Tooltip</a></td><td><code>--tooltip-z-index</code></td><td>1050</td></tr>
-          <tr><td><a href="/dialog">Dialog</a></td><td><code>--dialog-z-index</code></td><td>1055</td></tr>
-          <tr><td><a href="/popover">Popover</a></td><td><code>--popover-z-index</code></td><td>1070</td></tr>
-          <tr><td><a href="/toast">Toast</a></td><td><code>--toast-z-index</code></td><td>1090</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Component</th>
+          <th>Variable</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><a href="/dropdown">Dropdown</a></td><td><code>--dropdown-z-index</code></td><td>1030</td></tr>
+        <tr><td><a href="/app-shell">App-shell sidebar</a></td><td><code>--app-shell-sidebar-z</code></td><td>1030</td></tr>
+        <tr><td><a href="/drawer">Drawer</a></td><td><code>--drawer-z-index</code></td><td>1045</td></tr>
+        <tr><td><a href="/tooltip">Tooltip</a></td><td><code>--tooltip-z-index</code></td><td>1050</td></tr>
+        <tr><td><a href="/dialog">Dialog</a></td><td><code>--dialog-z-index</code></td><td>1055</td></tr>
+        <tr><td><a href="/popover">Popover</a></td><td><code>--popover-z-index</code></td><td>1070</td></tr>
+        <tr><td><a href="/toast">Toast</a></td><td><code>--toast-z-index</code></td><td>1090</td></tr>
+      </tbody>
+    </table>
     <p>Sidebar and dropdown share <code>1030</code> on purpose. They never co-exist in the same stacking context (the sidebar is fixed layout chrome, a dropdown opens inside content).</p>
   </section>
 

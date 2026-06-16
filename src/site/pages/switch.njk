@@ -123,46 +123,44 @@
   <section>
     <h2>Customization</h2>
     <p>Seven variables retune <code>.switch</code> without touching component CSS. Override on <code>.switch</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Use</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--switch-track-w</code></td>
-            <td>Track width; <code>--lg</code> reassigns this</td>
-          </tr>
-          <tr>
-            <td><code>--switch-track-h</code></td>
-            <td>Track height</td>
-          </tr>
-          <tr>
-            <td><code>--switch-thumb</code></td>
-            <td>Thumb diameter</td>
-          </tr>
-          <tr>
-            <td><code>--switch-inset</code></td>
-            <td>Visible gap between thumb edge and track edge</td>
-          </tr>
-          <tr>
-            <td><code>--switch-off-bg</code></td>
-            <td>Off-state track; mid-gray that adapts per theme so the white thumb stays readable in both modes</td>
-          </tr>
-          <tr>
-            <td><code>--switch-on-bg</code></td>
-            <td>On-state track</td>
-          </tr>
-          <tr>
-            <td><code>--switch-thumb-color</code></td>
-            <td>Thumb fill (white literal so the thumb reads on both the off-state mid-gray and the on-state primary track in both themes)</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--switch-track-w</code></td>
+          <td>Track width; <code>--lg</code> reassigns this</td>
+        </tr>
+        <tr>
+          <td><code>--switch-track-h</code></td>
+          <td>Track height</td>
+        </tr>
+        <tr>
+          <td><code>--switch-thumb</code></td>
+          <td>Thumb diameter</td>
+        </tr>
+        <tr>
+          <td><code>--switch-inset</code></td>
+          <td>Visible gap between thumb edge and track edge</td>
+        </tr>
+        <tr>
+          <td><code>--switch-off-bg</code></td>
+          <td>Off-state track; mid-gray that adapts per theme so the white thumb stays readable in both modes</td>
+        </tr>
+        <tr>
+          <td><code>--switch-on-bg</code></td>
+          <td>On-state track</td>
+        </tr>
+        <tr>
+          <td><code>--switch-thumb-color</code></td>
+          <td>Thumb fill (white literal so the thumb reads on both the off-state mid-gray and the on-state primary track in both themes)</td>
+        </tr>
+      </tbody>
+    </table>
     <p>Track and thumb opt out of <code>--st-radius</code>. The pill and circle are semantic. Override <code>--switch-track-h</code> or <code>--switch-thumb</code> for a different shape; the radius follows the shorter dimension.</p>
   </section>
 {% endblock %}

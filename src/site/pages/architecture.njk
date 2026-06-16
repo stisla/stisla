@@ -18,15 +18,13 @@
   <section>
     <h2>Two packages</h2>
     <p>Stisla ships in two scoped packages, installed and versioned together.</p>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Package</th><th>What it ships</th></tr></thead>
-        <tbody>
-          <tr><td><code>@stisla/css</code></td><td>The universal stylesheet. Tokens, foundation, components, utilities. No JavaScript. Works in every implementation</td></tr>
-          <tr><td><code>@stisla/vanilla</code></td><td>The vanilla JavaScript runtime. Declares <code>data-stisla-*</code> behavior on the canonical markup. Pairs with <code>@stisla/css</code> at a matching version</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Package</th><th>What it ships</th></tr></thead>
+      <tbody>
+        <tr><td><code>@stisla/css</code></td><td>The universal stylesheet. Tokens, foundation, components, utilities. No JavaScript. Works in every implementation</td></tr>
+        <tr><td><code>@stisla/vanilla</code></td><td>The vanilla JavaScript runtime. Declares <code>data-stisla-*</code> behavior on the canonical markup. Pairs with <code>@stisla/css</code> at a matching version</td></tr>
+      </tbody>
+    </table>
     <p>The two share a version. <code>@stisla/vanilla</code> declares <code>@stisla/css</code> as a peer dependency pinned to the same release, so an out-of-sync pair fails at install time rather than at runtime. Future implementation packages (<code>@stisla/base-ui</code>, <code>@stisla/reka</code>, ...) each ship their own JS runtime alongside the same <code>@stisla/css</code>.</p>
   </section>
 
@@ -39,29 +37,25 @@
     <p>Order matters. Foundation rules (reset, grid, typography baseline) sit below theme tokens. Theme tokens sit below component rules. Utilities sit on top so a utility class wins against the component it tweaks. Within layered scope, normal cascade rules apply.</p>
 
     <h3>What each layer holds</h3>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Layer</th><th>Contents</th><th>Source path</th></tr></thead>
-        <tbody>
-          <tr><td><strong>foundation</strong></td><td>Normalize, Preflight reset, base typography rules, grid, container sizes</td><td><code>src/scss/foundation/</code></td></tr>
-          <tr><td><strong>theme</strong></td><td>The <code>:root { --st-* }</code> declarations and the dark-mode delta block</td><td><code>src/scss/tokens/_theme.scss</code></td></tr>
-          <tr><td><strong>components</strong></td><td>Every BEM component partial. One file per block</td><td><code>src/scss/components/_&lt;name&gt;.scss</code></td></tr>
-          <tr><td><strong>utilities</strong></td><td>The shipped utility classes (spacing, sizing, typography, surface)</td><td><code>src/scss/utilities/_utilities.scss</code></td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Layer</th><th>Contents</th><th>Source path</th></tr></thead>
+      <tbody>
+        <tr><td><strong>foundation</strong></td><td>Normalize, Preflight reset, base typography rules, grid, container sizes</td><td><code>src/scss/foundation/</code></td></tr>
+        <tr><td><strong>theme</strong></td><td>The <code>:root { --st-* }</code> declarations and the dark-mode delta block</td><td><code>src/scss/tokens/_theme.scss</code></td></tr>
+        <tr><td><strong>components</strong></td><td>Every BEM component partial. One file per block</td><td><code>src/scss/components/_&lt;name&gt;.scss</code></td></tr>
+        <tr><td><strong>utilities</strong></td><td>The shipped utility classes (spacing, sizing, typography, surface)</td><td><code>src/scss/utilities/_utilities.scss</code></td></tr>
+      </tbody>
+    </table>
 
     <h3>Two bundle entries</h3>
     <p>Two pre-compiled bundles ship in <code>@stisla/css</code>. They share most of their content; the only difference is which optional components land in the build.</p>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Bundle</th><th>Includes</th><th>Use when</th></tr></thead>
-        <tbody>
-          <tr><td><code>stisla.css</code> (core)</td><td>Every component except the vanilla-optional ones (carousel today)</td><td>You want the smallest install and pull optionals à la carte</td></tr>
-          <tr><td><code>stisla-full.css</code></td><td>Core plus every vanilla-optional component</td><td>You want one stylesheet that covers everything</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Bundle</th><th>Includes</th><th>Use when</th></tr></thead>
+      <tbody>
+        <tr><td><code>stisla.css</code> (core)</td><td>Every component except the vanilla-optional ones (carousel today)</td><td>You want the smallest install and pull optionals à la carte</td></tr>
+        <tr><td><code>stisla-full.css</code></td><td>Core plus every vanilla-optional component</td><td>You want one stylesheet that covers everything</td></tr>
+      </tbody>
+    </table>
     <p>The line between core and optional is a per-implementation decision. The spec doesn&rsquo;t fix it. Carousel is optional in vanilla because it depends on <code>embla-carousel</code>, a real install cost. A future React+Base UI bundle may include carousel in its default because its primitive library covers every Stisla component at a comparable weight. The <a class="link" href="/installation">Installation</a> page covers the picking rule from the user side; here it&rsquo;s a design choice in the bundle wiring.</p>
   </section>
 
@@ -158,16 +152,14 @@ src/js/
 
     <h3>6. State hooks</h3>
     <p>Runtime state is exposed through three vocabularies, each with a specific role.</p>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Hook</th><th>Use</th><th>Examples</th></tr></thead>
-        <tbody>
-          <tr><td><code>[data-state="X"]</code></td><td>Primitive-library aligned state. Both Radix and Base UI use this convention. Stisla matches it so the same CSS serves the vanilla impl (which sets the attribute via its own JS) and the React/Vue impls (which inherit the attribute from their primitive library)</td><td><code>data-state="open"</code> on dialog, dropdown, drawer, popover. <code>data-state="active"</code> on tabs trigger</td></tr>
-          <tr><td><code>.is-&lt;state&gt;</code></td><td>Stisla-original states that no primitive library exposes a name for. Class-based so they sit alongside BEM modifiers and don&rsquo;t need a primitive-library mapping</td><td><code>.is-loading</code> on btn, <code>.is-collapsed</code> on sidebar</td></tr>
-          <tr><td><code>aria-*</code></td><td>Accessibility semantics. <code>aria-pressed</code>, <code>aria-current</code>, <code>aria-disabled</code>, <code>aria-expanded</code>. Reused as styling hooks when the visual treatment maps cleanly to the semantic</td><td><code>[aria-pressed="true"]</code> on btn for the pressed-in fill</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Hook</th><th>Use</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td><code>[data-state="X"]</code></td><td>Primitive-library aligned state. Both Radix and Base UI use this convention. Stisla matches it so the same CSS serves the vanilla impl (which sets the attribute via its own JS) and the React/Vue impls (which inherit the attribute from their primitive library)</td><td><code>data-state="open"</code> on dialog, dropdown, drawer, popover. <code>data-state="active"</code> on tabs trigger</td></tr>
+        <tr><td><code>.is-&lt;state&gt;</code></td><td>Stisla-original states that no primitive library exposes a name for. Class-based so they sit alongside BEM modifiers and don&rsquo;t need a primitive-library mapping</td><td><code>.is-loading</code> on btn, <code>.is-collapsed</code> on sidebar</td></tr>
+        <tr><td><code>aria-*</code></td><td>Accessibility semantics. <code>aria-pressed</code>, <code>aria-current</code>, <code>aria-disabled</code>, <code>aria-expanded</code>. Reused as styling hooks when the visual treatment maps cleanly to the semantic</td><td><code>[aria-pressed="true"]</code> on btn for the pressed-in fill</td></tr>
+      </tbody>
+    </table>
   </section>
 
   <section>
@@ -175,18 +167,16 @@ src/js/
     <p>The vanilla runtime is small. Around 600 lines of our own JS plus three vendored primitives. Every interactive component follows the same lifecycle, and most behavior comes from declarative markup rather than imperative JS calls.</p>
 
     <h3>Primitives we vendor</h3>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Library</th><th>Used by</th><th>Why</th></tr></thead>
-        <tbody>
-          <tr><td><a class="link" href="https://floating-ui.com/" target="_blank" rel="noopener noreferrer">Floating UI</a></td><td>dropdown, popover, tooltip</td><td>Position calculation for floating elements (collision detection, placement flips, arrow rendering)</td></tr>
-          <tr><td><a class="link" href="https://focus-trap.github.io/focus-trap/" target="_blank" rel="noopener noreferrer">focus-trap</a></td><td>dialog, drawer</td><td>Keyboard focus containment inside overlays</td></tr>
-          <tr><td><a class="link" href="https://www.embla-carousel.com/" target="_blank" rel="noopener noreferrer">Embla</a></td><td>carousel (optional)</td><td>Touch-friendly scroll mechanics. Lives in the optional bundle</td></tr>
-          <tr><td><a class="link" href="https://kingsora.github.io/OverlayScrollbars/" target="_blank" rel="noopener noreferrer">OverlayScrollbars</a></td><td>scroll-area</td><td>Custom-styled scrollbars that overlay the content without taking layout space</td></tr>
-          <tr><td><code>tabbable</code></td><td>focus-trap, sidebar dismiss</td><td>Walks the focusable tree. Tiny shared utility</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Library</th><th>Used by</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td><a class="link" href="https://floating-ui.com/" target="_blank" rel="noopener noreferrer">Floating UI</a></td><td>dropdown, popover, tooltip</td><td>Position calculation for floating elements (collision detection, placement flips, arrow rendering)</td></tr>
+        <tr><td><a class="link" href="https://focus-trap.github.io/focus-trap/" target="_blank" rel="noopener noreferrer">focus-trap</a></td><td>dialog, drawer</td><td>Keyboard focus containment inside overlays</td></tr>
+        <tr><td><a class="link" href="https://www.embla-carousel.com/" target="_blank" rel="noopener noreferrer">Embla</a></td><td>carousel (optional)</td><td>Touch-friendly scroll mechanics. Lives in the optional bundle</td></tr>
+        <tr><td><a class="link" href="https://kingsora.github.io/OverlayScrollbars/" target="_blank" rel="noopener noreferrer">OverlayScrollbars</a></td><td>scroll-area</td><td>Custom-styled scrollbars that overlay the content without taking layout space</td></tr>
+        <tr><td><code>tabbable</code></td><td>focus-trap, sidebar dismiss</td><td>Walks the focusable tree. Tiny shared utility</td></tr>
+      </tbody>
+    </table>
     <p>Everything else comes from our own code. No jQuery, no Bootstrap JS bundle, no framework runtime.</p>
 
     <h3>The register and init pattern</h3>
@@ -228,20 +218,18 @@ if (document.readyState === 'loading') {
   <section>
     <h2>How this realizes the spec</h2>
     <p>The vanilla impl is one realization of the cross-implementation contract. Reading the spec alongside the vanilla source shows how each requirement lands in practice. A few examples:</p>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Spec requirement</th><th>Vanilla solution</th></tr></thead>
-        <tbody>
-          <tr><td>Token surface is <code>--st-*</code> only</td><td><code>src/scss/tokens/_theme.scss</code>. Only file with literal color values</td></tr>
-          <tr><td>State derivation via <code>color-mix</code></td><td>Every component file. Recipe percentages as Sass constants at top of <code>_btn.scss</code> and similar</td></tr>
-          <tr><td>BEM block names match the spec</td><td><code>.btn</code>, <code>.card</code>, <code>.dialog</code>, etc. One <code>_&lt;name&gt;.scss</code> per block</td></tr>
-          <tr><td>State attributes match Radix conventions</td><td><code>[data-state="open|closed|active"]</code> set by our JS or by future primitive libraries; same CSS serves both</td></tr>
-          <tr><td>Focus, dismiss, scroll-lock, keyboard a11y</td><td>focus-trap (dialog, drawer), our own dismiss + scroll-lock, Floating UI for floating elements</td></tr>
-          <tr><td>Dark mode is one delta block</td><td>End of <code>_theme.scss</code>. <code>[data-theme="dark"]</code> and <code>.dark</code> both match</td></tr>
-          <tr><td>Component contract per <code>spec/components/&lt;name&gt;.md</code></td><td>Each JS-coordinated component honors the spec&rsquo;s required behavior, parts, and events</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Spec requirement</th><th>Vanilla solution</th></tr></thead>
+      <tbody>
+        <tr><td>Token surface is <code>--st-*</code> only</td><td><code>src/scss/tokens/_theme.scss</code>. Only file with literal color values</td></tr>
+        <tr><td>State derivation via <code>color-mix</code></td><td>Every component file. Recipe percentages as Sass constants at top of <code>_btn.scss</code> and similar</td></tr>
+        <tr><td>BEM block names match the spec</td><td><code>.btn</code>, <code>.card</code>, <code>.dialog</code>, etc. One <code>_&lt;name&gt;.scss</code> per block</td></tr>
+        <tr><td>State attributes match Radix conventions</td><td><code>[data-state="open|closed|active"]</code> set by our JS or by future primitive libraries; same CSS serves both</td></tr>
+        <tr><td>Focus, dismiss, scroll-lock, keyboard a11y</td><td>focus-trap (dialog, drawer), our own dismiss + scroll-lock, Floating UI for floating elements</td></tr>
+        <tr><td>Dark mode is one delta block</td><td>End of <code>_theme.scss</code>. <code>[data-theme="dark"]</code> and <code>.dark</code> both match</td></tr>
+        <tr><td>Component contract per <code>spec/components/&lt;name&gt;.md</code></td><td>Each JS-coordinated component honors the spec&rsquo;s required behavior, parts, and events</td></tr>
+      </tbody>
+    </table>
     <p>Future implementations (React + Base UI, Vue + Reka, Svelte + bits-ui) get their own architecture pages with the same shape. Same spec, different runtime, different primitive library, same <code>@stisla/css</code> underneath.</p>
   </section>
 

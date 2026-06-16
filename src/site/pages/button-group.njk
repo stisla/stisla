@@ -141,26 +141,24 @@
   <section>
     <h2>Customization</h2>
     <p>Two variables retune <code>.btn-group</code> + <code>.btn-toolbar</code>. Sizes retune the child <code>--btn-*</code> vars in modifier scope rather than introducing per-size vars on the group, the same model as <code>.btn--sm</code> / <code>.btn--lg</code>. Override on the wrapper, a parent scope, or <code>:root</code>; the cascade scopes the change.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Use</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--btn-group-radius</code></td>
-            <td>Outer corner radius. Inner corners stay square. <code>--sm</code> / <code>--lg</code> retune this in modifier scope.</td>
-          </tr>
-          <tr>
-            <td><code>--btn-toolbar-gap</code></td>
-            <td>Space between groups inside a <code>.btn-toolbar</code>.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--btn-group-radius</code></td>
+          <td>Outer corner radius. Inner corners stay square. <code>--sm</code> / <code>--lg</code> retune this in modifier scope.</td>
+        </tr>
+        <tr>
+          <td><code>--btn-toolbar-gap</code></td>
+          <td>Space between groups inside a <code>.btn-toolbar</code>.</td>
+        </tr>
+      </tbody>
+    </table>
     <p>The group's chrome (members' borders, fills, hover and active paint) lives on the child <code>.btn</code>. To recolor a cluster, set <code>--btn-bg</code> / <code>--btn-tone</code> on the members. Don't set them on the wrapper. See the <a class="link" href="/button">button</a> page for the full <code>.btn</code> variable surface.</p>
   </section>
 {% endblock %}

@@ -1,7 +1,9 @@
 {#
-  Site navigation sidebar. Grouped by purpose: prologue / foundation / forms /
-  components / overlays / media (all alphabetical). Every entry is a real link;
-  unbuilt pages 404 for now and become live as their templates land.
+  Site navigation sidebar. The top bucket is spec-level (titleless): docs about
+  Stisla the framework regardless of implementation. After that, groups cover
+  the vanilla implementation: get-started / layout / forms / components /
+  overlays (the component buckets are alphabetical). Every entry is a real
+  link; unbuilt pages 404 for now and become live as their templates land.
 
   Optional components (not in the vanilla core bundle — see SPEC.md §10) get
   a muted "Optional" indicator inline. The grouping reflects component family,
@@ -15,22 +17,27 @@
     <nav class="sidebar__menu">
 
       <div class="sidebar__group">
-        <span class="sidebar__group-title">Prologue</span>
         <ul class="sidebar__list">
           <li class="sidebar__item"><a class="sidebar__button" href="/introduction"><span>Introduction</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/installation"><span>Installation</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/javascript"><span>JavaScript</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/specification"><span>Specification</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/architecture"><span>Architecture</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/customization"><span>Customization</span></a></li>
-          <li class="sidebar__item"><a class="sidebar__button" href="/optimization"><span>Optimization</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/why-stisla"><span>Why Stisla</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/specification"><span>Specification</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/contributing"><span>Contributing</span></a></li>
         </ul>
       </div>
 
       <div class="sidebar__group">
-        <span class="sidebar__group-title">Foundation</span>
+        <span class="sidebar__group-title">Get Started</span>
+        <ul class="sidebar__list">
+          <li class="sidebar__item"><a class="sidebar__button" href="/installation"><span>Installation</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/javascript"><span>JavaScript</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/architecture"><span>Architecture</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/customization"><span>Customization</span></a></li>
+          <li class="sidebar__item"><a class="sidebar__button" href="/optimization"><span>Optimization</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__group">
+        <span class="sidebar__group-title">Layout</span>
         <ul class="sidebar__list">
           <li class="sidebar__item"><a class="sidebar__button" href="/breakpoints"><span>Breakpoints</span></a></li>
           <li class="sidebar__item"><a class="sidebar__button" href="/grid"><span>Grid</span></a></li>

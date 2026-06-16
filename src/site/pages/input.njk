@@ -141,49 +141,47 @@
   <section>
     <h2>Customization</h2>
     <p>Eight variables retune <code>.input</code> without touching component CSS. Override on the field itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change. The same surface appears on <a class="link" href="/select">.select</a> and <a class="link" href="/textarea">.textarea</a> under their own prefix so each field component can be tuned independently.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Use</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--input-radius</code></td>
-            <td>Corner radius (per-component override via <code>--st-input-radius</code>; sizes pull <code>--st-radius-sm</code> / <code>-lg</code>)</td>
-          </tr>
-          <tr>
-            <td><code>--input-height</code></td>
-            <td>Single-line height; sm and lg reassign this. Multiplied by <code>--st-density</code> at the component level</td>
-          </tr>
-          <tr>
-            <td><code>--input-padding-x</code></td>
-            <td>Horizontal padding; sm and lg reassign this</td>
-          </tr>
-          <tr>
-            <td><code>--input-font-size</code></td>
-            <td>Text size; sm and lg reassign this</td>
-          </tr>
-          <tr>
-            <td><code>--input-bg</code></td>
-            <td>Background; <code>readonly</code> shifts a tier</td>
-          </tr>
-          <tr>
-            <td><code>--input-color</code></td>
-            <td>Text color</td>
-          </tr>
-          <tr>
-            <td><code>--input-border</code></td>
-            <td>Border color; validation hooks flip this to <code>--st-danger</code></td>
-          </tr>
-          <tr>
-            <td><code>--input-placeholder</code></td>
-            <td>Placeholder text color</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--input-radius</code></td>
+          <td>Corner radius (per-component override via <code>--st-input-radius</code>; sizes pull <code>--st-radius-sm</code> / <code>-lg</code>)</td>
+        </tr>
+        <tr>
+          <td><code>--input-height</code></td>
+          <td>Single-line height; sm and lg reassign this. Multiplied by <code>--st-density</code> at the component level</td>
+        </tr>
+        <tr>
+          <td><code>--input-padding-x</code></td>
+          <td>Horizontal padding; sm and lg reassign this</td>
+        </tr>
+        <tr>
+          <td><code>--input-font-size</code></td>
+          <td>Text size; sm and lg reassign this</td>
+        </tr>
+        <tr>
+          <td><code>--input-bg</code></td>
+          <td>Background; <code>readonly</code> shifts a tier</td>
+        </tr>
+        <tr>
+          <td><code>--input-color</code></td>
+          <td>Text color</td>
+        </tr>
+        <tr>
+          <td><code>--input-border</code></td>
+          <td>Border color; validation hooks flip this to <code>--st-danger</code></td>
+        </tr>
+        <tr>
+          <td><code>--input-placeholder</code></td>
+          <td>Placeholder text color</td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 {% endblock %}

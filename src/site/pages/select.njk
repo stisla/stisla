@@ -186,54 +186,52 @@
   <section>
     <h2>Customization</h2>
     <p>Nine variables retune <code>.select</code> without touching component CSS. Eight mirror the <a class="link" href="/input">input surface</a> under the <code>--select-</code> prefix so the chevron, padding, height, and so on can shift independently. The ninth is the chevron SVG itself.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Use</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--select-radius</code></td>
-            <td>Corner radius; sizes pull <code>--st-radius-sm</code> / <code>-lg</code></td>
-          </tr>
-          <tr>
-            <td><code>--select-height</code></td>
-            <td>Single-line height; sm and lg reassign this. Multi-line variants (<code>multiple</code>, <code>size</code>) treat this as a min-height floor</td>
-          </tr>
-          <tr>
-            <td><code>--select-padding-x</code></td>
-            <td>Horizontal padding; sm and lg reassign this</td>
-          </tr>
-          <tr>
-            <td><code>--select-font-size</code></td>
-            <td>Text size; sm and lg reassign this</td>
-          </tr>
-          <tr>
-            <td><code>--select-bg</code></td>
-            <td>Background</td>
-          </tr>
-          <tr>
-            <td><code>--select-color</code></td>
-            <td>Text color</td>
-          </tr>
-          <tr>
-            <td><code>--select-border</code></td>
-            <td>Border color; validation hooks flip this to <code>--st-danger</code></td>
-          </tr>
-          <tr>
-            <td><code>--select-placeholder</code></td>
-            <td>Placeholder text color (selects don't render a true placeholder, but the var is part of the shared field surface)</td>
-          </tr>
-          <tr>
-            <td><code>--select-indicator</code></td>
-            <td>Native chevron painted in the inline-end padding well; <code>multiple</code> and <code>size</code> drop it. Override with a different SVG to retheme the chevron</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--select-radius</code></td>
+          <td>Corner radius; sizes pull <code>--st-radius-sm</code> / <code>-lg</code></td>
+        </tr>
+        <tr>
+          <td><code>--select-height</code></td>
+          <td>Single-line height; sm and lg reassign this. Multi-line variants (<code>multiple</code>, <code>size</code>) treat this as a min-height floor</td>
+        </tr>
+        <tr>
+          <td><code>--select-padding-x</code></td>
+          <td>Horizontal padding; sm and lg reassign this</td>
+        </tr>
+        <tr>
+          <td><code>--select-font-size</code></td>
+          <td>Text size; sm and lg reassign this</td>
+        </tr>
+        <tr>
+          <td><code>--select-bg</code></td>
+          <td>Background</td>
+        </tr>
+        <tr>
+          <td><code>--select-color</code></td>
+          <td>Text color</td>
+        </tr>
+        <tr>
+          <td><code>--select-border</code></td>
+          <td>Border color; validation hooks flip this to <code>--st-danger</code></td>
+        </tr>
+        <tr>
+          <td><code>--select-placeholder</code></td>
+          <td>Placeholder text color (selects don't render a true placeholder, but the var is part of the shared field surface)</td>
+        </tr>
+        <tr>
+          <td><code>--select-indicator</code></td>
+          <td>Native chevron painted in the inline-end padding well; <code>multiple</code> and <code>size</code> drop it. Override with a different SVG to retheme the chevron</td>
+        </tr>
+      </tbody>
+    </table>
     <p>The chevron SVG carries a literal stroke color (one per theme) because <code>data:</code> URLs can't read CSS variables. To recolor the chevron, replace the whole URL with one whose stroke matches the new color.</p>
   </section>
 {% endblock %}

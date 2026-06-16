@@ -12,7 +12,30 @@
 // Page-wrapper usage. .prose works as a whole-page wrapper too (the
 // stisla.dev docs do exactly this on .main-container.prose). Demo viewers
 // and any other subtree that wants to escape prose styling carry the
-// .not-prose class — every prose rule is gated `:not(.not-prose, .not-prose *)`.
+// .not-prose class — every prose element rule is gated
+// `:not(.not-prose, .not-prose *)`.
+//
+// What .not-prose opts out of (and what it doesn't). The gate above
+// prevents prose's *element rules* from matching inside .not-prose, so
+// headings, links, lists, blockquotes, tables, etc. revert to their
+// non-prose (reboot) treatment. But CSS inheritance is orthogonal to
+// selector matching: properties that .prose sets on its root and that
+// inherit by default — `color` and `line-height` — still flow into
+// .not-prose subtrees. In the framework's default state this is invisible
+// (--prose-body-color defaults to --st-foreground, matching body), so
+// .not-prose still reads as body. The leak only surfaces when a consumer
+// overrides --prose-body-color (or --prose-line-height) on the wrapper
+// — the docs site does this to mute article body text, and demo previews
+// inside that wrapper pick up the muted tone on anything using
+// `color: inherit` (.h1–.h6) or no color (.display-*, plain <h1>). A
+// consumer that introduces this kind of override should reset the
+// affected property on their own .not-prose scope (e.g.
+// `.docs-prose .not-prose { color: var(--st-foreground); }`).
+// CSS @scope would fix this structurally, but landed past the framework's
+// documented browser baseline (V3.md §1 / SPEC.md §15: Safari 16.4+,
+// Chrome 111+, Firefox 121+; @scope requires Safari 17.4 / Chrome 118 /
+// Firefox 128). Same trade-off Tailwind Typography ships with.
+//
 // Caveat: a nested .prose inside .not-prose can't reactivate (the opt-out
 // gate trips on the inner elements too). For demos that themselves are
 // prose content, use `{% call ui.demo(prose=true) %}` — that drops
@@ -27,7 +50,7 @@
 // retunes the kbd component without inventing new prose vars):
 //
 //   --prose-color           var(--st-foreground)           Master text color; body / headings / strong cascade from this
-//   --prose-body-color      var(--prose-color)          p, li, dd (applied at .prose root, inherits to descendants)
+//   --prose-body-color      var(--prose-color)          p, li, dd (applied at .prose root, inherits to descendants — see .not-prose caveat below)
 //   --prose-headings-color  var(--prose-color)          h1-h6
 //   --prose-strong-color    var(--prose-color)          strong, b, dt
 //   --prose-link-color      var(--st-primary)              Inline link color

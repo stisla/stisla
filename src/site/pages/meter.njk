@@ -175,82 +175,80 @@
   <section>
     <h2>Customization</h2>
     <p>Override the variables on <code>.meter</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change. Size modifiers <code>--sm</code> / <code>--lg</code> retune the track height in their own scope.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Use</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--meter-height</code></td>
-            <td>Track height (8 at default density; sm 4, lg 16)</td>
-          </tr>
-          <tr>
-            <td><code>--meter-radius</code></td>
-            <td>Track corner radius (pill; opts out of <code>--st-radius</code>)</td>
-          </tr>
-          <tr>
-            <td><code>--meter-margin-bottom</code></td>
-            <td>Trailing space below the component</td>
-          </tr>
-          <tr>
-            <td><code>--meter-header-gap</code></td>
-            <td>Space between the caption row and the track</td>
-          </tr>
-          <tr>
-            <td><code>--meter-segment-gap</code></td>
-            <td>Gap between adjacent bars in a stacked track</td>
-          </tr>
-          <tr>
-            <td><code>--meter-bg</code></td>
-            <td>Track background (unfilled portion)</td>
-          </tr>
-          <tr>
-            <td><code>--meter-bar-bg</code></td>
-            <td>Bar fill (intent modifiers retune; also drives the legend dot)</td>
-          </tr>
-          <tr>
-            <td><code>--meter-label-font-size</code></td>
-            <td>Caption font size (label and value)</td>
-          </tr>
-          <tr>
-            <td><code>--meter-label-font-weight</code></td>
-            <td>Label weight (value stays at the inherited weight)</td>
-          </tr>
-          <tr>
-            <td><code>--meter-label-color</code></td>
-            <td>Label text color</td>
-          </tr>
-          <tr>
-            <td><code>--meter-value-color</code></td>
-            <td>Value text color</td>
-          </tr>
-          <tr>
-            <td><code>--meter-legend-row-gap</code></td>
-            <td>Space between the track and the legend</td>
-          </tr>
-          <tr>
-            <td><code>--meter-legend-item-gap</code></td>
-            <td>Horizontal gap between legend items</td>
-          </tr>
-          <tr>
-            <td><code>--meter-legend-dot-size</code></td>
-            <td>Diameter of the legend swatch</td>
-          </tr>
-          <tr>
-            <td><code>--meter-legend-font-size</code></td>
-            <td>Legend text size</td>
-          </tr>
-          <tr>
-            <td><code>--meter-legend-color</code></td>
-            <td>Legend text color</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--meter-height</code></td>
+          <td>Track height (8 at default density; sm 4, lg 16)</td>
+        </tr>
+        <tr>
+          <td><code>--meter-radius</code></td>
+          <td>Track corner radius (pill; opts out of <code>--st-radius</code>)</td>
+        </tr>
+        <tr>
+          <td><code>--meter-margin-bottom</code></td>
+          <td>Trailing space below the component</td>
+        </tr>
+        <tr>
+          <td><code>--meter-header-gap</code></td>
+          <td>Space between the caption row and the track</td>
+        </tr>
+        <tr>
+          <td><code>--meter-segment-gap</code></td>
+          <td>Gap between adjacent bars in a stacked track</td>
+        </tr>
+        <tr>
+          <td><code>--meter-bg</code></td>
+          <td>Track background (unfilled portion)</td>
+        </tr>
+        <tr>
+          <td><code>--meter-bar-bg</code></td>
+          <td>Bar fill (intent modifiers retune; also drives the legend dot)</td>
+        </tr>
+        <tr>
+          <td><code>--meter-label-font-size</code></td>
+          <td>Caption font size (label and value)</td>
+        </tr>
+        <tr>
+          <td><code>--meter-label-font-weight</code></td>
+          <td>Label weight (value stays at the inherited weight)</td>
+        </tr>
+        <tr>
+          <td><code>--meter-label-color</code></td>
+          <td>Label text color</td>
+        </tr>
+        <tr>
+          <td><code>--meter-value-color</code></td>
+          <td>Value text color</td>
+        </tr>
+        <tr>
+          <td><code>--meter-legend-row-gap</code></td>
+          <td>Space between the track and the legend</td>
+        </tr>
+        <tr>
+          <td><code>--meter-legend-item-gap</code></td>
+          <td>Horizontal gap between legend items</td>
+        </tr>
+        <tr>
+          <td><code>--meter-legend-dot-size</code></td>
+          <td>Diameter of the legend swatch</td>
+        </tr>
+        <tr>
+          <td><code>--meter-legend-font-size</code></td>
+          <td>Legend text size</td>
+        </tr>
+        <tr>
+          <td><code>--meter-legend-color</code></td>
+          <td>Legend text color</td>
+        </tr>
+      </tbody>
+    </table>
     <p>Track opts out of <code>--st-radius</code>. Pill is semantic for a meter strip and matches the rest of the bar family (badge, progress, slider). Override <code>--meter-radius</code> per-component for a brutalist square track.</p>
   </section>
 {% endblock %}

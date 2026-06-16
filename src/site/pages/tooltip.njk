@@ -141,54 +141,52 @@
   <section>
     <h2>Customization</h2>
     <p>Every variable that retunes <code>.tooltip</code> is below. Override on a single trigger, on a parent scope, or on <code>:root</code>. The chip uses an inverse surface (<code>--st-foreground</code> / <code>--st-background</code>) so it stays high-contrast against the page in both themes.</p>
-    <div class="prose">
-      <h3>Geometry</h3>
-      <table>
-        <thead>
-          <tr><th>Variable</th><th>Use</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><code>--tooltip-max-width</code></td><td>Wrap point. Long content past this folds to a second line.</td></tr>
-          <tr><td><code>--tooltip-padding-y</code></td><td>Top and bottom inset on <code>.tooltip__inner</code>.</td></tr>
-          <tr><td><code>--tooltip-padding-x</code></td><td>Left and right inset on <code>.tooltip__inner</code>.</td></tr>
-          <tr><td><code>--tooltip-radius</code></td><td>Chip radius. Small tier. Matches kbd and badge.</td></tr>
-          <tr><td><code>--tooltip-z-index</code></td><td>Stack level. Between drawer (1045) and dialog (1055).</td></tr>
-          <tr><td><code>--tooltip-font-size</code></td><td>Label text size.</td></tr>
-          <tr><td><code>--tooltip-line-height</code></td><td>Wrapping rhythm.</td></tr>
-        </tbody>
-      </table>
+    <h3>Geometry</h3>
+    <table>
+      <thead>
+        <tr><th>Variable</th><th>Use</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>--tooltip-max-width</code></td><td>Wrap point. Long content past this folds to a second line.</td></tr>
+        <tr><td><code>--tooltip-padding-y</code></td><td>Top and bottom inset on <code>.tooltip__inner</code>.</td></tr>
+        <tr><td><code>--tooltip-padding-x</code></td><td>Left and right inset on <code>.tooltip__inner</code>.</td></tr>
+        <tr><td><code>--tooltip-radius</code></td><td>Chip radius. Small tier. Matches kbd and badge.</td></tr>
+        <tr><td><code>--tooltip-z-index</code></td><td>Stack level. Between drawer (1045) and dialog (1055).</td></tr>
+        <tr><td><code>--tooltip-font-size</code></td><td>Label text size.</td></tr>
+        <tr><td><code>--tooltip-line-height</code></td><td>Wrapping rhythm.</td></tr>
+      </tbody>
+    </table>
 
-      <h3>Surface</h3>
-      <table>
-        <thead>
-          <tr><th>Variable</th><th>Use</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><code>--tooltip-bg</code></td><td>Chip background. Inverse. Flips with theme via the token swap.</td></tr>
-          <tr><td><code>--tooltip-color</code></td><td>Label text color. Inverse pair.</td></tr>
-          <tr><td><code>--tooltip-shadow</code></td><td>Lift off the page.</td></tr>
-        </tbody>
-      </table>
+    <h3>Surface</h3>
+    <table>
+      <thead>
+        <tr><th>Variable</th><th>Use</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>--tooltip-bg</code></td><td>Chip background. Inverse. Flips with theme via the token swap.</td></tr>
+        <tr><td><code>--tooltip-color</code></td><td>Label text color. Inverse pair.</td></tr>
+        <tr><td><code>--tooltip-shadow</code></td><td>Lift off the page.</td></tr>
+      </tbody>
+    </table>
 
-      <h3>Arrow</h3>
-      <table>
-        <thead>
-          <tr><th>Variable</th><th>Use</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><code>--tooltip-arrow-size</code></td><td>Square that's rotated 45° for the diamond caret.</td></tr>
-        </tbody>
-      </table>
+    <h3>Arrow</h3>
+    <table>
+      <thead>
+        <tr><th>Variable</th><th>Use</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>--tooltip-arrow-size</code></td><td>Square that's rotated 45° for the diamond caret.</td></tr>
+      </tbody>
+    </table>
 
-      <h3>Motion</h3>
-      <table>
-        <thead>
-          <tr><th>Variable</th><th>Use</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><code>--tooltip-transition-duration</code></td><td>Fade and translate duration. Zeroed under <code>prefers-reduced-motion</code>.</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <h3>Motion</h3>
+    <table>
+      <thead>
+        <tr><th>Variable</th><th>Use</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>--tooltip-transition-duration</code></td><td>Fade and translate duration. Zeroed under <code>prefers-reduced-motion</code>.</td></tr>
+      </tbody>
+    </table>
   </section>
 {% endblock %}

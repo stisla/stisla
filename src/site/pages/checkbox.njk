@@ -142,41 +142,39 @@
   <section>
     <h2>Customization</h2>
     <p>Six variables retune <code>.checkbox</code> without touching component CSS. Override on the input itself, on a parent scope, or on <code>:root</code>.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Use</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--checkbox-size</code></td>
-            <td>Box dimension; density scales it</td>
-          </tr>
-          <tr>
-            <td><code>--checkbox-radius</code></td>
-            <td>Corner radius; raise to round the corners or zero out for sharp edges</td>
-          </tr>
-          <tr>
-            <td><code>--checkbox-bg</code></td>
-            <td>Unchecked background</td>
-          </tr>
-          <tr>
-            <td><code>--checkbox-border</code></td>
-            <td>Unchecked border; validation hooks flip this to <code>--st-danger</code></td>
-          </tr>
-          <tr>
-            <td><code>--checkbox-checked-bg</code></td>
-            <td>Checked or indeterminate background</td>
-          </tr>
-          <tr>
-            <td><code>--checkbox-indicator</code></td>
-            <td>Glyph painted over <code>--checkbox-checked-bg</code>. Checked and indeterminate each set their own SVG. The fill color is a literal because <code>data:</code> URLs can't read CSS variables. To recolor, replace the URL with one whose fill matches the new color</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--checkbox-size</code></td>
+          <td>Box dimension; density scales it</td>
+        </tr>
+        <tr>
+          <td><code>--checkbox-radius</code></td>
+          <td>Corner radius; raise to round the corners or zero out for sharp edges</td>
+        </tr>
+        <tr>
+          <td><code>--checkbox-bg</code></td>
+          <td>Unchecked background</td>
+        </tr>
+        <tr>
+          <td><code>--checkbox-border</code></td>
+          <td>Unchecked border; validation hooks flip this to <code>--st-danger</code></td>
+        </tr>
+        <tr>
+          <td><code>--checkbox-checked-bg</code></td>
+          <td>Checked or indeterminate background</td>
+        </tr>
+        <tr>
+          <td><code>--checkbox-indicator</code></td>
+          <td>Glyph painted over <code>--checkbox-checked-bg</code>. Checked and indeterminate each set their own SVG. The fill color is a literal because <code>data:</code> URLs can't read CSS variables. To recolor, replace the URL with one whose fill matches the new color</td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 {% endblock %}

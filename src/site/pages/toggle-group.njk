@@ -168,88 +168,84 @@
   <section>
     <h2>Keyboard</h2>
     <p>Roving tabindex keeps one member in the tab order at a time, so Tab leaves the group naturally. Arrow keys move focus along the group's orientation. In single-select mode focus is selection (WAI-ARIA radio-group); multi-select decouples them.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Key</th>
-            <th>Single-select</th>
-            <th>Multi-select</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><kbd class="kbd">→</kbd> / <kbd class="kbd">↓</kbd></td>
-            <td>Focus next enabled member, auto-select.</td>
-            <td>Focus next enabled member.</td>
-          </tr>
-          <tr>
-            <td><kbd class="kbd">←</kbd> / <kbd class="kbd">↑</kbd></td>
-            <td>Focus previous enabled member, auto-select.</td>
-            <td>Focus previous enabled member.</td>
-          </tr>
-          <tr>
-            <td><kbd class="kbd">Home</kbd></td>
-            <td>Focus first enabled, auto-select.</td>
-            <td>Focus first enabled member.</td>
-          </tr>
-          <tr>
-            <td><kbd class="kbd">End</kbd></td>
-            <td>Focus last enabled, auto-select.</td>
-            <td>Focus last enabled member.</td>
-          </tr>
-          <tr>
-            <td><kbd class="kbd">Space</kbd> / <kbd class="kbd">Enter</kbd></td>
-            <td>Select focused (no-op if already selected).</td>
-            <td>Flip <code>aria-pressed</code> on focused member.</td>
-          </tr>
-          <tr>
-            <td><kbd class="kbd">Tab</kbd></td>
-            <td colspan="2">Leaves the group. Only the tabbable member is in the tab order.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Key</th>
+          <th>Single-select</th>
+          <th>Multi-select</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><kbd class="kbd">→</kbd> / <kbd class="kbd">↓</kbd></td>
+          <td>Focus next enabled member, auto-select.</td>
+          <td>Focus next enabled member.</td>
+        </tr>
+        <tr>
+          <td><kbd class="kbd">←</kbd> / <kbd class="kbd">↑</kbd></td>
+          <td>Focus previous enabled member, auto-select.</td>
+          <td>Focus previous enabled member.</td>
+        </tr>
+        <tr>
+          <td><kbd class="kbd">Home</kbd></td>
+          <td>Focus first enabled, auto-select.</td>
+          <td>Focus first enabled member.</td>
+        </tr>
+        <tr>
+          <td><kbd class="kbd">End</kbd></td>
+          <td>Focus last enabled, auto-select.</td>
+          <td>Focus last enabled member.</td>
+        </tr>
+        <tr>
+          <td><kbd class="kbd">Space</kbd> / <kbd class="kbd">Enter</kbd></td>
+          <td>Select focused (no-op if already selected).</td>
+          <td>Flip <code>aria-pressed</code> on focused member.</td>
+        </tr>
+        <tr>
+          <td><kbd class="kbd">Tab</kbd></td>
+          <td colspan="2">Leaves the group. Only the tabbable member is in the tab order.</td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 
   <section>
     <h2>Customization</h2>
     <p>Six variables retune <code>.toggle-group</code>. Child <code>.toggle</code> vars (height, radius, bg, border) re-derive from the container values inside member scope. See <a class="link" href="/toggle">Toggle</a> for the child surface.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Use</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--toggle-group-radius</code></td>
-            <td>Outer corner radius. Inner toggle radius computes as <code>outer - padding</code> (concentric).</td>
-          </tr>
-          <tr>
-            <td><code>--toggle-group-height</code></td>
-            <td>Outer raw height (density multiplies once). Inner toggle fills via flex stretch, so height resolves to <code>outer − 2 × border − 2 × padding</code> via the box model.</td>
-          </tr>
-          <tr>
-            <td><code>--toggle-group-padding</code></td>
-            <td>Padding around the children. Subtracts from the inner toggle's effective height and from the concentric inner radius.</td>
-          </tr>
-          <tr>
-            <td><code>--toggle-group-gap</code></td>
-            <td>Space between adjacent toggles. Lets multi-active members breathe without border collisions.</td>
-          </tr>
-          <tr>
-            <td><code>--toggle-group-bg</code></td>
-            <td>Container fill. Set to <code>var(--st-surface-2)</code> for a tinted pill.</td>
-          </tr>
-          <tr>
-            <td><code>--toggle-group-border-color</code></td>
-            <td>Outer rim color.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--toggle-group-radius</code></td>
+          <td>Outer corner radius. Inner toggle radius computes as <code>outer - padding</code> (concentric).</td>
+        </tr>
+        <tr>
+          <td><code>--toggle-group-height</code></td>
+          <td>Outer raw height (density multiplies once). Inner toggle fills via flex stretch, so height resolves to <code>outer − 2 × border − 2 × padding</code> via the box model.</td>
+        </tr>
+        <tr>
+          <td><code>--toggle-group-padding</code></td>
+          <td>Padding around the children. Subtracts from the inner toggle's effective height and from the concentric inner radius.</td>
+        </tr>
+        <tr>
+          <td><code>--toggle-group-gap</code></td>
+          <td>Space between adjacent toggles. Lets multi-active members breathe without border collisions.</td>
+        </tr>
+        <tr>
+          <td><code>--toggle-group-bg</code></td>
+          <td>Container fill. Set to <code>var(--st-surface-2)</code> for a tinted pill.</td>
+        </tr>
+        <tr>
+          <td><code>--toggle-group-border-color</code></td>
+          <td>Outer rim color.</td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 {% endblock %}

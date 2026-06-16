@@ -102,60 +102,56 @@
   <section>
     <h2>Events</h2>
     <p>Four events bubble from the region element. <code>opening</code> and <code>closing</code> are cancelable. Call <code>preventDefault()</code> on the event to abort.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Event</th>
-            <th>Cancelable</th>
-            <th>Fires</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>stisla:collapsible:opening</code></td>
-            <td>Yes</td>
-            <td>Before the open transition starts</td>
-          </tr>
-          <tr>
-            <td><code>stisla:collapsible:opened</code></td>
-            <td>No</td>
-            <td>After the open transition ends</td>
-          </tr>
-          <tr>
-            <td><code>stisla:collapsible:closing</code></td>
-            <td>Yes</td>
-            <td>Before the close transition starts</td>
-          </tr>
-          <tr>
-            <td><code>stisla:collapsible:closed</code></td>
-            <td>No</td>
-            <td>After the close transition ends</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>Cancelable</th>
+          <th>Fires</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>stisla:collapsible:opening</code></td>
+          <td>Yes</td>
+          <td>Before the open transition starts</td>
+        </tr>
+        <tr>
+          <td><code>stisla:collapsible:opened</code></td>
+          <td>No</td>
+          <td>After the open transition ends</td>
+        </tr>
+        <tr>
+          <td><code>stisla:collapsible:closing</code></td>
+          <td>Yes</td>
+          <td>Before the close transition starts</td>
+        </tr>
+        <tr>
+          <td><code>stisla:collapsible:closed</code></td>
+          <td>No</td>
+          <td>After the close transition ends</td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 
   <section>
     <h2>Customization</h2>
     <p>One variable controls the transition duration. Override it on the region itself, on a parent scope, or on <code>:root</code>. Pass <code>{ duration: 350 }</code> at construction for a per-instance override.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Use</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--collapsible-transition-duration</code></td>
-            <td>Height transition speed. Set <code>0</code> to snap. Honored at construction and on every open/close call. <code>prefers-reduced-motion: reduce</code> zeroes it regardless.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--collapsible-transition-duration</code></td>
+          <td>Height transition speed. Set <code>0</code> to snap. Honored at construction and on every open/close call. <code>prefers-reduced-motion: reduce</code> zeroes it regardless.</td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 
   <script>

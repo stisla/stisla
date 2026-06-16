@@ -38,76 +38,66 @@
 
     <h3>Color</h3>
 
-    <div class="prose">
-      <table>
-        <thead><tr><th>Class</th><th>Reads</th><th>Use</th></tr></thead>
-        <tbody>
-          <tr><td><code>.text-foreground</code></td><td><code>--st-foreground</code></td><td>Reset child color to body text.</td></tr>
-          <tr><td><code>.text-muted-foreground</code></td><td><code>--st-muted-foreground</code></td><td>Secondary copy, helper text, metadata.</td></tr>
-          <tr><td><code>.text-primary</code></td><td><code>--st-primary</code></td><td>Brand-colored text run.</td></tr>
-          <tr><td><code>.text-success</code></td><td><code>--st-success</code></td><td>Positive state text.</td></tr>
-          <tr><td><code>.text-warning</code></td><td><code>--st-warning</code></td><td>Caution state text.</td></tr>
-          <tr><td><code>.text-danger</code></td><td><code>--st-danger</code></td><td>Error state text.</td></tr>
-          <tr><td><code>.text-info</code></td><td><code>--st-info</code></td><td>Informational text.</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Class</th><th>Reads</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td><code>.text-foreground</code></td><td><code>--st-foreground</code></td><td>Reset child color to body text.</td></tr>
+        <tr><td><code>.text-muted-foreground</code></td><td><code>--st-muted-foreground</code></td><td>Secondary copy, helper text, metadata.</td></tr>
+        <tr><td><code>.text-primary</code></td><td><code>--st-primary</code></td><td>Brand-colored text run.</td></tr>
+        <tr><td><code>.text-success</code></td><td><code>--st-success</code></td><td>Positive state text.</td></tr>
+        <tr><td><code>.text-warning</code></td><td><code>--st-warning</code></td><td>Caution state text.</td></tr>
+        <tr><td><code>.text-danger</code></td><td><code>--st-danger</code></td><td>Error state text.</td></tr>
+        <tr><td><code>.text-info</code></td><td><code>--st-info</code></td><td>Informational text.</td></tr>
+      </tbody>
+    </table>
 
     <h3>Weight</h3>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Class</th><th>Value</th></tr></thead>
-        <tbody>
-          <tr><td><code>.fw-light</code></td><td>300</td></tr>
-          <tr><td><code>.fw-normal</code></td><td>400</td></tr>
-          <tr><td><code>.fw-medium</code></td><td>500</td></tr>
-          <tr><td><code>.fw-semibold</code></td><td>600</td></tr>
-          <tr><td><code>.fw-bold</code></td><td>700</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Class</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code>.fw-light</code></td><td>300</td></tr>
+        <tr><td><code>.fw-normal</code></td><td>400</td></tr>
+        <tr><td><code>.fw-medium</code></td><td>500</td></tr>
+        <tr><td><code>.fw-semibold</code></td><td>600</td></tr>
+        <tr><td><code>.fw-bold</code></td><td>700</td></tr>
+      </tbody>
+    </table>
 
     <h3>Size</h3>
     <p>Numeric scale, ascending small &rarr; large. Same direction as <code>.gap-*</code> and <code>.m*-*</code>. Use <a class="link" href="#responsive"><code>.fs-{breakpoint}-{step}</code></a> for breakpoint-up variants.</p>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Class</th><th>Value</th><th>Pixels (at 16&nbsp;px root)</th></tr></thead>
-        <tbody>
-          <tr><td><code>.fs-1</code></td><td>0.75rem</td><td>12</td></tr>
-          <tr><td><code>.fs-2</code></td><td>0.875rem</td><td>14</td></tr>
-          <tr><td><code>.fs-3</code></td><td>1rem</td><td>16</td></tr>
-          <tr><td><code>.fs-4</code></td><td>1.125rem</td><td>18</td></tr>
-          <tr><td><code>.fs-5</code></td><td>1.25rem</td><td>20</td></tr>
-          <tr><td><code>.fs-6</code></td><td>1.5rem</td><td>24</td></tr>
-          <tr><td><code>.fs-7</code></td><td>2rem</td><td>32</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Class</th><th>Value</th><th>Pixels (at 16&nbsp;px root)</th></tr></thead>
+      <tbody>
+        <tr><td><code>.fs-1</code></td><td>0.75rem</td><td>12</td></tr>
+        <tr><td><code>.fs-2</code></td><td>0.875rem</td><td>14</td></tr>
+        <tr><td><code>.fs-3</code></td><td>1rem</td><td>16</td></tr>
+        <tr><td><code>.fs-4</code></td><td>1.125rem</td><td>18</td></tr>
+        <tr><td><code>.fs-5</code></td><td>1.25rem</td><td>20</td></tr>
+        <tr><td><code>.fs-6</code></td><td>1.5rem</td><td>24</td></tr>
+        <tr><td><code>.fs-7</code></td><td>2rem</td><td>32</td></tr>
+      </tbody>
+    </table>
 
     <h3>Alignment &amp; overflow</h3>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Class</th><th>Effect</th></tr></thead>
-        <tbody>
-          <tr><td><code>.text-start</code></td><td>Align start of text container (LTR=left).</td></tr>
-          <tr><td><code>.text-end</code></td><td>Align end (LTR=right).</td></tr>
-          <tr><td><code>.text-center</code></td><td>Center align.</td></tr>
-          <tr><td><code>.text-nowrap</code></td><td>Prevent line breaking.</td></tr>
-          <tr><td><code>.text-truncate</code></td><td>Single-line ellipsis on overflow.</td></tr>
-          <tr><td><code>.text-break</code></td><td>Break long words to prevent overflow.</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Class</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td><code>.text-start</code></td><td>Align start of text container (LTR=left).</td></tr>
+        <tr><td><code>.text-end</code></td><td>Align end (LTR=right).</td></tr>
+        <tr><td><code>.text-center</code></td><td>Center align.</td></tr>
+        <tr><td><code>.text-nowrap</code></td><td>Prevent line breaking.</td></tr>
+        <tr><td><code>.text-truncate</code></td><td>Single-line ellipsis on overflow.</td></tr>
+        <tr><td><code>.text-break</code></td><td>Break long words to prevent overflow.</td></tr>
+      </tbody>
+    </table>
 
     <h3>Accessibility</h3>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Class</th><th>Effect</th></tr></thead>
-        <tbody>
-          <tr><td><code>.visually-hidden</code></td><td>Removes the element from view while keeping it readable by assistive tech. Used for spinner labels, icon-only button labels, skip links.</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Class</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td><code>.visually-hidden</code></td><td>Removes the element from view while keeping it readable by assistive tech. Used for spinner labels, icon-only button labels, skip links.</td></tr>
+      </tbody>
+    </table>
   </section>
 
   <section>
@@ -134,167 +124,147 @@
     <p>A vertical stack with an 8&nbsp;px gap between rows. Note the helper text uses <code>.mb-0</code> to kill its natural bottom margin so the gap owns the rhythm.</p>
 
     <h3>Display</h3>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Class</th><th>Value</th></tr></thead>
-        <tbody>
-          <tr><td><code>.d-none</code></td><td><code>display: none</code></td></tr>
-          <tr><td><code>.d-block</code></td><td><code>display: block</code></td></tr>
-          <tr><td><code>.d-inline</code></td><td><code>display: inline</code></td></tr>
-          <tr><td><code>.d-inline-block</code></td><td><code>display: inline-block</code></td></tr>
-          <tr><td><code>.d-flex</code></td><td><code>display: flex</code></td></tr>
-          <tr><td><code>.d-inline-flex</code></td><td><code>display: inline-flex</code></td></tr>
-          <tr><td><code>.d-grid</code></td><td><code>display: grid</code></td></tr>
-          <tr><td><code>.d-inline-grid</code></td><td><code>display: inline-grid</code></td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Class</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code>.d-none</code></td><td><code>display: none</code></td></tr>
+        <tr><td><code>.d-block</code></td><td><code>display: block</code></td></tr>
+        <tr><td><code>.d-inline</code></td><td><code>display: inline</code></td></tr>
+        <tr><td><code>.d-inline-block</code></td><td><code>display: inline-block</code></td></tr>
+        <tr><td><code>.d-flex</code></td><td><code>display: flex</code></td></tr>
+        <tr><td><code>.d-inline-flex</code></td><td><code>display: inline-flex</code></td></tr>
+        <tr><td><code>.d-grid</code></td><td><code>display: grid</code></td></tr>
+        <tr><td><code>.d-inline-grid</code></td><td><code>display: inline-grid</code></td></tr>
+      </tbody>
+    </table>
 
     <h3>Flex direction &amp; wrap</h3>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Class</th><th>Value</th></tr></thead>
-        <tbody>
-          <tr><td><code>.flex-row</code></td><td><code>flex-direction: row</code></td></tr>
-          <tr><td><code>.flex-row-reverse</code></td><td><code>row-reverse</code></td></tr>
-          <tr><td><code>.flex-column</code></td><td><code>column</code></td></tr>
-          <tr><td><code>.flex-column-reverse</code></td><td><code>column-reverse</code></td></tr>
-          <tr><td><code>.flex-wrap</code></td><td><code>flex-wrap: wrap</code></td></tr>
-          <tr><td><code>.flex-nowrap</code></td><td><code>nowrap</code></td></tr>
-          <tr><td><code>.flex-wrap-reverse</code></td><td><code>wrap-reverse</code></td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Class</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code>.flex-row</code></td><td><code>flex-direction: row</code></td></tr>
+        <tr><td><code>.flex-row-reverse</code></td><td><code>row-reverse</code></td></tr>
+        <tr><td><code>.flex-column</code></td><td><code>column</code></td></tr>
+        <tr><td><code>.flex-column-reverse</code></td><td><code>column-reverse</code></td></tr>
+        <tr><td><code>.flex-wrap</code></td><td><code>flex-wrap: wrap</code></td></tr>
+        <tr><td><code>.flex-nowrap</code></td><td><code>nowrap</code></td></tr>
+        <tr><td><code>.flex-wrap-reverse</code></td><td><code>wrap-reverse</code></td></tr>
+      </tbody>
+    </table>
 
     <h3>Flex grow &amp; shrink</h3>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Class</th><th>Value</th></tr></thead>
-        <tbody>
-          <tr><td><code>.flex-fill</code></td><td><code>flex: 1 1 auto</code></td></tr>
-          <tr><td><code>.flex-grow-0</code></td><td><code>flex-grow: 0</code></td></tr>
-          <tr><td><code>.flex-grow-1</code></td><td><code>flex-grow: 1</code></td></tr>
-          <tr><td><code>.flex-shrink-0</code></td><td><code>flex-shrink: 0</code></td></tr>
-          <tr><td><code>.flex-shrink-1</code></td><td><code>flex-shrink: 1</code></td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Class</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code>.flex-fill</code></td><td><code>flex: 1 1 auto</code></td></tr>
+        <tr><td><code>.flex-grow-0</code></td><td><code>flex-grow: 0</code></td></tr>
+        <tr><td><code>.flex-grow-1</code></td><td><code>flex-grow: 1</code></td></tr>
+        <tr><td><code>.flex-shrink-0</code></td><td><code>flex-shrink: 0</code></td></tr>
+        <tr><td><code>.flex-shrink-1</code></td><td><code>flex-shrink: 1</code></td></tr>
+      </tbody>
+    </table>
 
     <h3>Justify &amp; align</h3>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Class</th><th>Value</th></tr></thead>
-        <tbody>
-          <tr><td><code>.justify-content-start</code></td><td><code>flex-start</code></td></tr>
-          <tr><td><code>.justify-content-end</code></td><td><code>flex-end</code></td></tr>
-          <tr><td><code>.justify-content-center</code></td><td><code>center</code></td></tr>
-          <tr><td><code>.justify-content-between</code></td><td><code>space-between</code></td></tr>
-          <tr><td><code>.justify-content-around</code></td><td><code>space-around</code></td></tr>
-          <tr><td><code>.justify-content-evenly</code></td><td><code>space-evenly</code></td></tr>
-          <tr><td><code>.align-items-{start,end,center,baseline,stretch}</code></td><td>Cross-axis alignment for flex children.</td></tr>
-          <tr><td><code>.align-self-{start,end,center,baseline,stretch,auto}</code></td><td>Per-child override of cross-axis alignment.</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Class</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code>.justify-content-start</code></td><td><code>flex-start</code></td></tr>
+        <tr><td><code>.justify-content-end</code></td><td><code>flex-end</code></td></tr>
+        <tr><td><code>.justify-content-center</code></td><td><code>center</code></td></tr>
+        <tr><td><code>.justify-content-between</code></td><td><code>space-between</code></td></tr>
+        <tr><td><code>.justify-content-around</code></td><td><code>space-around</code></td></tr>
+        <tr><td><code>.justify-content-evenly</code></td><td><code>space-evenly</code></td></tr>
+        <tr><td><code>.align-items-{start,end,center,baseline,stretch}</code></td><td>Cross-axis alignment for flex children.</td></tr>
+        <tr><td><code>.align-self-{start,end,center,baseline,stretch,auto}</code></td><td>Per-child override of cross-axis alignment.</td></tr>
+      </tbody>
+    </table>
 
     <h3>Order</h3>
     <p>Visually reorder flex children. Useful when the source order needs to differ from the visual order, like a sidebar that comes after the article in markup but should sit to its left at <code>lg</code>. <code>.order-first</code> and <code>.order-last</code> shortcut the extremes; numeric steps cover everything in between.</p>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Class</th><th>Value</th></tr></thead>
-        <tbody>
-          <tr><td><code>.order-first</code></td><td><code>-1</code></td></tr>
-          <tr><td><code>.order-0</code></td><td><code>0</code></td></tr>
-          <tr><td><code>.order-1</code></td><td><code>1</code></td></tr>
-          <tr><td><code>.order-2</code></td><td><code>2</code></td></tr>
-          <tr><td><code>.order-3</code></td><td><code>3</code></td></tr>
-          <tr><td><code>.order-4</code></td><td><code>4</code></td></tr>
-          <tr><td><code>.order-5</code></td><td><code>5</code></td></tr>
-          <tr><td><code>.order-last</code></td><td><code>6</code></td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Class</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code>.order-first</code></td><td><code>-1</code></td></tr>
+        <tr><td><code>.order-0</code></td><td><code>0</code></td></tr>
+        <tr><td><code>.order-1</code></td><td><code>1</code></td></tr>
+        <tr><td><code>.order-2</code></td><td><code>2</code></td></tr>
+        <tr><td><code>.order-3</code></td><td><code>3</code></td></tr>
+        <tr><td><code>.order-4</code></td><td><code>4</code></td></tr>
+        <tr><td><code>.order-5</code></td><td><code>5</code></td></tr>
+        <tr><td><code>.order-last</code></td><td><code>6</code></td></tr>
+      </tbody>
+    </table>
 
     <h3>Gap</h3>
     <p><code>.gap-{n}</code> sets both row and column gap. <code>.row-gap-{n}</code> and <code>.column-gap-{n}</code> target one axis. Values: <code>0 / 1 / 2 / 3 / 4 / 5 / 6 / 8</code>.</p>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Step</th><th>Value</th><th>Default density (1)</th></tr></thead>
-        <tbody>
-          <tr><td><code>0</code></td><td>0</td><td>0&nbsp;px</td></tr>
-          <tr><td><code>1</code></td><td><code>0.25rem &times; density</code></td><td>4&nbsp;px</td></tr>
-          <tr><td><code>2</code></td><td><code>0.5rem &times; density</code></td><td>8&nbsp;px</td></tr>
-          <tr><td><code>3</code></td><td><code>0.75rem &times; density</code></td><td>12&nbsp;px</td></tr>
-          <tr><td><code>4</code></td><td><code>1rem &times; density</code></td><td>16&nbsp;px</td></tr>
-          <tr><td><code>5</code></td><td><code>1.25rem &times; density</code></td><td>20&nbsp;px</td></tr>
-          <tr><td><code>6</code></td><td><code>1.5rem &times; density</code></td><td>24&nbsp;px</td></tr>
-          <tr><td><code>8</code></td><td><code>2rem &times; density</code></td><td>32&nbsp;px</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Step</th><th>Value</th><th>Default density (1)</th></tr></thead>
+      <tbody>
+        <tr><td><code>0</code></td><td>0</td><td>0&nbsp;px</td></tr>
+        <tr><td><code>1</code></td><td><code>0.25rem &times; density</code></td><td>4&nbsp;px</td></tr>
+        <tr><td><code>2</code></td><td><code>0.5rem &times; density</code></td><td>8&nbsp;px</td></tr>
+        <tr><td><code>3</code></td><td><code>0.75rem &times; density</code></td><td>12&nbsp;px</td></tr>
+        <tr><td><code>4</code></td><td><code>1rem &times; density</code></td><td>16&nbsp;px</td></tr>
+        <tr><td><code>5</code></td><td><code>1.25rem &times; density</code></td><td>20&nbsp;px</td></tr>
+        <tr><td><code>6</code></td><td><code>1.5rem &times; density</code></td><td>24&nbsp;px</td></tr>
+        <tr><td><code>8</code></td><td><code>2rem &times; density</code></td><td>32&nbsp;px</td></tr>
+      </tbody>
+    </table>
 
     <h3>Margin &amp; padding</h3>
     <p>Direction abbreviations follow Bootstrap convention: <code>t</code>op, <code>b</code>ottom, <code>s</code>tart, <code>e</code>nd, <code>x</code> for both inline sides, <code>y</code> for both block sides. Start and end use logical properties so RTL flips for free. Same step scale as gap.</p>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Pattern</th><th>Maps to</th></tr></thead>
-        <tbody>
-          <tr><td><code>.m-{0&hellip;8}</code></td><td><code>margin</code> (all sides)</td></tr>
-          <tr><td><code>.mt-{0&hellip;8}</code></td><td><code>margin-block-start</code></td></tr>
-          <tr><td><code>.mb-{0&hellip;8}</code></td><td><code>margin-block-end</code></td></tr>
-          <tr><td><code>.ms-{0&hellip;8}</code></td><td><code>margin-inline-start</code> (LTR=left)</td></tr>
-          <tr><td><code>.me-{0&hellip;8}</code></td><td><code>margin-inline-end</code> (LTR=right)</td></tr>
-          <tr><td><code>.mx-{0&hellip;8}</code></td><td><code>margin-inline</code> (both)</td></tr>
-          <tr><td><code>.my-{0&hellip;8}</code></td><td><code>margin-block</code> (both)</td></tr>
-          <tr><td><code>.m-auto</code>, <code>.mx-auto</code>, <code>.ms-auto</code>, <code>.me-auto</code>, <code>.mt-auto</code>, <code>.mb-auto</code>, <code>.my-auto</code></td><td>Auto margin variants for centering and flex push-to-end.</td></tr>
-          <tr><td><code>.p-{0&hellip;8}</code>, <code>.pt-</code>, <code>.pb-</code>, <code>.ps-</code>, <code>.pe-</code>, <code>.px-</code>, <code>.py-</code></td><td>Same shape, padding properties.</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Pattern</th><th>Maps to</th></tr></thead>
+      <tbody>
+        <tr><td><code>.m-{0&hellip;8}</code></td><td><code>margin</code> (all sides)</td></tr>
+        <tr><td><code>.mt-{0&hellip;8}</code></td><td><code>margin-block-start</code></td></tr>
+        <tr><td><code>.mb-{0&hellip;8}</code></td><td><code>margin-block-end</code></td></tr>
+        <tr><td><code>.ms-{0&hellip;8}</code></td><td><code>margin-inline-start</code> (LTR=left)</td></tr>
+        <tr><td><code>.me-{0&hellip;8}</code></td><td><code>margin-inline-end</code> (LTR=right)</td></tr>
+        <tr><td><code>.mx-{0&hellip;8}</code></td><td><code>margin-inline</code> (both)</td></tr>
+        <tr><td><code>.my-{0&hellip;8}</code></td><td><code>margin-block</code> (both)</td></tr>
+        <tr><td><code>.m-auto</code>, <code>.mx-auto</code>, <code>.ms-auto</code>, <code>.me-auto</code>, <code>.mt-auto</code>, <code>.mb-auto</code>, <code>.my-auto</code></td><td>Auto margin variants for centering and flex push-to-end.</td></tr>
+        <tr><td><code>.p-{0&hellip;8}</code>, <code>.pt-</code>, <code>.pb-</code>, <code>.ps-</code>, <code>.pe-</code>, <code>.px-</code>, <code>.py-</code></td><td>Same shape, padding properties.</td></tr>
+      </tbody>
+    </table>
 
     <h3>Sizing</h3>
     <p>Percentage widths and heights resolve against the containing block. <code>.h-*</code> needs a sized parent to be meaningful.</p>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Class</th><th>Value</th></tr></thead>
-        <tbody>
-          <tr><td><code>.w-25</code></td><td><code>width: 25%</code></td></tr>
-          <tr><td><code>.w-50</code></td><td><code>width: 50%</code></td></tr>
-          <tr><td><code>.w-75</code></td><td><code>width: 75%</code></td></tr>
-          <tr><td><code>.w-100</code></td><td><code>width: 100%</code></td></tr>
-          <tr><td><code>.w-auto</code></td><td><code>width: auto</code></td></tr>
-          <tr><td><code>.h-100</code>, <code>.h-auto</code></td><td>Full-height or auto-height. Percentage steps are intentionally omitted because they only resolve against a sized parent.</td></tr>
-          <tr><td><code>.mw-100</code></td><td><code>max-width: 100%</code></td></tr>
-          <tr><td><code>.mh-100</code></td><td><code>max-height: 100%</code></td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Class</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code>.w-25</code></td><td><code>width: 25%</code></td></tr>
+        <tr><td><code>.w-50</code></td><td><code>width: 50%</code></td></tr>
+        <tr><td><code>.w-75</code></td><td><code>width: 75%</code></td></tr>
+        <tr><td><code>.w-100</code></td><td><code>width: 100%</code></td></tr>
+        <tr><td><code>.w-auto</code></td><td><code>width: auto</code></td></tr>
+        <tr><td><code>.h-100</code>, <code>.h-auto</code></td><td>Full-height or auto-height. Percentage steps are intentionally omitted because they only resolve against a sized parent.</td></tr>
+        <tr><td><code>.mw-100</code></td><td><code>max-width: 100%</code></td></tr>
+        <tr><td><code>.mh-100</code></td><td><code>max-height: 100%</code></td></tr>
+      </tbody>
+    </table>
 
     <h3>Position</h3>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Class</th><th>Value</th></tr></thead>
-        <tbody>
-          <tr><td><code>.position-static</code></td><td><code>static</code></td></tr>
-          <tr><td><code>.position-relative</code></td><td><code>relative</code></td></tr>
-          <tr><td><code>.position-absolute</code></td><td><code>absolute</code></td></tr>
-          <tr><td><code>.position-fixed</code></td><td><code>fixed</code></td></tr>
-          <tr><td><code>.position-sticky</code></td><td><code>sticky</code></td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Class</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code>.position-static</code></td><td><code>static</code></td></tr>
+        <tr><td><code>.position-relative</code></td><td><code>relative</code></td></tr>
+        <tr><td><code>.position-absolute</code></td><td><code>absolute</code></td></tr>
+        <tr><td><code>.position-fixed</code></td><td><code>fixed</code></td></tr>
+        <tr><td><code>.position-sticky</code></td><td><code>sticky</code></td></tr>
+      </tbody>
+    </table>
 
     <h3>Overflow</h3>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Class</th><th>Value</th></tr></thead>
-        <tbody>
-          <tr><td><code>.overflow-{hidden,auto,scroll,visible}</code></td><td>Both axes.</td></tr>
-          <tr><td><code>.overflow-x-{hidden,auto,scroll,visible}</code></td><td>Horizontal axis.</td></tr>
-          <tr><td><code>.overflow-y-{hidden,auto,scroll,visible}</code></td><td>Vertical axis.</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Class</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code>.overflow-{hidden,auto,scroll,visible}</code></td><td>Both axes.</td></tr>
+        <tr><td><code>.overflow-x-{hidden,auto,scroll,visible}</code></td><td>Horizontal axis.</td></tr>
+        <tr><td><code>.overflow-y-{hidden,auto,scroll,visible}</code></td><td>Vertical axis.</td></tr>
+      </tbody>
+    </table>
   </section>
 
   <section id="surface">
@@ -311,52 +281,46 @@
 
     <h3>Background</h3>
     <p>Only the neutral surfaces ship here. Each one pairs with <code>--st-foreground</code>, so default text stays readable on top.</p>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Class</th><th>Reads</th><th>Use</th></tr></thead>
-        <tbody>
-          <tr><td><code>.bg-transparent</code></td><td><code>transparent</code></td><td>Reset an inherited background.</td></tr>
-          <tr><td><code>.bg-background</code></td><td><code>--st-background</code></td><td>Page background.</td></tr>
-          <tr><td><code>.bg-surface</code></td><td><code>--st-surface</code></td><td>Card-level surface.</td></tr>
-          <tr><td><code>.bg-surface-2</code></td><td><code>--st-surface-2</code></td><td>Slightly elevated surface.</td></tr>
-          <tr><td><code>.bg-surface-3</code></td><td><code>--st-surface-3</code></td><td>More elevated surface.</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Class</th><th>Reads</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td><code>.bg-transparent</code></td><td><code>transparent</code></td><td>Reset an inherited background.</td></tr>
+        <tr><td><code>.bg-background</code></td><td><code>--st-background</code></td><td>Page background.</td></tr>
+        <tr><td><code>.bg-surface</code></td><td><code>--st-surface</code></td><td>Card-level surface.</td></tr>
+        <tr><td><code>.bg-surface-2</code></td><td><code>--st-surface-2</code></td><td>Slightly elevated surface.</td></tr>
+        <tr><td><code>.bg-surface-3</code></td><td><code>--st-surface-3</code></td><td>More elevated surface.</td></tr>
+      </tbody>
+    </table>
     <p>Intent backgrounds (<code>.bg-primary</code>, <code>.bg-success</code>, &hellip;) don&rsquo;t ship as utilities. Background without a paired foreground is a contrast footgun, and the components that need a filled brand surface (<a class="link" href="/btn">btn</a>, <a class="link" href="/badge">badge</a>, <a class="link" href="/alert">alert</a>) already pair the matching <code>--st-{intent}-foreground</code>.</p>
 
     <h3>Border</h3>
     <p><code>.border</code> draws a 1&nbsp;px line on every side using <code>--st-border</code>. Directional variants target one side via logical properties, so <code>.border-start</code> and <code>.border-end</code> flip in RTL.</p>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Class</th><th>Effect</th></tr></thead>
-        <tbody>
-          <tr><td><code>.border</code></td><td>1&nbsp;px line on all sides.</td></tr>
-          <tr><td><code>.border-0</code></td><td>Remove all borders.</td></tr>
-          <tr><td><code>.border-top</code></td><td>Line on the block-start edge (top in horizontal writing).</td></tr>
-          <tr><td><code>.border-bottom</code></td><td>Line on the block-end edge.</td></tr>
-          <tr><td><code>.border-start</code></td><td>Line on the inline-start edge (LTR=left).</td></tr>
-          <tr><td><code>.border-end</code></td><td>Line on the inline-end edge (LTR=right).</td></tr>
-          <tr><td><code>.border-top-0</code>, <code>.border-bottom-0</code>, <code>.border-start-0</code>, <code>.border-end-0</code></td><td>Zero the width on one side while keeping the other three from <code>.border</code>.</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Class</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td><code>.border</code></td><td>1&nbsp;px line on all sides.</td></tr>
+        <tr><td><code>.border-0</code></td><td>Remove all borders.</td></tr>
+        <tr><td><code>.border-top</code></td><td>Line on the block-start edge (top in horizontal writing).</td></tr>
+        <tr><td><code>.border-bottom</code></td><td>Line on the block-end edge.</td></tr>
+        <tr><td><code>.border-start</code></td><td>Line on the inline-start edge (LTR=left).</td></tr>
+        <tr><td><code>.border-end</code></td><td>Line on the inline-end edge (LTR=right).</td></tr>
+        <tr><td><code>.border-top-0</code>, <code>.border-bottom-0</code>, <code>.border-start-0</code>, <code>.border-end-0</code></td><td>Zero the width on one side while keeping the other three from <code>.border</code>.</td></tr>
+      </tbody>
+    </table>
 
     <h3>Rounded</h3>
     <p>Each class reads one of the three radius tiers (<code>--st-radius-sm</code>, <code>--st-radius</code>, <code>--st-radius-lg</code>). A hard-cornered theme overrides all three tiers (see the brutalist preset on the <a class="link" href="/customization#radius">Customization</a> page).</p>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Class</th><th>Reads</th></tr></thead>
-        <tbody>
-          <tr><td><code>.rounded</code></td><td><code>--st-radius</code></td></tr>
-          <tr><td><code>.rounded-sm</code></td><td><code>--st-radius-sm</code></td></tr>
-          <tr><td><code>.rounded-lg</code></td><td><code>--st-radius-lg</code></td></tr>
-          <tr><td><code>.rounded-0</code></td><td>Square corners.</td></tr>
-          <tr><td><code>.rounded-pill</code></td><td>Fully pilled.</td></tr>
-          <tr><td><code>.rounded-circle</code></td><td>Circular, for square boxes.</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Class</th><th>Reads</th></tr></thead>
+      <tbody>
+        <tr><td><code>.rounded</code></td><td><code>--st-radius</code></td></tr>
+        <tr><td><code>.rounded-sm</code></td><td><code>--st-radius-sm</code></td></tr>
+        <tr><td><code>.rounded-lg</code></td><td><code>--st-radius-lg</code></td></tr>
+        <tr><td><code>.rounded-0</code></td><td>Square corners.</td></tr>
+        <tr><td><code>.rounded-pill</code></td><td>Fully pilled.</td></tr>
+        <tr><td><code>.rounded-circle</code></td><td>Circular, for square boxes.</td></tr>
+      </tbody>
+    </table>
   </section>
 
   <section id="responsive">
@@ -381,40 +345,36 @@
 
     <h3>Breakpoints</h3>
     <p>Same five breakpoints as the grid system.</p>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Suffix</th><th>Applies at</th><th>Width &ge;</th></tr></thead>
-        <tbody>
-          <tr><td><em>(none)</em></td><td>Always (mobile default)</td><td>0</td></tr>
-          <tr><td><code>sm</code></td><td>Small tablet up</td><td>576&nbsp;px</td></tr>
-          <tr><td><code>md</code></td><td>Tablet up</td><td>768&nbsp;px</td></tr>
-          <tr><td><code>lg</code></td><td>Small laptop up</td><td>992&nbsp;px</td></tr>
-          <tr><td><code>xl</code></td><td>Desktop up</td><td>1200&nbsp;px</td></tr>
-          <tr><td><code>xxl</code></td><td>Wide desktop up</td><td>1400&nbsp;px</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Suffix</th><th>Applies at</th><th>Width &ge;</th></tr></thead>
+      <tbody>
+        <tr><td><em>(none)</em></td><td>Always (mobile default)</td><td>0</td></tr>
+        <tr><td><code>sm</code></td><td>Small tablet up</td><td>576&nbsp;px</td></tr>
+        <tr><td><code>md</code></td><td>Tablet up</td><td>768&nbsp;px</td></tr>
+        <tr><td><code>lg</code></td><td>Small laptop up</td><td>992&nbsp;px</td></tr>
+        <tr><td><code>xl</code></td><td>Desktop up</td><td>1200&nbsp;px</td></tr>
+        <tr><td><code>xxl</code></td><td>Wide desktop up</td><td>1400&nbsp;px</td></tr>
+      </tbody>
+    </table>
 
     <h3>What gets a responsive variant</h3>
     <p>These are the defaults. Every group is toggleable through <a class="link" href="#customizing-the-set"><code>$utilities-config</code></a>, so this table shows what ships when the bundle is imported untouched.</p>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Group</th><th>Pattern</th><th>Example</th></tr></thead>
-        <tbody>
-          <tr><td>Display</td><td><code>.d-{bp}-{value}</code></td><td><code>.d-md-flex</code>, <code>.d-lg-none</code></td></tr>
-          <tr><td>Flex direction &amp; wrap</td><td><code>.flex-{bp}-{value}</code></td><td><code>.flex-md-row</code>, <code>.flex-lg-wrap</code></td></tr>
-          <tr><td>Justify content</td><td><code>.justify-content-{bp}-{value}</code></td><td><code>.justify-content-md-between</code></td></tr>
-          <tr><td>Align items</td><td><code>.align-items-{bp}-{value}</code></td><td><code>.align-items-md-center</code></td></tr>
-          <tr><td>Order</td><td><code>.order-{bp}-{value}</code></td><td><code>.order-md-1</code>, <code>.order-lg-last</code></td></tr>
-          <tr><td>Gap</td><td><code>.gap-{bp}-{step}</code>, <code>.row-gap-{bp}-{step}</code>, <code>.column-gap-{bp}-{step}</code></td><td><code>.gap-md-4</code></td></tr>
-          <tr><td>Margin</td><td><code>.m{,t,b,s,e,x,y}-{bp}-{step}</code></td><td><code>.mt-md-3</code>, <code>.mx-lg-auto</code></td></tr>
-          <tr><td>Padding</td><td><code>.p{,t,b,s,e,x,y}-{bp}-{step}</code></td><td><code>.p-md-4</code>, <code>.py-lg-2</code></td></tr>
-          <tr><td>Width</td><td><code>.w-{bp}-{25,50,75,100,auto}</code></td><td><code>.w-md-50</code></td></tr>
-          <tr><td>Text align</td><td><code>.text-{bp}-{start,end,center}</code></td><td><code>.text-md-center</code></td></tr>
-          <tr><td>Font size</td><td><code>.fs-{bp}-{step}</code></td><td><code>.fs-md-4</code></td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Group</th><th>Pattern</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Display</td><td><code>.d-{bp}-{value}</code></td><td><code>.d-md-flex</code>, <code>.d-lg-none</code></td></tr>
+        <tr><td>Flex direction &amp; wrap</td><td><code>.flex-{bp}-{value}</code></td><td><code>.flex-md-row</code>, <code>.flex-lg-wrap</code></td></tr>
+        <tr><td>Justify content</td><td><code>.justify-content-{bp}-{value}</code></td><td><code>.justify-content-md-between</code></td></tr>
+        <tr><td>Align items</td><td><code>.align-items-{bp}-{value}</code></td><td><code>.align-items-md-center</code></td></tr>
+        <tr><td>Order</td><td><code>.order-{bp}-{value}</code></td><td><code>.order-md-1</code>, <code>.order-lg-last</code></td></tr>
+        <tr><td>Gap</td><td><code>.gap-{bp}-{step}</code>, <code>.row-gap-{bp}-{step}</code>, <code>.column-gap-{bp}-{step}</code></td><td><code>.gap-md-4</code></td></tr>
+        <tr><td>Margin</td><td><code>.m{,t,b,s,e,x,y}-{bp}-{step}</code></td><td><code>.mt-md-3</code>, <code>.mx-lg-auto</code></td></tr>
+        <tr><td>Padding</td><td><code>.p{,t,b,s,e,x,y}-{bp}-{step}</code></td><td><code>.p-md-4</code>, <code>.py-lg-2</code></td></tr>
+        <tr><td>Width</td><td><code>.w-{bp}-{25,50,75,100,auto}</code></td><td><code>.w-md-50</code></td></tr>
+        <tr><td>Text align</td><td><code>.text-{bp}-{start,end,center}</code></td><td><code>.text-md-center</code></td></tr>
+        <tr><td>Font size</td><td><code>.fs-{bp}-{step}</code></td><td><code>.fs-md-4</code></td></tr>
+      </tbody>
+    </table>
     <p>Base-only by default: flex grow / shrink, align self, height, max-width / max-height, position, overflow, text color, font weight, visually-hidden, background, border, rounded. Flip any of them on in <code>$utilities-config</code>.</p>
   </section>
 
@@ -454,38 +414,36 @@
     <p>Emits <code>.cursor-pointer</code>, <code>.cursor-grab</code>, <code>.cursor-not-allowed</code>. Flip <code>responsive: true</code> and the same block also emits <code>.cursor-md-pointer</code> etc. at every breakpoint.</p>
 
     <h3>All groups</h3>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Group key</th><th>Classes</th><th>Responsive by default</th></tr></thead>
-        <tbody>
-          <tr><td><code>text-color</code></td><td><code>.text-foreground</code>, <code>.text-primary</code>, &hellip;</td><td>no</td></tr>
-          <tr><td><code>font-weight</code></td><td><code>.fw-*</code></td><td>no</td></tr>
-          <tr><td><code>font-size</code></td><td><code>.fs-*</code></td><td>yes</td></tr>
-          <tr><td><code>text-wrap</code></td><td><code>.text-nowrap</code>, <code>.text-truncate</code>, <code>.text-break</code></td><td>no</td></tr>
-          <tr><td><code>text-align</code></td><td><code>.text-start</code>, <code>.text-end</code>, <code>.text-center</code></td><td>yes</td></tr>
-          <tr><td><code>visually-hidden</code></td><td><code>.visually-hidden</code></td><td>no</td></tr>
-          <tr><td><code>display</code></td><td><code>.d-*</code></td><td>yes</td></tr>
-          <tr><td><code>position</code></td><td><code>.position-*</code></td><td>no</td></tr>
-          <tr><td><code>overflow</code></td><td><code>.overflow-*</code>, <code>.overflow-x-*</code>, <code>.overflow-y-*</code></td><td>no</td></tr>
-          <tr><td><code>flex-fill</code></td><td><code>.flex-fill</code>, <code>.flex-grow-*</code>, <code>.flex-shrink-*</code></td><td>no</td></tr>
-          <tr><td><code>flex-direction</code></td><td><code>.flex-row</code>, <code>.flex-column</code>, &hellip;</td><td>yes</td></tr>
-          <tr><td><code>flex-wrap</code></td><td><code>.flex-wrap</code>, <code>.flex-nowrap</code>, <code>.flex-wrap-reverse</code></td><td>yes</td></tr>
-          <tr><td><code>justify-content</code></td><td><code>.justify-content-*</code></td><td>yes</td></tr>
-          <tr><td><code>align-items</code></td><td><code>.align-items-*</code></td><td>yes</td></tr>
-          <tr><td><code>align-self</code></td><td><code>.align-self-*</code></td><td>no</td></tr>
-          <tr><td><code>order</code></td><td><code>.order-{first,0..5,last}</code></td><td>yes</td></tr>
-          <tr><td><code>gap</code></td><td><code>.gap-*</code>, <code>.row-gap-*</code>, <code>.column-gap-*</code></td><td>yes</td></tr>
-          <tr><td><code>margin</code></td><td><code>.m{,t,b,s,e,x,y}-*</code></td><td>yes</td></tr>
-          <tr><td><code>padding</code></td><td><code>.p{,t,b,s,e,x,y}-*</code></td><td>yes</td></tr>
-          <tr><td><code>width</code></td><td><code>.w-*</code></td><td>yes</td></tr>
-          <tr><td><code>height</code></td><td><code>.h-100</code>, <code>.h-auto</code></td><td>no</td></tr>
-          <tr><td><code>max-size</code></td><td><code>.mw-100</code>, <code>.mh-100</code></td><td>no</td></tr>
-          <tr><td><code>background</code></td><td><code>.bg-transparent</code>, <code>.bg-background</code>, <code>.bg-surface</code>, <code>.bg-surface-2</code>, <code>.bg-surface-3</code></td><td>no</td></tr>
-          <tr><td><code>border</code></td><td><code>.border</code>, <code>.border-0</code>, <code>.border-{top,bottom,start,end}</code>, &hellip;</td><td>no</td></tr>
-          <tr><td><code>rounded</code></td><td><code>.rounded</code>, <code>.rounded-{0,sm,lg,pill,circle}</code></td><td>no</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Group key</th><th>Classes</th><th>Responsive by default</th></tr></thead>
+      <tbody>
+        <tr><td><code>text-color</code></td><td><code>.text-foreground</code>, <code>.text-primary</code>, &hellip;</td><td>no</td></tr>
+        <tr><td><code>font-weight</code></td><td><code>.fw-*</code></td><td>no</td></tr>
+        <tr><td><code>font-size</code></td><td><code>.fs-*</code></td><td>yes</td></tr>
+        <tr><td><code>text-wrap</code></td><td><code>.text-nowrap</code>, <code>.text-truncate</code>, <code>.text-break</code></td><td>no</td></tr>
+        <tr><td><code>text-align</code></td><td><code>.text-start</code>, <code>.text-end</code>, <code>.text-center</code></td><td>yes</td></tr>
+        <tr><td><code>visually-hidden</code></td><td><code>.visually-hidden</code></td><td>no</td></tr>
+        <tr><td><code>display</code></td><td><code>.d-*</code></td><td>yes</td></tr>
+        <tr><td><code>position</code></td><td><code>.position-*</code></td><td>no</td></tr>
+        <tr><td><code>overflow</code></td><td><code>.overflow-*</code>, <code>.overflow-x-*</code>, <code>.overflow-y-*</code></td><td>no</td></tr>
+        <tr><td><code>flex-fill</code></td><td><code>.flex-fill</code>, <code>.flex-grow-*</code>, <code>.flex-shrink-*</code></td><td>no</td></tr>
+        <tr><td><code>flex-direction</code></td><td><code>.flex-row</code>, <code>.flex-column</code>, &hellip;</td><td>yes</td></tr>
+        <tr><td><code>flex-wrap</code></td><td><code>.flex-wrap</code>, <code>.flex-nowrap</code>, <code>.flex-wrap-reverse</code></td><td>yes</td></tr>
+        <tr><td><code>justify-content</code></td><td><code>.justify-content-*</code></td><td>yes</td></tr>
+        <tr><td><code>align-items</code></td><td><code>.align-items-*</code></td><td>yes</td></tr>
+        <tr><td><code>align-self</code></td><td><code>.align-self-*</code></td><td>no</td></tr>
+        <tr><td><code>order</code></td><td><code>.order-{first,0..5,last}</code></td><td>yes</td></tr>
+        <tr><td><code>gap</code></td><td><code>.gap-*</code>, <code>.row-gap-*</code>, <code>.column-gap-*</code></td><td>yes</td></tr>
+        <tr><td><code>margin</code></td><td><code>.m{,t,b,s,e,x,y}-*</code></td><td>yes</td></tr>
+        <tr><td><code>padding</code></td><td><code>.p{,t,b,s,e,x,y}-*</code></td><td>yes</td></tr>
+        <tr><td><code>width</code></td><td><code>.w-*</code></td><td>yes</td></tr>
+        <tr><td><code>height</code></td><td><code>.h-100</code>, <code>.h-auto</code></td><td>no</td></tr>
+        <tr><td><code>max-size</code></td><td><code>.mw-100</code>, <code>.mh-100</code></td><td>no</td></tr>
+        <tr><td><code>background</code></td><td><code>.bg-transparent</code>, <code>.bg-background</code>, <code>.bg-surface</code>, <code>.bg-surface-2</code>, <code>.bg-surface-3</code></td><td>no</td></tr>
+        <tr><td><code>border</code></td><td><code>.border</code>, <code>.border-0</code>, <code>.border-{top,bottom,start,end}</code>, &hellip;</td><td>no</td></tr>
+        <tr><td><code>rounded</code></td><td><code>.rounded</code>, <code>.rounded-{0,sm,lg,pill,circle}</code></td><td>no</td></tr>
+      </tbody>
+    </table>
   </section>
 
   <section>

@@ -19,7 +19,7 @@
 
   <section>
     <h2>In running prose</h2>
-    <p>Inside <code>.prose</code>, bare <code>&lt;a&gt;</code> picks up the same recipe without a class so article markup stays semantic. The two surfaces are independently retunable: <code>--link-color</code> drives <code>.link</code>, <code>--st-prose-link-color</code> drives anchors inside <code>.prose</code>.</p>
+    <p>Inside <code>.prose</code>, bare <code>&lt;a&gt;</code> picks up the same recipe without a class so article markup stays semantic. The two surfaces are independently retunable: <code>--link-color</code> drives <code>.link</code>, <code>--prose-link-color</code> drives anchors inside <code>.prose</code>.</p>
     {% call ui.demo(prose=true) %}
     <p>Stisla ships a small set of components and a thin utility layer. See the <a href="/customization">customization page</a> for the variable surface, or jump to <a href="/utilities">utilities</a> for the spacing and layout escape hatches.</p>
     {% endcall %}
@@ -41,33 +41,31 @@
   <section>
     <h2>Customization</h2>
     <p>Four variables retune <code>.link</code>. The hover color resolves once at component definition, so overriding <code>--link-color</code> auto-moves <code>--link-hover-color</code>. Setting <code>--link-hover-color</code> after that breaks the link and pins the hover to a literal value.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Use</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--link-color</code></td>
-            <td>Resting text color and the source for the hover mix.</td>
-          </tr>
-          <tr>
-            <td><code>--link-decoration-offset</code></td>
-            <td>Distance between the baseline and the underline.</td>
-          </tr>
-          <tr>
-            <td><code>--link-decoration-thickness</code></td>
-            <td>Underline weight.</td>
-          </tr>
-          <tr>
-            <td><code>--link-hover-color</code></td>
-            <td>Hover text color. Derives from <code>--link-color</code> by default; override directly to pin a literal value.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--link-color</code></td>
+          <td>Resting text color and the source for the hover mix.</td>
+        </tr>
+        <tr>
+          <td><code>--link-decoration-offset</code></td>
+          <td>Distance between the baseline and the underline.</td>
+        </tr>
+        <tr>
+          <td><code>--link-decoration-thickness</code></td>
+          <td>Underline weight.</td>
+        </tr>
+        <tr>
+          <td><code>--link-hover-color</code></td>
+          <td>Hover text color. Derives from <code>--link-color</code> by default; override directly to pin a literal value.</td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 {% endblock %}

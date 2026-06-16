@@ -43,30 +43,28 @@
     {% endcall %}
 
     <h3>Max-widths</h3>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Class</th>
-            <th>xs (&lt;576)</th>
-            <th>sm (≥576)</th>
-            <th>md (≥768)</th>
-            <th>lg (≥992)</th>
-            <th>xl (≥1200)</th>
-            <th>xxl (≥1400)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td><code>.container</code></td><td>100%</td><td>540px</td><td>720px</td><td>960px</td><td>1140px</td><td>1320px</td></tr>
-          <tr><td><code>.container-fluid</code></td><td>100%</td><td>100%</td><td>100%</td><td>100%</td><td>100%</td><td>100%</td></tr>
-          <tr><td><code>.container-sm</code></td><td>100%</td><td>540px</td><td>720px</td><td>960px</td><td>1140px</td><td>1320px</td></tr>
-          <tr><td><code>.container-md</code></td><td>100%</td><td>100%</td><td>720px</td><td>960px</td><td>1140px</td><td>1320px</td></tr>
-          <tr><td><code>.container-lg</code></td><td>100%</td><td>100%</td><td>100%</td><td>960px</td><td>1140px</td><td>1320px</td></tr>
-          <tr><td><code>.container-xl</code></td><td>100%</td><td>100%</td><td>100%</td><td>100%</td><td>1140px</td><td>1320px</td></tr>
-          <tr><td><code>.container-xxl</code></td><td>100%</td><td>100%</td><td>100%</td><td>100%</td><td>100%</td><td>1320px</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Class</th>
+          <th>xs (&lt;576)</th>
+          <th>sm (≥576)</th>
+          <th>md (≥768)</th>
+          <th>lg (≥992)</th>
+          <th>xl (≥1200)</th>
+          <th>xxl (≥1400)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>.container</code></td><td>100%</td><td>540px</td><td>720px</td><td>960px</td><td>1140px</td><td>1320px</td></tr>
+        <tr><td><code>.container-fluid</code></td><td>100%</td><td>100%</td><td>100%</td><td>100%</td><td>100%</td><td>100%</td></tr>
+        <tr><td><code>.container-sm</code></td><td>100%</td><td>540px</td><td>720px</td><td>960px</td><td>1140px</td><td>1320px</td></tr>
+        <tr><td><code>.container-md</code></td><td>100%</td><td>100%</td><td>720px</td><td>960px</td><td>1140px</td><td>1320px</td></tr>
+        <tr><td><code>.container-lg</code></td><td>100%</td><td>100%</td><td>100%</td><td>960px</td><td>1140px</td><td>1320px</td></tr>
+        <tr><td><code>.container-xl</code></td><td>100%</td><td>100%</td><td>100%</td><td>100%</td><td>1140px</td><td>1320px</td></tr>
+        <tr><td><code>.container-xxl</code></td><td>100%</td><td>100%</td><td>100%</td><td>100%</td><td>100%</td><td>1320px</td></tr>
+      </tbody>
+    </table>
   </section>
 
   <section>
@@ -256,25 +254,23 @@
     {% endcall %}
 
     <h3>Gutter ramp</h3>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Class</th>
-            <th>Value</th>
-            <th>Use</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td><code>.g-0</code> / <code>.gx-0</code> / <code>.gy-0</code></td><td>0</td><td>No gutter</td></tr>
-          <tr><td><code>.g-1</code></td><td>0.25rem</td><td>Hairline grid</td></tr>
-          <tr><td><code>.g-2</code></td><td>0.5rem</td><td>Tight grid</td></tr>
-          <tr><td><code>.g-3</code></td><td>1rem</td><td>Comfortable grid</td></tr>
-          <tr><td><code>.g-4</code></td><td>1.5rem</td><td>Default, same as the bare <code>.row</code></td></tr>
-          <tr><td><code>.g-5</code></td><td>3rem</td><td>Wide grid</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Class</th>
+          <th>Value</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>.g-0</code> / <code>.gx-0</code> / <code>.gy-0</code></td><td>0</td><td>No gutter</td></tr>
+        <tr><td><code>.g-1</code></td><td>0.25rem</td><td>Hairline grid</td></tr>
+        <tr><td><code>.g-2</code></td><td>0.5rem</td><td>Tight grid</td></tr>
+        <tr><td><code>.g-3</code></td><td>1rem</td><td>Comfortable grid</td></tr>
+        <tr><td><code>.g-4</code></td><td>1.5rem</td><td>Default, same as the bare <code>.row</code></td></tr>
+        <tr><td><code>.g-5</code></td><td>3rem</td><td>Wide grid</td></tr>
+      </tbody>
+    </table>
     <p>Per-breakpoint variants apply per axis. <code>.gx-md-0</code> drops horizontal gutters at <code>md</code> and up while leaving vertical untouched.</p>
 
     <h3>Overflow at large gutters</h3>
@@ -324,70 +320,66 @@
     <p>Two CSS variables and a handful of Sass values drive every grid behaviour. The CSS vars retune live at runtime; the Sass values are compile-time and live in <code>foundation/_grid.scss</code> + <code>foundation/_containers.scss</code>.</p>
 
     <h3>CSS variables</h3>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Use</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--st-grid-gutter-x</code></td>
-            <td>Horizontal gutter on <code>.row</code> + <code>.container</code> padding. Override on a row or globally.</td>
-          </tr>
-          <tr>
-            <td><code>--st-grid-gutter-y</code></td>
-            <td>Vertical gutter on <code>.row</code> between wrapped rows.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--st-grid-gutter-x</code></td>
+          <td>Horizontal gutter on <code>.row</code> + <code>.container</code> padding. Override on a row or globally.</td>
+        </tr>
+        <tr>
+          <td><code>--st-grid-gutter-y</code></td>
+          <td>Vertical gutter on <code>.row</code> between wrapped rows.</td>
+        </tr>
+      </tbody>
+    </table>
 
     <h3>Sass variables</h3>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Default</th>
-            <th>Use</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>$grid-columns</code></td>
-            <td>12</td>
-            <td>Total column count. Drop to 8, 10, 16 for a different cadence; every <code>.col-{n}</code> regenerates against the new total.</td>
-          </tr>
-          <tr>
-            <td><code>$grid-row-columns</code></td>
-            <td>6</td>
-            <td>Maximum n for <code>.row-cols-{n}</code> utilities.</td>
-          </tr>
-          <tr>
-            <td><code>$grid-gutter-width</code></td>
-            <td>1.5rem</td>
-            <td>Default value seeded into <code>--st-grid-gutter-x</code> at the row mixin.</td>
-          </tr>
-          <tr>
-            <td><code>$gutters</code></td>
-            <td>0, 0.25, 0.5, 1, 1.5, 3 (rem)</td>
-            <td>Steps in the <code>.g-*</code> / <code>.gx-*</code> / <code>.gy-*</code> utility ramp.</td>
-          </tr>
-          <tr>
-            <td><code>$container-max-widths</code></td>
-            <td>sm 540, md 720, lg 960, xl 1140, xxl 1320 (px)</td>
-            <td>Max-widths for <code>.container</code> and per-breakpoint container classes.</td>
-          </tr>
-          <tr>
-            <td><code>$breakpoints</code></td>
-            <td>See <a href="/breakpoints">Breakpoints</a></td>
-            <td>Named viewport widths. Change here, the grid + every utility re-emits.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Default</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>$grid-columns</code></td>
+          <td>12</td>
+          <td>Total column count. Drop to 8, 10, 16 for a different cadence; every <code>.col-{n}</code> regenerates against the new total.</td>
+        </tr>
+        <tr>
+          <td><code>$grid-row-columns</code></td>
+          <td>6</td>
+          <td>Maximum n for <code>.row-cols-{n}</code> utilities.</td>
+        </tr>
+        <tr>
+          <td><code>$grid-gutter-width</code></td>
+          <td>1.5rem</td>
+          <td>Default value seeded into <code>--st-grid-gutter-x</code> at the row mixin.</td>
+        </tr>
+        <tr>
+          <td><code>$gutters</code></td>
+          <td>0, 0.25, 0.5, 1, 1.5, 3 (rem)</td>
+          <td>Steps in the <code>.g-*</code> / <code>.gx-*</code> / <code>.gy-*</code> utility ramp.</td>
+        </tr>
+        <tr>
+          <td><code>$container-max-widths</code></td>
+          <td>sm 540, md 720, lg 960, xl 1140, xxl 1320 (px)</td>
+          <td>Max-widths for <code>.container</code> and per-breakpoint container classes.</td>
+        </tr>
+        <tr>
+          <td><code>$breakpoints</code></td>
+          <td>See <a href="/breakpoints">Breakpoints</a></td>
+          <td>Named viewport widths. Change here, the grid + every utility re-emits.</td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 {% endblock %}

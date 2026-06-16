@@ -384,41 +384,39 @@
   <section>
     <h2>Customization</h2>
     <p>Six variables retune <code>.item</code> without touching component CSS. Override on the item itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change. Inside a <code>.card</code>, the flush variant additionally reads <code>--card-padding</code> so the row's inline edges align with the card header and footer.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Use</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--item-radius</code></td>
-            <td>Corner radius. Cleared to <code>0</code> by <code>--flush</code>.</td>
-          </tr>
-          <tr>
-            <td><code>--item-padding</code></td>
-            <td>Padding for the row. Retuned to <code>--card-padding</code> when a flush item lives inside a card.</td>
-          </tr>
-          <tr>
-            <td><code>--item-gap</code></td>
-            <td>Spacing between media, content, and action.</td>
-          </tr>
-          <tr>
-            <td><code>--item-bg</code></td>
-            <td>Background fill. Cleared to <code>transparent</code> by <code>--flush</code>.</td>
-          </tr>
-          <tr>
-            <td><code>--item-color</code></td>
-            <td>Text color.</td>
-          </tr>
-          <tr>
-            <td><code>--item-border</code></td>
-            <td>Full border shorthand. Cleared to <code>0</code> by <code>--flush</code>.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--item-radius</code></td>
+          <td>Corner radius. Cleared to <code>0</code> by <code>--flush</code>.</td>
+        </tr>
+        <tr>
+          <td><code>--item-padding</code></td>
+          <td>Padding for the row. Retuned to <code>--card-padding</code> when a flush item lives inside a card.</td>
+        </tr>
+        <tr>
+          <td><code>--item-gap</code></td>
+          <td>Spacing between media, content, and action.</td>
+        </tr>
+        <tr>
+          <td><code>--item-bg</code></td>
+          <td>Background fill. Cleared to <code>transparent</code> by <code>--flush</code>.</td>
+        </tr>
+        <tr>
+          <td><code>--item-color</code></td>
+          <td>Text color.</td>
+        </tr>
+        <tr>
+          <td><code>--item-border</code></td>
+          <td>Full border shorthand. Cleared to <code>0</code> by <code>--flush</code>.</td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 {% endblock %}

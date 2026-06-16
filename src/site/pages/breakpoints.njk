@@ -16,25 +16,23 @@
   <section>
     <h2>The breakpoints</h2>
     <p>There are six tiers. <code>xs</code> is the implicit baseline; any rule that doesn&rsquo;t name a breakpoint applies at every width.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Min-width</th>
-            <th>Typical device</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td><code>xs</code></td><td>0</td><td>Portrait phones</td></tr>
-          <tr><td><code>sm</code></td><td>576px</td><td>Landscape phones</td></tr>
-          <tr><td><code>md</code></td><td>768px</td><td>Tablets</td></tr>
-          <tr><td><code>lg</code></td><td>992px</td><td>Small laptops</td></tr>
-          <tr><td><code>xl</code></td><td>1200px</td><td>Desktops</td></tr>
-          <tr><td><code>xxl</code></td><td>1400px</td><td>Wide desktops</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Min-width</th>
+          <th>Typical device</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>xs</code></td><td>0</td><td>Portrait phones</td></tr>
+        <tr><td><code>sm</code></td><td>576px</td><td>Landscape phones</td></tr>
+        <tr><td><code>md</code></td><td>768px</td><td>Tablets</td></tr>
+        <tr><td><code>lg</code></td><td>992px</td><td>Small laptops</td></tr>
+        <tr><td><code>xl</code></td><td>1200px</td><td>Desktops</td></tr>
+        <tr><td><code>xxl</code></td><td>1400px</td><td>Wide desktops</td></tr>
+      </tbody>
+    </table>
   </section>
 
   <section>
@@ -131,28 +129,26 @@
   <section>
     <h2>Customization</h2>
     <p>Two Sass maps drive every responsive behaviour. Override before importing.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Default</th>
-            <th>Use</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>$breakpoints</code></td>
-            <td>xs 0, sm 576px, md 768px, lg 992px, xl 1200px, xxl 1400px</td>
-            <td>Named viewport widths used by every <code>media-*</code> mixin and every responsive class suffix.</td>
-          </tr>
-          <tr>
-            <td><code>$container-max-widths</code></td>
-            <td>sm 540px, md 720px, lg 960px, xl 1140px, xxl 1320px</td>
-            <td>Maximum content widths the <code>.container</code> classes clamp to at each breakpoint. See <a href="/grid">Grid</a>.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Default</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>$breakpoints</code></td>
+          <td>xs 0, sm 576px, md 768px, lg 992px, xl 1200px, xxl 1400px</td>
+          <td>Named viewport widths used by every <code>media-*</code> mixin and every responsive class suffix.</td>
+        </tr>
+        <tr>
+          <td><code>$container-max-widths</code></td>
+          <td>sm 540px, md 720px, lg 960px, xl 1140px, xxl 1320px</td>
+          <td>Maximum content widths the <code>.container</code> classes clamp to at each breakpoint. See <a href="/grid">Grid</a>.</td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 {% endblock %}

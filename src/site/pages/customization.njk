@@ -192,100 +192,86 @@
 
     <h3>Intent</h3>
     <p>Five paired tokens for semantic color. Foregrounds flip per-intent so text contrast survives a base swap. <code>--st-warning-foreground</code> stays dark in both themes (yellow stays yellow, text on it stays dark).</p>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Token</th><th>Pair</th><th>Use</th></tr></thead>
-        <tbody>
-          <tr><td><code>--st-primary</code></td><td><code>--st-primary-foreground</code></td><td>Brand color. Drives <code>--st-ring</code> and the <code>--st-highlight</code> tint</td></tr>
-          <tr><td><code>--st-success</code></td><td><code>--st-success-foreground</code></td><td>Positive state</td></tr>
-          <tr><td><code>--st-warning</code></td><td><code>--st-warning-foreground</code></td><td>Caution</td></tr>
-          <tr><td><code>--st-danger</code></td><td><code>--st-danger-foreground</code></td><td>Destructive or error</td></tr>
-          <tr><td><code>--st-info</code></td><td><code>--st-info-foreground</code></td><td>Informational</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Token</th><th>Pair</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td><code>--st-primary</code></td><td><code>--st-primary-foreground</code></td><td>Brand color. Drives <code>--st-ring</code> and the <code>--st-highlight</code> tint</td></tr>
+        <tr><td><code>--st-success</code></td><td><code>--st-success-foreground</code></td><td>Positive state</td></tr>
+        <tr><td><code>--st-warning</code></td><td><code>--st-warning-foreground</code></td><td>Caution</td></tr>
+        <tr><td><code>--st-danger</code></td><td><code>--st-danger-foreground</code></td><td>Destructive or error</td></tr>
+        <tr><td><code>--st-info</code></td><td><code>--st-info-foreground</code></td><td>Informational</td></tr>
+      </tbody>
+    </table>
 
     <h3>Surface tier</h3>
     <p>Page background, primary text, and three stacked surface levels. Every surface tier flips per theme; foregrounds flip with them so contrast holds (see <a class="link" href="#dark-mode">Dark mode</a>). <code>--st-muted-foreground</code> is the secondary text color paired with every surface.</p>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Token</th><th>Use</th></tr></thead>
-        <tbody>
-          <tr><td><code>--st-background</code></td><td>Page background</td></tr>
-          <tr><td><code>--st-foreground</code></td><td>Primary text</td></tr>
-          <tr><td><code>--st-surface</code></td><td>Default raised surface (cards, dialogs)</td></tr>
-          <tr><td><code>--st-surface-2</code></td><td>Slightly elevated surface</td></tr>
-          <tr><td><code>--st-surface-3</code></td><td>Most elevated surface</td></tr>
-          <tr><td><code>--st-border</code></td><td>Hairline borders between surfaces</td></tr>
-          <tr><td><code>--st-muted-foreground</code></td><td>Secondary text on any surface</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Token</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td><code>--st-background</code></td><td>Page background</td></tr>
+        <tr><td><code>--st-foreground</code></td><td>Primary text</td></tr>
+        <tr><td><code>--st-surface</code></td><td>Default raised surface (cards, dialogs)</td></tr>
+        <tr><td><code>--st-surface-2</code></td><td>Slightly elevated surface</td></tr>
+        <tr><td><code>--st-surface-3</code></td><td>Most elevated surface</td></tr>
+        <tr><td><code>--st-border</code></td><td>Hairline borders between surfaces</td></tr>
+        <tr><td><code>--st-muted-foreground</code></td><td>Secondary text on any surface</td></tr>
+      </tbody>
+    </table>
 
     <h3>Interactional</h3>
     <p>Three pairs for stateful neutral surfaces.</p>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Token</th><th>Pair</th><th>Use</th></tr></thead>
-        <tbody>
-          <tr><td><code>--st-neutral</code></td><td><code>--st-neutral-foreground</code></td><td>Rest fill for filled-neutral elements (<code>.btn--neutral</code>, default badge, kbd, input-group addons)</td></tr>
-          <tr><td><code>--st-accent</code></td><td><code>--st-accent-foreground</code></td><td>Transient hover bg over neutral or transparent surfaces</td></tr>
-          <tr><td><code>--st-highlight</code></td><td><code>--st-highlight-foreground</code></td><td>Persistent selected-or-current bg, a soft primary tint that derives from <code>--st-primary</code></td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Token</th><th>Pair</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td><code>--st-neutral</code></td><td><code>--st-neutral-foreground</code></td><td>Rest fill for filled-neutral elements (<code>.btn--neutral</code>, default badge, kbd, input-group addons)</td></tr>
+        <tr><td><code>--st-accent</code></td><td><code>--st-accent-foreground</code></td><td>Transient hover bg over neutral or transparent surfaces</td></tr>
+        <tr><td><code>--st-highlight</code></td><td><code>--st-highlight-foreground</code></td><td>Persistent selected-or-current bg, a soft primary tint that derives from <code>--st-primary</code></td></tr>
+      </tbody>
+    </table>
 
     <h3>Overlay</h3>
     <p>One pair for chrome that sits on top of imagery (carousel controls, indicators, and captions today, more media surfaces later). Theme-independent on purpose so slide photos read consistently in both light and dark.</p>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Token</th><th>Pair</th><th>Use</th></tr></thead>
-        <tbody>
-          <tr><td><code>--st-overlay</code></td><td><code>--st-overlay-foreground</code></td><td>Backdrop scrim and chrome foreground for surfaces that ride imagery</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Token</th><th>Pair</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td><code>--st-overlay</code></td><td><code>--st-overlay-foreground</code></td><td>Backdrop scrim and chrome foreground for surfaces that ride imagery</td></tr>
+      </tbody>
+    </table>
 
     <h3>Focus</h3>
     <p>One token for focus rings. Tracks <code>--st-primary</code> by default so a brand swap repaints every focus ring at the same time.</p>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Token</th><th>Use</th></tr></thead>
-        <tbody>
-          <tr><td><code>--st-ring</code></td><td>Focus-visible ring color. Components add their own 2&nbsp;px outline using it</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Token</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td><code>--st-ring</code></td><td>Focus-visible ring color. Components add their own 2&nbsp;px outline using it</td></tr>
+      </tbody>
+    </table>
 
     <h3>Geometry</h3>
     <p>Three radius tiers, three shadow tiers, a global border-width knob, and a single density multiplier. The radius and shadow tiers are independent literals; components opt into the tier that matches their visual weight. See the <a class="link" href="#brutalist">Brutalist</a> and <a class="link" href="#density">Density</a> recipes below for complete presets that push multiple axes at once.</p>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Token</th><th>Use</th></tr></thead>
-        <tbody>
-          <tr><td><code>--st-radius-sm</code></td><td>Small radius tier. Inline chips and tight surfaces (kbd, tooltip, icon-box, breadcrumb, sidebar buttons, checkbox)</td></tr>
-          <tr><td><code>--st-radius</code></td><td>Default radius tier. Everyday surfaces (button, alert, input-group, pagination, tabs)</td></tr>
-          <tr><td><code>--st-radius-lg</code></td><td>Large radius tier. Elevated surfaces (card, accordion, dialog, popover, toast, list-group)</td></tr>
-          <tr><td><code>--st-shadow-light</code></td><td>Light elevation. Tooltip-class surfaces</td></tr>
-          <tr><td><code>--st-shadow</code></td><td>Default elevation. Cards, dropdowns, popovers, toasts, accordion</td></tr>
-          <tr><td><code>--st-shadow-heavy</code></td><td>Heavy elevation. Dialog and drawer (modal surfaces)</td></tr>
-          <tr><td><code>--st-border-width</code></td><td>Width of the shape outline on every bordered component. Internal dividers (card section rules, list-group separators) stay literal 1&nbsp;px</td></tr>
-          <tr><td><code>--st-density</code></td><td>Multiplier on every component&rsquo;s padding, gap, and height tokens, plus utility-class spacing</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Token</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td><code>--st-radius-sm</code></td><td>Small radius tier. Inline chips and tight surfaces (kbd, tooltip, icon-box, breadcrumb, sidebar buttons, checkbox)</td></tr>
+        <tr><td><code>--st-radius</code></td><td>Default radius tier. Everyday surfaces (button, alert, input-group, pagination, tabs)</td></tr>
+        <tr><td><code>--st-radius-lg</code></td><td>Large radius tier. Elevated surfaces (card, accordion, dialog, popover, toast, list-group)</td></tr>
+        <tr><td><code>--st-shadow-light</code></td><td>Light elevation. Tooltip-class surfaces</td></tr>
+        <tr><td><code>--st-shadow</code></td><td>Default elevation. Cards, dropdowns, popovers, toasts, accordion</td></tr>
+        <tr><td><code>--st-shadow-heavy</code></td><td>Heavy elevation. Dialog and drawer (modal surfaces)</td></tr>
+        <tr><td><code>--st-border-width</code></td><td>Width of the shape outline on every bordered component. Internal dividers (card section rules, list-group separators) stay literal 1&nbsp;px</td></tr>
+        <tr><td><code>--st-density</code></td><td>Multiplier on every component&rsquo;s padding, gap, and height tokens, plus utility-class spacing</td></tr>
+      </tbody>
+    </table>
     <p>Each radius tier and shadow tier also has a per-component override. To pill every button without touching cards, set <code>--st-btn-radius: 9999px</code> at <code>:root</code>. To make dialogs heavier without touching popovers, set <code>--st-dialog-shadow</code>. Every shape component exposes <code>--st-{name}-radius</code>; every elevated component exposes <code>--st-{name}-shadow</code>. The per-component knob defaults to the matching tier, so untouched components still follow your global radius and shadow choices.</p>
 
     <h3>Type</h3>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Token</th><th>Use</th></tr></thead>
-        <tbody>
-          <tr><td><code>--st-font-sans</code></td><td>Default body font stack</td></tr>
-          <tr><td><code>--st-font-mono</code></td><td>Monospace font stack for code, kbd, and table data</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Token</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td><code>--st-font-sans</code></td><td>Default body font stack</td></tr>
+        <tr><td><code>--st-font-mono</code></td><td>Monospace font stack for code, kbd, and table data</td></tr>
+      </tbody>
+    </table>
 
     <h3>Source</h3>
     <p>The shipped defaults live in <code>src/scss/tokens/_theme.scss</code>. Read that file when you want a starting copy with current values. Override the names you care about in your own stylesheet, loaded after the framework bundle.</p>
@@ -712,17 +698,15 @@
 }
     {% endcall %}
     <p>The same shape works for any hue. Picking one is a design decision (perceptual lightness, chroma headroom, accessibility against the foreground). A few starting points to paste and tune:</p>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Brand</th><th><code>--st-primary</code></th></tr></thead>
-        <tbody>
-          <tr><td>Violet</td><td><code>oklch(0.58 0.22 285)</code></td></tr>
-          <tr><td>Teal</td><td><code>oklch(0.65 0.13 195)</code></td></tr>
-          <tr><td>Amber</td><td><code>oklch(0.78 0.16 75)</code></td></tr>
-          <tr><td>Rose</td><td><code>oklch(0.65 0.21 13)</code></td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Brand</th><th><code>--st-primary</code></th></tr></thead>
+      <tbody>
+        <tr><td>Violet</td><td><code>oklch(0.58 0.22 285)</code></td></tr>
+        <tr><td>Teal</td><td><code>oklch(0.65 0.13 195)</code></td></tr>
+        <tr><td>Amber</td><td><code>oklch(0.78 0.16 75)</code></td></tr>
+        <tr><td>Rose</td><td><code>oklch(0.65 0.21 13)</code></td></tr>
+      </tbody>
+    </table>
     <p>If you change <code>--st-primary</code>, change <code>--st-primary-foreground</code> at the same time so text on filled primary surfaces stays readable. Most brand hues pair with <code>oklch(1 0 0)</code> (pure white); a pale yellow brand would pair with a darker foreground.</p>
   </section>
 
@@ -760,16 +744,14 @@
   <section>
     <h2>Density</h2>
     <p>One knob shrinks or grows every component proportionally. Padding, gap, and height tokens all wrap <code>calc(X * var(--st-density))</code>, so the multiplier reaches every spacing decision in the system. Utility-class spacing (<code>.gap-3</code>, <code>.mb-4</code>, <code>.p-2</code>) inherits the same multiplier.</p>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Preset</th><th>Value</th><th>Use</th></tr></thead>
-        <tbody>
-          <tr><td>Compact</td><td><code>0.875</code></td><td>Information-dense apps, admin dashboards, tabular UIs</td></tr>
-          <tr><td>Default</td><td><code>1</code></td><td>General-purpose product UI</td></tr>
-          <tr><td>Comfortable</td><td><code>1.125</code></td><td>Marketing surfaces, content-first reading flows</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead><tr><th>Preset</th><th>Value</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td>Compact</td><td><code>0.875</code></td><td>Information-dense apps, admin dashboards, tabular UIs</td></tr>
+        <tr><td>Default</td><td><code>1</code></td><td>General-purpose product UI</td></tr>
+        <tr><td>Comfortable</td><td><code>1.125</code></td><td>Marketing surfaces, content-first reading flows</td></tr>
+      </tbody>
+    </table>
     {% call ui.demo() %}
 <div class="preset-dense">
   {{ showcase() }}

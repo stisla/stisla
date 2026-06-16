@@ -112,54 +112,52 @@
   <section>
     <h2>Customization</h2>
     <p>Nine variables retune <code>.badge</code> without touching component CSS. Override on <code>.badge</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Use</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--badge-radius</code></td>
-            <td>Corner radius (pill; opts out of <code>--st-radius</code>)</td>
-          </tr>
-          <tr>
-            <td><code>--badge-min-height</code></td>
-            <td>Minimum height; pill adapts to content above this</td>
-          </tr>
-          <tr>
-            <td><code>--badge-padding-y</code></td>
-            <td>Vertical padding</td>
-          </tr>
-          <tr>
-            <td><code>--badge-padding-x</code></td>
-            <td>Horizontal padding</td>
-          </tr>
-          <tr>
-            <td><code>--badge-font-size</code></td>
-            <td>Label size</td>
-          </tr>
-          <tr>
-            <td><code>--badge-font-weight</code></td>
-            <td>Label weight</td>
-          </tr>
-          <tr>
-            <td><code>--badge-tone</code></td>
-            <td>Color source the soft variant tints over; intents reassign this</td>
-          </tr>
-          <tr>
-            <td><code>--badge-bg</code></td>
-            <td>Background; intents set the intent color, soft mixes 15% over <code>--badge-tone</code></td>
-          </tr>
-          <tr>
-            <td><code>--badge-color</code></td>
-            <td>Label color; intents flip to the paired <code>-foreground</code>; soft reads <code>--badge-tone</code></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--badge-radius</code></td>
+          <td>Corner radius (pill; opts out of <code>--st-radius</code>)</td>
+        </tr>
+        <tr>
+          <td><code>--badge-min-height</code></td>
+          <td>Minimum height; pill adapts to content above this</td>
+        </tr>
+        <tr>
+          <td><code>--badge-padding-y</code></td>
+          <td>Vertical padding</td>
+        </tr>
+        <tr>
+          <td><code>--badge-padding-x</code></td>
+          <td>Horizontal padding</td>
+        </tr>
+        <tr>
+          <td><code>--badge-font-size</code></td>
+          <td>Label size</td>
+        </tr>
+        <tr>
+          <td><code>--badge-font-weight</code></td>
+          <td>Label weight</td>
+        </tr>
+        <tr>
+          <td><code>--badge-tone</code></td>
+          <td>Color source the soft variant tints over; intents reassign this</td>
+        </tr>
+        <tr>
+          <td><code>--badge-bg</code></td>
+          <td>Background; intents set the intent color, soft mixes 15% over <code>--badge-tone</code></td>
+        </tr>
+        <tr>
+          <td><code>--badge-color</code></td>
+          <td>Label color; intents flip to the paired <code>-foreground</code>; soft reads <code>--badge-tone</code></td>
+        </tr>
+      </tbody>
+    </table>
     <p>Pill is intentional, so the badge opts out of <code>--st-radius</code>. Override <code>--badge-radius</code> per-component if a square chip is genuinely wanted.</p>
   </section>
 {% endblock %}

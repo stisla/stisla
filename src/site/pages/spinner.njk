@@ -133,30 +133,28 @@
   <section>
     <h2>Customization</h2>
     <p>Three variables retune <code>.spinner</code> without touching component CSS. Override on <code>.spinner</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Use</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--spinner-size</code></td>
-            <td>Diameter; sm and lg reassign this</td>
-          </tr>
-          <tr>
-            <td><code>--spinner-width</code></td>
-            <td>Stroke width on <code>.spinner</code>; ignored by <code>.spinner--grow</code></td>
-          </tr>
-          <tr>
-            <td><code>--spinner-duration</code></td>
-            <td>One animation cycle; reduced-motion overrides to a longer value</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--spinner-size</code></td>
+          <td>Diameter; sm and lg reassign this</td>
+        </tr>
+        <tr>
+          <td><code>--spinner-width</code></td>
+          <td>Stroke width on <code>.spinner</code>; ignored by <code>.spinner--grow</code></td>
+        </tr>
+        <tr>
+          <td><code>--spinner-duration</code></td>
+          <td>One animation cycle; reduced-motion overrides to a longer value</td>
+        </tr>
+      </tbody>
+    </table>
     <p>Color comes from <code>currentColor</code>, so any <code>.text-*</code> utility recolors the spinner without a dedicated variable.</p>
   </section>
 {% endblock %}

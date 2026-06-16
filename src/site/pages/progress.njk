@@ -156,74 +156,72 @@
   <section>
     <h2>Customization</h2>
     <p>Override the variables on <code>.progress</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change. Size modifiers <code>--sm</code> / <code>--lg</code> retune the track height in their own scope.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Use</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--progress-height</code></td>
-            <td>Track height (8 at default density; sm 4, lg 16)</td>
-          </tr>
-          <tr>
-            <td><code>--progress-radius</code></td>
-            <td>Track corner radius (pill; opts out of <code>--st-radius</code>)</td>
-          </tr>
-          <tr>
-            <td><code>--progress-margin-bottom</code></td>
-            <td>Trailing space below the component</td>
-          </tr>
-          <tr>
-            <td><code>--progress-header-gap</code></td>
-            <td>Space between the caption row and the track</td>
-          </tr>
-          <tr>
-            <td><code>--progress-bg</code></td>
-            <td>Track background (unfilled portion)</td>
-          </tr>
-          <tr>
-            <td><code>--progress-bar-bg</code></td>
-            <td>Bar fill (intent modifiers retune)</td>
-          </tr>
-          <tr>
-            <td><code>--progress-bar-transition-duration</code></td>
-            <td>Width tween when value changes from JS</td>
-          </tr>
-          <tr>
-            <td><code>--progress-label-font-size</code></td>
-            <td>Caption font size (label and value)</td>
-          </tr>
-          <tr>
-            <td><code>--progress-label-font-weight</code></td>
-            <td>Label weight (value stays at the inherited weight)</td>
-          </tr>
-          <tr>
-            <td><code>--progress-label-color</code></td>
-            <td>Label text color</td>
-          </tr>
-          <tr>
-            <td><code>--progress-value-color</code></td>
-            <td>Value text color</td>
-          </tr>
-          <tr>
-            <td><code>--progress-shimmer-color</code></td>
-            <td>Animated sheen color (reads on every intent in both themes)</td>
-          </tr>
-          <tr>
-            <td><code>--progress-shimmer-duration</code></td>
-            <td>Animated cycle length (sweep plus rest)</td>
-          </tr>
-          <tr>
-            <td><code>--progress-indeterminate-duration</code></td>
-            <td>Indeterminate sliding-bar cycle length</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--progress-height</code></td>
+          <td>Track height (8 at default density; sm 4, lg 16)</td>
+        </tr>
+        <tr>
+          <td><code>--progress-radius</code></td>
+          <td>Track corner radius (pill; opts out of <code>--st-radius</code>)</td>
+        </tr>
+        <tr>
+          <td><code>--progress-margin-bottom</code></td>
+          <td>Trailing space below the component</td>
+        </tr>
+        <tr>
+          <td><code>--progress-header-gap</code></td>
+          <td>Space between the caption row and the track</td>
+        </tr>
+        <tr>
+          <td><code>--progress-bg</code></td>
+          <td>Track background (unfilled portion)</td>
+        </tr>
+        <tr>
+          <td><code>--progress-bar-bg</code></td>
+          <td>Bar fill (intent modifiers retune)</td>
+        </tr>
+        <tr>
+          <td><code>--progress-bar-transition-duration</code></td>
+          <td>Width tween when value changes from JS</td>
+        </tr>
+        <tr>
+          <td><code>--progress-label-font-size</code></td>
+          <td>Caption font size (label and value)</td>
+        </tr>
+        <tr>
+          <td><code>--progress-label-font-weight</code></td>
+          <td>Label weight (value stays at the inherited weight)</td>
+        </tr>
+        <tr>
+          <td><code>--progress-label-color</code></td>
+          <td>Label text color</td>
+        </tr>
+        <tr>
+          <td><code>--progress-value-color</code></td>
+          <td>Value text color</td>
+        </tr>
+        <tr>
+          <td><code>--progress-shimmer-color</code></td>
+          <td>Animated sheen color (reads on every intent in both themes)</td>
+        </tr>
+        <tr>
+          <td><code>--progress-shimmer-duration</code></td>
+          <td>Animated cycle length (sweep plus rest)</td>
+        </tr>
+        <tr>
+          <td><code>--progress-indeterminate-duration</code></td>
+          <td>Indeterminate sliding-bar cycle length</td>
+        </tr>
+      </tbody>
+    </table>
     <p>Track opts out of <code>--st-radius</code>. Pill is semantic for a progress strip. It isn't a style choice. Override <code>--progress-radius</code> per-component if you really want a square track (e.g. on a brutalist preset).</p>
   </section>
 {% endblock %}

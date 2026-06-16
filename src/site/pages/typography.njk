@@ -171,39 +171,50 @@ background-color: var(--st-background);
 
   <section>
     <h2>Customization</h2>
-    <p>Five variables retune <code>.prose</code> without touching component CSS. Override on <code>.prose</code> itself, or on any ancestor. The cascade scopes the change.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Use</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--st-prose-line-height</code></td>
-            <td>Reading leading</td>
-          </tr>
-          <tr>
-            <td><code>--st-prose-link-color</code></td>
-            <td>Inline link color</td>
-          </tr>
-          <tr>
-            <td><code>--st-prose-marker-color</code></td>
-            <td>List bullets / numbers</td>
-          </tr>
-          <tr>
-            <td><code>--st-prose-quote-border</code></td>
-            <td>Blockquote left rule</td>
-          </tr>
-          <tr>
-            <td><code>--st-prose-headings-color</code></td>
-            <td>Heading color</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <p>Eight variables retune <code>.prose</code> without touching component CSS. Override on <code>.prose</code> itself, or on any ancestor. The cascade scopes the change.</p>
+    <p>Text colors form a small cascade. <code>--prose-color</code> is the master, and <code>--prose-body-color</code>, <code>--prose-headings-color</code>, and <code>--prose-strong-color</code> default to it. Override the master to shift every text color together. Override one of the granular vars for selective control (the docs site mutes <code>--prose-body-color</code> only, so headings and emphasis stay bright against the muted body).</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--prose-color</code></td>
+          <td>Master text color; body, headings, and strong cascade from this</td>
+        </tr>
+        <tr>
+          <td><code>--prose-body-color</code></td>
+          <td>Paragraphs, list items, definition descriptions</td>
+        </tr>
+        <tr>
+          <td><code>--prose-headings-color</code></td>
+          <td>h1 through h6</td>
+        </tr>
+        <tr>
+          <td><code>--prose-strong-color</code></td>
+          <td>strong, b, dt</td>
+        </tr>
+        <tr>
+          <td><code>--prose-link-color</code></td>
+          <td>Inline link color</td>
+        </tr>
+        <tr>
+          <td><code>--prose-marker-color</code></td>
+          <td>List bullets / numbers</td>
+        </tr>
+        <tr>
+          <td><code>--prose-quote-border</code></td>
+          <td>Blockquote left rule</td>
+        </tr>
+        <tr>
+          <td><code>--prose-line-height</code></td>
+          <td>Reading leading</td>
+        </tr>
+      </tbody>
+    </table>
     <p>Components nested inside prose customize through the cascade. To enlarge <code>&lt;kbd&gt;</code> chips inside long-form content, set <code>--st-kbd-padding-y</code> on <code>.prose</code>. The kbd component reads its own variable and the cascade scopes the change. No prose-specific variable is invented for the nested component.</p>
   </section>
 {% endblock %}

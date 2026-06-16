@@ -369,157 +369,155 @@
   <section>
     <h2>Customization</h2>
     <p>Twenty-two variables retune <code>.dialog</code> without touching component CSS. Override on the <code>.dialog</code> element, on a parent scope, or on <code>:root</code>. Size modifiers <code>--sm</code> / <code>--lg</code> / <code>--xl</code> retune <code>--dialog-width</code> in their own scope. The dark-mode block flips the close chip from a solid dark overlay to a subtle light translucent overlay so it reads against the deep dark surface.</p>
-    <div class="prose">
-      <h3>Geometry</h3>
-      <table>
-        <thead>
-          <tr><th>Variable</th><th>Use</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--dialog-width</code></td>
-            <td>Max panel width. Retuned by <code>.dialog--sm</code> / <code>--lg</code> / <code>--xl</code> in modifier scope.</td>
-          </tr>
-          <tr>
-            <td><code>--dialog-margin</code></td>
-            <td>Breathing space between panel and viewport edge.</td>
-          </tr>
-          <tr>
-            <td><code>--dialog-padding</code></td>
-            <td>Header, body, and footer inset.</td>
-          </tr>
-          <tr>
-            <td><code>--dialog-radius</code></td>
-            <td>Content corner radius. Large-surface tier, matches card and accordion.</td>
-          </tr>
-          <tr>
-            <td><code>--dialog-z-index</code></td>
-            <td>Stack level. Sits above sidebar and navbar.</td>
-          </tr>
-        </tbody>
-      </table>
+    <h3>Geometry</h3>
+    <table>
+      <thead>
+        <tr><th>Variable</th><th>Use</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--dialog-width</code></td>
+          <td>Max panel width. Retuned by <code>.dialog--sm</code> / <code>--lg</code> / <code>--xl</code> in modifier scope.</td>
+        </tr>
+        <tr>
+          <td><code>--dialog-margin</code></td>
+          <td>Breathing space between panel and viewport edge.</td>
+        </tr>
+        <tr>
+          <td><code>--dialog-padding</code></td>
+          <td>Header, body, and footer inset.</td>
+        </tr>
+        <tr>
+          <td><code>--dialog-radius</code></td>
+          <td>Content corner radius. Large-surface tier, matches card and accordion.</td>
+        </tr>
+        <tr>
+          <td><code>--dialog-z-index</code></td>
+          <td>Stack level. Sits above sidebar and navbar.</td>
+        </tr>
+      </tbody>
+    </table>
 
-      <h3>Surface</h3>
-      <table>
-        <thead>
-          <tr><th>Variable</th><th>Use</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--dialog-bg</code></td>
-            <td>Content card background.</td>
-          </tr>
-          <tr>
-            <td><code>--dialog-color</code></td>
-            <td>Body and title text.</td>
-          </tr>
-          <tr>
-            <td><code>--dialog-border-color</code></td>
-            <td>Subtle content rim.</td>
-          </tr>
-          <tr>
-            <td><code>--dialog-shadow</code></td>
-            <td>Lift off the page. Set to <code>none</code> for a flat dialog.</td>
-          </tr>
-        </tbody>
-      </table>
+    <h3>Surface</h3>
+    <table>
+      <thead>
+        <tr><th>Variable</th><th>Use</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--dialog-bg</code></td>
+          <td>Content card background.</td>
+        </tr>
+        <tr>
+          <td><code>--dialog-color</code></td>
+          <td>Body and title text.</td>
+        </tr>
+        <tr>
+          <td><code>--dialog-border-color</code></td>
+          <td>Subtle content rim.</td>
+        </tr>
+        <tr>
+          <td><code>--dialog-shadow</code></td>
+          <td>Lift off the page. Set to <code>none</code> for a flat dialog.</td>
+        </tr>
+      </tbody>
+    </table>
 
-      <h3>Backdrop</h3>
-      <table>
-        <thead>
-          <tr><th>Variable</th><th>Use</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--dialog-backdrop-bg</code></td>
-            <td>Translucent dim layer. Solid dark in both themes so the dialog reads as the foreground.</td>
-          </tr>
-          <tr>
-            <td><code>--dialog-backdrop-blur</code></td>
-            <td>Backdrop blur radius. Set to 0 for a flat dim.</td>
-          </tr>
-        </tbody>
-      </table>
+    <h3>Backdrop</h3>
+    <table>
+      <thead>
+        <tr><th>Variable</th><th>Use</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--dialog-backdrop-bg</code></td>
+          <td>Translucent dim layer. Solid dark in both themes so the dialog reads as the foreground.</td>
+        </tr>
+        <tr>
+          <td><code>--dialog-backdrop-blur</code></td>
+          <td>Backdrop blur radius. Set to 0 for a flat dim.</td>
+        </tr>
+      </tbody>
+    </table>
 
-      <h3>Title</h3>
-      <table>
-        <thead>
-          <tr><th>Variable</th><th>Use</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--dialog-title-font-size</code></td>
-            <td>Title text size. Independent of the heading tag wrapping it.</td>
-          </tr>
-          <tr>
-            <td><code>--dialog-title-font-weight</code></td>
-            <td>Title weight.</td>
-          </tr>
-        </tbody>
-      </table>
+    <h3>Title</h3>
+    <table>
+      <thead>
+        <tr><th>Variable</th><th>Use</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--dialog-title-font-size</code></td>
+          <td>Title text size. Independent of the heading tag wrapping it.</td>
+        </tr>
+        <tr>
+          <td><code>--dialog-title-font-weight</code></td>
+          <td>Title weight.</td>
+        </tr>
+      </tbody>
+    </table>
 
-      <h3>Close chip</h3>
-      <table>
-        <thead>
-          <tr><th>Variable</th><th>Use</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--dialog-close-size</code></td>
-            <td>Width and height of the dismiss chip.</td>
-          </tr>
-          <tr>
-            <td><code>--dialog-close-bg</code></td>
-            <td>Frosted chip background. Translucent dark over light surface; subtle light translucent over dark surface.</td>
-          </tr>
-          <tr>
-            <td><code>--dialog-close-bg-hover</code></td>
-            <td>Hover fill. Same inversion logic as the rest state.</td>
-          </tr>
-          <tr>
-            <td><code>--dialog-close-color</code></td>
-            <td>Icon glyph color. Stays white in both themes so the chip reads over any surface.</td>
-          </tr>
-          <tr>
-            <td><code>--dialog-close-color-hover</code></td>
-            <td>Icon glyph color on hover. Pure white in both themes.</td>
-          </tr>
-        </tbody>
-      </table>
+    <h3>Close chip</h3>
+    <table>
+      <thead>
+        <tr><th>Variable</th><th>Use</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--dialog-close-size</code></td>
+          <td>Width and height of the dismiss chip.</td>
+        </tr>
+        <tr>
+          <td><code>--dialog-close-bg</code></td>
+          <td>Frosted chip background. Translucent dark over light surface; subtle light translucent over dark surface.</td>
+        </tr>
+        <tr>
+          <td><code>--dialog-close-bg-hover</code></td>
+          <td>Hover fill. Same inversion logic as the rest state.</td>
+        </tr>
+        <tr>
+          <td><code>--dialog-close-color</code></td>
+          <td>Icon glyph color. Stays white in both themes so the chip reads over any surface.</td>
+        </tr>
+        <tr>
+          <td><code>--dialog-close-color-hover</code></td>
+          <td>Icon glyph color on hover. Pure white in both themes.</td>
+        </tr>
+      </tbody>
+    </table>
 
-      <h3>Footer</h3>
-      <table>
-        <thead>
-          <tr><th>Variable</th><th>Use</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--dialog-footer-padding-y</code></td>
-            <td>Vertical padding inside the footer. Slightly tighter than the body padding so the seam reads as an action row.</td>
-          </tr>
-          <tr>
-            <td><code>--dialog-footer-bg</code></td>
-            <td>Footer background. The alt-surface tier sets the action row apart from the body without a bold paint. Set to <code>transparent</code> for a flat footer.</td>
-          </tr>
-          <tr>
-            <td><code>--dialog-footer-border-color</code></td>
-            <td>Top divider line. Set to <code>transparent</code> to drop the seam entirely.</td>
-          </tr>
-        </tbody>
-      </table>
+    <h3>Footer</h3>
+    <table>
+      <thead>
+        <tr><th>Variable</th><th>Use</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--dialog-footer-padding-y</code></td>
+          <td>Vertical padding inside the footer. Slightly tighter than the body padding so the seam reads as an action row.</td>
+        </tr>
+        <tr>
+          <td><code>--dialog-footer-bg</code></td>
+          <td>Footer background. The alt-surface tier sets the action row apart from the body without a bold paint. Set to <code>transparent</code> for a flat footer.</td>
+        </tr>
+        <tr>
+          <td><code>--dialog-footer-border-color</code></td>
+          <td>Top divider line. Set to <code>transparent</code> to drop the seam entirely.</td>
+        </tr>
+      </tbody>
+    </table>
 
-      <h3>Motion</h3>
-      <table>
-        <thead>
-          <tr><th>Variable</th><th>Use</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--dialog-transition-duration</code></td>
-            <td>Open and close fade plus panel slide. Zeroed under <code>prefers-reduced-motion</code>.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <h3>Motion</h3>
+    <table>
+      <thead>
+        <tr><th>Variable</th><th>Use</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--dialog-transition-duration</code></td>
+          <td>Open and close fade plus panel slide. Zeroed under <code>prefers-reduced-motion</code>.</td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 {% endblock %}

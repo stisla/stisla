@@ -12,34 +12,32 @@
   <section>
     <h2>Starting point</h2>
     <p>The pre-compiled core bundle is the right default for most apps. The numbers below are what <code>@stisla/css@beta</code> ships as of beta.2.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Bundle</th>
-            <th>Raw</th>
-            <th>Gzip</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>stisla.css</code> (core, 41 components)</td>
-            <td>~201 KB</td>
-            <td>~27 KB</td>
-          </tr>
-          <tr>
-            <td><code>stisla-full.css</code> (core + carousel)</td>
-            <td>~205 KB</td>
-            <td>~28 KB</td>
-          </tr>
-          <tr>
-            <td><code>stisla.js</code> (core runtime)</td>
-            <td>~99 KB</td>
-            <td>~27 KB</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Bundle</th>
+          <th>Raw</th>
+          <th>Gzip</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>stisla.css</code> (core, 41 components)</td>
+          <td>~201 KB</td>
+          <td>~27 KB</td>
+        </tr>
+        <tr>
+          <td><code>stisla-full.css</code> (core + carousel)</td>
+          <td>~205 KB</td>
+          <td>~28 KB</td>
+        </tr>
+        <tr>
+          <td><code>stisla.js</code> (core runtime)</td>
+          <td>~99 KB</td>
+          <td>~27 KB</td>
+        </tr>
+      </tbody>
+    </table>
     <p>27 KB of gzipped CSS is small enough that most apps don&rsquo;t need to optimize at all. If yours does, here are three levers in order of effort.</p>
   </section>
 
@@ -129,34 +127,32 @@ export default defineConfig({
 }
     {% endcall %}
     <p>The example above keeps seven components (button, input, form label, card, badge, alert, link), which is the kind of subset you&rsquo;d use on a landing page or marketing site.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Bundle</th>
-            <th>Raw</th>
-            <th>Gzip</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Default core (41 components)</td>
-            <td>~201 KB</td>
-            <td>~27 KB</td>
-          </tr>
-          <tr>
-            <td>Forked bundle (7 components)</td>
-            <td>~137 KB</td>
-            <td>~14 KB</td>
-          </tr>
-          <tr>
-            <td>Saved</td>
-            <td>~64 KB</td>
-            <td>~13 KB</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Bundle</th>
+          <th>Raw</th>
+          <th>Gzip</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Default core (41 components)</td>
+          <td>~201 KB</td>
+          <td>~27 KB</td>
+        </tr>
+        <tr>
+          <td>Forked bundle (7 components)</td>
+          <td>~137 KB</td>
+          <td>~14 KB</td>
+        </tr>
+        <tr>
+          <td>Saved</td>
+          <td>~64 KB</td>
+          <td>~13 KB</td>
+        </tr>
+      </tbody>
+    </table>
     <p>Half the gzipped weight gone for a small app. Most of what&rsquo;s left is the foundation (reset, reboot, typography, grid, the theme token block). That stays regardless of which components you keep, and it&rsquo;s what makes the runtime overrides possible.</p>
     <p>Pair this with Lever 1 if you want both. Fork to remove what you know you don&rsquo;t need, then purge to drop the BEM children you didn&rsquo;t reach inside the components you kept.</p>
   </section>
@@ -184,13 +180,11 @@ $breakpoint-xxl: 1536px;
 
   <section>
     <h2>Which lever, when</h2>
-    <div class="prose">
-      <ul>
-        <li><strong>Lever 1 if you don&rsquo;t know which components you use.</strong> Most teams don&rsquo;t. The scanner figures it out and you ship what&rsquo;s reached.</li>
-        <li><strong>Lever 2 if you do.</strong> Faster than scanning, reproducible across builds, and it lets you delete component code from your dependency tree instead of from the output bundle.</li>
-        <li><strong>Lever 3 if breakpoints or tokens are wrong for you.</strong> The defaults work for most apps. This is the escape hatch for the ones they don&rsquo;t.</li>
-      </ul>
-    </div>
+    <ul>
+      <li><strong>Lever 1 if you don&rsquo;t know which components you use.</strong> Most teams don&rsquo;t. The scanner figures it out and you ship what&rsquo;s reached.</li>
+      <li><strong>Lever 2 if you do.</strong> Faster than scanning, reproducible across builds, and it lets you delete component code from your dependency tree instead of from the output bundle.</li>
+      <li><strong>Lever 3 if breakpoints or tokens are wrong for you.</strong> The defaults work for most apps. This is the escape hatch for the ones they don&rsquo;t.</li>
+    </ul>
     <p>Most apps need at most one of these. If you find yourself reaching for all three, you might want a different framework. Stisla is a design specification, and it isn&rsquo;t trying to be a meta-toolkit.</p>
   </section>
 {% endblock %}

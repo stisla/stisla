@@ -115,69 +115,65 @@
   <section>
     <h2>How the fill works</h2>
     <p>No JavaScript. Two browser paths:</p>
-    <div class="prose">
-      <ul>
-        <li><strong>Firefox</strong> exposes <code>::-moz-range-progress</code>, a native pseudo whose width tracks the input's value. We paint it with <code>--slider-fill</code>.</li>
-        <li><strong>Webkit / Blink</strong> doesn't expose a progress pseudo. The thumb gets a giant <code>box-shadow</code> (<code>-100vmax 0 0 100vmax var(--slider-fill)</code>) whose right edge lands at the thumb's right edge; <code>overflow: hidden</code> on the runnable track clips the shadow to the track shape. The shadow follows the thumb because the browser moves the thumb natively.</li>
-      </ul>
-    </div>
+    <ul>
+      <li><strong>Firefox</strong> exposes <code>::-moz-range-progress</code>, a native pseudo whose width tracks the input's value. We paint it with <code>--slider-fill</code>.</li>
+      <li><strong>Webkit / Blink</strong> doesn't expose a progress pseudo. The thumb gets a giant <code>box-shadow</code> (<code>-100vmax 0 0 100vmax var(--slider-fill)</code>) whose right edge lands at the thumb's right edge; <code>overflow: hidden</code> on the runnable track clips the shadow to the track shape. The shadow follows the thumb because the browser moves the thumb natively.</li>
+    </ul>
   </section>
 
   <section>
     <h2>Customization</h2>
     <p>Ten variables retune <code>.slider</code> without touching component CSS. Override on <code>.slider</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Use</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--slider-h</code></td>
-            <td>Track + shell height (matches <code>.input</code>)</td>
-          </tr>
-          <tr>
-            <td><code>--slider-thumb-w</code></td>
-            <td>Thumb width (narrow vertical pill)</td>
-          </tr>
-          <tr>
-            <td><code>--slider-thumb-h</code></td>
-            <td>Thumb height (centered inside track)</td>
-          </tr>
-          <tr>
-            <td><code>--slider-thumb-gap</code></td>
-            <td>Visible space between thumb's right edge and unfilled track</td>
-          </tr>
-          <tr>
-            <td><code>--slider-radius</code></td>
-            <td>Track + thumb corner radius (pill)</td>
-          </tr>
-          <tr>
-            <td><code>--slider-track-bg</code></td>
-            <td>Unfilled segment</td>
-          </tr>
-          <tr>
-            <td><code>--slider-fill</code></td>
-            <td>Filled segment</td>
-          </tr>
-          <tr>
-            <td><code>--slider-thumb-bg</code></td>
-            <td>Thumb fill</td>
-          </tr>
-          <tr>
-            <td><code>--slider-thumb-shadow</code></td>
-            <td>Thumb edge definition</td>
-          </tr>
-          <tr>
-            <td><code>--slider-ring</code></td>
-            <td>Focus halo color</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--slider-h</code></td>
+          <td>Track + shell height (matches <code>.input</code>)</td>
+        </tr>
+        <tr>
+          <td><code>--slider-thumb-w</code></td>
+          <td>Thumb width (narrow vertical pill)</td>
+        </tr>
+        <tr>
+          <td><code>--slider-thumb-h</code></td>
+          <td>Thumb height (centered inside track)</td>
+        </tr>
+        <tr>
+          <td><code>--slider-thumb-gap</code></td>
+          <td>Visible space between thumb's right edge and unfilled track</td>
+        </tr>
+        <tr>
+          <td><code>--slider-radius</code></td>
+          <td>Track + thumb corner radius (pill)</td>
+        </tr>
+        <tr>
+          <td><code>--slider-track-bg</code></td>
+          <td>Unfilled segment</td>
+        </tr>
+        <tr>
+          <td><code>--slider-fill</code></td>
+          <td>Filled segment</td>
+        </tr>
+        <tr>
+          <td><code>--slider-thumb-bg</code></td>
+          <td>Thumb fill</td>
+        </tr>
+        <tr>
+          <td><code>--slider-thumb-shadow</code></td>
+          <td>Thumb edge definition</td>
+        </tr>
+        <tr>
+          <td><code>--slider-ring</code></td>
+          <td>Focus halo color</td>
+        </tr>
+      </tbody>
+    </table>
     <p>Track and thumb opt out of <code>--st-radius</code>. Pill is semantic. It isn't a style choice. Override <code>--slider-radius</code> per-component if you really want a square track.</p>
   </section>
 {% endblock %}

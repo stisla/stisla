@@ -271,7 +271,7 @@ body {
 
 .main-container.prose {
   $opt-out: ":not(:where(.not-prose, .not-prose *, .prose .prose, .prose .prose *))";
-  --st-prose-link-color: var(--st-foreground);
+  --prose-link-color: var(--st-foreground);
 
   // Quieter reading rhythm for reference docs.
   line-height: 1.7;
@@ -302,7 +302,7 @@ body {
   :where(h3)#{$opt-out} {
     font-size: 1rem;
     line-height: 1.4;
-    margin: 1.5rem 0 0.5rem;
+    margin: 3rem 0 0.5rem;
     scroll-margin-top: 7.5rem;
 
     @include bp.media-up(lg) {
@@ -310,10 +310,11 @@ body {
     }
   }
 
-  // Muted body color for docs paragraphs — page chrome stays quiet so
-  // demos pop. `.lead` keeps muted too (slightly larger intro paragraph).
+  // Body uses --prose-color (--st-foreground) by default in the framework;
+  // no docs-site override. `.lead` stays muted (slightly larger intro
+  // paragraph) so the opening sentence reads as secondary.
+
   :where(p)#{$opt-out} {
-    color: var(--st-muted-foreground);
     margin: 0 0 1rem;
   }
 
@@ -325,7 +326,7 @@ body {
 
   // Page structure: <section> / <header> own the inter-section spacing.
   :where(section, header)#{$opt-out} {
-    margin-bottom: 3rem;
+    margin-bottom: 4.5rem;
   }
 
   :where(section, header):last-child#{$opt-out} {
@@ -353,9 +354,10 @@ body {
 // Auto-wrapped prose tables (see site.js `wrapDocsTables`). The wrapper
 // takes the table's block margin so inter-element rhythm matches the
 // unwrapped layout; the table itself drops its margin to avoid doubling
-// inside the new scroll container.
+// inside the new scroll container. Tighter than the framework default
+// (2em) to sit closer to the docs paragraph rhythm.
 .main-container.prose .table-responsive {
-  margin-block: calc(2em * var(--st-density));
+  margin-block: calc(1.25em * var(--st-density));
 
   > table {
     margin-block: 0;

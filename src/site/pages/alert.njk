@@ -170,50 +170,48 @@
   <section>
     <h2>Customization</h2>
     <p>Eight variables retune <code>.alert</code> without touching component CSS. Override on <code>.alert</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Use</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--alert-radius</code></td>
-            <td>Corner radius (per-component override via <code>--st-alert-radius</code>)</td>
-          </tr>
-          <tr>
-            <td><code>--alert-padding-y</code></td>
-            <td>Vertical padding; doubles when <code>.alert__description</code> is present</td>
-          </tr>
-          <tr>
-            <td><code>--alert-padding-x</code></td>
-            <td>Horizontal padding</td>
-          </tr>
-          <tr>
-            <td><code>--alert-bg</code></td>
-            <td>Background; <code>--neutral</code> sets <code>--st-surface</code>, intents set a 7% tint of the intent color</td>
-          </tr>
-          <tr>
-            <td><code>--alert-border-color</code></td>
-            <td>Border color; <code>--neutral</code> sets <code>--st-border</code>, intents set a 40% tint of the intent color</td>
-          </tr>
-          <tr>
-            <td><code>--alert-color</code></td>
-            <td>Body text color</td>
-          </tr>
-          <tr>
-            <td><code>--alert-icon-color</code></td>
-            <td>Leading icon color; intents flip this to the intent color</td>
-          </tr>
-          <tr>
-            <td><code>--alert-link-color</code></td>
-            <td><code>.alert__link</code> color; intents flip this to the intent color so the link stays readable</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--alert-radius</code></td>
+          <td>Corner radius (per-component override via <code>--st-alert-radius</code>)</td>
+        </tr>
+        <tr>
+          <td><code>--alert-padding-y</code></td>
+          <td>Vertical padding; doubles when <code>.alert__description</code> is present</td>
+        </tr>
+        <tr>
+          <td><code>--alert-padding-x</code></td>
+          <td>Horizontal padding</td>
+        </tr>
+        <tr>
+          <td><code>--alert-bg</code></td>
+          <td>Background; <code>--neutral</code> sets <code>--st-surface</code>, intents set a 7% tint of the intent color</td>
+        </tr>
+        <tr>
+          <td><code>--alert-border-color</code></td>
+          <td>Border color; <code>--neutral</code> sets <code>--st-border</code>, intents set a 40% tint of the intent color</td>
+        </tr>
+        <tr>
+          <td><code>--alert-color</code></td>
+          <td>Body text color</td>
+        </tr>
+        <tr>
+          <td><code>--alert-icon-color</code></td>
+          <td>Leading icon color; intents flip this to the intent color</td>
+        </tr>
+        <tr>
+          <td><code>--alert-link-color</code></td>
+          <td><code>.alert__link</code> color; intents flip this to the intent color so the link stays readable</td>
+        </tr>
+      </tbody>
+    </table>
     <p>A bare <code>.alert</code> stays transparent because <code>--alert-bg</code> and <code>--alert-border-color</code> default to transparent. The tone modifier provides the visible chrome, so an alert without a tone is invisible by design.</p>
   </section>
 {% endblock %}

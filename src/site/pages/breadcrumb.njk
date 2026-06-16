@@ -86,65 +86,63 @@
   <section>
     <h2>Customization</h2>
     <p>Twelve variables retune <code>.breadcrumb</code> without touching component CSS. Override on <code>.breadcrumb</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
-    <div class="prose">
-      <table>
-        <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Use</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>--breadcrumb-padding-y</code></td>
-            <td>Vertical padding around the trail (wraps for chip-style)</td>
-          </tr>
-          <tr>
-            <td><code>--breadcrumb-padding-x</code></td>
-            <td>Horizontal padding around the trail</td>
-          </tr>
-          <tr>
-            <td><code>--breadcrumb-gap</code></td>
-            <td>Space between crumbs and between divider and text</td>
-          </tr>
-          <tr>
-            <td><code>--breadcrumb-margin-bottom</code></td>
-            <td>Trailing space below the trail</td>
-          </tr>
-          <tr>
-            <td><code>--breadcrumb-font-size</code></td>
-            <td>Crumb text size</td>
-          </tr>
-          <tr>
-            <td><code>--breadcrumb-bg</code></td>
-            <td>Background fill (set with padding + radius for chip wrap)</td>
-          </tr>
-          <tr>
-            <td><code>--breadcrumb-radius</code></td>
-            <td>Outer corner radius (opt-in for chip wrap)</td>
-          </tr>
-          <tr>
-            <td><code>--breadcrumb-color</code></td>
-            <td>Trail color (also paints the divider via currentColor)</td>
-          </tr>
-          <tr>
-            <td><code>--breadcrumb-hover-color</code></td>
-            <td>Trail link hover color</td>
-          </tr>
-          <tr>
-            <td><code>--breadcrumb-active-color</code></td>
-            <td>Current page color (<code>aria-current="page"</code>)</td>
-          </tr>
-          <tr>
-            <td><code>--breadcrumb-divider</code></td>
-            <td>Glyph between crumbs. Override on the <code>&lt;nav&gt;</code> wrapper or any ancestor; any <code>content</code> value works (string, url(), counter)</td>
-          </tr>
-          <tr>
-            <td><code>--breadcrumb-icon-size</code></td>
-            <td>Leading / trailing icon width and height</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--breadcrumb-padding-y</code></td>
+          <td>Vertical padding around the trail (wraps for chip-style)</td>
+        </tr>
+        <tr>
+          <td><code>--breadcrumb-padding-x</code></td>
+          <td>Horizontal padding around the trail</td>
+        </tr>
+        <tr>
+          <td><code>--breadcrumb-gap</code></td>
+          <td>Space between crumbs and between divider and text</td>
+        </tr>
+        <tr>
+          <td><code>--breadcrumb-margin-bottom</code></td>
+          <td>Trailing space below the trail</td>
+        </tr>
+        <tr>
+          <td><code>--breadcrumb-font-size</code></td>
+          <td>Crumb text size</td>
+        </tr>
+        <tr>
+          <td><code>--breadcrumb-bg</code></td>
+          <td>Background fill (set with padding + radius for chip wrap)</td>
+        </tr>
+        <tr>
+          <td><code>--breadcrumb-radius</code></td>
+          <td>Outer corner radius (opt-in for chip wrap)</td>
+        </tr>
+        <tr>
+          <td><code>--breadcrumb-color</code></td>
+          <td>Trail color (also paints the divider via currentColor)</td>
+        </tr>
+        <tr>
+          <td><code>--breadcrumb-hover-color</code></td>
+          <td>Trail link hover color</td>
+        </tr>
+        <tr>
+          <td><code>--breadcrumb-active-color</code></td>
+          <td>Current page color (<code>aria-current="page"</code>)</td>
+        </tr>
+        <tr>
+          <td><code>--breadcrumb-divider</code></td>
+          <td>Glyph between crumbs. Override on the <code>&lt;nav&gt;</code> wrapper or any ancestor; any <code>content</code> value works (string, url(), counter)</td>
+        </tr>
+        <tr>
+          <td><code>--breadcrumb-icon-size</code></td>
+          <td>Leading / trailing icon width and height</td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 {% endblock %}
