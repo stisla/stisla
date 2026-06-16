@@ -21,6 +21,26 @@
 // per state; --btn-tone itself never changes, which avoids the var
 // cycle that would kill state transitions on custom buttons.
 
+// === Recipe constants ===================================================
+// State-derivation mix ratios. Single source so shape and tone overrides
+// all read the same numbers and the visual progression stays coherent.
+// Sass vars (not CSS custom properties) because these are recipe tuning,
+// not user-facing knobs — promoting them to --btn-* would over-expose the
+// public API and turn internal tweaks into breaking changes.
+//
+// Naming convention: $btn-<shape>-<state>, percentage = tone retention in
+// the color-mix recipe. Lower number → more of the second color (black for
+// filled, transparent for outline/ghost/soft).
+$btn-fill-hover:     88%;
+$btn-fill-active:    78%;
+$btn-outline-hover:  14%;
+$btn-outline-active: 22%;
+$btn-ghost-hover:    18%;
+$btn-ghost-active:   26%;
+$btn-soft-rest:      12%;
+$btn-soft-hover:     20%;
+$btn-soft-active:    28%;
+
 .btn {
   --btn-radius:       var(--st-btn-radius, var(--st-radius));
   --btn-height:       2.25rem;                                       // 36
@@ -30,6 +50,9 @@
 
   // Derive the rest bg from --btn-tone. Tones with a non-matching bg
   // (neutral fills with --st-neutral, not its tone) override below.
+  // State rules always mix from --btn-tone (source), never from --btn-bg
+  // (derived) — chaining derived values produces double-mixed mud under
+  // stacked states.
   --btn-bg:           var(--btn-tone);
 
   // Universal rim + bevel. Border derives from --btn-tone so every
@@ -85,10 +108,10 @@
   // (neutral → accent, tertiary → toward background) override below.
   // Shape modifiers (outline/ghost/light) override too — they tint over
   // transparent rather than darkening a solid fill.
-  &:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) 88%, black); }
+  &:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) #{$btn-fill-hover}, black); }
   &:active,
   &[aria-pressed="true"],
-  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--btn-tone) 78%, black); }
+  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--btn-tone) #{$btn-fill-active}, black); }
 
   &:focus-visible {
     outline: 2px solid var(--st-ring);
@@ -200,10 +223,10 @@
   --btn-color:        var(--st-neutral-foreground);
   --btn-border-color: color-mix(in oklch, var(--st-neutral) var(--btn-rim-mix), var(--st-muted-foreground));
 
-  &:hover  { --btn-bg: color-mix(in oklch, var(--st-neutral) 88%, black); }
+  &:hover  { --btn-bg: color-mix(in oklch, var(--st-neutral) #{$btn-fill-hover}, black); }
   &:active,
   &[aria-pressed="true"],
-  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--st-neutral) 78%, black); }
+  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--st-neutral) #{$btn-fill-active}, black); }
 }
 
 // Tertiary — mono high-emphasis CTA. Inverts per theme automatically
@@ -214,10 +237,10 @@
   --btn-tone:  var(--st-foreground);
   --btn-color: var(--st-background);
 
-  &:hover  { --btn-bg: color-mix(in oklch, var(--st-foreground) 88%, var(--st-background)); }
+  &:hover  { --btn-bg: color-mix(in oklch, var(--st-foreground) #{$btn-fill-hover}, var(--st-background)); }
   &:active,
   &[aria-pressed="true"],
-  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--st-foreground) 78%, var(--st-background)); }
+  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--st-foreground) #{$btn-fill-active}, var(--st-background)); }
 }
 
 // === Shape modifiers ==================================================
@@ -237,10 +260,10 @@
   --btn-border-color: var(--btn-tone);
   --btn-bevel:        none;
 
-  &:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) 14%, transparent); }
+  &:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) #{$btn-outline-hover}, transparent); }
   &:active,
   &[aria-pressed="true"],
-  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--btn-tone) 22%, transparent); }
+  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--btn-tone) #{$btn-outline-active}, transparent); }
 }
 
 .btn--ghost {
@@ -249,22 +272,22 @@
   --btn-border-color: transparent;
   --btn-bevel:        none;
 
-  &:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) 18%, transparent); }
+  &:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) #{$btn-ghost-hover}, transparent); }
   &:active,
   &[aria-pressed="true"],
-  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--btn-tone) 26%, transparent); }
+  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--btn-tone) #{$btn-ghost-active}, transparent); }
 }
 
 .btn--soft {
-  --btn-bg:           color-mix(in oklch, var(--btn-tone) 12%, transparent);
+  --btn-bg:           color-mix(in oklch, var(--btn-tone) #{$btn-soft-rest}, transparent);
   --btn-color:        var(--btn-tone);
   --btn-border-color: transparent;
   --btn-bevel:        none;
 
-  &:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) 20%, transparent); }
+  &:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) #{$btn-soft-hover}, transparent); }
   &:active,
   &[aria-pressed="true"],
-  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--btn-tone) 28%, transparent); }
+  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--btn-tone) #{$btn-soft-active}, transparent); }
 }
 
 // Neutral × shape — neutral's tone is var(--st-foreground), which would
