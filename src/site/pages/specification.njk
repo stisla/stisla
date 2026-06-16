@@ -78,11 +78,16 @@
         <tr><th>Token</th><th>Use</th></tr>
       </thead>
       <tbody>
-        <tr><td><code>--st-radius</code></td><td>Default corner radius. <code>--st-radius-sm</code> and <code>--st-radius-lg</code> derive from it so brutalist (0) cascades cleanly</td></tr>
-        <tr><td><code>--st-shadow</code></td><td>Default raised-surface shadow</td></tr>
+        <tr><td><code>--st-radius-sm</code></td><td>Small radius tier — chips, inline shapes</td></tr>
+        <tr><td><code>--st-radius</code></td><td>Default radius tier — everyday surfaces</td></tr>
+        <tr><td><code>--st-radius-lg</code></td><td>Large radius tier — elevated surfaces</td></tr>
+        <tr><td><code>--st-shadow-light</code></td><td>Light elevation — tooltip-class surfaces</td></tr>
+        <tr><td><code>--st-shadow</code></td><td>Default elevation — cards, dropdowns, popovers, toasts, accordion</td></tr>
+        <tr><td><code>--st-shadow-heavy</code></td><td>Heavy elevation — dialog, drawer</td></tr>
         <tr><td><code>--st-density</code></td><td>Multiplier wrapped around every component's padding and height. 1 default, 0.875 compact, 1.125 comfortable</td></tr>
       </tbody>
     </table>
+    <p>The three radius tiers and three shadow tiers are independent literals. A theme that needs every corner square or every shadow flat overrides each tier explicitly; a calc-derived chain at <code>:root</code> would substitute <code>var()</code> references at <code>:root</code> time and freeze the result.</p>
 
     <h3>Type</h3>
     <table>
@@ -97,6 +102,7 @@
 
     <h3>Per-component tokens</h3>
     <p>Every component exposes a <code>--&lt;block&gt;-*</code> surface that falls back to the global tokens above. <code>--btn-radius</code> falls back to <code>--st-radius</code>, <code>--card-bg</code> falls back to <code>--st-surface</code>, and so on. The names of those per-component tokens are part of the spec, but the defaults are set by each implementation. See the Customization section at the bottom of each component page for the catalog.</p>
+    <p>Two of those component tokens also get a <code>:root</code>-level override knob. Every shape component exposes <code>--st-{name}-radius</code>, and every elevated component exposes <code>--st-{name}-shadow</code>. Reading the per-component knob in the component CSS keeps the fallback substitution at the component element, so wrapper overrides flow through correctly. Other properties (padding, bg, font, etc.) don&rsquo;t get the same knob at <code>:root</code>; the global token tiers plus wrapper-class scoping cover their use cases.</p>
   </section>
 
   <section>

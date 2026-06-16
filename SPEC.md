@@ -284,12 +284,36 @@ matching global token:
 
 ```css
 .btn   { border-radius: var(--st-btn-radius, var(--st-radius)); }
-.card  { border-radius: var(--st-card-radius, var(--st-radius)); }
+.card  { border-radius: var(--st-card-radius, var(--st-radius-lg)); }
 .input { border-radius: var(--st-input-radius, var(--st-radius)); }
 ```
 
-Global override sets `--st-radius` once at `:root`; per-component override
-sets `--st-btn-radius`. Same pattern for density and shadow.
+Global override sets a tier token (`--st-radius-sm` / `--st-radius` /
+`--st-radius-lg`, or `--st-shadow-light` / `--st-shadow` /
+`--st-shadow-heavy`) once at `:root`; per-component override sets
+`--st-btn-radius`, `--st-dialog-shadow`, and so on. The pattern applies
+to radius and shadow — the two properties where designers genuinely
+tune per component family ("pilled buttons, default cards"; "heavier
+dialogs, lighter popovers"). Other component properties (padding, bg,
+font, etc.) don't get a `:root`-level per-component knob; the global
+tier tokens plus wrapper-class scoping cover their use cases. Density
+is `:root`-only — there is no `--st-{name}-density`.
+
+The fallback chain lives INSIDE the component rule, not at `:root`:
+
+```css
+/* Right — substitution happens at the component element */
+.card { --card-radius: var(--st-card-radius, var(--st-radius-lg)); }
+
+/* Wrong — substitution happens at :root and inherits a frozen value */
+:root { --st-card-radius: var(--st-radius-lg); }
+.card { border-radius: var(--st-card-radius); }
+```
+
+CSS substitutes `var()` references in a custom property's value at the
+declaration element. The second form would freeze `--st-card-radius` at
+`:root`'s value of `--st-radius-lg`, breaking any wrapper override of
+the tier token.
 
 **`--st-radius` is outer-only.** Inner nested items (accordion items
 inside a framed accordion, sidebar items inside a padded sidebar) compute

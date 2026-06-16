@@ -130,17 +130,22 @@
     </div>
 
     <h3>Geometry</h3>
-    <p>Three knobs reshape the system proportionally. Density multiplies through every padding, gap, and height value that wraps <code>calc(X * var(--st-density))</code>. See the <a class="link" href="#radius">Radius</a> and <a class="link" href="#density">Density</a> recipes below for ready-to-paste values.</p>
+    <p>Three radius tiers, three shadow tiers, and a single density multiplier. The radius and shadow tiers are independent literals; components opt into the tier that matches their visual weight. See the <a class="link" href="#radius">Radius</a> and <a class="link" href="#density">Density</a> recipes below for ready-to-paste values.</p>
     <div class="prose">
       <table>
         <thead><tr><th>Token</th><th>Use</th></tr></thead>
         <tbody>
-          <tr><td><code>--st-radius</code></td><td>Corner radius. <code>--st-radius-sm</code> and <code>--st-radius-lg</code> derive from it so the brutalist preset (radius 0) cascades cleanly to every size variant</td></tr>
-          <tr><td><code>--st-shadow</code></td><td>Default elevated shadow used by cards, dropdowns, and popovers. Swap per preset (the brutalist preset uses an offset solid that tracks <code>--st-foreground</code>)</td></tr>
+          <tr><td><code>--st-radius-sm</code></td><td>Small radius tier. Inline chips and tight surfaces (kbd, tooltip, icon-box, breadcrumb, sidebar buttons, checkbox)</td></tr>
+          <tr><td><code>--st-radius</code></td><td>Default radius tier. Everyday surfaces (button, alert, input-group, pagination, tabs)</td></tr>
+          <tr><td><code>--st-radius-lg</code></td><td>Large radius tier. Elevated surfaces (card, accordion, dialog, popover, toast, list-group)</td></tr>
+          <tr><td><code>--st-shadow-light</code></td><td>Light elevation. Tooltip-class surfaces</td></tr>
+          <tr><td><code>--st-shadow</code></td><td>Default elevation. Cards, dropdowns, popovers, toasts, accordion</td></tr>
+          <tr><td><code>--st-shadow-heavy</code></td><td>Heavy elevation. Dialog and drawer (modal surfaces)</td></tr>
           <tr><td><code>--st-density</code></td><td>Multiplier on every component&rsquo;s padding, gap, and height tokens, plus utility-class spacing</td></tr>
         </tbody>
       </table>
     </div>
+    <p>Each radius tier and shadow tier also has a per-component override. To pill every button without touching cards, set <code>--st-btn-radius: 9999px</code> at <code>:root</code>. To make dialogs heavier without touching popovers, set <code>--st-dialog-shadow</code>. Every shape component exposes <code>--st-{name}-radius</code>; every elevated component exposes <code>--st-{name}-shadow</code>. The per-component knob defaults to the matching tier, so untouched components still follow your global radius and shadow choices.</p>
 
     <h3>Type</h3>
     <div class="prose">
