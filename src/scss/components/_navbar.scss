@@ -35,7 +35,7 @@
   --navbar-button-padding-x: calc(0.75rem * var(--st-density));
   --navbar-brand-padding-x: var(--navbar-button-padding-x);
   --navbar-button-gap: calc(0.25rem * var(--st-density));
-  --navbar-button-radius: calc(var(--st-radius) - 0.25rem);
+  --navbar-button-radius: var(--st-navbar-button-radius, calc(var(--st-radius) - 0.25rem));
   --navbar-button-color: var(--st-foreground);
   --navbar-button-hover-bg: var(--st-accent);
   --navbar-button-hover-color: var(--st-accent-foreground);

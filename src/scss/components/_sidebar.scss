@@ -77,7 +77,7 @@
   --sidebar-button-padding-x: calc(
     0.625rem * var(--st-density)
   ); // 10 — load-bearing: 10 + 16 + 10 = 36 button-height (symmetric icon centering at rail width)
-  --sidebar-button-radius: var(--st-radius-sm);
+  --sidebar-button-radius: var(--st-sidebar-button-radius, var(--st-radius-sm));
   --sidebar-button-gap: calc(1rem * var(--st-density)); //  16 — icon ↔ label
   --sidebar-button-font-weight: 400;
   --sidebar-button-color: var(--sidebar-color);

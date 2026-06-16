@@ -26,7 +26,7 @@
   --popover-max-width: 17.25rem; // 276px — preserves BS5 default
   --popover-min-width: 13rem; // 208px — floor for a line of action text
   --popover-padding: 1rem; // 16px — single frame padding (no inner header/body padding)
-  --popover-radius: var(--st-radius-lg);
+  --popover-radius: var(--st-popover-radius, var(--st-radius-lg));
   --popover-z-index: 1070; // between dropdown (1050) and toast (1090)
 
   // === Surface ==============================================================

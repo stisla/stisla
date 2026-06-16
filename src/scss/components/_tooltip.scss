@@ -24,7 +24,7 @@
   --tooltip-max-width: 240px;
   --tooltip-padding-y: 6px;
   --tooltip-padding-x: 10px;
-  --tooltip-radius: var(--st-radius-sm);
+  --tooltip-radius: var(--st-tooltip-radius, var(--st-radius-sm));
   --tooltip-z-index: 1050;
   --tooltip-font-size: 0.8125rem;
   --tooltip-line-height: 1.4;

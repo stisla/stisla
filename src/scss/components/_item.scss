@@ -15,7 +15,7 @@
 // --st-muted-foreground. 16px padding × --st-density.
 
 .item {
-  --item-radius:        var(--st-radius);
+  --item-radius:        var(--st-item-radius, var(--st-radius));
   --item-padding:       calc(1rem * var(--st-density));
   --item-gap:           0.75rem;
   --item-bg:            var(--st-surface);

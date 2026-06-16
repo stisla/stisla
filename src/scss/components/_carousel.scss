@@ -15,7 +15,7 @@
 // indicator dot/pill, caption gradient.
 
 .carousel {
-  --carousel-radius: var(--st-radius-lg);
+  --carousel-radius: var(--st-carousel-radius, var(--st-radius-lg));
   --carousel-aspect-ratio: 16 / 9;
   --carousel-slide-gap: 0;
 

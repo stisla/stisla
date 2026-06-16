@@ -114,7 +114,7 @@
   --toast-min-width: 18rem;
   --toast-max-width: 21.875rem;
   --toast-padding: 1rem;
-  --toast-radius: var(--st-radius-lg);
+  --toast-radius: var(--st-toast-radius, var(--st-radius-lg));
   --toast-z-index: 1090;
 
   // Surface — snapshot routed bg through --bs-surface and forced an

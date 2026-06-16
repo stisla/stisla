@@ -43,7 +43,7 @@
   // the 4px wrapper inset, the inner item lands at 12px = the standalone
   // --st-radius default, so the inner chip reads like a normal rounded
   // element framed by a softer outer rim.
-  --accordion-radius: var(--st-radius-lg);
+  --accordion-radius: var(--st-accordion-radius, var(--st-radius-lg));
   --accordion-padding: 0.25rem;
   --accordion-gap: 0.25rem;
 

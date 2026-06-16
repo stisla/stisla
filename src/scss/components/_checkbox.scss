@@ -15,7 +15,7 @@
 
 .checkbox {
   --checkbox-size:   calc(1rem * var(--st-density));         // 16
-  --checkbox-radius: 0.25rem;
+  --checkbox-radius: var(--st-checkbox-radius, 0.25rem);
 
   @include form-check-base('checkbox');
 

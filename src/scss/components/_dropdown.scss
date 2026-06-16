@@ -46,7 +46,7 @@
   // inner item radius derives so the row chip sits cleanly inset.
   --dropdown-width-min: 10rem;
   --dropdown-padding: 0.25rem;
-  --dropdown-radius: var(--st-radius);
+  --dropdown-radius: var(--st-dropdown-radius, var(--st-radius));
   --dropdown-item-radius: calc(var(--dropdown-radius) - var(--dropdown-padding));
   --dropdown-gap: 2px;
   --dropdown-z-index: 1030;

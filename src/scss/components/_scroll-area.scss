@@ -14,7 +14,7 @@
 // rules below don't have to mention .os-* selectors.
 
 .scroll-area {
-  --scroll-area-radius: var(--st-radius);
+  --scroll-area-radius: var(--st-scroll-area-radius, var(--st-radius));
 
   --scroll-area-bar-size: 0.625rem;
   --scroll-area-bar-padding: 0.125rem;

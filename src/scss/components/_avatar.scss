@@ -25,7 +25,7 @@
 
 .avatar {
   --avatar-size:         2.5rem;                    // 40 — md default
-  --avatar-radius:       var(--st-radius);
+  --avatar-radius:       var(--st-avatar-radius, var(--st-radius));
   --avatar-bg:           var(--st-neutral);
   --avatar-color:        var(--st-neutral-foreground);
   --avatar-font-size:    0.875rem;

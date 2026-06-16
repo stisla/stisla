@@ -20,7 +20,7 @@
   --dialog-width: 28rem;
   --dialog-margin: 1rem;
   --dialog-padding: calc(1.25rem * var(--st-density));
-  --dialog-radius: var(--st-radius-lg);
+  --dialog-radius: var(--st-dialog-radius, var(--st-radius-lg));
   --dialog-z-index: 1055;
 
   // Surface
