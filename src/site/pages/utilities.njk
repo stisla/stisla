@@ -14,7 +14,7 @@
     <p>A utility class changes <em>one</em> property on an <em>existing</em> shape. A button that needs a custom height. A card row that needs to be flex. A stack that needs more gap. A heading that needs muted color in one specific place. That&rsquo;s what utilities are for.</p>
     <p>What utilities are <strong>not</strong> for: assembling a new component from scratch. If you find yourself stacking <code>.d-flex .gap-3 .p-4 .rounded .border</code> on a <code>&lt;div&gt;</code> to build something that looks like a card, you&rsquo;re using the wrong tool. Build the component in SCSS with its own BEM class, tokens, and <code>color-mix</code> states. The component file is small, scoped, deletable, and lets the next person reading your codebase see what the thing actually is.</p>
     <p>Stisla is a design spec realized as components. Utilities are escape hatches. They aren&rsquo;t Lego bricks. If composing utilities into components is your preferred workflow, reach for <a class="link" href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer">Tailwind</a> instead.</p>
-    <p>The shipped set is small on purpose. Text (color, weight, size, line-height, alignment, transform, overflow). Layout (display, flex, gap, margin, padding, sizing, position, overflow). Surface (background, border, radius). If a property isn&rsquo;t in those three lists, the answer isn&rsquo;t &ldquo;add a new utility&rdquo;. It&rsquo;s &ldquo;the component owns this&rdquo;.</p>
+    <p>The shipped set is small on purpose. Text (color, weight, size, alignment, overflow). Layout (display, flex, gap, margin, padding, sizing, position, overflow). Surface (background, border, radius). If a property isn&rsquo;t in those three lists, the answer isn&rsquo;t &ldquo;add a new utility&rdquo;. It&rsquo;s &ldquo;the component owns this&rdquo;.</p>
   </section>
 
   <section id="naming">
@@ -25,14 +25,14 @@
 
   <section>
     <h2>Text</h2>
-    <p>Typography tweaks. Class names track the underlying property. Use <code>.fw-*</code> for weight, <code>.fs-*</code> for size, <code>.lh-*</code> for line height, and <code>.text-*</code> for color, alignment, transform, and overflow.</p>
+    <p>Typography tweaks. Class names track the underlying property. Use <code>.fw-*</code> for weight, <code>.fs-*</code> for size, and <code>.text-*</code> for color, alignment, and overflow.</p>
 
     {% call ui.demo() %}
     <div class="d-flex flex-column">
       <p class="fw-semibold fs-5 text-primary">Semibold, fs-5, primary color.</p>
       <p class="fw-light text-muted-foreground">Light weight, muted color.</p>
       <p class="text-truncate" style="max-width: 18rem;">A long sentence that will truncate with an ellipsis once it exceeds the container width.</p>
-      <p class="text-uppercase text-center fs-1">Uppercased, centered, fs-1.</p>
+      <p class="text-center fs-1">Centered, fs-1.</p>
     </div>
     {% endcall %}
 
@@ -84,20 +84,7 @@
       </table>
     </div>
 
-    <h3>Line height</h3>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Class</th><th>Value</th></tr></thead>
-        <tbody>
-          <tr><td><code>.lh-1</code></td><td>1</td></tr>
-          <tr><td><code>.lh-sm</code></td><td>1.25</td></tr>
-          <tr><td><code>.lh-base</code></td><td>1.5</td></tr>
-          <tr><td><code>.lh-lg</code></td><td>2</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <h3>Alignment, transform, overflow</h3>
+    <h3>Alignment &amp; overflow</h3>
     <div class="prose">
       <table>
         <thead><tr><th>Class</th><th>Effect</th></tr></thead>
@@ -105,9 +92,6 @@
           <tr><td><code>.text-start</code></td><td>Align start of text container (LTR=left).</td></tr>
           <tr><td><code>.text-end</code></td><td>Align end (LTR=right).</td></tr>
           <tr><td><code>.text-center</code></td><td>Center align.</td></tr>
-          <tr><td><code>.text-lowercase</code></td><td>Force lowercase.</td></tr>
-          <tr><td><code>.text-uppercase</code></td><td>Force uppercase.</td></tr>
-          <tr><td><code>.text-capitalize</code></td><td>Capitalize first letter of each word.</td></tr>
           <tr><td><code>.text-nowrap</code></td><td>Prevent line breaking.</td></tr>
           <tr><td><code>.text-truncate</code></td><td>Single-line ellipsis on overflow.</td></tr>
           <tr><td><code>.text-break</code></td><td>Break long words to prevent overflow.</td></tr>
@@ -279,7 +263,7 @@
           <tr><td><code>.w-75</code></td><td><code>width: 75%</code></td></tr>
           <tr><td><code>.w-100</code></td><td><code>width: 100%</code></td></tr>
           <tr><td><code>.w-auto</code></td><td><code>width: auto</code></td></tr>
-          <tr><td><code>.h-{25,50,75,100,auto}</code></td><td>Same shape, height.</td></tr>
+          <tr><td><code>.h-100</code>, <code>.h-auto</code></td><td>Full-height or auto-height. Percentage steps are intentionally omitted because they only resolve against a sized parent.</td></tr>
           <tr><td><code>.mw-100</code></td><td><code>max-width: 100%</code></td></tr>
           <tr><td><code>.mh-100</code></td><td><code>max-height: 100%</code></td></tr>
         </tbody>
@@ -319,14 +303,14 @@
 
     {% call ui.demo() %}
     <div class="d-flex flex-column gap-3">
-      <div class="bg-surface-2 p-3 rounded border">Surface-2 panel with a 1&nbsp;px border and the default radius.</div>
-      <div class="bg-primary p-3 rounded" style="color: var(--st-primary-foreground);">Filled primary surface. Pair the matching foreground token for readable text.</div>
-      <div class="bg-surface p-3 rounded-pill border border-primary">Pilled card with a primary border.</div>
+      <div class="bg-surface p-3 rounded border">Surface panel with a 1&nbsp;px border and the default radius.</div>
+      <div class="bg-surface-2 p-3 rounded-pill border">Pilled surface-2 strip, useful for filter chips and segmented headers.</div>
+      <div class="bg-surface-3 p-3 rounded">Surface-3, the most elevated of the three neutrals.</div>
     </div>
     {% endcall %}
 
     <h3>Background</h3>
-    <p>Tracks the surface and intent tokens. <code>.bg-*</code> sets background only, not foreground.</p>
+    <p>Only the neutral surfaces ship here. Each one pairs with <code>--st-foreground</code>, so default text stays readable on top.</p>
     <div class="prose">
       <table>
         <thead><tr><th>Class</th><th>Reads</th><th>Use</th></tr></thead>
@@ -336,15 +320,10 @@
           <tr><td><code>.bg-surface</code></td><td><code>--st-surface</code></td><td>Card-level surface.</td></tr>
           <tr><td><code>.bg-surface-2</code></td><td><code>--st-surface-2</code></td><td>Slightly elevated surface.</td></tr>
           <tr><td><code>.bg-surface-3</code></td><td><code>--st-surface-3</code></td><td>More elevated surface.</td></tr>
-          <tr><td><code>.bg-primary</code></td><td><code>--st-primary</code></td><td>Filled brand surface.</td></tr>
-          <tr><td><code>.bg-success</code></td><td><code>--st-success</code></td><td>Positive state surface.</td></tr>
-          <tr><td><code>.bg-warning</code></td><td><code>--st-warning</code></td><td>Caution state surface.</td></tr>
-          <tr><td><code>.bg-danger</code></td><td><code>--st-danger</code></td><td>Error state surface.</td></tr>
-          <tr><td><code>.bg-info</code></td><td><code>--st-info</code></td><td>Informational surface.</td></tr>
         </tbody>
       </table>
     </div>
-    <p>Single-property by design. For readable text on a semantic surface, pair with the matching <code>--st-{intent}-foreground</code> token, or reach for the component that already pairs them (badge, button, alert).</p>
+    <p>Intent backgrounds (<code>.bg-primary</code>, <code>.bg-success</code>, &hellip;) don&rsquo;t ship as utilities. Background without a paired foreground is a contrast footgun, and the components that need a filled brand surface (<a class="link" href="/btn">btn</a>, <a class="link" href="/badge">badge</a>, <a class="link" href="/alert">alert</a>) already pair the matching <code>--st-{intent}-foreground</code>.</p>
 
     <h3>Border</h3>
     <p><code>.border</code> draws a 1&nbsp;px line on every side using <code>--st-border</code>. Directional variants target one side via logical properties, so <code>.border-start</code> and <code>.border-end</code> flip in RTL.</p>
@@ -359,21 +338,6 @@
           <tr><td><code>.border-start</code></td><td>Line on the inline-start edge (LTR=left).</td></tr>
           <tr><td><code>.border-end</code></td><td>Line on the inline-end edge (LTR=right).</td></tr>
           <tr><td><code>.border-top-0</code>, <code>.border-bottom-0</code>, <code>.border-start-0</code>, <code>.border-end-0</code></td><td>Zero the width on one side while keeping the other three from <code>.border</code>.</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <h3>Border color</h3>
-    <p>Override the default border tone with a semantic intent.</p>
-    <div class="prose">
-      <table>
-        <thead><tr><th>Class</th><th>Reads</th></tr></thead>
-        <tbody>
-          <tr><td><code>.border-primary</code></td><td><code>--st-primary</code></td></tr>
-          <tr><td><code>.border-success</code></td><td><code>--st-success</code></td></tr>
-          <tr><td><code>.border-warning</code></td><td><code>--st-warning</code></td></tr>
-          <tr><td><code>.border-danger</code></td><td><code>--st-danger</code></td></tr>
-          <tr><td><code>.border-info</code></td><td><code>--st-info</code></td></tr>
         </tbody>
       </table>
     </div>
@@ -451,7 +415,7 @@
         </tbody>
       </table>
     </div>
-    <p>Base-only by default: flex grow / shrink, align self, height, max-width / max-height, position, overflow, text color, font weight, line height, text transform, visually-hidden, background, border, border color, rounded. Flip any of them on in <code>$utilities-config</code>.</p>
+    <p>Base-only by default: flex grow / shrink, align self, height, max-width / max-height, position, overflow, text color, font weight, visually-hidden, background, border, rounded. Flip any of them on in <code>$utilities-config</code>.</p>
   </section>
 
   <section id="customizing-the-set">
@@ -497,8 +461,6 @@
           <tr><td><code>text-color</code></td><td><code>.text-foreground</code>, <code>.text-primary</code>, &hellip;</td><td>no</td></tr>
           <tr><td><code>font-weight</code></td><td><code>.fw-*</code></td><td>no</td></tr>
           <tr><td><code>font-size</code></td><td><code>.fs-*</code></td><td>yes</td></tr>
-          <tr><td><code>line-height</code></td><td><code>.lh-*</code></td><td>no</td></tr>
-          <tr><td><code>text-transform</code></td><td><code>.text-lowercase</code>, <code>.text-uppercase</code>, <code>.text-capitalize</code></td><td>no</td></tr>
           <tr><td><code>text-wrap</code></td><td><code>.text-nowrap</code>, <code>.text-truncate</code>, <code>.text-break</code></td><td>no</td></tr>
           <tr><td><code>text-align</code></td><td><code>.text-start</code>, <code>.text-end</code>, <code>.text-center</code></td><td>yes</td></tr>
           <tr><td><code>visually-hidden</code></td><td><code>.visually-hidden</code></td><td>no</td></tr>
@@ -516,11 +478,10 @@
           <tr><td><code>margin</code></td><td><code>.m{,t,b,s,e,x,y}-*</code></td><td>yes</td></tr>
           <tr><td><code>padding</code></td><td><code>.p{,t,b,s,e,x,y}-*</code></td><td>yes</td></tr>
           <tr><td><code>width</code></td><td><code>.w-*</code></td><td>yes</td></tr>
-          <tr><td><code>height</code></td><td><code>.h-*</code></td><td>no</td></tr>
+          <tr><td><code>height</code></td><td><code>.h-100</code>, <code>.h-auto</code></td><td>no</td></tr>
           <tr><td><code>max-size</code></td><td><code>.mw-100</code>, <code>.mh-100</code></td><td>no</td></tr>
-          <tr><td><code>background</code></td><td><code>.bg-transparent</code>, <code>.bg-surface</code>, <code>.bg-primary</code>, &hellip;</td><td>no</td></tr>
+          <tr><td><code>background</code></td><td><code>.bg-transparent</code>, <code>.bg-background</code>, <code>.bg-surface</code>, <code>.bg-surface-2</code>, <code>.bg-surface-3</code></td><td>no</td></tr>
           <tr><td><code>border</code></td><td><code>.border</code>, <code>.border-0</code>, <code>.border-{top,bottom,start,end}</code>, &hellip;</td><td>no</td></tr>
-          <tr><td><code>border-color</code></td><td><code>.border-primary</code>, <code>.border-success</code>, &hellip;</td><td>no</td></tr>
           <tr><td><code>rounded</code></td><td><code>.rounded</code>, <code>.rounded-{0,sm,lg,pill,circle}</code></td><td>no</td></tr>
         </tbody>
       </table>

@@ -88,8 +88,6 @@ $utilities-config: (
   text-color:       (enabled: true, responsive: false),
   font-weight:      (enabled: true, responsive: false),
   font-size:        (enabled: true, responsive: true),
-  line-height:      (enabled: true, responsive: false),
-  text-transform:   (enabled: true, responsive: false),
   text-wrap:        (enabled: true, responsive: false),
   text-align:       (enabled: true, responsive: true),
 
@@ -123,7 +121,6 @@ $utilities-config: (
   // Surface
   background:       (enabled: true, responsive: false),
   border:           (enabled: true, responsive: false),
-  border-color:     (enabled: true, responsive: false),
   rounded:          (enabled: true, responsive: false),
 ) !default;
 
@@ -176,21 +173,6 @@ $utilities-config: (
   @each $step, $value in $font-sizes {
     .fs#{$i}-#{$step} { font-size: $value !important; }
   }
-}
-
-// === Line height =============================================================
-@include utility-group('line-height') using ($i) {
-  .lh#{$i}-1    { line-height: 1    !important; }
-  .lh#{$i}-sm   { line-height: 1.25 !important; }
-  .lh#{$i}-base { line-height: 1.5  !important; }
-  .lh#{$i}-lg   { line-height: 2    !important; }
-}
-
-// === Text transform ==========================================================
-@include utility-group('text-transform') using ($i) {
-  .text#{$i}-lowercase  { text-transform: lowercase  !important; }
-  .text#{$i}-uppercase  { text-transform: uppercase  !important; }
-  .text#{$i}-capitalize { text-transform: capitalize !important; }
 }
 
 // === Text wrap / overflow ====================================================
@@ -382,11 +364,11 @@ $utilities-config: (
 }
 
 // === Height ==================================================================
-// .h-* needs a sized parent for percentage heights to be meaningful.
+// Only the two outcomes that work without a sized parent. Percentage steps
+// (25/50/75) need a sized ancestor to be meaningful and were a smell more
+// often than a tool, so they don't ship; reach for `style="height: ..."` or
+// write the rule on a class if you really need a sized parent.
 @include utility-group('height') using ($i) {
-  .h#{$i}-25   { height: 25%  !important; }
-  .h#{$i}-50   { height: 50%  !important; }
-  .h#{$i}-75   { height: 75%  !important; }
   .h#{$i}-100  { height: 100% !important; }
   .h#{$i}-auto { height: auto !important; }
 }
@@ -398,21 +380,16 @@ $utilities-config: (
 }
 
 // === Background ==============================================================
-// Single-property: sets background only. For readable text on a semantic
-// surface, pair with the matching --st-{intent}-foreground (or use a
-// component — that's what they're for).
+// Neutral surfaces only. Intent backgrounds (.bg-primary / .bg-success / ...)
+// don't ship as utilities because background without a paired foreground is a
+// contrast footgun; the components that need a filled brand surface (.btn,
+// .badge, .alert) already pair the matching --st-*-foreground.
 @include utility-group('background') using ($i) {
   .bg#{$i}-transparent { background-color: transparent          !important; }
   .bg#{$i}-background  { background-color: var(--st-background) !important; }
   .bg#{$i}-surface     { background-color: var(--st-surface)    !important; }
   .bg#{$i}-surface-2   { background-color: var(--st-surface-2)  !important; }
   .bg#{$i}-surface-3   { background-color: var(--st-surface-3)  !important; }
-
-  .bg#{$i}-primary     { background-color: var(--st-primary)    !important; }
-  .bg#{$i}-success     { background-color: var(--st-success)    !important; }
-  .bg#{$i}-warning     { background-color: var(--st-warning)    !important; }
-  .bg#{$i}-danger      { background-color: var(--st-danger)     !important; }
-  .bg#{$i}-info        { background-color: var(--st-info)       !important; }
 }
 
 // === Border ==================================================================
@@ -432,15 +409,6 @@ $utilities-config: (
   .border#{$i}-bottom-0 { border-block-end-width:    0 !important; }
   .border#{$i}-start-0  { border-inline-start-width: 0 !important; }
   .border#{$i}-end-0    { border-inline-end-width:   0 !important; }
-}
-
-// === Border color ============================================================
-@include utility-group('border-color') using ($i) {
-  .border#{$i}-primary { border-color: var(--st-primary) !important; }
-  .border#{$i}-success { border-color: var(--st-success) !important; }
-  .border#{$i}-warning { border-color: var(--st-warning) !important; }
-  .border#{$i}-danger  { border-color: var(--st-danger)  !important; }
-  .border#{$i}-info    { border-color: var(--st-info)    !important; }
 }
 
 // === Rounded =================================================================

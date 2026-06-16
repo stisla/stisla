@@ -238,6 +238,7 @@
   width: var(--toast-icon-size);
   height: var(--toast-icon-size);
   color: var(--toast-icon-color);
+  line-height: 1;
   flex-shrink: 0;
 
   > svg,
