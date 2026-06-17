@@ -48,7 +48,7 @@ $btn-soft-active:    28%;
   // pixels under density. Override with a plain value (e.g. `2.5rem`) for
   // a rigid taller button; override with the same calc shape to keep
   // density-aware growth at a custom nominal.
-  --btn-height:       calc(2.25rem + 1.5rem * (var(--st-density) - 1));   // 36 @ 1 → 42 @ 1.25 → 30 @ 0.75
+  --btn-height:       calc(2.25rem + 0.75rem * (var(--st-density) - 1));   // 36 @ 1 → 39 @ 1.25 → 33 @ 0.75
   --btn-padding-x:    calc(0.75rem * var(--st-density));
   --btn-font-size:    0.875rem;
   --btn-font-weight:  500;
@@ -155,13 +155,13 @@ $btn-soft-active:    28%;
 // default padding-x (the source of width growth).
 .btn--sm {
   --btn-radius:    var(--st-btn-radius, var(--st-radius-sm));
-  --btn-height:    calc(1.75rem + 1.25rem * (var(--st-density) - 1));   // 28 @ 1 → 33 @ 1.25 → 23 @ 0.75
+  --btn-height:    calc(1.75rem + 0.625rem * (var(--st-density) - 1));  // 28 @ 1 → 30.5 @ 1.25 → 25.5 @ 0.75
   --btn-padding-x: calc(0.625rem * var(--st-density));
   --btn-font-size: 0.8125rem;
 }
 .btn--lg {
   --btn-radius:    var(--st-btn-radius, var(--st-radius-lg));
-  --btn-height:    calc(2.75rem + 2rem * (var(--st-density) - 1));      // 44 @ 1 → 52 @ 1.25 → 36 @ 0.75
+  --btn-height:    calc(2.75rem + 1rem * (var(--st-density) - 1));      // 44 @ 1 → 48 @ 1.25 → 40 @ 0.75
   --btn-padding-x: calc(1rem * var(--st-density));
   --btn-font-size: 1rem;
 }

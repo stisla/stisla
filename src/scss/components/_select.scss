@@ -45,15 +45,15 @@
 // === Sizes ==============================================================
 .select--sm {
   --select-radius:    var(--st-input-radius, var(--st-radius-sm));
-  --select-height:    calc(1.75rem + 1rem * (var(--st-density) - 1));    // 28 @ 1
-  --select-padding-x: calc(0.5rem * var(--st-density));                  //  8
+  --select-height:    calc(1.75rem + 0.5rem * (var(--st-density) - 1));    // 28 @ 1
+  --select-padding-x: calc(0.5rem * var(--st-density));                    //  8
   --select-font-size: 0.8125rem;
 }
 
 .select--lg {
   --select-radius:    var(--st-input-radius, var(--st-radius-lg));
-  --select-height:    calc(2.75rem + 1.75rem * (var(--st-density) - 1)); // 44 @ 1
-  --select-padding-x: calc(0.875rem * var(--st-density));                // 14
+  --select-height:    calc(2.75rem + 0.875rem * (var(--st-density) - 1));  // 44 @ 1
+  --select-padding-x: calc(0.875rem * var(--st-density));                  // 14
   --select-font-size: 1rem;
 }
 

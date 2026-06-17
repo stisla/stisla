@@ -40,7 +40,7 @@
   // Geometry — matches .btn cadence so a standalone .toggle sits in the
   // same rhythm as a standalone .btn next to it.
   --toggle-radius:        var(--st-toggle-radius, var(--st-radius));
-  --toggle-height:        calc(2.25rem + 1.5rem * (var(--st-density) - 1));   // 36 @ 1 → 42 @ 1.25
+  --toggle-height:        calc(2.25rem + 0.75rem * (var(--st-density) - 1));   // 36 @ 1 → 39 @ 1.25
   --toggle-padding-x:     calc(0.75rem * var(--st-density));
   --toggle-font-size:     0.875rem;
   --toggle-font-weight:   500;
@@ -138,14 +138,14 @@
 // so a sized .toggle baselines with the rest of the v3 control family.
 .toggle--sm {
   --toggle-radius:    var(--st-toggle-radius, var(--st-radius-sm));
-  --toggle-height:    calc(1.75rem + 1.25rem * (var(--st-density) - 1));   // 28 @ 1 → 33 @ 1.25
+  --toggle-height:    calc(1.75rem + 0.625rem * (var(--st-density) - 1));  // 28 @ 1 → 30.5 @ 1.25
   --toggle-padding-x: calc(0.625rem * var(--st-density));
   --toggle-font-size: 0.8125rem;
 }
 
 .toggle--lg {
   --toggle-radius:    var(--st-toggle-radius, var(--st-radius-lg));
-  --toggle-height:    calc(2.75rem + 2rem * (var(--st-density) - 1));      // 44 @ 1 → 52 @ 1.25
+  --toggle-height:    calc(2.75rem + 1rem * (var(--st-density) - 1));      // 44 @ 1 → 48 @ 1.25
   --toggle-padding-x: calc(1rem * var(--st-density));
   --toggle-font-size: 1rem;
 }

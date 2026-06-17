@@ -38,32 +38,36 @@
 // position via logical properties (RTL-safe).
 
 .tabs {
-  --tabs-orientation:                 row;
-  --tabs-gap:                         0.75rem;       // list ↔ panel
+  --tabs-orientation: row;
+  --tabs-gap: 0.75rem; // list ↔ panel
 
-  --tabs-list-radius:                 var(--st-tabs-radius, var(--st-radius));
-  --tabs-list-height:                 calc(2.25rem + 1.5rem * (var(--st-density) - 1));   // 36 @ 1 → 42 @ 1.25
-  --tabs-list-padding:                0.25rem;       // 4 raw
-  --tabs-list-gap:                    0.125rem;      // 2 raw — trigger ↔ trigger
-  --tabs-list-bg:                     var(--st-surface-2);
-  --tabs-list-color:                  var(--st-muted-foreground);
+  --tabs-list-radius: var(--st-tabs-radius, var(--st-radius));
+  --tabs-list-height: calc(
+    2.25rem + 0.75rem * (var(--st-density) - 1)
+  ); // 36 @ 1 → 39 @ 1.25
+  --tabs-list-padding: 0.125rem; // 2 raw
+  --tabs-list-gap: 0.125rem; // 2 raw — trigger ↔ trigger
+  --tabs-list-bg: var(--st-surface-2);
+  --tabs-list-color: var(--st-muted-foreground);
 
-  --tabs-trigger-radius:              calc(var(--tabs-list-radius) - var(--tabs-list-padding));
-  --tabs-trigger-padding-x:           calc(0.75rem * var(--st-density));
-  --tabs-trigger-gap:                 0.5rem;        // icon ↔ label
-  --tabs-trigger-font-size:           0.875rem;
-  --tabs-trigger-font-weight:         500;
-  --tabs-trigger-hover-color:         var(--st-foreground);
+  --tabs-trigger-radius: calc(
+    var(--tabs-list-radius) - var(--tabs-list-padding)
+  );
+  --tabs-trigger-padding-x: calc(0.75rem * var(--st-density));
+  --tabs-trigger-gap: 0.5rem; // icon ↔ label
+  --tabs-trigger-font-size: 0.875rem;
+  --tabs-trigger-font-weight: 500;
+  --tabs-trigger-hover-color: var(--st-foreground);
   // Active paint mirrors .toggle / .toggle-group active member: highlight
   // bg + highlight-foreground color + border matches bg for a clean solid
   // chip with no visible rim. Cohesive with the segmented-control family
   // and reads cleanly in both themes without a drop shadow.
-  --tabs-trigger-active-bg:           var(--st-highlight);
-  --tabs-trigger-active-color:        var(--st-highlight-foreground);
+  --tabs-trigger-active-bg: var(--st-highlight);
+  --tabs-trigger-active-color: var(--st-highlight-foreground);
   --tabs-trigger-active-border-color: var(--tabs-trigger-active-bg);
 
-  --tabs-ring:                        var(--st-ring);
-  --tabs-transition-duration:         0.15s;
+  --tabs-ring: var(--st-ring);
+  --tabs-transition-duration: 0.15s;
 
   display: flex;
   flex-direction: column;
@@ -74,7 +78,7 @@
 .tabs__list {
   display: inline-flex;
   align-items: stretch;
-  align-self: flex-start;          // pill hugs content, doesn't stretch
+  align-self: flex-start; // pill hugs content, doesn't stretch
   flex-direction: var(--tabs-orientation);
   height: var(--tabs-list-height);
   padding: calc(var(--tabs-list-padding) * var(--st-density));
@@ -100,9 +104,9 @@
   align-items: center;
   justify-content: center;
   gap: var(--tabs-trigger-gap);
-  height: 100%;                    // fills rail's inner area via box model
+  height: 100%; // fills rail's inner area via box model
   padding: 0 var(--tabs-trigger-padding-x);
-  color: inherit;                  // inherits rail's muted-foreground
+  color: inherit; // inherits rail's muted-foreground
   font-size: var(--tabs-trigger-font-size);
   font-weight: var(--tabs-trigger-font-weight);
   line-height: 1;
@@ -191,5 +195,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tabs { --tabs-transition-duration: 0s; }
+  .tabs {
+    --tabs-transition-duration: 0s;
+  }
 }

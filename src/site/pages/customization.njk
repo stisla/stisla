@@ -769,7 +769,7 @@
     <h2>Sizing model</h2>
     <p>Chip-like components (buttons, form fields, pagination chips, navbar buttons, toggles, tabs) ship three independent knobs. Shape, content, icon. Override any one without touching the others.</p>
     <ul>
-      <li><strong><code>--*-height</code></strong> is the shape knob. The value bakes in a density-aware growth formula (<code>nominal + 2 &times; default-padding-x &times; (density &minus; 1)</code>), so dialing density grows the box by the same number of pixels on the vertical axis as the padding does on the horizontal. Both axes scale together. Override with a plain value (<code>3rem</code>) for a rigid shape; override with the same calc shape (<code>calc(3rem + 1.5rem &times; (var(--st-density) &minus; 1))</code>) to keep density growth at a custom nominal.</li>
+      <li><strong><code>--*-height</code></strong> is the shape knob. The value bakes in a density-aware growth formula (<code>nominal + default-padding-x &times; (density &minus; 1)</code>), so dialing density grows the box a fraction of the padding-x delta, keeping the chip&rsquo;s visible aspect ratio close to its default. Override with a plain value (<code>3rem</code>) for a rigid shape; override with the same calc shape (<code>calc(3rem + 0.75rem &times; (var(--st-density) &minus; 1))</code>) to keep density growth at a custom nominal.</li>
       <li><strong><code>--*-font-size</code></strong> is the label knob. Defaults to <code>0.875rem</code>. Doesn&rsquo;t affect shape; text sits centered inside whatever height you set.</li>
       <li><strong><code>--*-icon-size</code></strong> (and similar) is the icon knob. Defaults to <code>1em</code> so the glyph tracks the font. Bump it to <code>1.25em</code> for icon-prominent UIs without touching height or label size.</li>
     </ul>
@@ -790,12 +790,12 @@
     {% call ui.demo() %}
 <div class="demo-row demo-row--gap-md" style="align-items: center; --st-density: 1.2">
   <button type="button" class="btn btn--primary" style="--btn-height: 3rem">Rigid</button>
-  <button type="button" class="btn btn--primary" style="--btn-height: calc(3rem + 1.5rem * (var(--st-density) - 1))">Density-aware</button>
+  <button type="button" class="btn btn--primary" style="--btn-height: calc(3rem + 0.75rem * (var(--st-density) - 1))">Density-aware</button>
 </div>
     {% endcall %}
     {% call ui.code(lang='html') %}
 <button class="btn btn--primary"
-  style="--btn-height: calc(3rem + 1.5rem * (var(--st-density) - 1))">
+  style="--btn-height: calc(3rem + 0.75rem * (var(--st-density) - 1))">
   Density-aware
 </button>
     {% endcall %}

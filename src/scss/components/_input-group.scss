@@ -25,7 +25,7 @@
 
 .input-group {
   --input-group-radius:        var(--st-input-radius, var(--st-radius));
-  --input-group-height:        calc(2.25rem + 1.25rem * (var(--st-density) - 1));   // tracks .input's --input-height
+  --input-group-height:        calc(2.25rem + 0.625rem * (var(--st-density) - 1));   // tracks .input's --input-height
   --input-group-bg:            var(--st-surface);
   --input-group-border:        var(--st-border);
   --input-group-padding-x:     calc(0.625rem * var(--st-density));       // 10
@@ -134,13 +134,13 @@
 // across sizes.
 .input-group--sm {
   --input-group-radius:    var(--st-input-radius, var(--st-radius-sm));
-  --input-group-height:    calc(1.75rem + 1rem * (var(--st-density) - 1));    // tracks .input--sm
+  --input-group-height:    calc(1.75rem + 0.5rem * (var(--st-density) - 1));    // tracks .input--sm
   --input-group-padding-x: calc(0.5rem  * var(--st-density));            //  8
 }
 
 .input-group--lg {
   --input-group-radius:    var(--st-input-radius, var(--st-radius-lg));
-  --input-group-height:    calc(2.75rem + 1.75rem * (var(--st-density) - 1)); // tracks .input--lg
+  --input-group-height:    calc(2.75rem + 0.875rem * (var(--st-density) - 1)); // tracks .input--lg
   --input-group-padding-x: calc(0.875rem * var(--st-density));           // 14
 }
 

@@ -58,7 +58,7 @@
   // the same growth as a standalone .toggle. Children stretch via flex
   // + height: 100% so the inner area math (height − 2*border − 2*padding)
   // resolves through the box model.
-  --toggle-group-height:       calc(2.25rem + 1.5rem * (var(--st-density) - 1));
+  --toggle-group-height:       calc(2.25rem + 0.75rem * (var(--st-density) - 1));
   --toggle-group-padding:      0.125rem;                         //  2 raw
   --toggle-group-gap:          0.125rem;                         //  2 raw
 
@@ -146,10 +146,10 @@
 // inner clickable area scales with the outer dimension.
 .toggle-group--sm {
   --toggle-group-radius: var(--st-toggle-group-radius, var(--st-radius-sm));
-  --toggle-group-height: calc(1.75rem + 1.25rem * (var(--st-density) - 1));   // tracks .toggle--sm
+  --toggle-group-height: calc(1.75rem + 0.625rem * (var(--st-density) - 1));   // tracks .toggle--sm
 }
 
 .toggle-group--lg {
   --toggle-group-radius: var(--st-toggle-group-radius, var(--st-radius-lg));
-  --toggle-group-height: calc(2.75rem + 2rem * (var(--st-density) - 1));      // tracks .toggle--lg
+  --toggle-group-height: calc(2.75rem + 1rem * (var(--st-density) - 1));      // tracks .toggle--lg
 }

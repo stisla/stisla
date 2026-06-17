@@ -51,7 +51,7 @@
   --pagination-font-size:              0.875rem;
 
   // === Chip geometry ===================================================
-  --pagination-button-height:          calc(2.25rem + 1.5rem * (var(--st-density) - 1));   // 36 @ 1 → 42 @ 1.25
+  --pagination-button-height:          calc(2.25rem + 0.75rem * (var(--st-density) - 1));   // 36 @ 1 → 39 @ 1.25
   --pagination-button-padding-x:       calc(0.75rem * var(--st-density));
   --pagination-button-inner-gap:       0.375rem;
   --pagination-button-radius:          var(--st-pagination-button-radius, var(--st-radius));
@@ -182,13 +182,13 @@ button.pagination__button:hover:not([data-state="active"], [aria-current="page"]
 // Matches .btn--sm / .btn--lg pattern.
 
 .pagination--sm {
-  --pagination-button-height:    calc(1.75rem + 1rem * (var(--st-density) - 1));   // 28 @ 1 → 32 @ 1.25
+  --pagination-button-height:    calc(1.75rem + 0.5rem * (var(--st-density) - 1));   // 28 @ 1 → 30 @ 1.25
   --pagination-button-padding-x: calc(0.5rem * var(--st-density));
   --pagination-font-size:        0.8125rem;
 }
 
 .pagination--lg {
-  --pagination-button-height:    calc(2.75rem + 2rem * (var(--st-density) - 1));   // 44 @ 1 → 52 @ 1.25
+  --pagination-button-height:    calc(2.75rem + 1rem * (var(--st-density) - 1));   // 44 @ 1 → 48 @ 1.25
   --pagination-button-padding-x: calc(1rem * var(--st-density));
   --pagination-font-size:        1rem;
 }

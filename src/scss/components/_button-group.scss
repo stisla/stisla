@@ -99,7 +99,7 @@
   --btn-group-radius: var(--st-btn-radius, var(--st-radius-sm));
 
   > .btn {
-    --btn-height:    calc(1.75rem + 1.25rem * (var(--st-density) - 1));
+    --btn-height:    calc(1.75rem + 0.625rem * (var(--st-density) - 1));
     --btn-padding-x: calc(0.625rem * var(--st-density));
     --btn-font-size: 0.8125rem;
     --btn-radius:    var(--st-btn-radius, var(--st-radius-sm));
@@ -110,7 +110,7 @@
   --btn-group-radius: var(--st-btn-radius, var(--st-radius-lg));
 
   > .btn {
-    --btn-height:    calc(2.75rem + 2rem * (var(--st-density) - 1));
+    --btn-height:    calc(2.75rem + 1rem * (var(--st-density) - 1));
     --btn-padding-x: calc(1rem * var(--st-density));
     --btn-font-size: 1rem;
     --btn-radius:    var(--st-btn-radius, var(--st-radius-lg));

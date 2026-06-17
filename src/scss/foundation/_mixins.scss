@@ -55,7 +55,7 @@
 // so a single root override still retunes every field type.
 @mixin form-field-base($prefix) {
   --#{$prefix}-radius:      var(--st-input-radius, var(--st-radius));
-  --#{$prefix}-height:      calc(2.25rem + 1.25rem * (var(--st-density) - 1));   // 36 @ 1 → 41 @ 1.25
+  --#{$prefix}-height:      calc(2.25rem + 0.625rem * (var(--st-density) - 1));   // 36 @ 1 → 38.5 @ 1.25
   --#{$prefix}-padding-x:   calc(0.625rem * var(--st-density));   // 10
   --#{$prefix}-font-size:   0.875rem;
   --#{$prefix}-bg:          var(--st-surface);
