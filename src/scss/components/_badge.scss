@@ -7,16 +7,17 @@
 //   <span class="badge badge--primary">Primary</span>         primary filled
 //   <span class="badge badge--soft badge--primary">…</span>   primary soft tint
 //
-// Pill is the default shape; .badge opts out of --st-radius (V3.md §3.4
-// — pill is intentional). Override --badge-radius if a square chip is
-// needed for a one-off; project-scope a class if it happens three+ times.
+// Pill is the default shape; .badge opts out of --st-radius by default
+// (V3.md §3.4 — pill is intentional). Set --st-badge-radius at a parent
+// scope (e.g. the brutalist preset wrapper) to flatten in bulk, or
+// --badge-radius on the badge itself for a one-off.
 //
 // Sizing is intrinsic to the content (line-height clamp + padding ×
 // density). No --sm / --lg modifiers — badges rarely need them. Inside
 // a .btn the badge auto-shrinks via the parent's font-size cascade.
 
 .badge {
-  --badge-radius:       9999px;
+  --badge-radius:       var(--st-badge-radius, 9999px);
   --badge-min-height:   calc(1.375rem * var(--st-density));
   --badge-padding-y:    calc(0.125rem * var(--st-density));
   --badge-padding-x:    calc(0.5rem   * var(--st-density));

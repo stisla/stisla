@@ -189,7 +189,7 @@
         </tr>
         <tr>
           <td><code>--meter-radius</code></td>
-          <td>Track corner radius (pill; opts out of <code>--st-radius</code>)</td>
+          <td>Track corner radius (pill). Reads <code>--st-meter-radius</code> first; override either to flatten.</td>
         </tr>
         <tr>
           <td><code>--meter-margin-bottom</code></td>
@@ -249,6 +249,6 @@
         </tr>
       </tbody>
     </table>
-    <p>Track opts out of <code>--st-radius</code>. Pill is semantic for a meter strip and matches the rest of the bar family (badge, progress, slider). Override <code>--meter-radius</code> per-component for a brutalist square track.</p>
+    <p>Track opts out of <code>--st-radius</code> by default. Pill is semantic for a meter strip and matches the rest of the bar family (badge, progress, slider). Set <code>--st-meter-radius</code> at the scope you want flattened (a preset wrapper, <code>:root</code>) or <code>--meter-radius</code> on the track itself for a one-off.</p>
   </section>
 {% endblock %}

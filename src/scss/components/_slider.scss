@@ -35,7 +35,7 @@
   --slider-thumb-w: 0.5rem;
   --slider-thumb-h: 1rem; // 16 — shorter than track so the clipped sliver at value extremes is less prominent
   --slider-thumb-gap: 0.2rem; //  4 — visible space between thumb's right edge and unfilled track
-  --slider-radius: 999px;
+  --slider-radius: var(--st-slider-radius, 999px);
   --slider-track-bg: var(--st-neutral);
   --slider-fill: var(--st-primary);
   --slider-thumb-bg: #fff; // literal — works on filled (primary) AND unfilled (neutral) in both themes; drop shadow carries edge definition

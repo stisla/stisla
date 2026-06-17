@@ -170,7 +170,7 @@
         </tr>
         <tr>
           <td><code>--progress-radius</code></td>
-          <td>Track corner radius (pill; opts out of <code>--st-radius</code>)</td>
+          <td>Track corner radius (pill). Reads <code>--st-progress-radius</code> first; override either to flatten.</td>
         </tr>
         <tr>
           <td><code>--progress-margin-bottom</code></td>
@@ -222,6 +222,6 @@
         </tr>
       </tbody>
     </table>
-    <p>Track opts out of <code>--st-radius</code>. Pill is semantic for a progress strip. It isn't a style choice. Override <code>--progress-radius</code> per-component if you really want a square track (e.g. on a brutalist preset).</p>
+    <p>Track opts out of <code>--st-radius</code> by default. Pill is semantic for a progress strip, not a style choice. Set <code>--st-progress-radius</code> at the scope you want flattened (a preset wrapper, <code>:root</code>) or <code>--progress-radius</code> on the track itself for a one-off.</p>
   </section>
 {% endblock %}

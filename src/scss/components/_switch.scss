@@ -66,9 +66,24 @@
   --switch-track-h:     calc(1rem     * var(--st-density));            // 16
   --switch-thumb:       calc(0.75rem  * var(--st-density));            // 12
   --switch-inset:       calc(0.125rem * var(--st-density));            //  2
+  --switch-radius:      var(--st-switch-radius, 9999px);
   --switch-off-bg:      color-mix(in oklch, var(--st-foreground) 25%, transparent);
   --switch-on-bg:       var(--st-primary);
   --switch-thumb-color: white;
+  // Thumb shape lives in the paint, not in border-radius — <input> is a
+  // void element so the thumb can't be a pseudo. Default paint is a
+  // radial-gradient with a hard 49%→51% cutoff: a circle inside the
+  // --switch-thumb-sized background box. Swap --st-switch-thumb-paint
+  // to a linear-gradient(color, color) for a solid square (the brutalist
+  // preset uses this so the thumb tracks the flat-cornered track).
+  --switch-thumb-paint: var(
+    --st-switch-thumb-paint,
+    radial-gradient(
+      circle at center,
+      var(--switch-thumb-color) 49%,
+      transparent 51%
+    )
+  );
 
   flex-shrink: 0;
   width:  var(--switch-track-w);
@@ -76,13 +91,9 @@
   margin: 0;
   vertical-align: middle;
   border: var(--st-border-width) solid transparent;
-  border-radius: 9999px;
+  border-radius: var(--switch-radius);
   background-color: var(--switch-off-bg);
-  background-image: radial-gradient(
-    circle at center,
-    var(--switch-thumb-color) 49%,
-    transparent 51%
-  );
+  background-image: var(--switch-thumb-paint);
   background-size: var(--switch-thumb) var(--switch-thumb);
   background-position: var(--switch-inset) center;
   background-repeat: no-repeat;

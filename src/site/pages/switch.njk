@@ -122,7 +122,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Seven variables retune <code>.switch</code> without touching component CSS. Override on <code>.switch</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
+    <p>Nine variables retune <code>.switch</code> without touching component CSS. Override on <code>.switch</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
     <table>
       <thead>
         <tr>
@@ -148,6 +148,10 @@
           <td>Visible gap between thumb edge and track edge</td>
         </tr>
         <tr>
+          <td><code>--switch-radius</code></td>
+          <td>Track corner radius (pill). Reads <code>--st-switch-radius</code> first; override either to flatten.</td>
+        </tr>
+        <tr>
           <td><code>--switch-off-bg</code></td>
           <td>Off-state track; mid-gray that adapts per theme so the white thumb stays readable in both modes</td>
         </tr>
@@ -159,8 +163,12 @@
           <td><code>--switch-thumb-color</code></td>
           <td>Thumb fill (white literal so the thumb reads on both the off-state mid-gray and the on-state primary track in both themes)</td>
         </tr>
+        <tr>
+          <td><code>--switch-thumb-paint</code></td>
+          <td>Thumb shape (paint). Default is a <code>radial-gradient</code> circle; reads <code>--st-switch-thumb-paint</code> first, so a preset can swap to <code>linear-gradient(color, color)</code> for a square thumb without touching component CSS.</td>
+        </tr>
       </tbody>
     </table>
-    <p>Track and thumb opt out of <code>--st-radius</code>. The pill and circle are semantic. Override <code>--switch-track-h</code> or <code>--switch-thumb</code> for a different shape; the radius follows the shorter dimension.</p>
+    <p>Track and thumb opt out of <code>--st-radius</code> by default. The pill and circle are semantic. Set <code>--st-switch-radius</code> at the scope you want flattened (a preset wrapper, <code>:root</code>) or <code>--switch-radius</code> on the switch itself; override <code>--switch-track-h</code> or <code>--switch-thumb</code> for a different shape.</p>
   </section>
 {% endblock %}

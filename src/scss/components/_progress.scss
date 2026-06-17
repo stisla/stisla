@@ -54,15 +54,16 @@
 // the inline width on the bar in indeterminate markup; the CSS owns it.
 //
 // === Radius ==============================================================
-// .progress__track opts out of --st-radius. Pill is semantic for a
-// progress strip (same family as .badge, .slider — V3.md §3.4).
-// Brutalist users who want sharp progress override --progress-radius
-// per-component.
+// .progress__track opts out of --st-radius by default. Pill is semantic
+// for a progress strip (same family as .badge, .slider — V3.md §3.4).
+// Set --st-progress-radius at a parent scope (e.g. the brutalist preset
+// wrapper) to flatten in bulk, or --progress-radius on the component
+// itself for a one-off.
 
 .progress {
   // === Geometry ========================================================
   --progress-height:                    calc(0.5rem * var(--st-density));
-  --progress-radius:                    9999px;
+  --progress-radius:                    var(--st-progress-radius, 9999px);
   --progress-margin-bottom:             0;
   --progress-header-gap:                0.25rem;
 

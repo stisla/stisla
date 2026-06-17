@@ -49,14 +49,15 @@
 // space exposes the track bg (the "unused" portion).
 //
 // === Radius ==============================================================
-// .meter__track opts out of --st-radius. Pill matches progress + badge +
-// slider (V3.md §3.4). Override --meter-radius for a one-off square
-// track.
+// .meter__track opts out of --st-radius by default. Pill matches
+// progress + badge + slider (V3.md §3.4). Set --st-meter-radius at a
+// parent scope (e.g. the brutalist preset wrapper) to flatten in bulk,
+// or --meter-radius on the component itself for a one-off.
 
 .meter {
   // === Geometry ========================================================
   --meter-height:                       calc(0.5rem * var(--st-density));
-  --meter-radius:                       9999px;
+  --meter-radius:                       var(--st-meter-radius, 9999px);
   --meter-margin-bottom:                0;
   --meter-header-gap:                   0.25rem;
   --meter-segment-gap:                  1px;

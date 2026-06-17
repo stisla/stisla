@@ -122,7 +122,7 @@
       <tbody>
         <tr>
           <td><code>--badge-radius</code></td>
-          <td>Corner radius (pill; opts out of <code>--st-radius</code>)</td>
+          <td>Corner radius (pill). Reads <code>--st-badge-radius</code> first; override either to flatten.</td>
         </tr>
         <tr>
           <td><code>--badge-min-height</code></td>
@@ -158,6 +158,6 @@
         </tr>
       </tbody>
     </table>
-    <p>Pill is intentional, so the badge opts out of <code>--st-radius</code>. Override <code>--badge-radius</code> per-component if a square chip is genuinely wanted.</p>
+    <p>Pill is intentional, so the badge opts out of <code>--st-radius</code> by default. Set <code>--st-badge-radius</code> at the scope you want flattened (a preset wrapper, <code>:root</code>) or <code>--badge-radius</code> on the badge itself for a one-off.</p>
   </section>
 {% endblock %}
