@@ -169,15 +169,29 @@ Implementations must not allow Tab to escape the drawer while open.
 
 ## 8. A11y
 
+**Root element.**
+
+- A *modal* drawer (default — backdrop, focus trapped, page inert) uses
+  a generic root (`<div>`) and carries dialog ARIA. The native
+  `<dialog>` element is not used; its built-in lifecycle would collide
+  with the drawer's own focus, backdrop, and dismiss handling.
+- A *non-modal* drawer (`backdrop: false` and / or page scroll
+  allowed — filter panels, inspector strips) uses `<aside>`. It is a
+  complementary landmark, not a dialog, so the dialog ARIA below does
+  not apply.
+
 **Roles + ARIA.**
 
-- The root (or `.drawer__content`, depending on primitive library
-  convention) is the modal surface. Implementations apply
-  `role="dialog"` and `aria-modal="true"` to the element that owns
-  focus. Both are required.
+- Modal drawers: implementations apply `role="dialog"` and
+  `aria-modal="true"` to the element that owns focus (the root or
+  `.drawer__content`, depending on primitive library convention). Both
+  are required.
+- Non-modal drawers: no `role="dialog"`, no `aria-modal`. The `<aside>`
+  itself conveys the landmark.
 - If `.drawer__title` exists, the drawer references it via
   `aria-labelledby` pointing at the title's `id`. If no title, the
-  drawer uses `aria-label` provided by the consumer.
+  drawer uses `aria-label` provided by the consumer. Non-modal drawers
+  must carry one or the other so the landmark has a name.
 - `aria-describedby` may point at `.drawer__body` (or a specific
   element inside it) when a description is meaningful. Optional.
 - `aria-hidden` mirrors `data-state` on the root (open → `false`,
