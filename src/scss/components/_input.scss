@@ -123,20 +123,19 @@
 
 // === Sizes ==============================================================
 // Each size pulls its own --st-radius-{sm,lg} so corners scale
-// proportionally with --st-radius. Mirrors the .btn--{sm,lg} pattern.
-// --input-height is the same nominal value at every size; the density
-// multiplier on the base resolves it.
+// proportionally with --st-radius. --input-height retunes per size with
+// the density-delta formula tracking each size's own --input-padding-x.
 .input--sm {
-  --input-radius: var(--st-input-radius, var(--st-radius-sm));
-  --input-height: 1.75rem; // 28
-  --input-padding-x: calc(0.5rem * var(--st-density)); //  8
+  --input-radius:    var(--st-input-radius, var(--st-radius-sm));
+  --input-height:    calc(1.75rem + 1rem * (var(--st-density) - 1));    // 28 @ 1 → 32 @ 1.25
+  --input-padding-x: calc(0.5rem * var(--st-density));                  //  8
   --input-font-size: 0.8125rem;
 }
 
 .input--lg {
-  --input-radius: var(--st-input-radius, var(--st-radius-lg));
-  --input-height: 2.75rem; // 44
-  --input-padding-x: calc(0.875rem * var(--st-density)); // 14
+  --input-radius:    var(--st-input-radius, var(--st-radius-lg));
+  --input-height:    calc(2.75rem + 1.75rem * (var(--st-density) - 1)); // 44 @ 1 → 48.4 @ 1.25
+  --input-padding-x: calc(0.875rem * var(--st-density));                // 14
   --input-font-size: 1rem;
 }
 
@@ -153,7 +152,7 @@
   display: inline-flex;
   align-items: center;
   width: 100%;
-  height: calc(2.25rem * var(--st-density));
+  height: calc(2.25rem + 1.25rem * (var(--st-density) - 1));
   padding: 0;
   font-family: inherit;
   font-size: 0.875rem;

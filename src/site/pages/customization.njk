@@ -743,7 +743,7 @@
 
   <section>
     <h2>Density</h2>
-    <p>One knob shrinks or grows every component proportionally. Padding, gap, and height tokens all wrap <code>calc(X * var(--st-density))</code>, so the multiplier reaches every spacing decision in the system. Utility-class spacing (<code>.gap-3</code>, <code>.mb-4</code>, <code>.p-2</code>) inherits the same multiplier.</p>
+    <p>One knob shrinks or grows every component proportionally. Padding and gap tokens wrap <code>calc(X * var(--st-density))</code>, so the multiplier reaches every spacing decision in the system. Chip-like components (buttons, form fields, pagination chips, navbar buttons, toggles, tabs) bake the multiplier into their <code>--*-height</code> tokens as a density-delta calc, so the box grows by the same number of pixels on both axes. Utility-class spacing (<code>.gap-3</code>, <code>.mb-4</code>, <code>.p-2</code>) inherits the same multiplier.</p>
     <table>
       <thead><tr><th>Preset</th><th>Value</th><th>Use</th></tr></thead>
       <tbody>
@@ -763,6 +763,91 @@
 }
     {% endcall %}
     <p>Density is a single number you can interpolate freely. <code>0.95</code> for a slight squeeze, <code>1.05</code> for a slight stretch. The whole system retunes at runtime.</p>
+  </section>
+
+  <section>
+    <h2>Sizing model</h2>
+    <p>Chip-like components (buttons, form fields, pagination chips, navbar buttons, toggles, tabs) ship three independent knobs. Shape, content, icon. Override any one without touching the others.</p>
+    <ul>
+      <li><strong><code>--*-height</code></strong> is the shape knob. The value bakes in a density-aware growth formula (<code>nominal + 2 &times; default-padding-x &times; (density &minus; 1)</code>), so dialing density grows the box by the same number of pixels on the vertical axis as the padding does on the horizontal. Both axes scale together. Override with a plain value (<code>3rem</code>) for a rigid shape; override with the same calc shape (<code>calc(3rem + 1.5rem &times; (var(--st-density) &minus; 1))</code>) to keep density growth at a custom nominal.</li>
+      <li><strong><code>--*-font-size</code></strong> is the label knob. Defaults to <code>0.875rem</code>. Doesn&rsquo;t affect shape; text sits centered inside whatever height you set.</li>
+      <li><strong><code>--*-icon-size</code></strong> (and similar) is the icon knob. Defaults to <code>1em</code> so the glyph tracks the font. Bump it to <code>1.25em</code> for icon-prominent UIs without touching height or label size.</li>
+    </ul>
+    <p>Each size variant (<code>--sm</code>, <code>--lg</code>) reassigns <code>--*-height</code>, <code>--*-padding-x</code>, and <code>--*-font-size</code> so the sized chip lands on the documented 28 / 36 / 44 cadence at the default density.</p>
+
+    <h3>Make one element taller or shorter</h3>
+    <p>Override <code>--*-height</code> on the element. A plain value gives a rigid shape that doesn&rsquo;t move with density.</p>
+    {% call ui.demo() %}
+<div class="demo-row demo-row--gap-md" style="align-items: center">
+  <button type="button" class="btn btn--primary">Default</button>
+  <button type="button" class="btn btn--primary" style="--btn-height: 3rem">Rigid 48 px</button>
+</div>
+    {% endcall %}
+    {% call ui.code(lang='html') %}
+<button class="btn btn--primary" style="--btn-height: 3rem">Rigid 48 px</button>
+    {% endcall %}
+    <p>Use the same calc shape if you want density to keep acting on the element. The two buttons below sit inside a <code>--st-density: 1.2</code> region. The first one (rigid) stays put; the second one (calc) grows with the region.</p>
+    {% call ui.demo() %}
+<div class="demo-row demo-row--gap-md" style="align-items: center; --st-density: 1.2">
+  <button type="button" class="btn btn--primary" style="--btn-height: 3rem">Rigid</button>
+  <button type="button" class="btn btn--primary" style="--btn-height: calc(3rem + 1.5rem * (var(--st-density) - 1))">Density-aware</button>
+</div>
+    {% endcall %}
+    {% call ui.code(lang='html') %}
+<button class="btn btn--primary"
+  style="--btn-height: calc(3rem + 1.5rem * (var(--st-density) - 1))">
+  Density-aware
+</button>
+    {% endcall %}
+
+    <h3>Bigger content, same shape</h3>
+    <p>Bump <code>--*-icon-size</code> or <code>--*-font-size</code> to grow the content without touching the shape. Content centers inside the height via flex, so it grows toward the box edges without breaking the chip silhouette.</p>
+    {% call ui.demo() %}
+<div class="demo-row demo-row--gap-md" style="align-items: center">
+  <button type="button" class="btn btn--primary">
+    <i data-lucide="upload"></i>
+    Default
+  </button>
+  <button type="button" class="btn btn--primary" style="--btn-icon-size: 1.5em">
+    <i data-lucide="upload"></i>
+    Big icon
+  </button>
+</div>
+    {% endcall %}
+    {% call ui.code(lang='html') %}
+<button class="btn btn--primary" style="--btn-icon-size: 1.5em">
+  <i data-lucide="upload"></i>
+  Big icon
+</button>
+    {% endcall %}
+
+    <h3>Resize a region</h3>
+    <p>Scope <code>--st-density</code> on a wrapper. Every button, field, and chip inside scales together. Use this when &ldquo;the form is tight&rdquo; or &ldquo;the dashboard is roomy&rdquo; describes a whole area. For a single element, the height override above is enough.</p>
+    {% call ui.demo() %}
+<div class="demo-row demo-row--gap-md" style="align-items: flex-start">
+  <div style="display: flex; flex-direction: column; gap: 0.5rem; padding: 1rem; border: 1px solid var(--st-border); border-radius: var(--st-radius); flex: 1">
+    <span style="font-size: 0.75rem; color: var(--st-muted-foreground); text-transform: uppercase; letter-spacing: 0.05em">Default density</span>
+    <input class="input" placeholder="Email" />
+    <div style="display: flex; gap: 0.5rem; justify-content: flex-end">
+      <button type="button" class="btn btn--ghost btn--neutral">Cancel</button>
+      <button type="button" class="btn btn--primary">Save</button>
+    </div>
+  </div>
+  <div style="--st-density: 1.15; display: flex; flex-direction: column; gap: 0.5rem; padding: 1rem; border: 1px solid var(--st-border); border-radius: var(--st-radius); flex: 1">
+    <span style="font-size: 0.75rem; color: var(--st-muted-foreground); text-transform: uppercase; letter-spacing: 0.05em">--st-density: 1.15</span>
+    <input class="input" placeholder="Email" />
+    <div style="display: flex; gap: 0.5rem; justify-content: flex-end">
+      <button type="button" class="btn btn--ghost btn--neutral">Cancel</button>
+      <button type="button" class="btn btn--primary">Save</button>
+    </div>
+  </div>
+</div>
+    {% endcall %}
+    {% call ui.code(lang='html') %}
+<form style="--st-density: 1.1">
+  ...
+</form>
+    {% endcall %}
   </section>
 
   <section>

@@ -14,7 +14,7 @@
   @include form-field-base('textarea');
 
   height: auto;
-  min-height: calc(var(--textarea-height) * var(--st-density));
+  min-height: var(--textarea-height);
   padding-block: calc(0.375rem * var(--st-density));   // 6 at density 1
   line-height: 1.5;
   resize: vertical;
@@ -25,14 +25,14 @@
 // without breaking rhythm.
 .textarea--sm {
   --textarea-radius:    var(--st-input-radius, var(--st-radius-sm));
-  --textarea-height:    1.75rem;                                // 28
-  --textarea-padding-x: calc(0.5rem * var(--st-density));       //  8
+  --textarea-height:    calc(1.75rem + 1rem * (var(--st-density) - 1));    // 28 @ 1
+  --textarea-padding-x: calc(0.5rem * var(--st-density));                  //  8
   --textarea-font-size: 0.8125rem;
 }
 
 .textarea--lg {
   --textarea-radius:    var(--st-input-radius, var(--st-radius-lg));
-  --textarea-height:    2.75rem;                                // 44
-  --textarea-padding-x: calc(0.875rem * var(--st-density));     // 14
+  --textarea-height:    calc(2.75rem + 1.75rem * (var(--st-density) - 1)); // 44 @ 1
+  --textarea-padding-x: calc(0.875rem * var(--st-density));                // 14
   --textarea-font-size: 1rem;
 }

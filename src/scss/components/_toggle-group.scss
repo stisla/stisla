@@ -15,7 +15,8 @@
 //   └────────────────────────────────┘
 //
 // Height architecture (V3.md §3.4):
-//   outer height — --toggle-group-height (default 2.25rem = 36 px raw).
+//   outer height — --toggle-group-height (calc-derived: nominal + density
+//                  delta tracking .toggle's own growth formula).
 //   inner toggle — flex stretch + height: 100% so members naturally
 //                  fill whatever vertical space the container's box
 //                  model leaves (height - 2*border - 2*padding). No
@@ -53,7 +54,11 @@
 .toggle-group,
 .toggle-group--vertical {
   --toggle-group-radius:       var(--st-toggle-group-radius, var(--st-radius));
-  --toggle-group-height:       2.25rem;                          // 36 raw
+  // Mirrors .toggle's --toggle-height formula so the outer pill tracks
+  // the same growth as a standalone .toggle. Children stretch via flex
+  // + height: 100% so the inner area math (height − 2*border − 2*padding)
+  // resolves through the box model.
+  --toggle-group-height:       calc(2.25rem + 1.5rem * (var(--st-density) - 1));
   --toggle-group-padding:      0.125rem;                         //  2 raw
   --toggle-group-gap:          0.125rem;                         //  2 raw
 
@@ -92,7 +97,7 @@
 // both. height: 100% on vertical children would override the standalone
 // --toggle-height calc and break the row-height knob.
 .toggle-group:not(.toggle-group--vertical) {
-  height: calc(var(--toggle-group-height) * var(--st-density));
+  height: var(--toggle-group-height);
 
   > .toggle {
     height: 100%;
@@ -129,7 +134,7 @@
   // menu-list cadence (matches Notion / Linear / shadcn sidebar rhythm).
   // The full 36 px chip read too tall for a stacked menu.
   > .toggle {
-    --toggle-height: 2rem;
+    --toggle-height: calc(2rem * var(--st-density));   // 32 cadence (menu-list rhythm)
     width: 100%;
     justify-content: flex-start;
     text-align: start;
@@ -141,10 +146,10 @@
 // inner clickable area scales with the outer dimension.
 .toggle-group--sm {
   --toggle-group-radius: var(--st-toggle-group-radius, var(--st-radius-sm));
-  --toggle-group-height: 1.75rem;                              // 28 raw
+  --toggle-group-height: calc(1.75rem + 1.25rem * (var(--st-density) - 1));   // tracks .toggle--sm
 }
 
 .toggle-group--lg {
   --toggle-group-radius: var(--st-toggle-group-radius, var(--st-radius-lg));
-  --toggle-group-height: 2.75rem;                              // 44 raw
+  --toggle-group-height: calc(2.75rem + 2rem * (var(--st-density) - 1));      // tracks .toggle--lg
 }

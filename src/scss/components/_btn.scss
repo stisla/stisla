@@ -43,7 +43,12 @@ $btn-soft-active:    28%;
 
 .btn {
   --btn-radius:       var(--st-btn-radius, var(--st-radius));
-  --btn-height:       2.25rem;                                       // 36
+  // Shape knob. Bakes in the density-aware growth (nominal + 2 × default
+  // padding-x × (density - 1)) so both axes grow by the same absolute
+  // pixels under density. Override with a plain value (e.g. `2.5rem`) for
+  // a rigid taller button; override with the same calc shape to keep
+  // density-aware growth at a custom nominal.
+  --btn-height:       calc(2.25rem + 1.5rem * (var(--st-density) - 1));   // 36 @ 1 → 42 @ 1.25 → 30 @ 0.75
   --btn-padding-x:    calc(0.75rem * var(--st-density));
   --btn-font-size:    0.875rem;
   --btn-font-weight:  500;
@@ -78,11 +83,12 @@ $btn-soft-active:    28%;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  // Hard height × density. Single-line button — padding-block: 0 lets
-  // native vertical centering handle the label. --st-density now
-  // genuinely compresses buttons (not just their padding); .btn--wrap
-  // opts out for multi-line cases (height: auto + min-height floor).
-  height: calc(var(--btn-height) * var(--st-density));
+  // Rigid shape, content floats inside. Height grows by the same number
+  // of pixels as the width grows under density, so the box stays
+  // proportional without coupling shape to content. --btn-icon-size and
+  // --btn-font-size can grow independently (the icon rule below sizes
+  // glyphs to 1em so they track the font).
+  height: var(--btn-height);
   padding: 0 var(--btn-padding-x);
   font-family: inherit;
   font-size: var(--btn-font-size);
@@ -144,30 +150,29 @@ $btn-soft-active:    28%;
 }
 
 // === Sizes ============================================================
-// Each size pulls its own --st-radius-{sm,lg} derived sibling so corner
-// scaling tracks --st-radius proportionally. Heights are literal rem
-// values so the calc(* var(--st-density)) on the base resolves cleanly.
-// .btn--icon-round overrides --btn-radius directly.
+// Each size pulls its own --st-radius-{sm,lg} derived sibling + retunes
+// --btn-height so the density-delta formula tracks the size's own
+// default padding-x (the source of width growth).
 .btn--sm {
   --btn-radius:    var(--st-btn-radius, var(--st-radius-sm));
-  --btn-height:    1.75rem;                                       // 28
+  --btn-height:    calc(1.75rem + 1.25rem * (var(--st-density) - 1));   // 28 @ 1 → 33 @ 1.25 → 23 @ 0.75
   --btn-padding-x: calc(0.625rem * var(--st-density));
   --btn-font-size: 0.8125rem;
 }
 .btn--lg {
   --btn-radius:    var(--st-btn-radius, var(--st-radius-lg));
-  --btn-height:    2.75rem;                                       // 44
+  --btn-height:    calc(2.75rem + 2rem * (var(--st-density) - 1));      // 44 @ 1 → 52 @ 1.25 → 36 @ 0.75
   --btn-padding-x: calc(1rem * var(--st-density));
   --btn-font-size: 1rem;
 }
 
 // === Icon shapes ======================================================
-// Square at every size. Width tracks the same density-multiplied height
-// the base sets, so .btn--icon-only composes with .btn--sm / .btn--lg
-// and stays square through every --st-density value.
+// Square at every size. Width tracks --btn-height (already density-aware)
+// so .btn--icon-only composes with .btn--sm / .btn--lg through every
+// --st-density value.
 .btn--icon-only {
   --btn-padding-x: 0;
-  width: calc(var(--btn-height) * var(--st-density));
+  width: var(--btn-height);
 }
 
 // Opt out of --st-radius for a circular silhouette.
@@ -184,7 +189,7 @@ $btn-soft-active:    28%;
 // inside the button. Pair with .btn--lg for breathing room.
 .btn--wrap {
   height: auto;
-  min-height: calc(var(--btn-height) * var(--st-density));
+  min-height: var(--btn-height);
   padding-block: calc(0.375rem * var(--st-density));
   white-space: normal;
   overflow: visible;

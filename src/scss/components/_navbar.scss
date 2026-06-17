@@ -31,7 +31,7 @@
   --navbar-bg: var(--st-background);
   --navbar-color: var(--st-foreground);
 
-  --navbar-button-height: 2.25rem;
+  --navbar-button-height: calc(2.25rem + 1.5rem * (var(--st-density) - 1));   // 36 @ 1 → 42 @ 1.25
   --navbar-button-padding-x: calc(0.75rem * var(--st-density));
   --navbar-brand-padding-x: var(--navbar-button-padding-x);
   --navbar-button-gap: calc(0.25rem * var(--st-density));
@@ -81,7 +81,7 @@
 .navbar__brand {
   display: inline-flex;
   align-items: center;
-  height: calc(var(--navbar-button-height) * var(--st-density));
+  height: var(--navbar-button-height);
   padding-inline: var(--navbar-brand-padding-x);
   color: var(--navbar-color);
   line-height: 1;
@@ -135,7 +135,7 @@
 .navbar__button {
   display: inline-flex;
   align-items: center;
-  height: calc(var(--navbar-button-height) * var(--st-density));
+  height: var(--navbar-button-height);
   padding-block: 0;
   padding-inline: var(--navbar-button-padding-x);
   border-radius: var(--navbar-button-radius);

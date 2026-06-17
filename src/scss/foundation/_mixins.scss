@@ -55,7 +55,7 @@
 // so a single root override still retunes every field type.
 @mixin form-field-base($prefix) {
   --#{$prefix}-radius:      var(--st-input-radius, var(--st-radius));
-  --#{$prefix}-height:      2.25rem;                              // 36
+  --#{$prefix}-height:      calc(2.25rem + 1.25rem * (var(--st-density) - 1));   // 36 @ 1 → 41 @ 1.25
   --#{$prefix}-padding-x:   calc(0.625rem * var(--st-density));   // 10
   --#{$prefix}-font-size:   0.875rem;
   --#{$prefix}-bg:          var(--st-surface);
@@ -65,10 +65,12 @@
 
   display: block;
   width: 100%;
-  // Hard height × density. Single-line shape — padding-block: 0 lets the
-  // UA's native vertical centering handle the text. Multi-line consumers
-  // (textarea, multi-line selects) opt out at the call site.
-  height: calc(var(--#{$prefix}-height) * var(--st-density));
+  // Rigid shape. Density grows height by the same delta as the width
+  // grows from padding-x (`2 × default-padding-x × (density - 1)`), so
+  // both axes scale proportionally. Single-line — padding-block: 0 lets
+  // the UA's native vertical centering handle the text. Multi-line
+  // consumers (textarea, multi-line selects) opt out at the call site.
+  height: var(--#{$prefix}-height);
   padding: 0 var(--#{$prefix}-padding-x);
   font-family: inherit;
   font-size: var(--#{$prefix}-font-size);

@@ -32,10 +32,11 @@
 // styling automatically; <span class="pagination__button"> sits quiet so
 // an aria-disabled edge marker doesn't light up under cursor.
 //
-// === Height architecture (V3.md §3.4) ====================================
-// Hard `height` + `padding-block: 0` so --st-density genuinely shrinks
-// the chip, not just its inner padding. min-width === height so a
-// single-glyph chip ("1") lands as a square at the matching cadence;
+// === Height architecture =================================================
+// Hard `height` + `padding-block: 0` — density-aware via the same delta
+// formula as .btn (nominal + 2 × default-padding-x × (density - 1)) so
+// both axes scale by equal pixels under density. min-width === height
+// so a single-glyph chip ("1") lands as a square at every density;
 // longer labels ("Previous") grow from padding-inline.
 //
 // === Icons ===============================================================
@@ -50,7 +51,7 @@
   --pagination-font-size:              0.875rem;
 
   // === Chip geometry ===================================================
-  --pagination-button-height:          calc(2.25rem * var(--st-density));
+  --pagination-button-height:          calc(2.25rem + 1.5rem * (var(--st-density) - 1));   // 36 @ 1 → 42 @ 1.25
   --pagination-button-padding-x:       calc(0.75rem * var(--st-density));
   --pagination-button-inner-gap:       0.375rem;
   --pagination-button-radius:          var(--st-pagination-button-radius, var(--st-radius));
@@ -181,13 +182,13 @@ button.pagination__button:hover:not([data-state="active"], [aria-current="page"]
 // Matches .btn--sm / .btn--lg pattern.
 
 .pagination--sm {
-  --pagination-button-height:    calc(1.75rem * var(--st-density));
+  --pagination-button-height:    calc(1.75rem + 1rem * (var(--st-density) - 1));   // 28 @ 1 → 32 @ 1.25
   --pagination-button-padding-x: calc(0.5rem * var(--st-density));
   --pagination-font-size:        0.8125rem;
 }
 
 .pagination--lg {
-  --pagination-button-height:    calc(2.75rem * var(--st-density));
+  --pagination-button-height:    calc(2.75rem + 2rem * (var(--st-density) - 1));   // 44 @ 1 → 52 @ 1.25
   --pagination-button-padding-x: calc(1rem * var(--st-density));
   --pagination-font-size:        1rem;
 }

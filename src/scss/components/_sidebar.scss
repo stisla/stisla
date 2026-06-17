@@ -376,7 +376,7 @@
 // override win.
 .sidebar__item-action .btn,
 .sidebar__group-action .btn {
-  --btn-height: 1.5rem;
+  --btn-height: 1.5rem;  // 24 tall, fixed (matches the 24-wide square)
   --btn-padding-x: 0;
   --btn-radius: var(--st-radius-sm);
   width: 1.5rem;

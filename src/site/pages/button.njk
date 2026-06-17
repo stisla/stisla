@@ -270,11 +270,11 @@
         </tr>
         <tr>
           <td><code>--btn-height</code></td>
-          <td>Hard single-line height. Multiplied by <code>--st-density</code> at the component level</td>
+          <td>Hard single-line height. Bakes in the density-aware growth formula. Override with a plain value for rigid shape, or with the same calc shape to keep density growth at a custom nominal</td>
         </tr>
         <tr>
           <td><code>--btn-padding-x</code></td>
-          <td>Horizontal padding</td>
+          <td>Horizontal padding. Multiplied by <code>--st-density</code></td>
         </tr>
         <tr>
           <td><code>--btn-font-size</code></td>
@@ -290,7 +290,7 @@
         </tr>
       </tbody>
     </table>
-    <p><code>.btn--icon-only</code> zeroes <code>--btn-padding-x</code> and pins width to <code>--btn-height</code> for a 1:1 square.</p>
+    <p><code>.btn--icon-only</code> zeroes <code>--btn-padding-x</code> and pins width to <code>--btn-height</code> for a 1:1 square at every size.</p>
 
     <h3>Color knobs</h3>
     <p>The four surface variables that paint each state. Each one defaults from <code>--btn-tone</code> (covered in the next group), so retoning the button is usually a one-line <code>--btn-tone</code> override rather than four separate writes.</p>

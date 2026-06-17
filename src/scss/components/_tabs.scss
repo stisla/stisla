@@ -25,7 +25,8 @@
 //   .tabs__panel[data-state="active|inactive"], [data-orientation]
 //
 // Height + concentric corners (V3.md §3.4):
-//   outer rail height — --tabs-list-height (default 2.25rem = 36 px raw)
+//   outer rail height — --tabs-list-height (calc-derived to track .btn
+//                       cadence + density delta). 36 px at density 1.
 //   rail padding      — --tabs-list-padding (default 0.25rem = 4 raw)
 //   inner trigger     — flex stretch + height: 100% so the box model
 //                       computes (height - 2*padding) automatically.
@@ -41,7 +42,7 @@
   --tabs-gap:                         0.75rem;       // list ↔ panel
 
   --tabs-list-radius:                 var(--st-tabs-radius, var(--st-radius));
-  --tabs-list-height:                 2.25rem;       // 36 raw
+  --tabs-list-height:                 calc(2.25rem + 1.5rem * (var(--st-density) - 1));   // 36 @ 1 → 42 @ 1.25
   --tabs-list-padding:                0.25rem;       // 4 raw
   --tabs-list-gap:                    0.125rem;      // 2 raw — trigger ↔ trigger
   --tabs-list-bg:                     var(--st-surface-2);
@@ -75,7 +76,7 @@
   align-items: stretch;
   align-self: flex-start;          // pill hugs content, doesn't stretch
   flex-direction: var(--tabs-orientation);
-  height: calc(var(--tabs-list-height) * var(--st-density));
+  height: var(--tabs-list-height);
   padding: calc(var(--tabs-list-padding) * var(--st-density));
   gap: calc(var(--tabs-list-gap) * var(--st-density));
   background: var(--tabs-list-bg);
