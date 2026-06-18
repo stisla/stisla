@@ -12,7 +12,6 @@
   <section id="philosophy">
     <h2>Philosophy</h2>
     <p>Utilities cover container properties. The kind that affects how content renders or where elements sit. Text styling, alignment, margin, display, position, overflow, flex behavior, gap, sizing. These work on any element and don&rsquo;t depend on the element being a specific kind of thing. Setting <code>font-size</code> on a <code>&lt;div&gt;</code> cascades into every descendant; <code>text-align</code> positions every form of inline content. That includes text, inline-blocks, images, anything that participates in inline layout.</p>
-    <p>Utilities don&rsquo;t cover component-shape properties. Background, border, radius, padding, shadow. These build a new look from scratch. Earlier versions of Stisla shipped them as utilities, which made it easy to stack <code>.bg-*</code>, <code>.border-*</code>, <code>.rounded-*</code>, <code>.p-*</code>, and <code>.shadow-*</code> on a div and call the result a card. The component layer became optional and the design system lost authority over what its surfaces look like.</p>
     <p>Component-shape work belongs to a component, a component variant (<code>.btn--block</code>, <code>.card--flush</code>), the <code>customize</code> surface, or an honest inline <code>style</code> for a one-off.</p>
     <p>If composing utilities into components is the workflow you want, reach for <a class="link" href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer">Tailwind</a> instead.</p>
   </section>
@@ -112,7 +111,7 @@
       <span class="text-muted-foreground fs-2 ms-auto">Edited 2 min ago</span>
     </div>
     {% endcall %}
-    <p>One flex row with a 12&nbsp;px gap and an end-aligned timestamp pushed by <code>.ms-auto</code>. The <a class="link" href="/stack"><code>.stack</code></a> and <a class="link" href="/inline"><code>.inline</code></a> primitives cover the same pattern when you want the layout intent to read at the call site.</p>
+    <p>One flex row with a 12&nbsp;px gap and an end-aligned timestamp pushed by <code>.ms-auto</code>.</p>
 
     {% call ui.demo() %}
     <div class="d-flex flex-column gap-2" style="max-width: 18rem;">
