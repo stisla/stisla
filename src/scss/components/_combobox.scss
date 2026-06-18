@@ -1,0 +1,219 @@
+// Stisla v3 — combobox.
+//
+// A searchable trigger backed by Tom Select. Same field shape as .select
+// (form-field-base) but the inner row holds a real typing input plus chip
+// items in multi mode. Pairs with the shared popup-* surface for the
+// dropdown.
+//
+// Anatomy after hydration:
+//   <select class="combobox" hidden>…</select>
+//   <div class="ts-wrapper combobox single|multi">
+//     <div class="ts-control">
+//       <div class="item" data-value="…">Label<a class="remove">×</a></div>
+//       <input class="ts-control-input" placeholder="…">
+//     </div>
+//     <div class="ts-dropdown">
+//       <div class="ts-dropdown-content">
+//         <div class="option" data-value="…">…</div>
+//       </div>
+//     </div>
+//
+// Modes:
+//   <select class="combobox" data-stisla-combobox>          — single, searchable
+//   <select class="combobox" data-stisla-combobox multiple> — multi with chips
+//   data-stisla-combobox-create="true"                       — tagging (create new values)
+
+.combobox {
+  @include form-field-base('combobox');
+
+  // Chevron — same vocabulary as .select. The trigger is typeable, so
+  // cursor stays at text; the chevron just signals "this opens a list".
+  --combobox-indicator: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 6 8 10 12 6'/%3E%3C/svg%3E");
+
+  padding-inline-end: 2.25rem;
+  background-image: var(--combobox-indicator);
+  background-position: right 0.75rem center;
+  background-repeat: no-repeat;
+  background-size: 0.75rem 0.75rem;
+  cursor: text;
+}
+
+// === Tom Select wrapper ================================================
+// .ts-wrapper.combobox is the new visible trigger. Flex layout so the
+// inner .ts-control stretches; multi grows past --combobox-height as
+// chips wrap.
+
+.ts-wrapper.combobox {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  padding: 0;
+  cursor: text;
+
+  &.multi {
+    height: auto;
+    min-height: var(--combobox-height);
+  }
+}
+
+// Inner row — holds chips + typing input. align-items: center keeps a
+// single-chip row centered inside the min-height; multi-row chips flow
+// naturally because flex-wrap is on. padding-block lives on .ts-control
+// (not the wrapper) so the whole padded area stays clickable — Tom
+// Select binds its click handler to .ts-control only.
+.ts-wrapper.combobox .ts-control {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem;
+  min-width: 0;
+  padding-block: 0.25rem;
+  padding-inline-start: var(--combobox-padding-x);
+  padding-inline-end: 0;
+  background: transparent;
+  border: 0;
+  outline: none;
+  cursor: text;
+
+  > input {
+    flex: 1 1 auto;
+    min-width: 4ch;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    outline: none;
+
+    &::placeholder {
+      color: var(--combobox-placeholder);
+      opacity: 1;
+    }
+  }
+}
+
+// Reset Stisla's .item component styling (border + bg + padding) that
+// would otherwise leak onto Tom Select's chip divs. Multi re-paints
+// below.
+.ts-wrapper.combobox .ts-control .item {
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+// Multi chip — small inline tag with X remove handle (from
+// remove_button plugin).
+.ts-wrapper.combobox.multi .ts-control .item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--st-accent-foreground);
+  background: var(--st-accent);
+  border-radius: calc(var(--combobox-radius) - 0.25rem);
+
+  .remove {
+    margin-inline-start: 0.125rem;
+    color: inherit;
+    text-decoration: none;
+    opacity: 0.6;
+    cursor: pointer;
+    transition: opacity 0.12s ease;
+  }
+  .remove:hover {
+    opacity: 1;
+  }
+}
+
+// Once any item is selected (single value or multi chips), suppress the
+// search input's placeholder so it doesn't trail the chosen value
+// visually. Tom Select toggles .has-items on the wrapper.
+.ts-wrapper.combobox.has-items .ts-control > input::placeholder {
+  color: transparent;
+}
+
+// Focus — Tom Select toggles .focus / .input-active on the wrapper. Re-
+// emit form-field-base's halo since :focus-visible doesn't match on the
+// wrapper (focus lives on the inner input).
+.ts-wrapper.combobox.focus,
+.ts-wrapper.combobox.input-active {
+  outline: none;
+  border-color: var(--st-primary);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--st-ring) 25%, transparent);
+}
+
+// Invalid — bridge aria-invalid from the hidden <select> to the wrapper.
+// Tom Select inserts .ts-wrapper as a sibling AFTER the source select
+// (not as its parent), so adjacent-sibling does the job; :has(> select)
+// wouldn't match.
+select.combobox[aria-invalid="true"] + .ts-wrapper.combobox {
+  border-color: var(--st-danger);
+}
+select.combobox[aria-invalid="true"] + .ts-wrapper.combobox.focus,
+select.combobox[aria-invalid="true"] + .ts-wrapper.combobox.input-active {
+  border-color: var(--st-danger);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--st-danger) 25%, transparent);
+}
+
+// Disabled — Tom Select adds .disabled to the wrapper. Override the
+// form-field-base hover (its :disabled guard doesn't match a <div>).
+.ts-wrapper.combobox.disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+
+  .ts-control {
+    cursor: not-allowed;
+  }
+}
+
+.ts-wrapper.combobox.disabled:hover {
+  border-color: var(--combobox-border);
+}
+
+// Hide the original <select> once hydrated. Tom Select adds these
+// classes; we display: none rather than relying on the inline style so
+// user CSS overrides can't unhide it accidentally.
+select.combobox.tomselected,
+select.combobox.ts-hidden-accessible {
+  display: none !important;
+}
+
+// === Popup =============================================================
+// Shared popup-* surface via ts-popup mapping. The trigger anchors
+// position; ts-popup paints the rest.
+.ts-wrapper.combobox .ts-dropdown {
+  @include ts-popup;
+}
+
+// === Sizes =============================================================
+.combobox--sm {
+  --combobox-radius:    var(--st-input-radius, var(--st-radius-sm));
+  --combobox-height:    calc(1.75rem + 0.5rem * (var(--st-density) - 1));
+  --combobox-padding-x: calc(0.5rem * var(--st-density));
+  --combobox-font-size: 0.8125rem;
+  // See form-field-base — iOS auto-zoom guard for sub-16px fields.
+  @media (pointer: coarse) {
+    --combobox-font-size: 1rem;
+  }
+}
+
+.combobox--lg {
+  --combobox-radius:    var(--st-input-radius, var(--st-radius-lg));
+  --combobox-height:    calc(2.75rem + 0.875rem * (var(--st-density) - 1));
+  --combobox-padding-x: calc(0.875rem * var(--st-density));
+  --combobox-font-size: 1rem;
+}
+
+// === Dark mode =========================================================
+@include color-mode(dark) {
+  .combobox {
+    --combobox-indicator: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 6 8 10 12 6'/%3E%3C/svg%3E");
+  }
+}

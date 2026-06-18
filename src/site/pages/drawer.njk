@@ -60,10 +60,20 @@
   </section>
 
   <section>
+    <h2>Keyboard</h2>
+    <p>In the default modal mode, focus is trapped inside the drawer while it's open. On open, focus lands on the first element marked <code>autofocus</code>, falling back to <code>.drawer__close</code>; on close, focus returns to the trigger that opened it. Non-modal drawers (the No backdrop variant) skip the focus trap so the rest of the page stays reachable.</p>
+    <ul>
+      <li><kbd>Tab</kbd>: cycle focus forward through focusable controls (wraps to the first in modal mode)</li>
+      <li><kbd>Shift</kbd> + <kbd>Tab</kbd>: cycle focus backward (wraps to the last in modal mode)</li>
+      <li><kbd>Escape</kbd>: dismiss the drawer (unless the backdrop is static, see Static backdrop below)</li>
+    </ul>
+  </section>
+
+  <section>
     <h2>Placements</h2>
     <p>Four modifiers anchor the panel to a viewport edge. <code>.drawer--start</code> slides in from the left, <code>.drawer--end</code> from the right, <code>.drawer--top</code> from above, <code>.drawer--bottom</code> from below. Start and end take a fixed width, top and bottom take a fixed height. Bare <code>.drawer</code> behaves as end.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
+    <div class="d-flex flex-wrap align-items-center gap-2">
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-drawer-trigger="drawerStart">Start</button>
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-drawer-trigger="drawerEnd">End</button>
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-drawer-trigger="drawerTop">Top</button>
@@ -77,9 +87,9 @@
           <h3 class="drawer__title">Account</h3>
           <button type="button" class="drawer__close" data-stisla-drawer-dismiss aria-label="Close"><i data-lucide="x"></i></button>
         </div>
-        <div class="drawer__body p-0">
+        <div class="drawer__body" style="padding: 0">
           <ul class="list-group list-group--flush">
-            <li class="list-group__item d-flex align-items-center gap-3">
+            <li class="d-flex flex-wrap list-group__item align-items-center gap-3">
               <span class="icon-box icon-box--primary"><i data-lucide="user"></i></span>
               <div class="flex-fill">
                 <div class="fw-medium">Profile</div>
@@ -87,7 +97,7 @@
               </div>
               <i data-lucide="chevron-right" width="18" class="text-muted-foreground"></i>
             </li>
-            <li class="list-group__item d-flex align-items-center gap-3">
+            <li class="d-flex flex-wrap list-group__item align-items-center gap-3">
               <span class="icon-box icon-box--info"><i data-lucide="bell"></i></span>
               <div class="flex-fill">
                 <div class="fw-medium">Notifications</div>
@@ -95,7 +105,7 @@
               </div>
               <i data-lucide="chevron-right" width="18" class="text-muted-foreground"></i>
             </li>
-            <li class="list-group__item d-flex align-items-center gap-3">
+            <li class="d-flex flex-wrap list-group__item align-items-center gap-3">
               <span class="icon-box icon-box--warning"><i data-lucide="credit-card"></i></span>
               <div class="flex-fill">
                 <div class="fw-medium">Billing</div>
@@ -103,7 +113,7 @@
               </div>
               <i data-lucide="chevron-right" width="18" class="text-muted-foreground"></i>
             </li>
-            <li class="list-group__item d-flex align-items-center gap-3">
+            <li class="d-flex flex-wrap list-group__item align-items-center gap-3">
               <span class="icon-box"><i data-lucide="shield"></i></span>
               <div class="flex-fill">
                 <div class="fw-medium">Security</div>
@@ -124,7 +134,7 @@
           <button type="button" class="drawer__close" data-stisla-drawer-dismiss aria-label="Close"><i data-lucide="x"></i></button>
         </div>
         <div class="drawer__body">
-          <div class="d-flex gap-3 mb-4 pb-4" style="border-bottom: 1px solid var(--st-border);">
+          <div class="d-flex flex-wrap align-items-center gap-3 mb-4" style="border-bottom: 1px solid var(--st-border); padding-block-end: calc(1rem * var(--st-density))">
             <span class="icon-box icon-box--success icon-box--round flex-shrink-0"><i data-lucide="check"></i></span>
             <div>
               <div class="fw-medium">Deploy finished</div>
@@ -132,7 +142,7 @@
               <span class="fs-2 text-muted-foreground">2 minutes ago</span>
             </div>
           </div>
-          <div class="d-flex gap-3 mb-4 pb-4" style="border-bottom: 1px solid var(--st-border);">
+          <div class="d-flex flex-wrap align-items-center gap-3 mb-4" style="border-bottom: 1px solid var(--st-border); padding-block-end: calc(1rem * var(--st-density))">
             <span class="icon-box icon-box--info icon-box--round flex-shrink-0"><i data-lucide="message-square"></i></span>
             <div>
               <div class="fw-medium">Amelia replied</div>
@@ -140,7 +150,7 @@
               <span class="fs-2 text-muted-foreground">12 minutes ago</span>
             </div>
           </div>
-          <div class="d-flex gap-3">
+          <div class="d-flex flex-wrap align-items-center gap-3">
             <span class="icon-box icon-box--warning icon-box--round flex-shrink-0"><i data-lucide="alert-triangle"></i></span>
             <div>
               <div class="fw-medium">Disk above 80%</div>
@@ -185,7 +195,7 @@
       <div class="drawer__backdrop" data-stisla-drawer-dismiss></div>
       <div class="drawer__content">
         <div class="drawer__header">
-          <div class="mx-auto w-100 d-flex align-items-center" style="max-width: 30rem;">
+          <div class="d-flex flex-wrap mx-auto w-100 align-items-center" style="max-width: 30rem;">
             <h3 class="drawer__title">Share this report</h3>
             <button type="button" class="drawer__close" data-stisla-drawer-dismiss aria-label="Close"><i data-lucide="x"></i></button>
           </div>
@@ -196,7 +206,7 @@
               <input type="text" class="input" value="https://app.example.com/r/q3-revenue" readonly>
               <button class="btn btn--outline btn--neutral" type="button">Copy link</button>
             </div>
-            <div class="d-flex flex-wrap gap-2">
+            <div class="d-flex flex-wrap align-items-center gap-2">
               <button type="button" class="btn btn--outline btn--neutral"><i data-lucide="mail"></i>Email</button>
               <button type="button" class="btn btn--outline btn--neutral"><i data-lucide="message-circle"></i>Slack</button>
               <button type="button" class="btn btn--outline btn--neutral"><i data-lucide="download"></i>Download PDF</button>
@@ -269,22 +279,22 @@
           <button type="button" class="drawer__close" data-stisla-drawer-dismiss aria-label="Close"><i data-lucide="x"></i></button>
         </div>
         <div class="drawer__body">
-          <ol class="p-0 m-0" style="list-style: none;">
-            <li class="d-flex gap-3 mb-4">
+          <ol class="m-0" style="list-style: none; padding: 0">
+            <li class="d-flex flex-wrap align-items-center gap-3 mb-4">
               <div class="icon-box icon-box--primary icon-box--round flex-shrink-0" style="--icon-box-size: 2rem;"><i data-lucide="git-commit"></i></div>
               <div>
                 <div><span class="fw-medium">Amelia</span> pushed 3 commits to <code>main</code></div>
                 <span class="fs-2 text-muted-foreground">9:42 AM</span>
               </div>
             </li>
-            <li class="d-flex gap-3 mb-4">
+            <li class="d-flex flex-wrap align-items-center gap-3 mb-4">
               <div class="icon-box icon-box--success icon-box--round flex-shrink-0" style="--icon-box-size: 2rem;"><i data-lucide="check"></i></div>
               <div>
                 <div><span class="fw-medium">Jonas</span> completed "Audit checkout copy"</div>
                 <span class="fs-2 text-muted-foreground">9:31 AM</span>
               </div>
             </li>
-            <li class="d-flex gap-3 mb-4">
+            <li class="d-flex flex-wrap align-items-center gap-3 mb-4">
               <div class="icon-box icon-box--info icon-box--round flex-shrink-0" style="--icon-box-size: 2rem;"><i data-lucide="message-square"></i></div>
               <div>
                 <div><span class="fw-medium">Priya</span> commented on "Onboarding redesign"</div>
@@ -292,14 +302,14 @@
                 <span class="fs-2 text-muted-foreground">9:18 AM</span>
               </div>
             </li>
-            <li class="d-flex gap-3 mb-4">
+            <li class="d-flex flex-wrap align-items-center gap-3 mb-4">
               <div class="icon-box icon-box--warning icon-box--round flex-shrink-0" style="--icon-box-size: 2rem;"><i data-lucide="user-plus"></i></div>
               <div>
                 <div><span class="fw-medium">Lena</span> joined the workspace</div>
                 <span class="fs-2 text-muted-foreground">Yesterday</span>
               </div>
             </li>
-            <li class="d-flex gap-3">
+            <li class="d-flex flex-wrap align-items-center gap-3">
               <div class="icon-box icon-box--danger icon-box--round flex-shrink-0" style="--icon-box-size: 2rem;"><i data-lucide="alert-circle"></i></div>
               <div>
                 <div>Build #2143 failed on <code>release/v2</code></div>
@@ -353,7 +363,7 @@
           </div>
         </div>
         <div class="drawer__footer">
-          <button type="button" class="btn btn--primary w-100" data-stisla-drawer-dismiss>Save and continue</button>
+          <button type="button" class="btn btn--primary btn--block" data-stisla-drawer-dismiss>Save and continue</button>
         </div>
       </div>
     </div>
@@ -432,6 +442,15 @@
       </div>
     </aside>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Events</h2>
+    <p>Four events fire on the <code>.drawer</code> root. The <code>opening</code> and <code>closing</code> events are cancelable.</p>
+    <p><code>stisla:drawer:opening</code> fires before the panel slides in. Call <code>preventDefault()</code> to abort.</p>
+    <p><code>stisla:drawer:opened</code> fires once the open transition lands and focus is in place.</p>
+    <p><code>stisla:drawer:closing</code> fires before the panel slides out. Call <code>preventDefault()</code> to keep it open.</p>
+    <p><code>stisla:drawer:closed</code> fires once the panel is fully hidden and (in modal mode) focus has returned to the trigger.</p>
   </section>
 
   <section>

@@ -7,32 +7,14 @@
   <header>
     <h1>Tabs</h1>
     <p class="lead">A content-panel switcher. Active trigger paints with the highlight tint over a muted rail.</p>
+    <p>For a segmented control with no content panels, see <a class="link" href="/toggle-group">Toggle group</a>. The active trigger paints the same way in both; the difference is the rail and the panel switching. Tabs sits on a <code>--st-surface-2</code> bed and switches a matching <code>.tabs__panel</code> below the rail.</p>
   </header>
 
   <section>
-    <p>For a segmented control with no content panels, see <a class="link" href="/toggle-group">Toggle group</a>. The active trigger paints the same way in both (highlight bg matching the trigger's border); the difference is the rail and the panel switching. Toggle group is an outline-neutral cluster on a transparent rim; tabs sits on a <code>--st-surface-2</code> bed and switches a matching <code>.tabs__panel</code> below the rail.</p>
-  </section>
-
-  <section>
-    <h2>Anatomy</h2>
-    <p>The component scans for triggers and panels inside the root and matches them by <code>data-value</code>. Author writes <code>data-stisla-tabs</code> and the value pairs; the class wires every ARIA attribute (<code>role</code>, <code>aria-selected</code>, <code>aria-controls</code>, <code>aria-labelledby</code>, roving <code>tabindex</code>) on init. IDs auto-generate when missing.</p>
-    {% call ui.code(lang='html') %}
-    <div class="tabs" data-stisla-tabs>
-      <div class="tabs__list">
-        <button class="tabs__trigger" data-value="overview">Overview</button>
-        <button class="tabs__trigger" data-value="activity">Activity</button>
-      </div>
-      <div class="tabs__panel" data-value="overview">…</div>
-      <div class="tabs__panel" data-value="activity">…</div>
-    </div>
-    {% endcall %}
-  </section>
-
-  <section>
     <h2>Basic</h2>
-    <p>Three triggers, three panels. The first enabled trigger activates on init.</p>
+    <p>Add <code>data-stisla-tabs</code> to the root, then pair each <code>.tabs__trigger</code> with a <code>.tabs__panel</code> by <code>data-value</code>. The class wires every ARIA attribute (<code>role</code>, <code>aria-selected</code>, <code>aria-controls</code>, <code>aria-labelledby</code>, roving <code>tabindex</code>) on init, and auto-generates IDs when missing. The first enabled trigger activates on init.</p>
     {% call ui.demo() %}
-    <div class="tabs w-100" data-stisla-tabs>
+    <div class="tabs tabs--block" data-stisla-tabs>
       <div class="tabs__list">
         <button class="tabs__trigger" data-value="overview">Overview</button>
         <button class="tabs__trigger" data-value="activity">Activity</button>
@@ -52,10 +34,22 @@
   </section>
 
   <section>
+    <h2>Keyboard</h2>
+    <p>Tabs follow the WAI-ARIA tabs pattern with a roving <code>tabindex</code>. Only the active trigger is in the tab order; arrow keys move focus along the list.</p>
+    <ul>
+      <li><kbd>Tab</kbd>: focus the active trigger (or leave the list if a trigger is already focused)</li>
+      <li><kbd>ArrowRight</kbd> / <kbd>ArrowLeft</kbd>: move focus through enabled triggers (wraps). <kbd>ArrowDown</kbd> / <kbd>ArrowUp</kbd> in vertical mode.</li>
+      <li><kbd>Home</kbd> / <kbd>End</kbd>: focus the first / last enabled trigger</li>
+      <li><kbd>Enter</kbd> / <kbd>Space</kbd>: activate the focused trigger (only needed in manual activation mode)</li>
+    </ul>
+    <p>Automatic activation (the default) commits the focused trigger as soon as arrow keys move focus. Manual mode decouples them; see the Manual activation section below.</p>
+  </section>
+
+  <section>
     <h2>With icons</h2>
     <p>Drop an <code>&lt;i&gt;</code> next to the trigger label. Icons scale with the trigger's font-size (1em), so a custom size flows through.</p>
     {% call ui.demo() %}
-    <div class="tabs w-100" data-stisla-tabs>
+    <div class="tabs tabs--block" data-stisla-tabs>
       <div class="tabs__list">
         <button class="tabs__trigger" data-value="inbox">
           <i data-lucide="inbox"></i>
@@ -87,7 +81,7 @@
     <h2>Vertical</h2>
     <p>Add <code>.tabs--vertical</code> to flip the layout. The rail becomes a column on the inline-start side; panels fill the remaining row. Arrow keys swap to <kbd class="kbd">↑</kbd> / <kbd class="kbd">↓</kbd>.</p>
     {% call ui.demo() %}
-    <div class="tabs tabs--vertical w-100" data-stisla-tabs>
+    <div class="tabs tabs--vertical tabs--block" data-stisla-tabs>
       <div class="tabs__list">
         <button class="tabs__trigger" data-value="account">
           <i data-lucide="user"></i>
@@ -126,7 +120,7 @@
     <h2>Disabled trigger</h2>
     <p>Mark a trigger with <code>data-disabled</code> or the native <code>disabled</code> attribute. The class skips it for click, arrow navigation, and initial activation.</p>
     {% call ui.demo() %}
-    <div class="tabs w-100" data-stisla-tabs>
+    <div class="tabs tabs--block" data-stisla-tabs>
       <div class="tabs__list">
         <button class="tabs__trigger" data-value="home">Home</button>
         <button class="tabs__trigger" data-value="archive" data-disabled>Archive</button>
@@ -149,7 +143,7 @@
     <h2>Manual activation</h2>
     <p>Set <code>data-stisla-tabs-activation-mode="manual"</code> to decouple focus from selection. Arrow keys move focus only; <kbd class="kbd">Space</kbd> or <kbd class="kbd">Enter</kbd> commits via native button click.</p>
     {% call ui.demo() %}
-    <div class="tabs w-100" data-stisla-tabs data-stisla-tabs-activation-mode="manual">
+    <div class="tabs tabs--block" data-stisla-tabs data-stisla-tabs-activation-mode="manual">
       <div class="tabs__list">
         <button class="tabs__trigger" data-value="one">One</button>
         <button class="tabs__trigger" data-value="two">Two</button>
@@ -183,7 +177,7 @@
         <div class="tabs__panel" data-value="beta"><p>Beta pane.</p></div>
         <div class="tabs__panel" data-value="gamma"><p>Gamma pane.</p></div>
       </div>
-      <div class="d-flex gap-2 flex-wrap">
+      <div class="d-flex flex-wrap align-items-center gap-2">
         <button type="button" class="btn btn--outline btn--neutral btn--sm" data-tabs-demo="alpha">Open Alpha</button>
         <button type="button" class="btn btn--outline btn--neutral btn--sm" data-tabs-demo="beta">Open Beta</button>
         <button type="button" class="btn btn--outline btn--neutral btn--sm" data-tabs-demo="gamma">Open Gamma</button>
@@ -218,7 +212,7 @@
     <p>Useful for sidebar links, toolbar buttons, command-palette entries, even a <code>.toggle-group</code> member that doubles as a tab switcher. Native click semantics carry, so buttons fire on click + Enter + Space, and anchors fire on click + Enter.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-column gap-4 w-100">
-      <div class="d-flex gap-2 flex-wrap">
+      <div class="d-flex flex-wrap align-items-center gap-2">
         <button type="button" class="btn btn--outline btn--neutral btn--sm" aria-controls="tabsDemoExternal" data-stisla-tabs-value="overview">Jump to Overview</button>
         <button type="button" class="btn btn--outline btn--neutral btn--sm" aria-controls="tabsDemoExternal" data-stisla-tabs-value="activity">Jump to Activity</button>
         <button type="button" class="btn btn--outline btn--neutral btn--sm" aria-controls="tabsDemoExternal" data-stisla-tabs-value="settings">Jump to Settings</button>
@@ -235,6 +229,13 @@
       </div>
     </div>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Events</h2>
+    <p>Two events fire on the tabs root. Both carry <code>value</code> (the new selection) and <code>previousValue</code> (the prior selection) in <code>detail</code>.</p>
+    <p><code>stisla:tabs:changing</code> fires before the flip and is cancelable. Call <code>preventDefault()</code> on the event to keep the current selection (useful for unsaved-changes guards).</p>
+    <p><code>stisla:tabs:changed</code> fires after the new panel is active. Use it to sync URL hash state or persist the last-open tab.</p>
   </section>
 
   <section>

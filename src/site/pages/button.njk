@@ -10,10 +10,12 @@
   </header>
 
   <section>
-    <h2>Primary</h2>
+    <h2>Basic</h2>
     <p>
-      The main call to action. Use one per surface for the action you most
-      want the user to take.
+      Add <code>.btn</code> to a <code>&lt;button&gt;</code>, then pair it
+      with a tone modifier for the role. <code>.btn--primary</code> is the
+      main call to action; use one per surface for the action you most want
+      the user to take.
     </p>
     {% call ui.demo() %}
     <button type="button" class="btn btn--primary">Primary</button>
@@ -350,7 +352,7 @@
         <tr>
           <td><code>.btn--neutral</code></td>
           <td>var(--st-foreground)</td>
-          <td>Asymmetric: <code>--btn-bg</code> is forced to <code>--st-neutral</code> and <code>--btn-border-color</code> mixes neutral with muted foreground so the rim reads as recessed</td>
+          <td>Asymmetric. <code>--btn-bg</code> is forced to <code>--st-neutral</code> and <code>--btn-border-color</code> mixes neutral with muted foreground so the rim reads as recessed</td>
         </tr>
         <tr>
           <td><code>.btn--tertiary</code></td>

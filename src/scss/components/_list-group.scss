@@ -67,14 +67,14 @@
   --list-group-item-hover-bg: var(--st-accent);
   --list-group-item-hover-color: var(--st-accent-foreground);
   --list-group-item-active-bg: var(--st-highlight);
-  --list-group-item-active-color: var(--st-highlight-foreground);
+  --list-group-item-active-color: var(--st-foreground);
   --list-group-item-disabled-color: var(--st-muted-foreground);
 
   // === Focus ===========================================================
   --list-group-ring: var(--st-ring);
 
   // === Motion ==========================================================
-  --list-group-transition: background-color .12s ease, color .12s ease;
+  --list-group-transition: background-color 0.12s ease, color 0.12s ease;
 
   display: flex;
   flex-direction: column;
@@ -110,7 +110,9 @@
   // this file.
   transition: var(--list-group-transition);
 
-  &:first-child { border-top: 0; }
+  &:first-child {
+    border-top: 0;
+  }
 }
 
 // === Interactive rows ================================================
@@ -132,8 +134,18 @@ button.list-group__item {
 // the rule explicit and avoids a specificity puzzle (the active rule
 // below has lower specificity than `a.list-group__item:hover` since
 // the type selector tips the balance toward hover).
-a.list-group__item:hover:not([data-state="active"], [aria-current="page"], [aria-current="true"], [aria-disabled="true"]),
-button.list-group__item:hover:not([data-state="active"], [aria-current="page"], [aria-current="true"], [aria-disabled="true"]):not(:disabled) {
+a.list-group__item:hover:not(
+    [data-state="active"],
+    [aria-current="page"],
+    [aria-current="true"],
+    [aria-disabled="true"]
+  ),
+button.list-group__item:hover:not(
+    [data-state="active"],
+    [aria-current="page"],
+    [aria-current="true"],
+    [aria-disabled="true"]
+  ):not(:disabled) {
   background-color: var(--list-group-item-hover-bg);
   color: var(--list-group-item-hover-color);
 }
@@ -191,7 +203,11 @@ button.list-group__item:focus-visible {
 
 @each $intent in (primary, success, info, warning, danger) {
   .list-group__item--#{$intent} {
-    background-color: color-mix(in oklab, var(--st-#{$intent}) 10%, var(--list-group-bg));
+    background-color: color-mix(
+      in oklab,
+      var(--st-#{$intent}) 10%,
+      var(--list-group-bg)
+    );
     color: var(--st-foreground);
   }
 }
@@ -242,7 +258,9 @@ button.list-group__item:focus-visible {
     border-top: 0;
     border-inline-start: 1px solid var(--list-group-divider-color);
 
-    &:first-child { border-inline-start: 0; }
+    &:first-child {
+      border-inline-start: 0;
+    }
   }
 }
 
@@ -255,7 +273,9 @@ button.list-group__item:focus-visible {
         border-top: 0;
         border-inline-start: 1px solid var(--list-group-divider-color);
 
-        &:first-child { border-inline-start: 0; }
+        &:first-child {
+          border-inline-start: 0;
+        }
       }
     }
   }
@@ -272,8 +292,12 @@ button.list-group__item:focus-visible {
   border-radius: 0;
 }
 
-.card > .list-group:first-child { border-top-width: 0; }
-.card > .list-group:last-child  { border-bottom-width: 0; }
+.card > .list-group:first-child {
+  border-top-width: 0;
+}
+.card > .list-group:last-child {
+  border-bottom-width: 0;
+}
 
 // === Reduced motion ===================================================
 // Zero the row transition. Honors the user-agent's accessibility setting
@@ -282,4 +306,9 @@ button.list-group__item:focus-visible {
   .list-group__item {
     transition: none;
   }
+}
+
+// Block — fills its container width per SPEC §9 escape ramp.
+.list-group--block {
+  width: 100%;
 }

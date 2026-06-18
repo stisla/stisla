@@ -319,4 +319,16 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
   :where(tbody tr + tr td)#{$skip} {
     border-top: 1px solid color-mix(in oklch, var(--st-border) 50%, transparent);
   }
+
+  // Inline code in a reading-table cell is almost always a token name
+  // (--st-ring, --st-primary-foreground). The prose code chip uses
+  // overflow-wrap: anywhere so long URLs in flowing copy don't blow out
+  // a column, but in a narrow cell that lets `--st-ring` split into
+  // `--st-` + `ring`. Stop the chip from breaking mid-token here; the
+  // column grows to fit and the build-time .table-responsive wrapper
+  // (tools/wrap-tables.mjs) scrolls horizontally on narrow viewports.
+  :where(td > code)#{$skip} {
+    white-space: nowrap;
+    overflow-wrap: normal;
+  }
 }

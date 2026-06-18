@@ -10,32 +10,8 @@
   </header>
 
   <section>
-    <h2>Pick a bundle</h2>
-    <p>Stisla ships two bundles, the same pair of packages with two different entry files. Pick one before you start.</p>
-    <table>
-      <thead>
-        <tr>
-          <th>Bundle</th>
-          <th width="30%">Gzip CSS + JS</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Core.</strong> Every component except the optional ones (carousel, date-picker, command palette, etc.).</td>
-          <td>~29 KB + ~27 KB</td>
-        </tr>
-        <tr>
-          <td><strong>Full.</strong> Core plus every optional component in one bundle. One install line that gives you everything.</td>
-          <td>~30 KB + ~37 KB</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>If you&rsquo;re not sure, pick core. Adding an optional component later is just one extra import; you don&rsquo;t need to swap the bundle.</p>
-  </section>
-
-  <section>
     <h2>Using CDN</h2>
-    <p>No build step. Drop the bundles into a plain HTML page.</p>
+    <p>No build step. Drop the bundles into a plain HTML page. If you&rsquo;re not sure whether to pick Core or Full, <a class="link" href="#bundle-comparison">Bundle comparison</a> has the side-by-side.</p>
 
     <h3>Core</h3>
     <p>Two tags. One for the core stylesheet in the <code>&lt;head&gt;</code>, one for the runtime at the end of the <code>&lt;body&gt;</code>. That covers every component except the optional ones.</p>
@@ -112,19 +88,91 @@ import '@stisla/vanilla/components/carousel';
   </section>
 
   <section>
-    <h2>Sass source</h2>
-    <p>You don&rsquo;t need Sass for most customization. Picking a primary color, changing the radius, or swapping density is a single CSS variable override on <code>:root</code> and takes effect at runtime. The pre-compiled bundle above is the right entry for that.</p>
-    <p>Reach for the Sass source when you need one of:</p>
-    <ul>
-      <li>Changing breakpoint sizes (media queries can&rsquo;t read CSS variables, so breakpoints live in Sass).</li>
-      <li>Forking a bundle entry to drop components you don&rsquo;t use, shaving the CSS payload further than tree-shaking can.</li>
-      <li>Rewriting a component from the ground up while keeping the rest of the system intact.</li>
-    </ul>
-    <p>The Sass source ships inside <code>@stisla/css</code> alongside the compiled CSS. Import a bundle entry from your own stylesheet instead of the <code>.css</code> file.</p>
+    <h2>Custom bundle</h2>
+    <p>The package ships the raw Sass source alongside the compiled CSS. Compose your own bundle when you want custom breakpoints, want to drop components you never use, or are forking a partial to rewrite it.</p>
     {% call ui.code(lang='scss', title='your-app.scss') %}
-@use '@stisla/css/scss/bundles/stisla';
+@layer foundation, theme, components, utilities;
+
+@layer foundation {
+  @import '@stisla/css/scss/foundation/reboot';
+}
+@layer components {
+  @import '@stisla/css/scss/components/btn';
+  @import '@stisla/css/scss/components/dialog';
+  // ...add only what you actually use
+}
     {% endcall %}
     <p>The <a class="link" href="/optimization">Optimization</a> page walks through the fork-and-drop recipe with real before/after byte counts.</p>
+  </section>
+
+  <section>
+    <h2>Bundle comparison</h2>
+    <p>Stisla ships two compiled bundles. They share the same package and only differ in which entry file you import. Picking one isn&rsquo;t a permanent choice; if you start with Core and later want an optional component, you add it with two extra imports.</p>
+
+    <h3>Size</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Bundle</th>
+          <th width="30%">Gzip CSS + JS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Core.</strong> Every component except the optional ones.</td>
+          <td>~29 KB + ~32 KB</td>
+        </tr>
+        <tr>
+          <td><strong>Full.</strong> Core plus every optional component in one drop-in file.</td>
+          <td>~32 KB + ~76 KB</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>What&rsquo;s included</h3>
+    <p>Both bundles include every standard component (button, input, dialog, drawer, tabs, accordion, slider, select, autocomplete, and the rest). They only differ on the optional ones.</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Optional component</th>
+          <th width="10%">Core</th>
+          <th width="10%">Full</th>
+          <th width="25%">Individual (gzip CSS + JS)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a class="link" href="/carousel">Carousel</a></td>
+          <td>No</td>
+          <td>Yes</td>
+          <td>~1 KB + ~9 KB</td>
+        </tr>
+        <tr>
+          <td><a class="link" href="/combobox">Combobox</a> (searchable select with multi-select and tagging)</td>
+          <td>No</td>
+          <td>Yes</td>
+          <td>~2 KB + ~16 KB</td>
+        </tr>
+        <tr>
+          <td><a class="link" href="/scroll-area">Scroll area</a> (custom-styled scrollbars)</td>
+          <td>No</td>
+          <td>Yes</td>
+          <td>&lt;1 KB + ~18 KB</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Adding an optional later</h3>
+    <p>Each optional ships as its own CSS and JS file under <code>dist/components/</code>. Pulling combobox on top of Core means two extra lines, whether you load via CDN or via a bundler.</p>
+    {% call ui.code() %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@beta/dist/components/combobox.css">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@beta/dist/components/combobox.js"></script>
+    {% endcall %}
+    {% call ui.code(lang='js') %}
+import '@stisla/css/components/combobox';
+import '@stisla/vanilla/components/combobox';
+    {% endcall %}
+    <p>Every optional follows the same pattern. You don&rsquo;t need to swap bundles or rebuild the rest of your setup. The full Core-plus-optional examples live in <a class="link" href="#using-cdn">Using CDN</a> and <a class="link" href="#using-package-manager">Using package manager</a>.</p>
   </section>
 
   <section>

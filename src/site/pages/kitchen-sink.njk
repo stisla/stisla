@@ -199,7 +199,10 @@
     <span class="ks-bar__sep" aria-hidden="true"></span>
     <div class="ks-density">
       <label for="ksDensity" class="ks-density__label">Density</label>
-      <input type="range" class="slider slider--sm" id="ksDensity" min="0.75" max="1.25" step="0.05" value="1" data-stisla-ks-density />
+      <div class="slider slider--sm" id="ksDensity" data-stisla-slider data-stisla-ks-density data-min="0.75" data-max="1.25" data-step="0.05" data-value="1">
+        <div class="slider__track"><div class="slider__range"></div></div>
+        <div class="slider__thumb"></div>
+      </div>
       <output for="ksDensity" class="ks-density__value">1.00</output>
     </div>
   </div>
@@ -357,17 +360,17 @@
         </div>
       </div>
       <div class="field">
-        <div class="switch">
-          <input class="switch__input" type="checkbox" role="switch" id="ksSw1" checked />
-          <label class="switch__label" for="ksSw1">Auto-update</label>
+        <div class="field__item">
+          <input class="switch" type="checkbox" role="switch" id="ksSw1" checked />
+          <label class="field__label" for="ksSw1">Auto-update</label>
         </div>
-        <div class="switch">
-          <input class="switch__input" type="checkbox" role="switch" id="ksSw2" />
-          <label class="switch__label" for="ksSw2">Notifications</label>
+        <div class="field__item">
+          <input class="switch" type="checkbox" role="switch" id="ksSw2" />
+          <label class="field__label" for="ksSw2">Notifications</label>
         </div>
-        <div class="switch switch--lg">
-          <input class="switch__input" type="checkbox" role="switch" id="ksSw3" checked />
-          <label class="switch__label" for="ksSw3">Large switch</label>
+        <div class="field__item">
+          <input class="switch switch--lg" type="checkbox" role="switch" id="ksSw3" checked />
+          <label class="field__label" for="ksSw3">Large switch</label>
         </div>
       </div>
     </div>
@@ -375,15 +378,24 @@
     <div class="ks-grid">
       <div class="field">
         <label class="field__label" for="ksSlider1">Brightness</label>
-        <input type="range" class="slider" id="ksSlider1" value="40" />
+        <div class="slider" id="ksSlider1" data-stisla-slider data-value="40">
+          <div class="slider__track"><div class="slider__range"></div></div>
+          <div class="slider__thumb"></div>
+        </div>
       </div>
       <div class="field">
         <label class="field__label" for="ksSlider2">Small</label>
-        <input type="range" class="slider slider--sm" id="ksSlider2" value="60" />
+        <div class="slider slider--sm" id="ksSlider2" data-stisla-slider data-value="60">
+          <div class="slider__track"><div class="slider__range"></div></div>
+          <div class="slider__thumb"></div>
+        </div>
       </div>
       <div class="field">
         <label class="field__label" for="ksSlider3">Large</label>
-        <input type="range" class="slider slider--lg" id="ksSlider3" value="80" />
+        <div class="slider slider--lg" id="ksSlider3" data-stisla-slider data-value="80">
+          <div class="slider__track"><div class="slider__range"></div></div>
+          <div class="slider__thumb"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -569,7 +581,7 @@
     </div>
 
     <div class="ks-stack ks-stack--fill">
-      <div class="progress w-100" role="progressbar" aria-label="Upload" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100">
+      <div class="progress progress--block" role="progressbar" aria-label="Upload" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100">
         <span class="progress__label">Uploading</span>
         <span class="progress__value">72%</span>
         <div class="progress__track">
@@ -588,7 +600,7 @@
       <div class="progress progress--lg is-indeterminate" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100">
         <div class="progress__track"><div class="progress__bar"></div></div>
       </div>
-      <div class="meter w-100" role="meter" aria-label="Memory" aria-valuenow="14.2" aria-valuemin="0" aria-valuemax="16">
+      <div class="meter meter--block" role="meter" aria-label="Memory" aria-valuenow="14.2" aria-valuemin="0" aria-valuemax="16">
         <span class="meter__label">Memory</span>
         <span class="meter__value">14.2 GB of 16 GB</span>
         <div class="meter__track">
@@ -773,9 +785,9 @@
             <label class="field__label" for="ksDrawerSearch">Search</label>
             <input type="search" class="input" id="ksDrawerSearch" placeholder="Filter results" />
           </div>
-          <div class="switch switch--reverse justify-content-between">
-            <label class="switch__label" for="ksDrawerArchived">Include archived</label>
-            <input class="switch__input" type="checkbox" role="switch" id="ksDrawerArchived" />
+          <div class="d-flex flex-wrap align-items-center justify-content-between">
+            <label class="field__label" for="ksDrawerArchived">Include archived</label>
+            <input class="switch" type="checkbox" role="switch" id="ksDrawerArchived" />
           </div>
         </div>
         <div class="drawer__footer">
@@ -897,12 +909,12 @@
     </div>
 
     <div class="ks-row ks-row--swatches">
-      <div class="bg-surface p-3 rounded border">surface</div>
-      <div class="bg-surface-2 p-3 rounded border">surface-2</div>
-      <div class="bg-surface-3 p-3 rounded border">surface-3</div>
-      <div class="bg-surface-2 p-3 rounded-pill border">pill</div>
-      <div class="bg-surface-2 p-3 rounded-sm border">rounded-sm</div>
-      <div class="bg-surface-2 p-3 rounded-lg border">rounded-lg</div>
+      <div style="padding: calc(0.75rem * var(--st-density)); border-radius: var(--st-radius); border: var(--st-border-width) solid var(--st-border); background-color: var(--st-surface)">surface</div>
+      <div style="padding: calc(0.75rem * var(--st-density)); border-radius: var(--st-radius); border: var(--st-border-width) solid var(--st-border); background-color: var(--st-surface-2)">surface-2</div>
+      <div style="padding: calc(0.75rem * var(--st-density)); border-radius: var(--st-radius); border: var(--st-border-width) solid var(--st-border); background-color: var(--st-surface-3)">surface-3</div>
+      <div style="padding: calc(0.75rem * var(--st-density)); border-radius: 9999px; border: var(--st-border-width) solid var(--st-border); background-color: var(--st-surface-2)">pill</div>
+      <div style="padding: calc(0.75rem * var(--st-density)); border-radius: var(--st-radius-sm); border: var(--st-border-width) solid var(--st-border); background-color: var(--st-surface-2)">rounded-sm</div>
+      <div style="padding: calc(0.75rem * var(--st-density)); border-radius: var(--st-radius-lg); border: var(--st-border-width) solid var(--st-border); background-color: var(--st-surface-2)">rounded-lg</div>
     </div>
   </section>
 </main>
@@ -944,9 +956,10 @@
     var slider = root.querySelector('[data-stisla-ks-density]');
     var out = root.querySelector('.ks-density__value');
     if (slider) {
-      slider.addEventListener('input', function () {
-        root.style.setProperty('--st-density', slider.value);
-        if (out) out.value = parseFloat(slider.value).toFixed(2);
+      slider.addEventListener('stisla:slider:input', function (e) {
+        var v = e.detail.value;
+        root.style.setProperty('--st-density', v);
+        if (out) out.value = parseFloat(v).toFixed(2);
       });
     }
   })();

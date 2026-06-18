@@ -25,7 +25,7 @@
   "exports": {
     ".": "./dist/stisla.js",
     "./full": "./dist/stisla-full.js",
-    "./components/carousel": "./dist/components/carousel.js",
+    "./components/*": "./dist/components/*.js",
     "./dist/*": "./dist/*",
     "./src/*": "./src/*",
     "./package.json": "./package.json"
@@ -33,6 +33,7 @@
   "sideEffects": [
     "./dist/stisla.js",
     "./dist/stisla-full.js",
+    "./dist/components/*.js",
     "./src/index.js",
     "./src/index-full.js"
   ],
@@ -46,7 +47,8 @@
     "@floating-ui/dom": "^1.7.6",
     "embla-carousel": "^8.6.0",
     "focus-trap": "^8.2.1",
-    "tabbable": "^6.4.0"
+    "tabbable": "^6.4.0",
+    "tom-select": "^2.6.1"
   },
   "peerDependencies": {
     "@stisla/css": "3.0.0-beta.2"

@@ -28,7 +28,17 @@
   </section>
 
   <section>
-    <h2>Anatomy</h2>
+    <h2>Keyboard</h2>
+    <p>Hover-trigger popovers open on focus too, so keyboard users get the same affordance as hover users. Focus is not trapped, so <kbd>Tab</kbd> can leave the panel naturally. Pointer down outside the popover also dismisses.</p>
+    <ul>
+      <li><kbd>Enter</kbd> / <kbd>Space</kbd>: open the popover when the trigger is focused (click-trigger mode)</li>
+      <li><kbd>Escape</kbd>: close the popover and return focus to the trigger</li>
+      <li><kbd>Tab</kbd>: move focus through the panel and out the other side</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>With close button</h2>
     <p>An optional <code>.popover__close</code> chip sits in the top-right corner. Wire it with <code>data-stisla-popover-dismiss</code> so the delegated handler closes the popover without per-instance JS.</p>
     {% call ui.demo() %}
     <button type="button" class="btn btn--outline btn--neutral"
@@ -52,7 +62,7 @@
     <h2>Placements</h2>
     <p><code>data-stisla-popover-placement</code> picks the resting side. Floating UI flips automatically when the chosen side would overflow the viewport.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
+    <div class="d-flex flex-wrap align-items-center gap-2">
       <button type="button" class="btn btn--outline btn--neutral"
               data-stisla-popover-trigger="popover-top"
               aria-haspopup="dialog" aria-expanded="false" aria-controls="popover-top">Top</button>
@@ -125,7 +135,7 @@
       <div class="popover__body text-foreground">
         <div class="d-flex flex-column gap-2">
           <input type="email" class="input" placeholder="name@example.com" aria-label="Email address">
-          <div class="d-flex gap-2 justify-content-end">
+          <div class="d-flex flex-wrap align-items-center gap-2 justify-content-end">
             <button type="button" class="btn btn--sm btn--ghost btn--neutral" data-stisla-popover-dismiss>Cancel</button>
             <button type="button" class="btn btn--sm btn--primary">Send invite</button>
           </div>
@@ -156,6 +166,15 @@
       <div class="popover__body">Opened by a script, anchored to the marked trigger.</div>
     </div>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Events</h2>
+    <p>Four events fire on the <code>.popover</code> root. The <code>opening</code> and <code>closing</code> events are cancelable.</p>
+    <p><code>stisla:popover:opening</code> fires before the panel mounts. Call <code>preventDefault()</code> to abort.</p>
+    <p><code>stisla:popover:opened</code> fires once the panel is positioned and visible.</p>
+    <p><code>stisla:popover:closing</code> fires before the panel dismisses. Call <code>preventDefault()</code> to keep it open.</p>
+    <p><code>stisla:popover:closed</code> fires once the panel is fully hidden and focus has returned to the trigger.</p>
   </section>
 
   <section>

@@ -10,7 +10,7 @@
   </header>
 
   <section>
-    <h2>Default</h2>
+    <h2>Basic</h2>
     <p>Each item carries <code>data-state="open"</code> or <code>"closed"</code>. Multiple items may stay open at once. Click any header to toggle its panel.</p>
     {% call ui.demo() %}
     <div class="accordion" data-stisla-accordion>
@@ -55,12 +55,22 @@
         </h3>
         <div class="accordion__body" id="acc-default-3" role="region" aria-labelledby="acc-default-3-trigger">
           <div class="accordion__body-inner">
-            The chevron rotates today. The height transition lands with the Stisla.Accordion JS class in Step 4, same shape as the upcoming Sidebar and Dialog classes.
+            The chevron rotates and the panel slides open and closed. Both transitions follow the standard Stisla motion curve and ease at the same duration.
           </div>
         </div>
       </div>
     </div>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Keyboard</h2>
+    <p>Each <code>.accordion__header</code> is a native <code>&lt;button&gt;</code>, so the browser handles focus and activation.</p>
+    <ul>
+      <li><kbd>Tab</kbd>: move focus to the next header (or out of the accordion)</li>
+      <li><kbd>Shift</kbd> + <kbd>Tab</kbd>: move focus backward</li>
+      <li><kbd>Enter</kbd> / <kbd>Space</kbd>: toggle the focused panel</li>
+    </ul>
   </section>
 
   <section>
@@ -184,7 +194,7 @@
       <div class="accordion__item" data-state="open">
         <h3>
           <button type="button" class="accordion__header" data-stisla-accordion-trigger aria-expanded="true" aria-controls="acc-icon-1" id="acc-icon-1-trigger">
-            <span class="d-inline-flex align-items-center gap-2">
+            <span class="d-flex flex-wrap align-items-center gap-2">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M12 2v6m0 0l3-3m-3 3l-3-3M5 12H2m20 0h-3M12 16v6m0-6l3 3m-3-3l-3 3"></path>
               </svg>
@@ -204,7 +214,7 @@
       <div class="accordion__item" data-state="closed">
         <h3>
           <button type="button" class="accordion__header" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-icon-2" id="acc-icon-2-trigger">
-            <span class="d-inline-flex align-items-center gap-2">
+            <span class="d-flex flex-wrap align-items-center gap-2">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M6 6l1 14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-14"></path>
               </svg>
@@ -224,7 +234,7 @@
       <div class="accordion__item" data-state="closed">
         <h3>
           <button type="button" class="accordion__header" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-icon-3" id="acc-icon-3-trigger">
-            <span class="d-inline-flex align-items-center gap-2">
+            <span class="d-flex flex-wrap align-items-center gap-2">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <circle cx="12" cy="12" r="10"></circle>
                 <path d="M12 8v4l3 2"></path>
@@ -283,6 +293,11 @@
       </div>
     </div>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Events</h2>
+    <p><code>stisla:accordion:value-change</code> fires on the accordion root after a successful open or close. The <code>detail</code> object carries the freshly-changed item under <code>value</code>, the prior selection under <code>previousValue</code>, and the full set of currently-open items under <code>openItems</code>. Use it to sync URL hash state, persist the last-open item, or react to user navigation through the panels.</p>
   </section>
 
   <section>
@@ -447,7 +462,7 @@
         </tr>
         <tr>
           <td><code>--accordion-body-transition-duration</code></td>
-          <td>Reserved for the Step 4 height transition. No-op today.</td>
+          <td>Open/close height transition duration. Zeroed under <code>prefers-reduced-motion</code>.</td>
         </tr>
       </tbody>
     </table>

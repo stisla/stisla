@@ -27,6 +27,18 @@
   </section>
 
   <section>
+    <h2>Keyboard</h2>
+    <p>The trigger behaves like a menu button. Open it with <kbd>Enter</kbd>, <kbd>Space</kbd>, or <kbd>ArrowDown</kbd>; the first enabled item takes focus.</p>
+    <ul>
+      <li><kbd>ArrowDown</kbd> / <kbd>ArrowUp</kbd>: move focus through enabled items (wraps at the ends)</li>
+      <li><kbd>Home</kbd> / <kbd>End</kbd>: focus the first / last enabled item</li>
+      <li><kbd>Enter</kbd> / <kbd>Space</kbd>: activate the focused item</li>
+      <li><kbd>Escape</kbd>: close the menu and return focus to the trigger</li>
+      <li><kbd>Tab</kbd>: close the menu and move focus to the next element on the page</li>
+    </ul>
+  </section>
+
+  <section>
     <h2>With icons</h2>
     <p>Drop an <code>&lt;svg&gt;</code> or <code>&lt;i data-lucide&gt;</code> as the first child of an item. The icon pins to 1rem and inherits the row color on hover so it tracks the surface naturally.</p>
     {% call ui.demo() %}
@@ -187,7 +199,7 @@
   </section>
 
   <section>
-    <h2>Keyboard shortcuts</h2>
+    <h2>Item shortcuts</h2>
     <p>Append a <code>.dropdown-menu__shortcut</code> chip after the label and auto-margin pushes it to the trailing edge of the row. Pair with <code>&lt;kbd&gt;</code> for the keystroke glyphs. The chip color inherits in hover and active paint so it stays readable on the highlight surface.</p>
     {% call ui.demo() %}
     <div class="dropdown">
@@ -225,7 +237,7 @@
       <button type="button" class="btn btn--primary" data-stisla-dropdown-trigger="ddForm" aria-haspopup="menu" aria-expanded="false" aria-controls="ddForm">
         Sign in
       </button>
-      <form class="dropdown-menu gap-3 p-3" id="ddForm" data-stisla-dropdown data-stisla-dropdown-auto-close="outside" data-state="closed" style="min-width: 18rem;">
+      <form class="dropdown-menu gap-3" id="ddForm" data-stisla-dropdown data-stisla-dropdown-auto-close="outside" data-state="closed" style="min-width: 18rem; padding: calc(0.75rem * var(--st-density))">
         <div class="field" style="--field-gap: 0.25rem;">
           <label for="ddFormEmail" class="field__label">Email</label>
           <input type="email" class="input" id="ddFormEmail" placeholder="you@example.com">
@@ -240,7 +252,7 @@
             <span class="field__label">Remember me</span>
           </label>
         </div>
-        <button type="submit" class="btn btn--primary w-100">Sign in</button>
+        <button type="submit" class="btn btn--primary btn--block">Sign in</button>
       </form>
     </div>
     {% endcall %}
@@ -250,7 +262,7 @@
     <h2>Placement</h2>
     <p>Set <code>data-stisla-dropdown-placement</code> on the menu to override the default <code>bottom-start</code>. Floating UI flips the menu automatically when it would overflow the viewport, so the value is a preference. It isn't a hard constraint.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
+    <div class="d-flex flex-wrap align-items-center gap-2">
       <div class="dropdown">
         <button type="button" class="btn btn--outline btn--neutral" data-stisla-dropdown-trigger="ddTop" aria-haspopup="menu" aria-expanded="false" aria-controls="ddTop">
           Top
@@ -289,6 +301,15 @@
       </div>
     </div>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Events</h2>
+    <p>Four events fire on the <code>.dropdown-menu</code> root. The <code>opening</code> and <code>closing</code> events are cancelable.</p>
+    <p><code>stisla:dropdown:opening</code> fires before the menu mounts. Call <code>preventDefault()</code> to abort.</p>
+    <p><code>stisla:dropdown:opened</code> fires once the menu is positioned and focus has moved to the first item.</p>
+    <p><code>stisla:dropdown:closing</code> fires before the menu dismisses. Call <code>preventDefault()</code> to keep it open.</p>
+    <p><code>stisla:dropdown:closed</code> fires once the menu is hidden and focus has returned to the trigger.</p>
   </section>
 
   <section>

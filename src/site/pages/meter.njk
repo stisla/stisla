@@ -10,48 +10,15 @@
   </header>
 
   <section>
-    <h2>Example</h2>
+    <h2>Basic</h2>
     <p>Memory used out of total, fuel against tank capacity, score against a target. Pair the value text with a label and the meter reads at a glance. Meter is the scalar-measurement cousin of <a class="link" href="/progress">progress</a>. Use progress when work is in motion. Reach for meter when the value just sits at a level.</p>
+    <p>Wrap a <code>.meter__bar</code> inside a <code>.meter__track</code>, inside a <code>.meter</code> root. The root carries <code>role="meter"</code> and the <code>aria-valuenow</code> / <code>aria-valuemin</code> / <code>aria-valuemax</code> attributes. The inner bar paints the fill via inline <code>width</code>. Add <code>.meter--block</code> to a meter that also carries <code>.meter__label</code> and <code>.meter__value</code> children so they stack above the track.</p>
     {% call ui.demo() %}
-    <div class="meter w-100" role="meter" aria-label="Memory" aria-valuenow="14.2" aria-valuemin="0" aria-valuemax="16" aria-valuetext="14.2 GB of 16 GB used">
+    <div class="meter meter--block" role="meter" aria-label="Memory" aria-valuenow="14.2" aria-valuemin="0" aria-valuemax="16" aria-valuetext="14.2 GB of 16 GB used">
       <span class="meter__label">Memory</span>
       <span class="meter__value">14.2 GB of 16 GB</span>
       <div class="meter__track">
         <div class="meter__bar meter__bar--warning" style="width: 89%"></div>
-      </div>
-    </div>
-    {% endcall %}
-  </section>
-
-  <section>
-    <h2>Basic</h2>
-    <p>Wrap a <code>.meter__bar</code> inside a <code>.meter__track</code>, inside a <code>.meter</code> root. The root carries <code>role="meter"</code> and the <code>aria-valuenow</code> / <code>aria-valuemin</code> / <code>aria-valuemax</code> attributes. The inner bar paints the fill via inline <code>width</code>.</p>
-    {% call ui.demo() %}
-    <div class="d-flex flex-column gap-4 w-100">
-      <div class="meter" role="meter" aria-label="Zero" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-        <div class="meter__track">
-          <div class="meter__bar" style="width: 0%"></div>
-        </div>
-      </div>
-      <div class="meter" role="meter" aria-label="Quarter" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-        <div class="meter__track">
-          <div class="meter__bar" style="width: 25%"></div>
-        </div>
-      </div>
-      <div class="meter" role="meter" aria-label="Half" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-        <div class="meter__track">
-          <div class="meter__bar" style="width: 50%"></div>
-        </div>
-      </div>
-      <div class="meter" role="meter" aria-label="Three quarters" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-        <div class="meter__track">
-          <div class="meter__bar" style="width: 75%"></div>
-        </div>
-      </div>
-      <div class="meter" role="meter" aria-label="Full" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-        <div class="meter__track">
-          <div class="meter__bar" style="width: 100%"></div>
-        </div>
       </div>
     </div>
     {% endcall %}
@@ -119,7 +86,7 @@
     <h2>Stacked</h2>
     <p>Drop multiple <code>.meter__bar</code> children inside one <code>.meter__track</code> to break the value into segments. The track is a flex row, so adjacent bars sit next to each other separated by <code>--meter-segment-gap</code>. Widths must sum to no more than 100. Any remaining room exposes the track background as the unfilled portion.</p>
     {% call ui.demo() %}
-    <div class="meter meter--lg w-100" role="meter" aria-label="Monthly budget" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" aria-valuetext="$3,120 of $4,000 budget spent">
+    <div class="meter meter--lg meter--block" role="meter" aria-label="Monthly budget" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" aria-valuetext="$3,120 of $4,000 budget spent">
       <span class="meter__label">Monthly budget</span>
       <span class="meter__value">$3,120 of $4,000</span>
       <div class="meter__track">
@@ -136,7 +103,7 @@
     <h2>Legend</h2>
     <p>Pair a stacked meter with a <code>.meter__legend</code> row when each segment names a category. Each <code>.meter__legend-item</code> carries a dot that reuses <code>--meter-bar-bg</code>, so the intent modifier on the dot (or an inline override) colors the swatch and matches the bar above.</p>
     {% call ui.demo() %}
-    <div class="meter meter--lg w-100" role="meter" aria-label="Macintosh HD" aria-valuenow="83" aria-valuemin="0" aria-valuemax="100" aria-valuetext="203.95 GB of 245.11 GB used">
+    <div class="meter meter--lg meter--block" role="meter" aria-label="Macintosh HD" aria-valuenow="83" aria-valuemin="0" aria-valuemax="100" aria-valuetext="203.95 GB of 245.11 GB used">
       <span class="meter__label">Macintosh HD</span>
       <span class="meter__value">203.95 GB of 245.11 GB used</span>
       <div class="meter__track">
@@ -185,7 +152,7 @@
       <tbody>
         <tr>
           <td><code>--meter-height</code></td>
-          <td>Track height (8 at default density; sm 4, lg 16)</td>
+          <td>Track height; sm and lg reassign this</td>
         </tr>
         <tr>
           <td><code>--meter-radius</code></td>

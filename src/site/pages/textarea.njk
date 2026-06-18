@@ -24,7 +24,7 @@
     <h2>Sizes</h2>
     <p>Three sizes match the input scale so a textarea sits beside an input in the same row. Add <code>.textarea--sm</code> or <code>.textarea--lg</code>.</p>
     {% call ui.demo() %}
-    <div class="demo-stack w-100" style="max-width: 24rem;">
+    <div class="demo-stack" style="max-width: 24rem;">
       <textarea class="textarea textarea--sm" rows="2" placeholder="Small"></textarea>
       <textarea class="textarea" rows="2" placeholder="Default"></textarea>
       <textarea class="textarea textarea--lg" rows="2" placeholder="Large"></textarea>
@@ -48,7 +48,7 @@
     <h2>Browser validation</h2>
     <p>Pair native constraint attributes (<code>required</code>, <code>minlength</code>, <code>maxlength</code>) with the <code>:user-invalid</code> pseudo. The browser fires it after the user interacts with the field, and clears it the moment the value satisfies the constraints.</p>
     {% call ui.demo() %}
-    <form class="demo-stack w-100" style="max-width: 24rem;" onsubmit="event.preventDefault()">
+    <form class="demo-stack" style="max-width: 24rem;" onsubmit="event.preventDefault()">
       <div class="field">
         <label for="reqMessage" class="field__label">Message</label>
         <textarea class="textarea" id="reqMessage" rows="3" required minlength="10" placeholder="At least 10 characters"></textarea>
@@ -63,7 +63,7 @@
     <h2>Server validation</h2>
     <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky, and Stisla just paints while it's present. Pair with a <code>.field__error</code> message tied via <code>aria-describedby</code>.</p>
     {% call ui.demo() %}
-    <div class="demo-stack w-100" style="max-width: 24rem;">
+    <div class="demo-stack" style="max-width: 24rem;">
       <div class="field">
         <label for="srvFeedback" class="field__label">Feedback</label>
         <textarea
@@ -82,7 +82,7 @@
     <h2>Disabled &amp; readonly</h2>
     <p><code>disabled</code> blocks interaction and dims the field. <code>readonly</code> keeps the value selectable for copy but rejects edits. The bg shifts a tier so you can see at a glance that the field is selectable but not editable.</p>
     {% call ui.demo() %}
-    <div class="demo-stack w-100" style="max-width: 24rem;">
+    <div class="demo-stack" style="max-width: 24rem;">
       <textarea class="textarea" rows="2" disabled>Disabled</textarea>
       <textarea class="textarea" rows="2" readonly>Readonly</textarea>
     </div>
@@ -92,6 +92,7 @@
   <section>
     <h2>Customization</h2>
     <p>Eight variables retune <code>.textarea</code> independently of <code>.input</code>. Override on the field itself, on a parent scope, or on <code>:root</code>. <code>--textarea-height</code> acts as a min-height floor (the field grows past it as content fills in).</p>
+    <p>On touch devices (<code>@media (pointer: coarse)</code>) <code>--textarea-font-size</code> is bumped to <code>1rem</code> so iOS Safari doesn't zoom the viewport on focus. The browser auto-zooms any field with computed font-size below 16px and never zooms back; desktop keeps the tighter default.</p>
     <table>
       <thead>
         <tr>

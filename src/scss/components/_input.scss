@@ -130,6 +130,10 @@
   --input-height:    calc(1.75rem + 0.5rem * (var(--st-density) - 1));   // 28 @ 1 → 30 @ 1.25
   --input-padding-x: calc(0.5rem * var(--st-density));                   //  8
   --input-font-size: 0.8125rem;
+  // See form-field-base — iOS auto-zoom guard for sub-16px fields.
+  @media (pointer: coarse) {
+    --input-font-size: 1rem;
+  }
 }
 
 .input--lg {

@@ -1,0 +1,85 @@
+// Stisla v3 — autocomplete.
+//
+// An <input> that suggests options as the user types. Same field shape
+// as .input (form-field-base). No multi-select, no chips, no tagging.
+// Picking a suggestion replaces the typed text with the chosen value,
+// matching how a user would expect a native autocomplete to behave.
+//
+// Anatomy after hydration:
+//   <input class="autocomplete" role="combobox" aria-autocomplete="list"
+//          aria-expanded="false" aria-controls="…">
+//   <ul class="autocomplete__popup" role="listbox" hidden>
+//     <li class="autocomplete__option" role="option" data-value="…">…</li>
+//
+// Options can be authored two ways:
+//   1. A <datalist id="…"> referenced via list="…" on the input. JS reads
+//      the datalist, hides it (removes the list attr to suppress the
+//      native browser UI), and renders the custom popup.
+//   2. data-options='[{"value":"…","label":"…"}, …]' on the input.
+
+.autocomplete {
+  @include form-field-base('autocomplete');
+}
+
+// === Popup =============================================================
+.autocomplete__popup {
+  @include popup-base;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1030;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  margin: 0;
+  list-style: none;
+  overflow-y: auto;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.autocomplete__option {
+  @include popup-item;
+  // Search-highlight markup splits the label across multiple inline
+  // nodes (`Foo<mark>bar</mark>baz`); bare text nodes become anonymous
+  // flex items, so a non-zero gap would paint visible whitespace
+  // between them. Reset to 0; autocomplete options are text-only.
+  gap: 0;
+
+  &:hover,
+  &.is-highlighted {
+    @include popup-item-hover;
+  }
+
+  // Search match highlight — JS wraps the matching substring in <mark>.
+  // Subtle, picks up the surrounding row color.
+  mark {
+    background: color-mix(in oklch, currentColor 18%, transparent);
+    color: inherit;
+    border-radius: 2px;
+  }
+}
+
+.autocomplete__empty {
+  @include popup-item;
+  @include popup-item-disabled;
+  cursor: default;
+  font-style: italic;
+}
+
+// === Sizes =============================================================
+.autocomplete--sm {
+  --autocomplete-radius:    var(--st-input-radius, var(--st-radius-sm));
+  --autocomplete-height:    calc(1.75rem + 0.5rem * (var(--st-density) - 1));
+  --autocomplete-padding-x: calc(0.5rem * var(--st-density));
+  --autocomplete-font-size: 0.8125rem;
+}
+
+.autocomplete--lg {
+  --autocomplete-radius:    var(--st-input-radius, var(--st-radius-lg));
+  --autocomplete-height:    calc(2.75rem + 0.875rem * (var(--st-density) - 1));
+  --autocomplete-padding-x: calc(0.875rem * var(--st-density));
+  --autocomplete-font-size: 1rem;
+}

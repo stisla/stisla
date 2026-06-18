@@ -20,10 +20,19 @@
   </section>
 
   <section>
+    <h2>Keyboard</h2>
+    <p>Tooltip activation is tied to focus when <code>focus</code> is in the trigger list (the default). Blurring the trigger closes it.</p>
+    <ul>
+      <li><kbd>Tab</kbd>: focus the trigger and open the tooltip</li>
+      <li><kbd>Escape</kbd>: close the open tooltip without taking focus off the trigger</li>
+    </ul>
+  </section>
+
+  <section>
     <h2>Placements</h2>
     <p><code>data-stisla-tooltip-placement</code> picks the resting side. Floating UI flips automatically when the chosen side would overflow the viewport; the <code>-start</code> and <code>-end</code> variants align the tooltip to the corresponding edge of the trigger.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
+    <div class="d-flex flex-wrap align-items-center gap-2">
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-placement="top" data-stisla-tooltip-title="Anchored above">Top</button>
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-placement="right" data-stisla-tooltip-title="Anchored right">Right</button>
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-placement="bottom" data-stisla-tooltip-title="Anchored below">Bottom</button>
@@ -40,7 +49,7 @@
     <h2>Triggers</h2>
     <p>The default is <code>hover focus</code>, which opens on either. Pass <code>data-stisla-tooltip-trigger</code> to opt for one. <code>manual</code> wires nothing and leaves <code>show()</code> / <code>hide()</code> to a consumer script.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
+    <div class="d-flex flex-wrap align-items-center gap-2">
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-trigger="hover" data-stisla-tooltip-title="Hover only. Keyboard focus skips this.">
         Hover only
       </button>
@@ -58,7 +67,7 @@
     <h2>Delay</h2>
     <p>The 600ms default <code>delay</code> prevents flash on incidental pointer crossings. Drop to <code>0</code> for instant feedback or raise it for chips that should only show on deliberate hover.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
+    <div class="d-flex flex-wrap align-items-center gap-2">
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-delay="0" data-stisla-tooltip-title="Instant. No open delay.">
         Instant
       </button>
@@ -91,17 +100,17 @@
     <h2>Icon-only triggers</h2>
     <p>Icon buttons rely on tooltips for their label. Always pair the tooltip with an <code>aria-label</code> on the trigger so screen readers without hover get the same name.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
-      <button type="button" class="btn btn--outline btn--neutral btn--icon" data-stisla-tooltip data-stisla-tooltip-title="Edit" aria-label="Edit">
+    <div class="d-flex flex-wrap align-items-center gap-2">
+      <button type="button" class="btn btn--outline btn--neutral btn--icon-only" data-stisla-tooltip data-stisla-tooltip-title="Edit" aria-label="Edit">
         <i data-lucide="pencil"></i>
       </button>
-      <button type="button" class="btn btn--outline btn--neutral btn--icon" data-stisla-tooltip data-stisla-tooltip-title="Duplicate" aria-label="Duplicate">
+      <button type="button" class="btn btn--outline btn--neutral btn--icon-only" data-stisla-tooltip data-stisla-tooltip-title="Duplicate" aria-label="Duplicate">
         <i data-lucide="copy"></i>
       </button>
-      <button type="button" class="btn btn--outline btn--neutral btn--icon" data-stisla-tooltip data-stisla-tooltip-title="Archive" aria-label="Archive">
+      <button type="button" class="btn btn--outline btn--neutral btn--icon-only" data-stisla-tooltip data-stisla-tooltip-title="Archive" aria-label="Archive">
         <i data-lucide="archive"></i>
       </button>
-      <button type="button" class="btn btn--outline btn--danger btn--icon" data-stisla-tooltip data-stisla-tooltip-title="Delete" aria-label="Delete">
+      <button type="button" class="btn btn--outline btn--danger btn--icon-only" data-stisla-tooltip data-stisla-tooltip-title="Delete" aria-label="Delete">
         <i data-lucide="trash-2"></i>
       </button>
     </div>
@@ -120,7 +129,7 @@
 
   <section>
     <h2>Long content</h2>
-    <p>Content past <code>--tooltip-max-width</code> (240px) wraps. Two lines is the practical ceiling. Anything longer belongs in a popover.</p>
+    <p>Content past <code>--tooltip-max-width</code> wraps. Two lines is the practical ceiling. Anything longer belongs in a popover.</p>
     {% call ui.demo() %}
     <button type="button" class="btn btn--outline btn--neutral" data-stisla-tooltip data-stisla-tooltip-title="Only workspace owners can change billing details and downgrade the plan">
       Hover for the rule
@@ -136,6 +145,15 @@
       <button type="button" class="btn btn--primary" disabled style="pointer-events: none;">Export CSV</button>
     </span>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Events</h2>
+    <p>Four events fire on the trigger element. The <code>opening</code> and <code>closing</code> events are cancelable.</p>
+    <p><code>stisla:tooltip:opening</code> fires before the tooltip appears. Call <code>preventDefault()</code> to keep it hidden (useful for conditional reveal).</p>
+    <p><code>stisla:tooltip:opened</code> fires once the tooltip is positioned and visible.</p>
+    <p><code>stisla:tooltip:closing</code> fires before the tooltip dismisses. Call <code>preventDefault()</code> to keep it open.</p>
+    <p><code>stisla:tooltip:closed</code> fires once the tooltip is removed from the DOM.</p>
   </section>
 
   <section>

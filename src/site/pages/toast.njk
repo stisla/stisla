@@ -22,6 +22,23 @@
   </header>
 
   <section>
+    <h2>Basic</h2>
+    <p>A toast carries a leading icon, a title, and an optional body. The icon column is required so the toast keeps a consistent visual anchor. Use a Lucide icon, an <code>.icon-box</code>, or an image. Drop one inside a <code>.toast-region</code> to position it; the region holds the stack and the corner placement. For static demos like this one, the toast sits inline with <code>data-state="open"</code> so it stays visible.</p>
+    {% call ui.demo() %}
+    <div class="toast" data-state="open" role="status" aria-live="polite" aria-atomic="true">
+      <div class="toast__icon"><i data-lucide="bell"></i></div>
+      <div class="toast__content">
+        <div class="toast__header">Workspace saved</div>
+        <div class="toast__body">Your changes to billing details have been written and synced.</div>
+      </div>
+      <button type="button" class="toast__close" data-stisla-toast-dismiss aria-label="Close">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
     <h2>Setup</h2>
     <p>Mount one <code>.toast-region</code> in your app shell so the helper has somewhere to render. Tag it with <code>data-stisla-toast-region="default"</code> and <code>Stisla.toast(...)</code> will land there when no <code>region</code> opt is passed.</p>
 
@@ -62,38 +79,17 @@
   </section>
 
   <section>
-    <h2>How it works</h2>
-    <p>Two pieces, two lifetimes. The <code>.toast-region</code> is <code>position: fixed</code>, carries the corner placement and the live-region ARIA wrapper, and persists for the page. Individual <code>.toast</code> nodes come and go inside it; they're created by markup or by the JS helper, opened, paused on hover, then dismissed when the user clicks close or the auto-hide timer fires.</p>
-
-    <p>State lives on the toast root as <code>data-state="open|closed"</code>. Closed toasts are <code>display: none</code> so they don't reserve layout space and a stack of pending markup-first toasts doesn't push the next-to-open one down the page. Hovering or focusing an open toast pauses its auto-hide timer (per WCAG 2.2.1) and leaving resumes it. Re-triggering an already-open toast restarts the timer rather than stacking a duplicate.</p>
-
-    <p>Two ways to create a toast:</p>
+    <h2>Keyboard</h2>
+    <p>Hovering or focusing an open toast pauses its auto-hide timer (per WCAG 2.2.1) and leaving resumes it. Re-triggering an already-open toast restarts the timer rather than stacking a duplicate. Action-row buttons inside <code>.toast__action</code> are tabbable in the same way as the close chip.</p>
     <ul>
-      <li><strong>Markup-first.</strong> Author a <code>.toast</code> inside the region with <code>data-state="closed"</code>, then open it with a <code>data-stisla-toast-trigger="&lt;id&gt;"</code> button. The toast stays in the DOM and can be re-triggered. See the Trigger section below.</li>
-      <li><strong>Imperative.</strong> Call <code>Stisla.toast({ title, description, variant })</code>. The helper builds the node, mounts it, opens it, and removes it from the DOM after close. See the JS helper section below.</li>
+      <li><kbd>Tab</kbd>: focus the close chip (and any action-row buttons)</li>
+      <li><kbd>Enter</kbd> / <kbd>Space</kbd>: activate the focused chip or button</li>
     </ul>
   </section>
 
   <section>
-    <h2>Basic</h2>
-    <p>A toast carries a leading icon, a title, and an optional body. The icon column is required so the toast keeps a consistent visual anchor. Use a Lucide icon, an <code>.icon-box</code>, or an image. Drop one inside a <code>.toast-region</code> to position it; the region holds the stack and the corner placement. For static demos like this one, the toast sits inline with <code>data-state="open"</code> so it stays visible.</p>
-    {% call ui.demo() %}
-    <div class="toast" data-state="open" role="status" aria-live="polite" aria-atomic="true">
-      <div class="toast__icon"><i data-lucide="bell"></i></div>
-      <div class="toast__content">
-        <div class="toast__header">Workspace saved</div>
-        <div class="toast__body">Your changes to billing details have been written and synced.</div>
-      </div>
-      <button type="button" class="toast__close" data-stisla-toast-dismiss aria-label="Close">
-        <i data-lucide="x"></i>
-      </button>
-    </div>
-    {% endcall %}
-  </section>
-
-  <section>
-    <h2>Anatomy</h2>
-    <p>The row has three columns. A <code>.toast__icon</code> leading slot, a <code>.toast__content</code> vertical stack, and a <code>.toast__close</code> chip. The content stack carries <code>.toast__header</code> with an optional <code>.toast__timestamp</code>, <code>.toast__body</code> for the description, and <code>.toast__action</code> for inline buttons. The stack owns its own gap so spacing stays consistent regardless of which parts are present.</p>
+    <h2>With actions and timestamp</h2>
+    <p>The content stack carries an optional <code>.toast__timestamp</code> beside the header and a <code>.toast__action</code> row for inline buttons. The stack owns its own gap so spacing stays consistent regardless of which parts are present.</p>
     {% call ui.demo() %}
     <div class="toast" data-state="open" role="status" aria-live="polite" aria-atomic="true">
       <div class="toast__icon"><i data-lucide="shield-check"></i></div>
@@ -274,7 +270,7 @@
     <h2>Auto-hide and persistent</h2>
     <p>Auto-hide is on by default with a 4-second delay. Hovering or focusing the toast pauses the timer (WCAG 2.2.1) and leaving resumes it. Set <code>data-stisla-toast-autohide="false"</code> for a sticky toast that only the close button dismisses, useful for errors and confirmations.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
+    <div class="d-flex flex-wrap align-items-center gap-2">
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-toast-trigger="autoHideToast">Auto-hide (4s)</button>
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-toast-trigger="persistentToast">Persistent</button>
     </div>
@@ -326,7 +322,7 @@
 
   <section>
     <h2>JS helper</h2>
-    <p><code>Stisla.toast(opts)</code> builds the toast node, mounts it into a region, opens it, and removes it from the DOM after close. Returns the <code>Toast</code> instance so callers can <code>.close()</code> manually. If no region exists in the page, the helper appends a default top-center region to <code>&lt;body&gt;</code> on first call (see Setup).</p>
+    <p><code>Stisla.toast(opts)</code> builds the toast node, mounts it into a region, opens it, and removes it from the DOM after close. Returns the <code>Toast</code> instance so callers can <code>.close()</code> manually. If no region exists in the page, the helper appends a default top-center region to <code>&lt;body&gt;</code> on first call (see Configuration above).</p>
 
     {% call ui.code(lang='js') %}
     // Object-form
@@ -346,7 +342,7 @@
     {% endcall %}
 
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
+    <div class="d-flex flex-wrap align-items-center gap-2">
       <button type="button" class="btn btn--ghost btn--neutral" data-demo-toast-shortcut="success">Success</button>
       <button type="button" class="btn btn--ghost btn--neutral" data-demo-toast-shortcut="error">Error</button>
       <button type="button" class="btn btn--ghost btn--neutral" data-demo-toast-shortcut="warning">Warning</button>
@@ -375,6 +371,16 @@
   </section>
 
   <section>
+    <h2>Events</h2>
+    <p>Five events fire on the <code>.toast</code> root. The <code>opening</code> and <code>closing</code> events are cancelable.</p>
+    <p><code>stisla:toast:opening</code> fires before the toast appears. Call <code>preventDefault()</code> to abort.</p>
+    <p><code>stisla:toast:opened</code> fires once the open transition lands.</p>
+    <p><code>stisla:toast:closing</code> fires before the toast dismisses. Call <code>preventDefault()</code> to keep it open.</p>
+    <p><code>stisla:toast:closed</code> fires once the toast is fully hidden. For helper-created toasts, the node is removed from the DOM right after.</p>
+    <p><code>stisla:toast:updated</code> fires when an open toast is patched in place (the path <code>Stisla.toast.promise</code> takes when a promise settles). The <code>detail.patch</code> object carries the fields that changed.</p>
+  </section>
+
+  <section>
     <h2>Customization</h2>
     <p>Twenty-eight variables retune <code>.toast</code> and <code>.toast-region</code> without touching component CSS. Override on a single instance, on the region, on a wrapper, or on <code>:root</code>. Intent modifiers shift only <code>--toast-icon-color</code>, so the surface stays neutral and a stack of mixed intents reads as one family.</p>
 
@@ -394,7 +400,7 @@
       <thead><tr><th>Variable</th><th>Use</th></tr></thead>
       <tbody>
         <tr><td><code>--toast-min-width</code></td><td>Floor so short titles still feel substantial</td></tr>
-        <tr><td><code>--toast-max-width</code></td><td>350px ceiling so long bodies wrap before getting unwieldy</td></tr>
+        <tr><td><code>--toast-max-width</code></td><td>Ceiling so long bodies wrap before getting unwieldy</td></tr>
         <tr><td><code>--toast-padding</code></td><td>Single frame pad on the root</td></tr>
         <tr><td><code>--toast-radius</code></td><td>Large-frame tier (matches dialog and card)</td></tr>
         <tr><td><code>--toast-z-index</code></td><td>Individual toast stacking</td></tr>

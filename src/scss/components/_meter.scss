@@ -190,3 +190,6 @@
 
 .meter--sm { --meter-height: calc(0.25rem * var(--st-density)); } //  4
 .meter--lg { --meter-height: calc(1rem    * var(--st-density)); } // 16
+
+// Block — fills its container width per SPEC §9 escape ramp.
+.meter--block { width: 100%; }

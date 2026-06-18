@@ -23,7 +23,8 @@
     "embla-carousel": "^8.6.0",
     "focus-trap": "^8.2.1",
     "overlayscrollbars": "^2.16.0",
-    "tabbable": "^6.4.0"
+    "tabbable": "^6.4.0",
+    "tom-select": "^2.6.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",

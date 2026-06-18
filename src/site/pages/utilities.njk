@@ -6,15 +6,15 @@
 {% block content %}
   <header>
     <h1>Utilities</h1>
-    <p class="lead">Small set of single-property classes for tweaking existing components.</p>
+    <p class="lead">Single-property classes for tweaking existing components and laying out their contents.</p>
   </header>
 
   <section id="philosophy">
     <h2>Philosophy</h2>
-    <p>A utility class changes <em>one</em> property on an <em>existing</em> shape. A button that needs a custom height. A card row that needs to be flex. A stack that needs more gap. A heading that needs muted color in one specific place. That&rsquo;s what utilities are for.</p>
-    <p>What utilities are <strong>not</strong> for: assembling a new component from scratch. If you find yourself stacking <code>.d-flex .gap-3 .p-4 .rounded .border</code> on a <code>&lt;div&gt;</code> to build something that looks like a card, you&rsquo;re using the wrong tool. Build the component in SCSS with its own BEM class, tokens, and <code>color-mix</code> states. The component file is small, scoped, deletable, and lets the next person reading your codebase see what the thing actually is.</p>
-    <p>Stisla is a design spec realized as components. Utilities are escape hatches. They aren&rsquo;t Lego bricks. If composing utilities into components is your preferred workflow, reach for <a class="link" href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer">Tailwind</a> instead.</p>
-    <p>The shipped set is small on purpose. Text (color, weight, size, alignment, overflow). Layout (display, flex, gap, margin, padding, sizing, position, overflow). Surface (background, border, radius). If a property isn&rsquo;t in those three lists, the answer isn&rsquo;t &ldquo;add a new utility&rdquo;. It&rsquo;s &ldquo;the component owns this&rdquo;.</p>
+    <p>Utilities cover container properties. The kind that affects how content renders or where elements sit. Text styling, alignment, margin, display, position, overflow, flex behavior, gap, sizing. These work on any element and don&rsquo;t depend on the element being a specific kind of thing. Setting <code>font-size</code> on a <code>&lt;div&gt;</code> cascades into every descendant; <code>text-align</code> positions every form of inline content. That includes text, inline-blocks, images, anything that participates in inline layout.</p>
+    <p>Utilities don&rsquo;t cover component-shape properties. Background, border, radius, padding, shadow. These build a new look from scratch. Earlier versions of Stisla shipped them as utilities, which made it easy to stack <code>.bg-*</code>, <code>.border-*</code>, <code>.rounded-*</code>, <code>.p-*</code>, and <code>.shadow-*</code> on a div and call the result a card. The component layer became optional and the design system lost authority over what its surfaces look like.</p>
+    <p>Component-shape work belongs to a component, a component variant (<code>.btn--block</code>, <code>.card--flush</code>), the <code>customize</code> surface, or an honest inline <code>style</code> for a one-off.</p>
+    <p>If composing utilities into components is the workflow you want, reach for <a class="link" href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer">Tailwind</a> instead.</p>
   </section>
 
   <section id="naming">
@@ -25,11 +25,11 @@
 
   <section>
     <h2>Text</h2>
-    <p>Typography tweaks. Class names track the underlying property. Use <code>.fw-*</code> for weight, <code>.fs-*</code> for size, and <code>.text-*</code> for color, alignment, and overflow.</p>
+    <p>Typography tweaks for any element. Class names track the underlying property. Use <code>.fw-*</code> for weight, <code>.fs-*</code> for size, and <code>.text-*</code> for colour, alignment, and overflow.</p>
 
     {% call ui.demo() %}
-    <div class="d-flex flex-column">
-      <p class="fw-semibold fs-5 text-primary">Semibold, fs-5, primary color.</p>
+    <div class="d-flex flex-column gap-2">
+      <p class="fs-5 fw-semibold text-primary">Semibold, fs-5, primary color.</p>
       <p class="fw-light text-muted-foreground">Light weight, muted color.</p>
       <p class="text-truncate" style="max-width: 18rem;">A long sentence that will truncate with an ellipsis once it exceeds the container width.</p>
       <p class="text-center fs-1">Centered, fs-1.</p>
@@ -64,7 +64,7 @@
     </table>
 
     <h3>Size</h3>
-    <p>Numeric scale, ascending small &rarr; large. Same direction as <code>.gap-*</code> and <code>.m*-*</code>. Use <a class="link" href="#responsive"><code>.fs-{breakpoint}-{step}</code></a> for breakpoint-up variants.</p>
+    <p>Numeric scale, ascending small to large. Same direction as <code>.gap-*</code> and <code>.m*-*</code>. Use <a class="link" href="#responsive"><code>.fs-{breakpoint}-{step}</code></a> for breakpoint-up variants.</p>
     <table>
       <thead><tr><th>Class</th><th>Value</th><th>Pixels (at 16&nbsp;px root)</th></tr></thead>
       <tbody>
@@ -106,13 +106,13 @@
     <p>Margin and padding use CSS logical properties (<code>margin-block-start</code>, <code>margin-inline-end</code>, ...) so the same class works in LTR and RTL.</p>
 
     {% call ui.demo() %}
-    <div class="d-flex gap-3 align-items-center">
+    <div class="d-flex align-items-center gap-3">
       <button type="button" class="btn btn--primary">Save</button>
       <button type="button" class="btn btn--neutral">Cancel</button>
       <span class="text-muted-foreground fs-2 ms-auto">Edited 2 min ago</span>
     </div>
     {% endcall %}
-    <p>One flex row with a 12&nbsp;px gap and an end-aligned timestamp pushed by <code>.ms-auto</code>. No new component, just three buttons and a span getting a layout tweak.</p>
+    <p>One flex row with a 12&nbsp;px gap and an end-aligned timestamp pushed by <code>.ms-auto</code>. The <a class="link" href="/stack"><code>.stack</code></a> and <a class="link" href="/inline"><code>.inline</code></a> primitives cover the same pattern when you want the layout intent to read at the call site.</p>
 
     {% call ui.demo() %}
     <div class="d-flex flex-column gap-2" style="max-width: 18rem;">
@@ -121,7 +121,7 @@
       <p class="text-muted-foreground fs-2 mb-0">We'll never share your address.</p>
     </div>
     {% endcall %}
-    <p>A vertical stack with an 8&nbsp;px gap between rows. Note the helper text uses <code>.mb-0</code> to kill its natural bottom margin so the gap owns the rhythm.</p>
+    <p>A vertical stack with an 8&nbsp;px gap between rows. The helper text uses <code>.mb-0</code> to kill its natural bottom margin so the gap owns the rhythm.</p>
 
     <h3>Display</h3>
     <table>
@@ -211,8 +211,8 @@
       </tbody>
     </table>
 
-    <h3>Margin &amp; padding</h3>
-    <p>Direction abbreviations follow Bootstrap convention: <code>t</code>op, <code>b</code>ottom, <code>s</code>tart, <code>e</code>nd, <code>x</code> for both inline sides, <code>y</code> for both block sides. Start and end use logical properties so RTL flips for free. Same step scale as gap.</p>
+    <h3>Margin</h3>
+    <p>Direction abbreviations follow Bootstrap convention. <code>t</code>op, <code>b</code>ottom, <code>s</code>tart, <code>e</code>nd, <code>x</code> for both inline sides, <code>y</code> for both block sides. Start and end use logical properties so RTL flips for free. Same step scale as gap.</p>
     <table>
       <thead><tr><th>Pattern</th><th>Maps to</th></tr></thead>
       <tbody>
@@ -224,12 +224,12 @@
         <tr><td><code>.mx-{0&hellip;8}</code></td><td><code>margin-inline</code> (both)</td></tr>
         <tr><td><code>.my-{0&hellip;8}</code></td><td><code>margin-block</code> (both)</td></tr>
         <tr><td><code>.m-auto</code>, <code>.mx-auto</code>, <code>.ms-auto</code>, <code>.me-auto</code>, <code>.mt-auto</code>, <code>.mb-auto</code>, <code>.my-auto</code></td><td>Auto margin variants for centering and flex push-to-end.</td></tr>
-        <tr><td><code>.p-{0&hellip;8}</code>, <code>.pt-</code>, <code>.pb-</code>, <code>.ps-</code>, <code>.pe-</code>, <code>.px-</code>, <code>.py-</code></td><td>Same shape, padding properties.</td></tr>
       </tbody>
     </table>
+    <p>Padding doesn&rsquo;t ship as a utility. It&rsquo;s a component-shape property and belongs to a component, a variant, or an inline <code>style</code>. See the <a class="link" href="#philosophy">philosophy</a> section.</p>
 
     <h3>Sizing</h3>
-    <p>Percentage widths and heights resolve against the containing block. <code>.h-*</code> needs a sized parent to be meaningful.</p>
+    <p>Percentage widths and heights resolve against the containing block. <code>.h-*</code> needs a sized parent to be meaningful. For full-width on a known component shell, the component&rsquo;s <code>--block</code> modifier reads better at the call site (<code>.btn--block</code>, <code>.card--block</code>, <code>.list-group--block</code>, <code>.tabs--block</code>, <code>.navbar--block</code>, <code>.meter--block</code>, <code>.progress--block</code>).</p>
     <table>
       <thead><tr><th>Class</th><th>Value</th></tr></thead>
       <tbody>
@@ -267,62 +267,6 @@
     </table>
   </section>
 
-  <section id="surface">
-    <h2>Surface</h2>
-    <p>Background, border, and corner radius tweaks for existing components.</p>
-
-    {% call ui.demo() %}
-    <div class="d-flex flex-column gap-3">
-      <div class="bg-surface p-3 rounded border">Surface panel with a 1&nbsp;px border and the default radius.</div>
-      <div class="bg-surface-2 p-3 rounded-pill border">Pilled surface-2 strip, useful for filter chips and segmented headers.</div>
-      <div class="bg-surface-3 p-3 rounded">Surface-3, the most elevated of the three neutrals.</div>
-    </div>
-    {% endcall %}
-
-    <h3>Background</h3>
-    <p>Only the neutral surfaces ship here. Each one pairs with <code>--st-foreground</code>, so default text stays readable on top.</p>
-    <table>
-      <thead><tr><th>Class</th><th>Reads</th><th>Use</th></tr></thead>
-      <tbody>
-        <tr><td><code>.bg-transparent</code></td><td><code>transparent</code></td><td>Reset an inherited background.</td></tr>
-        <tr><td><code>.bg-background</code></td><td><code>--st-background</code></td><td>Page background.</td></tr>
-        <tr><td><code>.bg-surface</code></td><td><code>--st-surface</code></td><td>Card-level surface.</td></tr>
-        <tr><td><code>.bg-surface-2</code></td><td><code>--st-surface-2</code></td><td>Slightly elevated surface.</td></tr>
-        <tr><td><code>.bg-surface-3</code></td><td><code>--st-surface-3</code></td><td>More elevated surface.</td></tr>
-      </tbody>
-    </table>
-    <p>Intent backgrounds (<code>.bg-primary</code>, <code>.bg-success</code>, &hellip;) don&rsquo;t ship as utilities. Background without a paired foreground is a contrast footgun, and the components that need a filled brand surface (<a class="link" href="/btn">btn</a>, <a class="link" href="/badge">badge</a>, <a class="link" href="/alert">alert</a>) already pair the matching <code>--st-{intent}-foreground</code>.</p>
-
-    <h3>Border</h3>
-    <p><code>.border</code> draws a 1&nbsp;px line on every side using <code>--st-border</code>. Directional variants target one side via logical properties, so <code>.border-start</code> and <code>.border-end</code> flip in RTL.</p>
-    <table>
-      <thead><tr><th>Class</th><th>Effect</th></tr></thead>
-      <tbody>
-        <tr><td><code>.border</code></td><td>1&nbsp;px line on all sides.</td></tr>
-        <tr><td><code>.border-0</code></td><td>Remove all borders.</td></tr>
-        <tr><td><code>.border-top</code></td><td>Line on the block-start edge (top in horizontal writing).</td></tr>
-        <tr><td><code>.border-bottom</code></td><td>Line on the block-end edge.</td></tr>
-        <tr><td><code>.border-start</code></td><td>Line on the inline-start edge (LTR=left).</td></tr>
-        <tr><td><code>.border-end</code></td><td>Line on the inline-end edge (LTR=right).</td></tr>
-        <tr><td><code>.border-top-0</code>, <code>.border-bottom-0</code>, <code>.border-start-0</code>, <code>.border-end-0</code></td><td>Zero the width on one side while keeping the other three from <code>.border</code>.</td></tr>
-      </tbody>
-    </table>
-
-    <h3>Rounded</h3>
-    <p>Each class reads one of the three radius tiers (<code>--st-radius-sm</code>, <code>--st-radius</code>, <code>--st-radius-lg</code>). A hard-cornered theme overrides all three tiers (see the brutalist preset on the <a class="link" href="/customization#radius">Customization</a> page).</p>
-    <table>
-      <thead><tr><th>Class</th><th>Reads</th></tr></thead>
-      <tbody>
-        <tr><td><code>.rounded</code></td><td><code>--st-radius</code></td></tr>
-        <tr><td><code>.rounded-sm</code></td><td><code>--st-radius-sm</code></td></tr>
-        <tr><td><code>.rounded-lg</code></td><td><code>--st-radius-lg</code></td></tr>
-        <tr><td><code>.rounded-0</code></td><td>Square corners.</td></tr>
-        <tr><td><code>.rounded-pill</code></td><td>Fully pilled.</td></tr>
-        <tr><td><code>.rounded-circle</code></td><td>Circular, for square boxes.</td></tr>
-      </tbody>
-    </table>
-  </section>
-
   <section id="responsive">
     <h2>Responsive</h2>
     <p>Insert a breakpoint name into any responsive-enabled class to make it apply from that width up. The mobile-first base lays the default. Each breakpoint cascades on top via <code>min-width</code>.</p>
@@ -336,7 +280,7 @@
       </div>
       <div class="w-100 w-md-50">
         <div class="card">
-          <div class="card__body">Sits side&#8209;by&#8209;side from <code>md</code> up.</div>
+          <div class="card__body">Sits side-by-side from <code>md</code> up.</div>
         </div>
       </div>
     </div>
@@ -369,7 +313,6 @@
         <tr><td>Order</td><td><code>.order-{bp}-{value}</code></td><td><code>.order-md-1</code>, <code>.order-lg-last</code></td></tr>
         <tr><td>Gap</td><td><code>.gap-{bp}-{step}</code>, <code>.row-gap-{bp}-{step}</code>, <code>.column-gap-{bp}-{step}</code></td><td><code>.gap-md-4</code></td></tr>
         <tr><td>Margin</td><td><code>.m{,t,b,s,e,x,y}-{bp}-{step}</code></td><td><code>.mt-md-3</code>, <code>.mx-lg-auto</code></td></tr>
-        <tr><td>Padding</td><td><code>.p{,t,b,s,e,x,y}-{bp}-{step}</code></td><td><code>.p-md-4</code>, <code>.py-lg-2</code></td></tr>
         <tr><td>Width</td><td><code>.w-{bp}-{25,50,75,100,auto}</code></td><td><code>.w-md-50</code></td></tr>
         <tr><td>Text align</td><td><code>.text-{bp}-{start,end,center}</code></td><td><code>.text-md-center</code></td></tr>
         <tr><td>Font size</td><td><code>.fs-{bp}-{step}</code></td><td><code>.fs-md-4</code></td></tr>
@@ -435,13 +378,9 @@
         <tr><td><code>order</code></td><td><code>.order-{first,0..5,last}</code></td><td>yes</td></tr>
         <tr><td><code>gap</code></td><td><code>.gap-*</code>, <code>.row-gap-*</code>, <code>.column-gap-*</code></td><td>yes</td></tr>
         <tr><td><code>margin</code></td><td><code>.m{,t,b,s,e,x,y}-*</code></td><td>yes</td></tr>
-        <tr><td><code>padding</code></td><td><code>.p{,t,b,s,e,x,y}-*</code></td><td>yes</td></tr>
         <tr><td><code>width</code></td><td><code>.w-*</code></td><td>yes</td></tr>
         <tr><td><code>height</code></td><td><code>.h-100</code>, <code>.h-auto</code></td><td>no</td></tr>
         <tr><td><code>max-size</code></td><td><code>.mw-100</code>, <code>.mh-100</code></td><td>no</td></tr>
-        <tr><td><code>background</code></td><td><code>.bg-transparent</code>, <code>.bg-background</code>, <code>.bg-surface</code>, <code>.bg-surface-2</code>, <code>.bg-surface-3</code></td><td>no</td></tr>
-        <tr><td><code>border</code></td><td><code>.border</code>, <code>.border-0</code>, <code>.border-{top,bottom,start,end}</code>, &hellip;</td><td>no</td></tr>
-        <tr><td><code>rounded</code></td><td><code>.rounded</code>, <code>.rounded-{0,sm,lg,pill,circle}</code></td><td>no</td></tr>
       </tbody>
     </table>
   </section>
@@ -449,7 +388,7 @@
   <section>
     <h2>Customization</h2>
     <p>Two knobs, no per-class vars.</p>
-    <p>Spacing values resolve through <code>--st-density</code>, the global lever from <a class="link" href="/customization">Customization</a> that retunes every <code>.gap-*</code>, <code>.m*-*</code>, and <code>.p*-*</code> alongside component padding. Compact density (<code>0.875</code>) shrinks every utility step proportionally. Comfortable density (<code>1.125</code>) expands them.</p>
+    <p>Spacing values resolve through <code>--st-density</code>, the global lever from <a class="link" href="/customization">Customization</a> that retunes every <code>.gap-*</code> and <code>.m*-*</code> alongside component padding. Compact density (<code>0.875</code>) shrinks every utility step proportionally. Comfortable density (<code>1.125</code>) expands them.</p>
     <p>Which groups ship, and which carry breakpoint variants, is set in <a class="link" href="#customizing-the-set"><code>$utilities-config</code></a>. Disable groups you don&rsquo;t use to drop them from the bundle. Flip <code>responsive: true</code> on a group to add breakpoint variants.</p>
   </section>
 {% endblock %}

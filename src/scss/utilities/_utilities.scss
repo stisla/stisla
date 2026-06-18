@@ -68,16 +68,6 @@ $margin-axes: (
   'y': margin-block,
 );
 
-$padding-axes: (
-  '':  padding,
-  't': padding-block-start,
-  'b': padding-block-end,
-  's': padding-inline-start,
-  'e': padding-inline-end,
-  'x': padding-inline,
-  'y': padding-block,
-);
-
 // === Config ==================================================================
 // Defaults mirror the previous hand-written file. Groups currently keyed
 // `responsive: false` were intentionally base-only; flip them to `true`
@@ -108,20 +98,24 @@ $utilities-config: (
   align-self:       (enabled: true, responsive: false),
   order:            (enabled: true, responsive: true),
 
-  // Spacing
-  gap:              (enabled: true, responsive: true),
-  margin:           (enabled: true, responsive: true),
-  padding:          (enabled: true, responsive: true),
+  // Spacing — padding is a component-shape property (SPEC.md §9) and
+  // doesn't ship as a utility. Reach for component padding, a variant,
+  // an inline `style`, or a project-scoped class.
+  gap:              (enabled: true,  responsive: true),
+  margin:           (enabled: true,  responsive: true),
+  padding:          (enabled: false, responsive: true),
 
   // Sizing
   width:            (enabled: true, responsive: true),
   height:           (enabled: true, responsive: false),
   max-size:         (enabled: true, responsive: false),
 
-  // Surface
-  background:       (enabled: true, responsive: false),
-  border:           (enabled: true, responsive: false),
-  rounded:          (enabled: true, responsive: false),
+  // Surface — background, border, and rounded are all component-shape
+  // properties (SPEC.md §9) and don't ship as utilities. Components own
+  // their surface treatment through the --st-* tokens directly.
+  background:       (enabled: false, responsive: false),
+  border:           (enabled: false, responsive: false),
+  rounded:          (enabled: false, responsive: false),
 ) !default;
 
 // === Emission helper =========================================================
@@ -345,15 +339,6 @@ $utilities-config: (
   }
 }
 
-// === Padding =================================================================
-@include utility-group('padding') using ($i) {
-  @each $suffix, $prop in $padding-axes {
-    @each $step, $value in $spacing-scale {
-      .p#{$suffix}#{$i}-#{$step} { #{$prop}: $value !important; }
-    }
-  }
-}
-
 // === Width ===================================================================
 @include utility-group('width') using ($i) {
   .w#{$i}-25   { width: 25%  !important; }
@@ -379,48 +364,3 @@ $utilities-config: (
   .mh#{$i}-100 { max-height: 100% !important; }
 }
 
-// === Background ==============================================================
-// Neutral surfaces only. Intent backgrounds (.bg-primary / .bg-success / ...)
-// don't ship as utilities because background without a paired foreground is a
-// contrast footgun; the components that need a filled brand surface (.btn,
-// .badge, .alert) already pair the matching --st-*-foreground.
-@include utility-group('background') using ($i) {
-  .bg#{$i}-transparent { background-color: transparent          !important; }
-  .bg#{$i}-background  { background-color: var(--st-background) !important; }
-  .bg#{$i}-surface     { background-color: var(--st-surface)    !important; }
-  .bg#{$i}-surface-2   { background-color: var(--st-surface-2)  !important; }
-  .bg#{$i}-surface-3   { background-color: var(--st-surface-3)  !important; }
-}
-
-// === Border ==================================================================
-// Logical sides so RTL flips inline-start / inline-end automatically,
-// matching the margin / padding convention. The -0 variants zero only the
-// width, leaving the other sides set by the base .border shorthand intact.
-@include utility-group('border') using ($i) {
-  .border#{$i}   { border: 1px solid var(--st-border) !important; }
-  .border#{$i}-0 { border: 0 !important; }
-
-  .border#{$i}-top    { border-block-start:  1px solid var(--st-border) !important; }
-  .border#{$i}-bottom { border-block-end:    1px solid var(--st-border) !important; }
-  .border#{$i}-start  { border-inline-start: 1px solid var(--st-border) !important; }
-  .border#{$i}-end    { border-inline-end:   1px solid var(--st-border) !important; }
-
-  .border#{$i}-top-0    { border-block-start-width:  0 !important; }
-  .border#{$i}-bottom-0 { border-block-end-width:    0 !important; }
-  .border#{$i}-start-0  { border-inline-start-width: 0 !important; }
-  .border#{$i}-end-0    { border-inline-end-width:   0 !important; }
-}
-
-// === Rounded =================================================================
-// Each class reads one of the three radius tier tokens. The tiers are
-// independent literals at :root (see tokens/_theme.scss), so a brutalist
-// theme overrides --st-radius-sm / --st-radius / --st-radius-lg together
-// to land hard corners everywhere; the pill / circle variants stay literal.
-@include utility-group('rounded') using ($i) {
-  .rounded#{$i}        { border-radius: var(--st-radius)    !important; }
-  .rounded#{$i}-0      { border-radius: 0                   !important; }
-  .rounded#{$i}-sm     { border-radius: var(--st-radius-sm) !important; }
-  .rounded#{$i}-lg     { border-radius: var(--st-radius-lg) !important; }
-  .rounded#{$i}-pill   { border-radius: 9999px              !important; }
-  .rounded#{$i}-circle { border-radius: 50%                 !important; }
-}

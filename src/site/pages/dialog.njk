@@ -45,10 +45,20 @@
   </section>
 
   <section>
+    <h2>Keyboard</h2>
+    <p>Focus is trapped inside the dialog while it's open. On open, focus lands on the first element marked <code>autofocus</code>, falling back to <code>.dialog__close</code>; on close, focus returns to the trigger that opened it.</p>
+    <ul>
+      <li><kbd>Tab</kbd>: cycle focus forward through focusable controls (wraps to the first)</li>
+      <li><kbd>Shift</kbd> + <kbd>Tab</kbd>: cycle focus backward (wraps to the last)</li>
+      <li><kbd>Escape</kbd>: dismiss the dialog (unless the backdrop is static, see Static backdrop below)</li>
+    </ul>
+  </section>
+
+  <section>
     <h2>Sizes</h2>
     <p>Add <code>.dialog--sm</code>, <code>.dialog--lg</code>, or <code>.dialog--xl</code> on the <code>.dialog</code> root to swap widths. The default sits in the middle of the scale. <code>.dialog--almost-fullscreen</code> keeps a 2.5rem breathing strip around the panel so the page still hints through; <code>.dialog--fullscreen</code> edge-bleeds the panel to the viewport.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
+    <div class="d-flex flex-wrap align-items-center gap-2">
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogSm">Small</button>
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogDefault">Default</button>
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogLg">Large</button>
@@ -141,7 +151,7 @@
     <h2>Positioning</h2>
     <p>The panel centers vertically by default. Add <code>.dialog__panel--top</code> to drop in from above, or <code>.dialog__panel--bottom</code> to anchor it to the lower edge.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap gap-2">
+    <div class="d-flex flex-wrap align-items-center gap-2">
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogTop">Top</button>
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogCenter">Center</button>
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogBottom">Bottom</button>
@@ -318,7 +328,7 @@
       <div class="dialog__panel">
         <div class="dialog__content">
           <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
-          <div class="dialog__body text-center pt-6">
+          <div class="dialog__body text-center" style="padding-block-start: calc(1.5rem * var(--st-density))">
             <span class="icon-box icon-box--danger icon-box--round mb-3" style="--icon-box-size: 3rem; --icon-box-icon-size: 1.25rem;">
               <i data-lucide="trash-2"></i>
             </span>
@@ -350,7 +360,7 @@
           <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close">
             <i data-lucide="x"></i>
           </button>
-          <div class="dialog__body text-center pt-6">
+          <div class="dialog__body text-center" style="padding-block-start: calc(1.5rem * var(--st-density))">
             <span class="icon-box icon-box--success icon-box--round mb-3" style="--icon-box-size: 3.5rem; --icon-box-icon-size: 1.5rem;">
               <i data-lucide="check"></i>
             </span>
@@ -358,12 +368,21 @@
             <p class="text-muted-foreground m-0">We've emailed the receipt and a tracking link. Delivery lands in two to three business days.</p>
           </div>
           <div class="dialog__footer">
-            <button type="button" class="btn w-100" data-stisla-dialog-dismiss style="--btn-tone: var(--st-success); --btn-color: var(--st-success-foreground);">View order</button>
+            <button type="button" class="btn btn--block" data-stisla-dialog-dismiss style="--btn-tone: var(--st-success); --btn-color: var(--st-success-foreground);">View order</button>
           </div>
         </div>
       </div>
     </div>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Events</h2>
+    <p>Four events fire on the <code>.dialog</code> root. The <code>opening</code> and <code>closing</code> events are cancelable.</p>
+    <p><code>stisla:dialog:opening</code> fires before the panel mounts and the backdrop fades in. Call <code>preventDefault()</code> to abort (useful for an external readiness check).</p>
+    <p><code>stisla:dialog:opened</code> fires once the open transition lands and focus is in place.</p>
+    <p><code>stisla:dialog:closing</code> fires before the close transition starts. Call <code>preventDefault()</code> to keep it open (useful for unsaved-changes guards).</p>
+    <p><code>stisla:dialog:closed</code> fires once the panel is fully hidden and focus has returned to the trigger.</p>
   </section>
 
   <section>

@@ -10,48 +10,14 @@
   </header>
 
   <section>
-    <h2>Example</h2>
-    <p>Add <code>.progress__label</code> and <code>.progress__value</code> as direct children of <code>.progress</code> to caption the bar. The label states the action; the value sits muted on the trailing edge so the eye reads the action first.</p>
+    <h2>Basic</h2>
+    <p>Wrap the bar in <code>.progress</code> and place <code>.progress__track</code> with a single <code>.progress__bar</code> inside. The wrapper carries <code>role="progressbar"</code> and the <code>aria-valuenow</code> / <code>aria-valuemin</code> / <code>aria-valuemax</code> attributes; the inner element paints the fill via <code>width</code>. Add <code>.progress__label</code> and <code>.progress__value</code> as direct children with <code>.progress--block</code> on the root to caption the bar; the label states the action and the value sits muted on the trailing edge.</p>
     {% call ui.demo() %}
-    <div class="progress w-100" role="progressbar" aria-label="Upload" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress progress--block" role="progressbar" aria-label="Upload" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100">
       <span class="progress__label">Uploading</span>
       <span class="progress__value">72%</span>
       <div class="progress__track">
         <div class="progress__bar" style="width: 72%"></div>
-      </div>
-    </div>
-    {% endcall %}
-  </section>
-
-  <section>
-    <h2>Basic</h2>
-    <p>Wrap the bar in <code>.progress</code> and place <code>.progress__track</code> with a single <code>.progress__bar</code> inside. The wrapper carries <code>role="progressbar"</code> and the <code>aria-valuenow</code> / <code>aria-valuemin</code> / <code>aria-valuemax</code> attributes; the inner element paints the fill via <code>width</code>.</p>
-    {% call ui.demo() %}
-    <div class="d-flex flex-column gap-4 w-100">
-      <div class="progress" role="progressbar" aria-label="Zero" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-        <div class="progress__track">
-          <div class="progress__bar" style="width: 0%"></div>
-        </div>
-      </div>
-      <div class="progress" role="progressbar" aria-label="Quarter" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-        <div class="progress__track">
-          <div class="progress__bar" style="width: 25%"></div>
-        </div>
-      </div>
-      <div class="progress" role="progressbar" aria-label="Half" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-        <div class="progress__track">
-          <div class="progress__bar" style="width: 50%"></div>
-        </div>
-      </div>
-      <div class="progress" role="progressbar" aria-label="Three quarters" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-        <div class="progress__track">
-          <div class="progress__bar" style="width: 75%"></div>
-        </div>
-      </div>
-      <div class="progress" role="progressbar" aria-label="Full" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-        <div class="progress__track">
-          <div class="progress__bar" style="width: 100%"></div>
-        </div>
       </div>
     </div>
     {% endcall %}
@@ -222,6 +188,6 @@
         </tr>
       </tbody>
     </table>
-    <p>Track opts out of <code>--st-radius</code> by default. Pill is semantic for a progress strip, not a style choice. Set <code>--st-progress-radius</code> at the scope you want flattened (a preset wrapper, <code>:root</code>) or <code>--progress-radius</code> on the track itself for a one-off.</p>
+    <p>Track opts out of <code>--st-radius</code> by default. The pill shape carries meaning for a progress strip, so it isn't a style choice. Set <code>--st-progress-radius</code> at the scope you want flattened (a preset wrapper, <code>:root</code>) or <code>--progress-radius</code> on the track itself for a one-off.</p>
   </section>
 {% endblock %}

@@ -12,12 +12,16 @@
 import { Stisla } from './index.js';
 import { Carousel } from './components/carousel.js';
 import { ScrollArea } from './components/scroll-area.js';
+import { Combobox } from './components/combobox.js';
 
 Stisla.register('carousel', Carousel);
 Stisla.Carousel = Carousel;
 
 Stisla.register('scroll-area', ScrollArea);
 Stisla.ScrollArea = ScrollArea;
+
+Stisla.register('combobox', Combobox);
+Stisla.Combobox = Combobox;
 
 export { Stisla };
 export default Stisla;

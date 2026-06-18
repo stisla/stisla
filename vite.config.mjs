@@ -59,6 +59,8 @@ export default defineConfig(({ command }) => {
     'component-css-carousel.css': 'components/carousel.css',
     'component-js-scroll-area': 'components/scroll-area.js',
     'component-css-scroll-area.css': 'components/scroll-area.css',
+    'component-js-combobox': 'components/combobox.js',
+    'component-css-combobox.css': 'components/combobox.css',
   };
   const finalNames = new Set(Object.values(renames));
 
@@ -77,6 +79,8 @@ export default defineConfig(({ command }) => {
           'component-js-carousel': 'src/js/components/carousel.js',
           'component-css-scroll-area': 'src/scss/bundles/components/scroll-area.scss',
           'component-js-scroll-area': 'src/js/components/scroll-area.js',
+          'component-css-combobox': 'src/scss/bundles/components/combobox.scss',
+          'component-js-combobox': 'src/js/components/combobox.js',
           site: 'src/site/scripts/site.js',
           'site-styles': 'src/site/styles/site.scss',
         },

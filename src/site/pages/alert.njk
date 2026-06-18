@@ -10,8 +10,8 @@
   </header>
 
   <section>
-    <h2>Tones</h2>
-    <p>A tone is required. Pair <code>.alert</code> with <code>.alert--neutral</code> for the plain surface look, or with an intent like <code>.alert--success</code> for a tinted variant. A bare <code>.alert</code> renders transparent, the same contract as <code>.btn</code>.</p>
+    <h2>Basic</h2>
+    <p>Pair <code>.alert</code> with a tone modifier. Use <code>.alert--neutral</code> for the plain surface look, or an intent like <code>.alert--primary</code>, <code>.alert--success</code>, <code>.alert--warning</code>, <code>.alert--danger</code>, <code>.alert--info</code> for a tinted variant. A bare <code>.alert</code> renders transparent, the same contract as <code>.btn</code>, so the tone is what gives the alert its visible chrome.</p>
     {% call ui.demo() %}
     <div class="demo-stack">
       <div class="alert alert--neutral">
@@ -124,7 +124,7 @@
 
   <section>
     <h2>Dismissible</h2>
-    <p>Alert ships no special close control. Drop a <code>.btn--ghost.btn--neutral.btn--icon-only.btn--sm</code> with an X icon inside <code>.alert__action</code>. JS to close the alert is wired in Step 4; today the button is markup-only.</p>
+    <p>Alert ships no special close control. Drop a <code>.btn--ghost.btn--neutral.btn--icon-only.btn--sm</code> with an X icon inside <code>.alert__action</code> and wire your own dismiss handler.</p>
     {% call ui.demo() %}
     <div class="demo-stack">
       <div class="alert alert--success">

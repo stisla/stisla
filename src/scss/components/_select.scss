@@ -1,10 +1,19 @@
 // Stisla v3 — select.
 //
-// Native <select>. Shares the field-shape contract with .input / .textarea
-// via `form-field-base`, then layers on its own concerns: the chevron
-// indicator in the inline-end padding well, extra inline-end padding to
-// make room for it, and the multi-line opt-out for [multiple] and
-// [size]>1 selects (they render as inline lists, height: auto).
+// Two surfaces share the .select class:
+//
+//   1. Native <select class="select"> — the no-JS baseline. Uses
+//      form-field-base for the field-shape contract, then layers on the
+//      chevron in the inline-end padding well. Multi-line opt-out for
+//      [multiple] and [size]>1.
+//
+//   2. Hand-rolled JS trigger — when data-stisla-select is present and
+//      the JS layer is loaded, Stisla.Select hides the source <select>
+//      and inserts a sibling <button class="select select__trigger"> +
+//      <ul class="select__popup" role="listbox">. The button reuses the
+//      same .select shell, so it inherits sizes, density, validation,
+//      and theming. The popup picks up the shared popup-* mixins so it
+//      matches .dropdown-menu visually.
 //
 // BEM: .select (base) + .select--{sm,lg}.
 // Validation: [aria-invalid="true"] + :user-invalid (see form-field-base).
@@ -12,14 +21,11 @@
 .select {
   @include form-field-base('select');
 
-  // Chevron for <select>. Authored as a custom prop so consumers can
+  // Chevron for the trigger. Authored as a custom prop so consumers can
   // swap the SVG via root override without subclassing. The stroke
   // color inside the data: URL has to be a literal — CSS vars don't
   // resolve inside url() — so the dark block at the bottom swaps the
-  // SVG. The two literals approximate --st-muted-foreground per theme;
-  // this is the one exception to the "literal colors only in
-  // tokens/_theme.scss" rule and lives here because the platform
-  // doesn't give us a runtime alternative for <select>.
+  // SVG for the dark theme.
   --select-indicator: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 6 8 10 12 6'/%3E%3C/svg%3E");
 
   padding-inline-end: 2.25rem;
@@ -30,16 +36,123 @@
   cursor: pointer;
 }
 
-// Multi-line selects (<select multiple> or <select size> > 1) render
-// as inline lists. Drop the chevron, restore native list rendering,
-// opt out of the hard-height contract — same shape as textarea.
-.select[multiple],
-.select[size]:not([size="1"]) {
+// Multi-line native selects (<select multiple> or <select size> > 1)
+// render as inline lists. Drop the chevron, restore native list
+// rendering, opt out of the hard-height contract — same shape as
+// textarea. Scoped to <select> so the rule doesn't fire on the
+// JS-hydrated trigger button (which never carries `multiple` natively).
+select.select[multiple],
+select.select[size]:not([size="1"]) {
   height: auto;
   min-height: var(--select-height);
   padding: calc(0.375rem * var(--st-density)) var(--select-padding-x);
   appearance: auto;
   background-image: none;
+}
+
+// === Trigger (JS path) ==================================================
+// Same shell as the native .select but with internal flex layout for the
+// value text + optional "+N more" chip. The original <select> is hidden
+// once hydrated; we display: none it as a belt-and-braces in case the
+// `hidden` attribute is overridden by user CSS.
+select.select[data-stisla-select][hidden] {
+  display: none !important;
+}
+
+.select__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: start;
+
+  // form-field-base width:100% gives a stretched trigger; keep that.
+  // The button element has its own focus-visible halo from
+  // form-field-base, so we don't re-emit it here.
+}
+
+.select__value {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  // Empty value — show placeholder text via attr() so authoring stays
+  // declarative (no JS sets innerHTML to placeholder string). Note that
+  // :empty matches when there are no children; the JS renders the value
+  // by setting textContent, so an active selection makes the span
+  // non-empty.
+  &:empty::before {
+    content: attr(data-placeholder);
+    color: var(--select-placeholder);
+  }
+}
+
+.select__more {
+  flex-shrink: 0;
+  font-size: 0.8125rem;
+  color: var(--select-placeholder);
+}
+
+// === Popup ==============================================================
+// Listbox surface — uses the shared popup-* mixins. Positioning is owned
+// by the JS (Floating UI) which sets position/left/top inline; we just
+// declare the absolute strategy and a sane z-index here.
+.select__popup {
+  @include popup-base;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1030;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem; // matches --dropdown-gap
+  margin: 0;
+  list-style: none;
+  overflow-y: auto;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.select__option {
+  @include popup-item;
+
+  // Hover (mouse) + .is-highlighted (keyboard nav) paint the same accent
+  // chip. Tracks Dropdown's pattern: keyboard owns the visible position,
+  // mouse mirrors it.
+  &:hover,
+  &.is-highlighted {
+    @include popup-item-hover;
+  }
+
+  // Currently selected — persists past hover/highlight so the chosen
+  // value stays visible.
+  &.is-selected,
+  &.is-selected:hover,
+  &.is-selected.is-highlighted {
+    @include popup-item-active;
+  }
+
+  &[aria-disabled="true"] {
+    @include popup-item-disabled;
+  }
+}
+
+.select__group {
+  @include popup-header;
+}
+
+// Subsequent group headers get extra top space so the section break
+// reads as a divider (matches the dropdown rhythm).
+.select__group + .select__option,
+.select__option + .select__group {
+  // First option after a header sits flush; subsequent groups get the
+  // margin via the second selector.
+}
+.select__option + .select__group {
+  margin-top: 0.5rem;
 }
 
 // === Sizes ==============================================================
@@ -48,6 +161,10 @@
   --select-height:    calc(1.75rem + 0.5rem * (var(--st-density) - 1));    // 28 @ 1
   --select-padding-x: calc(0.5rem * var(--st-density));                    //  8
   --select-font-size: 0.8125rem;
+  // See form-field-base — iOS auto-zoom guard for sub-16px fields.
+  @media (pointer: coarse) {
+    --select-font-size: 1rem;
+  }
 }
 
 .select--lg {

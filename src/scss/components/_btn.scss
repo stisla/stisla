@@ -197,6 +197,19 @@ $btn-soft-active:    28%;
   line-height: 1.25;
 }
 
+// === Block ============================================================
+// Full-width button. The canonical answer to "make this button fill its
+// row" (SPEC §9 escape ramp, step 1) so consumers don't reach for
+// `.w-100` or inline `style="width: 100%"`. Pairs cleanly with
+// `.btn--wrap` when a long label needs to wrap inside a stretched
+// button. `display: flex` (vs the base `inline-flex`) makes the button
+// block-level so `width: 100%` fills the container without relying on
+// the parent's intrinsic sizing.
+.btn--block {
+  display: flex;
+  width: 100%;
+}
+
 // === Tone modifiers — filled defaults =================================
 // Each tone publishes --btn-tone (for shape modifiers) and sets
 // --btn-bg + --btn-color. State transitions come from .btn base.

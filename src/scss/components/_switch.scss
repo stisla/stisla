@@ -5,10 +5,12 @@
 // on :checked. No data: URL for the thumb — geometry lives in component-
 // scoped vars so density and --lg recompute the gradient cleanly.
 //
-// BEM (V3.md §3.6):
-//   <div class="switch">
-//     <input type="checkbox" role="switch" class="switch__input" id="x">
-//     <label class="switch__label" for="x">Notifications</label>
+// Authoring (matches .checkbox / .radio — primitive input + separate
+// <label>, composed via .field__item):
+//
+//   <div class="field__item">
+//     <input class="switch" type="checkbox" role="switch" id="x">
+//     <label class="field__label" for="x">Notifications</label>
 //   </div>
 //
 // Off-state track uses a semi-transparent foreground tone instead of
@@ -28,40 +30,7 @@
 // instead of "checkbox". The visual treatment is the same regardless of
 // the role — role just changes the announcement.
 
-// === Wrapper ============================================================
 .switch {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding-block: 0.125rem;
-}
-
-.switch--inline {
-  display: inline-flex;
-}
-
-// Label-first, input-last. Justify-content keeps the input pinned to the
-// row trailing edge (useful in settings rows where the affordance lives
-// on the right).
-.switch--reverse {
-  flex-direction: row-reverse;
-  justify-content: flex-end;
-}
-
-// === Label ==============================================================
-.switch__label {
-  cursor: pointer;
-  line-height: 1.4;
-  user-select: none;
-}
-
-.switch:has(> .switch__input:disabled) .switch__label {
-  cursor: not-allowed;
-  opacity: 0.55;
-}
-
-// === Track + thumb =====================================================
-.switch__input {
   --switch-track-w:     calc(1.75rem  * var(--st-density));            // 28
   --switch-track-h:     calc(1rem     * var(--st-density));            // 16
   --switch-thumb:       calc(0.75rem  * var(--st-density));            // 12
@@ -138,14 +107,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .switch__input { transition: none; }
+  .switch { transition: none; }
 }
 
 // === Large ==============================================================
 // 44×24 variant. Suited to standalone settings rows where the switch is
 // the row's primary affordance and reads small at the default 28×16.
 // Density still multiplies through the var chain.
-.switch--lg .switch__input {
+.switch--lg {
   --switch-track-w: calc(2.75rem  * var(--st-density));                 // 44
   --switch-track-h: calc(1.5rem   * var(--st-density));                 // 24
   --switch-thumb:   calc(1.25rem  * var(--st-density));                 // 20

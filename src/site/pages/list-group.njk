@@ -13,7 +13,7 @@
     <h2>Basic</h2>
     <p>Add <code>.list-group</code> to the wrapper and <code>.list-group__item</code> to each row. Use any list element you like, such as <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, or a plain <code>&lt;div&gt;</code>.</p>
     {% call ui.demo() %}
-    <ul class="list-group w-100" style="max-width: 24rem;">
+    <ul class="list-group list-group--block" style="max-width: 24rem;">
       <li class="list-group__item">Frontend platform</li>
       <li class="list-group__item">Mobile apps</li>
       <li class="list-group__item">Data infrastructure</li>
@@ -27,7 +27,7 @@
     <h2>Active and disabled</h2>
     <p>Mark the selected row with <code>data-state="active"</code> (or <code>aria-current</code> on a link). Mark unreachable rows with <code>aria-disabled="true"</code>. Active takes the highlight surface; disabled fades and blocks pointer events.</p>
     {% call ui.demo() %}
-    <ul class="list-group w-100" style="max-width: 24rem;">
+    <ul class="list-group list-group--block" style="max-width: 24rem;">
       <li class="list-group__item">Profile</li>
       <li class="list-group__item" data-state="active" aria-current="true">Billing</li>
       <li class="list-group__item">Notifications</li>
@@ -40,7 +40,7 @@
     <h2>Links and buttons</h2>
     <p>Swap <code>&lt;li&gt;</code> for <code>&lt;a&gt;</code> or <code>&lt;button&gt;</code> and the rows pick up hover and focus automatically. No opt-in class needed. Mark the current page with <code>aria-current="page"</code>. A first-child <code>&lt;svg&gt;</code> or <code>&lt;i&gt;</code> pins as a leading icon at <code>--list-group-item-icon-size</code>.</p>
     {% call ui.demo() %}
-    <div class="list-group w-100" style="max-width: 24rem;">
+    <div class="list-group list-group--block" style="max-width: 24rem;">
       <a href="#" class="list-group__item"><i data-lucide="layout-dashboard"></i>Dashboard</a>
       <a href="#" class="list-group__item"><i data-lucide="folder-kanban"></i>Projects</a>
       <a href="#" class="list-group__item" aria-current="page"><i data-lucide="users"></i>Team</a>
@@ -54,7 +54,7 @@
     <h2>Flush</h2>
     <p>Add <code>.list-group--flush</code> to drop the outer border and radius. Rows sit edge to edge with a divider between them. Useful inside popovers, sidebar panels, or anywhere that already owns a frame.</p>
     {% call ui.demo() %}
-    <ul class="list-group list-group--flush w-100" style="max-width: 24rem;">
+    <ul class="list-group list-group--flush list-group--block" style="max-width: 24rem;">
       <li class="list-group__item">Acme Corp</li>
       <li class="list-group__item">Nimbus Labs</li>
       <li class="list-group__item">Pinecone Studio</li>
@@ -67,7 +67,7 @@
     <h2>Numbered</h2>
     <p>Drop <code>.list-group--numbered</code> on the wrapper and use an <code>&lt;ol&gt;</code>. A CSS counter stamps the prefix; nest another numbered list and the counter cascades.</p>
     {% call ui.demo() %}
-    <ol class="list-group list-group--numbered w-100" style="max-width: 24rem;">
+    <ol class="list-group list-group--numbered list-group--block" style="max-width: 24rem;">
       <li class="list-group__item">Install the CLI</li>
       <li class="list-group__item">Authenticate with your account</li>
       <li class="list-group__item">Initialize a new project</li>
@@ -94,7 +94,7 @@
     <h2>With badge</h2>
     <p>Push a count or status to the trailing edge with a span set to <code>flex: 1</code> on the label. Reads as a counter row.</p>
     {% call ui.demo() %}
-    <ul class="list-group w-100" style="max-width: 24rem;">
+    <ul class="list-group list-group--block" style="max-width: 24rem;">
       <li class="list-group__item">
         <i data-lucide="inbox"></i>
         <span class="flex-fill">Inbox</span>
@@ -128,7 +128,7 @@
     <h2>Contextual variants</h2>
     <p>Tint a row with <code>.list-group__item--{intent}</code> for status messaging. Same five intents as <code>.alert</code> and <code>.table__row--{intent}</code>. Add <code>.list-group__item--neutral</code> for a quiet fill that tracks the interactional neutral.</p>
     {% call ui.demo() %}
-    <ul class="list-group w-100" style="max-width: 28rem;">
+    <ul class="list-group list-group--block" style="max-width: 28rem;">
       <li class="list-group__item list-group__item--primary">New version v3.2 is ready to deploy</li>
       <li class="list-group__item list-group__item--success">Nightly database backup completed</li>
       <li class="list-group__item list-group__item--info">Maintenance window scheduled for Friday 02:00 UTC</li>
@@ -143,25 +143,25 @@
     <h2>Custom content</h2>
     <p>A row can hold whatever you need. A title, a subhead, a timestamp. Override <code>align-items</code> and <code>flex-direction</code> on the row when content stacks vertically.</p>
     {% call ui.demo() %}
-    <div class="list-group w-100" style="max-width: 32rem;">
-      <a href="#" class="list-group__item flex-column align-items-stretch gap-1" aria-current="page">
-        <div class="d-flex justify-content-between gap-2">
+    <div class="list-group list-group--block" style="max-width: 32rem;">
+      <a href="#" class="d-flex flex-column list-group__item align-items-stretch gap-1" aria-current="page">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
           <span class="fw-semibold">Mariam Saidova opened a pull request</span>
           <small>just now</small>
         </div>
         <p>Refactor the checkout flow into smaller routes so the bundle splits cleanly on Stripe success / cancel.</p>
         <small>#1248 · billing · 6 files changed</small>
       </a>
-      <a href="#" class="list-group__item flex-column align-items-stretch gap-1">
-        <div class="d-flex justify-content-between gap-2">
+      <a href="#" class="d-flex flex-column list-group__item align-items-stretch gap-1">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
           <span class="fw-semibold">Production deploy succeeded</span>
           <small class="text-muted-foreground">14 minutes ago</small>
         </div>
         <p>Release <code>v3.1.7</code> rolled out to the EU and US regions. Edge cache warmed in 38 seconds.</p>
         <small class="text-muted-foreground">@nauval · deploys</small>
       </a>
-      <a href="#" class="list-group__item flex-column align-items-stretch gap-1">
-        <div class="d-flex justify-content-between gap-2">
+      <a href="#" class="d-flex flex-column list-group__item align-items-stretch gap-1">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
           <span class="fw-semibold">Hideo Tanaka left a review on #1241</span>
           <small class="text-muted-foreground">1 hour ago</small>
         </div>
@@ -176,8 +176,8 @@
     <h2>Contacts</h2>
     <p>Compose a chat-style contact row from an avatar, a two-line label, and a trailing timestamp + unread counter. Each row is an <code>&lt;a&gt;</code> so the whole strip is clickable.</p>
     {% call ui.demo() %}
-    <div class="list-group w-100" style="max-width: 32rem;">
-      <a href="#" class="list-group__item gap-3 py-3" aria-current="page">
+    <div class="list-group list-group--block" style="max-width: 32rem;">
+      <a href="#" class="list-group__item gap-3" aria-current="page" style="padding-block: calc(0.75rem * var(--st-density))">
         <img class="flex-shrink-0" src="https://i.pravatar.cc/80?img=12" alt="" width="40" height="40" style="border-radius: 50%;">
         <div class="flex-fill" style="min-width: 0;">
           <div class="fw-medium">Mariam Saidova</div>
@@ -188,7 +188,7 @@
           <span class="badge badge--primary">3</span>
         </div>
       </a>
-      <a href="#" class="list-group__item gap-3 py-3">
+      <a href="#" class="list-group__item gap-3" style="padding-block: calc(0.75rem * var(--st-density))">
         <img class="flex-shrink-0" src="https://i.pravatar.cc/80?img=33" alt="" width="40" height="40" style="border-radius: 50%;">
         <div class="flex-fill" style="min-width: 0;">
           <div class="fw-medium">Hideo Tanaka</div>
@@ -199,7 +199,7 @@
           <span class="badge badge--primary">1</span>
         </div>
       </a>
-      <a href="#" class="list-group__item gap-3 py-3">
+      <a href="#" class="list-group__item gap-3" style="padding-block: calc(0.75rem * var(--st-density))">
         <img class="flex-shrink-0" src="https://i.pravatar.cc/80?img=47" alt="" width="40" height="40" style="border-radius: 50%;">
         <div class="flex-fill" style="min-width: 0;">
           <div class="fw-medium">Priya Ramanathan</div>
@@ -207,7 +207,7 @@
         </div>
         <small class="text-muted-foreground flex-shrink-0">Yesterday</small>
       </a>
-      <a href="#" class="list-group__item gap-3 py-3">
+      <a href="#" class="list-group__item gap-3" style="padding-block: calc(0.75rem * var(--st-density))">
         <img class="flex-shrink-0" src="https://i.pravatar.cc/80?img=58" alt="" width="40" height="40" style="border-radius: 50%;">
         <div class="flex-fill" style="min-width: 0;">
           <div class="fw-medium">Tomás Reyes</div>
@@ -223,7 +223,7 @@
     <h2>Settings</h2>
     <p>Drop a <code>.list-group</code> as a direct child of a <code>.card</code> and the outer chrome auto-merges with the card. No <code>--flush</code> modifier needed. The card owns the frame, the list-group owns the inner rows.</p>
     {% call ui.demo() %}
-    <div class="card w-100" style="max-width: 36rem;">
+    <div class="card card--block" style="max-width: 36rem;">
       <div class="card__header">
         Notifications
       </div>
@@ -233,18 +233,14 @@
             <label class="field__label fw-medium" for="settingsEmail">Email digest</label>
             <small class="text-muted-foreground d-block">A weekly summary of activity across your projects.</small>
           </div>
-          <label class="switch switch--lg flex-shrink-0">
-            <input class="switch__input" type="checkbox" id="settingsEmail" checked>
-          </label>
+          <input class="switch switch--lg flex-shrink-0" type="checkbox" id="settingsEmail" checked aria-label="Email digest">
         </li>
         <li class="list-group__item gap-3">
           <div class="flex-fill">
             <label class="field__label fw-medium" for="settingsPush">Push notifications</label>
             <small class="text-muted-foreground d-block">Get a ping on this device when someone mentions you.</small>
           </div>
-          <label class="switch switch--lg flex-shrink-0">
-            <input class="switch__input" type="checkbox" id="settingsPush">
-          </label>
+          <input class="switch switch--lg flex-shrink-0" type="checkbox" id="settingsPush" aria-label="Push notifications">
         </li>
         <li class="list-group__item gap-3">
           <div class="flex-fill">
@@ -281,42 +277,34 @@
     <h2>Payment methods</h2>
     <p>Stack saved methods as rows with a label, helper text, and a default-toggle on each. The switch promotes one card so the trailing edge stays uncluttered.</p>
     {% call ui.demo() %}
-    <div class="list-group w-100" style="max-width: 36rem;">
+    <div class="list-group list-group--block" style="max-width: 36rem;">
       <div class="list-group__item gap-3">
         <div class="flex-fill">
           <div class="fw-medium">Visa ending in 4242</div>
           <small class="text-muted-foreground">Expires 08 / 2028</small>
         </div>
-        <label class="switch switch--lg flex-shrink-0">
-          <input class="switch__input" type="checkbox" id="payDefault1" checked aria-label="Default for billing">
-        </label>
+        <input class="switch switch--lg flex-shrink-0" type="checkbox" id="payDefault1" checked aria-label="Default for billing">
       </div>
       <div class="list-group__item gap-3">
         <div class="flex-fill">
           <div class="fw-medium">Mastercard ending in 0119</div>
           <small class="text-muted-foreground">Expires 03 / 2027</small>
         </div>
-        <label class="switch switch--lg flex-shrink-0">
-          <input class="switch__input" type="checkbox" id="payDefault2" aria-label="Default for billing">
-        </label>
+        <input class="switch switch--lg flex-shrink-0" type="checkbox" id="payDefault2" aria-label="Default for billing">
       </div>
       <div class="list-group__item gap-3">
         <div class="flex-fill">
           <div class="fw-medium">Bank transfer · BCA</div>
           <small class="text-muted-foreground">Account ····3084</small>
         </div>
-        <label class="switch switch--lg flex-shrink-0">
-          <input class="switch__input" type="checkbox" id="payDefault3" aria-label="Default for billing">
-        </label>
+        <input class="switch switch--lg flex-shrink-0" type="checkbox" id="payDefault3" aria-label="Default for billing">
       </div>
       <div class="list-group__item gap-3">
         <div class="flex-fill">
           <div class="fw-medium">Wallet credit</div>
           <small class="text-muted-foreground">$128.40 available</small>
         </div>
-        <label class="switch switch--lg flex-shrink-0">
-          <input class="switch__input" type="checkbox" id="payDefault4" aria-label="Use wallet first">
-        </label>
+        <input class="switch switch--lg flex-shrink-0" type="checkbox" id="payDefault4" aria-label="Use wallet first">
       </div>
     </div>
     {% endcall %}

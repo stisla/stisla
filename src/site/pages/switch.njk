@@ -10,17 +10,17 @@
   </header>
 
   <section>
-    <h2>Default</h2>
-    <p>Wrap a <code>&lt;input type="checkbox" role="switch"&gt;</code> in <code>.switch</code> with a paired <code>.switch__label</code>. The <code>role="switch"</code> makes assistive tech announce the affordance correctly.</p>
+    <h2>Basic</h2>
+    <p>Add <code>.switch</code> to a <code>&lt;input type="checkbox" role="switch"&gt;</code>. Pair with a <code>&lt;label&gt;</code> the same way you would for <a class="link" href="/checkbox">Checkbox</a> or <a class="link" href="/radio">Radio</a>. The <code>role="switch"</code> makes assistive tech announce the affordance correctly.</p>
     {% call ui.demo() %}
-    <div class="demo-stack" style="max-width: 24rem;">
-      <div class="switch">
-        <input class="switch__input" type="checkbox" role="switch" id="defaultSwitch" />
-        <label class="switch__label" for="defaultSwitch">Notifications</label>
+    <div class="field" style="width: auto; max-width: 24rem;">
+      <div class="field__item">
+        <input class="switch" type="checkbox" role="switch" id="defaultSwitch" />
+        <label class="field__label" for="defaultSwitch">Notifications</label>
       </div>
-      <div class="switch">
-        <input class="switch__input" type="checkbox" role="switch" id="checkedSwitch" checked />
-        <label class="switch__label" for="checkedSwitch">Auto-update</label>
+      <div class="field__item">
+        <input class="switch" type="checkbox" role="switch" id="checkedSwitch" checked />
+        <label class="field__label" for="checkedSwitch">Auto-update</label>
       </div>
     </div>
     {% endcall %}
@@ -30,14 +30,14 @@
     <h2>Large</h2>
     <p>Add <code>.switch--lg</code> for a larger variant. Suited to standalone settings rows where the switch is the row's primary affordance.</p>
     {% call ui.demo() %}
-    <div class="demo-stack" style="max-width: 24rem;">
-      <div class="switch switch--lg">
-        <input class="switch__input" type="checkbox" role="switch" id="lgSwitch" />
-        <label class="switch__label" for="lgSwitch">Notifications</label>
+    <div class="field" style="width: auto; max-width: 24rem;">
+      <div class="field__item">
+        <input class="switch switch--lg" type="checkbox" role="switch" id="lgSwitch" />
+        <label class="field__label" for="lgSwitch">Notifications</label>
       </div>
-      <div class="switch switch--lg">
-        <input class="switch__input" type="checkbox" role="switch" id="lgSwitchOn" checked />
-        <label class="switch__label" for="lgSwitchOn">Auto-update</label>
+      <div class="field__item">
+        <input class="switch switch--lg" type="checkbox" role="switch" id="lgSwitchOn" checked />
+        <label class="field__label" for="lgSwitchOn">Auto-update</label>
       </div>
     </div>
     {% endcall %}
@@ -45,16 +45,16 @@
 
   <section>
     <h2>Settings row</h2>
-    <p>Push the switch to the row's trailing edge with <code>.switch--reverse</code> + <code>justify-content: space-between</code>. The label sits on the left as row content; the switch pins right as the affordance.</p>
+    <p>Push the switch to the row's trailing edge with a plain flex row. The label sits on the left as row content; the switch pins right as the affordance.</p>
     {% call ui.demo() %}
-    <div class="demo-stack" style="max-width: 24rem;">
-      <div class="switch switch--lg switch--reverse justify-content-between">
-        <label class="switch__label" for="settingEmail">Email notifications</label>
-        <input class="switch__input" type="checkbox" role="switch" id="settingEmail" checked />
+    <div class="demo-stack" style="width: 100%; max-width: 24rem;">
+      <div class="d-flex flex-wrap align-items-center justify-content-between">
+        <label class="field__label" for="settingEmail">Email notifications</label>
+        <input class="switch switch--lg" type="checkbox" role="switch" id="settingEmail" checked />
       </div>
-      <div class="switch switch--lg switch--reverse justify-content-between">
-        <label class="switch__label" for="settingPush">Push notifications</label>
-        <input class="switch__input" type="checkbox" role="switch" id="settingPush" />
+      <div class="d-flex flex-wrap align-items-center justify-content-between">
+        <label class="field__label" for="settingPush">Push notifications</label>
+        <input class="switch switch--lg" type="checkbox" role="switch" id="settingPush" />
       </div>
     </div>
     {% endcall %}
@@ -64,14 +64,14 @@
     <h2>Disabled</h2>
     <p>Add <code>disabled</code> to dim the input and its label, and block interaction.</p>
     {% call ui.demo() %}
-    <div class="demo-stack" style="max-width: 24rem;">
-      <div class="switch">
-        <input class="switch__input" type="checkbox" role="switch" id="disabledSwitchOff" disabled />
-        <label class="switch__label" for="disabledSwitchOff">Disabled off</label>
+    <div class="field" style="width: auto; max-width: 24rem;">
+      <div class="field__item">
+        <input class="switch" type="checkbox" role="switch" id="disabledSwitchOff" disabled />
+        <label class="field__label" for="disabledSwitchOff">Disabled off</label>
       </div>
-      <div class="switch">
-        <input class="switch__input" type="checkbox" role="switch" id="disabledSwitchOn" checked disabled />
-        <label class="switch__label" for="disabledSwitchOn">Disabled on</label>
+      <div class="field__item">
+        <input class="switch" type="checkbox" role="switch" id="disabledSwitchOn" checked disabled />
+        <label class="field__label" for="disabledSwitchOn">Disabled on</label>
       </div>
     </div>
     {% endcall %}
@@ -79,11 +79,11 @@
 
   <section>
     <h2>Without label</h2>
-    <p>Drop the <code>.switch</code> wrapper to use a bare <code>.switch__input</code>. Always pair with an <code>aria-label</code> for accessibility.</p>
+    <p>The <code>.switch</code> input stands on its own. Always pair with an <code>aria-label</code> for accessibility.</p>
     {% call ui.demo() %}
     <div class="demo-row">
-      <input class="switch__input" type="checkbox" role="switch" aria-label="Bare switch off" />
-      <input class="switch__input" type="checkbox" role="switch" aria-label="Bare switch on" checked />
+      <input class="switch" type="checkbox" role="switch" aria-label="Bare switch off" />
+      <input class="switch" type="checkbox" role="switch" aria-label="Bare switch on" checked />
     </div>
     {% endcall %}
   </section>
@@ -92,10 +92,10 @@
     <h2>Browser validation</h2>
     <p>Pair <code>required</code> with the native <code>:user-invalid</code> pseudo. The browser fires it after the user interacts with the field, and clears it the moment the switch is on. Use for inline validation where the affordance owns its own state.</p>
     {% call ui.demo() %}
-    <div class="demo-stack" style="max-width: 24rem;">
-      <div class="switch">
-        <input class="switch__input" type="checkbox" role="switch" id="reqSwitch" required />
-        <label class="switch__label" for="reqSwitch">Enable two-factor (required)</label>
+    <div class="field" style="width: auto; max-width: 24rem;">
+      <div class="field__item">
+        <input class="switch" type="checkbox" role="switch" id="reqSwitch" required />
+        <label class="field__label" for="reqSwitch">Enable two-factor (required)</label>
       </div>
     </div>
     {% endcall %}
@@ -106,14 +106,14 @@
     <h2>Server validation</h2>
     <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky. Frameworks like React Hook Form, Formik, vee-validate, and Rails / Django / Laravel form helpers manage this based on their own error state. Stisla just paints the red border while the attribute is present.</p>
     {% call ui.demo() %}
-    <div class="demo-stack" style="max-width: 24rem;">
-      <div class="switch">
-        <input class="switch__input" type="checkbox" role="switch" id="srvSwitch" aria-invalid="true" />
-        <label class="switch__label" for="srvSwitch">Two-factor must be enabled</label>
+    <div class="field" style="width: auto; max-width: 24rem;">
+      <div class="field__item">
+        <input class="switch" type="checkbox" role="switch" id="srvSwitch" aria-invalid="true" />
+        <label class="field__label" for="srvSwitch">Two-factor must be enabled</label>
       </div>
-      <div class="switch">
-        <input class="switch__input" type="checkbox" role="switch" id="srvSwitchOn" aria-invalid="true" checked />
-        <label class="switch__label" for="srvSwitchOn">Enabled (server still flagged)</label>
+      <div class="field__item">
+        <input class="switch" type="checkbox" role="switch" id="srvSwitchOn" aria-invalid="true" checked />
+        <label class="field__label" for="srvSwitchOn">Enabled (server still flagged)</label>
       </div>
     </div>
     {% endcall %}

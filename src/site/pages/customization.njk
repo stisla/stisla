@@ -545,7 +545,7 @@
   <section>
     <h2>Utility vs component</h2>
     <p>The utilities file header puts it as a rule. Utilities are tweaks. They aren&rsquo;t building blocks. If you reach for the same utility chain three times, write a component. If you reach for it once or twice, leave it inline.</p>
-    <p>The concrete signal is utility-stacking. Putting <code>.d-flex .gap-3 .p-4 .rounded .border</code> on a <code>&lt;div&gt;</code> to build something card-shaped means you&rsquo;re using utilities as building blocks. Write the component instead. The component file is small, scoped, deletable, and tells the next reader of the code what the thing actually is.</p>
+    <p>The concrete signal is utility-stacking. Stacking <code>.p-4 .rounded .border .bg-surface</code> on a <code>&lt;div&gt;</code> to build something card-shaped means you&rsquo;re using utilities as building blocks. Write the component instead. The component file is small, scoped, deletable, and tells the next reader of the code what the thing actually is.</p>
     <p>The handful of utilities Stisla ships exist for the small set of tweaks that genuinely don&rsquo;t need a component. A heading muted in one place. A button row with extra gap to its neighbor. A card that needs to be flex in a single layout. That&rsquo;s the entire purpose.</p>
   </section>
 
@@ -564,31 +564,43 @@
     <p><strong>Third use.</strong> Now you have permission to abstract. The shape of the abstraction reveals itself by then. The class names, the variables, the parts. They&rsquo;re obvious because you&rsquo;ve already written them three times.</p>
 
     <h3>Worked example: <code>.notice</code></h3>
-    <p>A short banner with an icon, a message, and an intent. Around thirty lines of Sass using Stisla patterns end to end.</p>
+    <p>A short banner with an icon, a message, and an intent. Forty lines of Sass using Stisla patterns end to end.</p>
     {% call ui.code(lang='scss', title='src/scss/components/_notice.scss') %}
 .notice {
   // Component-scoped vars. Each one falls back through a global token so
   // the global density / radius / surface knobs reach this component.
-  --notice-padding: calc(0.75rem * var(--st-density));
+  --notice-padding: calc(0.625rem * var(--st-density)) calc(0.875rem * var(--st-density));
   --notice-radius:  var(--st-radius);
-  --notice-gap:     0.5rem;
+  --notice-gap:     0.625rem;
 
-  // Tone is the single source. bg / color / border derive from it via
-  // color-mix, so swapping --notice-tone repaints every part.
-  --notice-tone:    var(--st-foreground);
-  --notice-bg:      color-mix(in oklch, var(--notice-tone) 10%, var(--st-surface));
-  --notice-color:   var(--notice-tone);
-  --notice-border:  color-mix(in oklch, var(--notice-tone) 25%, transparent);
+  // Tone is the single source. bg, border, and icon derive from it via
+  // color-mix, so swapping --notice-tone repaints every part. Body text
+  // stays on --st-foreground — saturated intent colors make great
+  // accents but punishing reading copy. Mix against transparent (not
+  // --st-surface) so the result is a translucent tone composited over
+  // whatever parent bg the notice sits on; mixing in oklch against pure
+  // white shifts the result hue toward red via powerless-hue interp.
+  --notice-tone:   var(--st-foreground);
+  --notice-bg:     color-mix(in oklch, var(--notice-tone) 10%, transparent);
+  --notice-border: color-mix(in oklch, var(--notice-tone) 30%, transparent);
 
   display: flex;
   align-items: center;
   gap: var(--notice-gap);
   padding: var(--notice-padding);
+  font-size: 0.875rem;
 
   background: var(--notice-bg);
-  color: var(--notice-color);
+  color: var(--st-foreground);
   border: 1px solid var(--notice-border);
   border-radius: var(--notice-radius);
+
+  > svg {
+    flex: none;
+    width: 1.125em;
+    height: 1.125em;
+    color: var(--notice-tone);
+  }
 }
 
 // Intent modifiers reassign the source. Every derived var follows.
@@ -600,21 +612,27 @@
     {% call ui.demo() %}
 <style>
   .notice {
-    --notice-padding: calc(0.75rem * var(--st-density));
+    --notice-padding: calc(0.625rem * var(--st-density)) calc(0.875rem * var(--st-density));
     --notice-radius:  var(--st-radius);
-    --notice-gap:     0.5rem;
+    --notice-gap:     0.625rem;
     --notice-tone:    var(--st-foreground);
-    --notice-bg:      color-mix(in oklch, var(--notice-tone) 10%, var(--st-surface));
-    --notice-color:   var(--notice-tone);
-    --notice-border:  color-mix(in oklch, var(--notice-tone) 25%, transparent);
+    --notice-bg:      color-mix(in oklch, var(--notice-tone) 10%, transparent);
+    --notice-border:  color-mix(in oklch, var(--notice-tone) 30%, transparent);
     display: flex;
     align-items: center;
     gap: var(--notice-gap);
     padding: var(--notice-padding);
+    font-size: 0.875rem;
     background: var(--notice-bg);
-    color: var(--notice-color);
+    color: var(--st-foreground);
     border: 1px solid var(--notice-border);
     border-radius: var(--notice-radius);
+  }
+  .notice > svg {
+    flex: none;
+    width: 1.125em;
+    height: 1.125em;
+    color: var(--notice-tone);
   }
   .notice--info    { --notice-tone: var(--st-info); }
   .notice--success { --notice-tone: var(--st-success); }
@@ -743,7 +761,7 @@
 
   <section>
     <h2>Density</h2>
-    <p>One knob shrinks or grows every component proportionally. Padding and gap tokens wrap <code>calc(X * var(--st-density))</code>, so the multiplier reaches every spacing decision in the system. Chip-like components (buttons, form fields, pagination chips, navbar buttons, toggles, tabs) bake the multiplier into their <code>--*-height</code> tokens as a density-delta calc, so the box grows by the same number of pixels on both axes. Utility-class spacing (<code>.gap-3</code>, <code>.mb-4</code>, <code>.p-2</code>) inherits the same multiplier.</p>
+    <p>One knob shrinks or grows every component proportionally. Padding and gap tokens wrap <code>calc(X * var(--st-density))</code>, so the multiplier reaches every spacing decision in the system. Chip-like components (buttons, form fields, pagination chips, navbar buttons, toggles, tabs) bake the multiplier into their <code>--*-height</code> tokens as a density-delta calc, so the box grows by the same number of pixels on both axes. Utility-class spacing (<code>.mb-4</code>, <code>.p-2</code>, <code>.my-3</code>) inherits the same multiplier.</p>
     <table>
       <thead><tr><th>Preset</th><th>Value</th><th>Use</th></tr></thead>
       <tbody>

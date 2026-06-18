@@ -93,8 +93,8 @@ contract is documented in that implementation's README, not here.
 | Vue | `@stisla/reka` (future) |
 | Svelte | `@stisla/bits` (future) |
 
-The CSS source library is shared across implementations (§10). Each
-implementation curates which component partials it ships (§11).
+The CSS source library is shared across implementations (§11). Each
+implementation curates which component partials it ships (§12).
 
 ## 4. Token surface — `--st-*`
 
@@ -140,7 +140,7 @@ breaks the moment someone overrides `--st-primary`.
 
 No spacing ramp. Padding is component-local, expressed as
 `calc(<literal> * var(--st-density))` so the one density knob retunes
-the system (§9).
+the system (§10).
 
 ## 5. Colour model
 
@@ -277,7 +277,89 @@ State hook by component family:
 | Button loading | `.is-loading` |
 | Sidebar collapsed | `.is-collapsed` |
 
-## 9. Component-scoped fallback pattern
+## 9. Utilities
+
+The utility surface alongside components.
+
+**Utilities cover container properties that affect how content renders or
+where it sits.** Text styling (colour, size, weight, wrap), text
+alignment, margin, display, position, overflow, flex behaviour
+(direction, wrap, justify, align-items, gap, fill / grow / shrink,
+align-self, order), and max-size all live as utilities. These properties
+work on any element and don't depend on the element being a specific
+kind of thing. Font-size on a `<div>` cascades into its descendants;
+`text-align` positions every form of inline content, not just text.
+
+**Utilities do not cover component-shape properties.** Intent
+backgrounds, border, radius, padding, shadow. These build a new look
+from scratch. Shipped as free-floating utilities, they let a consumer
+assemble a card-shaped thing from prop-shaped classes and call it a
+component. The component layer becomes optional and the design system
+loses authority over what its surfaces look like.
+
+Component-shape work belongs to:
+
+- A component (write the SCSS for the visual identity)
+- A component variant (`.btn--block`, `.card--flush`)
+- The `customize` surface (per-component CSS-variable override, §10)
+- An honest inline `style` for a deliberate one-off
+
+Kept utility groups:
+
+| Group | Examples |
+| --- | --- |
+| Margin (logical) | `.m-3`, `.mt-2`, `.ms-md-4`, `.mx-auto` |
+| Text styling | `.text-muted-foreground`, `.fs-2`, `.fw-medium`, `.text-truncate` |
+| Text alignment | `.text-start`, `.text-end`, `.text-center` |
+| Display | `.d-flex`, `.d-block`, `.d-none`, `.d-md-block` |
+| Position | `.position-relative`, `.position-sticky` |
+| Overflow | `.overflow-auto`, `.overflow-x-hidden` |
+| Flex container | `.flex-row`, `.flex-column`, `.flex-wrap`, `.justify-content-between`, `.align-items-center`, `.gap-3` |
+| Flex child | `.flex-fill`, `.flex-grow-1`, `.align-self-end`, `.order-md-1` |
+| Visibility | `.visually-hidden` |
+| Sizing | `.w-100`, `.w-md-50`, `.h-100`, `.mw-100`, `.mh-100` |
+
+Dropped utility groups and their replacement:
+
+| Dropped | Replacement |
+| --- | --- |
+| `.p-3` / `.pt-2` padding | Component-internal padding, a component variant, inline `style`, or a project-scoped class |
+| `.border` / `.border-primary` | Component variant or per-component CSS-variable override (§10) |
+| `.rounded-pill` / `.rounded-sm` radius | Component variant or per-component CSS-variable override (§10) |
+| `.shadow-sm` / `.shadow-lg` shadow | Component variant or per-component CSS-variable override (§10) |
+| `.bg-*` background (neutral and intent) | Component-only. Components that need a filled surface pair their own `--st-{intent}-foreground` for contrast; consumers reach for inline `style` or a project-scoped class when a one-off surface is needed |
+
+**Layout primitives are per-implementation.** Implementations may ship
+`Stack`, `Inline`, or similar layout primitives where they add value.
+React-style implementations get a typed prop surface and JSX ergonomics
+from `<Stack gap={3}>` and `<Inline align="center">`. The vanilla
+implementation doesn't ship them: a BEM block with modifiers like
+`.stack--gap-3` would only reskin utilities the consumer already
+composes directly. Consumers reach for the flex utilities (`.d-flex`,
+`.flex-column`, `.justify-content-*`, `.align-items-*`, `.gap-*`) and
+get the same result with one fewer abstraction.
+
+**The escape ramp.** When the sanctioned surfaces do not cover a need,
+the order is:
+
+1. **Component variant.** A modifier such as `.btn--block` for a
+   full-width button. The design system sanctions the deviation.
+2. **Per-component CSS-variable override.** Each component exposes a
+   scoped `--st-<name>-*` surface (§10) that tunes that one component
+   without touching the rest. Implementations may wrap this in a typed
+   prop (e.g. React `customize={{ … }}`); the underlying contract is
+   the CSS variables.
+3. **Inline `style` for a single deliberate one-off.** The consumer
+   owns it. One usage, an explicit reason, no shared class quietly
+   picking up an edge case.
+4. **A real CSS class.** When the same one-off shows up in five places
+   it has become a component. Name it, write it, ship it.
+
+Each surface stays in its lane. A utility doing component-shape work
+is the wrong tool; an inline `style` doing placement work is the wrong
+tool too.
+
+## 10. Component-scoped fallback pattern
 
 Every component reads a component-scoped var that falls back to the
 matching global token:
@@ -334,7 +416,7 @@ component's hard `height` (`.btn`, `.form-control`, `.icon-box`,
 components opt out via `height: auto` + `min-height` floor +
 their own `padding-block`.
 
-## 10. Source organisation
+## 11. Source organisation
 
 The CSS source library is **shared across implementations**. Each
 component has one canonical `_<name>.scss` partial under
@@ -390,7 +472,7 @@ alongside `bits-ui`). The DOM differences live in the primitive library,
 not the framework. `vanilla` is the exception since it's its own
 primitive layer.
 
-## 11. Packaging — bundle exports
+## 12. Packaging — bundle exports
 
 One CSS package, multiple curated bundle exports. Each implementation
 recommends which entry to install.
@@ -421,10 +503,10 @@ The JS implementation packages are separate, one per implementation:
 @stisla/base-ui/<name>                   per-component imports
 ```
 
-## 12. Component catalogue
+## 13. Component catalogue
 
 The spec'd components, grouped by family. Optional / core classification
-is per-implementation (§11) and lives in each impl's docs, not here.
+is per-implementation (§12) and lives in each impl's docs, not here.
 
 - **Action.** btn, btn-group, toggle, toggle-group, dropdown, link
 - **Display.** card, badge, icon-box, alert, kbd, avatar, preview-card
@@ -443,7 +525,7 @@ The contract names anatomy, parts, states, keyboard interactions, a11y
 requirements, and token usage. Implementations test against the
 per-component contract, not against any reference implementation.
 
-## 13. A11y baseline
+## 14. A11y baseline
 
 The spec's a11y commitments. Implementations must satisfy these; how they
 satisfy them is the implementation's choice (vanilla code; Base UI / Reka
@@ -469,12 +551,17 @@ UI / bits-ui doing it for them).
 - **Focus visibility.** `:focus-visible` is the universal hook for focus
   rings. Components do not style `:focus` (mouse + keyboard) since that
   shows a ring on click — only `:focus-visible`.
+- **Touch field sizing.** Form-field controls (input, select, textarea,
+  combobox) compute font-size ≥ 16px under `@media (pointer: coarse)`.
+  iOS Safari zooms the viewport on focus when a field's computed
+  font-size is below 16px and never zooms back out; the guard prevents
+  the misfire without `user-scalable=no` (which violates WCAG 1.4.4).
 
 Out of scope for the spec at 3.0: print stylesheet, screen-reader
 behaviour in legacy AT (NVDA + IE, etc.). RTL is handled at the CSS
-layer via logical properties (§16); no implementation work required.
+layer via logical properties (§17); no implementation work required.
 
-## 14. Dark mode
+## 15. Dark mode
 
 Two selectors, both supported out of the box:
 
@@ -491,7 +578,7 @@ chip flips luminance to read against the deep surface).
 Asymmetry: `--st-warning-foreground` stays dark in both themes. Yellow
 stays yellow; text on it stays dark.
 
-## 15. Browser support
+## 16. Browser support
 
 Evergreen Chromium, Firefox, Safari from mid-2023. Minimum versions:
 Safari 16.4+, Chrome 111+, Firefox 121+. No polyfills. Features the
@@ -499,7 +586,7 @@ spec relies on — OKLCH, `color-mix`, `:has()`, `@layer`, container
 queries, `inert`, `100dvh`, `env(safe-area-inset-*)` — are all
 well-supported in those versions.
 
-## 16. Direction-agnostic CSS
+## 17. Direction-agnostic CSS
 
 Stisla CSS is authored with CSS logical properties throughout. Components
 use `padding-inline`, `margin-inline-start`, `inset-inline-end`,
@@ -535,7 +622,7 @@ Sass mixins (`media-up`, `media-down`, `media-between`, `media-only`)
 and the breakpoint table are direction-agnostic — viewport size is
 independent of writing direction.
 
-## 17. Out of scope for the spec at 3.0
+## 18. Out of scope for the spec at 3.0
 
 - Print stylesheet — not required
 - v2 originals (`.metric`, `.invoice-summary`, etc.) — those become
@@ -547,7 +634,7 @@ independent of writing direction.
   by the per-component contracts; a formal test suite is a later
   artefact
 
-## 18. Where to look next
+## 19. Where to look next
 
 - **`spec/components/<name>.md`** — the per-component contract. Anatomy,
   parts, states, keyboard interactions, a11y, tokens.

@@ -7,15 +7,12 @@
   <header>
     <h1>Toggle group</h1>
     <p class="lead">A pill container that hosts a row of toggles pressed inside its padded interior.</p>
+    <p>For a single press button, see <a class="link" href="/toggle">Toggle</a>. For purely visual button grouping with no state, see <a class="link" href="/button-group">Button group</a>.</p>
   </header>
 
   <section>
-    <p>For a single press button, see <a class="link" href="/toggle">Toggle</a>. For purely visual button grouping with no state, see <a class="link" href="/button-group">Button group</a>.</p>
-  </section>
-
-  <section>
-    <h2>Single-select (segmented control)</h2>
-    <p>Use <code>role="radiogroup"</code> on the wrapper and <code>role="radio"</code> with <code>aria-checked</code> on each member. The CSS hook is <code>data-state="active"</code> on the current member. Add <code>data-stisla-toggle-group</code> to wire the click and arrow-key contract. The type autodetects from <code>role="radiogroup"</code>.</p>
+    <h2>Basic</h2>
+    <p>Use <code>role="radiogroup"</code> on the wrapper and <code>role="radio"</code> with <code>aria-checked</code> on each member for the single-select (segmented control) shape. The CSS hook is <code>data-state="active"</code> on the current member. Add <code>data-stisla-toggle-group</code> to wire the click and arrow-key contract. The type autodetects from <code>role="radiogroup"</code>.</p>
     {% call ui.demo() %}
     <div class="toggle-group" data-stisla-toggle-group role="radiogroup" aria-label="Text alignment">
       <button type="button" class="toggle toggle--icon-only" role="radio" aria-checked="false" aria-label="Align left" data-value="left">
@@ -29,6 +26,51 @@
       </button>
     </div>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Keyboard</h2>
+    <p>Roving tabindex keeps one member in the tab order at a time, so Tab leaves the group naturally. Arrow keys move focus along the group's orientation. In single-select mode focus is selection (WAI-ARIA radio-group); multi-select decouples them.</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Key</th>
+          <th>Single-select</th>
+          <th>Multi-select</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><kbd class="kbd">→</kbd> / <kbd class="kbd">↓</kbd></td>
+          <td>Focus next enabled member, auto-select.</td>
+          <td>Focus next enabled member.</td>
+        </tr>
+        <tr>
+          <td><kbd class="kbd">←</kbd> / <kbd class="kbd">↑</kbd></td>
+          <td>Focus previous enabled member, auto-select.</td>
+          <td>Focus previous enabled member.</td>
+        </tr>
+        <tr>
+          <td><kbd class="kbd">Home</kbd></td>
+          <td>Focus first enabled, auto-select.</td>
+          <td>Focus first enabled member.</td>
+        </tr>
+        <tr>
+          <td><kbd class="kbd">End</kbd></td>
+          <td>Focus last enabled, auto-select.</td>
+          <td>Focus last enabled member.</td>
+        </tr>
+        <tr>
+          <td><kbd class="kbd">Space</kbd> / <kbd class="kbd">Enter</kbd></td>
+          <td>Select focused (no-op if already selected).</td>
+          <td>Flip <code>aria-pressed</code> on focused member.</td>
+        </tr>
+        <tr>
+          <td><kbd class="kbd">Tab</kbd></td>
+          <td colspan="2">Leaves the group. Only the tabbable member is in the tab order.</td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 
   <section>
@@ -120,7 +162,7 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Add <code>.toggle-group--sm</code> or <code>.toggle-group--lg</code>. Outer height shrinks to 28 / grows to 44 px under default density; the inner toggle height re-derives from the new container values automatically (concentric corners per V3.md §3.4).</p>
+    <p>Add <code>.toggle-group--sm</code> or <code>.toggle-group--lg</code>. The outer container scales with the standard size cadence; the inner toggle height re-derives from the new container values automatically (concentric corners per V3.md §3.4).</p>
     {% call ui.demo() %}
     <div class="d-flex flex-column gap-2 align-items-start">
       <div class="toggle-group toggle-group--sm" data-stisla-toggle-group role="radiogroup" aria-label="Small">
@@ -166,48 +208,10 @@
   </section>
 
   <section>
-    <h2>Keyboard</h2>
-    <p>Roving tabindex keeps one member in the tab order at a time, so Tab leaves the group naturally. Arrow keys move focus along the group's orientation. In single-select mode focus is selection (WAI-ARIA radio-group); multi-select decouples them.</p>
-    <table>
-      <thead>
-        <tr>
-          <th>Key</th>
-          <th>Single-select</th>
-          <th>Multi-select</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><kbd class="kbd">→</kbd> / <kbd class="kbd">↓</kbd></td>
-          <td>Focus next enabled member, auto-select.</td>
-          <td>Focus next enabled member.</td>
-        </tr>
-        <tr>
-          <td><kbd class="kbd">←</kbd> / <kbd class="kbd">↑</kbd></td>
-          <td>Focus previous enabled member, auto-select.</td>
-          <td>Focus previous enabled member.</td>
-        </tr>
-        <tr>
-          <td><kbd class="kbd">Home</kbd></td>
-          <td>Focus first enabled, auto-select.</td>
-          <td>Focus first enabled member.</td>
-        </tr>
-        <tr>
-          <td><kbd class="kbd">End</kbd></td>
-          <td>Focus last enabled, auto-select.</td>
-          <td>Focus last enabled member.</td>
-        </tr>
-        <tr>
-          <td><kbd class="kbd">Space</kbd> / <kbd class="kbd">Enter</kbd></td>
-          <td>Select focused (no-op if already selected).</td>
-          <td>Flip <code>aria-pressed</code> on focused member.</td>
-        </tr>
-        <tr>
-          <td><kbd class="kbd">Tab</kbd></td>
-          <td colspan="2">Leaves the group. Only the tabbable member is in the tab order.</td>
-        </tr>
-      </tbody>
-    </table>
+    <h2>Events</h2>
+    <p>Two events fire on the group's root.</p>
+    <p><code>stisla:toggle-group:changing</code> fires before a flip and is cancelable. In single-select mode <code>detail</code> carries <code>value</code>, <code>member</code>, <code>previousValue</code>, and <code>previousMember</code>. In multi-select mode <code>detail</code> carries the proposed <code>value</code> array, the <code>member</code> being toggled, and <code>action</code> (<code>'pressed'</code> or <code>'unpressed'</code>). Call <code>preventDefault()</code> to abort the flip.</p>
+    <p><code>stisla:toggle-group:changed</code> fires after the flip lands with the same <code>detail</code> shape (final values). Not cancelable.</p>
   </section>
 
   <section>

@@ -6,14 +6,15 @@
 {% block content %}
   <header>
     <h1>Radio</h1>
-    <p class="lead">A native <code>&lt;input type="radio"&gt;</code> styled as a small round dot. Group radios by a shared <code>name</code> to enforce single-selection within the group.</p>
+    <p class="lead">A native <code>&lt;input type="radio"&gt;</code> styled as a small round dot.</p>
+    <p>Group radios by a shared <code>name</code> to enforce single-selection within the group.</p>
   </header>
 
   <section>
     <h2>Basic</h2>
     <p>Add <code>.radio</code> to the input. Wrap each input + label pair in <code>.field__item</code>, and group items inside a <code>.field</code> for consistent vertical rhythm. Give every radio in the group a shared <code>name</code> so the browser handles single-selection. See <a class="link" href="/field">Field</a> for the full element family.</p>
     {% call ui.demo() %}
-    <div class="field" style="max-width: 24rem;">
+    <div class="field" style="width: auto; max-width: 24rem;">
       <div class="field__item">
         <input class="radio" type="radio" name="defaultRadio" id="defaultRadio1" checked />
         <label class="field__label" for="defaultRadio1">First option</label>
@@ -55,7 +56,7 @@
     <h2>Reverse</h2>
     <p>Add <code>.field__item--reverse</code> to flip the label to the start and the input to the end.</p>
     {% call ui.demo() %}
-    <div class="field" style="max-width: 24rem;">
+    <div class="field" style="width: auto; max-width: 24rem;">
       <div class="field__item field__item--reverse">
         <input class="radio" type="radio" name="reverseRadio" id="reverseRadio" checked />
         <label class="field__label" for="reverseRadio">Reversed radio</label>
@@ -68,7 +69,7 @@
     <h2>Disabled</h2>
     <p>Add <code>disabled</code> to dim the input and its label, and block interaction.</p>
     {% call ui.demo() %}
-    <div class="field" style="max-width: 24rem;">
+    <div class="field" style="width: auto; max-width: 24rem;">
       <div class="field__item">
         <input class="radio" type="radio" name="disabledRadio" id="disabledRadio1" disabled />
         <label class="field__label" for="disabledRadio1">Disabled radio</label>
@@ -106,7 +107,7 @@
     <h2>Server validation</h2>
     <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky. Stisla just paints the red while the attribute is present. Remove it when your validator considers the field resolved.</p>
     {% call ui.demo() %}
-    <div class="field" style="max-width: 24rem;">
+    <div class="field" style="width: auto; max-width: 24rem;">
       <div class="field__item">
         <input class="radio" type="radio" name="srvPlan" id="srvPlanBasic" aria-invalid="true" />
         <label class="field__label" for="srvPlanBasic">Basic plan</label>

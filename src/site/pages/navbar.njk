@@ -17,7 +17,7 @@
     <h2>Basic</h2>
     <p>Wrap a <code>.navbar__brand</code>, a <code>.navbar__toggle</code>, and a <code>.navbar__menu</code> with its <code>.navbar__nav</code> list. Mark the current page with <code>data-state="active"</code> on the matching <code>.navbar__button</code>.</p>
     {% call ui.demo() %}
-    <nav class="navbar w-100" data-stisla-navbar style="border: 1px solid var(--st-border); border-radius: var(--st-radius);">
+    <nav class="navbar navbar--block" data-stisla-navbar style="border: 1px solid var(--st-border); border-radius: var(--st-radius);">
       <a class="navbar__brand" href="#">Acme</a>
       <button type="button" class="navbar__toggle" data-stisla-navbar-toggle aria-controls="navbarBasic" aria-expanded="false" aria-label="Toggle navigation">
         <i data-lucide="menu"></i>
@@ -38,7 +38,7 @@
     <h2>Active and disabled</h2>
     <p>Active links carry <code>data-state="active"</code> (highlight chip); unreachable links carry <code>aria-disabled="true"</code> (dim + no pointer events). Hover is the soft accent chip; the active treatment is the highlight chip so the current row reads steadier than a transient hover.</p>
     {% call ui.demo() %}
-    <nav class="navbar w-100" data-stisla-navbar style="border: 1px solid var(--st-border); border-radius: var(--st-radius);">
+    <nav class="navbar navbar--block" data-stisla-navbar style="border: 1px solid var(--st-border); border-radius: var(--st-radius);">
       <a class="navbar__brand" href="#">Acme</a>
       <button type="button" class="navbar__toggle" data-stisla-navbar-toggle aria-controls="navbarStates" aria-expanded="false" aria-label="Toggle navigation">
         <i data-lucide="menu"></i>
@@ -59,13 +59,13 @@
     <h2>With status text</h2>
     <p>Drop any element inside <code>.navbar__menu</code> for a trailing status pill, workspace name, or counter. Without a nav before it, push the element to the trailing edge with <code>margin-inline-start: auto</code>.</p>
     {% call ui.demo() %}
-    <nav class="navbar w-100" data-stisla-navbar style="border: 1px solid var(--st-border); border-radius: var(--st-radius);">
+    <nav class="navbar navbar--block" data-stisla-navbar style="border: 1px solid var(--st-border); border-radius: var(--st-radius);">
       <a class="navbar__brand" href="#">Acme</a>
       <button type="button" class="navbar__toggle" data-stisla-navbar-toggle aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <i data-lucide="menu"></i>
       </button>
       <div class="navbar__menu" id="navbarText" data-state="closed">
-        <span class="d-inline-flex align-items-center gap-2 ms-auto text-muted-foreground">
+        <span class="d-flex flex-wrap align-items-center gap-2 ms-auto text-muted-foreground">
           <span class="d-inline-block" style="width: 0.375rem; height: 0.375rem; border-radius: 50%; background: var(--st-success);"></span>
           All systems normal
         </span>
@@ -78,7 +78,7 @@
     <h2>Container</h2>
     <p>Drop a <code>.container</code> or <code>.container-fluid</code> as the bar's direct child to clamp inner content to the standard column widths. The bar still spans full width; the container takes over the inline padding so the inner row shares its inset with a matching container in the page body.</p>
     {% call ui.demo() %}
-    <nav class="navbar w-100" data-stisla-navbar style="border: 1px solid var(--st-border); border-radius: var(--st-radius);">
+    <nav class="navbar navbar--block" data-stisla-navbar style="border: 1px solid var(--st-border); border-radius: var(--st-radius);">
       <div class="container">
         <a class="navbar__brand" href="#">Acme</a>
         <button type="button" class="navbar__toggle" data-stisla-navbar-toggle aria-controls="navbarContainer" aria-expanded="false" aria-label="Toggle navigation">

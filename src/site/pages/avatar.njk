@@ -10,8 +10,8 @@
   </header>
 
   <section>
-    <h2>Initials</h2>
-    <p>Drop text directly into <code>.avatar</code> for the no-image case. No JS; the avatar paints as a plain neutral tile with the content centered. The default shape is a rounded square; the radius tracks <code>--st-radius</code>.</p>
+    <h2>Basic</h2>
+    <p>Drop text directly into <code>.avatar</code> for the no-image case. No JS needed; the avatar paints as a plain neutral tile with the content centered. The default shape is a rounded square; the radius tracks <code>--st-radius</code>.</p>
     {% call ui.demo() %}
     <div class="demo-row">
       <span class="avatar">RF</span>
@@ -142,6 +142,11 @@
       <p class="text-muted-foreground">Source loads after a 1.5 s artificial delay.</p>
     </div>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Events</h2>
+    <p><code>stisla:avatar:changed</code> fires on the avatar root whenever its load status flips. The <code>detail.status</code> field carries the new value (<code>"loading"</code>, <code>"loaded"</code>, or <code>"error"</code>). Use it to log image failures, swap to a different source on error, or kick off the next step in a load orchestration.</p>
   </section>
 
   <section>

@@ -10,43 +10,6 @@
   </header>
 
   <section>
-    <h2>Installation</h2>
-    <p>Skip this step if you're on the <code>stisla-full</code> bundle, it already ships with Scroll area. On the core <code>stisla</code> bundle, add it alongside as a script tag or via your package manager.</p>
-
-    <div class="tabs mt-4" data-stisla-tabs>
-      <div class="tabs__list">
-        <button class="tabs__trigger" data-value="compiled">Compiled</button>
-        <button class="tabs__trigger" data-value="manual">Manual</button>
-      </div>
-
-      <div class="tabs__panel" data-value="compiled">
-        <p>Add the component's stylesheet and script next to the ones loading the core bundle.</p>
-        {% call ui.code(lang='html') %}
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/vanilla@beta/dist/components/scroll-area.css">
-        <script type="module" src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@beta/dist/components/scroll-area.js"></script>
-        {% endcall %}
-        <p>The script auto-registers on the global <code>Stisla</code> instance, so no extra wiring is needed.</p>
-      </div>
-
-      <div class="tabs__panel" data-value="manual">
-        <p>Install OverlayScrollbars:</p>
-        {% call ui.code(lang='bash') %}
-        npm install overlayscrollbars
-        {% endcall %}
-        <p>Import the CSS + class, register it, then call <code>Stisla.init()</code>:</p>
-        {% call ui.code(lang='js') %}
-        import '@stisla/vanilla/dist/components/scroll-area.css';
-        import { Stisla } from '@stisla/vanilla';
-        import { ScrollArea } from '@stisla/vanilla/components/scroll-area';
-
-        Stisla.register('scroll-area', ScrollArea);
-        Stisla.init();
-        {% endcall %}
-      </div>
-    </div>
-  </section>
-
-  <section>
     <h2>Basic</h2>
     <p>Drop <code>.scroll-area</code> on any bounded element and tag it with <code>data-stisla-scroll-area</code>. The native scrollbar disappears; the overlay bar fades in on hover and while scrolling.</p>
     {% call ui.demo() %}
@@ -64,6 +27,36 @@
       </div>
     </div>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Installation</h2>
+    <p>Skip this step if you're on the <code>stisla-full</code> bundle, it already ships with Scroll area. On the core <code>stisla</code> bundle, add it alongside as a script tag or via your package manager.</p>
+
+    <div class="tabs mt-4" data-stisla-tabs>
+      <div class="tabs__list">
+        <button class="tabs__trigger" data-value="compiled">Compiled</button>
+        <button class="tabs__trigger" data-value="manual">Manual</button>
+      </div>
+
+      <div class="tabs__panel" data-value="compiled">
+        <p>Add the component's stylesheet and script next to the ones loading the core bundle.</p>
+        {% call ui.code(lang='html') %}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@beta/dist/components/scroll-area.css">
+        <script type="module" src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@beta/dist/components/scroll-area.js"></script>
+        {% endcall %}
+        <p>The script auto-registers on the global <code>Stisla</code> instance, so no extra wiring is needed.</p>
+      </div>
+
+      <div class="tabs__panel" data-value="manual">
+        <p>Import the CSS and the JS. Both files register themselves on load, so no manual <code>register()</code> or <code>Stisla.init()</code> call is needed.</p>
+        {% call ui.code(lang='js') %}
+        import '@stisla/css/components/scroll-area';
+        import '@stisla/vanilla/components/scroll-area';
+        {% endcall %}
+        <p>OverlayScrollbars rides along as a transitive dependency of <code>@stisla/vanilla</code>, so no extra install is needed.</p>
+      </div>
+    </div>
   </section>
 
   <section>
@@ -138,11 +131,16 @@
       <div style="padding: 1rem;">
         <p>The handle paints from a primary mix at rest, deepens on hover, and lands on the solid intent on active. The track sits transparent so the parent surface reads through.</p>
         <p>Same pattern works for success, danger, info, or any custom token a parent scope publishes. Set the three handle vars once and every scroll-area inside the scope picks the new tone up.</p>
-        <p>The bar width here is bumped a notch to make the color read at a glance. Defaults stay narrow so the chrome reads as plumbing, not decoration.</p>
+        <p>The bar width here is bumped a notch to make the color read at a glance. Defaults stay narrow so the chrome reads as plumbing rather than decoration.</p>
         <p>Density still applies through the surrounding scale, so a compact view shrinks the surface around the bar without retuning the bar itself.</p>
       </div>
     </div>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Events</h2>
+    <p><code>stisla:scroll-area:destroyed</code> fires on the root when the underlying OverlayScrollbars instance is torn down (the component is destroyed or unmounted). Use it to detach any consumer-side listeners or refs you held against the scroll area.</p>
   </section>
 
   <section>

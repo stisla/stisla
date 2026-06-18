@@ -117,7 +117,7 @@ Unblocked by Phase C.
   levers: PurgeCSS / LightningCSS purge against rendered HTML, fork
   `stisla.scss` and drop component imports, change Sass-level knobs
   (breakpoints, baked tokens). Worked example with real before/after:
-  41 → 7 components saves ~64 KB raw / ~13 KB gz.
+  46 → 7 components saves ~124 KB raw / ~17 KB gz.
 
 ---
 

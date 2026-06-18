@@ -25,7 +25,7 @@
   "exports": {
     ".": "./dist/stisla.css",
     "./full": "./dist/stisla-full.css",
-    "./components/carousel": "./dist/components/carousel.css",
+    "./components/*": "./dist/components/*.css",
     "./dist/*": "./dist/*",
     "./scss/*": "./scss/*",
     "./package.json": "./package.json"

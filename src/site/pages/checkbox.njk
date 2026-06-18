@@ -6,14 +6,15 @@
 {% block content %}
   <header>
     <h1>Checkbox</h1>
-    <p class="lead">A native <code>&lt;input type="checkbox"&gt;</code> styled as a small square box. See <a href="/radio" class="link">Radio</a> for the round single-choice variant and <a href="/switch" class="link">Switch</a> for the track-and-thumb.</p>
+    <p class="lead">A native <code>&lt;input type="checkbox"&gt;</code> styled as a small square box.</p>
+    <p>See <a href="/radio" class="link">Radio</a> for the round single-choice variant and <a href="/switch" class="link">Switch</a> for the track-and-thumb.</p>
   </header>
 
   <section>
     <h2>Basic</h2>
     <p>Add <code>.checkbox</code> to the input. Wrap each input + label pair in <code>.field__item</code>, and group items inside a <code>.field</code> so the rows pick up consistent vertical rhythm. See <a class="link" href="/field">Field</a> for the full element family.</p>
     {% call ui.demo() %}
-    <div class="field" style="max-width: 24rem;">
+    <div class="field" style="width: auto; max-width: 24rem;">
       <div class="field__item">
         <input class="checkbox" type="checkbox" id="defaultCheck" />
         <label class="field__label" for="defaultCheck">Default checkbox</label>
@@ -51,7 +52,7 @@
     <h2>Indeterminate</h2>
     <p>The indeterminate state is set from script. There's no HTML attribute for it. Useful as a parent of a partially-selected group.</p>
     {% call ui.demo() %}
-    <div class="field" style="max-width: 24rem;">
+    <div class="field" style="width: auto; max-width: 24rem;">
       <div class="field__item">
         <input class="checkbox" type="checkbox" id="indeterminateCheck" />
         <label class="field__label" for="indeterminateCheck">Select all</label>
@@ -67,7 +68,7 @@
     <h2>Reverse</h2>
     <p>Add <code>.field__item--reverse</code> to flip the label to the start and the input to the end. Useful for settings rows where the affordance sits on the right edge.</p>
     {% call ui.demo() %}
-    <div class="field" style="max-width: 24rem;">
+    <div class="field" style="width: auto; max-width: 24rem;">
       <div class="field__item field__item--reverse">
         <input class="checkbox" type="checkbox" id="reverseCheck" />
         <label class="field__label" for="reverseCheck">Reversed checkbox</label>
@@ -80,7 +81,7 @@
     <h2>Disabled</h2>
     <p>Add <code>disabled</code> to dim the input and its label, and block interaction.</p>
     {% call ui.demo() %}
-    <div class="field" style="max-width: 24rem;">
+    <div class="field" style="width: auto; max-width: 24rem;">
       <div class="field__item">
         <input class="checkbox" type="checkbox" id="disabledCheck" disabled />
         <label class="field__label" for="disabledCheck">Disabled checkbox</label>
@@ -114,7 +115,7 @@
     <h2>Server validation</h2>
     <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky. Stisla just paints the red while the attribute is present. Remove it when your validator considers the field resolved.</p>
     {% call ui.demo() %}
-    <div class="field" style="max-width: 24rem;">
+    <div class="field" style="width: auto; max-width: 24rem;">
       <div class="field__item">
         <input class="checkbox" type="checkbox" id="srvTerms" aria-invalid="true" />
         <label class="field__label" for="srvTerms">Accept the terms</label>

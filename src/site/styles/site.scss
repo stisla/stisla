@@ -14,6 +14,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
 }
 
@@ -141,12 +142,52 @@ body {
   width: 100%;
 }
 
+// .demo-preview centers via flex (shrink-to-content). A .demo-row inside
+// it would otherwise collapse to its widest single item and wrap even
+// when the preview has room — visible on /card where 18rem cards stacked
+// instead of sitting side-by-side. Stretch the row to the preview width
+// so flex-wrap only fires on genuinely narrow viewports; items keep their
+// centered look via .demo-row's own justify-content: center.
+.demo-preview > .demo-row {
+  width: 100%;
+}
+
 // Placeholder bars are sized via `style="width: N%"` inline, which is
 // relative to the parent box. .demo-preview centers via flex, so a bare
 // wrapper around the bars shrink-fits to ~0 and the bars collapse to
 // 1em-tall pills. Stretch any wrapper that hosts a placeholder anywhere
 // in its subtree.
 .demo-preview > :has(.placeholder) {
+  width: 100%;
+}
+
+// Form-input demos: the centered .demo-preview shrink-fits its flex
+// children. .field handles itself (own `width: 100%`), but a bare
+// .demo-stack / <form> wrapping form fields collapses to its narrowest
+// content — controls inside then read `width: 100%` against the collapsed
+// parent and render tiny. Stretch the wrapper when it hosts a .field or
+// a control that's meant to fill; compact widgets (.switch, .checkbox,
+// .radio, button rows) stay shrink-fit so they read as a centered group.
+.demo-preview
+  > .demo-stack:has(
+    > .field,
+    .input,
+    .select,
+    .textarea,
+    .slider,
+    .autocomplete,
+    .combobox
+  ),
+.demo-preview
+  > form:has(
+    > .field,
+    .input,
+    .select,
+    .textarea,
+    .slider,
+    .autocomplete,
+    .combobox
+  ) {
   width: 100%;
 }
 
@@ -322,6 +363,10 @@ body {
     font-size: 1.0625rem;
     color: var(--st-muted-foreground);
     margin-bottom: 0;
+    + p {
+      margin-top: 1.25rem;
+      color: var(--st-muted-foreground);
+    }
   }
 
   // Page structure: <section> / <header> own the inter-section spacing.
@@ -751,7 +796,6 @@ $shell-max: 90rem;
 .site-partners__card {
   display: flex;
   flex-direction: column;
-  gap: 0.375rem;
   padding: 1rem;
   border: 1px solid var(--st-border);
   border-radius: var(--st-radius);
@@ -763,6 +807,8 @@ $shell-max: 90rem;
 .site-partners__brand {
   font-weight: 600;
   font-size: 0.9375rem;
+  margin-top: 0.375rem;
+  margin-bottom: 0.25rem;
 }
 
 .site-partners__blurb {
@@ -935,4 +981,3 @@ body:has(.site-layout--landing) .site-navbar__trigger {
     color: var(--st-foreground);
   }
 }
-

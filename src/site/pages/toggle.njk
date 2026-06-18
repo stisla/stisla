@@ -7,21 +7,27 @@
   <header>
     <h1>Toggle</h1>
     <p class="lead">A two-state press button. Outline-neutral at rest, highlight-filled when active.</p>
+    <p>For collections of toggles in a pill container, see <a class="link" href="/toggle-group">Toggle group</a>.</p>
   </header>
 
   <section>
-    <p>For collections of toggles in a pill container, see <a class="link" href="/toggle-group">Toggle group</a>.</p>
-  </section>
-
-  <section>
-    <h2>Press button</h2>
-    <p>Add <code>data-stisla-toggle</code> to a <code>&lt;button class="toggle"&gt;</code>. Clicking flips <code>aria-pressed</code>. Listen for <code>stisla:toggle:changed</code> to react.</p>
+    <h2>Basic</h2>
+    <p>Add <code>data-stisla-toggle</code> to a <code>&lt;button class="toggle"&gt;</code>. Clicking flips <code>aria-pressed</code>.</p>
     {% call ui.demo() %}
     <button type="button" class="toggle" data-stisla-toggle aria-pressed="true">
       <i data-lucide="bell"></i>
       Notifications on
     </button>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Keyboard</h2>
+    <p>The toggle behaves like a native <code>&lt;button&gt;</code> with a sticky pressed state.</p>
+    <ul>
+      <li><kbd>Tab</kbd>: focus the toggle</li>
+      <li><kbd>Space</kbd> / <kbd>Enter</kbd>: flip <code>aria-pressed</code></li>
+    </ul>
   </section>
 
   <section>
@@ -40,9 +46,9 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Add <code>.toggle--sm</code> or <code>.toggle--lg</code> to match the <code>.btn</code> size cadence (28 / 36 / 44 px under default density).</p>
+    <p>Add <code>.toggle--sm</code> or <code>.toggle--lg</code> to match the <code>.btn</code> size cadence.</p>
     {% call ui.demo() %}
-    <div class="d-flex gap-2 align-items-center">
+    <div class="d-flex flex-wrap gap-2 align-items-center">
       <button type="button" class="toggle toggle--sm" data-stisla-toggle aria-pressed="true">Bold</button>
       <button type="button" class="toggle" data-stisla-toggle aria-pressed="true">Bold</button>
       <button type="button" class="toggle toggle--lg" data-stisla-toggle aria-pressed="true">Bold</button>
@@ -54,7 +60,7 @@
     <h2>Icon-only</h2>
     <p>Add <code>.toggle--icon-only</code> for a square slot (mirrors <code>.btn--icon-only</code>). Add an <code>aria-label</code> so the affordance is named for assistive tech.</p>
     {% call ui.demo() %}
-    <div class="d-flex gap-2 align-items-center">
+    <div class="d-flex flex-wrap gap-2 align-items-center">
       <button type="button" class="toggle toggle--icon-only" data-stisla-toggle aria-pressed="false" aria-label="Bold">
         <i data-lucide="bold"></i>
       </button>
@@ -72,7 +78,7 @@
     <h2>Icon-round</h2>
     <p>Add <code>.toggle--icon-round</code> alongside <code>.toggle--icon-only</code> for a circular silhouette. Same opt-out as <code>.btn--icon-round</code>. Radius forces 9999px and ignores <code>--st-radius</code>.</p>
     {% call ui.demo() %}
-    <div class="d-flex gap-2 align-items-center">
+    <div class="d-flex flex-wrap gap-2 align-items-center">
       <button type="button" class="toggle toggle--icon-only toggle--icon-round" data-stisla-toggle aria-pressed="false" aria-label="Like">
         <i data-lucide="thumbs-up"></i>
       </button>
@@ -90,13 +96,20 @@
     <h2>Disabled</h2>
     <p>Native <code>:disabled</code> on the button (or on the paired <code>.toggle-input</code>) dims the chip and blocks pointer events.</p>
     {% call ui.demo() %}
-    <div class="d-flex gap-2 align-items-center">
+    <div class="d-flex flex-wrap gap-2 align-items-center">
       <button type="button" class="toggle" data-stisla-toggle aria-pressed="false" disabled>Off, disabled</button>
       <button type="button" class="toggle" data-stisla-toggle aria-pressed="true" disabled>On, disabled</button>
       <input type="checkbox" class="toggle-input" id="toggleDisabledForm" disabled>
       <label class="toggle" for="toggleDisabledForm">Form, disabled</label>
     </div>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Events</h2>
+    <p>Two events fire on the toggle. Both carry the upcoming or new state in <code>detail.pressed</code>.</p>
+    <p><code>stisla:toggle:changing</code> fires before the flip and is cancelable. Call <code>preventDefault()</code> on the event to keep the current state (useful when an external check has to confirm the flip first).</p>
+    <p><code>stisla:toggle:changed</code> fires after the flip lands. Use it to mirror the state somewhere else or to save the choice.</p>
   </section>
 
   <section>

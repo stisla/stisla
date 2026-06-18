@@ -9,8 +9,10 @@
 //
 // === Anatomy =============================================================
 //   .page                  — vertical flex container with row-gap
-//   .page__header          — top header row (title + actions)
-//   .page__title           — title slot (heading + optional subtitle)
+//   .page__header          — top header row (heading group + actions)
+//   .page__heading         — heading group (title + optional description)
+//   .page__title           — opinionated heading (h3-equivalent cadence)
+//   .page__description     — opinionated muted helper copy under the title
 //   .page__action          — actions slot; reused by .page__section-header
 //   .page__section         — content section with its own inner gap
 //   .page__section-header  — mini header row inside a section
@@ -27,11 +29,11 @@
   gap: var(--page-section-gap);
 }
 
-// Page header — flex row, title leading, optional actions trailing.
+// Page header — flex row, heading leading, optional actions trailing.
 // flex-wrap drops actions to a new line on narrow viewports instead of
 // overflowing. justify-content: space-between is the fallback for the
-// "two direct children, no .page__title wrapper" case; when the title
-// wrapper is present, its flex: 1 1 auto pushes actions to the end.
+// "two direct children, no .page__heading wrapper" case; when the heading
+// group is present, its flex: 1 1 auto pushes actions to the end.
 .page__header {
   --page-header-gap: calc(1rem * var(--st-density));
 
@@ -42,18 +44,45 @@
   gap: var(--page-header-gap);
 }
 
-// Title slot — flex-column so a heading + subtitle stack with a small
-// gap (Preflight strips default heading + paragraph margins). flex: 1 1
-// auto lets the slot grow into the row; min-width: 0 keeps a long title
-// wrapping inside its column instead of forcing actions off-screen.
-.page__title {
-  --page-title-gap: calc(0.25rem * var(--st-density));
+// Heading group — flex-column so the title + description stack with a
+// small gap (Preflight strips default heading + paragraph margins).
+// flex: 1 1 auto lets the group grow into the row; min-width: 0 keeps a
+// long title wrapping inside its column instead of forcing actions off-screen.
+.page__heading {
+  --page-heading-gap: calc(0.25rem * var(--st-density));
 
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  gap: var(--page-title-gap);
+  gap: var(--page-heading-gap);
   min-width: 0;
+}
+
+// Title — opinionated cadence (h3-equivalent) so consumers can drop the
+// recurring .h3 utility from every page heading. Same shape as
+// .page__section-title at a larger scale. Override via tokens, or by
+// adding a different heading utility class.
+.page__title {
+  --page-title-size:   1.25rem;
+  --page-title-weight: 600;
+
+  font-size: var(--page-title-size);
+  font-weight: var(--page-title-weight);
+  line-height: 1.2;
+}
+
+// Description slot — optional one-line helper copy under the title. Mirrors
+// .item__description / .field__description / .alert__description: muted
+// color is baked in so consumers don't reach for a utility, and size /
+// weight ride tokens for theme tuning.
+.page__description {
+  --page-description-size: 0.875rem;
+  --page-description-weight: 400;
+
+  font-size: var(--page-description-size);
+  font-weight: var(--page-description-weight);
+  line-height: 1.5;
+  color: var(--st-muted-foreground);
 }
 
 // Actions slot — used by both .page__header and .page__section-header.
@@ -98,7 +127,7 @@
 // different heading utility class (the rule below has element-only
 // specificity).
 .page__section-title {
-  --page-section-title-size:   1.125rem;
+  --page-section-title-size: 1.125rem;
   --page-section-title-weight: 600;
 
   font-size: var(--page-section-title-size);

@@ -28,6 +28,10 @@
   --textarea-height:    calc(1.75rem + 0.5rem * (var(--st-density) - 1));    // 28 @ 1
   --textarea-padding-x: calc(0.5rem * var(--st-density));                    //  8
   --textarea-font-size: 0.8125rem;
+  // See form-field-base — iOS auto-zoom guard for sub-16px fields.
+  @media (pointer: coarse) {
+    --textarea-font-size: 1rem;
+  }
 }
 
 .textarea--lg {

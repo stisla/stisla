@@ -24,6 +24,13 @@
   display: flex;
   flex-direction: column;
   gap: var(--field-gap, 0.375rem);
+  // A field is a form section — it fills its column by default. The
+  // controls inside (.input, .select, .textarea, .slider) already carry
+  // `width: 100%`; without a width on the field, a shrink-to-fit parent
+  // (a centered flex row, a table cell, a grid track sized by content)
+  // collapses the field to its narrowest content and the controls
+  // collapse with it. Consumers apply `max-width` to cap.
+  width: 100%;
 }
 
 .field--inline {
@@ -75,9 +82,9 @@
 }
 
 // Disabled input dims its label. :has() is well-supported per V3.md §2.
-// Covers .checkbox + .radio (the form-check-base inputs); .switch ships
-// its own label-disabled logic since the track-and-thumb shape differs.
-.field__item:has(> :is(.checkbox, .radio):disabled) > .field__label {
+// Covers every primitive input that lives inside an item: checkbox,
+// radio, and switch (all three are <input type="checkbox|radio">).
+.field__item:has(> :is(.checkbox, .radio, .switch):disabled) > .field__label {
   cursor: not-allowed;
   opacity: var(--field-item-disabled-opacity, 0.55);
 }

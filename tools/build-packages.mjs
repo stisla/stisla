@@ -24,6 +24,11 @@ const ASSETS = join(ROOT, 'site-dist', 'assets');
 const PKG_CSS = join(ROOT, 'packages', 'css');
 const PKG_VAN = join(ROOT, 'packages', 'vanilla');
 
+// Optional components shipped à la carte under dist/components/<name>.{css,js}.
+// Add a new entry here when an à-la-carte optional lands; the staging,
+// require-checks, and summary loops below pick it up automatically.
+const OPTIONALS = ['carousel', 'combobox', 'scroll-area'];
+
 async function exists(path) {
   try { await access(path); return true; } catch { return false; }
 }
@@ -59,10 +64,12 @@ async function stageCss() {
 
   await copyFile(join(ASSETS, 'stisla.css'), join(dist, 'stisla.css'));
   await copyFile(join(ASSETS, 'stisla-full.css'), join(dist, 'stisla-full.css'));
-  await copyFile(
-    join(ASSETS, 'components', 'carousel.css'),
-    join(dist, 'components', 'carousel.css'),
-  );
+  for (const name of OPTIONALS) {
+    await copyFile(
+      join(ASSETS, 'components', `${name}.css`),
+      join(dist, 'components', `${name}.css`),
+    );
+  }
 
   await copyDir(join(ROOT, 'src', 'scss'), scss);
 
@@ -79,10 +86,12 @@ async function stageVanilla() {
 
   await copyFile(join(ASSETS, 'stisla.js'), join(dist, 'stisla.js'));
   await copyFile(join(ASSETS, 'stisla-full.js'), join(dist, 'stisla-full.js'));
-  await copyFile(
-    join(ASSETS, 'components', 'carousel.js'),
-    join(dist, 'components', 'carousel.js'),
-  );
+  for (const name of OPTIONALS) {
+    await copyFile(
+      join(ASSETS, 'components', `${name}.js`),
+      join(dist, 'components', `${name}.js`),
+    );
+  }
   await copyDir(join(ASSETS, 'chunks'), join(dist, 'chunks'));
 
   await copyDir(join(ROOT, 'src', 'js'), src);
@@ -98,7 +107,10 @@ async function summarize(label, root) {
   const distFiles = [
     'dist/stisla.css', 'dist/stisla-full.css',
     'dist/stisla.js', 'dist/stisla-full.js',
-    'dist/components/carousel.css', 'dist/components/carousel.js',
+    ...OPTIONALS.flatMap((name) => [
+      `dist/components/${name}.css`,
+      `dist/components/${name}.js`,
+    ]),
   ];
   console.log(`\n${label}`);
   for (const f of distFiles) {
@@ -112,8 +124,10 @@ async function main() {
   await requireFile(join(ASSETS, 'stisla.js'));
   await requireFile(join(ASSETS, 'stisla-full.css'));
   await requireFile(join(ASSETS, 'stisla-full.js'));
-  await requireFile(join(ASSETS, 'components', 'carousel.css'));
-  await requireFile(join(ASSETS, 'components', 'carousel.js'));
+  for (const name of OPTIONALS) {
+    await requireFile(join(ASSETS, 'components', `${name}.css`));
+    await requireFile(join(ASSETS, 'components', `${name}.js`));
+  }
 
   await stageCss();
   await stageVanilla();

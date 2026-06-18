@@ -24,8 +24,8 @@
   </section>
 
   <section>
-    <h2>Default</h2>
-    <p>Drop <code>.item__media</code>, <code>.item__content</code>, and <code>.item__action</code> as direct children. The row sits on the surface fill with a hairline border at 16px padding.</p>
+    <h2>Basic</h2>
+    <p>Drop <code>.item__media</code>, <code>.item__content</code>, and <code>.item__action</code> as direct children. The row sits on the surface fill with a hairline border and a comfortable padding floor.</p>
     {% call ui.demo() %}
     <div class="item" style="max-width: 28rem;">
       <div class="item__media">
@@ -179,7 +179,7 @@
           <div class="item__description">Real-time alerts on this device for mentions and direct replies.</div>
         </div>
         <div class="item__action">
-          <input class="switch__input" type="checkbox" role="switch" aria-label="Push notifications" checked>
+          <input class="switch" type="checkbox" role="switch" aria-label="Push notifications" checked>
         </div>
       </div>
       <hr class="separator">
@@ -193,7 +193,7 @@
           <div class="item__description">A single recap email each Monday with last week's activity.</div>
         </div>
         <div class="item__action">
-          <input class="switch__input" type="checkbox" role="switch" aria-label="Email digest" checked>
+          <input class="switch" type="checkbox" role="switch" aria-label="Email digest" checked>
         </div>
       </div>
       <hr class="separator">
@@ -207,7 +207,7 @@
           <div class="item__description">Critical-only messages, used for billing and account recovery.</div>
         </div>
         <div class="item__action">
-          <input class="switch__input" type="checkbox" role="switch" aria-label="SMS alerts">
+          <input class="switch" type="checkbox" role="switch" aria-label="SMS alerts">
         </div>
       </div>
     </div>

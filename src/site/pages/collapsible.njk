@@ -6,18 +6,13 @@
 {% block content %}
   <header>
     <h1>Collapsible</h1>
-    <p class="lead">A region that opens and closes from a trigger. The primitive that <code>.accordion</code>, <code>.sidebar</code> submenus, and <code>.navbar</code> mobile menu compose for their own collapse behaviour.</p>
+    <p class="lead">A region that opens and closes from a trigger.</p>
+    <p>The primitive that <code>.accordion</code>, <code>.sidebar</code> submenus, and <code>.navbar</code> mobile menu compose for their own collapse behaviour.</p>
   </header>
 
   <section>
-    <h2>Anatomy</h2>
-    <p>A trigger button and a content region tied by id. The trigger points at the region via <code>data-stisla-collapsible-trigger</code>, and ARIA attributes wire up screen readers in the usual way. The region carries <code>data-stisla-collapsible</code> so the scanner picks it up, and <code>data-state="open"</code> or <code>"closed"</code> drives the paint.</p>
-    <p>The height transition runs around the state flip. The CSS <code>display: none</code> on the closed state stays put. The JS measures, animates, and clears the inline height once it lands.</p>
-  </section>
-
-  <section>
     <h2>Basic</h2>
-    <p>One trigger, one region. Click the button to flip the panel below.</p>
+    <p>A trigger button and a content region tied by id. The trigger points at the region via <code>data-stisla-collapsible-trigger</code>; the region carries <code>data-stisla-collapsible</code> and <code>data-state="open"</code> or <code>"closed"</code> driving the paint. The height transition runs around every state flip; the JS measures, animates, and clears the inline height once it lands.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-column gap-3 align-items-start">
       <button type="button" class="btn btn--neutral"
@@ -32,6 +27,15 @@
       </div>
     </div>
     {% endcall %}
+  </section>
+
+  <section>
+    <h2>Keyboard</h2>
+    <p>The trigger is whatever element you wire to the region. The collapsible itself adds no key bindings beyond the trigger's native ones. When the trigger is a native <code>&lt;button&gt;</code> (the canonical shape), the browser handles focus and activation.</p>
+    <ul>
+      <li><kbd>Tab</kbd>: focus the trigger</li>
+      <li><kbd>Enter</kbd> / <kbd>Space</kbd>: toggle the panel</li>
+    </ul>
   </section>
 
   <section>
@@ -61,7 +65,7 @@
       <div class="card__body">
         <h4 class="card__title">API token</h4>
         <p class="card__text text-muted-foreground">Created two weeks ago. Last used yesterday.</p>
-        <div class="d-flex gap-2 mt-3">
+        <div class="d-flex flex-wrap align-items-center gap-2 mt-3">
           <button type="button" class="btn btn--sm btn--ghost btn--neutral"
                   data-stisla-collapsible-trigger="collapsible-card"
                   aria-controls="collapsible-card" aria-expanded="false">
@@ -69,7 +73,7 @@
           </button>
         </div>
         <div id="collapsible-card" class="collapsible mt-2" data-stisla-collapsible data-state="closed" role="region">
-          <ul class="m-0 ps-5 text-muted-foreground">
+          <ul class="m-0 text-muted-foreground" style="padding-inline-start: calc(1.25rem * var(--st-density))">
             <li>read:repo</li>
             <li>write:issues</li>
             <li>read:user</li>
@@ -85,7 +89,7 @@
     <p>Build a <code>Stisla.Collapsible</code> directly to drive a region from code. Pass any element as <code>opts.triggers</code>, or let the constructor scan for matching <code>data-stisla-collapsible-trigger</code>s by id.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-column gap-3 align-items-start">
-      <div class="d-flex gap-2">
+      <div class="d-flex flex-wrap align-items-center gap-2">
         <button type="button" class="btn btn--sm btn--neutral" data-demo-collapsible="open">Open</button>
         <button type="button" class="btn btn--sm btn--neutral" data-demo-collapsible="close">Close</button>
         <button type="button" class="btn btn--sm btn--neutral" data-demo-collapsible="toggle">Toggle</button>
@@ -101,38 +105,11 @@
 
   <section>
     <h2>Events</h2>
-    <p>Four events bubble from the region element. <code>opening</code> and <code>closing</code> are cancelable. Call <code>preventDefault()</code> on the event to abort.</p>
-    <table>
-      <thead>
-        <tr>
-          <th>Event</th>
-          <th>Cancelable</th>
-          <th>Fires</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>stisla:collapsible:opening</code></td>
-          <td>Yes</td>
-          <td>Before the open transition starts</td>
-        </tr>
-        <tr>
-          <td><code>stisla:collapsible:opened</code></td>
-          <td>No</td>
-          <td>After the open transition ends</td>
-        </tr>
-        <tr>
-          <td><code>stisla:collapsible:closing</code></td>
-          <td>Yes</td>
-          <td>Before the close transition starts</td>
-        </tr>
-        <tr>
-          <td><code>stisla:collapsible:closed</code></td>
-          <td>No</td>
-          <td>After the close transition ends</td>
-        </tr>
-      </tbody>
-    </table>
+    <p>Four events bubble from the region element. The <code>opening</code> and <code>closing</code> events are cancelable.</p>
+    <p><code>stisla:collapsible:opening</code> fires before the open transition starts. Call <code>preventDefault()</code> to abort.</p>
+    <p><code>stisla:collapsible:opened</code> fires after the open transition ends.</p>
+    <p><code>stisla:collapsible:closing</code> fires before the close transition starts. Call <code>preventDefault()</code> to keep it open.</p>
+    <p><code>stisla:collapsible:closed</code> fires after the close transition ends.</p>
   </section>
 
   <section>

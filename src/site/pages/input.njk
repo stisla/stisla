@@ -24,7 +24,7 @@
     <h2>Sizes</h2>
     <p>Three sizes match the <code>.btn</code> scale. Add <code>.input--sm</code> or <code>.input--lg</code>.</p>
     {% call ui.demo() %}
-    <div class="demo-stack w-100" style="max-width: 24rem;">
+    <div class="demo-stack" style="max-width: 24rem;">
       <input type="text" class="input input--sm" placeholder="Small" />
       <input type="text" class="input" placeholder="Default" />
       <input type="text" class="input input--lg" placeholder="Large" />
@@ -36,7 +36,7 @@
     <h2>Input types</h2>
     <p>The class applies to every text-like input: <code>text</code>, <code>email</code>, <code>password</code>, <code>number</code>, <code>search</code>, <code>tel</code>, <code>url</code>, <code>date</code>, <code>time</code>.</p>
     {% call ui.demo() %}
-    <div class="demo-stack w-100" style="max-width: 24rem;">
+    <div class="demo-stack" style="max-width: 24rem;">
       <input type="email" class="input" placeholder="email" />
       <input type="password" class="input" placeholder="password" value="hunter2" />
       <input type="number" class="input" placeholder="number" />
@@ -62,7 +62,7 @@
     <h2>Browser validation</h2>
     <p>Pair native constraint attributes (<code>required</code>, <code>type="email"</code>, <code>pattern</code>, <code>min</code>, <code>max</code>) with the <code>:user-invalid</code> pseudo. The browser fires it after the user interacts with the field, and clears it the moment the value satisfies the constraints. Use for inline validation where the field owns its own state.</p>
     {% call ui.demo() %}
-    <form class="demo-stack w-100" style="max-width: 24rem;" onsubmit="event.preventDefault()">
+    <form class="demo-stack" style="max-width: 24rem;" onsubmit="event.preventDefault()">
       <div class="field">
         <label for="reqEmail" class="field__label">Email</label>
         <input type="email" class="input" id="reqEmail" required placeholder="you@example.com" />
@@ -77,7 +77,7 @@
     <h2>Server validation</h2>
     <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky. Frameworks like React Hook Form, Formik, vee-validate, and Rails / Django / Laravel form helpers manage this based on their own error state. Pair with a <code>.field__error</code> message tied via <code>aria-describedby</code> so the error reaches assistive tech.</p>
     {% call ui.demo() %}
-    <div class="demo-stack w-100" style="max-width: 24rem;">
+    <div class="demo-stack" style="max-width: 24rem;">
       <div class="field">
         <label for="srvEmail" class="field__label">Email</label>
         <input
@@ -98,7 +98,7 @@
     <h2>Disabled &amp; readonly</h2>
     <p><code>disabled</code> blocks interaction and dims the field. <code>readonly</code> keeps the value reachable for copy but rejects edits. The bg shifts a tier to signal that you can select the value but you can't edit it.</p>
     {% call ui.demo() %}
-    <div class="demo-stack w-100" style="max-width: 24rem;">
+    <div class="demo-stack" style="max-width: 24rem;">
       <input type="text" class="input" value="Disabled" disabled />
       <input type="text" class="input" value="Readonly" readonly />
     </div>
@@ -141,6 +141,7 @@
   <section>
     <h2>Customization</h2>
     <p>Eight variables retune <code>.input</code> without touching component CSS. Override on the field itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change. The same surface appears on <a class="link" href="/select">.select</a> and <a class="link" href="/textarea">.textarea</a> under their own prefix so each field component can be tuned independently.</p>
+    <p>On touch devices (<code>@media (pointer: coarse)</code>) <code>--input-font-size</code> is bumped to <code>1rem</code> so iOS Safari doesn't zoom the viewport on focus. The browser auto-zooms any field with computed font-size below 16px and never zooms back; desktop keeps the tighter default.</p>
     <table>
       <thead>
         <tr>

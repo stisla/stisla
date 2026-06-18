@@ -138,3 +138,6 @@
   --item-padding: var(--card-padding);
   border-radius: 0;
 }
+
+// Block — fills its container width per SPEC §9 escape ramp.
+.card--block { width: 100%; }

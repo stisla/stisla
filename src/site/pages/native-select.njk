@@ -1,0 +1,239 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Native select · Stisla{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Native select</h1>
+    <p class="lead">A styled <code>&lt;select&gt;</code> for picking from a fixed list of options.</p>
+    <p>Reach for this when the option set is short and a native dropdown is enough. For multi-select, type-ahead, or async loading, use <a class="link" href="/select">Select</a>, <a class="link" href="/combobox">Combobox</a>, or <a class="link" href="/autocomplete">Autocomplete</a>.</p>
+  </header>
+
+  <section>
+    <h2>Basic</h2>
+    <p>Add <code>.select</code> to any <code>&lt;select&gt;</code>. The field shape matches <a class="link" href="/input">.input</a> and <a class="link" href="/textarea">.textarea</a> so the three line up in a form row. The chevron and appearance reset come from the class. Pair with a <code>&lt;label&gt;</code> tied via <code>for</code>/<code>id</code> so the field is reachable.</p>
+    {% call ui.demo() %}
+    <div class="field" style="max-width: 24rem;">
+      <label for="basicSelect" class="field__label">Country</label>
+      <select class="select" id="basicSelect">
+        <option selected>Pick one</option>
+        <option value="id">Indonesia</option>
+        <option value="my">Malaysia</option>
+        <option value="sg">Singapore</option>
+      </select>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Sizes</h2>
+    <p>Three sizes match the input scale. Add <code>.select--sm</code> or <code>.select--lg</code>.</p>
+    {% call ui.demo() %}
+    <div class="demo-stack" style="max-width: 24rem;">
+      <select class="select select--sm" aria-label="Small select">
+        <option selected>Small</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+      </select>
+      <select class="select" aria-label="Default select">
+        <option selected>Default</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+      </select>
+      <select class="select select--lg" aria-label="Large select">
+        <option selected>Large</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+      </select>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Option groups</h2>
+    <p>Wrap related options in <code>&lt;optgroup&gt;</code> to label sections inside the menu.</p>
+    {% call ui.demo() %}
+    <div class="field" style="max-width: 24rem;">
+      <label for="groupedSelect" class="field__label">City</label>
+      <select class="select" id="groupedSelect">
+        <option selected>Pick one</option>
+        <optgroup label="Indonesia">
+          <option value="jkt">Jakarta</option>
+          <option value="bdg">Bandung</option>
+          <option value="sby">Surabaya</option>
+        </optgroup>
+        <optgroup label="Malaysia">
+          <option value="kul">Kuala Lumpur</option>
+          <option value="pen">Penang</option>
+        </optgroup>
+      </select>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Multiple</h2>
+    <p>Add the <code>multiple</code> attribute to let users select several options. The chevron drops and the control grows past the default height to render the list inline.</p>
+    {% call ui.demo() %}
+    <div class="field" style="max-width: 24rem;">
+      <label for="multipleSelect" class="field__label">Tags</label>
+      <select class="select" id="multipleSelect" multiple aria-label="Multiple select">
+        <option value="bug">Bug</option>
+        <option value="docs" selected>Docs</option>
+        <option value="feat" selected>Feature</option>
+        <option value="qa">QA</option>
+        <option value="perf">Performance</option>
+      </select>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Size attribute</h2>
+    <p>Set <code>size</code> to render a fixed-row list instead of a dropdown. Useful when the option count is small enough to show inline.</p>
+    {% call ui.demo() %}
+    <div class="w-100" style="max-width: 24rem;">
+      <select class="select" size="4" aria-label="Size 4 select">
+        <option selected>Pick one</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+        <option value="4">Four</option>
+      </select>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Helper text</h2>
+    <p>Use <code>.field__description</code> below the field for short hints. Wire it to the select with <code>aria-describedby</code> so screen readers announce it.</p>
+    {% call ui.demo() %}
+    <div class="field" style="max-width: 24rem;">
+      <label for="planSelect" class="field__label">Plan</label>
+      <select class="select" id="planSelect" aria-describedby="planHelp">
+        <option selected>Pick one</option>
+        <option value="free">Free</option>
+        <option value="pro">Pro</option>
+        <option value="team">Team</option>
+      </select>
+      <div id="planHelp" class="field__description">You can change this later from billing.</div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Disabled</h2>
+    <p>Add <code>disabled</code> to block interaction and dim the field. Individual <code>&lt;option&gt;</code> elements take the same attribute.</p>
+    {% call ui.demo() %}
+    <div class="demo-stack" style="max-width: 24rem;">
+      <select class="select" disabled aria-label="Disabled select">
+        <option selected>Disabled</option>
+      </select>
+      <select class="select" aria-label="Select with disabled option">
+        <option selected>Pick a plan</option>
+        <option value="free">Free</option>
+        <option value="pro" disabled>Pro (sold out)</option>
+        <option value="team">Team</option>
+      </select>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Browser validation</h2>
+    <p>Pair <code>required</code> with a placeholder <code>&lt;option value=""&gt;</code> so the user has to pick something with a real value. The native <code>:user-invalid</code> pseudo fires after the user interacts with the field, and clears the moment a valid option is selected.</p>
+    {% call ui.demo() %}
+    <form class="demo-stack" style="max-width: 24rem;" onsubmit="event.preventDefault()">
+      <div class="field">
+        <label for="reqPlan" class="field__label">Plan</label>
+        <select class="select" id="reqPlan" required>
+          <option value="" selected>Pick a plan</option>
+          <option value="free">Free</option>
+          <option value="pro">Pro</option>
+          <option value="team">Team</option>
+        </select>
+        <div class="field__description">Hit Submit without picking to trigger <code>:user-invalid</code>. Pick any option and the red clears on its own.</div>
+      </div>
+      <button type="submit" class="btn btn--primary">Submit</button>
+    </form>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Server validation</h2>
+    <p>Set <code>aria-invalid="true"</code> from your form library. The attribute is sticky; Stisla just paints while it's present. Pair with a <code>.field__error</code> message tied via <code>aria-describedby</code>.</p>
+    {% call ui.demo() %}
+    <div class="demo-stack" style="max-width: 24rem;">
+      <div class="field">
+        <label for="srvPlan" class="field__label">Plan</label>
+        <select
+          class="select"
+          id="srvPlan"
+          aria-invalid="true"
+          aria-describedby="srvPlanError">
+          <option value="">Pick a plan</option>
+          <option value="free" selected>Free</option>
+          <option value="pro">Pro</option>
+          <option value="team">Team</option>
+        </select>
+        <div id="srvPlanError" class="field__error">This plan isn't available in your region.</div>
+      </div>
+    </div>
+    {% endcall %}
+    <p>The red stays even after you change the value. Your code removes <code>aria-invalid</code> when the field's error state resolves.</p>
+  </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>Nine variables retune <code>.select</code> without touching component CSS. Eight mirror the <a class="link" href="/input">input surface</a> under the <code>--select-</code> prefix so the chevron, padding, height, and so on can shift independently. The ninth is the chevron SVG itself.</p>
+    <p>On touch devices (<code>@media (pointer: coarse)</code>) <code>--select-font-size</code> is bumped to <code>1rem</code> so iOS Safari doesn't zoom the viewport on focus. The browser auto-zooms any field with computed font-size below 16px and never zooms back; desktop keeps the tighter default.</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--select-radius</code></td>
+          <td>Corner radius; sizes pull <code>--st-radius-sm</code> / <code>-lg</code></td>
+        </tr>
+        <tr>
+          <td><code>--select-height</code></td>
+          <td>Single-line height; sm and lg reassign this. Multi-line variants (<code>multiple</code>, <code>size</code>) treat this as a min-height floor</td>
+        </tr>
+        <tr>
+          <td><code>--select-padding-x</code></td>
+          <td>Horizontal padding; sm and lg reassign this</td>
+        </tr>
+        <tr>
+          <td><code>--select-font-size</code></td>
+          <td>Text size; sm and lg reassign this</td>
+        </tr>
+        <tr>
+          <td><code>--select-bg</code></td>
+          <td>Background</td>
+        </tr>
+        <tr>
+          <td><code>--select-color</code></td>
+          <td>Text color</td>
+        </tr>
+        <tr>
+          <td><code>--select-border</code></td>
+          <td>Border color; validation hooks flip this to <code>--st-danger</code></td>
+        </tr>
+        <tr>
+          <td><code>--select-placeholder</code></td>
+          <td>Placeholder text color (selects don't render a true placeholder, but the var is part of the shared field surface)</td>
+        </tr>
+        <tr>
+          <td><code>--select-indicator</code></td>
+          <td>Native chevron painted in the inline-end padding well; <code>multiple</code> and <code>size</code> drop it. Override with a different SVG to retheme the chevron</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>The chevron SVG carries a literal stroke color (one per theme) because <code>data:</code> URLs can't read CSS variables. To recolor the chevron, replace the whole URL with one whose stroke matches the new color.</p>
+  </section>
+{% endblock %}

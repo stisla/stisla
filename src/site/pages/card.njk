@@ -14,11 +14,27 @@
 
   <section>
     <h2>Basic</h2>
-    <p>A card with just <code>.card__body</code>.</p>
+    <p>A card with just <code>.card__body</code>. Drop in a form, a stack of fields, or any block of content.</p>
     {% call ui.demo() %}
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 22rem;">
       <div class="card__body">
-        This is some text within a card body.
+        <h5 class="card__title">Sign in</h5>
+        <p class="card__text">Welcome back. Enter your details to continue.</p>
+        <form class="demo-stack" style="margin-top: 1rem;">
+          <div class="field">
+            <label for="cardLoginEmail" class="field__label">Email</label>
+            <input type="email" class="input" id="cardLoginEmail" placeholder="you@example.com" />
+          </div>
+          <div class="field">
+            <label for="cardLoginPwd" class="field__label">Password</label>
+            <input type="password" class="input" id="cardLoginPwd" />
+          </div>
+          <div class="field__item">
+            <input class="checkbox" type="checkbox" id="cardLoginRemember" />
+            <label class="field__label" for="cardLoginRemember">Remember me</label>
+          </div>
+          <button type="submit" class="btn btn--primary">Sign in</button>
+        </form>
       </div>
     </div>
     {% endcall %}
@@ -39,7 +55,6 @@
         <h6 class="card__subtitle">Card subtitle</h6>
         <p class="card__text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
         <a href="#" class="card__link">Card link</a>
-        <a href="#" class="card__link">Another link</a>
       </div>
     </div>
     {% endcall %}

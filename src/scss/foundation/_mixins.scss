@@ -58,6 +58,12 @@
   --#{$prefix}-height:      calc(2.25rem + 0.625rem * (var(--st-density) - 1));   // 36 @ 1 → 38.5 @ 1.25
   --#{$prefix}-padding-x:   calc(0.625rem * var(--st-density));   // 10
   --#{$prefix}-font-size:   0.875rem;
+  // iOS Safari zooms the viewport when a focused field's computed font-size
+  // is below 16px and never zooms back out. Bump touch devices to 1rem so
+  // focus doesn't trip the zoom; desktop keeps the tighter 14px.
+  @media (pointer: coarse) {
+    --#{$prefix}-font-size: 1rem;
+  }
   --#{$prefix}-bg:          var(--st-surface);
   --#{$prefix}-color:       var(--st-foreground);
   --#{$prefix}-border:      var(--st-border);
@@ -134,6 +140,189 @@
 
   @media (prefers-reduced-motion: reduce) {
     transition: none;
+  }
+}
+
+// Popup surface mixins — shared by .dropdown, .select, future .combobox
+// and .autocomplete. Each mixin emits one part of the popup vocabulary
+// (shell, row, header, divider); the call site picks the parts it needs
+// and applies them to its own selectors. Token names use the `--popup-*`
+// namespace by default; consumers can shadow them at any scope to retune
+// per component.
+//
+// Usage:
+//   .select__popup     { @include popup-base; }
+//   .select__option    { @include popup-item; }
+//   .select__option.is-highlighted { @include popup-item-hover; }
+//   .select__option.is-selected    { @include popup-item-active; }
+//   .select__option[aria-disabled="true"] { @include popup-item-disabled; }
+//   .select__group     { @include popup-header; }
+
+@mixin popup-base {
+  --popup-radius: var(--st-popup-radius, var(--st-radius));
+  --popup-padding: 0.25rem;
+  --popup-bg: var(--st-surface);
+  --popup-color: var(--st-foreground);
+  --popup-border-color: var(--st-border);
+  --popup-shadow: var(--st-popup-shadow, var(--st-shadow));
+
+  padding: var(--popup-padding);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--popup-color);
+  background: var(--popup-bg);
+  border: var(--st-border-width) solid var(--popup-border-color);
+  border-radius: var(--popup-radius);
+  box-shadow: var(--popup-shadow);
+}
+
+@mixin popup-item {
+  --popup-item-radius: calc(var(--popup-radius, var(--st-radius)) - var(--popup-padding, 0.25rem));
+  --popup-item-padding-y: calc(0.125rem * var(--st-density));
+  --popup-item-padding-x: calc(0.75rem * var(--st-density));
+  --popup-item-min-height: calc(2rem * var(--st-density));
+  --popup-item-gap: 0.5rem;
+
+  display: flex;
+  align-items: center;
+  gap: var(--popup-item-gap);
+  min-height: var(--popup-item-min-height);
+  padding: var(--popup-item-padding-y) var(--popup-item-padding-x);
+  color: inherit;
+  background: transparent;
+  border-radius: var(--popup-item-radius);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.12s ease, color 0.12s ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+@mixin popup-item-hover {
+  background: var(--popup-item-bg-hover, var(--st-accent));
+  color: var(--popup-item-color-hover, var(--st-accent-foreground));
+}
+
+@mixin popup-item-active {
+  background: var(--popup-item-bg-active, var(--st-highlight));
+  color: var(--popup-item-color-active, var(--st-highlight-foreground));
+}
+
+@mixin popup-item-disabled {
+  color: var(--popup-item-color-disabled, var(--st-muted-foreground));
+  background: transparent;
+  pointer-events: none;
+}
+
+@mixin popup-header {
+  --popup-header-padding-y: 0.25rem;
+  --popup-header-padding-x: calc(0.75rem * var(--st-density));
+  --popup-header-font-size: 0.75rem;
+  --popup-header-color: var(--st-muted-foreground);
+
+  padding: var(--popup-header-padding-y) var(--popup-header-padding-x);
+  margin: 0;
+  font-size: var(--popup-header-font-size);
+  font-weight: 600;
+  color: var(--popup-header-color);
+  text-transform: none;
+  white-space: nowrap;
+}
+
+// Tom Select popup skin — wraps the shared popup-* mixins above to map
+// Tom Select's DOM vocabulary (.ts-dropdown / .ts-dropdown-content /
+// .option / .optgroup-header / .item / .highlight) onto our surface.
+// Used by .combobox and (later) .autocomplete.
+//
+// Tom Select doesn't require its own CSS to function — we override its
+// defaults rather than import them, so no double-rule reset is needed.
+//
+// Apply at the call site:
+//   .combobox .ts-dropdown { @include ts-popup; }
+@mixin ts-popup {
+  @include popup-base;
+  position: absolute;
+  top: 100%;
+  inset-inline-start: 0;
+  z-index: 1030;
+  min-width: 100%;
+  margin: 0.5rem 0 0; // matches .dropdown's offset(8)
+
+  .ts-dropdown-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--popup-item-gap, 0.125rem);
+    max-height: 16rem;
+    overflow-y: auto;
+    padding: 0;
+  }
+
+  .optgroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--popup-item-gap, 0.125rem);
+  }
+
+  // Hide the empty <option value=""> from the list (authors keep it as
+  // the "no selection" placeholder anchor).
+  .option[data-value=""] {
+    display: none;
+  }
+
+  .option,
+  .create {
+    @include popup-item;
+    // Search-highlight markup splits the label into multiple inline
+    // nodes (`Foo<span class="highlight">bar</span>baz`). Inside a flex
+    // container, bare text nodes become anonymous flex items, so a
+    // non-zero gap would paint visible whitespace between them. Reset
+    // to 0; combobox options are text-only.
+    gap: 0;
+  }
+
+  // Tom Select uses .active for the keyboard-highlighted row,
+  // .selected for the currently-chosen value.
+  .option:hover,
+  .option.active,
+  .create.active {
+    @include popup-item-hover;
+  }
+
+  .option.selected,
+  .option.selected.active,
+  .option.selected:hover {
+    @include popup-item-active;
+  }
+
+  .option[data-disabled],
+  .no-results,
+  .spinner {
+    @include popup-item-disabled;
+    cursor: default;
+  }
+
+  .no-results {
+    padding:
+      var(--popup-item-padding-y, calc(0.125rem * var(--st-density)))
+      var(--popup-item-padding-x, calc(0.75rem * var(--st-density)));
+    font-size: 0.875rem;
+  }
+
+  .optgroup-header {
+    @include popup-header;
+  }
+
+  .optgroup + .optgroup .optgroup-header {
+    margin-top: 0.5rem;
+  }
+
+  // Search match highlight — Tom Select wraps matched substring in
+  // <span class="highlight">.
+  .highlight {
+    background: color-mix(in oklch, currentColor 18%, transparent);
+    border-radius: 2px;
   }
 }
 

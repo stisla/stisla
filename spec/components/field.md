@@ -57,7 +57,7 @@ Two state hooks that field parts respond to:
 [aria-invalid="true"] on the control     control is invalid — paired
                                          .field__error is the error
                                          surface
-.field__item:has(> :is(.checkbox, .radio):disabled) .field__label
+.field__item:has(> :is(.checkbox, .radio, .switch):disabled) .field__label
                                          input child is disabled — dim
                                          the label and surface
                                          not-allowed
@@ -68,9 +68,10 @@ consumer's responsibility. The spec does not auto-show / hide based on
 the control's `aria-invalid` (a future implementation may layer that on
 but it is not required at 3.0).
 
-The disabled-label rule above covers `.checkbox` and `.radio`. Other
-controls (`.switch`) ship their own disabled-label affordance because
-their shape differs.
+The disabled-label rule covers every primitive input that lives inside
+an item: `.checkbox`, `.radio`, and `.switch` — all three are
+`<input type="checkbox|radio">` underneath, so the same `:has()` selector
+catches all of them.
 
 ## 3. Modifiers
 

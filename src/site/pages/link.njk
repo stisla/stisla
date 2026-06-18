@@ -10,7 +10,7 @@
   </header>
 
   <section>
-    <h2>Default</h2>
+    <h2>Basic</h2>
     <p>Add <code>.link</code> to an <code>&lt;a&gt;</code> sitting in app UI prose. Reboot strips anchor styling globally so a bare <code>&lt;a&gt;</code> renders as inherited text; <code>.link</code> opts back into the primary-colored underline.</p>
     {% call ui.demo() %}
     <p>Settings have moved under <a class="link" href="#">Workspace preferences</a>.</p>
@@ -19,7 +19,7 @@
 
   <section>
     <h2>In running prose</h2>
-    <p>Inside <code>.prose</code>, bare <code>&lt;a&gt;</code> picks up the same recipe without a class so article markup stays semantic. The two surfaces are independently retunable: <code>--link-color</code> drives <code>.link</code>, <code>--prose-link-color</code> drives anchors inside <code>.prose</code>.</p>
+    <p>Inside <code>.prose</code>, bare <code>&lt;a&gt;</code> picks up the same recipe without a class so article markup stays semantic. The two surfaces are independently retunable. <code>--link-color</code> drives <code>.link</code>; <code>--prose-link-color</code> drives anchors inside <code>.prose</code>.</p>
     {% call ui.demo(prose=true) %}
     <p>Stisla ships a small set of components and a thin utility layer. See the <a href="/customization">customization page</a> for the variable surface, or jump to <a href="/utilities">utilities</a> for the spacing and layout escape hatches.</p>
     {% endcall %}
