@@ -1,7 +1,7 @@
 {
   "name": "stisla-monorepo",
   "private": true,
-  "version": "3.0.0-beta.2",
+  "version": "3.0.0-beta.7",
   "description": "Stisla v3 dev tree. Publishable packages live under packages/* — see @stisla/css and @stisla/vanilla.",
   "license": "MIT",
   "author": "Nauval Azhar <nauvalazhar2@gmail.com> (https://stisla.dev)",
