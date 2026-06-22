@@ -60,7 +60,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Four variables retune <code>.kbd</code> without touching component CSS. Override on the element, on a parent scope, or on <code>:root</code>. The cascade scopes the change. The same variables retune the bare <code>&lt;kbd&gt;</code> rule inside <code>.prose</code>, except padding defaults switch to em-based so prose chips track the surrounding font.</p>
+    <p>These variables retune <code>.kbd</code> without touching component CSS. Override on the element, on a parent scope, or on <code>:root</code>. The cascade scopes the change. The same variables retune the bare <code>&lt;kbd&gt;</code> rule inside <code>.prose</code>, except padding defaults switch to em-based so prose chips track the surrounding font.</p>
     <table>
       <thead>
         <tr>
@@ -70,16 +70,32 @@
       </thead>
       <tbody>
         <tr>
-          <td><code>--kbd-padding-y</code></td>
-          <td>Vertical padding</td>
+          <td><code>--kbd-padding-block</code></td>
+          <td>Top and bottom padding</td>
         </tr>
         <tr>
-          <td><code>--kbd-padding-x</code></td>
-          <td>Horizontal padding</td>
+          <td><code>--kbd-padding-inline</code></td>
+          <td>Left and right padding</td>
+        </tr>
+        <tr>
+          <td><code>--kbd-font-size</code></td>
+          <td>Cap text size</td>
+        </tr>
+        <tr>
+          <td><code>--kbd-font-weight</code></td>
+          <td>Cap text weight</td>
+        </tr>
+        <tr>
+          <td><code>--kbd-color</code></td>
+          <td>Cap text color</td>
+        </tr>
+        <tr>
+          <td><code>--kbd-bg</code></td>
+          <td>Cap background</td>
         </tr>
         <tr>
           <td><code>--kbd-radius</code></td>
-          <td>Corner radius. Set <code>--st-kbd-radius</code> on a parent scope to retune chips beneath it without reaching for the local variable.</td>
+          <td>Corner radius</td>
         </tr>
         <tr>
           <td><code>--kbd-rim</code></td>

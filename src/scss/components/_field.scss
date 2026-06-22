@@ -23,7 +23,7 @@
 .field {
   display: flex;
   flex-direction: column;
-  gap: var(--field-gap, 0.375rem);
+  gap: var(--field-gap, #{space(1.5)});
   // A field is a form section — it fills its column by default. The
   // controls inside (.input, .select, .textarea, .slider) already carry
   // `width: 100%`; without a width on the field, a shrink-to-fit parent
@@ -37,12 +37,12 @@
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  --field-gap: 1rem;
+  --field-gap: #{space(4)};
 }
 
 .field__label {
-  font-size: var(--field-label-font-size, 0.875rem);
-  font-weight: var(--field-label-font-weight, 500);
+  font-size: var(--field-label-font-size, #{text(sm)});
+  font-weight: var(--field-label-font-weight, #{weight(medium)});
   color: var(--field-label-color, var(--st-foreground));
 }
 
@@ -59,8 +59,8 @@
 .field__item {
   display: flex;
   align-items: center;
-  gap: var(--field-item-gap, 0.5rem);
-  padding-block: var(--field-item-padding-y, 0.125rem);
+  gap: var(--field-item-gap, #{space(2)});
+  padding-block: var(--field-item-padding-block, #{space(0.5)});
 }
 
 // Label-first, input-last. justify-content keeps the input pinned to
@@ -75,7 +75,7 @@
 // regular weight, clickable, and unselectable. Overrides the stacked-
 // label rules above.
 .field__item > .field__label {
-  font-weight: var(--field-item-label-font-weight, 400);
+  font-weight: var(--field-item-label-font-weight, #{weight(normal)});
   cursor: pointer;
   line-height: 1.4;
   user-select: none;

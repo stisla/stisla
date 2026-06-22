@@ -26,7 +26,7 @@
 //   autoClose: 'outside'         'outside' | 'inside' | 'both' | false
 //   focus: true                  trap focus inside popover on open (click trigger only)
 //   returnFocus: true            move focus back to the trigger on close
-//   trigger: 'click'             'click' | 'hover focus' | 'manual'
+//   triggerMode: 'click'             'click' | 'hover focus' | 'manual'
 //   delay: 0                     open delay (ms) — hover trigger only
 //   closeDelay: 100              close delay (ms) — hover trigger only; bridges cursor → surface
 //
@@ -58,7 +58,7 @@ export class Popover extends Component {
     autoClose: 'outside',
     focus: true,
     returnFocus: true,
-    trigger: 'click',
+    triggerMode: 'click',
     delay: 0,
     closeDelay: 100,
   };
@@ -120,7 +120,7 @@ export class Popover extends Component {
 
     // Hover/focus trigger wiring. Mouseenter/leave on BOTH trigger and surface
     // so cursor can bridge into the popover without dismissing.
-    const triggers = String(this.opts.trigger).split(/\s+/).filter(Boolean);
+    const triggers = String(this.opts.triggerMode).split(/\s+/).filter(Boolean);
     this._hoverMode = triggers.includes('hover') || triggers.includes('focus');
     if (this._trigger && triggers.includes('hover')) {
       this.on(this._trigger, 'mouseenter', () => this._scheduleShow());
@@ -425,7 +425,7 @@ if (
         if (existing) Object.assign(existing.opts, opts);
         // Skip click toggling for hover/focus triggers — clicking should not
         // fight the hover state. Manual triggers ignore click delegation too.
-        const triggers = String(inst.opts.trigger).split(/\s+/).filter(Boolean);
+        const triggers = String(inst.opts.triggerMode).split(/\s+/).filter(Boolean);
         if (triggers.includes('click')) inst.toggle();
       }
       return;
@@ -445,7 +445,7 @@ if (
     for (const surface of document.querySelectorAll('.popover[data-state="open"]')) {
       const inst = getInstance(surface);
       if (!inst || inst.opts.autoClose === false) continue;
-      const triggers = String(inst.opts.trigger).split(/\s+/).filter(Boolean);
+      const triggers = String(inst.opts.triggerMode).split(/\s+/).filter(Boolean);
       if (triggers.includes('hover') || triggers.includes('focus')) continue;
       const insideSurface = surface.contains(e.target);
       if (inst.opts.autoClose === 'inside' && !insideSurface) continue;

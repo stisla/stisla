@@ -11,7 +11,7 @@
 //   .table__body--divider           <tbody> with the heavier top rule
 //   .table__row--{intent}           per-row tint (primary/success/info/warning/danger)
 //   .table__row--neutral            per-row neutral fill (replaces BS5 .table-secondary)
-//   .table--sm                      denser cell padding
+//   .table--compact                      denser cell padding
 //   .table--bordered                border on every side of every cell
 //   .table--borderless              strip every border
 //   .table--hover                   row-hover opt-in
@@ -33,48 +33,20 @@
 //   color  = color-state ?? color-type ?? color
 
 .table {
-  // === Geometry ===
-  --table-cell-padding-y:  calc(0.75rem * var(--st-density));
-  --table-cell-padding-x:  calc(0.75rem * var(--st-density));
-  --table-cell-padding-sm: calc(0.25rem * var(--st-density));
-  --table-edge-padding:    calc(1.25rem * var(--st-density));
-
-  // === Head ===
-  --table-head-font-size:   0.75rem;
-  --table-head-font-weight: 500;
-  --table-head-color:       var(--st-muted-foreground);
-  --table-head-bg-alt:      var(--st-surface-2);
-
-  // === Surface (rest) ===
-  // Transparent base lets the table read against its parent's bg (card,
-  // page, etc.). All paints land via the box-shadow chain below.
-  --table-color:        var(--st-foreground);
-  --table-bg:           transparent;
-  --table-border-color: var(--st-border);
-
-  // === Layered slots (BS5 mechanic). Rest = unset; downstream rules set
-  // --type for static variants, --state for runtime state.
-  --table-bg-type:    initial;
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): geometry, head, surface,
+  // and row-state colours are read with their defaults at the cell / part /
+  // modifier rules below — nothing declared on the base. Only the layered
+  // paint slots stay as the BS5 mechanic: `initial` here, set by variant /
+  // state rules, consumed via the var() chain in the cell.
+  --table-bg-type: initial;
   --table-color-type: initial;
-  --table-bg-state:    initial;
+  --table-bg-state: initial;
   --table-color-state: initial;
 
-  // === Row-state defaults ===
-  --table-striped-bg:    color-mix(in oklch, var(--st-foreground) 4%, transparent);
-  --table-striped-color: var(--st-foreground);
-  --table-hover-bg:      var(--st-accent);
-  --table-hover-color:   var(--st-accent-foreground);
-  --table-active-bg:     var(--st-highlight);
-  --table-active-color:  var(--st-highlight-foreground);
-
-  // === Group divider ===
-  --table-group-divider-width: 2px;
-
   width: 100%;
-  margin-bottom: 1rem;
-  color: var(--table-color);
+  color: var(--table-color, var(--st-foreground));
   vertical-align: top;
-  border-color: var(--table-border-color);
+  border-color: var(--table-border-color, var(--st-border));
 }
 
 // Per-cell layered chain. Variants repaint via --table-bg-type; hover/active
@@ -83,62 +55,75 @@
 // destroying each other.
 // stylelint-disable selector-max-universal
 .table > :not(caption) > * > * {
-  padding: var(--table-cell-padding-y) var(--table-cell-padding-x);
+  padding: var(--table-cell-padding-block, #{space(3)}) var(--table-cell-padding-inline, #{space(3)});
   // <th> defaults to text-align: center in the UA stylesheet. Inherit so
   // headers align with table text direction (start = left in LTR) and
   // body <th scope="row"> reads like the data cells beside it. .text-end
   // and friends still override via the utility's !important.
   text-align: inherit;
-  color: var(--table-color-state, var(--table-color-type, var(--table-color)));
-  background-color: var(--table-bg);
+  color: var(--table-color-state, var(--table-color-type, var(--table-color, var(--st-foreground))));
+  background-color: var(--table-bg, transparent);
   // Preflight sets every element to `border: 0 solid currentColor`, so
   // unset border-color resolves to the text color (near-white in dark
   // mode). Pin all four sides to --table-border-color here so any side
   // a modifier later turns on (.table--bordered does top/right/left)
   // reads the table palette, not currentColor.
-  border-color: var(--table-border-color);
+  border-color: var(--table-border-color, var(--st-border));
   border-bottom-width: 1px;
-  box-shadow: inset 0 0 0 9999px var(--table-bg-state, var(--table-bg-type, transparent));
+  box-shadow: inset 0 0 0 9999px
+    var(--table-bg-state, var(--table-bg-type, transparent));
 }
 
 // Rows pick up the table border color too — .table--bordered turns on
 // row-top/bottom borders and they'd otherwise inherit currentColor.
 .table > :not(caption) > * {
-  border-color: var(--table-border-color);
+  border-color: var(--table-border-color, var(--st-border));
 }
 
 // Edge-cell bump. Lines the first/last column up with .card's 20px gutter
 // so a table drops into a .card flush. Logical inset-start/end so dir="rtl"
 // keeps the heavier padding on the visual edges of the row.
-.table > :not(caption) > * > :first-child { padding-inline-start: var(--table-edge-padding); }
-.table > :not(caption) > * > :last-child  { padding-inline-end:   var(--table-edge-padding); }
+.table > :not(caption) > * > :first-child {
+  padding-inline-start: var(--table-edge-padding, #{space(5)});
+}
+.table > :not(caption) > * > :last-child {
+  padding-inline-end: var(--table-edge-padding, #{space(5)});
+}
 // stylelint-enable selector-max-universal
 
-.table > thead { vertical-align: bottom; }
-.table > tbody { vertical-align: inherit; }
+.table > thead {
+  vertical-align: bottom;
+}
+.table > tbody {
+  vertical-align: inherit;
+}
 
 // === Head ===
 // Smaller, muted, semi-bold so thead reads as a label row, not body text.
 // Setting --table-color (the rest layer) lets per-cell variant/state still
 // override via -type/-state.
 .table > thead > tr > * {
-  font-size: var(--table-head-font-size);
-  font-weight: var(--table-head-font-weight);
-  --table-color: var(--table-head-color);
+  font-size: var(--table-head-font-size, #{text(xs)});
+  font-weight: var(--table-head-font-weight, #{weight(medium)});
+  // Tight label line-height. Without it the head inherits the body's 1.5,
+  // which on this small no-descender label leaves the empty descent gap
+  // below the text and reads as off-center in the cell.
+  line-height: var(--table-head-line-height, 1.2);
+  --table-color: var(--table-head-color, var(--st-muted-foreground));
 }
 
 // Header alt — opts the head row onto --st-surface-2. Same two-tone language
 // as .card__header--alt. Repaints --table-bg on the head so every cell
 // inherits the surface fill without per-cell specificity.
 .table__head--alt {
-  --table-bg: var(--table-head-bg-alt);
+  --table-bg: var(--table-head-bg-alt, var(--st-surface-2));
 }
 
 // === Body divider ===
 // Heavier rule above the tbody. Helpful when the head reads as a column
 // label rather than a section break.
 .table__body--divider {
-  border-top: var(--table-group-divider-width) solid currentColor;
+  border-top: var(--table-group-divider-width, 2px) solid currentColor;
 }
 
 // === Row variants ===
@@ -156,58 +141,74 @@
 // hue direction, so each border tints in its own intent's color.
 @each $intent in (primary, success, info, warning, danger) {
   .table__row--#{$intent} {
-    --table-bg-type:      color-mix(in oklab, var(--st-#{$intent}) 10%, transparent);
-    --table-color-type:   var(--st-foreground);
-    --table-border-color: color-mix(in oklab, var(--st-#{$intent}) 25%, var(--st-border));
+    --table-bg-type: color-mix(in oklab, var(--st-#{$intent}) 10%, transparent);
+    --table-color-type: var(--st-foreground);
+    --table-border-color: color-mix(
+      in oklab,
+      var(--st-#{$intent}) 25%,
+      var(--st-border)
+    );
   }
 }
 
 // Neutral fill — replaces BS5's .table-secondary. Routes through the
 // interactional neutral so warm/cool theme retints drag the fill along.
 .table__row--neutral {
-  --table-bg-type:    var(--st-neutral);
+  --table-bg-type: var(--st-neutral);
   --table-color-type: var(--st-neutral-foreground);
 }
 
 // === Runtime states ===
 .table--striped > tbody > tr:nth-of-type(odd) > * {
-  --table-bg-type:    var(--table-striped-bg);
-  --table-color-type: var(--table-striped-color);
+  --table-bg-type: var(--table-striped-bg, color-mix(in oklch, var(--st-foreground) 4%, transparent));
+  --table-color-type: var(--table-striped-color, var(--st-foreground));
 }
 
 .table--striped-cols > :not(caption) > tr > :nth-child(2n) {
-  --table-bg-type:    var(--table-striped-bg);
-  --table-color-type: var(--table-striped-color);
+  --table-bg-type: var(--table-striped-bg, color-mix(in oklch, var(--st-foreground) 4%, transparent));
+  --table-color-type: var(--table-striped-color, var(--st-foreground));
 }
 
 .table--hover > tbody > tr:hover > * {
-  --table-bg-state:    var(--table-hover-bg);
-  --table-color-state: var(--table-hover-color);
+  --table-bg-state: var(--table-bg-hover, var(--st-accent));
+  --table-color-state: var(--table-color-hover, var(--st-accent-foreground));
 }
 
 // Active row — persistent selection (V3.md §3.6, Radix-aligned).
 // Highlight tier matches sidebar / dropdown / list-group selection.
 .table > tbody > tr[data-state="active"] > * {
-  --table-bg-state:    var(--table-active-bg);
-  --table-color-state: var(--table-active-color);
+  --table-bg-state: var(--table-bg-active, var(--st-highlight));
+  --table-color-state: var(--table-color-active, var(--st-highlight-foreground));
 }
 
 // === Borders ===
-.table--bordered > :not(caption) > *     { border-width: 1px 0; }
-.table--bordered > :not(caption) > * > * { border-width: 0 1px; }
+.table--bordered > :not(caption) > * {
+  border-width: 1px 0;
+}
+.table--bordered > :not(caption) > * > * {
+  border-width: 0 1px;
+}
 
-.table--borderless > :not(caption) > * > * { border-bottom-width: 0; }
-.table--borderless > :not(:first-child)    { border-top-width: 0; }
+.table--borderless > :not(caption) > * > * {
+  border-bottom-width: 0;
+}
+.table--borderless > :not(:first-child) {
+  border-top-width: 0;
+}
 
 // === Sm — denser padding ===
 // Inner cells shrink to the sm value; edge cells keep the flush-in-card
-// 1.25rem so dropping a .table--sm into a card still aligns with the
+// 1.25rem so dropping a .table--compact into a card still aligns with the
 // card's body gutter.
-.table--sm > :not(caption) > * > * {
-  padding: var(--table-cell-padding-sm);
+.table--compact > :not(caption) > * > * {
+  padding: var(--table-cell-padding-sm, #{space(1)});
 }
-.table--sm > :not(caption) > * > :first-child { padding-inline-start: var(--table-edge-padding); }
-.table--sm > :not(caption) > * > :last-child  { padding-inline-end:   var(--table-edge-padding); }
+.table--compact > :not(caption) > * > :first-child {
+  padding-inline-start: var(--table-edge-padding, #{space(5)});
+}
+.table--compact > :not(caption) > * > :last-child {
+  padding-inline-end: var(--table-edge-padding, #{space(5)});
+}
 
 // === Align middle ===
 // Opt cells onto vertical-align: middle. Useful when rows mix multi-line
@@ -220,20 +221,94 @@
 // === Responsive wrappers ===
 // Not .table parts — they wrap the table so the table can stay unchanged
 // while the wrapper scrolls. Kept as flat utility names, matching BS5.
-.table-responsive { overflow-x: auto; }
+.table-responsive {
+  overflow-x: auto;
+}
 
-@include media-down(sm)  { .table-responsive-sm  { overflow-x: auto; } }
-@include media-down(md)  { .table-responsive-md  { overflow-x: auto; } }
-@include media-down(lg)  { .table-responsive-lg  { overflow-x: auto; } }
-@include media-down(xl)  { .table-responsive-xl  { overflow-x: auto; } }
-@include media-down(xxl) { .table-responsive-xxl { overflow-x: auto; } }
+@include media-down(sm) {
+  .table-responsive-sm {
+    overflow-x: auto;
+  }
+}
+@include media-down(md) {
+  .table-responsive-md {
+    overflow-x: auto;
+  }
+}
+@include media-down(lg) {
+  .table-responsive-lg {
+    overflow-x: auto;
+  }
+}
+@include media-down(xl) {
+  .table-responsive-xl {
+    overflow-x: auto;
+  }
+}
+@include media-down(xxl) {
+  .table-responsive-xxl {
+    overflow-x: auto;
+  }
+}
 
 // === Card integration ===
-// .card already has overflow: hidden so the table's square bottom cells
-// get carved by the card's rounded corners. The only thing left to do is
-// drop the last row's bottom border so it doesn't double with the card's
-// outer border. > :last-child picks up <tbody> / <tfoot> whichever closes.
+// A table dropped flush in a card composes with the card's frame via the
+// table's own CSS — no overflow: hidden on the card (it dropped that so focus
+// rings, sticky headers, and overflowing menus aren't clipped) and no utility
+// classes on the table. Flush behaviour:
+//   • corner cells round to the card's INNER radius (outer − border) at the
+//     edges that meet the card — top corners as the first child, bottom corners
+//     as the last — so a filled head / hovered last row (an inset box-shadow,
+//     which respects border-radius) clips cleanly at the card's rounded corner;
+//   • borders that would double the card's drop out: the last row's bottom
+//     (every table), plus the whole outer perimeter for .table--bordered.
+// > :first-child / :last-child pick up <thead> / <tbody> / <tfoot> whichever
+// opens / closes. Responsive-wrapped tables get the margin / radius / last-row
+// treatment; their inline edges scroll, so the bordered inline-border drop is
+// scoped to the direct (non-scrolling) flush table only.
+// stylelint-disable selector-max-universal
+
+// Last row drops its bottom border (doubles the card border).
 .card > .table:last-child > :last-child > tr:last-child > *,
 .card > .table-responsive:last-child > .table > :last-child > tr:last-child > * {
   border-bottom-width: 0;
 }
+
+// Bottom corners — last child.
+.card > .table:last-child > :last-child > tr:last-child > :first-child,
+.card > .table-responsive:last-child > .table > :last-child > tr:last-child > :first-child {
+  border-end-start-radius: calc(var(--card-radius, #{radius(lg)}) - var(--st-border-width));
+}
+.card > .table:last-child > :last-child > tr:last-child > :last-child,
+.card > .table-responsive:last-child > .table > :last-child > tr:last-child > :last-child {
+  border-end-end-radius: calc(var(--card-radius, #{radius(lg)}) - var(--st-border-width));
+}
+
+// Top corners — first child (no card header rounding the top above it).
+.card > .table:first-child > :first-child > tr:first-child > :first-child,
+.card > .table-responsive:first-child > .table > :first-child > tr:first-child > :first-child {
+  border-start-start-radius: calc(var(--card-radius, #{radius(lg)}) - var(--st-border-width));
+}
+.card > .table:first-child > :first-child > tr:first-child > :last-child,
+.card > .table-responsive:first-child > .table > :first-child > tr:first-child > :last-child {
+  border-start-end-radius: calc(var(--card-radius, #{radius(lg)}) - var(--st-border-width));
+}
+
+// Bordered table: drop the outer perimeter so it doesn't double the card
+// border. Horizontal edges live on the row (tr carries border-block); vertical
+// edges on the first / last cell (cell carries border-inline). The inline drop
+// is direct-child only — a responsive bordered table scrolls, so its left /
+// right edges aren't pinned to the card.
+.card > .table--bordered:first-child > :first-child > tr:first-child {
+  border-top-width: 0;
+}
+.card > .table--bordered:last-child > :last-child > tr:last-child {
+  border-bottom-width: 0;
+}
+.card > .table--bordered > :not(caption) > tr > :first-child {
+  border-inline-start-width: 0;
+}
+.card > .table--bordered > :not(caption) > tr > :last-child {
+  border-inline-end-width: 0;
+}
+// stylelint-enable selector-max-universal

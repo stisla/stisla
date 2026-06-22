@@ -60,8 +60,8 @@ spec's CSS targets them; deviations break visual conformance.
 
 ```
 .toggle-group--vertical                  stacked column, full-width members
-.toggle-group--sm                        compact rail height
-.toggle-group--lg                        roomy rail height
+.toggle-group--compact                        compact rail height
+.toggle-group--roomy                        roomy rail height
 ```
 
 The vertical modifier stacks members in a column, stretches them to fill
@@ -181,17 +181,20 @@ globally).**
 
 | Variable | Affects |
 | --- | --- |
-| `--toggle-group-radius` | Container corner radius. The member's inner radius is derived from this minus the container padding for concentric corners. |
+| `--toggle-group-radius` | Container corner radius. The member's inner radius is derived from this minus the container inline padding for concentric corners. |
 | `--toggle-group-height` | Container height in horizontal mode. |
-| `--toggle-group-padding` | Inner padding inside the container. |
+| `--toggle-group-padding-inline` | Inline padding inside the container. |
+| `--toggle-group-padding-block` | Block padding inside the container. |
 | `--toggle-group-gap` | Gap between adjacent members. |
 | `--toggle-group-bg` | Container background. |
+| `--toggle-group-border-width` | Container border width. |
 | `--toggle-group-border-color` | Container border colour. |
 
 **Global tokens consumed.**
 
-`--st-radius`, `--st-radius-sm` (small modifier), `--st-radius-lg`
-(large modifier), `--st-border`, `--st-density`.
+`--st-radius`, `--st-radius-sm` (compact modifier), `--st-radius-lg`
+(roomy modifier), `--st-border`, `--st-border-width`, `--st-spacing`
+(spacing base behind `space()` height, padding, and gap).
 
 The group also depends on the `.toggle` component's tokens — member
 visuals (background, border, padding, font, active fill) read from the

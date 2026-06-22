@@ -59,10 +59,10 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Three sizes cover the typical range. Default sits at a thin strip; <code>--sm</code> compresses to a hairline; <code>--lg</code> grows to label-friendly height.</p>
+    <p>Three sizes cover the typical range. Default sits at a thin strip; <code>--compact</code> compresses to a hairline; <code>--roomy</code> grows to label-friendly height.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-column gap-4 w-100">
-      <div class="progress progress--sm" role="progressbar" aria-label="Small" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+      <div class="progress progress--compact" role="progressbar" aria-label="Small" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
         <div class="progress__track">
           <div class="progress__bar" style="width: 60%"></div>
         </div>
@@ -72,7 +72,7 @@
           <div class="progress__bar" style="width: 60%"></div>
         </div>
       </div>
-      <div class="progress progress--lg" role="progressbar" aria-label="Large" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+      <div class="progress progress--roomy" role="progressbar" aria-label="Large" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
         <div class="progress__track">
           <div class="progress__bar" style="width: 60%"></div>
         </div>
@@ -86,12 +86,12 @@
     <p>Add <code>.progress__bar--animated</code> for a soft sheen that sweeps across the fill every few seconds. It's a quiet "still working" signal. It isn't a constant treadmill. <code>prefers-reduced-motion</code> turns the animation off.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-column gap-4 w-100">
-      <div class="progress progress--lg" role="progressbar" aria-label="Animated primary" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+      <div class="progress progress--roomy" role="progressbar" aria-label="Animated primary" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
         <div class="progress__track">
           <div class="progress__bar progress__bar--animated" style="width: 60%"></div>
         </div>
       </div>
-      <div class="progress progress--lg" role="progressbar" aria-label="Animated success" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
+      <div class="progress progress--roomy" role="progressbar" aria-label="Animated success" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
         <div class="progress__track">
           <div class="progress__bar progress__bar--success progress__bar--animated" style="width: 80%"></div>
         </div>
@@ -110,7 +110,7 @@
           <div class="progress__bar"></div>
         </div>
       </div>
-      <div class="progress progress--lg is-indeterminate" role="progressbar" aria-label="Loading large" aria-valuemin="0" aria-valuemax="100">
+      <div class="progress progress--roomy is-indeterminate" role="progressbar" aria-label="Loading large" aria-valuemin="0" aria-valuemax="100">
         <div class="progress__track">
           <div class="progress__bar progress__bar--success"></div>
         </div>
@@ -121,7 +121,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Override the variables on <code>.progress</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change. Size modifiers <code>--sm</code> / <code>--lg</code> retune the track height in their own scope.</p>
+    <p>Override the variables on <code>.progress</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change. Size modifiers <code>--compact</code> / <code>--roomy</code> retune the track height in their own scope.</p>
     <table>
       <thead>
         <tr>
@@ -132,15 +132,11 @@
       <tbody>
         <tr>
           <td><code>--progress-height</code></td>
-          <td>Track height (8 at default density; sm 4, lg 16)</td>
+          <td>Track height; size modifiers reassign this</td>
         </tr>
         <tr>
           <td><code>--progress-radius</code></td>
-          <td>Track corner radius (pill). Reads <code>--st-progress-radius</code> first; override either to flatten.</td>
-        </tr>
-        <tr>
-          <td><code>--progress-margin-bottom</code></td>
-          <td>Trailing space below the component</td>
+          <td>Track corner radius; pilled by default, set a smaller value to flatten</td>
         </tr>
         <tr>
           <td><code>--progress-header-gap</code></td>
@@ -188,6 +184,6 @@
         </tr>
       </tbody>
     </table>
-    <p>Track opts out of <code>--st-radius</code> by default. The pill shape carries meaning for a progress strip, so it isn't a style choice. Set <code>--st-progress-radius</code> at the scope you want flattened (a preset wrapper, <code>:root</code>) or <code>--progress-radius</code> on the track itself for a one-off.</p>
+    <p>Track opts out of <code>--st-radius</code> by default. The pill shape carries meaning for a progress strip, so it isn't a style choice. Set <code>--progress-radius</code> at the scope you want flattened (a preset wrapper, <code>:root</code>) or on the track itself for a one-off.</p>
   </section>
 {% endblock %}

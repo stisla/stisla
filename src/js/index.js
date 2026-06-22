@@ -8,7 +8,7 @@ import { Component, getInstance } from './core/component.js';
 import { register, init } from './core/init.js';
 import { Dialog } from './components/dialog.js';
 import { Drawer } from './components/drawer.js';
-import { Dropdown } from './components/dropdown.js';
+import { Menu } from './components/menu.js';
 import { Tooltip } from './components/tooltip.js';
 import { Popover } from './components/popover.js';
 import { Toast, toast } from './components/toast.js';
@@ -27,7 +27,7 @@ import { Autocomplete } from './components/autocomplete.js';
 
 register('dialog', Dialog);
 register('drawer', Drawer);
-register('dropdown', Dropdown);
+register('menu', Menu);
 register('tooltip', Tooltip);
 register('popover', Popover);
 register('toast', Toast);
@@ -62,7 +62,7 @@ export const Stisla = {
   Component,
   Dialog,
   Drawer,
-  Dropdown,
+  Menu,
   Tooltip,
   Popover,
   Toast,

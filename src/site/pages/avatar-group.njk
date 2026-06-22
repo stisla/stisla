@@ -34,38 +34,38 @@
 
   <section>
     <h2>Composition with avatar modifiers</h2>
-    <p>The group is shape-agnostic and size-agnostic. Mix in any <code>.avatar</code> modifier (<code>--sm</code>, <code>--lg</code>, <code>--circle</code>) and the stack composes flat.</p>
+    <p>The group is shape-agnostic and size-agnostic. Mix in any <code>.avatar</code> modifier (<code>--compact</code>, <code>--roomy</code>, <code>--circle</code>) and the stack composes flat.</p>
     {% call ui.demo() %}
     <div class="demo-stack">
       <div class="avatar-group">
-        <span class="avatar avatar--sm" data-stisla-avatar>
+        <span class="avatar avatar--compact" data-stisla-avatar>
           <img class="avatar__image" src="https://i.pravatar.cc/96?img=11" alt="">
           <span class="avatar__fallback">A</span>
         </span>
-        <span class="avatar avatar--sm" data-stisla-avatar>
+        <span class="avatar avatar--compact" data-stisla-avatar>
           <img class="avatar__image" src="https://i.pravatar.cc/96?img=12" alt="">
           <span class="avatar__fallback">B</span>
         </span>
-        <span class="avatar avatar--sm" data-stisla-avatar>
+        <span class="avatar avatar--compact" data-stisla-avatar>
           <img class="avatar__image" src="https://i.pravatar.cc/96?img=13" alt="">
           <span class="avatar__fallback">C</span>
         </span>
-        <span class="avatar avatar--sm avatar-group__more">+8</span>
+        <span class="avatar avatar--compact avatar-group__more">+8</span>
       </div>
       <div class="avatar-group">
-        <span class="avatar avatar--lg avatar--circle" data-stisla-avatar>
+        <span class="avatar avatar--roomy avatar--circle" data-stisla-avatar>
           <img class="avatar__image" src="https://i.pravatar.cc/96?img=21" alt="">
           <span class="avatar__fallback">A</span>
         </span>
-        <span class="avatar avatar--lg avatar--circle" data-stisla-avatar>
+        <span class="avatar avatar--roomy avatar--circle" data-stisla-avatar>
           <img class="avatar__image" src="https://i.pravatar.cc/96?img=22" alt="">
           <span class="avatar__fallback">B</span>
         </span>
-        <span class="avatar avatar--lg avatar--circle" data-stisla-avatar>
+        <span class="avatar avatar--roomy avatar--circle" data-stisla-avatar>
           <img class="avatar__image" src="https://i.pravatar.cc/96?img=23" alt="">
           <span class="avatar__fallback">C</span>
         </span>
-        <span class="avatar avatar--lg avatar--circle" data-stisla-avatar>
+        <span class="avatar avatar--roomy avatar--circle" data-stisla-avatar>
           <img class="avatar__image" src="https://i.pravatar.cc/96?img=24" alt="">
           <span class="avatar__fallback">D</span>
         </span>
@@ -109,7 +109,7 @@
 
   <section>
     <h2>Overlap density</h2>
-    <p>Tighten or loosen the stack by overriding <code>--avatar-group-overlap</code> on the group. The value is a negative inline margin per neighbour, density-scaled so a compact / comfortable theme retunes proportionally.</p>
+    <p>Tighten or loosen the stack by overriding <code>--avatar-group-overlap</code> on the group. The value is a negative inline margin per neighbour, set off the base spacing scale so it retunes with the avatar size.</p>
     {% call ui.demo() %}
     <div class="demo-stack">
       <div class="avatar-group" style="--avatar-group-overlap: 1.25rem;">
@@ -191,7 +191,7 @@
       <tbody>
         <tr>
           <td><code>--avatar-group-overlap</code></td>
-          <td>Negative inline margin per member; density-scaled so the overlap retunes with theme density</td>
+          <td>Negative inline margin per member; rides the base spacing scale so the overlap retunes with the avatar size</td>
         </tr>
         <tr>
           <td><code>--avatar-group-ring-width</code></td>

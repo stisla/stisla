@@ -100,8 +100,8 @@
         </div>
         <div class="toast__body">Logins to this workspace now require a code from your authenticator app.</div>
         <div class="toast__action">
-          <button type="button" class="btn btn--sm btn--ghost btn--neutral btn--flush-start">Dismiss</button>
-          <button type="button" class="btn btn--sm btn--ghost btn--neutral">Manage devices</button>
+          <button type="button" class="btn btn--compact btn--ghost btn--neutral btn--flush-start">Dismiss</button>
+          <button type="button" class="btn btn--compact btn--ghost btn--neutral">Manage devices</button>
         </div>
       </div>
       <button type="button" class="toast__close" data-stisla-toast-dismiss aria-label="Close">
@@ -177,8 +177,8 @@
           </div>
           <div class="toast__body">Shared "Q3 roadmap" with you. You have edit access to the document.</div>
           <div class="toast__action">
-            <button type="button" class="btn btn--sm btn--ghost btn--neutral btn--flush-start">Dismiss</button>
-            <button type="button" class="btn btn--sm btn--ghost btn--primary">Open file</button>
+            <button type="button" class="btn btn--compact btn--ghost btn--neutral btn--flush-start">Dismiss</button>
+            <button type="button" class="btn btn--compact btn--ghost btn--primary">Open file</button>
           </div>
         </div>
         <button type="button" class="toast__close" data-stisla-toast-dismiss aria-label="Close"><i data-lucide="x"></i></button>
@@ -206,7 +206,7 @@
           <div class="toast__header">Deployment succeeded</div>
           <div class="toast__body">v2.4.1 is live on staging. Production rollout queued for 4 PM.</div>
           <div class="toast__action">
-            <button type="button" class="btn btn--sm btn--ghost btn--primary btn--flush-start">View deploy</button>
+            <button type="button" class="btn btn--compact btn--ghost btn--primary btn--flush-start">View deploy</button>
           </div>
         </div>
         <button type="button" class="toast__close" data-stisla-toast-dismiss aria-label="Close"><i data-lucide="x"></i></button>
@@ -216,7 +216,7 @@
          Stisla.toast.promise() covers the same shape imperatively. #}
       <div class="toast" data-state="open" role="status" aria-live="polite" aria-atomic="true">
         <div class="toast__icon">
-          <span class="spinner spinner--sm" role="status" aria-label="Loading"></span>
+          <span class="spinner spinner--compact" role="status" aria-label="Loading"></span>
         </div>
         <div class="toast__content">
           <div class="toast__header">
@@ -382,7 +382,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Twenty-eight variables retune <code>.toast</code> and <code>.toast-region</code> without touching component CSS. Override on a single instance, on the region, on a wrapper, or on <code>:root</code>. Intent modifiers shift only <code>--toast-icon-color</code>, so the surface stays neutral and a stack of mixed intents reads as one family.</p>
+    <p>These variables retune <code>.toast</code> and <code>.toast-region</code> without touching component CSS. Override on a single instance, on the region, on a wrapper, or on <code>:root</code>. Intent modifiers shift only <code>--toast-icon-color</code>, so the surface stays neutral and a stack of mixed intents reads as one family.</p>
 
     <h3>Region geometry</h3>
     <table>
@@ -401,7 +401,8 @@
       <tbody>
         <tr><td><code>--toast-min-width</code></td><td>Floor so short titles still feel substantial</td></tr>
         <tr><td><code>--toast-max-width</code></td><td>Ceiling so long bodies wrap before getting unwieldy</td></tr>
-        <tr><td><code>--toast-padding</code></td><td>Single frame pad on the root</td></tr>
+        <tr><td><code>--toast-padding-block</code></td><td>Top and bottom frame pad on the root</td></tr>
+        <tr><td><code>--toast-padding-inline</code></td><td>Left and right frame pad on the root</td></tr>
         <tr><td><code>--toast-radius</code></td><td>Large-frame tier (matches dialog and card)</td></tr>
         <tr><td><code>--toast-z-index</code></td><td>Individual toast stacking</td></tr>
       </tbody>
@@ -413,6 +414,7 @@
       <tbody>
         <tr><td><code>--toast-bg</code></td><td>Card-tier surface</td></tr>
         <tr><td><code>--toast-color</code></td><td>Title color</td></tr>
+        <tr><td><code>--toast-border-width</code></td><td>Border thickness; set <code>0</code> to drop it</td></tr>
         <tr><td><code>--toast-border-color</code></td><td>Opaque border (not the translucent variant)</td></tr>
         <tr><td><code>--toast-shadow</code></td><td>Default ambient shadow</td></tr>
       </tbody>

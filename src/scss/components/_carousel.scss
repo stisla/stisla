@@ -13,41 +13,16 @@
 // Embla writes `transform: translate3d(...)` on .carousel__track for the
 // slide motion. CSS here owns chrome only: rounded viewport, control chips,
 // indicator dot/pill, caption gradient.
+//
+// Fallback-default (V3-ARCHITECTURE.md §2): nothing is declared on the
+// .carousel root — every --carousel-* knob is read with its default at the
+// child that paints it, so a scope / inline override set on .carousel
+// inherits down and wins. Overlay chrome (controls / indicators / caption)
+// reads --st-overlay / --st-overlay-foreground: that pair is theme-independent
+// on purpose, so chrome stays consistent over arbitrary slide imagery in
+// light + dark.
 
 .carousel {
-  --carousel-radius: var(--st-carousel-radius, var(--st-radius-lg));
-  --carousel-aspect-ratio: 16 / 9;
-  --carousel-slide-gap: 0;
-
-  // Overlay chrome (controls / indicators / caption) reads
-  // --st-overlay and --st-overlay-foreground. The pair is theme-
-  // independent on purpose — slide imagery can be anything, so the
-  // chrome stays consistent across light + dark.
-  --carousel-control-size: 2.25rem;
-  --carousel-control-inset: 0.75rem;
-  --carousel-control-bg: color-mix(in oklch, var(--st-overlay) 70%, transparent);
-  --carousel-control-bg-hover: var(--st-overlay);
-  --carousel-control-color: var(--st-overlay-foreground);
-  --carousel-control-shadow: 0 1px 2px color-mix(in oklch, var(--st-overlay) 30%, transparent);
-
-  --carousel-indicators-inset: 0.875rem;
-  --carousel-indicator-size: 0.375rem;
-  --carousel-indicator-gap: 0.375rem;
-  --carousel-indicator-bg: color-mix(in oklch, var(--st-overlay-foreground) 50%, transparent);
-  --carousel-indicator-active-bg: var(--st-overlay-foreground);
-  --carousel-indicator-active-width: 1.25rem;
-
-  --carousel-caption-padding-y: 1.25rem;
-  --carousel-caption-padding-x: 1.25rem;
-  --carousel-caption-color: var(--st-overlay-foreground);
-  --carousel-caption-bg: linear-gradient(
-    to bottom,
-    transparent,
-    color-mix(in oklch, var(--st-overlay) 70%, transparent)
-  );
-
-  --carousel-transition-duration: 0.2s;
-
   position: relative;
   width: 100%;
 
@@ -60,8 +35,8 @@
 // === Viewport + track + slide =========================================
 .carousel__viewport {
   overflow: hidden;
-  border-radius: var(--carousel-radius);
-  aspect-ratio: var(--carousel-aspect-ratio);
+  border-radius: var(--carousel-radius, #{radius(lg)});
+  aspect-ratio: var(--carousel-aspect-ratio, 16 / 9);
 }
 
 .carousel__track {
@@ -74,7 +49,7 @@
   flex: 0 0 100%;
   min-width: 0;
   position: relative;
-  padding-inline-start: var(--carousel-slide-gap);
+  padding-inline-start: var(--carousel-slide-gap, 0);
 
   > img {
     display: block;
@@ -93,28 +68,28 @@
 // === Controls (prev/next) =============================================
 .carousel__control {
   position: absolute;
-  top: 50%;
+  inset-block-start: 50%;
   z-index: 2;
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--carousel-control-size);
-  height: var(--carousel-control-size);
+  width: var(--carousel-control-size, #{space(9)});
+  height: var(--carousel-control-size, #{space(9)});
   padding: 0;
 
   border: 0;
   border-radius: 50%;
-  background: var(--carousel-control-bg);
-  color: var(--carousel-control-color);
-  box-shadow: var(--carousel-control-shadow);
+  background: var(--carousel-control-bg, color-mix(in oklch, var(--st-overlay) 70%, transparent));
+  color: var(--carousel-control-color, var(--st-overlay-foreground));
+  box-shadow: var(--carousel-control-shadow, 0 1px 2px color-mix(in oklch, var(--st-overlay) 30%, transparent));
 
   cursor: pointer;
   transform: translateY(-50%);
-  transition: background-color var(--carousel-transition-duration) ease;
+  transition: background-color var(--carousel-transition-duration, #{duration(normal)}) ease;
 
   &:hover {
-    background: var(--carousel-control-bg-hover);
+    background: var(--carousel-control-bg-hover, var(--st-overlay));
   }
 
   &:focus-visible {
@@ -137,23 +112,23 @@
 }
 
 .carousel__control--prev {
-  inset-inline-start: var(--carousel-control-inset);
+  inset-inline-start: var(--carousel-control-inset, #{space(3)});
 }
 
 .carousel__control--next {
-  inset-inline-end: var(--carousel-control-inset);
+  inset-inline-end: var(--carousel-control-inset, #{space(3)});
 }
 
 // === Indicators =======================================================
 .carousel__indicators {
   position: absolute;
   inset-inline: 0;
-  bottom: var(--carousel-indicators-inset);
+  inset-block-end: var(--carousel-indicators-inset, #{space(3.5)});
   z-index: 2;
 
   display: flex;
   justify-content: center;
-  gap: var(--carousel-indicator-gap);
+  gap: var(--carousel-indicator-gap, #{space(1.5)});
 
   padding: 0;
   margin: 0;
@@ -162,19 +137,19 @@
 }
 
 .carousel__indicator {
-  width: var(--carousel-indicator-size);
-  height: var(--carousel-indicator-size);
+  width: var(--carousel-indicator-size, #{space(1.5)});
+  height: var(--carousel-indicator-size, #{space(1.5)});
   padding: 0;
 
   border: 0;
-  border-radius: 999px;
-  background: var(--carousel-indicator-bg);
+  border-radius: #{radius(full)};
+  background: var(--carousel-indicator-bg, color-mix(in oklch, var(--st-overlay-foreground) 50%, transparent));
 
   cursor: pointer;
   pointer-events: auto;
   transition:
-    width var(--carousel-transition-duration) ease,
-    background-color var(--carousel-transition-duration) ease;
+    width var(--carousel-transition-duration, #{duration(normal)}) ease,
+    background-color var(--carousel-transition-duration, #{duration(normal)}) ease;
 
   &:focus-visible {
     outline: 2px solid var(--st-ring);
@@ -182,20 +157,25 @@
   }
 
   &[data-state='active'] {
-    width: var(--carousel-indicator-active-width);
-    background: var(--carousel-indicator-active-bg);
+    width: var(--carousel-indicator-width-active, #{space(5)});
+    background: var(--carousel-indicator-bg-active, var(--st-overlay-foreground));
   }
 }
 
 // === Caption ==========================================================
 .carousel__caption {
   position: absolute;
-  inset: auto 0 0 0;
+  inset-block: auto 0;
+  inset-inline: 0;
 
-  padding: var(--carousel-caption-padding-y) var(--carousel-caption-padding-x);
+  padding: var(--carousel-caption-padding-block, #{space(5)}) var(--carousel-caption-padding-inline, #{space(5)});
 
-  background: var(--carousel-caption-bg);
-  color: var(--carousel-caption-color);
+  background: var(--carousel-caption-bg, linear-gradient(
+    to bottom,
+    transparent,
+    color-mix(in oklch, var(--st-overlay) 70%, transparent)
+  ));
+  color: var(--carousel-caption-color, var(--st-overlay-foreground));
 
   // The slide owns the rounded clip, so the caption can extend edge-to-edge
   // without bleeding past the viewport.

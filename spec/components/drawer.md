@@ -230,10 +230,12 @@ partial.
 | --- | --- |
 | `--drawer-width` | Panel width for start / end placements. |
 | `--drawer-height` | Panel height for top / bottom placements. |
-| `--drawer-padding` | Padding on header and body. |
+| `--drawer-padding-inline` | Inline padding on header, body, and footer. |
+| `--drawer-padding-block` | Block padding on header and body. |
 | `--drawer-z-index` | Stack order. |
 | `--drawer-bg` | Panel surface colour. |
 | `--drawer-color` | Panel text colour. |
+| `--drawer-border-width` | Inner-edge border width. |
 | `--drawer-border-color` | Inner-edge border colour. |
 | `--drawer-shadow` | Drop shadow on the panel. |
 | `--drawer-backdrop-bg` | Backdrop fill. |
@@ -244,7 +246,7 @@ partial.
 | `--drawer-close-color` | Close chip icon (rest). |
 | `--drawer-close-color-hover` | Close chip icon (hover). |
 | `--drawer-close-bg-hover` | Close chip background (hover). |
-| `--drawer-footer-padding-y` | Footer vertical padding. |
+| `--drawer-footer-padding-block` | Footer vertical padding. |
 | `--drawer-footer-bg` | Footer background. |
 | `--drawer-footer-border-color` | Footer top border. |
 | `--drawer-transition-duration` | Open / close slide duration. |
@@ -254,8 +256,8 @@ partial.
 `--st-surface` (panel bg), `--st-surface-2` (footer band),
 `--st-foreground` (panel text), `--st-muted-foreground` (close chip
 rest), `--st-border`, `--st-accent` (close chip hover bg),
-`--st-density` (padding multiplier), `--st-ring` (focus ring on
-`.drawer__close`).
+`--st-ring` (focus ring on `.drawer__close`). Padding rides the spacing
+base `--st-spacing` via the `space()` helper.
 
 **Dark-mode flips.** None per-component. All surfaces ride the root
 token swap automatically. The backdrop fill is intentionally fixed

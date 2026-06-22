@@ -7,10 +7,10 @@
 // foot-gun where same-task transition + property changes can fall
 // through to the previous (none) computation in some browsers.
 //
-// Override duration globally via --collapsible-duration on :root, on a
-// consumer element, or pass opts.duration to a Collapsible instance
-// (the JS will mirror it to inline --collapsible-duration so CSS and
-// JS use the same value).
+// Override duration globally via --collapsible-transition-duration on :root,
+// on a consumer element, or pass opts.duration to a Collapsible instance
+// (the JS will mirror it to inline --collapsible-transition-duration so CSS
+// and JS use the same value).
 
 // Closed state for self-mounted Collapsibles. Composers (accordion,
 // sidebar, navbar) own their own rules: state lives on a parent chip,
@@ -23,7 +23,7 @@
 
 .is-collapsing {
   transition-property: height;
-  transition-duration: var(--collapsible-duration, 0.2s);
+  transition-duration: var(--collapsible-transition-duration, 0.2s);
   transition-timing-function: ease;
   overflow: hidden;
 }

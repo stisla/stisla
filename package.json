@@ -16,6 +16,7 @@
     "build": "npm run build:assets && npm run build:site",
     "pack:packages": "npm run build:packages && cd packages/css && npm pack && cd ../vanilla && npm pack",
     "smoke:packages": "node tools/smoke-packages.mjs",
+    "audit:tokens": "node tools/audit-tokens.mjs",
     "preview": "vite preview --outDir site-dist"
   },
   "dependencies": {

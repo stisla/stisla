@@ -99,7 +99,7 @@
     <div class="card" style="width: 22rem;">
       <div class="card__header">
         Featured
-        <button type="button" class="btn btn--neutral btn--sm ms-auto">Action</button>
+        <button type="button" class="btn btn--neutral btn--compact ms-auto">Action</button>
       </div>
       <div class="card__body">
         <h5 class="card__title">Special title treatment</h5>
@@ -165,7 +165,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Six variables retune <code>.card</code> without touching component CSS. Override on <code>.card</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
+    <p>These variables retune <code>.card</code> without touching component CSS. Override on <code>.card</code> itself, on a parent scope, or on <code>:root</code>, and the cascade scopes the change. To retune every card at once, set the variable on <code>:root</code>; to retune all surfaces, override the scale tokens its defaults read (<code>--st-radius-lg</code>, <code>--st-shadow</code>, <code>--st-border-width</code>).</p>
     <table>
       <thead>
         <tr>
@@ -176,15 +176,15 @@
       <tbody>
         <tr>
           <td><code>--card-radius</code></td>
-          <td>Corner radius (per-card override via <code>--st-card-radius</code>)</td>
+          <td>Corner radius</td>
         </tr>
         <tr>
-          <td><code>--card-padding</code></td>
-          <td>Padding for header, body, and footer</td>
+          <td><code>--card-padding-inline</code></td>
+          <td>Left and right padding, shared by header, body, and footer so their edges align</td>
         </tr>
         <tr>
-          <td><code>--card-shadow</code></td>
-          <td>Drop shadow; <code>.card--flat</code> sets it to <code>none</code></td>
+          <td><code>--card-padding-block</code></td>
+          <td>Top and bottom padding of the body</td>
         </tr>
         <tr>
           <td><code>--card-bg</code></td>
@@ -195,8 +195,20 @@
           <td>Text color</td>
         </tr>
         <tr>
-          <td><code>--card-border</code></td>
-          <td>Full border shorthand (width, style, color)</td>
+          <td><code>--card-border-width</code></td>
+          <td>Border thickness; set <code>0</code> to drop the border</td>
+        </tr>
+        <tr>
+          <td><code>--card-border-color</code></td>
+          <td>Border color</td>
+        </tr>
+        <tr>
+          <td><code>--card-shadow</code></td>
+          <td>Drop shadow; <code>.card--flat</code> sets it to <code>none</code></td>
+        </tr>
+        <tr>
+          <td><code>--card-header-height</code></td>
+          <td>Minimum height of the header row</td>
         </tr>
       </tbody>
     </table>

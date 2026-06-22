@@ -20,8 +20,8 @@
 //   .meter__legend-dot     colored swatch (inherits --meter-bar-bg)
 //
 // === Modifiers ===========================================================
-//   .meter--sm                          compact track
-//   .meter--lg                          label-friendly track
+//   .meter--compact                          compact track
+//   .meter--roomy                          label-friendly track
 //   .meter__bar--primary                default intent (explicit form)
 //   .meter__bar--success
 //   .meter__bar--warning
@@ -49,61 +49,37 @@
 // space exposes the track bg (the "unused" portion).
 //
 // === Radius ==============================================================
-// .meter__track opts out of --st-radius by default. Pill matches
-// progress + badge + slider (V3.md §3.4). Set --st-meter-radius at a
-// parent scope (e.g. the brutalist preset wrapper) to flatten in bulk,
-// or --meter-radius on the component itself for a one-off.
+// .meter__track is a pill by default (radius(full)), matching progress +
+// badge + slider (V3.md §3.4). Set --meter-radius at a parent scope (e.g.
+// the brutalist preset wrapper) to flatten in bulk, or on the component
+// itself for a one-off.
 
 .meter {
-  // === Geometry ========================================================
-  --meter-height:                       calc(0.5rem * var(--st-density));
-  --meter-radius:                       var(--st-meter-radius, 9999px);
-  --meter-margin-bottom:                0;
-  --meter-header-gap:                   0.25rem;
-  --meter-segment-gap:                  1px;
-
-  // === Track ===========================================================
-  --meter-bg:                           var(--st-neutral);
-
-  // === Bar =============================================================
-  --meter-bar-bg:                       var(--st-primary);
-
-  // === Caption =========================================================
-  --meter-label-font-size:              0.875rem;
-  --meter-label-font-weight:            500;
-  --meter-label-color:                  var(--st-foreground);
-  --meter-value-color:                  var(--st-muted-foreground);
-
-  // === Legend ==========================================================
-  --meter-legend-row-gap:               0.5rem;
-  --meter-legend-item-gap:              0.875rem;
-  --meter-legend-dot-size:              0.5rem;
-  --meter-legend-font-size:             0.75rem;
-  --meter-legend-color:                 var(--st-muted-foreground);
-
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing declared on the
+  // root, so a scope / inline retunes any of them; the children read them
+  // with the same defaults.
   // Grid: label left, value right, track spanning both. Legend (when
   // present) tacks onto a third row that also spans the grid.
   display: grid;
   grid-template-columns: 1fr auto;
-  column-gap: 1rem;
-  row-gap: var(--meter-header-gap);
-  margin-bottom: var(--meter-margin-bottom);
+  column-gap: #{space(4)};
+  row-gap: var(--meter-header-gap, #{space(1)});
 }
 
 // === Caption =============================================================
 
 .meter__label {
   grid-column: 1;
-  font-size: var(--meter-label-font-size);
-  font-weight: var(--meter-label-font-weight);
-  color: var(--meter-label-color);
+  font-size: var(--meter-label-font-size, #{text(sm)});
+  font-weight: var(--meter-label-font-weight, #{weight(medium)});
+  color: var(--meter-label-color, var(--st-foreground));
   line-height: 1.4;
 }
 
 .meter__value {
   grid-column: 2;
-  font-size: var(--meter-label-font-size);
-  color: var(--meter-value-color);
+  font-size: var(--meter-label-font-size, #{text(sm)});
+  color: var(--meter-value-color, var(--st-muted-foreground));
   line-height: 1.4;
 }
 
@@ -115,10 +91,10 @@
 .meter__track {
   grid-column: 1 / -1;
   display: flex;
-  gap: var(--meter-segment-gap);
-  height: var(--meter-height);
-  background-color: var(--meter-bg);
-  border-radius: var(--meter-radius);
+  gap: var(--meter-segment-gap, 1px);
+  height: var(--meter-height, #{space(2)});
+  background-color: var(--meter-bg, var(--st-neutral));
+  border-radius: var(--meter-radius, #{radius(full)});
   overflow: hidden;
 }
 
@@ -132,7 +108,7 @@
   display: block;
   width: 0;
   height: 100%;
-  background-color: var(--meter-bar-bg);
+  background-color: var(--meter-bar-bg, var(--st-primary));
   flex-shrink: 0;
 }
 
@@ -154,11 +130,11 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  column-gap: var(--meter-legend-item-gap);
-  row-gap: 0.25rem;
-  margin-top: var(--meter-legend-row-gap);
-  font-size: var(--meter-legend-font-size);
-  color: var(--meter-legend-color);
+  column-gap: var(--meter-legend-item-gap, #{space(3.5)});
+  row-gap: #{space(1)};
+  margin-block-start: var(--meter-legend-row-gap, #{space(2)});
+  font-size: var(--meter-legend-font-size, #{text(xs)});
+  color: var(--meter-legend-color, var(--st-muted-foreground));
   line-height: 1.4;
 }
 
@@ -170,10 +146,10 @@
 
 .meter__legend-dot {
   display: inline-block;
-  width: var(--meter-legend-dot-size);
-  height: var(--meter-legend-dot-size);
-  background-color: var(--meter-bar-bg);
-  border-radius: 9999px;
+  width: var(--meter-legend-dot-size, #{space(2)});
+  height: var(--meter-legend-dot-size, #{space(2)});
+  background-color: var(--meter-bar-bg, var(--st-primary));
+  border-radius: #{radius(full)};
   flex-shrink: 0;
 }
 
@@ -188,8 +164,8 @@
 // (4 / 8 / 16 at default density) and the broader sm / default / lg
 // family across the component set.
 
-.meter--sm { --meter-height: calc(0.25rem * var(--st-density)); } //  4
-.meter--lg { --meter-height: calc(1rem    * var(--st-density)); } // 16
+.meter--compact { --meter-height: #{space(1)}; } // 0.25rem
+.meter--roomy { --meter-height: #{space(4)}; } // 1rem
 
 // Block — fills its container width per SPEC §9 escape ramp.
 .meter--block { width: 100%; }

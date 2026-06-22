@@ -27,10 +27,10 @@
 // Height + concentric corners (V3.md §3.4):
 //   outer rail height — --tabs-list-height (calc-derived to track .btn
 //                       cadence + density delta). 36 px at density 1.
-//   rail padding      — --tabs-list-padding (default 0.25rem = 4 raw)
+//   rail padding      — --tabs-list-padding-inline/-block (default 0.25rem = 4 raw)
 //   inner trigger     — flex stretch + height: 100% so the box model
 //                       computes (height - 2*padding) automatically.
-//                       28 raw default → matches .btn--sm cadence.
+//                       28 raw default → matches .btn--compact cadence.
 //   inner radius      — outer radius - padding (concentric).
 //
 // Vertical mode: list flips to a column on the inline-start side; panel
@@ -38,40 +38,13 @@
 // position via logical properties (RTL-safe).
 
 .tabs {
-  --tabs-orientation: row;
-  --tabs-gap: 0.75rem; // list ↔ panel
-
-  --tabs-list-radius: var(--st-tabs-radius, var(--st-radius));
-  --tabs-list-height: calc(
-    2.25rem + 0.75rem * (var(--st-density) - 1)
-  ); // 36 @ 1 → 39 @ 1.25
-  --tabs-list-padding: 0.125rem; // 2 raw
-  --tabs-list-gap: 0.125rem; // 2 raw — trigger ↔ trigger
-  --tabs-list-bg: var(--st-surface-2);
-  --tabs-list-color: var(--st-muted-foreground);
-
-  --tabs-trigger-radius: calc(
-    var(--tabs-list-radius) - var(--tabs-list-padding)
-  );
-  --tabs-trigger-padding-x: calc(0.75rem * var(--st-density));
-  --tabs-trigger-gap: 0.5rem; // icon ↔ label
-  --tabs-trigger-font-size: 0.875rem;
-  --tabs-trigger-font-weight: 500;
-  --tabs-trigger-hover-color: var(--st-foreground);
-  // Active paint mirrors .toggle / .toggle-group active member: highlight
-  // bg + highlight-foreground color + border matches bg for a clean solid
-  // chip with no visible rim. Cohesive with the segmented-control family
-  // and reads cleanly in both themes without a drop shadow.
-  --tabs-trigger-active-bg: var(--st-highlight);
-  --tabs-trigger-active-color: var(--st-highlight-foreground);
-  --tabs-trigger-active-border-color: var(--tabs-trigger-active-bg);
-
-  --tabs-ring: var(--st-ring);
-  --tabs-transition-duration: 0.15s;
-
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing on the root, so a
+  // scope / inline retunes any of them; the children (__list / __trigger /
+  // __panel) read them with the same defaults. List radius + padding are read
+  // again in the concentric trigger-radius calc, so their defaults repeat.
   display: flex;
   flex-direction: column;
-  gap: var(--tabs-gap);
+  gap: var(--tabs-gap, #{space(3)});
 }
 
 // === List (the muted rail) =============================================
@@ -79,13 +52,13 @@
   display: inline-flex;
   align-items: stretch;
   align-self: flex-start; // pill hugs content, doesn't stretch
-  flex-direction: var(--tabs-orientation);
-  height: var(--tabs-list-height);
-  padding: calc(var(--tabs-list-padding) * var(--st-density));
-  gap: calc(var(--tabs-list-gap) * var(--st-density));
-  background: var(--tabs-list-bg);
-  border-radius: var(--tabs-list-radius);
-  color: var(--tabs-list-color);
+  flex-direction: var(--tabs-orientation, row);
+  height: var(--tabs-list-height, #{space(9)});
+  padding: var(--tabs-list-padding-block, #{space(0.5)}) var(--tabs-list-padding-inline, #{space(0.5)});
+  gap: var(--tabs-list-gap, #{space(0.5)});
+  background: var(--tabs-list-bg, var(--st-surface-2));
+  border-radius: var(--tabs-list-radius, #{radius(md)});
+  color: var(--tabs-list-color, var(--st-muted-foreground));
 }
 
 // === Trigger ============================================================
@@ -103,32 +76,34 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--tabs-trigger-gap);
+  gap: var(--tabs-trigger-gap, #{space(2)});
   height: 100%; // fills rail's inner area via box model
-  padding: 0 var(--tabs-trigger-padding-x);
+  padding-block: 0;
+  padding-inline: var(--tabs-trigger-padding-inline, #{space(3)});
   color: inherit; // inherits rail's muted-foreground
-  font-size: var(--tabs-trigger-font-size);
-  font-weight: var(--tabs-trigger-font-weight);
+  font-size: var(--tabs-trigger-font-size, #{text(sm)});
+  font-weight: var(--tabs-trigger-font-weight, #{weight(medium)});
   line-height: 1;
-  border-radius: var(--tabs-trigger-radius);
+  border-radius: var(--tabs-trigger-radius,
+    calc(var(--tabs-list-radius, #{radius(md)}) - var(--tabs-list-padding-inline, #{space(0.5)})));
   text-decoration: none;
   transition:
-    background-color var(--tabs-transition-duration) ease,
-    color var(--tabs-transition-duration) ease,
-    border-color var(--tabs-transition-duration) ease;
+    background-color var(--tabs-transition-duration, 0.15s) ease,
+    color var(--tabs-transition-duration, 0.15s) ease,
+    border-color var(--tabs-transition-duration, 0.15s) ease;
 
   &:hover:not([data-state="active"]) {
-    color: var(--tabs-trigger-hover-color);
+    color: var(--tabs-trigger-color-hover, var(--st-foreground));
   }
 
   &[data-state="active"] {
-    background: var(--tabs-trigger-active-bg);
-    color: var(--tabs-trigger-active-color);
-    border-color: var(--tabs-trigger-active-border-color);
+    background: var(--tabs-trigger-bg-active, var(--st-highlight));
+    color: var(--tabs-trigger-color-active, var(--st-highlight-foreground));
+    border-color: var(--tabs-trigger-border-color-active, var(--tabs-trigger-bg-active, var(--st-highlight)));
   }
 
   &:focus-visible {
-    outline: 2px solid var(--tabs-ring);
+    outline: 2px solid var(--tabs-ring, var(--st-ring));
     outline-offset: 2px;
   }
 
@@ -154,9 +129,9 @@
   }
 
   &:focus-visible {
-    outline: 2px solid var(--tabs-ring);
+    outline: 2px solid var(--tabs-ring, var(--st-ring));
     outline-offset: 2px;
-    border-radius: var(--st-radius-sm);
+    border-radius: #{radius(sm)};
   }
 }
 
@@ -183,7 +158,7 @@
 // Linear / shadcn sidebar rhythm).
 .tabs--vertical .tabs__trigger {
   width: 100%;
-  height: calc(2rem * var(--st-density));
+  height: #{space(8)};   // 2rem, menu-list cadence
   justify-content: flex-start;
   text-align: start;
 }

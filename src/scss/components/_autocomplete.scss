@@ -9,7 +9,7 @@
 //   <input class="autocomplete" role="combobox" aria-autocomplete="list"
 //          aria-expanded="false" aria-controls="…">
 //   <ul class="autocomplete__popup" role="listbox" hidden>
-//     <li class="autocomplete__option" role="option" data-value="…">…</li>
+//     <li class="autocomplete__item" role="option" data-value="…">…</li>
 //
 // Options can be authored two ways:
 //   1. A <datalist id="…"> referenced via list="…" on the input. JS reads
@@ -23,7 +23,7 @@
 
 // === Popup =============================================================
 .autocomplete__popup {
-  @include popup-base;
+  @include menu-surface('autocomplete');
   position: absolute;
   top: 0;
   left: 0;
@@ -40,8 +40,8 @@
   }
 }
 
-.autocomplete__option {
-  @include popup-item;
+.autocomplete__item {
+  @include menu-item('autocomplete');
   // Search-highlight markup splits the label across multiple inline
   // nodes (`Foo<mark>bar</mark>baz`); bare text nodes become anonymous
   // flex items, so a non-zero gap would paint visible whitespace
@@ -50,36 +50,36 @@
 
   &:hover,
   &.is-highlighted {
-    @include popup-item-hover;
+    @include menu-item-hover('autocomplete');
   }
 
-  // Search match highlight — JS wraps the matching substring in <mark>.
-  // Subtle, picks up the surrounding row color.
+  // Search match highlight — JS wraps each matching run in <mark>. Just weight,
+  // no fill: a box per matched character reads noisy in a list.
   mark {
-    background: color-mix(in oklch, currentColor 18%, transparent);
+    background: none;
     color: inherit;
-    border-radius: 2px;
+    font-weight: var(--autocomplete-mark-font-weight, #{weight(semibold)});
   }
 }
 
 .autocomplete__empty {
-  @include popup-item;
-  @include popup-item-disabled;
+  @include menu-item('autocomplete');
+  @include menu-item-disabled('autocomplete');
   cursor: default;
   font-style: italic;
 }
 
 // === Sizes =============================================================
-.autocomplete--sm {
-  --autocomplete-radius:    var(--st-input-radius, var(--st-radius-sm));
-  --autocomplete-height:    calc(1.75rem + 0.5rem * (var(--st-density) - 1));
-  --autocomplete-padding-x: calc(0.5rem * var(--st-density));
-  --autocomplete-font-size: 0.8125rem;
+.autocomplete--compact {
+  --autocomplete-radius:         #{radius(sm)};
+  --autocomplete-height:         #{space(7)};   // 1.75rem
+  --autocomplete-padding-inline: #{space(2)};   // 0.5rem
+  --autocomplete-font-size:      0.8125rem;     // 13px, off-scale
 }
 
-.autocomplete--lg {
-  --autocomplete-radius:    var(--st-input-radius, var(--st-radius-lg));
-  --autocomplete-height:    calc(2.75rem + 0.875rem * (var(--st-density) - 1));
-  --autocomplete-padding-x: calc(0.875rem * var(--st-density));
-  --autocomplete-font-size: 1rem;
+.autocomplete--roomy {
+  --autocomplete-radius:         #{radius(lg)};
+  --autocomplete-height:         #{space(11)};  // 2.75rem
+  --autocomplete-padding-inline: #{space(3.5)}; // 0.875rem
+  --autocomplete-font-size:      #{text(base)};
 }

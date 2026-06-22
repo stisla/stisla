@@ -29,7 +29,7 @@
   color: var(--st-muted-foreground);
 }
 
-// Style the selector button to mirror .btn--sm.btn--neutral. The shadow
+// Style the selector button to mirror .btn--compact.btn--neutral. The shadow
 // DOM blocks .btn classes from reaching it, so the rules are inlined.
 .input[type="file"]::file-selector-button {
   margin-block-start: 0.4063rem;
@@ -43,7 +43,7 @@
   background: var(--st-neutral);
   border: var(--st-border-width) solid
     color-mix(in oklch, var(--st-neutral) 85%, var(--st-muted-foreground));
-  border-radius: calc(var(--input-radius) - 0.25rem);
+  border-radius: calc(var(--input-radius, #{radius(md)}) - 0.25rem);
   cursor: pointer;
   transition: background-color 0.12s ease;
 }
@@ -114,33 +114,32 @@
 }
 .input[type="color"]::-webkit-color-swatch {
   border: 0;
-  border-radius: calc(var(--input-radius) - 0.25rem);
+  border-radius: calc(var(--input-radius, #{radius(md)}) - 0.25rem);
 }
 .input[type="color"]::-moz-color-swatch {
   border: 0;
-  border-radius: calc(var(--input-radius) - 0.25rem);
+  border-radius: calc(var(--input-radius, #{radius(md)}) - 0.25rem);
 }
 
 // === Sizes ==============================================================
-// Each size pulls its own --st-radius-{sm,lg} so corners scale
-// proportionally with --st-radius. --input-height retunes per size with
-// the density-delta formula tracking each size's own --input-padding-x.
-.input--sm {
-  --input-radius:    var(--st-input-radius, var(--st-radius-sm));
-  --input-height:    calc(1.75rem + 0.5rem * (var(--st-density) - 1));   // 28 @ 1 → 30 @ 1.25
-  --input-padding-x: calc(0.5rem * var(--st-density));                   //  8
-  --input-font-size: 0.8125rem;
+// Each size retunes radius, height, and inline padding as space()/radius()
+// steps, so a denser scope (smaller --st-spacing) scales them proportionally.
+.input--compact {
+  --input-radius:         #{radius(sm)};
+  --input-height:         #{space(7)};   // 1.75rem
+  --input-padding-inline: #{space(2)};   // 0.5rem
+  --input-font-size:      0.8125rem;     // 13px, intentionally off-scale
   // See form-field-base — iOS auto-zoom guard for sub-16px fields.
   @media (pointer: coarse) {
-    --input-font-size: 1rem;
+    --input-font-size: #{text(base)};
   }
 }
 
-.input--lg {
-  --input-radius:    var(--st-input-radius, var(--st-radius-lg));
-  --input-height:    calc(2.75rem + 0.875rem * (var(--st-density) - 1));  // 44 @ 1 → 46.2 @ 1.25
-  --input-padding-x: calc(0.875rem * var(--st-density));                  // 14
-  --input-font-size: 1rem;
+.input--roomy {
+  --input-radius:         #{radius(lg)};
+  --input-height:         #{space(11)};  // 2.75rem
+  --input-padding-inline: #{space(3.5)}; // 0.875rem
+  --input-font-size:      #{text(base)};
 }
 
 // === Plaintext ==========================================================
@@ -156,10 +155,10 @@
   display: inline-flex;
   align-items: center;
   width: 100%;
-  height: calc(2.25rem + 0.625rem * (var(--st-density) - 1));
+  height: #{space(9)};   // 2.25rem — aligns with sibling .input fields
   padding: 0;
   font-family: inherit;
-  font-size: 0.875rem;
+  font-size: #{text(sm)};
   line-height: 1.2;
   color: var(--st-foreground);
   background: transparent;

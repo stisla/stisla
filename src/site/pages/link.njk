@@ -27,7 +27,7 @@
 
   <section>
     <h2>Retune color</h2>
-    <p>Override <code>--link-color</code> on the element, on a parent scope, or on <code>:root</code>. The hover color derives from <code>--link-color</code> by default, so a single override moves both states. Set <code>--link-hover-color</code> directly to break that derivation.</p>
+    <p>Override <code>--link-color</code> on the element, on a parent scope, or on <code>:root</code>. The hover color derives from <code>--link-color</code> by default, so a single override moves both states. Set <code>--link-color-hover</code> directly to break that derivation.</p>
     {% call ui.demo() %}
     <p>
       Pair tone with intent.
@@ -40,7 +40,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Four variables retune <code>.link</code>. The hover color resolves once at component definition, so overriding <code>--link-color</code> auto-moves <code>--link-hover-color</code>. Setting <code>--link-hover-color</code> after that breaks the link and pins the hover to a literal value.</p>
+    <p>These variables retune <code>.link</code>. The hover color resolves once at component definition, so overriding <code>--link-color</code> auto-moves <code>--link-color-hover</code>. Setting <code>--link-color-hover</code> after that breaks the link and pins the hover to a literal value.</p>
     <table>
       <thead>
         <tr>
@@ -54,6 +54,10 @@
           <td>Resting text color and the source for the hover mix.</td>
         </tr>
         <tr>
+          <td><code>--link-gap</code></td>
+          <td>Space between the label and a leading or trailing icon.</td>
+        </tr>
+        <tr>
           <td><code>--link-decoration-offset</code></td>
           <td>Distance between the baseline and the underline.</td>
         </tr>
@@ -62,7 +66,7 @@
           <td>Underline weight.</td>
         </tr>
         <tr>
-          <td><code>--link-hover-color</code></td>
+          <td><code>--link-color-hover</code></td>
           <td>Hover text color. Derives from <code>--link-color</code> by default; override directly to pin a literal value.</td>
         </tr>
       </tbody>

@@ -18,27 +18,20 @@
 //   with desc    → grid layout, 1rem both axes, no min-height clamp
 
 .alert {
-  --alert-radius:         var(--st-alert-radius, var(--st-radius));
-  --alert-padding-y:      calc(0.625rem * var(--st-density));
-  --alert-padding-x:      calc(1rem     * var(--st-density));
-  // Defaults are transparent — tone modifier supplies visible chrome.
-  --alert-bg:             transparent;
-  --alert-border-color:   transparent;
-  --alert-color:          var(--st-foreground);
-  --alert-icon-color:     var(--st-muted-foreground);
-  // Link defaults to primary so the inline link still reads as a link
-  // on a bare or neutral alert. Intent modifiers override to the intent.
-  --alert-link-color:     var(--st-primary);
-
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing on the base, so a
+  // scope / inline retunes any of these. Tone modifiers supply visible chrome
+  // (bg / border / icon / link). --alert-icon-color and --alert-link-color are
+  // read by child rules, so their defaults repeat there.
   display: flex;
   align-items: center;
-  gap: 0.625rem;
-  min-height: calc(2.75rem * var(--st-density));
-  padding: var(--alert-padding-y) var(--alert-padding-x);
-  color: var(--alert-color);
-  background: var(--alert-bg);
-  border: var(--st-border-width) solid var(--alert-border-color);
-  border-radius: var(--alert-radius);
+  gap: #{space(2.5)};
+  min-height: #{space(11)};   // 2.75rem
+  padding-block: var(--alert-padding-block, #{space(2.5)});   // 0.625rem
+  padding-inline: var(--alert-padding-inline, #{space(4)});   // 1rem
+  color: var(--alert-color, var(--st-foreground));
+  background: var(--alert-bg, transparent);
+  border: var(--alert-border-width, var(--st-border-width)) solid var(--alert-border-color, transparent);
+  border-radius: var(--alert-radius, #{radius(md)});
 }
 
 // Leading icon: any direct <svg> or <i> child. Same convention as .btn.
@@ -46,7 +39,7 @@
   width: 1.125rem;
   height: 1.125rem;
   flex-shrink: 0;
-  color: var(--alert-icon-color);
+  color: var(--alert-icon-color, var(--st-muted-foreground));
 }
 
 // === Parts ============================================================
@@ -78,8 +71,8 @@
 // the intent color on tinted alerts. Keeps the link affordance readable
 // regardless of which tone the alert carries.
 .alert__link {
-  color: var(--alert-link-color);
-  font-weight: 500;
+  color: var(--alert-link-color, var(--st-primary));
+  font-weight: #{weight(medium)};
   text-decoration: underline;
   text-underline-offset: 2px;
 }
@@ -88,11 +81,11 @@
 // Grid layout: icon (auto) | heading + description (1fr) | action (auto).
 // Icon aligns with the heading row; action centers across both rows.
 .alert:has(.alert__description) {
-  --alert-padding-y: calc(1rem * var(--st-density));
+  --alert-padding-block: #{space(4)};   // 1rem
 
   display: grid;
   grid-template-columns: auto 1fr auto;
-  column-gap: 0.625rem;
+  column-gap: #{space(2.5)};
   row-gap: 0;
   align-items: start;
   min-height: 0;

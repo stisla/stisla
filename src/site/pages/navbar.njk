@@ -115,11 +115,11 @@
       </thead>
       <tbody>
         <tr>
-          <td><code>--navbar-padding-y</code></td>
+          <td><code>--navbar-padding-block</code></td>
           <td>Vertical padding inside the bar</td>
         </tr>
         <tr>
-          <td><code>--navbar-padding-x</code></td>
+          <td><code>--navbar-padding-inline</code></td>
           <td>Horizontal padding inside the bar; zeroed when a container child is present</td>
         </tr>
         <tr>
@@ -148,14 +148,14 @@
       <tbody>
         <tr>
           <td><code>--navbar-button-height</code></td>
-          <td>Hard height of <code>.navbar__brand</code> and <code>.navbar__button</code>. Bakes in the density-aware growth formula</td>
+          <td>Hard height of <code>.navbar__brand</code> and <code>.navbar__button</code></td>
         </tr>
         <tr>
-          <td><code>--navbar-button-padding-x</code></td>
+          <td><code>--navbar-button-padding-inline</code></td>
           <td>Horizontal chip padding</td>
         </tr>
         <tr>
-          <td><code>--navbar-brand-padding-x</code></td>
+          <td><code>--navbar-brand-padding-inline</code></td>
           <td>Horizontal padding on <code>.navbar__brand</code>; defaults to the button chip's inset so brand text sits on the same x-grid as button text. Override to <code>0</code> for a flush brand.</td>
         </tr>
         <tr>
@@ -171,19 +171,19 @@
           <td>Rest text color</td>
         </tr>
         <tr>
-          <td><code>--navbar-button-hover-bg</code></td>
+          <td><code>--navbar-button-bg-hover</code></td>
           <td>Hover + focus chip fill</td>
         </tr>
         <tr>
-          <td><code>--navbar-button-hover-color</code></td>
+          <td><code>--navbar-button-color-hover</code></td>
           <td>Hover + focus text color</td>
         </tr>
         <tr>
-          <td><code>--navbar-button-active-bg</code></td>
+          <td><code>--navbar-button-bg-active</code></td>
           <td>Current-page chip fill (<code>data-state="active"</code>)</td>
         </tr>
         <tr>
-          <td><code>--navbar-button-active-color</code></td>
+          <td><code>--navbar-button-color-active</code></td>
           <td>Current-page text color</td>
         </tr>
       </tbody>
@@ -200,11 +200,11 @@
       <tbody>
         <tr>
           <td><code>--navbar-toggle-size</code></td>
-          <td>Square hamburger button size; multiplied by <code>--st-density</code></td>
+          <td>Square hamburger button size</td>
         </tr>
         <tr>
-          <td><code>--navbar-transition</code></td>
-          <td>Chip + toggle hover transition</td>
+          <td><code>--navbar-transition-duration</code></td>
+          <td>Chip + toggle hover transition speed</td>
         </tr>
       </tbody>
     </table>

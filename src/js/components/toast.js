@@ -405,7 +405,7 @@ function buildToastNode(opts) {
     action.className = "toast__action";
     const btn = document.createElement("button");
     btn.type = "button";
-    btn.className = "btn btn--sm btn--ghost btn--neutral btn--flush-start";
+    btn.className = "btn btn--compact btn--ghost btn--neutral btn--flush-start";
     btn.textContent = opts.action.label;
     btn.addEventListener("click", (e) => {
       try {
@@ -442,7 +442,7 @@ function buildLucideIcon(name) {
 
 function buildSpinnerNode() {
   const s = document.createElement("span");
-  s.className = "spinner spinner--sm";
+  s.className = "spinner spinner--compact";
   s.setAttribute("role", "status");
   s.setAttribute("aria-label", "Loading");
   return s;

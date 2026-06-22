@@ -106,30 +106,32 @@ src/js/
 // __subtitle / __text / __link / __image / __overlay). Variants stay
 // flat on the root (.card--flat).
 //
-// Tokens: --st-surface (bg), --st-border, --st-card-radius -> --st-radius-lg
-// (large-surface tier), --st-card-shadow -> --st-shadow,
-// padding × var(--st-density).
+// Tokens (all fallback-default): --card-bg (--st-surface), --card-color
+// (--st-foreground), --card-border-width (--st-border-width) +
+// --card-border-color (--st-border), --card-radius (radius(lg)),
+// --card-shadow (shadow(md)), --card-padding-inline / -block (space(5)).
     {% endcall %}
 
-    <h3>2. Component-scoped variables on the root</h3>
-    <p>Every visual decision goes through a <code>--&lt;block&gt;-*</code> variable declared on the root selector. The fallback chain reads <code>var(--st-&lt;name&gt;-*, var(--st-tier))</code> where applicable so a user can override globally at <code>:root</code> or per-instance via the local variable.</p>
+    <h3>2. Fallback-default variables</h3>
+    <p>Every visual decision reads a <code>--&lt;block&gt;-*</code> variable whose fallback default chains to a scale or theme token. Nothing is declared on the root, so a consumer can set the variable on the element, a wrapper scope, or <code>:root</code> and the cascade wins. Override <code>--st-radius-lg</code> to retune every large surface at once, or <code>--card-radius</code> to retune just cards.</p>
     {% call ui.code(lang='scss', title='_card.scss') %}
 .card {
-  --card-radius:  var(--st-card-radius, var(--st-radius-lg));
-  --card-padding: calc(1.25rem * var(--st-density));
-  --card-shadow:  var(--st-card-shadow, var(--st-shadow));
-  --card-bg:      var(--st-surface);
-  --card-color:   var(--st-foreground);
-  --card-border:  var(--st-border-width) solid var(--st-border);
-  ...
+  display: flex;
+  flex-direction: column;
+  color: var(--card-color, var(--st-foreground));
+  background: var(--card-bg, var(--st-surface));
+  border: var(--card-border-width, var(--st-border-width))
+          solid var(--card-border-color, var(--st-border));
+  border-radius: var(--card-radius, radius(lg));
+  box-shadow: var(--card-shadow, shadow(md));
 }
     {% endcall %}
-    <p>The variable surface comes first so a reader can scan the customization knobs without parsing rules. Layout properties (<code>display</code>, <code>position</code>, <code>padding</code>, ...) come after.</p>
+    <p>Reading each knob through a <code>var()</code> fallback is what keeps it overridable from an ancestor scope. Declaring <code>--card-radius</code> on <code>.card</code> instead would freeze its value at that element and block any wrapper override.</p>
 
     <h3>3. Parts via BEM element selectors</h3>
     <p>Every sub-element gets a <code>.&lt;block&gt;__&lt;element&gt;</code> class. No bare-element styling, no nested selectors that reach into specific HTML tags. Parts stay flat on the root&rsquo;s descendants.</p>
     {% call ui.code(lang='scss') %}
-.card__body { display: flex; flex-direction: column; gap: 0.5rem; padding: var(--card-padding); }
+.card__body { display: flex; flex-direction: column; gap: 0.5rem; padding: var(--card-padding-block, space(5)) var(--card-padding-inline, space(5)); }
 .card__header { ... }
 .card__footer { ... }
     {% endcall %}
@@ -188,7 +190,7 @@ import { Dropdown } from './components/dropdown.js';
 // ...
 
 register('dialog', Dialog);
-register('dropdown', Dropdown);
+register('menu', Menu);
 // ...
 
 if (document.readyState === 'loading') {

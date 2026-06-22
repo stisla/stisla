@@ -1,11 +1,11 @@
 // Stisla v3 — spinner.
 //
 // BEM: .spinner (default — border ring) + .spinner--grow (pulsing dot).
-// Sizes compose flat: .spinner--sm / .spinner--lg.
+// Sizes compose flat: .spinner--compact / .spinner--roomy.
 //
 //   <div class="spinner" role="status"><span class="visually-hidden">Loading…</span></div>
 //   <div class="spinner spinner--grow" role="status">…</div>
-//   <div class="spinner spinner--sm" role="status">…</div>
+//   <div class="spinner spinner--compact" role="status">…</div>
 //
 // Color inherits via currentColor — any parent .text-{intent} utility
 // recolors the spinner. Sits inside .btn.is-loading too (the button
@@ -18,22 +18,18 @@
 // border ring is just slow enough to feel intentional.
 
 .spinner {
-  --spinner-size:     1.25rem;
-  --spinner-width:    2px;
-  --spinner-duration: 0.75s;
-
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2). Size rides --st-spacing
+  // via space() so a denser scope compresses spinners alongside controls
+  // (replaces the old --st-density multiplier).
   display: inline-block;
-  // Density multiplier matches .btn / .input / .icon-box — a
-  // compact dashboard compresses spinners too instead of leaving them
-  // floating at default size next to shrunk controls.
-  width:  calc(var(--spinner-size) * var(--st-density));
-  height: calc(var(--spinner-size) * var(--st-density));
+  width:  var(--spinner-size, #{space(5)});    // 1.25rem
+  height: var(--spinner-size, #{space(5)});
   vertical-align: -0.125em;
   color: inherit;
-  border: var(--spinner-width) solid currentColor;
+  border: var(--spinner-width, 2px) solid currentColor;
   border-right-color: transparent;
   border-radius: 50%;
-  animation: st-spinner-border var(--spinner-duration) linear infinite;
+  animation: st-spinner-border var(--spinner-duration, 0.75s) linear infinite;
 }
 
 // === Grow modifier ====================================================
@@ -49,12 +45,12 @@
 }
 
 // === Sizes ============================================================
-.spinner--sm {
-  --spinner-size:  0.875rem;
+.spinner--compact {
+  --spinner-size:  #{space(3.5)};   // 0.875rem
   --spinner-width: 1.5px;
 }
-.spinner--lg {
-  --spinner-size:  2rem;
+.spinner--roomy {
+  --spinner-size:  #{space(8)};     // 2rem
   --spinner-width: 3px;
 }
 

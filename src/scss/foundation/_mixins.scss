@@ -51,49 +51,45 @@
 // textarea, file/color/date pickers on <input>) layer on at the call site.
 //
 // $prefix selects the public custom-property namespace ("input", "select",
-// "textarea"). The --st-input-radius cross-field token survives as a fallback
-// so a single root override still retunes every field type.
+// "textarea"). Field radius chains --<prefix>-radius → the radius scale
+// directly (no family middle token). To retune all fields at once, override
+// the radius scale step they default to (--st-radius-md); for one field type,
+// set its --<prefix>-radius.
 @mixin form-field-base($prefix) {
-  --#{$prefix}-radius:      var(--st-input-radius, var(--st-radius));
-  --#{$prefix}-height:      calc(2.25rem + 0.625rem * (var(--st-density) - 1));   // 36 @ 1 → 38.5 @ 1.25
-  --#{$prefix}-padding-x:   calc(0.625rem * var(--st-density));   // 10
-  --#{$prefix}-font-size:   0.875rem;
-  // iOS Safari zooms the viewport when a focused field's computed font-size
-  // is below 16px and never zooms back out. Bump touch devices to 1rem so
-  // focus doesn't trip the zoom; desktop keeps the tighter 14px.
-  @media (pointer: coarse) {
-    --#{$prefix}-font-size: 1rem;
-  }
-  --#{$prefix}-bg:          var(--st-surface);
-  --#{$prefix}-color:       var(--st-foreground);
-  --#{$prefix}-border:      var(--st-border);
-  --#{$prefix}-placeholder: var(--st-muted-foreground);
-
+  // Every knob reads var(--<prefix>-x, <default>) so a scope, the size
+  // modifiers, or an inline style can retune it — nothing is declared on the
+  // field itself (V3-ARCHITECTURE.md §2). Defaults repeat at the few child
+  // read sites in the component files (input swatches, select placeholder /
+  // min-height, textarea min-height).
   display: block;
   width: 100%;
-  // Rigid shape. Density grows height by the same delta as the width
-  // grows from padding-x (`2 × default-padding-x × (density - 1)`), so
-  // both axes scale proportionally. Single-line — padding-block: 0 lets
-  // the UA's native vertical centering handle the text. Multi-line
-  // consumers (textarea, multi-line selects) opt out at the call site.
-  height: var(--#{$prefix}-height);
-  padding: 0 var(--#{$prefix}-padding-x);
+  // Rigid single-line shape. Height + inline padding are space() multiples
+  // (ride --st-spacing). padding-block: 0 lets the UA center the text;
+  // multi-line consumers restore padding-block at the call site.
+  height: var(--#{$prefix}-height, #{space(9)});
+  padding-block: 0;
+  padding-inline: var(--#{$prefix}-padding-inline, #{space(2.5)});
   font-family: inherit;
-  font-size: var(--#{$prefix}-font-size);
-  font-weight: 400;
+  font-size: var(--#{$prefix}-font-size, #{text(sm)});
+  // iOS Safari zooms when a focused field's font-size < 16px and never
+  // zooms back. Bump touch devices to 1rem.
+  @media (pointer: coarse) {
+    font-size: var(--#{$prefix}-font-size, #{text(base)});
+  }
+  font-weight: #{weight(normal)};
   line-height: 1.2;
-  color: var(--#{$prefix}-color);
-  background: var(--#{$prefix}-bg);
-  border: var(--st-border-width) solid var(--#{$prefix}-border);
-  border-radius: var(--#{$prefix}-radius);
+  color: var(--#{$prefix}-color, var(--st-foreground));
+  background: var(--#{$prefix}-bg, var(--st-surface));
+  border: var(--#{$prefix}-border-width, var(--st-border-width)) solid var(--#{$prefix}-border-color, var(--st-border));
+  border-radius: var(--#{$prefix}-radius, #{radius(md)});
   // Strips UA chrome (search cancel, select chevron, number spinner). Each
   // type that wants an indicator paints it back at the call site.
   appearance: none;
-  transition: border-color .12s ease, box-shadow .12s ease,
-              background-color .12s ease;
+  transition: border-color #{duration(fast)} ease, box-shadow #{duration(fast)} ease,
+              background-color #{duration(fast)} ease;
 
   &::placeholder {
-    color: var(--#{$prefix}-placeholder);
+    color: var(--#{$prefix}-placeholder, var(--st-muted-foreground));
     opacity: 1;
   }
 
@@ -143,92 +139,153 @@
   }
 }
 
-// Popup surface mixins — shared by .dropdown, .select, future .combobox
-// and .autocomplete. Each mixin emits one part of the popup vocabulary
-// (shell, row, header, divider); the call site picks the parts it needs
-// and applies them to its own selectors. Token names use the `--popup-*`
-// namespace by default; consumers can shadow them at any scope to retune
-// per component.
+// Menu surface mixins — the ONE shared recipe for every menu-like floating
+// surface (Base UI overlay anatomy): .menu, .select popup, .combobox /
+// .autocomplete popups. Parameterized by $prefix so each component reads its
+// own --<prefix>-* tokens (same pattern as form-field-base). The set is
+// COMPREHENSIVE — it carries every part (surface, item + states, group-label,
+// separator, icon, indicator, shortcut, danger). Each component @includes only
+// the parts it needs (a select has no shortcut/submenu; a menu uses them).
 //
-// Usage:
-//   .select__popup     { @include popup-base; }
-//   .select__option    { @include popup-item; }
-//   .select__option.is-highlighted { @include popup-item-hover; }
-//   .select__option.is-selected    { @include popup-item-active; }
-//   .select__option[aria-disabled="true"] { @include popup-item-disabled; }
-//   .select__group     { @include popup-header; }
+// Paint vs selector split: the *paint* lives in the mixin; the *state selector*
+// lives at the call site, because state hooks differ per impl — a .menu uses
+// [data-highlighted] / [aria-current], Tom Select uses .is-highlighted /
+// .active / .selected. So each component applies menu-item-hover / -active /
+// -disabled to ITS OWN selectors.
+//
+// Usage (menu):
+//   .menu__popup { @include menu-surface('menu'); position: fixed; … }
+//   .menu__item  { @include menu-item('menu'); }
+//   .menu__item:hover, .menu__item[data-highlighted] { @include menu-item-hover('menu'); }
+// Usage (select):
+//   .select__popup { @include menu-surface('select'); }
+//   .select__item  { @include menu-item('select'); }
+//   .select__item.is-highlighted { @include menu-item-hover('select'); }
+//
+// Fallback-default (§2): nothing declared on the element; --<prefix>-radius +
+// --<prefix>-padding-inline repeat in the item concentric inner-radius calc so
+// a scope override flows to both. Radius / shadow chain straight to the scale
+// (radius(md) / shadow(sm)); theme all surfaces via the scale steps, one via
+// --<prefix>-radius / --<prefix>-shadow.
 
-@mixin popup-base {
-  --popup-radius: var(--st-popup-radius, var(--st-radius));
-  --popup-padding: 0.25rem;
-  --popup-bg: var(--st-surface);
-  --popup-color: var(--st-foreground);
-  --popup-border-color: var(--st-border);
-  --popup-shadow: var(--st-popup-shadow, var(--st-shadow));
-
-  padding: var(--popup-padding);
-  font-size: 0.875rem;
+@mixin menu-surface($prefix) {
+  padding: var(--#{$prefix}-padding-block, #{space(1)}) var(--#{$prefix}-padding-inline, #{space(1)});
+  font-size: var(--#{$prefix}-font-size, #{text(sm)});
   line-height: 1.5;
-  color: var(--popup-color);
-  background: var(--popup-bg);
-  border: var(--st-border-width) solid var(--popup-border-color);
-  border-radius: var(--popup-radius);
-  box-shadow: var(--popup-shadow);
+  color: var(--#{$prefix}-color, var(--st-foreground));
+  background-color: var(--#{$prefix}-bg, var(--st-surface));
+  border: var(--#{$prefix}-border-width, var(--st-border-width)) solid var(--#{$prefix}-border-color, var(--st-border));
+  border-radius: var(--#{$prefix}-radius, #{radius(md)});
+  // Floating popups want the soft lifted shadow (0 4px 12px), not the tight
+  // resting shadow cards use. NB shadow(sm) is currently the *larger* soft one
+  // — the shadow t-shirt scale is non-monotonic (sm=light > md=base); see
+  // V3-ARCHITECTURE §shadow-scale. Override per surface via --<prefix>-shadow,
+  // or all elevations at once via the --st-shadow* scale steps.
+  box-shadow: var(--#{$prefix}-shadow, #{shadow(sm)});
 }
 
-@mixin popup-item {
-  --popup-item-radius: calc(var(--popup-radius, var(--st-radius)) - var(--popup-padding, 0.25rem));
-  --popup-item-padding-y: calc(0.125rem * var(--st-density));
-  --popup-item-padding-x: calc(0.75rem * var(--st-density));
-  --popup-item-min-height: calc(2rem * var(--st-density));
-  --popup-item-gap: 0.5rem;
-
+@mixin menu-item($prefix) {
   display: flex;
   align-items: center;
-  gap: var(--popup-item-gap);
-  min-height: var(--popup-item-min-height);
-  padding: var(--popup-item-padding-y) var(--popup-item-padding-x);
-  color: inherit;
-  background: transparent;
-  border-radius: var(--popup-item-radius);
+  gap: var(--#{$prefix}-item-gap, #{space(2)});
+  width: 100%;
+  min-height: var(--#{$prefix}-item-min-height, #{space(8)});
+  padding: var(--#{$prefix}-item-padding-block, #{space(0.5)}) var(--#{$prefix}-item-padding-inline, #{space(3)});
+  font: inherit;
+  color: var(--#{$prefix}-color, var(--st-foreground));
+  text-align: start;
+  text-decoration: none;
+  background-color: transparent;
+  border: 0;
+  // Concentric inner radius = popup radius − popup gutter. The gutter is now
+  // two axes; use the inline one as the inset basis (equals block by default).
+  border-radius: var(--#{$prefix}-item-radius,
+    calc(var(--#{$prefix}-radius, #{radius(md)}) - var(--#{$prefix}-padding-inline, #{space(1)})));
   cursor: pointer;
   user-select: none;
-  transition: background-color 0.12s ease, color 0.12s ease;
+  transition: background-color #{duration(fast)} ease, color #{duration(fast)} ease;
 
   @media (prefers-reduced-motion: reduce) {
     transition: none;
   }
 }
 
-@mixin popup-item-hover {
-  background: var(--popup-item-bg-hover, var(--st-accent));
-  color: var(--popup-item-color-hover, var(--st-accent-foreground));
+@mixin menu-item-hover($prefix) {
+  color: var(--#{$prefix}-item-color-hover, var(--st-accent-foreground));
+  background-color: var(--#{$prefix}-item-bg-hover, var(--st-accent));
 }
 
-@mixin popup-item-active {
-  background: var(--popup-item-bg-active, var(--st-highlight));
-  color: var(--popup-item-color-active, var(--st-highlight-foreground));
+@mixin menu-item-active($prefix) {
+  color: var(--#{$prefix}-item-color-active, var(--st-highlight-foreground));
+  background-color: var(--#{$prefix}-item-bg-active, var(--st-highlight));
 }
 
-@mixin popup-item-disabled {
-  color: var(--popup-item-color-disabled, var(--st-muted-foreground));
-  background: transparent;
+@mixin menu-item-disabled($prefix) {
+  color: var(--#{$prefix}-item-color-disabled, var(--st-muted-foreground));
+  background-color: transparent;
   pointer-events: none;
 }
 
-@mixin popup-header {
-  --popup-header-padding-y: 0.25rem;
-  --popup-header-padding-x: calc(0.75rem * var(--st-density));
-  --popup-header-font-size: 0.75rem;
-  --popup-header-color: var(--st-muted-foreground);
+// Destructive item — base colour + the soft-danger hover paint.
+@mixin menu-item-danger($prefix) {
+  color: var(--#{$prefix}-item-color-danger, var(--st-danger));
+}
+@mixin menu-item-danger-hover($prefix) {
+  color: var(--#{$prefix}-item-color-danger, var(--st-danger));
+  background-color: var(--#{$prefix}-item-bg-danger-hover,
+    color-mix(in oklch, var(--st-danger) 12%, transparent));
+}
 
-  padding: var(--popup-header-padding-y) var(--popup-header-padding-x);
+// Leading icon slot — pinned size; colour tracks the row's text (`inherit`)
+// so it follows every state (rest / hover / highlight / active / danger)
+// automatically, no per-state recolour rules needed. Set
+// --#{$prefix}-item-icon-color to pin the icon to a fixed colour instead.
+@mixin menu-icon($prefix) {
+  width: var(--#{$prefix}-item-icon-size, 1rem);
+  height: var(--#{$prefix}-item-icon-size, 1rem);
+  flex-shrink: 0;
+  color: var(--#{$prefix}-item-icon-color, inherit);
+}
+
+// Indicator slot — leading check for checkbox/radio items. Footprint always
+// reserved (visibility, not display); call site flips it visible when checked.
+@mixin menu-indicator($prefix) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--#{$prefix}-item-icon-size, 1rem);
+  height: var(--#{$prefix}-item-icon-size, 1rem);
+  flex-shrink: 0;
+  color: inherit;
+  visibility: hidden;
+}
+
+// Trailing keyboard-shortcut chip — auto-margin pins it to the row end.
+@mixin menu-shortcut($prefix) {
+  margin-inline-start: auto;
+  font-size: var(--#{$prefix}-shortcut-font-size, #{text(xs)});
+  color: var(--#{$prefix}-shortcut-color, var(--st-muted-foreground));
+  letter-spacing: 0.02em;
+}
+
+@mixin menu-group-label($prefix) {
+  display: flex;
+  align-items: center;
+  padding: var(--#{$prefix}-group-label-padding-block, #{space(1)}) var(--#{$prefix}-group-label-padding-inline, #{space(3)});
   margin: 0;
-  font-size: var(--popup-header-font-size);
-  font-weight: 600;
-  color: var(--popup-header-color);
+  font-size: var(--#{$prefix}-group-label-font-size, #{text(xs)});
+  font-weight: var(--#{$prefix}-group-label-font-weight, #{weight(semibold)});
+  color: var(--#{$prefix}-group-label-color, var(--st-muted-foreground));
   text-transform: none;
   white-space: nowrap;
+}
+
+@mixin menu-separator($prefix) {
+  height: 0;
+  margin: var(--#{$prefix}-separator-margin-block, #{space(2)}) 0;
+  border: 0;
+  border-top: 1px solid var(--#{$prefix}-separator-color, var(--st-border));
+  opacity: 1;
 }
 
 // Tom Select popup skin — wraps the shared popup-* mixins above to map
@@ -242,18 +299,18 @@
 // Apply at the call site:
 //   .combobox .ts-dropdown { @include ts-popup; }
 @mixin ts-popup {
-  @include popup-base;
+  @include menu-surface('combobox');
   position: absolute;
   top: 100%;
   inset-inline-start: 0;
   z-index: 1030;
   min-width: 100%;
-  margin: 0.5rem 0 0; // matches .dropdown's offset(8)
+  margin: 0.5rem 0 0; // matches .menu's offset(8)
 
   .ts-dropdown-content {
     display: flex;
     flex-direction: column;
-    gap: var(--popup-item-gap, 0.125rem);
+    gap: var(--combobox-item-gap, 0.125rem);
     max-height: 16rem;
     overflow-y: auto;
     padding: 0;
@@ -262,7 +319,7 @@
   .optgroup {
     display: flex;
     flex-direction: column;
-    gap: var(--popup-item-gap, 0.125rem);
+    gap: var(--combobox-item-gap, 0.125rem);
   }
 
   // Hide the empty <option value=""> from the list (authors keep it as
@@ -273,7 +330,7 @@
 
   .option,
   .create {
-    @include popup-item;
+    @include menu-item('combobox');
     // Search-highlight markup splits the label into multiple inline
     // nodes (`Foo<span class="highlight">bar</span>baz`). Inside a flex
     // container, bare text nodes become anonymous flex items, so a
@@ -287,35 +344,35 @@
   .option:hover,
   .option.active,
   .create.active {
-    @include popup-item-hover;
+    @include menu-item-hover('combobox');
   }
 
   .option.selected,
   .option.selected.active,
   .option.selected:hover {
-    @include popup-item-active;
+    @include menu-item-active('combobox');
   }
 
   .option[data-disabled],
   .no-results,
   .spinner {
-    @include popup-item-disabled;
+    @include menu-item-disabled('combobox');
     cursor: default;
   }
 
   .no-results {
     padding:
-      var(--popup-item-padding-y, calc(0.125rem * var(--st-density)))
-      var(--popup-item-padding-x, calc(0.75rem * var(--st-density)));
-    font-size: 0.875rem;
+      var(--combobox-item-padding-block, #{space(0.5)})
+      var(--combobox-item-padding-inline, #{space(3)});
+    font-size: #{text(sm)};
   }
 
   .optgroup-header {
-    @include popup-header;
+    @include menu-group-label('combobox');
   }
 
   .optgroup + .optgroup .optgroup-header {
-    margin-top: 0.5rem;
+    margin-block-start: #{space(2)};
   }
 
   // Search match highlight — Tom Select wraps matched substring in
@@ -335,29 +392,31 @@
 // carries its own glyph. Indeterminate is checkbox-only and lives there too.
 //
 // $prefix selects the public custom-property namespace ("checkbox", "radio").
-// --<prefix>-radius defaults at the call site (0.25rem for checkbox,
-// 50% for radio) so the same mixin produces both shapes.
-@mixin form-check-base($prefix) {
-  --#{$prefix}-bg:             var(--st-surface);
-  --#{$prefix}-border:         var(--st-border);
-  --#{$prefix}-checked-bg:     var(--st-primary);
-  --#{$prefix}-checked-color:  var(--st-primary-foreground);
-
+// $radius is the shape default (radius(xs) square-ish for checkbox, 50%
+// circle for radio), passed in so one mixin makes both shapes. It's read as
+// the fallback of --<prefix>-radius, so a preset scope squares or rounds
+// every box by setting --<prefix>-radius — the old --st-<prefix>-radius
+// mirror is dropped (V3-ARCHITECTURE.md §2).
+@mixin form-check-base($prefix, $radius) {
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing is declared on
+  // the box, so a scope / modifier / inline can retune size, bg, border.
+  // Size defaults to space(4) (1rem) for both checkbox and radio; the
+  // checked fill is read at the call site's :checked rule.
   flex-shrink: 0;
-  width:  var(--#{$prefix}-size);
-  height: var(--#{$prefix}-size);
+  width:  var(--#{$prefix}-size, #{space(4)});
+  height: var(--#{$prefix}-size, #{space(4)});
   margin: 0;
   vertical-align: middle;
-  background-color: var(--#{$prefix}-bg);
+  background-color: var(--#{$prefix}-bg, var(--st-surface));
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
-  border: var(--st-border-width) solid var(--#{$prefix}-border);
-  border-radius: var(--#{$prefix}-radius);
+  border: var(--#{$prefix}-border-width, var(--st-border-width)) solid var(--#{$prefix}-border-color, var(--st-border));
+  border-radius: var(--#{$prefix}-radius, #{$radius});
   appearance: none;
   cursor: pointer;
-  transition: background-color .12s ease, background-position .15s ease,
-              border-color .12s ease, box-shadow .12s ease;
+  transition: background-color #{duration(fast)} ease, background-position 0.15s ease,
+              border-color #{duration(fast)} ease, box-shadow #{duration(fast)} ease;
   print-color-adjust: exact;
 
   &:focus-visible {

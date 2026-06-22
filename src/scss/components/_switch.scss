@@ -3,7 +3,7 @@
 // Track + thumb toggle. The track is the input itself (rounded rect);
 // the thumb is a radial-gradient circle that slides via background-position
 // on :checked. No data: URL for the thumb — geometry lives in component-
-// scoped vars so density and --lg recompute the gradient cleanly.
+// scoped vars so density and --roomy recompute the gradient cleanly.
 //
 // Authoring (matches .checkbox / .radio — primitive input + separate
 // <label>, composed via .field__item):
@@ -31,45 +31,31 @@
 // the role — role just changes the announcement.
 
 .switch {
-  --switch-track-w:     calc(1.75rem  * var(--st-density));            // 28
-  --switch-track-h:     calc(1rem     * var(--st-density));            // 16
-  --switch-thumb:       calc(0.75rem  * var(--st-density));            // 12
-  --switch-inset:       calc(0.125rem * var(--st-density));            //  2
-  --switch-radius:      var(--st-switch-radius, 9999px);
-  --switch-off-bg:      color-mix(in oklch, var(--st-foreground) 25%, transparent);
-  --switch-on-bg:       var(--st-primary);
-  --switch-thumb-color: white;
-  // Thumb shape lives in the paint, not in border-radius — <input> is a
-  // void element so the thumb can't be a pseudo. Default paint is a
-  // radial-gradient with a hard 49%→51% cutoff: a circle inside the
-  // --switch-thumb-sized background box. Swap --st-switch-thumb-paint
-  // to a linear-gradient(color, color) for a solid square (the brutalist
-  // preset uses this so the thumb tracks the flat-cornered track).
-  --switch-thumb-paint: var(
-    --st-switch-thumb-paint,
-    radial-gradient(
-      circle at center,
-      var(--switch-thumb-color) 49%,
-      transparent 51%
-    )
-  );
-
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing declared on the
+  // track, so a scope / inline can retune dims and colours. .switch--roomy sets
+  // the dims as a modifier. Dims are space() multiples (ride --st-spacing).
   flex-shrink: 0;
-  width:  var(--switch-track-w);
-  height: var(--switch-track-h);
+  width:  var(--switch-track-width, #{space(7)});    // 1.75rem
+  height: var(--switch-track-height, #{space(4)});    // 1rem
   margin: 0;
   vertical-align: middle;
   border: var(--st-border-width) solid transparent;
-  border-radius: var(--switch-radius);
-  background-color: var(--switch-off-bg);
-  background-image: var(--switch-thumb-paint);
-  background-size: var(--switch-thumb) var(--switch-thumb);
-  background-position: var(--switch-inset) center;
+  // Pill by default; a preset squares the track by setting --switch-radius.
+  border-radius: var(--switch-radius, #{radius(full)});
+  background-color: var(--switch-off-bg,
+    color-mix(in oklch, var(--st-foreground) 25%, transparent));
+  // Thumb shape lives in the paint (<input> is void, no pseudo). Default is
+  // a hard-edged radial circle; a preset swaps --switch-thumb-paint to a
+  // linear-gradient(color, color) for a solid square thumb.
+  background-image: var(--switch-thumb-paint,
+    radial-gradient(circle at center, var(--switch-thumb-color, white) 49%, transparent 51%));
+  background-size: var(--switch-thumb-size, #{space(3)}) var(--switch-thumb-size, #{space(3)});
+  background-position: var(--switch-inset, #{space(0.5)}) center;
   background-repeat: no-repeat;
   appearance: none;
   cursor: pointer;
-  transition: background-color .12s ease, background-position .15s ease,
-              border-color .12s ease, box-shadow .12s ease;
+  transition: background-color #{duration(fast)} ease, background-position 0.15s ease,
+              border-color #{duration(fast)} ease, box-shadow #{duration(fast)} ease;
   print-color-adjust: exact;
 
   // Hover (idle only). Skip when focus / invalid / checked / disabled own
@@ -84,8 +70,8 @@
   }
 
   &:checked {
-    background-color: var(--switch-on-bg);
-    background-position: calc(100% - var(--switch-inset)) center;
+    background-color: var(--switch-on-bg, var(--st-primary));
+    background-position: calc(100% - var(--switch-inset, #{space(0.5)})) center;
   }
 
   // Validation. Invalid touches border only; fill follows on/off so both
@@ -113,10 +99,9 @@
 // === Large ==============================================================
 // 44×24 variant. Suited to standalone settings rows where the switch is
 // the row's primary affordance and reads small at the default 28×16.
-// Density still multiplies through the var chain.
-.switch--lg {
-  --switch-track-w: calc(2.75rem  * var(--st-density));                 // 44
-  --switch-track-h: calc(1.5rem   * var(--st-density));                 // 24
-  --switch-thumb:   calc(1.25rem  * var(--st-density));                 // 20
-  --switch-inset:   calc(0.125rem * var(--st-density));                 //  2
+.switch--roomy {
+  --switch-track-width: #{space(11)};   // 2.75rem
+  --switch-track-height: #{space(6)};    // 1.5rem
+  --switch-thumb-size:   #{space(5)};    // 1.25rem
+  --switch-inset:   #{space(0.5)};  // 0.125rem
 }

@@ -31,7 +31,7 @@
     <h2>Inline</h2>
     <p>Add <code>.field--inline</code> on the field root to lay items on one row with wrap.</p>
     {% call ui.demo() %}
-    <div class="field field--inline">
+    <div class="field field--inline w-auto">
       <div class="field__item">
         <input class="checkbox" type="checkbox" id="inlineCheck1" />
         <label class="field__label" for="inlineCheck1">One</label>
@@ -142,7 +142,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Six variables retune <code>.checkbox</code> without touching component CSS. Override on the input itself, on a parent scope, or on <code>:root</code>.</p>
+    <p>These variables retune <code>.checkbox</code> without touching component CSS. Override on the input itself, on a parent scope, or on <code>:root</code>.</p>
     <table>
       <thead>
         <tr>
@@ -153,7 +153,7 @@
       <tbody>
         <tr>
           <td><code>--checkbox-size</code></td>
-          <td>Box dimension; density scales it</td>
+          <td>Box dimension</td>
         </tr>
         <tr>
           <td><code>--checkbox-radius</code></td>
@@ -164,16 +164,20 @@
           <td>Unchecked background</td>
         </tr>
         <tr>
-          <td><code>--checkbox-border</code></td>
+          <td><code>--checkbox-border-width</code></td>
+          <td>Border thickness</td>
+        </tr>
+        <tr>
+          <td><code>--checkbox-border-color</code></td>
           <td>Unchecked border; validation hooks flip this to <code>--st-danger</code></td>
         </tr>
         <tr>
-          <td><code>--checkbox-checked-bg</code></td>
+          <td><code>--checkbox-bg-checked</code></td>
           <td>Checked or indeterminate background</td>
         </tr>
         <tr>
           <td><code>--checkbox-indicator</code></td>
-          <td>Glyph painted over <code>--checkbox-checked-bg</code>. Checked and indeterminate each set their own SVG. The fill color is a literal because <code>data:</code> URLs can't read CSS variables. To recolor, replace the URL with one whose fill matches the new color</td>
+          <td>Glyph painted over <code>--checkbox-bg-checked</code>. Checked and indeterminate each set their own SVG. The fill color is a literal because <code>data:</code> URLs can't read CSS variables. To recolor, replace the URL with one whose fill matches the new color</td>
         </tr>
       </tbody>
     </table>

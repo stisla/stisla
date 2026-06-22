@@ -255,9 +255,9 @@
 
   <section>
     <h2>Small</h2>
-    <p><code>.table--sm</code> shrinks inner cell padding for denser rows. Edge padding stays so the flush-in-card alignment holds.</p>
+    <p><code>.table--compact</code> shrinks inner cell padding for denser rows. Edge padding stays so the flush-in-card alignment holds.</p>
     {% call ui.demo() %}
-    <table class="table table--sm">
+    <table class="table table--compact">
       <thead>
         <tr>
           <th scope="col">Key</th>
@@ -506,10 +506,10 @@
           <td>2 mins ago</td>
           <td class="text-end">
             <div class="d-flex flex-wrap align-items-center gap-1">
-              <button type="button" class="btn btn--sm btn--ghost btn--neutral btn--icon-only" aria-label="Copy">
+              <button type="button" class="btn btn--compact btn--ghost btn--neutral btn--icon-only" aria-label="Copy">
                 <i data-lucide="copy"></i>
               </button>
-              <button type="button" class="btn btn--sm btn--ghost btn--neutral btn--icon-only" aria-label="Revoke">
+              <button type="button" class="btn btn--compact btn--ghost btn--neutral btn--icon-only" aria-label="Revoke">
                 <i data-lucide="trash-2"></i>
               </button>
             </div>
@@ -522,10 +522,10 @@
           <td>1 hour ago</td>
           <td class="text-end">
             <div class="d-flex flex-wrap align-items-center gap-1">
-              <button type="button" class="btn btn--sm btn--ghost btn--neutral btn--icon-only" aria-label="Copy">
+              <button type="button" class="btn btn--compact btn--ghost btn--neutral btn--icon-only" aria-label="Copy">
                 <i data-lucide="copy"></i>
               </button>
-              <button type="button" class="btn btn--sm btn--ghost btn--neutral btn--icon-only" aria-label="Revoke">
+              <button type="button" class="btn btn--compact btn--ghost btn--neutral btn--icon-only" aria-label="Revoke">
                 <i data-lucide="trash-2"></i>
               </button>
             </div>
@@ -538,10 +538,10 @@
           <td>3 days ago</td>
           <td class="text-end">
             <div class="d-flex flex-wrap align-items-center gap-1">
-              <button type="button" class="btn btn--sm btn--ghost btn--neutral btn--icon-only" aria-label="Copy">
+              <button type="button" class="btn btn--compact btn--ghost btn--neutral btn--icon-only" aria-label="Copy">
                 <i data-lucide="copy"></i>
               </button>
-              <button type="button" class="btn btn--sm btn--ghost btn--neutral btn--icon-only" aria-label="Revoke">
+              <button type="button" class="btn btn--compact btn--ghost btn--neutral btn--icon-only" aria-label="Revoke">
                 <i data-lucide="trash-2"></i>
               </button>
             </div>
@@ -614,21 +614,21 @@
       <div class="card__header card__header--alt">
         <span><strong data-demo-select-count>2</strong> of 4 selected</span>
         <div class="d-flex flex-wrap align-items-center gap-2 ms-auto">
-          <button type="button" class="btn btn--sm btn--outline btn--neutral">
+          <button type="button" class="btn btn--compact btn--outline btn--neutral">
             <i data-lucide="tag"></i>
             Add tag
           </button>
-          <button type="button" class="btn btn--sm btn--outline btn--neutral">
+          <button type="button" class="btn btn--compact btn--outline btn--neutral">
             <i data-lucide="archive"></i>
             Archive
           </button>
-          <button type="button" class="btn btn--sm btn--danger">
+          <button type="button" class="btn btn--compact btn--danger">
             <i data-lucide="trash-2"></i>
             Delete
           </button>
         </div>
       </div>
-      <table class="table table--hover table--align-middle mb-0" data-demo-select-rows>
+      <table class="table table--hover table--align-middle" data-demo-select-rows>
         <thead>
           <tr>
             <th scope="col" style="width: 1rem;">
@@ -672,14 +672,14 @@
 
   <section>
     <h2>Inside a card</h2>
-    <p>Drop the table straight into a <code>.card</code> with <code>margin-bottom: 0</code> so it sits flush. The edge cells line up with the card header's left padding.</p>
+    <p>Drop the table straight into a <code>.card</code> and it sits flush on its own: the corner cells round to the card and the doubled border falls away. The edge cells line up with the card header's left padding.</p>
     {% call ui.demo() %}
     <div class="card">
       <div class="card__header card__header--alt">
         Deployments
-        <button type="button" class="btn btn--sm btn--primary ms-auto">Deploy</button>
+        <button type="button" class="btn btn--compact btn--primary ms-auto">Deploy</button>
       </div>
-      <table class="table table--hover table--align-middle mb-0">
+      <table class="table table--hover table--align-middle">
         <thead>
           <tr>
             <th scope="col">Service</th>
@@ -718,10 +718,45 @@
             <td>just now</td>
             <td>
               <span class="badge badge--soft badge--info">
-                <span class="spinner spinner--sm" role="status" aria-hidden="true"></span>
+                <span class="spinner spinner--compact" role="status" aria-hidden="true"></span>
                 Deploying
               </span>
             </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Bordered, inside a card</h2>
+    <p>A <code>.table--bordered</code> dropped straight into a <code>.card</code> drops its outer perimeter so it doesn't double the card border, and rounds the corner cells to the card. With no card header above, the top corners round too.</p>
+    {% call ui.demo() %}
+    <div class="card">
+      <table class="table table--bordered">
+        <thead>
+          <tr>
+            <th scope="col">Region</th>
+            <th scope="col">Orders</th>
+            <th scope="col">Revenue</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>North</td>
+            <td>1,284</td>
+            <td>$48,200</td>
+          </tr>
+          <tr>
+            <td>South</td>
+            <td>967</td>
+            <td>$31,540</td>
+          </tr>
+          <tr>
+            <td>West</td>
+            <td>1,102</td>
+            <td>$40,910</td>
           </tr>
         </tbody>
       </table>
@@ -737,12 +772,12 @@
       <div class="card__header card__header--alt">
         Team members
         <span class="badge badge--soft ms-2">5 of 15 seats</span>
-        <button type="button" class="btn btn--sm btn--primary ms-auto">
+        <button type="button" class="btn btn--compact btn--primary ms-auto">
           <i data-lucide="user-plus"></i>
           Invite
         </button>
       </div>
-      <table class="table table--hover table--align-middle mb-0">
+      <table class="table table--hover table--align-middle">
         <thead>
           <tr>
             <th scope="col">Member</th>
@@ -767,7 +802,7 @@
             <td>just now</td>
             <td><span class="badge badge--soft badge--success">Active</span></td>
             <td class="text-end">
-              <button type="button" class="btn btn--sm btn--ghost btn--neutral btn--icon-only" aria-label="More">
+              <button type="button" class="btn btn--compact btn--ghost btn--neutral btn--icon-only" aria-label="More">
                 <i data-lucide="more-horizontal"></i>
               </button>
             </td>
@@ -786,7 +821,7 @@
             <td>12 min ago</td>
             <td><span class="badge badge--soft badge--success">Active</span></td>
             <td class="text-end">
-              <button type="button" class="btn btn--sm btn--ghost btn--neutral btn--icon-only" aria-label="More">
+              <button type="button" class="btn btn--compact btn--ghost btn--neutral btn--icon-only" aria-label="More">
                 <i data-lucide="more-horizontal"></i>
               </button>
             </td>
@@ -805,7 +840,7 @@
             <td>2 hours ago</td>
             <td><span class="badge badge--soft badge--success">Active</span></td>
             <td class="text-end">
-              <button type="button" class="btn btn--sm btn--ghost btn--neutral btn--icon-only" aria-label="More">
+              <button type="button" class="btn btn--compact btn--ghost btn--neutral btn--icon-only" aria-label="More">
                 <i data-lucide="more-horizontal"></i>
               </button>
             </td>
@@ -824,7 +859,7 @@
             <td>never</td>
             <td><span class="badge badge--soft badge--warning">Invite pending</span></td>
             <td class="text-end">
-              <button type="button" class="btn btn--sm btn--ghost btn--neutral btn--icon-only" aria-label="More">
+              <button type="button" class="btn btn--compact btn--ghost btn--neutral btn--icon-only" aria-label="More">
                 <i data-lucide="more-horizontal"></i>
               </button>
             </td>
@@ -843,7 +878,7 @@
             <td>1 week ago</td>
             <td><span class="badge badge--soft badge--danger">Suspended</span></td>
             <td class="text-end">
-              <button type="button" class="btn btn--sm btn--ghost btn--neutral btn--icon-only" aria-label="More">
+              <button type="button" class="btn btn--compact btn--ghost btn--neutral btn--icon-only" aria-label="More">
                 <i data-lucide="more-horizontal"></i>
               </button>
             </td>
@@ -939,16 +974,16 @@
       </thead>
       <tbody>
         <tr>
-          <td><code>--table-cell-padding-y</code></td>
+          <td><code>--table-cell-padding-block</code></td>
           <td>Vertical cell padding</td>
         </tr>
         <tr>
-          <td><code>--table-cell-padding-x</code></td>
+          <td><code>--table-cell-padding-inline</code></td>
           <td>Horizontal cell padding</td>
         </tr>
         <tr>
           <td><code>--table-cell-padding-sm</code></td>
-          <td>Cell padding under <code>.table--sm</code></td>
+          <td>Cell padding under <code>.table--compact</code></td>
         </tr>
         <tr>
           <td><code>--table-edge-padding</code></td>
@@ -1022,19 +1057,19 @@
           <td>Striped row text color</td>
         </tr>
         <tr>
-          <td><code>--table-hover-bg</code></td>
+          <td><code>--table-bg-hover</code></td>
           <td>Row hover background under <code>.table--hover</code></td>
         </tr>
         <tr>
-          <td><code>--table-hover-color</code></td>
+          <td><code>--table-color-hover</code></td>
           <td>Row hover text color</td>
         </tr>
         <tr>
-          <td><code>--table-active-bg</code></td>
+          <td><code>--table-bg-active</code></td>
           <td>Selected row background for <code>data-state="active"</code></td>
         </tr>
         <tr>
-          <td><code>--table-active-color</code></td>
+          <td><code>--table-color-active</code></td>
           <td>Selected row text color</td>
         </tr>
       </tbody>

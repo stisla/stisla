@@ -128,19 +128,22 @@ breaks the moment someone overrides `--st-primary`.
 // Focus (1)
 --st-ring                  focus outline; defaults to --st-primary
 
-// Geometry (3)
---st-radius                0 brutalist · 0.75rem default · 1rem soft
---st-shadow
---st-density               1 default · 0.875 compact · 1.125 comfortable
+// Geometry
+--st-radius / --st-radius-sm / --st-radius-lg    0 brutalist · 0.75rem default
+--st-shadow / --st-shadow-light / --st-shadow-heavy
+--st-border-width                                hairline frame width; bump for heavier
+--st-spacing                                     0.25rem base; space(n) = n × this
 
 // Type (2)
 --st-font-sans
 --st-font-mono
 ```
 
-No spacing ramp. Padding is component-local, expressed as
-`calc(<literal> * var(--st-density))` so the one density knob retunes
-the system (§10).
+Spacing rides one base, `--st-spacing` (0.25rem, matching Tailwind), through
+the `space(n)` helper (`calc(n * var(--st-spacing))`). Padding and gaps are
+component-local multiples of it; raise `--st-spacing` for a roomier system,
+lower it for compact. See §10 for how component knobs read these (§5 covers
+colour).
 
 ## 5. Colour model
 
@@ -361,44 +364,54 @@ tool too.
 
 ## 10. Component-scoped fallback pattern
 
-Every component reads a component-scoped var that falls back to the
-matching global token:
+Two tiers, no middle. Every component property reads a component-scoped
+variable whose fallback default chains straight to the matching scale /
+theme token — nothing is declared on the base element:
 
 ```css
-.btn   { border-radius: var(--st-btn-radius, var(--st-radius)); }
-.card  { border-radius: var(--st-card-radius, var(--st-radius-lg)); }
-.input { border-radius: var(--st-input-radius, var(--st-radius)); }
+.card  { border-radius: var(--card-radius, var(--st-radius-lg)); }
+.btn   { border-radius: var(--btn-radius, var(--st-radius)); }
+.input { border-radius: var(--input-radius, var(--st-radius)); }
 ```
 
-Global override sets a tier token (`--st-radius-sm` / `--st-radius` /
-`--st-radius-lg`, or `--st-shadow-light` / `--st-shadow` /
-`--st-shadow-heavy`) once at `:root`; per-component override sets
-`--st-btn-radius`, `--st-dialog-shadow`, and so on. The pattern applies
-to radius and shadow — the two properties where designers genuinely
-tune per component family ("pilled buttons, default cards"; "heavier
-dialogs, lighter popovers"). Other component properties (padding, bg,
-font, etc.) don't get a `:root`-level per-component knob; the global
-tier tokens plus wrapper-class scoping cover their use cases.
+- **Theme everything** → override the scale / theme token the defaults read
+  (`--st-radius-sm/-/-lg`, `--st-shadow-light/-/-heavy`, `--st-border-width`,
+  `--st-border`, `--st-spacing`, the colour palette). It cascades into every
+  component default at once. A brutalist theme is a handful of these.
+- **Theme one component** → set its `--<comp>-x` (on `:root` for all instances,
+  or on a scope / the element for a subtree).
+- **Theme a subset** ("all surfaces but not fields") → a short consumer block
+  that lists those component tokens. Explicit, not a hidden grouping.
 
-Border-width is global-only (`--st-border-width`) — every bordered
-shape reads it directly, no per-component knob. Density is global-only
-the same way (`--st-density`, no `--st-{name}-density`).
+There is **no `--st-<comp>-*` middle rung** (no `--st-card-radius`,
+`--st-btn-radius`). The component token *is* the per-component knob; the scale
+token is the global knob. An earlier draft shipped per-family `--st-*` knobs
+(`--st-surface-radius`, `--st-input-radius`, `--st-overlay-shadow`) — removed,
+because the "retune the whole family" argument generalizes to every property ×
+every family and the scale already covers the global case.
 
-The fallback chain lives INSIDE the component rule, not at `:root`:
+Border and motion follow the same shape with two knobs each:
+`--<comp>-border-width` (→ `--st-border-width`) + `--<comp>-border-color`
+(→ `--st-border`); `--<comp>-transition-duration` for transition timing.
+Padding and margin are always two axis knobs, never bare:
+`--<comp>-padding-inline` / `--<comp>-padding-block` (both → `space()`).
+
+The fallback chain lives INSIDE the component rule, never declared on the base
+or at `:root`:
 
 ```css
-/* Right — substitution happens at the component element */
-.card { --card-radius: var(--st-card-radius, var(--st-radius-lg)); }
+/* Right — the default is in the var() fallback, overridable from any scope */
+.card { border-radius: var(--card-radius, var(--st-radius-lg)); }
 
-/* Wrong — substitution happens at :root and inherits a frozen value */
-:root { --st-card-radius: var(--st-radius-lg); }
-.card { border-radius: var(--st-card-radius); }
+/* Wrong — declaring the token on the element freezes it; an ancestor scope
+   can no longer override it */
+.card { --card-radius: var(--st-radius-lg); border-radius: var(--card-radius); }
 ```
 
-CSS substitutes `var()` references in a custom property's value at the
-declaration element. The second form would freeze `--st-card-radius` at
-`:root`'s value of `--st-radius-lg`, breaking any wrapper override of
-the tier token.
+Declaring `--card-radius` on `.card` resolves its value at that element, so a
+wrapper scope setting `--card-radius` higher up loses. Keeping the default in
+the `var()` fallback leaves the token open for any ancestor to set. (The
+`tools/audit-tokens.mjs` base-declaration check enforces this.)
 
 **`--st-radius` is outer-only.** Inner nested items (accordion items
 inside a framed accordion, sidebar items inside a padded sidebar) compute
@@ -410,10 +423,10 @@ Components that opt out of `--st-radius` (shape is semantic, not stylistic):
 check (square / circle), `.slider` track + thumb, `.progress` track,
 `.btn--icon-round`.
 
-**Density.** `--st-density` multiplies component padding and any
-component's hard `height` (`.btn`, `.form-control`, `.icon-box`,
-`.spinner`). One global lever retunes the whole system. Multi-line
-components opt out via `height: auto` + `min-height` floor +
+**Spacing base.** `--st-spacing` (0.25rem) is the unit every component
+padding, gap, and hard `height` is built from, through the `space(n)` helper.
+Raising it scales the whole system roomier; lowering it compacts. Multi-line
+components opt out of a fixed height via `height: auto` + a `min-height` floor +
 their own `padding-block`.
 
 ## 11. Source organisation

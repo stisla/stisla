@@ -122,9 +122,9 @@
     <p>Heights are pinned across small, default, and large regardless of content.</p>
     {% call ui.demo() %}
     <div class="demo-row">
-      <button type="button" class="btn btn--primary btn--sm">Small</button>
+      <button type="button" class="btn btn--primary btn--compact">Small</button>
       <button type="button" class="btn btn--primary">Default</button>
-      <button type="button" class="btn btn--primary btn--lg">Large</button>
+      <button type="button" class="btn btn--primary btn--roomy">Large</button>
     </div>
     {% endcall %}
   </section>
@@ -159,13 +159,13 @@
     </p>
     {% call ui.demo() %}
     <div class="demo-row">
-      <button type="button" class="btn btn--primary btn--icon-only btn--sm" aria-label="Add">
+      <button type="button" class="btn btn--primary btn--icon-only btn--compact" aria-label="Add">
         <i data-lucide="plus"></i>
       </button>
       <button type="button" class="btn btn--primary btn--icon-only" aria-label="Add">
         <i data-lucide="plus"></i>
       </button>
-      <button type="button" class="btn btn--primary btn--icon-only btn--lg" aria-label="Add">
+      <button type="button" class="btn btn--primary btn--icon-only btn--roomy" aria-label="Add">
         <i data-lucide="plus"></i>
       </button>
       <button type="button" class="btn btn--outline btn--danger btn--icon-only" aria-label="Delete">
@@ -208,9 +208,9 @@
     </p>
     {% call ui.demo() %}
     <div class="demo-row">
-      <button type="button" class="btn btn--primary is-loading btn--sm" aria-busy="true">Saving</button>
+      <button type="button" class="btn btn--primary is-loading btn--compact" aria-busy="true">Saving</button>
       <button type="button" class="btn btn--primary is-loading" aria-busy="true">Saving</button>
-      <button type="button" class="btn btn--primary is-loading btn--lg" aria-busy="true">Saving</button>
+      <button type="button" class="btn btn--primary is-loading btn--roomy" aria-busy="true">Saving</button>
       <button type="button" class="btn btn--outline btn--neutral is-loading" aria-busy="true">Loading</button>
       <button type="button" class="btn btn--danger btn--icon-only is-loading" aria-busy="true" aria-label="Deleting"></button>
     </div>
@@ -257,7 +257,7 @@
     <p>Override on <code>.btn</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change. The variable surface splits into four groups.</p>
 
     <h3>Geometry and sizes</h3>
-    <p>Shape, height, and text scale. Size modifiers (<code>--sm</code>, <code>--lg</code>) reassign each row to the corresponding small or large value.</p>
+    <p>Shape, height, and text scale. Size modifiers (<code>--compact</code>, <code>--roomy</code>) reassign each row to the corresponding small or large value.</p>
     <table>
       <thead>
         <tr>
@@ -268,15 +268,19 @@
       <tbody>
         <tr>
           <td><code>--btn-radius</code></td>
-          <td>Corner radius (per-component override via <code>--st-btn-radius</code>; sizes pull <code>--st-radius-sm</code> / <code>-lg</code>)</td>
+          <td>Corner radius. The compact and roomy sizes step it to a smaller and larger tier</td>
         </tr>
         <tr>
           <td><code>--btn-height</code></td>
-          <td>Hard single-line height. Bakes in the density-aware growth formula. Override with a plain value for rigid shape, or with the same calc shape to keep density growth at a custom nominal</td>
+          <td>Hard single-line height, a <code>space()</code> multiple so it tracks <code>--st-spacing</code>. Override with a plain value for a rigid shape</td>
         </tr>
         <tr>
-          <td><code>--btn-padding-x</code></td>
-          <td>Horizontal padding. Multiplied by <code>--st-density</code></td>
+          <td><code>--btn-padding-inline</code></td>
+          <td>Inline padding (left and right)</td>
+        </tr>
+        <tr>
+          <td><code>--btn-border-width</code></td>
+          <td>Border thickness; set <code>0</code> to drop the rim</td>
         </tr>
         <tr>
           <td><code>--btn-font-size</code></td>
@@ -292,7 +296,7 @@
         </tr>
       </tbody>
     </table>
-    <p><code>.btn--icon-only</code> zeroes <code>--btn-padding-x</code> and pins width to <code>--btn-height</code> for a 1:1 square at every size.</p>
+    <p><code>.btn--icon-only</code> zeroes <code>--btn-padding-inline</code> and pins width to <code>--btn-height</code> for a 1:1 square at every size.</p>
 
     <h3>Color knobs</h3>
     <p>The four surface variables that paint each state. Each one defaults from <code>--btn-tone</code> (covered in the next group), so retoning the button is usually a one-line <code>--btn-tone</code> override rather than four separate writes.</p>

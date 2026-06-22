@@ -28,15 +28,15 @@
 
   <section>
     <h2>Large</h2>
-    <p>Add <code>.switch--lg</code> for a larger variant. Suited to standalone settings rows where the switch is the row's primary affordance.</p>
+    <p>Add <code>.switch--roomy</code> for a larger variant. Suited to standalone settings rows where the switch is the row's primary affordance.</p>
     {% call ui.demo() %}
     <div class="field" style="width: auto; max-width: 24rem;">
       <div class="field__item">
-        <input class="switch switch--lg" type="checkbox" role="switch" id="lgSwitch" />
+        <input class="switch switch--roomy" type="checkbox" role="switch" id="lgSwitch" />
         <label class="field__label" for="lgSwitch">Notifications</label>
       </div>
       <div class="field__item">
-        <input class="switch switch--lg" type="checkbox" role="switch" id="lgSwitchOn" checked />
+        <input class="switch switch--roomy" type="checkbox" role="switch" id="lgSwitchOn" checked />
         <label class="field__label" for="lgSwitchOn">Auto-update</label>
       </div>
     </div>
@@ -50,11 +50,11 @@
     <div class="demo-stack" style="width: 100%; max-width: 24rem;">
       <div class="d-flex flex-wrap align-items-center justify-content-between">
         <label class="field__label" for="settingEmail">Email notifications</label>
-        <input class="switch switch--lg" type="checkbox" role="switch" id="settingEmail" checked />
+        <input class="switch switch--roomy" type="checkbox" role="switch" id="settingEmail" checked />
       </div>
       <div class="d-flex flex-wrap align-items-center justify-content-between">
         <label class="field__label" for="settingPush">Push notifications</label>
-        <input class="switch switch--lg" type="checkbox" role="switch" id="settingPush" />
+        <input class="switch switch--roomy" type="checkbox" role="switch" id="settingPush" />
       </div>
     </div>
     {% endcall %}
@@ -122,7 +122,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Nine variables retune <code>.switch</code> without touching component CSS. Override on <code>.switch</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
+    <p>These variables retune <code>.switch</code> without touching component CSS. Override on <code>.switch</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
     <table>
       <thead>
         <tr>
@@ -132,15 +132,15 @@
       </thead>
       <tbody>
         <tr>
-          <td><code>--switch-track-w</code></td>
-          <td>Track width; <code>--lg</code> reassigns this</td>
+          <td><code>--switch-track-width</code></td>
+          <td>Track width; the roomy variant reassigns this</td>
         </tr>
         <tr>
-          <td><code>--switch-track-h</code></td>
+          <td><code>--switch-track-height</code></td>
           <td>Track height</td>
         </tr>
         <tr>
-          <td><code>--switch-thumb</code></td>
+          <td><code>--switch-thumb-size</code></td>
           <td>Thumb diameter</td>
         </tr>
         <tr>
@@ -149,7 +149,7 @@
         </tr>
         <tr>
           <td><code>--switch-radius</code></td>
-          <td>Track corner radius (pill). Reads <code>--st-switch-radius</code> first; override either to flatten.</td>
+          <td>Track corner radius; pill by default, set a smaller value to flatten</td>
         </tr>
         <tr>
           <td><code>--switch-off-bg</code></td>
@@ -165,10 +165,10 @@
         </tr>
         <tr>
           <td><code>--switch-thumb-paint</code></td>
-          <td>Thumb shape (paint). Default is a <code>radial-gradient</code> circle; reads <code>--st-switch-thumb-paint</code> first, so a preset can swap to <code>linear-gradient(color, color)</code> for a square thumb without touching component CSS.</td>
+          <td>Thumb shape (paint). Default is a <code>radial-gradient</code> circle; a preset can swap to <code>linear-gradient(color, color)</code> for a square thumb without touching component CSS.</td>
         </tr>
       </tbody>
     </table>
-    <p>Track and thumb opt out of <code>--st-radius</code> by default. The pill and circle are semantic. Set <code>--st-switch-radius</code> at the scope you want flattened (a preset wrapper, <code>:root</code>) or <code>--switch-radius</code> on the switch itself; override <code>--switch-track-h</code> or <code>--switch-thumb</code> for a different shape.</p>
+    <p>Track and thumb keep their pill and circle shapes by default. Set <code>--switch-radius</code> on the switch (or any parent scope) to flatten the track; override <code>--switch-track-height</code> or <code>--switch-thumb-size</code> for a different shape.</p>
   </section>
 {% endblock %}

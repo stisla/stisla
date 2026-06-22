@@ -162,10 +162,10 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Add <code>.toggle-group--sm</code> or <code>.toggle-group--lg</code>. The outer container scales with the standard size cadence; the inner toggle height re-derives from the new container values automatically (concentric corners per V3.md §3.4).</p>
+    <p>Add <code>.toggle-group--compact</code> or <code>.toggle-group--roomy</code>. The outer container scales with the standard size cadence; the inner toggle height re-derives from the new container values automatically, keeping concentric corners.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-column gap-2 align-items-start">
-      <div class="toggle-group toggle-group--sm" data-stisla-toggle-group role="radiogroup" aria-label="Small">
+      <div class="toggle-group toggle-group--compact" data-stisla-toggle-group role="radiogroup" aria-label="Small">
         <button type="button" class="toggle" role="radio" data-state="active" aria-checked="true">Day</button>
         <button type="button" class="toggle" role="radio" aria-checked="false">Week</button>
         <button type="button" class="toggle" role="radio" aria-checked="false">Month</button>
@@ -175,7 +175,7 @@
         <button type="button" class="toggle" role="radio" aria-checked="false">Week</button>
         <button type="button" class="toggle" role="radio" aria-checked="false">Month</button>
       </div>
-      <div class="toggle-group toggle-group--lg" data-stisla-toggle-group role="radiogroup" aria-label="Large">
+      <div class="toggle-group toggle-group--roomy" data-stisla-toggle-group role="radiogroup" aria-label="Large">
         <button type="button" class="toggle" role="radio" data-state="active" aria-checked="true">Day</button>
         <button type="button" class="toggle" role="radio" aria-checked="false">Week</button>
         <button type="button" class="toggle" role="radio" aria-checked="false">Month</button>
@@ -216,7 +216,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Six variables retune <code>.toggle-group</code>. Child <code>.toggle</code> vars (height, radius, bg, border) re-derive from the container values inside member scope. See <a class="link" href="/toggle">Toggle</a> for the child surface.</p>
+    <p>Eight variables retune <code>.toggle-group</code>. Child <code>.toggle</code> vars (height, radius, bg, border) re-derive from the container values inside member scope. See <a class="link" href="/toggle">Toggle</a> for the child surface.</p>
     <table>
       <thead>
         <tr>
@@ -231,11 +231,15 @@
         </tr>
         <tr>
           <td><code>--toggle-group-height</code></td>
-          <td>Outer container height. Bakes in the density-aware growth formula tracking <code>--toggle-height</code>. Inner toggle fills via flex stretch, so height resolves to <code>outer − 2 × border − 2 × padding</code> via the box model.</td>
+          <td>Outer container height, tracking <code>--toggle-height</code>. Inner toggle fills via flex stretch, so height resolves to <code>outer − 2 × border − 2 × padding</code> via the box model.</td>
         </tr>
         <tr>
-          <td><code>--toggle-group-padding</code></td>
-          <td>Padding around the children. Subtracts from the inner toggle's effective height and from the concentric inner radius.</td>
+          <td><code>--toggle-group-padding-block</code></td>
+          <td>Vertical padding around the children. Subtracts from the inner toggle's effective height and from the concentric inner radius.</td>
+        </tr>
+        <tr>
+          <td><code>--toggle-group-padding-inline</code></td>
+          <td>Horizontal padding around the children.</td>
         </tr>
         <tr>
           <td><code>--toggle-group-gap</code></td>
@@ -248,6 +252,10 @@
         <tr>
           <td><code>--toggle-group-border-color</code></td>
           <td>Outer rim color.</td>
+        </tr>
+        <tr>
+          <td><code>--toggle-group-border-width</code></td>
+          <td>Outer rim thickness.</td>
         </tr>
       </tbody>
     </table>

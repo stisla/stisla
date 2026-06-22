@@ -18,10 +18,10 @@
 // a matching `@include utility-group('name') using ($i) { ... }` block at
 // the bottom — $i is '' at base, '-sm'/'-md'/... at breakpoints.
 //
-// Spacing scale — Tailwind 4 px linear, density-multiplied so the global
-// --st-density knob retunes the whole rhythm alongside component padding
-// (V3.md §3.4). 0 / 1 / 2 / 3 / 4 / 5 / 6 / 8 = 0 / 4 / 8 / 12 / 16 / 20 /
-// 24 / 32 px under default density.
+// Spacing scale — Tailwind 4 px linear, built on space(n) = n × --st-spacing
+// so the global --st-spacing base retunes the whole rhythm alongside
+// component padding (V3.md §3.4). 0 / 1 / 2 / 3 / 4 / 5 / 6 / 8 = 0 / 4 / 8 /
+// 12 / 16 / 20 / 24 / 32 px at the default --st-spacing (0.25rem).
 //
 // Font-size scale — numeric 1..7, ascending small → large. .fs-1 = 12 px
 // (the Tailwind text-xs equivalent), .fs-7 = 32 px. Numeric over t-shirt
@@ -37,15 +37,18 @@
 
 // === Scales ==================================================================
 
+// Keys map 1:1 onto the space() scale (space(n) = n × --st-spacing), so the
+// .m-*/.p-* utilities track --st-spacing like every component — replacing the
+// old --st-density multiplier with no change to the default values.
 $spacing-scale: (
   0: 0,
-  1: calc(0.25rem * var(--st-density)),
-  2: calc(0.5rem  * var(--st-density)),
-  3: calc(0.75rem * var(--st-density)),
-  4: calc(1rem    * var(--st-density)),
-  5: calc(1.25rem * var(--st-density)),
-  6: calc(1.5rem  * var(--st-density)),
-  8: calc(2rem    * var(--st-density)),
+  1: space(1),
+  2: space(2),
+  3: space(3),
+  4: space(4),
+  5: space(5),
+  6: space(6),
+  8: space(8),
 );
 
 $font-sizes: (
@@ -87,6 +90,7 @@ $utilities-config: (
   // Layout
   display:          (enabled: true, responsive: true),
   position:         (enabled: true, responsive: false),
+  pin:              (enabled: true, responsive: false),
   overflow:         (enabled: true, responsive: false),
 
   // Flexbox
@@ -226,6 +230,34 @@ $utilities-config: (
   .position#{$i}-absolute { position: absolute !important; }
   .position#{$i}-fixed    { position: fixed    !important; }
   .position#{$i}-sticky   { position: sticky   !important; }
+}
+
+// === Pin =====================================================================
+// Overlay a child onto a positioned parent's corner — the parent just needs
+// .position-relative. One class carries position + corner; --st-pin-inset is
+// the single negative offset knob, so there's no negative spacing scale to
+// invite stacking. Logical insets flip the horizontal edge in RTL.
+@include utility-group('pin') using ($i) {
+  .pin#{$i}-top-start {
+    position: absolute !important;
+    inset-block-start:  var(--st-pin-inset, -0.25rem) !important;
+    inset-inline-start: var(--st-pin-inset, -0.25rem) !important;
+  }
+  .pin#{$i}-top-end {
+    position: absolute !important;
+    inset-block-start: var(--st-pin-inset, -0.25rem) !important;
+    inset-inline-end:  var(--st-pin-inset, -0.25rem) !important;
+  }
+  .pin#{$i}-bottom-start {
+    position: absolute !important;
+    inset-block-end:    var(--st-pin-inset, -0.25rem) !important;
+    inset-inline-start: var(--st-pin-inset, -0.25rem) !important;
+  }
+  .pin#{$i}-bottom-end {
+    position: absolute !important;
+    inset-block-end:   var(--st-pin-inset, -0.25rem) !important;
+    inset-inline-end:  var(--st-pin-inset, -0.25rem) !important;
+  }
 }
 
 // === Overflow ================================================================

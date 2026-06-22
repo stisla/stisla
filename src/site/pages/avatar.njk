@@ -76,10 +76,10 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Four sizes: <code>.avatar--sm</code>, default, <code>.avatar--lg</code>, <code>.avatar--xl</code>. Each retunes <code>--avatar-size</code> and <code>--avatar-font-size</code>, and the result still multiplies by <code>--st-density</code>.</p>
+    <p>Four sizes. <code>.avatar--compact</code>, default, <code>.avatar--roomy</code>, and <code>.avatar--spacious</code>. Each retunes <code>--avatar-size</code> and <code>--avatar-font-size</code> off the base spacing scale.</p>
     {% call ui.demo() %}
     <div class="demo-row demo-row--top">
-      <span class="avatar avatar--sm" data-stisla-avatar>
+      <span class="avatar avatar--compact" data-stisla-avatar>
         <img class="avatar__image" src="https://i.pravatar.cc/96?img=5" alt="">
         <span class="avatar__fallback">RF</span>
       </span>
@@ -87,11 +87,11 @@
         <img class="avatar__image" src="https://i.pravatar.cc/96?img=5" alt="">
         <span class="avatar__fallback">RF</span>
       </span>
-      <span class="avatar avatar--lg" data-stisla-avatar>
+      <span class="avatar avatar--roomy" data-stisla-avatar>
         <img class="avatar__image" src="https://i.pravatar.cc/96?img=5" alt="">
         <span class="avatar__fallback">RF</span>
       </span>
-      <span class="avatar avatar--xl" data-stisla-avatar>
+      <span class="avatar avatar--spacious" data-stisla-avatar>
         <img class="avatar__image" src="https://i.pravatar.cc/96?img=5" alt="">
         <span class="avatar__fallback">RF</span>
       </span>
@@ -117,12 +117,12 @@
       <span class="avatar" data-stisla-avatar>
         <img class="avatar__image" src="https://i.pravatar.cc/96?img=44" alt="">
         <span class="avatar__fallback">ID</span>
-        <span class="avatar__indicator avatar__indicator--top avatar__indicator--lg" style="--avatar-indicator-bg: var(--st-danger); --avatar-indicator-color: var(--st-danger-foreground);">3</span>
+        <span class="avatar__indicator avatar__indicator--top avatar__indicator--roomy" style="--avatar-indicator-bg: var(--st-danger); --avatar-indicator-color: var(--st-danger-foreground);">3</span>
       </span>
       <span class="avatar" data-stisla-avatar>
         <img class="avatar__image" src="https://i.pravatar.cc/96?img=55" alt="">
         <span class="avatar__fallback">BS</span>
-        <span class="avatar__indicator avatar__indicator--xl" style="--avatar-indicator-bg: var(--st-info); --avatar-indicator-color: var(--st-info-foreground);">
+        <span class="avatar__indicator avatar__indicator--spacious" style="--avatar-indicator-bg: var(--st-info); --avatar-indicator-color: var(--st-info-foreground);">
           <i data-lucide="check"></i>
         </span>
       </span>
@@ -162,11 +162,11 @@
       <tbody>
         <tr>
           <td><code>--avatar-size</code></td>
-          <td>Square side length; size modifiers retune this and density still applies on top</td>
+          <td>Square side length; size modifiers retune this off the base spacing scale</td>
         </tr>
         <tr>
           <td><code>--avatar-radius</code></td>
-          <td>Corner radius; <code>.avatar--circle</code> flips it to <code>9999px</code></td>
+          <td>Corner radius; <code>.avatar--circle</code> flips it to a full pill</td>
         </tr>
         <tr>
           <td><code>--avatar-bg</code></td>

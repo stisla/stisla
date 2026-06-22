@@ -12,28 +12,25 @@
 // place in the page hierarchy.
 
 .icon-box {
-  --icon-box-size:        calc(2.25rem * var(--st-density));
-  --icon-box-icon-size:   1.125rem;
-  --icon-box-radius:      var(--st-icon-box-radius, var(--st-radius-sm));
-  --icon-box-tone:        var(--st-muted-foreground);
-  --icon-box-bg:          color-mix(in oklch, var(--icon-box-tone) 15%, transparent);
-  --icon-box-color:       var(--icon-box-tone);
-
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing on the base, so a
+  // scope / inline retunes any of these. Intent modifiers set --icon-box-tone;
+  // bg + color re-resolve from it via the fallback chain.
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: var(--icon-box-size);
-  height: var(--icon-box-size);
-  color: var(--icon-box-color);
-  background: var(--icon-box-bg);
-  border-radius: var(--icon-box-radius);
+  width: var(--icon-box-size, #{space(9)});    // 2.25rem
+  height: var(--icon-box-size, #{space(9)});
+  color: var(--icon-box-color, var(--icon-box-tone, var(--st-muted-foreground)));
+  background: var(--icon-box-bg,
+    color-mix(in oklch, var(--icon-box-tone, var(--st-muted-foreground)) 15%, transparent));
+  border-radius: var(--icon-box-radius, #{radius(sm)});
 }
 
 // Icon stays at --icon-box-icon-size regardless of surrounding font-size.
 .icon-box :is(svg, i) {
-  width: var(--icon-box-icon-size);
-  height: var(--icon-box-icon-size);
+  width: var(--icon-box-icon-size, 1.125rem);
+  height: var(--icon-box-icon-size, 1.125rem);
   flex-shrink: 0;
 }
 
@@ -50,15 +47,15 @@
 .icon-box--info    { @include icon-box-intent(info);    }
 
 // === Shape modifiers ==================================================
-.icon-box--round  { border-radius: 9999px; }
-.icon-box--square { border-radius: 0;      }
+.icon-box--round  { border-radius: #{radius(full)}; }
+.icon-box--square { border-radius: 0;               }
 
 // === Size modifiers ===================================================
-.icon-box--sm {
-  --icon-box-size:      calc(1.75rem * var(--st-density));
+.icon-box--compact {
+  --icon-box-size:      #{space(7)};   // 1.75rem
   --icon-box-icon-size: 0.875rem;
 }
-.icon-box--lg {
-  --icon-box-size:      calc(3rem * var(--st-density));
+.icon-box--roomy {
+  --icon-box-size:      #{space(12)};  // 3rem
   --icon-box-icon-size: 1.5rem;
 }

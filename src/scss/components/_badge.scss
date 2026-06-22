@@ -7,41 +7,31 @@
 //   <span class="badge badge--primary">Primary</span>         primary filled
 //   <span class="badge badge--soft badge--primary">…</span>   primary soft tint
 //
-// Pill is the default shape; .badge opts out of --st-radius by default
-// (V3.md §3.4 — pill is intentional). Set --st-badge-radius at a parent
-// scope (e.g. the brutalist preset wrapper) to flatten in bulk, or
-// --badge-radius on the badge itself for a one-off.
+// Pill is the default shape (radius(full), V3.md §3.4). Set --badge-radius
+// at a parent scope (e.g. the brutalist preset wrapper) to flatten in bulk,
+// or on the badge itself for a one-off.
 //
-// Sizing is intrinsic to the content (line-height clamp + padding ×
-// density). No --sm / --lg modifiers — badges rarely need them. Inside
-// a .btn the badge auto-shrinks via the parent's font-size cascade.
+// Sizing is intrinsic to the content (line-height clamp + space() padding).
+// No --compact / --roomy modifiers — badges rarely need them. Inside a .btn the
+// badge auto-shrinks via the parent's font-size cascade.
 
 .badge {
-  --badge-radius:       var(--st-badge-radius, 9999px);
-  --badge-min-height:   calc(1.375rem * var(--st-density));
-  --badge-padding-y:    calc(0.125rem * var(--st-density));
-  --badge-padding-x:    calc(0.5rem   * var(--st-density));
-  --badge-font-size:    0.75rem;
-  --badge-font-weight:  500;
-  // Default tone for the soft fallback (intent-less .badge--soft). Intent
-  // modifiers override --badge-tone; .badge--soft never touches it, so
-  // .badge--soft.badge--primary picks up primary via the cascade.
-  --badge-tone:         var(--st-muted-foreground);
-  --badge-bg:           var(--st-neutral);
-  --badge-color:        var(--st-neutral-foreground);
-
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing declared on the
+  // base, so a scope / inline retunes any of these. Intent + soft modifiers
+  // set --badge-tone / --badge-bg / --badge-color.
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  min-height: var(--badge-min-height);
-  padding: var(--badge-padding-y) var(--badge-padding-x);
+  gap: #{space(1)};
+  min-height: var(--badge-min-height, #{space(5.5)});         // 1.375rem
+  padding-block: var(--badge-padding-block, #{space(0.5)});   // 0.125rem
+  padding-inline: var(--badge-padding-inline, #{space(2)});   // 0.5rem
   font-family: inherit;
-  font-size: var(--badge-font-size);
-  font-weight: var(--badge-font-weight);
+  font-size: var(--badge-font-size, #{text(xs)});
+  font-weight: var(--badge-font-weight, #{weight(medium)});
   line-height: 1;
-  color: var(--badge-color);
-  background: var(--badge-bg);
-  border-radius: var(--badge-radius);
+  color: var(--badge-color, var(--st-neutral-foreground));
+  background: var(--badge-bg, var(--st-neutral));
+  border-radius: var(--badge-radius, #{radius(full)});
   white-space: nowrap;
 }
 
@@ -74,6 +64,6 @@
 // for the bare .badge--soft chip). Does NOT redefine --badge-tone — that
 // would clobber the intent and break .badge--soft.badge--primary.
 .badge--soft {
-  --badge-bg:    color-mix(in oklch, var(--badge-tone) 15%, transparent);
-  --badge-color: var(--badge-tone);
+  --badge-bg:    color-mix(in oklch, var(--badge-tone, var(--st-muted-foreground)) 15%, transparent);
+  --badge-color: var(--badge-tone, var(--st-muted-foreground));
 }

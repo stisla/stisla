@@ -25,33 +25,17 @@
 // + destroy + custom-events contract (V3.md §3.7).
 
 .navbar {
-  --navbar-padding-y: calc(0.625rem * var(--st-density));
-  --navbar-padding-x: calc(1rem * var(--st-density));
-  --navbar-gap: calc(0.75rem * var(--st-density));
-  --navbar-bg: var(--st-background);
-  --navbar-color: var(--st-foreground);
-
-  --navbar-button-height: calc(2.25rem + 0.75rem * (var(--st-density) - 1));   // 36 @ 1 → 39 @ 1.25
-  --navbar-button-padding-x: calc(0.75rem * var(--st-density));
-  --navbar-brand-padding-x: var(--navbar-button-padding-x);
-  --navbar-button-gap: calc(0.25rem * var(--st-density));
-  --navbar-button-radius: var(--st-navbar-button-radius, calc(var(--st-radius) - 0.25rem));
-  --navbar-button-color: var(--st-foreground);
-  --navbar-button-hover-bg: var(--st-accent);
-  --navbar-button-hover-color: var(--st-accent-foreground);
-  --navbar-button-active-bg: var(--st-highlight);
-  --navbar-button-active-color: var(--st-highlight-foreground);
-
-  --navbar-toggle-size: 2.25rem;
-  --navbar-transition: 150ms ease;
-
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing on the base, so a
+  // scope / inline retunes any of them; the children read them with the same
+  // defaults. Multi-read tokens (gap / color / button-height / button-radius /
+  // button state colours / padding-inline) repeat their fallbacks per site.
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--navbar-gap);
-  padding: var(--navbar-padding-y) var(--navbar-padding-x);
-  background-color: var(--navbar-bg);
-  color: var(--navbar-color);
+  gap: var(--navbar-gap, #{space(3)});                                   // 0.75rem
+  padding: var(--navbar-padding-block, #{space(2.5)}) var(--navbar-padding-inline, #{space(4)});
+  background-color: var(--navbar-bg, var(--st-background));
+  color: var(--navbar-color, var(--st-foreground));
 }
 
 // Container-inside-navbar — when the consumer wraps the inner row in
@@ -61,7 +45,7 @@
 // height matches a paddingless bar.
 .navbar:has(> .container),
 .navbar:has(> .container-fluid) {
-  --navbar-padding-x: 0;
+  --navbar-padding-inline: 0;
 }
 
 .navbar > .container,
@@ -69,21 +53,21 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--navbar-gap);
-  padding-block: var(--navbar-padding-y);
+  gap: var(--navbar-gap, #{space(3)});
+  padding-block: var(--navbar-padding-block, #{space(2.5)});
 }
 
 // Brand — wordmark / logo. Hard height + line-height: 1 matches the
 // button chip's geometry so the row reads as one band. Same horizontal
 // inset as a button chip so the brand text sits on the same x-grid as
-// the button text — override --navbar-brand-padding-x to 0 if a flush-
-// left brand is wanted.
+// the button text — override --navbar-brand-padding-inline to 0 if a
+// flush-left brand is wanted.
 .navbar__brand {
   display: inline-flex;
   align-items: center;
-  height: var(--navbar-button-height);
-  padding-inline: var(--navbar-brand-padding-x);
-  color: var(--navbar-color);
+  height: var(--navbar-button-height, #{space(9)});
+  padding-inline: var(--navbar-brand-padding-inline, var(--navbar-button-padding-inline, #{space(3)}));
+  color: var(--navbar-color, var(--st-foreground));
   line-height: 1;
   text-decoration: none;
 }
@@ -94,20 +78,20 @@
   display: none;
   align-items: center;
   justify-content: center;
-  width: calc(var(--navbar-toggle-size) * var(--st-density));
-  height: calc(var(--navbar-toggle-size) * var(--st-density));
+  width: var(--navbar-toggle-size, #{space(9)});
+  height: var(--navbar-toggle-size, #{space(9)});
   padding: 0;
   background-color: transparent;
-  color: var(--navbar-color);
+  color: var(--navbar-color, var(--st-foreground));
   border: 0;
-  border-radius: var(--navbar-button-radius);
+  border-radius: var(--navbar-button-radius, calc(#{radius(md)} - 0.25rem));
   cursor: pointer;
-  transition: background-color var(--navbar-transition);
+  transition: background-color var(--navbar-transition-duration, 150ms) ease;
 
   &:hover,
   &:focus-visible {
-    background-color: var(--navbar-button-hover-bg);
-    color: var(--navbar-button-hover-color);
+    background-color: var(--navbar-button-bg-hover, var(--st-accent));
+    color: var(--navbar-button-color-hover, var(--st-accent-foreground));
   }
 }
 
@@ -117,7 +101,7 @@
   display: flex;
   flex: 1 1 auto;
   align-items: center;
-  gap: var(--navbar-gap);
+  gap: var(--navbar-gap, #{space(3)});
 }
 
 // Nav — link list. Preflight already zeroes ul margin/padding +
@@ -125,7 +109,7 @@
 .navbar__nav {
   display: flex;
   align-items: center;
-  gap: var(--navbar-button-gap);
+  gap: var(--navbar-button-gap, #{space(1)});
 }
 
 // Button — ghost chip; soft accent on hover/focus, highlight when the
@@ -135,27 +119,27 @@
 .navbar__button {
   display: inline-flex;
   align-items: center;
-  height: var(--navbar-button-height);
+  height: var(--navbar-button-height, #{space(9)});
   padding-block: 0;
-  padding-inline: var(--navbar-button-padding-x);
-  border-radius: var(--navbar-button-radius);
+  padding-inline: var(--navbar-button-padding-inline, #{space(3)});
+  border-radius: var(--navbar-button-radius, calc(#{radius(md)} - 0.25rem));
   background-color: transparent;
-  color: var(--navbar-button-color);
+  color: var(--navbar-button-color, var(--st-foreground));
   line-height: 1;
   text-decoration: none;
   transition:
-    background-color var(--navbar-transition),
-    color var(--navbar-transition);
+    background-color var(--navbar-transition-duration, 150ms) ease,
+    color var(--navbar-transition-duration, 150ms) ease;
 
   &:hover,
   &:focus-visible {
-    background-color: var(--navbar-button-hover-bg);
-    color: var(--navbar-button-hover-color);
+    background-color: var(--navbar-button-bg-hover, var(--st-accent));
+    color: var(--navbar-button-color-hover, var(--st-accent-foreground));
   }
 
   &[data-state="active"] {
-    background-color: var(--navbar-button-active-bg);
-    color: var(--navbar-button-active-color);
+    background-color: var(--navbar-button-bg-active, var(--st-highlight));
+    color: var(--navbar-button-color-active, var(--st-highlight-foreground));
   }
 
   &[aria-disabled="true"] {

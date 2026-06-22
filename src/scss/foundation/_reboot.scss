@@ -45,10 +45,9 @@ html {
 
 body {
   font-family: var(--st-font-sans);
-  font-size: 0.875rem;        // 14px — V3.md baseline. <html> stays at 16px
-                              // so rem-based component math is unaffected.
+  font-size: 0.875rem; // 14px — V3.md baseline. <html> stays at 16px
+  // so rem-based component math is unaffected.
   font-weight: 400;
-  line-height: 1.5;
   color: var(--st-foreground);
   background-color: var(--st-background);
   text-rendering: optimizeLegibility;
@@ -60,7 +59,12 @@ body {
 // Inheritance flattens everything to body font-size + weight. Classes
 // (.h1, .fw-semibold, .lead) and .prose restore visual treatment where
 // wanted. Semantics remain in the DOM for screen readers + outline tools.
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-size: inherit;
   font-weight: inherit;
 }
@@ -70,9 +74,17 @@ a {
   text-decoration: inherit;
 }
 
-b, strong { font-weight: inherit; }
-em, i     { font-style: inherit;  }
-small     { font-size: inherit;   }
+b,
+strong {
+  font-weight: inherit;
+}
+em,
+i {
+  font-style: inherit;
+}
+small {
+  font-size: inherit;
+}
 
 // === 4. Semantic elements kept (no component covers these) ================
 abbr[title] {
@@ -81,25 +93,35 @@ abbr[title] {
   cursor: help;
 }
 
+// No bare-element styling: strip the UA yellow so a stray <mark> reads as plain
+// text. The highlight look is a reading-context treatment — .prose restores it
+// in scope; components style their own <mark> (e.g. autocomplete's bolded match).
 mark {
-  padding: 0.1875em;
-  background-color: var(--st-highlight);
-  color: var(--st-highlight-foreground);
+  background-color: transparent;
+  color: inherit;
 }
 
-sub, sup {
+sub,
+sup {
   font-size: 75%;
   line-height: 0;
   position: relative;
   vertical-align: baseline;
 }
-sub { bottom: -0.25em; }
-sup { top: -0.5em; }
+sub {
+  bottom: -0.25em;
+}
+sup {
+  top: -0.5em;
+}
 
 // === 5. Code family inherits mono ========================================
 // Same size as surrounding text (1em); .prose restyles to a chip outside
 // <pre>. Outside .prose, inline <code> reads as mono-font flowing text.
-code, kbd, samp, pre {
+code,
+kbd,
+samp,
+pre {
   font-family: var(--st-font-mono);
   font-size: 1em;
 }
@@ -108,7 +130,9 @@ code, kbd, samp, pre {
 // <ul>/<ol>/<menu> are bullet-less + indent-less. .prose restores both
 // for long-form. App UI typically wants flat lists (sidebars, nav, footer
 // rows) — they get this look for free.
-ol, ul, menu {
+ol,
+ul,
+menu {
   list-style: none;
 }
 
@@ -131,18 +155,31 @@ hr {
 // `vertical-align: middle` is defensive — ignored under `display: block`,
 // but kicks in if a consumer overrides display to inline-block. Mirrors
 // Tailwind Preflight's pattern; the linter flag is expected.
-img, svg, video, canvas, audio, iframe, embed, object {
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
   display: block;
   vertical-align: middle;
 }
 
-img, video {
+img,
+video {
   max-width: 100%;
   height: auto;
 }
 
 // === 10. Form controls inherit text ======================================
-button, input, select, optgroup, textarea, ::file-selector-button {
+button,
+input,
+select,
+optgroup,
+textarea,
+::file-selector-button {
   font: inherit;
   font-feature-settings: inherit;
   font-variation-settings: inherit;
@@ -153,25 +190,34 @@ button, input, select, optgroup, textarea, ::file-selector-button {
   opacity: 1;
 }
 
-::placeholder { opacity: 1; }
+::placeholder {
+  opacity: 1;
+}
 
-@supports (not (-webkit-appearance: -apple-pay-button)) or (contain-intrinsic-size: 1px) {
+@supports (not (-webkit-appearance: -apple-pay-button)) or
+  (contain-intrinsic-size: 1px) {
   ::placeholder {
     color: color-mix(in oklch, currentcolor 50%, transparent);
   }
 }
 
-textarea { resize: vertical; }
+textarea {
+  resize: vertical;
+}
 
 button,
-input:where([type='button'], [type='reset'], [type='submit']),
+input:where([type="button"], [type="reset"], [type="submit"]),
 ::file-selector-button {
   appearance: button;
 }
 
-::-webkit-search-decoration { -webkit-appearance: none; }
+::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
 ::-webkit-inner-spin-button,
-::-webkit-outer-spin-button { height: auto; }
+::-webkit-outer-spin-button {
+  height: auto;
+}
 
 // === 11. Focus ===========================================================
 :focus-visible {
@@ -180,9 +226,13 @@ input:where([type='button'], [type='reset'], [type='submit']),
 }
 
 // === 12. Misc ============================================================
-summary  { display: list-item; }
-progress { vertical-align: baseline; }
+summary {
+  display: list-item;
+}
+progress {
+  vertical-align: baseline;
+}
 
-[hidden]:where(:not([hidden='until-found'])) {
+[hidden]:where(:not([hidden="until-found"])) {
   display: none !important;
 }

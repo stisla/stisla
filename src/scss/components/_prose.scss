@@ -46,7 +46,7 @@
 // (0,2,1) and win cleanly without `!important`.
 //
 // Customization (8 knobs at the root of .prose; component nested
-// overrides happen via the cascade — e.g. .prose { --st-kbd-padding-y: … }
+// overrides happen via the cascade — e.g. .prose { --kbd-padding-inline: … }
 // retunes the kbd component without inventing new prose vars):
 //
 //   --prose-color           var(--st-foreground)           Master text color; body / headings / strong cascade from this
@@ -57,10 +57,14 @@
 //   --prose-marker-color    var(--st-muted-foreground)     List bullets / numbers
 //   --prose-quote-border    var(--st-border)               Blockquote left rule
 //   --prose-line-height     1.625                          Reading leading
+//   --prose-rhythm          1                              Vertical-rhythm multiplier on every block margin
 //
 // Internal scale is em-based so the whole block scales with the parent's
 // font-size if a consumer wants larger prose text. Block margins are
-// literal × var(--st-density) per V3.md §3.4 — no spacing ramp.
+// literal em × var(--prose-rhythm) — an em-relative reading rhythm, not the
+// rem space() ramp (V3.md §3.4). --prose-rhythm defaults to 1 (identical to
+// the historical density-1 baseline); set it on .prose to loosen / tighten
+// the whole block's vertical spacing from one knob.
 //
 // Spec: V3.md §3.4 (component-scoped vars), §3.6 (.prose is the block;
 // element rules target raw HTML descendants with `.not-prose` opt-out).
@@ -76,6 +80,7 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
   --prose-marker-color:   var(--st-muted-foreground);
   --prose-quote-border:   var(--st-border);
   --prose-line-height:    1.625;
+  --prose-rhythm:         1;
 
   color: var(--prose-body-color);
   line-height: var(--prose-line-height);
@@ -90,17 +95,17 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
     line-height: 1.25;
   }
 
-  :where(h1)#{$skip} { font-size: 2em;     margin-top: 0;                                 margin-bottom: calc(0.8em * var(--st-density)); }
-  :where(h2)#{$skip} { font-size: 1.5em;   margin-top: calc(2em   * var(--st-density));   margin-bottom: calc(0.8em * var(--st-density)); }
-  :where(h3)#{$skip} { font-size: 1.25em;  margin-top: calc(1.6em * var(--st-density));   margin-bottom: calc(0.6em * var(--st-density)); }
-  :where(h4)#{$skip} { font-size: 1.125em; margin-top: calc(1.5em * var(--st-density));   margin-bottom: calc(0.5em * var(--st-density)); }
-  :where(h5)#{$skip} { font-size: 1em;     margin-top: calc(1.5em * var(--st-density));   margin-bottom: calc(0.5em * var(--st-density)); }
-  :where(h6)#{$skip} { font-size: 0.875em; margin-top: calc(1.5em * var(--st-density));   margin-bottom: calc(0.5em * var(--st-density)); }
+  :where(h1)#{$skip} { font-size: 2em;     margin-block-start: 0;                            margin-block-end: calc(0.8em * var(--prose-rhythm, 1)); }
+  :where(h2)#{$skip} { font-size: 1.5em;   margin-block-start: calc(2em   * var(--prose-rhythm, 1)); margin-block-end: calc(0.8em * var(--prose-rhythm, 1)); }
+  :where(h3)#{$skip} { font-size: 1.25em;  margin-block-start: calc(1.6em * var(--prose-rhythm, 1)); margin-block-end: calc(0.6em * var(--prose-rhythm, 1)); }
+  :where(h4)#{$skip} { font-size: 1.125em; margin-block-start: calc(1.5em * var(--prose-rhythm, 1)); margin-block-end: calc(0.5em * var(--prose-rhythm, 1)); }
+  :where(h5)#{$skip} { font-size: 1em;     margin-block-start: calc(1.5em * var(--prose-rhythm, 1)); margin-block-end: calc(0.5em * var(--prose-rhythm, 1)); }
+  :where(h6)#{$skip} { font-size: 0.875em; margin-block-start: calc(1.5em * var(--prose-rhythm, 1)); margin-block-end: calc(0.5em * var(--prose-rhythm, 1)); }
 
   // === Paragraphs ===
   :where(p)#{$skip} {
-    margin-top: 0;
-    margin-bottom: calc(1.25em * var(--st-density));
+    margin-block-start: 0;
+    margin-block-end: calc(1.25em * var(--prose-rhythm, 1));
   }
 
   // === Lead ===
@@ -118,6 +123,12 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
   :where(strong, b)#{$skip} { font-weight: 600; color: var(--prose-strong-color); }
   :where(em, i)#{$skip}     { font-style: italic; }
   :where(small)#{$skip}     { font-size: 0.875em; }
+  // Highlighted text — the reading-context restore of the look reboot strips.
+  :where(mark)#{$skip} {
+    padding: 0.1875em;
+    background-color: var(--prose-mark-bg, var(--st-highlight));
+    color: var(--prose-mark-color, var(--st-highlight-foreground));
+  }
 
   // === Links ===
   :where(a)#{$skip} {
@@ -135,8 +146,8 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
   // Restore markers + indent. Nested level switches marker shape (disc →
   // circle → square) to read as a depth hierarchy.
   :where(ul, ol)#{$skip} {
-    margin-top: 0;
-    margin-bottom: calc(1.25em * var(--st-density));
+    margin-block-start: 0;
+    margin-block-end: calc(1.25em * var(--prose-rhythm, 1));
     padding-inline-start: 1.5em;
   }
 
@@ -147,7 +158,7 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
   :where(ul ul ul, ol ol ol)#{$skip}           { list-style: square; }
 
   :where(li)#{$skip} {
-    margin-block: calc(0.5em * var(--st-density));
+    margin-block: calc(0.5em * var(--prose-rhythm, 1));
   }
   :where(li)#{$skip}::marker {
     color: var(--prose-marker-color);
@@ -155,22 +166,22 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
 
   // Description lists.
   :where(dl)#{$skip} {
-    margin-top: 0;
-    margin-bottom: calc(1.25em * var(--st-density));
+    margin-block-start: 0;
+    margin-block-end: calc(1.25em * var(--prose-rhythm, 1));
   }
   :where(dt)#{$skip} {
     font-weight: 600;
     color: var(--prose-strong-color);
-    margin-top: calc(1em * var(--st-density));
+    margin-block-start: calc(1em * var(--prose-rhythm, 1));
   }
   :where(dd)#{$skip} {
-    margin-top: calc(0.25em * var(--st-density));
+    margin-block-start: calc(0.25em * var(--prose-rhythm, 1));
     padding-inline-start: 1.5em;
   }
 
   // === Blockquote ===
   :where(blockquote)#{$skip} {
-    margin-block: calc(1.6em * var(--st-density));
+    margin-block: calc(1.6em * var(--prose-rhythm, 1));
     padding-inline-start: 1em;
     border-inline-start: 3px solid var(--prose-quote-border);
     color: var(--st-muted-foreground);
@@ -179,11 +190,11 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
 
   // Inner <p> reverts to inherit so blockquote owns its own rhythm.
   :where(blockquote p)#{$skip} { margin: 0; }
-  :where(blockquote p + p)#{$skip} { margin-top: calc(0.75em * var(--st-density)); }
+  :where(blockquote p + p)#{$skip} { margin-block-start: calc(0.75em * var(--prose-rhythm, 1)); }
 
   // === HR ===
   :where(hr)#{$skip} {
-    margin-block: calc(3em * var(--st-density));
+    margin-block: calc(3em * var(--prose-rhythm, 1));
     border-top: 1px solid var(--st-border);
   }
 
@@ -203,8 +214,8 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
 
   // === Pre / code block ===
   :where(pre)#{$skip} {
-    margin-block: calc(1.6em * var(--st-density));
-    padding: calc(1em * var(--st-density));
+    margin-block: calc(1.6em * var(--prose-rhythm, 1));
+    padding: calc(1em * var(--prose-rhythm, 1));
     overflow-x: auto;
     font-family: var(--st-font-mono);
     font-size: 0.875em;
@@ -230,13 +241,13 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
   // components/_kbd.scss but stays em-based so the chip scales with the
   // surrounding prose font instead of sitting at a fixed UI size.
   :where(kbd)#{$skip} {
-    --kbd-padding-y: 0.125em;
-    --kbd-padding-x: 0.375em;
-    --kbd-radius:    var(--st-kbd-radius, var(--st-radius-sm));
+    --kbd-padding-block:  0.125em;
+    --kbd-padding-inline: 0.375em;
+    --kbd-radius:    #{radius(sm)};
     --kbd-rim:       color-mix(in oklch, var(--st-neutral) 85%, var(--st-muted-foreground));
 
     display: inline-block;
-    padding: var(--kbd-padding-y) var(--kbd-padding-x);
+    padding: var(--kbd-padding-block) var(--kbd-padding-inline);
     font-family: var(--st-font-mono);
     font-size: 0.8125em;
     font-weight: 500;
@@ -262,7 +273,7 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
 
   // === Images / figures ===
   :where(img, figure)#{$skip} {
-    margin-block: calc(2em * var(--st-density));
+    margin-block: calc(2em * var(--prose-rhythm, 1));
   }
 
   :where(img)#{$skip} {
@@ -275,7 +286,7 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
   }
 
   :where(figure figcaption)#{$skip} {
-    margin-top: calc(0.75em * var(--st-density));
+    margin-block-start: calc(0.75em * var(--prose-rhythm, 1));
     font-size: 0.875em;
     color: var(--st-muted-foreground);
     text-align: center;
@@ -293,7 +304,7 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
   // outer shape so consumer-added `thead { background: … }` stays inside
   // the frame.
   :where(table)#{$skip} {
-    margin-block: calc(2em * var(--st-density));
+    margin-block: calc(2em * var(--prose-rhythm, 1));
     width: 100%;
     font-size: 0.875em;
     line-height: 1.5;
@@ -305,7 +316,7 @@ $skip: ":not(:where(.not-prose, .not-prose *))";
   }
 
   :where(th, td)#{$skip} {
-    padding: calc(0.75em * var(--st-density)) calc(1em * var(--st-density));
+    padding: calc(0.75em * var(--prose-rhythm, 1)) calc(1em * var(--prose-rhythm, 1));
     text-align: start;
     vertical-align: top;
   }

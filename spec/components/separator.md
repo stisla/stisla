@@ -97,6 +97,7 @@ SCSS partial.
 | Variable | Affects |
 | --- | --- |
 | `--separator-thickness` | Rule weight (height for horizontal, width for vertical). |
+| `--separator-min-height` | Floor height for a vertical rule when its parent is not a flex container. |
 
 **Paint — set on `.separator`.**
 
@@ -106,8 +107,8 @@ SCSS partial.
 
 **Global tokens consumed.**
 
-`--st-border` (default rule colour). No density multiplier — the rule
-weight is a visual hairline, not part of the spacing rhythm.
+`--st-border` (default rule colour). The rule weight is a fixed visual
+hairline, not part of the `--st-spacing` rhythm.
 
 **Dark-mode flips.** None per-component. The default colour rides the
 root token swap automatically because `--st-border` retunes for dark

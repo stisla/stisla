@@ -102,9 +102,6 @@
   // edges) stay literal 1px because they're hairlines, not the shape.
   --st-border-width: 1px;
 
-  // Density: 1 default, 0.875 compact, 1.125 comfortable.
-  --st-density: 1;
-
   // === Type (2) =========================================================
   --st-font-sans:
     "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
@@ -113,6 +110,14 @@
   --st-font-mono:
     "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
     "Liberation Mono", monospace;
+
+  // === Scales (spacing, radius t-shirt, text, z, leading, …) ============
+  // Maps + functions live in tokens/_scales.scss; this emits their runtime
+  // --st-* values. Radius extends the three literals above with t-shirt keys
+  // (--st-radius aliases --st-radius-md). --st-spacing is the spacing base
+  // (space(n) = n × --st-spacing) — it fully replaced the old --st-density
+  // multiplier, which is now removed.
+  @include emit-scales;
 }
 
 // Dark mode. Intents stay put; the surface + interactional tiers flip.
@@ -124,7 +129,7 @@
   --st-surface:          oklch(0.18  0 0);
   --st-surface-2:        oklch(0.21  0 0);
   --st-surface-3:        oklch(0.23  0 0);
-  --st-border:           oklch(0.27  0 0);
+  --st-border:           oklch(0.25  0 0);
   --st-muted-foreground: oklch(0.72  0 0);
 
   --st-neutral: oklch(0.27 0 0);

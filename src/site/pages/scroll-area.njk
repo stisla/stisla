@@ -16,7 +16,7 @@
     <div class="scroll-area scroll-area--bordered" data-stisla-scroll-area style="height: 16rem;">
       <div style="padding: 1rem;">
         <h3 class="m-0 mb-2 fs-4 fw-semibold">Release notes</h3>
-        <p>The new token system retunes every component from a single root override. Brand color, radius, density, shadow, dark mode. One file, no per-component tweaks. The cascade picks the change up wherever the override lands.</p>
+        <p>The new token system retunes every component from a single root override. Brand color, radius, spacing, shadow, dark mode. One file, no per-component tweaks. The cascade picks the change up wherever the override lands.</p>
         <p>State derivation moved off Sass color math and onto runtime <code>color-mix(in oklch, ...)</code>. Hover and active percentages live next to the component, where reviewers can see them.</p>
         <p>BEM stays for static structure. Runtime state splits two ways. <code>[data-state]</code> for concepts that mainstream primitive libraries also surface, <code>.is-*</code> for everything else. Same CSS, every implementation.</p>
         <p>Forms got the long-promised reset. Inputs, selects, textareas and switches all read from one shared field-row partial. The <code>.field</code> family wraps label, control, help and error in a single block with consistent spacing.</p>
@@ -183,16 +183,17 @@
       </tbody>
     </table>
 
-    <h3>Motion</h3>
+    <h3>Border</h3>
     <table>
       <thead>
         <tr><th>Variable</th><th>Use</th></tr>
       </thead>
       <tbody>
-        <tr><td><code>--scroll-area-transition-duration</code></td><td>Handle background transition. Reduced motion zeros it.</td></tr>
+        <tr><td><code>--scroll-area-border-width</code></td><td>Frame border thickness, applied by <code>.scroll-area--bordered</code>.</td></tr>
+        <tr><td><code>--scroll-area-border-color</code></td><td>Frame border color.</td></tr>
       </tbody>
     </table>
 
-    <p><code>.scroll-area--bordered</code> adds a one-pixel border in <code>--st-border</code> for surfaces that need a frame around the scrolling region.</p>
+    <p><code>.scroll-area--bordered</code> adds a hairline border for surfaces that need a frame around the scrolling region. The handle fade is gated behind <code>prefers-reduced-motion</code> so reduced-motion users skip it.</p>
   </section>
 {% endblock %}

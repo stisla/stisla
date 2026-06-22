@@ -256,11 +256,13 @@ name and its surface stay the same.
 | --- | --- |
 | `--toast-min-width` | Minimum toast width. |
 | `--toast-max-width` | Maximum toast width. |
-| `--toast-padding` | Frame padding. |
+| `--toast-padding-inline` | Frame inline padding. |
+| `--toast-padding-block` | Frame block padding. |
 | `--toast-radius` | Outer corner radius. |
 | `--toast-z-index` | Stack order of an individual toast. |
 | `--toast-bg` | Surface background. |
 | `--toast-color` | Default text colour. |
+| `--toast-border-width` | Surface border width. |
 | `--toast-border-color` | Surface border colour (opaque by design — translucent borders ghost over content beneath). |
 | `--toast-shadow` | Drop shadow. |
 | `--toast-column-gap` | Gap between the three grid columns (icon / content / close). |

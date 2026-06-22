@@ -11,7 +11,7 @@
 
   <section>
     <h2>Example</h2>
-    <p>The same card in two states. The loading card mirrors the real card's layout so nothing jumps when content arrives. Wrap the skeleton tree in <code>.text-muted-foreground</code> so bars sit on a muted gray instead of the high-contrast body color.</p>
+    <p>The same card in two states. The loading card mirrors the real card's layout so nothing jumps when content arrives. The bars are a neutral muted gray by default, so nothing competes with the real content.</p>
     {% call ui.demo() %}
     <div class="demo-grid">
       <div class="card">
@@ -22,18 +22,14 @@
         </div>
       </div>
       <div class="card" aria-hidden="true">
-        <div class="card__body text-muted-foreground">
-          <h5 class="card__title placeholder--glow">
-            <span class="placeholder" style="width: 50%"></span>
-          </h5>
-          <p class="card__text placeholder--glow">
-            <span class="placeholder" style="width: 60%"></span>
-            <span class="placeholder" style="width: 30%"></span>
-            <span class="placeholder" style="width: 30%"></span>
-            <span class="placeholder" style="width: 50%"></span>
-            <span class="placeholder" style="width: 70%"></span>
+        <div class="card__body">
+          <span class="placeholder placeholder--glow mb-2" style="width: 50%"></span>
+          <p class="d-flex flex-column gap-2 w-100">
+            <span class="placeholder placeholder--glow" style="width: 80%"></span>
+            <span class="placeholder placeholder--glow" style="width: 70%"></span>
+            <span class="placeholder placeholder--glow" style="width: 30%"></span>
           </p>
-          <span class="btn btn--primary placeholder" aria-disabled="true" style="width: 6rem"></span>
+          <span class="placeholder placeholder--glow mt-2" aria-hidden="true" style="width: 6rem; height: 2.25rem"></span>
         </div>
       </div>
     </div>
@@ -42,7 +38,7 @@
 
   <section>
     <h2>Basic</h2>
-    <p>Apply <code>.placeholder</code> to any inline element and size it via an inline style. The bar fills with the current text color at half opacity and shows a wait cursor.</p>
+    <p>Apply <code>.placeholder</code> to any inline element and size it via an inline style. The bar fills with a neutral muted gray at half opacity and shows a wait cursor.</p>
     {% call ui.demo() %}
     <p class="text-muted-foreground m-0" aria-hidden="true">
       <span class="placeholder" style="width: 50%"></span>
@@ -52,63 +48,51 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Three height modifiers sit alongside the default. <code>.placeholder--xs</code> and <code>.placeholder--sm</code> trim the bar for inline captions; <code>.placeholder--lg</code> bulks it up for headings.</p>
+    <p>Two height modifiers sit alongside the default. <code>.placeholder--compact</code> trims the bar for inline captions; <code>.placeholder--roomy</code> bulks it up for headings.</p>
     {% call ui.demo() %}
-    <div class="text-muted-foreground" aria-hidden="true">
-      <span class="placeholder placeholder--lg" style="width: 100%"></span>
+    <div class="text-muted-foreground d-flex flex-column gap-2" aria-hidden="true">
+      <span class="placeholder placeholder--roomy" style="width: 100%"></span>
       <span class="placeholder" style="width: 100%"></span>
-      <span class="placeholder placeholder--sm" style="width: 100%"></span>
-      <span class="placeholder placeholder--xs" style="width: 100%"></span>
+      <span class="placeholder placeholder--compact" style="width: 100%"></span>
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>Colors</h2>
-    <p>Recolor with any <code>.text-*</code> utility. The default picks up the current text color; wrap in <code>.text-muted-foreground</code> for the muted gray used everywhere else on this page.</p>
+    <p>The default is a neutral muted gray. Set <code>--placeholder-bg</code> to tint a bar to any token.</p>
     {% call ui.demo() %}
-    <div aria-hidden="true">
-      <span class="placeholder text-muted-foreground" style="width: 100%"></span>
-      <span class="placeholder text-primary" style="width: 100%"></span>
-      <span class="placeholder text-success" style="width: 100%"></span>
-      <span class="placeholder text-danger" style="width: 100%"></span>
-      <span class="placeholder text-warning" style="width: 100%"></span>
-      <span class="placeholder text-info" style="width: 100%"></span>
+    <div class="d-flex flex-column gap-2" aria-hidden="true">
+      <span class="placeholder" style="width: 100%"></span>
+      <span class="placeholder" style="width: 100%; --placeholder-bg: var(--st-primary)"></span>
+      <span class="placeholder" style="width: 100%; --placeholder-bg: var(--st-success)"></span>
+      <span class="placeholder" style="width: 100%; --placeholder-bg: var(--st-danger)"></span>
+      <span class="placeholder" style="width: 100%; --placeholder-bg: var(--st-warning)"></span>
+      <span class="placeholder" style="width: 100%; --placeholder-bg: var(--st-info)"></span>
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>Animation</h2>
-    <p>Wrap a group in <code>.placeholder--glow</code> for a pulsing opacity loop, or <code>.placeholder--wave</code> for a shimmer that sweeps left to right.</p>
+    <p>Add <code>.placeholder--glow</code> to a bar for a pulsing opacity loop, or <code>.placeholder--wave</code> for a shimmer that sweeps left to right. They're modifiers on the bar, so put the class on each bar you want animated.</p>
     {% call ui.demo() %}
     <div class="demo-stack text-muted-foreground" aria-hidden="true">
-      <p class="placeholder--glow m-0">
-        <span class="placeholder" style="width: 100%"></span>
-        <span class="placeholder" style="width: 70%"></span>
-      </p>
-      <p class="placeholder--wave m-0">
-        <span class="placeholder" style="width: 100%"></span>
-        <span class="placeholder" style="width: 70%"></span>
-      </p>
-    </div>
-    {% endcall %}
-  </section>
-
-  <section>
-    <h2>Buttons</h2>
-    <p>Apply <code>.placeholder</code> to a <code>.btn</code> to render an unlabeled stand-in. Mirror the variant of the real button so the swap doesn't shift the layout.</p>
-    {% call ui.demo() %}
-    <div class="demo-row">
-      <span class="btn btn--primary placeholder" aria-disabled="true" style="width: 6rem"></span>
-      <span class="btn btn--outline btn--neutral placeholder" aria-disabled="true" style="width: 4rem"></span>
+      <div class="d-flex flex-column gap-2">
+        <span class="placeholder placeholder--glow" style="width: 100%"></span>
+        <span class="placeholder placeholder--glow" style="width: 70%"></span>
+      </div>
+      <div class="d-flex flex-column gap-2">
+        <span class="placeholder placeholder--wave" style="width: 100%"></span>
+        <span class="placeholder placeholder--wave" style="width: 70%"></span>
+      </div>
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>Customization</h2>
-    <p>Three variables retune <code>.placeholder</code> without touching component CSS. Override on <code>.placeholder</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
+    <p>These variables retune <code>.placeholder</code> without touching component CSS. Override on <code>.placeholder</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
     <table>
       <thead>
         <tr>
@@ -118,12 +102,16 @@
       </thead>
       <tbody>
         <tr>
+          <td><code>--placeholder-bg</code></td>
+          <td>Fill color; defaults to a neutral muted gray</td>
+        </tr>
+        <tr>
           <td><code>--placeholder-opacity</code></td>
-          <td>Opacity applied over <code>currentColor</code></td>
+          <td>Opacity applied over the fill</td>
         </tr>
         <tr>
           <td><code>--placeholder-radius</code></td>
-          <td>Corner radius (per-component override via <code>--st-placeholder-radius</code>)</td>
+          <td>Corner radius</td>
         </tr>
         <tr>
           <td><code>--placeholder-height</code></td>

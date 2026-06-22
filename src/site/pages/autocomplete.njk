@@ -69,12 +69,12 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Add <code>.autocomplete--sm</code> or <code>.autocomplete--lg</code> for the small or large variant. Sizes match the input scale.</p>
+    <p>Add <code>.autocomplete--compact</code> or <code>.autocomplete--roomy</code> for the small or large variant. Sizes match the input scale.</p>
     {% call ui.demo() %}
     <div class="demo-stack" style="max-width: 24rem;">
-      <input type="text" class="autocomplete autocomplete--sm" data-stisla-autocomplete placeholder="Small" data-options='["Apple", "Banana", "Cherry"]' aria-label="Small autocomplete">
+      <input type="text" class="autocomplete autocomplete--compact" data-stisla-autocomplete placeholder="Small" data-options='["Apple", "Banana", "Cherry"]' aria-label="Small autocomplete">
       <input type="text" class="autocomplete" data-stisla-autocomplete placeholder="Default" data-options='["Apple", "Banana", "Cherry"]' aria-label="Default autocomplete">
-      <input type="text" class="autocomplete autocomplete--lg" data-stisla-autocomplete placeholder="Large" data-options='["Apple", "Banana", "Cherry"]' aria-label="Large autocomplete">
+      <input type="text" class="autocomplete autocomplete--roomy" data-stisla-autocomplete placeholder="Large" data-options='["Apple", "Banana", "Cherry"]' aria-label="Large autocomplete">
     </div>
     {% endcall %}
   </section>
@@ -125,16 +125,15 @@
 
   <section>
     <h2>Customization</h2>
-    <p>The input reuses <code>--autocomplete-*</code> variables that mirror the input surface. The popup picks up the shared <code>--popup-*</code> variables (the same ones <a class="link" href="/dropdown">Dropdown menu</a>, <a class="link" href="/select">Select</a>, and <a class="link" href="/combobox">Combobox</a> use), so retuning at <code>:root</code> changes every popup the same way.</p>
+    <p>The input reuses <code>--autocomplete-*</code> variables that mirror the input surface. The popup adds more <code>--autocomplete-*</code> variables that follow the same surface recipe as <a class="link" href="/menu">Menu</a>, <a class="link" href="/select">Select</a>, and <a class="link" href="/combobox">Combobox</a>.</p>
     <table>
       <thead><tr><th>Variable</th><th>Use</th></tr></thead>
       <tbody>
         <tr><td><code>--autocomplete-height</code></td><td>Input height (matches <code>.input</code>)</td></tr>
-        <tr><td><code>--autocomplete-padding-x</code></td><td>Input horizontal padding</td></tr>
-        <tr><td><code>--autocomplete-radius</code></td><td>Input corner radius</td></tr>
-        <tr><td><code>--popup-radius</code></td><td>Popup corner radius (shared)</td></tr>
-        <tr><td><code>--popup-bg</code></td><td>Popup surface</td></tr>
-        <tr><td><code>--popup-item-bg-hover</code></td><td>Highlighted row background</td></tr>
+        <tr><td><code>--autocomplete-padding-inline</code></td><td>Input horizontal padding</td></tr>
+        <tr><td><code>--autocomplete-radius</code></td><td>Corner radius, shared by input and popup</td></tr>
+        <tr><td><code>--autocomplete-bg</code></td><td>Surface, shared by input and popup</td></tr>
+        <tr><td><code>--autocomplete-item-bg-hover</code></td><td>Highlighted row background</td></tr>
       </tbody>
     </table>
   </section>

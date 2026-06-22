@@ -1,4 +1,4 @@
-# Dropdown
+# Menu
 
 A floating menu surface tethered to a trigger control. Opens beside the
 trigger, repositions to stay in the viewport, traps keyboard navigation
@@ -15,50 +15,52 @@ each implementation. See `SPEC.md` §2.
 ## 1. Anatomy
 
 ```
-.dropdown                                positioning wrapper around the trigger
+.menu                                root — positioning wrapper around the trigger
   <trigger>                              any focusable control (typically .btn)
-  .dropdown-menu                         menu surface (positioned by JS)
-    .dropdown-menu__header               section label (optional)
-    .dropdown-menu__group                role="group" wrapper for items (optional)
-    .dropdown-menu__divider              <hr role="separator">
-    .dropdown-menu__item                 one row — button or anchor
-      .dropdown-menu__icon               leading icon slot (optional)
-      .dropdown-menu__indicator          leading check-mark slot (optional)
-      .dropdown-menu__shortcut           trailing keyboard hint (optional)
+  .menu__popup                       menu surface (floating, positioned by JS)
+    .menu__group-label               section label (optional)
+    .menu__group                role="group" wrapper for items (optional)
+    .menu__separator              <hr role="separator">
+    .menu__item                 one row — button or anchor
+      .menu__icon               leading icon slot (optional)
+      .menu__indicator          leading check-mark slot (optional)
+      .menu__shortcut           trailing keyboard hint (optional)
 ```
 
-**Required parts:** trigger, menu, at least one item.
+**Required parts:** trigger, popup, at least one item.
 
-**Optional parts:** wrapper, header, group, divider, icon, indicator,
-shortcut. The trigger does not own a Stisla class — any focusable control
-can drive a menu.
+**Optional parts:** root wrapper, group-label, group, separator, icon,
+indicator, shortcut. The trigger does not own a Stisla class — any focusable
+control can drive a menu.
 
 **Class ownership.** Implementations emit these exact class names. The
-spec's CSS targets them; deviations break visual conformance. The wrapper
-`.dropdown` is positional sugar — a menu without a wrapper still works as
-long as the trigger can be located.
+spec's CSS targets them; deviations break visual conformance. The root
+`.menu` is positional sugar — the `.menu__popup` can be portaled without a
+root as long as the trigger can be located. (Base UI anatomy: root /
+trigger / popup / item / indicator / separator / group — shared across all
+overlay components.)
 
 ## 2. States
 
 ```
-.dropdown-menu[data-state="open"]        visible, positioned, keyboard active
-.dropdown-menu[data-state="closed"]      hidden (default)
-.dropdown-menu__item[data-highlighted]   keyboard-focused row
-.dropdown-menu__item[data-state="checked"]    menuitemcheckbox / menuitemradio checked
-.dropdown-menu__item[data-state="unchecked"]  menuitemcheckbox / menuitemradio unchecked
-.dropdown-menu__item[aria-current="true"]     persistent selected (alt hook)
-.dropdown-menu__item[data-state="active"]     persistent selected (alt hook)
-.dropdown-menu__item[aria-disabled="true"]    disabled (anchor)
-.dropdown-menu__item:disabled                 disabled (button)
-html.is-dropdown-open                    page scroll lock while any menu is open
+.menu__popup[data-state="open"]   visible, positioned, keyboard active
+.menu__popup[data-state="closed"] hidden (default)
+.menu__item[data-highlighted]   keyboard-focused row
+.menu__item[data-state="checked"]    menuitemcheckbox / menuitemradio checked
+.menu__item[data-state="unchecked"]  menuitemcheckbox / menuitemradio unchecked
+.menu__item[aria-current="true"]     persistent selected (alt hook)
+.menu__item[data-state="active"]     persistent selected (alt hook)
+.menu__item[aria-disabled="true"]    disabled (anchor)
+.menu__item:disabled                 disabled (button)
+html.is-menu-open                        page scroll lock while any menu is open
 ```
 
 **Rules.**
 
-- `data-state` on `.dropdown-menu` lives on the menu surface and reflects
+- `data-state` lives on the `.menu__popup` surface and reflects
   open / closed. The convention matches what mainstream JS primitive
   libraries emit.
-- `data-highlighted` on `.dropdown-menu__item` is the keyboard navigation
+- `data-highlighted` on `.menu__item` is the keyboard navigation
   position. Exactly one item carries it while the menu is open and the
   user has pressed any keyboard nav key. Mouse hover does **not** set
   `data-highlighted` — hover paints `:hover` via CSS without touching the
@@ -72,18 +74,18 @@ html.is-dropdown-open                    page scroll lock while any menu is open
   hover so the persistent state stays visible.
 - `:disabled` covers `<button>` items; `[aria-disabled="true"]` covers
   `<a>` items (which have no native disabled attribute).
-- `.is-dropdown-open` on `<html>` locks page scroll while at least one
-  dropdown is open. Stacked opens use a refcount. The lock prevents the
+- `.is-menu-open` on `<html>` locks page scroll while at least one
+  menu is open. Stacked opens use a refcount. The lock prevents the
   menu's fixed position from drifting against scrolling content.
 
 ## 3. Modifiers
 
 ```
-.dropdown-menu__item--danger             destructive variant — danger colour text + soft danger hover bg
+.menu__item--danger             destructive variant — danger colour text + soft danger hover bg
 ```
 
 The menu surface has no size variants — width is content-driven within
-`--dropdown-width-min` and `max-content` bounds, and height is capped to
+`--menu-min-width` and `max-content` bounds, and height is capped to
 the available viewport space.
 
 ## 4. Behaviour
@@ -92,8 +94,8 @@ A dropdown has four lifecycle phases. Implementations satisfy all four.
 
 **Open.**
 1. Capture currently-focused element (for return on close).
-2. If this is the first open dropdown, apply scroll lock to `<html>`
-   (`.is-dropdown-open`). Otherwise increment the refcount.
+2. If this is the first open menu, apply scroll lock to `<html>`
+   (`.is-menu-open`). Otherwise increment the refcount.
 3. Compute initial position beside the trigger and apply it to the menu.
 4. Subscribe to scroll / resize so the menu repositions in real time if
    the trigger moves. (Outside of motion, the lock holds the page still.)
@@ -110,7 +112,7 @@ A dropdown has four lifecycle phases. Implementations satisfy all four.
 4. Flip `data-state` to `closed` on the menu and `aria-expanded` to
    `false` on the trigger. Clear any `data-highlighted` attribute.
 5. After transition end, decrement the refcount; if zero, remove
-   `.is-dropdown-open` from `<html>`.
+   `.is-menu-open` from `<html>`.
 6. Return focus to the element captured in Open step 1, unless
    suppressed (e.g. Tab-dismiss).
 
@@ -207,7 +209,7 @@ Disabled items are skipped by every navigation key and by typeahead.
   / `unchecked`.
 - `aria-disabled="true"` on anchor-based items; `:disabled` on
   button-based items.
-- `.dropdown-menu__divider` is `<hr role="separator">`.
+- `.menu__separator` is `<hr role="separator">`.
 
 **Focus management.**
 
@@ -221,8 +223,8 @@ Disabled items are skipped by every navigation key and by typeahead.
   before open — unless Tab-dismiss let focus advance, in which case the
   return is skipped.
 
-**Scroll lock.** The page behind a dropdown does not scroll. The
-implementation applies `.is-dropdown-open` to `<html>`; the CSS handles
+**Scroll lock.** The page behind a menu does not scroll. The
+implementation applies `.is-menu-open` to `<html>`; the CSS handles
 the rest (`overflow: hidden`, `scrollbar-gutter: stable`). This matches
 the dialog / drawer convention.
 
@@ -240,50 +242,54 @@ partial; the spec only commits to which knobs exist and what each one
 affects. Tuning a default is a non-breaking change as long as the var
 name and its surface stay the same.
 
-**Component-scoped (set on `.dropdown-menu`, override per menu or globally).**
+**Component-scoped (set on `.menu`, override per menu or globally).**
 
 | Variable | Affects |
 | --- | --- |
-| `--dropdown-width-min` | Minimum menu width. |
-| `--dropdown-padding` | Padding inside the menu surface around the items. |
-| `--dropdown-radius` | Outer corner radius of the menu. |
-| `--dropdown-item-radius` | Inner item radius — derives from outer radius minus padding so item chips sit cleanly inset. |
-| `--dropdown-gap` | Vertical gap between items. |
-| `--dropdown-z-index` | Stack order. |
-| `--dropdown-font-size` | Menu font size. |
-| `--dropdown-bg` | Menu surface background. |
-| `--dropdown-color` | Menu surface text colour. |
-| `--dropdown-border-color` | Menu surface border colour. |
-| `--dropdown-shadow` | Drop shadow under the menu. |
-| `--dropdown-item-padding-y` | Vertical padding on each item. Multiplied by `--st-density`. |
-| `--dropdown-item-padding-x` | Inline padding on each item. Multiplied by `--st-density`. |
-| `--dropdown-item-min-height` | Minimum row height. Multiplied by `--st-density`. |
-| `--dropdown-item-gap` | Gap between an item's icon, label, and shortcut. |
-| `--dropdown-item-icon-size` | Square size of an item icon, indicator, and shortcut chip. |
-| `--dropdown-item-bg-hover` | Item background on hover and keyboard highlight. |
-| `--dropdown-item-color-hover` | Item text colour on hover and keyboard highlight. |
-| `--dropdown-item-bg-active` | Item background when persistent selected. |
-| `--dropdown-item-color-active` | Item text colour when persistent selected. |
-| `--dropdown-item-color-disabled` | Item text colour when disabled. |
-| `--dropdown-item-color-danger` | Item text colour for the danger variant. |
-| `--dropdown-item-bg-danger-hover` | Soft danger tint background on a danger item's hover and keyboard highlight. |
-| `--dropdown-header-padding-y` | Header vertical padding. |
-| `--dropdown-header-padding-x` | Header inline padding. |
-| `--dropdown-header-font-size` | Header text size. |
-| `--dropdown-header-font-weight` | Header text weight. |
-| `--dropdown-header-color` | Header text colour. |
-| `--dropdown-divider-color` | Divider line colour. |
-| `--dropdown-divider-margin-y` | Vertical breathing room around the divider. |
-| `--dropdown-shortcut-color` | Trailing shortcut chip text colour. |
-| `--dropdown-shortcut-font-size` | Trailing shortcut chip text size. |
-| `--dropdown-transition-duration` | Open / close transition duration. |
+| `--menu-min-width` | Minimum menu width. |
+| `--menu-padding-inline` | Inline padding inside the menu surface around the items. |
+| `--menu-padding-block` | Block padding inside the menu surface around the items. |
+| `--menu-radius` | Outer corner radius of the menu. |
+| `--menu-item-radius` | Inner item radius — derives from outer radius minus inline padding so item chips sit cleanly inset. |
+| `--menu-gap` | Vertical gap between items. |
+| `--menu-z-index` | Stack order. |
+| `--menu-font-size` | Menu font size. |
+| `--menu-bg` | Menu surface background. |
+| `--menu-color` | Menu surface text colour. |
+| `--menu-border-width` | Menu surface border width. |
+| `--menu-border-color` | Menu surface border colour. |
+| `--menu-shadow` | Drop shadow under the menu. |
+| `--menu-item-padding-block` | Vertical padding on each item. |
+| `--menu-item-padding-inline` | Inline padding on each item. |
+| `--menu-item-min-height` | Minimum row height. |
+| `--menu-item-gap` | Gap between an item's icon, label, and shortcut. |
+| `--menu-item-icon-size` | Square size of an item icon, indicator, and shortcut chip. |
+| `--menu-item-icon-color` | Item icon colour. Defaults to the row's text colour; set to pin a fixed icon colour. |
+| `--menu-item-bg-hover` | Item background on hover and keyboard highlight. |
+| `--menu-item-color-hover` | Item text colour on hover and keyboard highlight. |
+| `--menu-item-bg-active` | Item background when persistent selected. |
+| `--menu-item-color-active` | Item text colour when persistent selected. |
+| `--menu-item-color-disabled` | Item text colour when disabled. |
+| `--menu-item-color-danger` | Item text colour for the danger variant. |
+| `--menu-item-bg-danger-hover` | Soft danger tint background on a danger item's hover and keyboard highlight. |
+| `--menu-group-label-padding-block` | Group label vertical padding. |
+| `--menu-group-label-padding-inline` | Group label inline padding. |
+| `--menu-group-label-font-size` | Group label text size. |
+| `--menu-group-label-font-weight` | Group label text weight. |
+| `--menu-group-label-color` | Group label text colour. |
+| `--menu-separator-color` | Separator line colour. |
+| `--menu-separator-margin-block` | Vertical breathing room around the separator. |
+| `--menu-shortcut-color` | Trailing shortcut chip text colour. |
+| `--menu-shortcut-font-size` | Trailing shortcut chip text size. |
+| `--menu-transition-duration` | Open / close transition duration. |
 
 **Global tokens consumed.**
 
 `--st-surface`, `--st-foreground`, `--st-muted-foreground`, `--st-accent`,
 `--st-accent-foreground`, `--st-highlight`, `--st-highlight-foreground`,
-`--st-border`, `--st-danger`, `--st-radius`, `--st-shadow`, `--st-density`,
-`--st-ring` (focus ring on items).
+`--st-border`, `--st-danger`, `--st-ring` (focus ring on items). Padding,
+gaps, and row height ride the spacing base `--st-spacing` via the
+`space()` helper.
 
 **Dark-mode flips.** None component-local — the dropdown inherits the
 theme's surface, accent, and highlight tokens. The danger variant's soft

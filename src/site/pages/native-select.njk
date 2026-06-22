@@ -28,10 +28,10 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Three sizes match the input scale. Add <code>.select--sm</code> or <code>.select--lg</code>.</p>
+    <p>Three sizes match the input scale. Add <code>.select--compact</code> or <code>.select--roomy</code>.</p>
     {% call ui.demo() %}
     <div class="demo-stack" style="max-width: 24rem;">
-      <select class="select select--sm" aria-label="Small select">
+      <select class="select select--compact" aria-label="Small select">
         <option selected>Small</option>
         <option value="1">One</option>
         <option value="2">Two</option>
@@ -41,7 +41,7 @@
         <option value="1">One</option>
         <option value="2">Two</option>
       </select>
-      <select class="select select--lg" aria-label="Large select">
+      <select class="select select--roomy" aria-label="Large select">
         <option selected>Large</option>
         <option value="1">One</option>
         <option value="2">Two</option>
@@ -186,7 +186,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Nine variables retune <code>.select</code> without touching component CSS. Eight mirror the <a class="link" href="/input">input surface</a> under the <code>--select-</code> prefix so the chevron, padding, height, and so on can shift independently. The ninth is the chevron SVG itself.</p>
+    <p>These variables retune <code>.select</code> without touching component CSS. Most mirror the <a class="link" href="/input">input surface</a> under the <code>--select-</code> prefix so the padding, height, and so on can shift independently. The last is the chevron SVG itself.</p>
     <p>On touch devices (<code>@media (pointer: coarse)</code>) <code>--select-font-size</code> is bumped to <code>1rem</code> so iOS Safari doesn't zoom the viewport on focus. The browser auto-zooms any field with computed font-size below 16px and never zooms back; desktop keeps the tighter default.</p>
     <table>
       <thead>
@@ -198,19 +198,19 @@
       <tbody>
         <tr>
           <td><code>--select-radius</code></td>
-          <td>Corner radius; sizes pull <code>--st-radius-sm</code> / <code>-lg</code></td>
+          <td>Corner radius; the compact and roomy variants reassign this</td>
         </tr>
         <tr>
           <td><code>--select-height</code></td>
-          <td>Single-line height; sm and lg reassign this. Multi-line variants (<code>multiple</code>, <code>size</code>) treat this as a min-height floor</td>
+          <td>Single-line height; the compact and roomy variants reassign this. Multi-line variants (<code>multiple</code>, <code>size</code>) treat this as a min-height floor</td>
         </tr>
         <tr>
-          <td><code>--select-padding-x</code></td>
-          <td>Horizontal padding; sm and lg reassign this</td>
+          <td><code>--select-padding-inline</code></td>
+          <td>Horizontal padding; the compact and roomy variants reassign this</td>
         </tr>
         <tr>
           <td><code>--select-font-size</code></td>
-          <td>Text size; sm and lg reassign this</td>
+          <td>Text size; the compact and roomy variants reassign this</td>
         </tr>
         <tr>
           <td><code>--select-bg</code></td>
@@ -221,7 +221,11 @@
           <td>Text color</td>
         </tr>
         <tr>
-          <td><code>--select-border</code></td>
+          <td><code>--select-border-width</code></td>
+          <td>Border thickness</td>
+        </tr>
+        <tr>
+          <td><code>--select-border-color</code></td>
           <td>Border color; validation hooks flip this to <code>--st-danger</code></td>
         </tr>
         <tr>

@@ -1,4 +1,4 @@
-## Item
+## media
 
 A multipurpose row that pairs media with text and an action. The media
 slot holds an avatar, icon, image, or any block-sized leading element;
@@ -8,8 +8,8 @@ inline end. Use it for user lists, settings rows, notifications,
 payment methods, files, products — anywhere a list of similar things
 shares a layout.
 
-This file is the cross-implementation contract. It describes what an
-item is and what it must do; the prop names and slot binding belong to
+This file is the cross-implementation contract. It describes what a
+media is and what it must do; the prop names and slot binding belong to
 each implementation. See `SPEC.md` §2.
 
 ---
@@ -17,27 +17,27 @@ each implementation. See `SPEC.md` §2.
 ## 1. Anatomy
 
 ```
-.item                                    the row — root
-  .item__media                           leading slot — avatar / icon / image
-  .item__content                         centre column — title / description / meta
-    .item__title                         primary line
-    .item__description                   secondary line — muted, regular weight
-    .item__meta                          tertiary line — muted, smaller
-  .item__action                          trailing slot — buttons / links / form controls
+.media                                    the row — root
+  .media__figure                           leading slot — avatar / icon / image
+  .media__content                         centre column — title / description / meta
+    .media__title                         primary line
+    .media__description                   secondary line — muted, regular weight
+    .media__meta                          tertiary line — muted, smaller
+  .media__action                          trailing slot — buttons / links / form controls
 ```
 
 **Required parts:** root.
 
-**Optional parts:** every other part. A minimum item is just `.item`
+**Optional parts:** every other part. A minimum media is just `.media`
 with text inside; the parts only exist to keep typography and spacing
 consistent across consumers.
 
 **Slot order.** The DOM order is media → content → action. The visual
 order matches under default direction; under RTL the inline-start /
 inline-end pins flip automatically because the CSS uses logical
-properties (`margin-inline-start: auto` on `.item__action`).
+properties (`margin-inline-start: auto` on `.media__action`).
 
-**Action placement.** `.item__action` is a sibling of `.item__content`,
+**Action placement.** `.media__action` is a sibling of `.media__content`,
 not a child. This is intentional: when the row's interactive surface is
 a wrapping `<a>` or `<button>` (e.g. an item that navigates), the
 action's own buttons must not be nested inside the wrapping interactive
@@ -48,13 +48,13 @@ spec's CSS targets them; deviations break visual conformance.
 
 ## 2. States
 
-The item itself has no opt-in state classes. Interactive items derive
+The media itself has no opt-in state classes. Interactive rows derive
 their hover and focus paint from the host element:
 
 ```
-a.item:hover                             hover — when the root is an anchor
-button.item:hover                        hover — when the root is a button
-.item:focus-visible                      keyboard focus
+a.media:hover                            hover — when the root is an anchor
+button.media:hover                       hover — when the root is a button
+.media:focus-visible                      keyboard focus
 ```
 
 Implementations may add `[data-state="active"]` for selection patterns
@@ -65,16 +65,17 @@ to it.
 ## 3. Modifiers
 
 ```
-.item--flush                             strip border, background, radius
-.item--vertical                          stack media / content / action top-to-bottom
+.media--flush                             strip border, background, radius
+.media--vertical                          stack media / content / action top-to-bottom
 ```
 
-**Flush.** Drops `--item-bg`, `--item-border`, and `--item-radius`.
-Designed for stacks where a parent owns the frame (a card body, a
-sidebar panel, a popover). When a flush item sits as a direct child of
-a `.card`, the host implementation retunes `--item-padding` to
-`--card-padding` so the row's inline edges align with the card's
-header and footer paddings.
+**Flush.** Drops `--media-bg`, `--media-border-width`, and
+`--media-radius`. Designed for stacks where a parent owns the frame (a
+card body, a sidebar panel, a popover). When a flush row sits as a
+direct child of a `.card`, the host implementation retunes
+`--media-padding-inline` / `--media-padding-block` to the card's
+paddings so the row's inline edges align with the card's header and
+footer paddings.
 
 **Vertical.** Sets `flex-direction: column` on the root and clears the
 action's `margin-inline-start: auto` (the inline pin makes no sense on
@@ -82,13 +83,13 @@ a column). Stack reads top to bottom: media, content, action.
 
 ## 4. Behaviour
 
-None. The item is pure layout. It owns no JS class and emits no
+None. The media is pure layout. It owns no JS class and emits no
 lifecycle events. Interactive rows source their behaviour from the host
 element type (anchor, button, label).
 
 ## 5. Options
 
-None. The item has no runtime options.
+None. The media has no runtime options.
 
 ## 6. Lifecycle events
 
@@ -96,7 +97,7 @@ None.
 
 ## 7. Keyboard
 
-The item itself is never focusable. If the root is an `<a>` or
+The media itself is never focusable. If the root is an `<a>` or
 `<button>`, standard platform keyboard semantics apply unchanged
 (Enter / Space on a button, Enter on a link). If the action slot holds
 form controls or buttons, they own their own keyboard interactions.
@@ -105,20 +106,20 @@ form controls or buttons, they own their own keyboard interactions.
 
 **Roles + ARIA.**
 
-- Interactive items use the appropriate native host: `<a>` for
+- Interactive rows use the appropriate native host: `<a>` for
   navigation, `<button>` for actions, `<label>` when the row paints a
   hidden input's state.
-- Static items use `<div>` (or `<li>` inside a list).
+- Static rows use `<div>` (or `<li>` inside a list).
 - Implementations must not nest interactive controls inside an
   interactive ancestor. The action slot's sibling placement makes this
   trivial: when the row root is an `<a>`, the action's buttons sit
   outside the link in the DOM tree.
 
 **Focus visibility.** Focus rings appear via `:focus-visible` only,
-sourced from `--st-ring` at the theme layer. Clicking the item does
+sourced from `--st-ring` at the theme layer. Clicking the row does
 not paint a ring.
 
-**Reduced motion.** The item has no animation; nothing to suppress.
+**Reduced motion.** The media has no animation; nothing to suppress.
 
 **Forced colours.** Borders, text, and any focus ring remain visible
 under `forced-colors: active`. Background fills route through system
@@ -126,30 +127,33 @@ colours.
 
 ## 9. Tokens
 
-The customisation knobs the item exposes. Defaults live in the SCSS
+The customisation knobs the media exposes. Defaults live in the SCSS
 partial.
 
-**Geometry — set on `.item`.**
+**Geometry — set on `.media`.**
 
 | Variable | Affects |
 | --- | --- |
-| `--item-radius` | Corner radius. Cleared to `0` by `--flush`. |
-| `--item-padding` | Padding for the row. Multiplied by `--st-density`. Retuned to `--card-padding` when a flush item lives inside a card. |
-| `--item-gap` | Spacing between media, content, and action. |
+| `--media-radius` | Corner radius. Cleared to `0` by `--flush`. |
+| `--media-padding-inline` | Inline padding for the row. Retuned to the card's inline padding when a flush row lives inside a card. |
+| `--media-padding-block` | Block padding for the row. Retuned to the card's block padding when a flush row lives inside a card. |
+| `--media-gap` | Spacing between figure, content, and action. |
 
-**Surface — set on `.item`.**
+**Surface — set on `.media`.**
 
 | Variable | Affects |
 | --- | --- |
-| `--item-bg` | Background fill. Cleared to `transparent` by `--flush`. |
-| `--item-color` | Text colour. |
-| `--item-border` | Full border shorthand (width, style, colour). Cleared to `0` by `--flush`. |
+| `--media-bg` | Background fill. Cleared to `transparent` by `--flush`. |
+| `--media-color` | Text colour. |
+| `--media-border-width` | Border width. Cleared to `0` by `--flush`. |
+| `--media-border-color` | Border colour. |
 
 **Global tokens consumed.**
 
 `--st-surface` (default bg), `--st-foreground` (text), `--st-border`
-(rim), `--st-muted-foreground` (description + meta), `--st-radius`
-(default corner), `--st-density` (padding multiplier).
+(rim), `--st-border-width` (default rim weight),
+`--st-muted-foreground` (description + meta), `--st-spacing` (spacing
+base behind `space()` paddings + gap).
 
 **Dark-mode flips.** None per-component. All surfaces ride the root
 token swap automatically.
@@ -159,7 +163,7 @@ token swap automatically.
 - Intent-coloured variants (`--primary`, `--success`, `--danger`,
   `--info`, `--warning`) — use `.alert` for notification banners or
   `.badge` for inline tags
-- Checkable item pattern (`role="option"`, `aria-selected`) — list
+- Checkable row pattern (`role="option"`, `aria-selected`) — list
   patterns belong to `.list-group` or to a future combobox / select
   primitive
 - Drag-handle slot for sortable lists — host implementations may add

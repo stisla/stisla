@@ -5,7 +5,7 @@
 // .radio. Checkbox-specific concerns layer on here: the square corner,
 // indeterminate fill, and the checked / indeterminate indicator SVGs.
 //
-// BEM: .checkbox (no modifiers — size scales by --st-density, the wrapper
+// BEM: .checkbox (no modifiers — size is a space() multiple, the wrapper
 // `.field__item` owns layout, validation lives on the input itself).
 //
 // State derivation: native pseudos first (V3.md §3.6). :checked,
@@ -14,13 +14,12 @@
 // .is-invalid / .was-validated entirely.
 
 .checkbox {
-  --checkbox-size:   calc(1rem * var(--st-density));         // 16
-  // 4 px literal, tighter than --st-radius-sm by design. Checkbox sits
-  // outside the small tier; presets that want every corner square set
-  // --st-checkbox-radius explicitly.
-  --checkbox-radius: var(--st-checkbox-radius, 0.25rem);
-
-  @include form-check-base('checkbox');
+  // radius(xs) (4px) is tighter than radius(sm) by design — the box sits
+  // outside the small tier. A preset squares every box by setting
+  // --checkbox-radius in its scope (form-check-base reads radius(xs) as the
+  // fallback default). Size defaults to space(4) in the mixin; override via
+  // --checkbox-size in a scope or inline.
+  @include form-check-base('checkbox', #{radius(xs)});
 
   // Hover — only when idle. Skip when the input owns a state with its own
   // border color (focus, invalid, checked, indeterminate, disabled).
@@ -38,8 +37,8 @@
   // with a custom SVG.
   &:checked,
   &:indeterminate {
-    background-color: var(--checkbox-checked-bg);
-    border-color:     var(--checkbox-checked-bg);
+    background-color: var(--checkbox-bg-checked, var(--st-primary));
+    border-color:     var(--checkbox-bg-checked, var(--st-primary));
     background-image: var(--checkbox-indicator);
   }
 

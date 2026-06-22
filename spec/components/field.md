@@ -182,7 +182,7 @@ partial.
 | Variable | Affects |
 | --- | --- |
 | `--field-item-gap` | Horizontal gap between input and label inside an item. |
-| `--field-item-padding-y` | Vertical breathing room around the item row. |
+| `--field-item-padding-block` | Vertical breathing room around the item row. |
 | `--field-item-label-font-weight` | Label weight when nested inside an item (overrides the stacked weight). |
 | `--field-item-disabled-opacity` | Label dim when the input inside an item is disabled. |
 

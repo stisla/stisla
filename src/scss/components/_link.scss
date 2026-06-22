@@ -7,22 +7,24 @@
 // .link's recipe is intentionally the visual twin of .prose a so a link
 // reads the same whether it sits in a UI explainer or a docs paragraph.
 //
-// --link-hover-color resolves at definition time, so overriding
-// --link-color also moves the hover. Override --link-hover-color directly
-// to break that derivation.
+// --link-color-hover derives from --link-color in its fallback, so overriding
+// --link-color also moves the hover. Set --link-color-hover directly to break
+// that derivation.
 
 .link {
-  --link-color:                var(--st-primary);
-  --link-decoration-offset:    2px;
-  --link-decoration-thickness: 1px;
-  --link-hover-color:          color-mix(in oklch, var(--link-color) 80%, black);
-
-  color: var(--link-color);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--link-gap, #{space(1)});
+  color: var(--link-color, var(--st-primary));
   text-decoration: underline;
-  text-underline-offset: var(--link-decoration-offset);
-  text-decoration-thickness: var(--link-decoration-thickness);
+  text-underline-offset: var(--link-decoration-offset, 2px);
+  text-decoration-thickness: var(--link-decoration-thickness, 1px);
+}
+
+.link svg {
+  width: 1.125rem;
 }
 
 .link:hover {
-  color: var(--link-hover-color);
+  color: var(--link-color-hover, color-mix(in oklch, var(--link-color, var(--st-primary)) 80%, black));
 }

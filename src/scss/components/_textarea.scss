@@ -14,8 +14,8 @@
   @include form-field-base('textarea');
 
   height: auto;
-  min-height: var(--textarea-height);
-  padding-block: calc(0.375rem * var(--st-density));   // 6 at density 1
+  min-height: var(--textarea-height, #{space(9)});
+  padding-block: #{space(1.5)};   // 0.375rem — restore vertical padding
   line-height: 1.5;
   resize: vertical;
 }
@@ -23,20 +23,20 @@
 // === Sizes ==============================================================
 // Mirror the .input scale so a textarea sits in a form row beside inputs
 // without breaking rhythm.
-.textarea--sm {
-  --textarea-radius:    var(--st-input-radius, var(--st-radius-sm));
-  --textarea-height:    calc(1.75rem + 0.5rem * (var(--st-density) - 1));    // 28 @ 1
-  --textarea-padding-x: calc(0.5rem * var(--st-density));                    //  8
-  --textarea-font-size: 0.8125rem;
+.textarea--compact {
+  --textarea-radius:         #{radius(sm)};
+  --textarea-height:         #{space(7)};   // 1.75rem
+  --textarea-padding-inline: #{space(2)};   // 0.5rem
+  --textarea-font-size:      0.8125rem;     // 13px, intentionally off-scale
   // See form-field-base — iOS auto-zoom guard for sub-16px fields.
   @media (pointer: coarse) {
-    --textarea-font-size: 1rem;
+    --textarea-font-size: #{text(base)};
   }
 }
 
-.textarea--lg {
-  --textarea-radius:    var(--st-input-radius, var(--st-radius-lg));
-  --textarea-height:    calc(2.75rem + 0.875rem * (var(--st-density) - 1));  // 44 @ 1
-  --textarea-padding-x: calc(0.875rem * var(--st-density));                  // 14
-  --textarea-font-size: 1rem;
+.textarea--roomy {
+  --textarea-radius:         #{radius(lg)};
+  --textarea-height:         #{space(11)};  // 2.75rem
+  --textarea-padding-inline: #{space(3.5)}; // 0.875rem
+  --textarea-font-size:      #{text(base)};
 }

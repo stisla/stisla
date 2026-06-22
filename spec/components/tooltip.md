@@ -176,8 +176,8 @@ affects.
 | Variable | Affects |
 | --- | --- |
 | `--tooltip-max-width` | Maximum chip width before content wraps. |
-| `--tooltip-padding-y` | Vertical padding inside the chip. |
-| `--tooltip-padding-x` | Horizontal padding inside the chip. |
+| `--tooltip-padding-block` | Vertical padding inside the chip. |
+| `--tooltip-padding-inline` | Horizontal padding inside the chip. |
 | `--tooltip-radius` | Corner radius of `.tooltip__inner`. |
 | `--tooltip-z-index` | Stack order. |
 | `--tooltip-font-size` | Text size. |

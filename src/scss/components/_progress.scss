@@ -17,8 +17,8 @@
 //   .progress__bar         the filled portion (sized by inline width %)
 //
 // === Modifiers ===========================================================
-//   .progress--sm                          4px track (compact)
-//   .progress--lg                         16px track (label-friendly)
+//   .progress--compact                          4px track (compact)
+//   .progress--roomy                         16px track (label-friendly)
 //   .progress__bar--primary               default intent (explicit form)
 //   .progress__bar--success
 //   .progress__bar--warning
@@ -56,42 +56,19 @@
 // === Radius ==============================================================
 // .progress__track opts out of --st-radius by default. Pill is semantic
 // for a progress strip (same family as .badge, .slider — V3.md §3.4).
-// Set --st-progress-radius at a parent scope (e.g. the brutalist preset
-// wrapper) to flatten in bulk, or --progress-radius on the component
-// itself for a one-off.
+// Set --progress-radius at a parent scope (e.g. the brutalist preset
+// wrapper) to flatten in bulk, or on the component itself for a one-off.
 
 .progress {
-  // === Geometry ========================================================
-  --progress-height:                    calc(0.5rem * var(--st-density));
-  --progress-radius:                    var(--st-progress-radius, 9999px);
-  --progress-margin-bottom:             0;
-  --progress-header-gap:                0.25rem;
-
-  // === Track ===========================================================
-  --progress-bg:                        var(--st-neutral);
-
-  // === Bar =============================================================
-  --progress-bar-bg:                    var(--st-primary);
-  --progress-bar-transition-duration:   0.6s;
-
-  // === Caption =========================================================
-  --progress-label-font-size:           0.875rem;
-  --progress-label-font-weight:         500;
-  --progress-label-color:               var(--st-foreground);
-  --progress-value-color:               var(--st-muted-foreground);
-
-  // === Animation =======================================================
-  --progress-shimmer-color:             color-mix(in oklch, white 30%, transparent);
-  --progress-shimmer-duration:          3s;
-  --progress-indeterminate-duration:    1.5s;
-
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing declared on the
+  // root, so a scope / inline retunes any of them; the children
+  // (__track / __bar / __label / __value) read them with the same defaults.
   // Grid: label left, value right, track spanning both. The header row
   // collapses to nothing when both caption elements are absent.
   display: grid;
   grid-template-columns: 1fr auto;
-  column-gap: 1rem;
-  row-gap: var(--progress-header-gap);
-  margin-bottom: var(--progress-margin-bottom);
+  column-gap: #{space(4)};
+  row-gap: var(--progress-header-gap, #{space(1)});
 }
 
 // === Caption =============================================================
@@ -100,16 +77,16 @@
 
 .progress__label {
   grid-column: 1;
-  font-size: var(--progress-label-font-size);
-  font-weight: var(--progress-label-font-weight);
-  color: var(--progress-label-color);
+  font-size: var(--progress-label-font-size, #{text(sm)});
+  font-weight: var(--progress-label-font-weight, #{weight(medium)});
+  color: var(--progress-label-color, var(--st-foreground));
   line-height: 1.4;
 }
 
 .progress__value {
   grid-column: 2;
-  font-size: var(--progress-label-font-size);
-  color: var(--progress-value-color);
+  font-size: var(--progress-label-font-size, #{text(sm)});
+  color: var(--progress-value-color, var(--st-muted-foreground));
   line-height: 1.4;
 }
 
@@ -121,9 +98,9 @@
 .progress__track {
   grid-column: 1 / -1;
   display: block;
-  height: var(--progress-height);
-  background-color: var(--progress-bg);
-  border-radius: var(--progress-radius);
+  height: var(--progress-height, #{space(2)});
+  background-color: var(--progress-bg, var(--st-neutral));
+  border-radius: var(--progress-radius, #{radius(full)});
   overflow: hidden;
 }
 
@@ -138,9 +115,9 @@
   display: block;
   width: 0;
   height: 100%;
-  background-color: var(--progress-bar-bg);
+  background-color: var(--progress-bar-bg, var(--st-primary));
   overflow: hidden;
-  transition: width var(--progress-bar-transition-duration) ease;
+  transition: width var(--progress-bar-transition-duration, 0.6s) ease;
 }
 
 // === Intent modifiers ====================================================
@@ -166,11 +143,11 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    var(--progress-shimmer-color) 50%,
+    var(--progress-shimmer-color, color-mix(in oklch, white 30%, transparent)) 50%,
     transparent 100%
   );
   transform: translateX(-100%);
-  animation: progress-shimmer var(--progress-shimmer-duration) linear infinite;
+  animation: progress-shimmer var(--progress-shimmer-duration, 3s) linear infinite;
 }
 
 @keyframes progress-shimmer {
@@ -190,7 +167,7 @@
 
 .progress.is-indeterminate .progress__bar {
   width: 50%;
-  animation: progress-indeterminate var(--progress-indeterminate-duration) ease-in-out infinite;
+  animation: progress-indeterminate var(--progress-indeterminate-duration, 1.5s) ease-in-out infinite;
 }
 
 .progress.is-indeterminate .progress__bar::after {
@@ -203,11 +180,11 @@
 }
 
 // === Size modifiers ======================================================
-// Retune --progress-height in modifier scope. Matches .btn--sm / --lg
-// and .pagination--sm / --lg pattern — no per-size vars to maintain.
+// Retune --progress-height in modifier scope. Matches .btn--compact / --roomy
+// and .pagination--compact / --roomy pattern — no per-size vars to maintain.
 
-.progress--sm { --progress-height: calc(0.25rem * var(--st-density)); } //  4
-.progress--lg { --progress-height: calc(1rem    * var(--st-density)); } // 16
+.progress--compact { --progress-height: #{space(1)}; } // 0.25rem
+.progress--roomy { --progress-height: #{space(4)}; } // 1rem
 
 @media (prefers-reduced-motion: reduce) {
   .progress__bar {

@@ -101,7 +101,7 @@
 
   <section>
     <h2>Layout</h2>
-    <p>Spacing uses a Tailwind-style 4&nbsp;px linear scale (<code>1</code>=4&nbsp;px, <code>2</code>=8&nbsp;px, <code>3</code>=12&nbsp;px, <code>4</code>=16&nbsp;px, <code>5</code>=20&nbsp;px, <code>6</code>=24&nbsp;px, <code>8</code>=32&nbsp;px). Every value multiplies by <code>--st-density</code> so the global density knob retunes spacing alongside component padding.</p>
+    <p>Spacing uses a Tailwind-style 4&nbsp;px linear scale (<code>1</code>=4&nbsp;px, <code>2</code>=8&nbsp;px, <code>3</code>=12&nbsp;px, <code>4</code>=16&nbsp;px, <code>5</code>=20&nbsp;px, <code>6</code>=24&nbsp;px, <code>8</code>=32&nbsp;px). Every value is a multiple of <code>--st-spacing</code> so the global spacing base retunes spacing alongside component padding.</p>
     <p>Margin and padding use CSS logical properties (<code>margin-block-start</code>, <code>margin-inline-end</code>, ...) so the same class works in LTR and RTL.</p>
 
     {% call ui.demo() %}
@@ -197,16 +197,16 @@
     <h3>Gap</h3>
     <p><code>.gap-{n}</code> sets both row and column gap. <code>.row-gap-{n}</code> and <code>.column-gap-{n}</code> target one axis. Values: <code>0 / 1 / 2 / 3 / 4 / 5 / 6 / 8</code>.</p>
     <table>
-      <thead><tr><th>Step</th><th>Value</th><th>Default density (1)</th></tr></thead>
+      <thead><tr><th>Step</th><th>Value</th><th>At default base</th></tr></thead>
       <tbody>
         <tr><td><code>0</code></td><td>0</td><td>0&nbsp;px</td></tr>
-        <tr><td><code>1</code></td><td><code>0.25rem &times; density</code></td><td>4&nbsp;px</td></tr>
-        <tr><td><code>2</code></td><td><code>0.5rem &times; density</code></td><td>8&nbsp;px</td></tr>
-        <tr><td><code>3</code></td><td><code>0.75rem &times; density</code></td><td>12&nbsp;px</td></tr>
-        <tr><td><code>4</code></td><td><code>1rem &times; density</code></td><td>16&nbsp;px</td></tr>
-        <tr><td><code>5</code></td><td><code>1.25rem &times; density</code></td><td>20&nbsp;px</td></tr>
-        <tr><td><code>6</code></td><td><code>1.5rem &times; density</code></td><td>24&nbsp;px</td></tr>
-        <tr><td><code>8</code></td><td><code>2rem &times; density</code></td><td>32&nbsp;px</td></tr>
+        <tr><td><code>1</code></td><td><code>space(1)</code></td><td>4&nbsp;px</td></tr>
+        <tr><td><code>2</code></td><td><code>space(2)</code></td><td>8&nbsp;px</td></tr>
+        <tr><td><code>3</code></td><td><code>space(3)</code></td><td>12&nbsp;px</td></tr>
+        <tr><td><code>4</code></td><td><code>space(4)</code></td><td>16&nbsp;px</td></tr>
+        <tr><td><code>5</code></td><td><code>space(5)</code></td><td>20&nbsp;px</td></tr>
+        <tr><td><code>6</code></td><td><code>space(6)</code></td><td>24&nbsp;px</td></tr>
+        <tr><td><code>8</code></td><td><code>space(8)</code></td><td>32&nbsp;px</td></tr>
       </tbody>
     </table>
 
@@ -387,7 +387,7 @@
   <section>
     <h2>Customization</h2>
     <p>Two knobs, no per-class vars.</p>
-    <p>Spacing values resolve through <code>--st-density</code>, the global lever from <a class="link" href="/customization">Customization</a> that retunes every <code>.gap-*</code> and <code>.m*-*</code> alongside component padding. Compact density (<code>0.875</code>) shrinks every utility step proportionally. Comfortable density (<code>1.125</code>) expands them.</p>
+    <p>Spacing values resolve through <code>--st-spacing</code>, the global lever from <a class="link" href="/customization">Customization</a> that retunes every <code>.gap-*</code> and <code>.m*-*</code> alongside component padding. A smaller base shrinks every utility step proportionally; a larger one expands them.</p>
     <p>Which groups ship, and which carry breakpoint variants, is set in <a class="link" href="#customizing-the-set"><code>$utilities-config</code></a>. Disable groups you don&rsquo;t use to drop them from the bundle. Flip <code>responsive: true</code> on a group to add breakpoint variants.</p>
   </section>
 {% endblock %}

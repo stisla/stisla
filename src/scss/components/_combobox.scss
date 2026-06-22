@@ -26,13 +26,12 @@
 .combobox {
   @include form-field-base('combobox');
 
-  // Chevron — same vocabulary as .select. The trigger is typeable, so
-  // cursor stays at text; the chevron just signals "this opens a list".
-  --combobox-indicator: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 6 8 10 12 6'/%3E%3C/svg%3E");
-
-  padding-inline-end: 2.25rem;
-  background-image: var(--combobox-indicator);
-  background-position: right 0.75rem center;
+  // Chevron — fallback-default custom prop (consumers swap from any scope);
+  // the dark block sets --combobox-indicator to the lighter SVG.
+  padding-inline-end: #{space(9)};
+  background-image: var(--combobox-indicator,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 6 8 10 12 6'/%3E%3C/svg%3E"));
+  background-position: right #{space(3)} center;
   background-repeat: no-repeat;
   background-size: 0.75rem 0.75rem;
   cursor: text;
@@ -52,7 +51,7 @@
 
   &.multi {
     height: auto;
-    min-height: var(--combobox-height);
+    min-height: var(--combobox-height, #{space(9)});
   }
 }
 
@@ -66,10 +65,10 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.375rem;
+  gap: #{space(1.5)};
   min-width: 0;
-  padding-block: 0.25rem;
-  padding-inline-start: var(--combobox-padding-x);
+  padding-block: #{space(1)};
+  padding-inline-start: var(--combobox-padding-inline, #{space(2.5)});
   padding-inline-end: 0;
   background: transparent;
   border: 0;
@@ -88,7 +87,7 @@
     outline: none;
 
     &::placeholder {
-      color: var(--combobox-placeholder);
+      color: var(--combobox-placeholder, var(--st-muted-foreground));
       opacity: 1;
     }
   }
@@ -117,7 +116,7 @@
   line-height: 1.4;
   color: var(--st-accent-foreground);
   background: var(--st-accent);
-  border-radius: calc(var(--combobox-radius) - 0.25rem);
+  border-radius: calc(var(--combobox-radius, #{radius(md)}) - 0.25rem);
 
   .remove {
     margin-inline-start: 0.125rem;
@@ -174,7 +173,7 @@ select.combobox[aria-invalid="true"] + .ts-wrapper.combobox.input-active {
 }
 
 .ts-wrapper.combobox.disabled:hover {
-  border-color: var(--combobox-border);
+  border-color: var(--combobox-border-color, var(--st-border));
 }
 
 // Hide the original <select> once hydrated. Tom Select adds these
@@ -193,22 +192,22 @@ select.combobox.ts-hidden-accessible {
 }
 
 // === Sizes =============================================================
-.combobox--sm {
-  --combobox-radius:    var(--st-input-radius, var(--st-radius-sm));
-  --combobox-height:    calc(1.75rem + 0.5rem * (var(--st-density) - 1));
-  --combobox-padding-x: calc(0.5rem * var(--st-density));
-  --combobox-font-size: 0.8125rem;
+.combobox--compact {
+  --combobox-radius:         #{radius(sm)};
+  --combobox-height:         #{space(7)};   // 1.75rem
+  --combobox-padding-inline: #{space(2)};   // 0.5rem
+  --combobox-font-size:      0.8125rem;     // 13px, off-scale
   // See form-field-base — iOS auto-zoom guard for sub-16px fields.
   @media (pointer: coarse) {
-    --combobox-font-size: 1rem;
+    --combobox-font-size: #{text(base)};
   }
 }
 
-.combobox--lg {
-  --combobox-radius:    var(--st-input-radius, var(--st-radius-lg));
-  --combobox-height:    calc(2.75rem + 0.875rem * (var(--st-density) - 1));
-  --combobox-padding-x: calc(0.875rem * var(--st-density));
-  --combobox-font-size: 1rem;
+.combobox--roomy {
+  --combobox-radius:         #{radius(lg)};
+  --combobox-height:         #{space(11)};  // 2.75rem
+  --combobox-padding-inline: #{space(3.5)}; // 0.875rem
+  --combobox-font-size:      #{text(base)};
 }
 
 // === Dark mode =========================================================

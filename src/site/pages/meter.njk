@@ -60,10 +60,10 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Three sizes cover the typical range. Default sits at a thin strip. <code>--sm</code> compresses to a hairline. <code>--lg</code> grows to a label-friendly height for hero metrics.</p>
+    <p>Three sizes cover the typical range. Default sits at a thin strip. <code>--compact</code> compresses to a hairline. <code>--roomy</code> grows to a label-friendly height for hero metrics.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-column gap-4 w-100">
-      <div class="meter meter--sm" role="meter" aria-label="Small" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+      <div class="meter meter--compact" role="meter" aria-label="Small" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
         <div class="meter__track">
           <div class="meter__bar" style="width: 60%"></div>
         </div>
@@ -73,7 +73,7 @@
           <div class="meter__bar" style="width: 60%"></div>
         </div>
       </div>
-      <div class="meter meter--lg" role="meter" aria-label="Large" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+      <div class="meter meter--roomy" role="meter" aria-label="Large" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
         <div class="meter__track">
           <div class="meter__bar" style="width: 60%"></div>
         </div>
@@ -86,7 +86,7 @@
     <h2>Stacked</h2>
     <p>Drop multiple <code>.meter__bar</code> children inside one <code>.meter__track</code> to break the value into segments. The track is a flex row, so adjacent bars sit next to each other separated by <code>--meter-segment-gap</code>. Widths must sum to no more than 100. Any remaining room exposes the track background as the unfilled portion.</p>
     {% call ui.demo() %}
-    <div class="meter meter--lg meter--block" role="meter" aria-label="Monthly budget" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" aria-valuetext="$3,120 of $4,000 budget spent">
+    <div class="meter meter--roomy meter--block" role="meter" aria-label="Monthly budget" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" aria-valuetext="$3,120 of $4,000 budget spent">
       <span class="meter__label">Monthly budget</span>
       <span class="meter__value">$3,120 of $4,000</span>
       <div class="meter__track">
@@ -103,7 +103,7 @@
     <h2>Legend</h2>
     <p>Pair a stacked meter with a <code>.meter__legend</code> row when each segment names a category. Each <code>.meter__legend-item</code> carries a dot that reuses <code>--meter-bar-bg</code>, so the intent modifier on the dot (or an inline override) colors the swatch and matches the bar above.</p>
     {% call ui.demo() %}
-    <div class="meter meter--lg meter--block" role="meter" aria-label="Macintosh HD" aria-valuenow="83" aria-valuemin="0" aria-valuemax="100" aria-valuetext="203.95 GB of 245.11 GB used">
+    <div class="meter meter--roomy meter--block" role="meter" aria-label="Macintosh HD" aria-valuenow="83" aria-valuemin="0" aria-valuemax="100" aria-valuetext="203.95 GB of 245.11 GB used">
       <span class="meter__label">Macintosh HD</span>
       <span class="meter__value">203.95 GB of 245.11 GB used</span>
       <div class="meter__track">
@@ -141,7 +141,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Override the variables on <code>.meter</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change. Size modifiers <code>--sm</code> / <code>--lg</code> retune the track height in their own scope.</p>
+    <p>Override the variables on <code>.meter</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change. Size modifiers <code>--compact</code> / <code>--roomy</code> retune the track height in their own scope.</p>
     <table>
       <thead>
         <tr>
@@ -152,15 +152,11 @@
       <tbody>
         <tr>
           <td><code>--meter-height</code></td>
-          <td>Track height; sm and lg reassign this</td>
+          <td>Track height; size modifiers reassign this</td>
         </tr>
         <tr>
           <td><code>--meter-radius</code></td>
-          <td>Track corner radius (pill). Reads <code>--st-meter-radius</code> first; override either to flatten.</td>
-        </tr>
-        <tr>
-          <td><code>--meter-margin-bottom</code></td>
-          <td>Trailing space below the component</td>
+          <td>Track corner radius; pilled by default, set a smaller value to flatten</td>
         </tr>
         <tr>
           <td><code>--meter-header-gap</code></td>
@@ -216,6 +212,6 @@
         </tr>
       </tbody>
     </table>
-    <p>Track opts out of <code>--st-radius</code> by default. Pill is semantic for a meter strip and matches the rest of the bar family (badge, progress, slider). Set <code>--st-meter-radius</code> at the scope you want flattened (a preset wrapper, <code>:root</code>) or <code>--meter-radius</code> on the track itself for a one-off.</p>
+    <p>Track opts out of <code>--st-radius</code> by default. Pill is semantic for a meter strip and matches the rest of the bar family (badge, progress, slider). Set <code>--meter-radius</code> at the scope you want flattened (a preset wrapper, <code>:root</code>) or on the track itself for a one-off.</p>
   </section>
 {% endblock %}

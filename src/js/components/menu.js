@@ -1,20 +1,20 @@
-// Stisla.Dropdown — V3.md §3.7 reference implementation.
+// Stisla.Menu — V3.md §3.7 reference implementation.
 //
 // Anatomy:
-//   .dropdown
-//     <button data-stisla-dropdown-trigger="menuId" aria-haspopup="menu"
+//   .menu
+//     <button data-stisla-menu-trigger="menuId" aria-haspopup="menu"
 //             aria-expanded="false" aria-controls="menuId">…</button>
-//     .dropdown-menu#menuId[data-stisla-dropdown][role="menu"]
+//     .menu__popup#menuId[data-stisla-menu][role="menu"]
 //                  [data-state="open|closed"]
-//       .dropdown-menu__item[role="menuitem|menuitemcheckbox|menuitemradio"]
+//       .menu__item[role="menuitem|menuitemcheckbox|menuitemradio"]
 //                  [data-highlighted]  [data-state="checked|active"]
 //                  [aria-current]      [aria-disabled]
 //
-// Events (bubbling, detail: { dropdown: this }):
-//   stisla:dropdown:opening   — before open  (cancelable)
-//   stisla:dropdown:opened    — after open + position
-//   stisla:dropdown:closing   — before close (cancelable)
-//   stisla:dropdown:closed    — after close
+// Events (bubbling, detail: { menu: this }):
+//   stisla:menu:opening   — before open  (cancelable)
+//   stisla:menu:opened    — after open + position
+//   stisla:menu:closing   — before close (cancelable)
+//   stisla:menu:closed    — after close
 //
 // Opts (defaults below):
 //   placement: 'bottom-start'           — Floating UI placement
@@ -22,11 +22,11 @@
 //   autoClose: 'both'                   — 'outside' | 'inside' | 'both' | false
 //   focus: true                         — move focus to first item on open
 //
-// Per-item opt-outs (on the .dropdown-menu__item):
-//   data-stisla-dropdown-auto-close="false"  — clicking this item keeps menu open
+// Per-item opt-outs (on the .menu__item):
+//   data-stisla-menu-auto-close="false"  — clicking this item keeps menu open
 //
 // Floating UI positions absolutely; the trigger must be a sibling under
-// .dropdown for default flow. For portal usage, set the menu's position
+// .menu for default flow. For portal usage, set the menu's position
 // strategy via opts (not implemented in 3.0 — defer).
 
 import {
@@ -44,17 +44,17 @@ import { waitForTransition } from '../core/transition.js';
 const OPEN = 'open';
 const CLOSED = 'closed';
 const TYPEAHEAD_WINDOW_MS = 500;
-const SCROLL_LOCK_CLASS = 'is-dropdown-open';
+const SCROLL_LOCK_CLASS = 'is-menu-open';
 
-// Body scroll is locked while any dropdown is open. Matches the Dialog +
+// Body scroll is locked while any menu is open. Matches the Dialog +
 // Drawer convention and sidesteps the visible repositioning lag Floating
 // UI would otherwise produce on every scroll frame (the menu is
-// position: fixed; the trigger isn't). Counter tracks stacked dropdowns
+// position: fixed; the trigger isn't). Counter tracks stacked menus
 // so the last one to close releases the lock.
 let openCount = 0;
 
-export class Dropdown extends Component {
-  static eventNamespace = 'dropdown';
+export class Menu extends Component {
+  static eventNamespace = "menu";
   static defaults = {
     placement: 'bottom-start',
     offset: 8,
@@ -73,16 +73,16 @@ export class Dropdown extends Component {
 
     this._menu = el;
     // Trigger is matched by id — works whether the trigger sits inside or
-    // outside the .dropdown wrapper. A consumer without an id on the menu
+    // outside the .menu wrapper. A consumer without an id on the menu
     // can't reach this component; the dev warning makes that visible.
     if (!el.id) {
       console.warn(
-        '[stisla] .dropdown-menu needs an id so its trigger can target it',
+        '[stisla] .menu__popup needs an id so its trigger can target it',
         el,
       );
     }
     this._trigger = el.id
-      ? document.querySelector(`[data-stisla-dropdown-trigger="${el.id}"]`)
+      ? document.querySelector(`[data-stisla-menu-trigger="${el.id}"]`)
       : null;
 
     this._cleanupAutoUpdate = null;
@@ -208,7 +208,7 @@ export class Dropdown extends Component {
     const { x, y } = await computePosition(this._trigger, this.el, {
       // 'fixed' strategy positions the menu in viewport coordinates so any
       // ancestor with overflow: hidden (or scroll, clip) can't crop the menu.
-      // Matches CSS position: fixed on .dropdown-menu.
+      // Matches CSS position: fixed on .menu__popup.
       strategy: 'fixed',
       placement: this.opts.placement,
       middleware: [
@@ -236,7 +236,7 @@ export class Dropdown extends Component {
 
   _items() {
     return Array.from(
-      this.el.querySelectorAll('.dropdown-menu__item'),
+      this.el.querySelectorAll('.menu__item'),
     );
   }
 
@@ -387,22 +387,22 @@ export class Dropdown extends Component {
 if (
   typeof document !== 'undefined' &&
   typeof window !== 'undefined' &&
-  !window.__stislaDropdownBound
+  !window.__stislaMenuBound
 ) {
-  window.__stislaDropdownBound = true;
+  window.__stislaMenuBound = true;
 
   // Trigger click → toggle the matched menu. Per-attr opts re-read on every
   // toggle so HMR / DOM swaps don't strand stale defaults.
   document.addEventListener('click', (e) => {
-    const opener = e.target.closest('[data-stisla-dropdown-trigger]');
+    const opener = e.target.closest('[data-stisla-menu-trigger]');
     if (opener) {
-      const id = opener.getAttribute('data-stisla-dropdown-trigger');
+      const id = opener.getAttribute('data-stisla-menu-trigger');
       const menuEl = id && document.getElementById(id);
-      if (menuEl && menuEl.classList.contains('dropdown-menu')) {
+      if (menuEl && menuEl.classList.contains('menu__popup')) {
         e.preventDefault();
-        const opts = readOpts(menuEl, 'dropdown', Dropdown);
+        const opts = readOpts(menuEl, 'menu', Menu);
         const existing = getInstance(menuEl);
-        const inst = existing ?? new Dropdown(menuEl, opts);
+        const inst = existing ?? new Menu(menuEl, opts);
         if (existing) Object.assign(existing.opts, opts);
         inst.toggle();
       }
@@ -412,9 +412,9 @@ if (
     // Item click — handle menuitemcheckbox / menuitemradio state flip and
     // honor opts.autoClose. Disabled rows are filtered by CSS pointer-events
     // already, but check defensively for the disabled attr path.
-    const item = e.target.closest('.dropdown-menu__item');
+    const item = e.target.closest('.menu__item');
     if (item) {
-      const menuEl = item.closest('.dropdown-menu');
+      const menuEl = item.closest('.menu__popup');
       const inst = menuEl && getInstance(menuEl);
       if (!inst) return;
       if (item.disabled || item.getAttribute('aria-disabled') === 'true') {
@@ -440,7 +440,7 @@ if (
       }
 
       const optOut =
-        item.getAttribute('data-stisla-dropdown-auto-close') === 'false';
+        item.getAttribute('data-stisla-menu-auto-close') === 'false';
       const close =
         !optOut &&
         (inst.opts.autoClose === 'both' || inst.opts.autoClose === 'inside');

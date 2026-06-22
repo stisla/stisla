@@ -85,7 +85,7 @@
         <tr><td><code>--st-shadow</code></td><td>Default elevation — cards, dropdowns, popovers, toasts, accordion</tr>
         <tr><td><code>--st-shadow-heavy</code></td><td>Heavy elevation — dialog, drawer</td></tr>
         <tr><td><code>--st-border-width</code></td><td>Width of every bordered shape's outline. Internal dividers stay literal 1&nbsp;px</td></tr>
-        <tr><td><code>--st-density</code></td><td>Multiplier wrapped around every component's padding and height. 1 default, 0.875 compact, 1.125 comfortable</td></tr>
+        <tr><td><code>--st-spacing</code></td><td>Spacing base (0.25rem). Every component padding, gap, and height is a multiple of it via <code>space()</code>. Raise for roomier, lower for compact</td></tr>
       </tbody>
     </table>
     <p>The three radius tiers and three shadow tiers are independent literals. A theme that needs every corner square or every shadow flat overrides each tier explicitly; a calc-derived chain at <code>:root</code> would substitute <code>var()</code> references at <code>:root</code> time and freeze the result.</p>
@@ -173,7 +173,7 @@
       <tbody>
         <tr><td><code>.dialog</code></td><td><code>__backdrop</code>, <code>__panel</code>, <code>__content</code>, <code>__header</code>, <code>__title</code>, <code>__body</code>, <code>__footer</code>, <code>__close</code></td></tr>
         <tr><td><code>.drawer</code></td><td><code>__backdrop</code>, <code>__content</code>, <code>__header</code>, <code>__title</code>, <code>__body</code>, <code>__footer</code>, <code>__close</code></td></tr>
-        <tr><td><code>.dropdown-menu</code></td><td><code>__group</code>, <code>__header</code>, <code>__item</code>, <code>__icon</code>, <code>__indicator</code>, <code>__shortcut</code>, <code>__divider</code></td></tr>
+        <tr><td><code>.menu</code></td><td><code>__group</code>, <code>__header</code>, <code>__item</code>, <code>__icon</code>, <code>__indicator</code>, <code>__shortcut</code>, <code>__divider</code></td></tr>
         <tr><td><code>.popover</code></td><td><code>__title</code>, <code>__body</code>, <code>__close</code>, <code>__arrow</code></td></tr>
         <tr><td><code>.toast</code></td><td><code>__icon</code>, <code>__content</code>, <code>__header</code>, <code>__body</code>, <code>__timestamp</code>, <code>__action</code>, <code>__close</code></td></tr>
         <tr><td><code>.tooltip</code></td><td><code>__inner</code>, <code>__arrow</code></td></tr>
@@ -241,7 +241,7 @@
       </thead>
       <tbody>
         <tr><td>Radius</td><td><code>--st-radius</code></td><td>0 (brutalist), 0.75rem (default), 1rem (soft). <code>-sm</code> and <code>-lg</code> derive multiplicatively</td></tr>
-        <tr><td>Density</td><td><code>--st-density</code></td><td>0.875 (compact), 1 (default), 1.125 (comfortable). Wraps every padding and height value</td></tr>
+        <tr><td>Spacing</td><td><code>--st-spacing</code></td><td>0.25rem base. Every padding, gap, and height is a multiple of it. Raise for roomier, lower for compact</td></tr>
         <tr><td>Brand</td><td><code>--st-primary</code></td><td>Any OKLCH (or any color), repaints every primary-toned surface, hover, active, focus, and highlight</td></tr>
       </tbody>
     </table>
@@ -260,7 +260,7 @@
     <h3>Stays put</h3>
     <ul>
       <li>Intents and their foregrounds: <code>--st-primary</code>, <code>--st-success</code>, <code>--st-warning</code>, <code>--st-danger</code>, <code>--st-info</code></li>
-      <li>Geometry, density, and type: <code>--st-radius</code>, <code>--st-shadow</code>, <code>--st-density</code>, <code>--st-font-sans</code>, <code>--st-font-mono</code></li>
+      <li>Geometry, spacing, and type: <code>--st-radius</code>, <code>--st-shadow</code>, <code>--st-spacing</code>, <code>--st-font-sans</code>, <code>--st-font-mono</code></li>
     </ul>
 
     <p>Per-component <code>-foreground</code> pairings are mandatory. If a component introduces a new background variable, it introduces the paired foreground at the same time, so a token override never strands a text color.</p>

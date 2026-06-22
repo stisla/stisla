@@ -73,13 +73,13 @@ spec's CSS targets them; deviations break visual conformance.
 ## 3. Modifiers
 
 ```
-.toggle--sm                              compact height — 28px under default density
-.toggle--lg                              comfortable height — 44px under default density
+.toggle--compact                              compact height — 28px at the default spacing base
+.toggle--roomy                              comfortable height — 44px at the default spacing base
 .toggle--icon-only                       square — width matches height, no horizontal padding
 .toggle--icon-round                      pill — opts out of --st-radius for a circular silhouette
 ```
 
-Default (no size modifier) is 36px under default density — matches the
+Default (no size modifier) is 36px at the default spacing base — matches the
 button baseline so a toggle and a button sit on the same rhythm side by
 side.
 
@@ -183,8 +183,8 @@ partial.
 | Variable | Affects |
 | --- | --- |
 | `--toggle-radius` | Corner radius. Opts in to `--st-radius` via component-scoped fallback. |
-| `--toggle-height` | Hard height. Multiplied by `--st-density`. |
-| `--toggle-padding-x` | Horizontal padding. Multiplied by `--st-density`. |
+| `--toggle-height` | Hard height. |
+| `--toggle-padding-inline` | Horizontal padding. |
 | `--toggle-font-size` | Label size. |
 | `--toggle-font-weight` | Label weight. |
 | `--toggle-gap` | Spacing between icon and label. |
@@ -195,22 +195,23 @@ partial.
 | --- | --- |
 | `--toggle-bg` | Rest background. |
 | `--toggle-color` | Rest text colour. |
+| `--toggle-border-width` | Rest border width. |
 | `--toggle-border-color` | Rest border colour. |
 
 **Hover surface — set on `.toggle`.**
 
 | Variable | Affects |
 | --- | --- |
-| `--toggle-hover-bg` | Hover background. |
-| `--toggle-hover-color` | Hover text colour. |
+| `--toggle-bg-hover` | Hover background. |
+| `--toggle-color-hover` | Hover text colour. |
 
 **Pressed surface — set on `.toggle`.**
 
 | Variable | Affects |
 | --- | --- |
-| `--toggle-active-bg` | Pressed background. |
-| `--toggle-active-color` | Pressed text colour. |
-| `--toggle-active-border-color` | Pressed border colour. Defaults to match the bg so the chip reads as a solid fill. |
+| `--toggle-bg-active` | Pressed background. |
+| `--toggle-color-active` | Pressed text colour. |
+| `--toggle-border-color-active` | Pressed border colour. Defaults to match the bg so the chip reads as a solid fill. |
 
 **Focus — set on `.toggle`.**
 
@@ -221,11 +222,12 @@ partial.
 **Global tokens consumed.**
 
 `--st-foreground` (rest text), `--st-border` (rest border),
+`--st-border-width` (rest border weight),
 `--st-accent`, `--st-accent-foreground` (hover surface),
 `--st-highlight`, `--st-highlight-foreground` (pressed surface),
-`--st-ring` (default focus ring), `--st-density` (height and padding
-multiplier), `--st-radius` / `--st-radius-sm` / `--st-radius-lg`
-(default radius per size).
+`--st-ring` (default focus ring), `--st-spacing` (spacing base behind
+`space()` height and padding), `--st-radius` / `--st-radius-sm` /
+`--st-radius-lg` (default radius per size).
 
 **Dark-mode flips.** None per-component. All surfaces ride the root
 token swap automatically.

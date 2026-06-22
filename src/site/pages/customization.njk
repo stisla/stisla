@@ -42,9 +42,9 @@
       <button type="button" class="btn btn--soft btn--primary">Soft</button>
     </div>
     <div class="demo-row">
-      <button type="button" class="btn btn--primary btn--sm">Small</button>
+      <button type="button" class="btn btn--primary btn--compact">Small</button>
       <button type="button" class="btn btn--primary">Default</button>
-      <button type="button" class="btn btn--primary btn--lg">Large</button>
+      <button type="button" class="btn btn--primary btn--roomy">Large</button>
     </div>
   </div>
 </div>
@@ -115,16 +115,16 @@
             <p class="card__text">Out for delivery, arrives today by 6 PM.</p>
           </div>
           <div class="card__footer">
-            <button type="button" class="btn btn--primary btn--sm">Track</button>
+            <button type="button" class="btn btn--primary btn--compact">Track</button>
           </div>
         </div>
 
-        <ul class="dropdown-menu" data-state="open" style="position: static; min-width: 9rem;" role="menu">
-          <li><button type="button" class="dropdown-menu__item" role="menuitem">Edit</button></li>
-          <li><button type="button" class="dropdown-menu__item" data-state="active" role="menuitem">Duplicate</button></li>
-          <li><button type="button" class="dropdown-menu__item" role="menuitem">Share</button></li>
-          <li><hr class="dropdown-menu__divider"></li>
-          <li><button type="button" class="dropdown-menu__item" data-danger role="menuitem">Delete</button></li>
+        <ul class="menu__popup" data-state="open" style="position: static; min-width: 9rem;" role="menu">
+          <li><button type="button" class="menu__item" role="menuitem">Edit</button></li>
+          <li><button type="button" class="menu__item" data-state="active" role="menuitem">Duplicate</button></li>
+          <li><button type="button" class="menu__item" role="menuitem">Share</button></li>
+          <li><hr class="menu__separator"></li>
+          <li><button type="button" class="menu__item" data-danger role="menuitem">Delete</button></li>
         </ul>
       </div>
 
@@ -151,18 +151,18 @@
         </div>
       </div>
 
-      <div class="item">
-        <div class="item__media">
+      <div class="media">
+        <div class="media__figure">
           <span class="avatar" data-stisla-avatar>
             <span class="avatar__fallback">RF</span>
           </span>
         </div>
-        <div class="item__content">
-          <div class="item__title">Rosa Frias</div>
-          <div class="item__description">rosa@acme.co</div>
+        <div class="media__content">
+          <div class="media__title">Rosa Frias</div>
+          <div class="media__description">rosa@acme.co</div>
         </div>
-        <div class="item__action">
-          <button type="button" class="btn btn--ghost btn--neutral btn--sm btn--icon-only" aria-label="More">
+        <div class="media__action">
+          <button type="button" class="btn btn--ghost btn--neutral btn--compact btn--icon-only" aria-label="More">
             <i data-lucide="more-horizontal"></i>
           </button>
         </div>
@@ -248,7 +248,7 @@
     </table>
 
     <h3>Geometry</h3>
-    <p>Three radius tiers, three shadow tiers, a global border-width knob, and a single density multiplier. The radius and shadow tiers are independent literals; components opt into the tier that matches their visual weight. See the <a class="link" href="#brutalist">Brutalist</a> and <a class="link" href="#density">Density</a> recipes below for complete presets that push multiple axes at once.</p>
+    <p>Three radius tiers, three shadow tiers, a global border-width knob, and a single spacing base. The radius and shadow tiers are independent literals; components opt into the tier that matches their visual weight. See the <a class="link" href="#brutalist">Brutalist</a> and <a class="link" href="#density">Density</a> recipes below for complete presets that push multiple axes at once.</p>
     <table>
       <thead><tr><th>Token</th><th>Use</th></tr></thead>
       <tbody>
@@ -256,13 +256,13 @@
         <tr><td><code>--st-radius</code></td><td>Default radius tier. Everyday surfaces (button, alert, input-group, pagination, tabs)</td></tr>
         <tr><td><code>--st-radius-lg</code></td><td>Large radius tier. Elevated surfaces (card, accordion, dialog, popover, toast, list-group)</td></tr>
         <tr><td><code>--st-shadow-light</code></td><td>Light elevation. Tooltip-class surfaces</td></tr>
-        <tr><td><code>--st-shadow</code></td><td>Default elevation. Cards, dropdowns, popovers, toasts, accordion</td></tr>
+        <tr><td><code>--st-shadow</code></td><td>Default elevation. Cards, menus, popovers, toasts, accordion</td></tr>
         <tr><td><code>--st-shadow-heavy</code></td><td>Heavy elevation. Dialog and drawer (modal surfaces)</td></tr>
-        <tr><td><code>--st-border-width</code></td><td>Width of the shape outline on every bordered component. Internal dividers (card section rules, list-group separators) stay literal 1&nbsp;px</td></tr>
-        <tr><td><code>--st-density</code></td><td>Multiplier on every component&rsquo;s padding, gap, and height tokens, plus utility-class spacing</td></tr>
+        <tr><td><code>--st-border-width</code></td><td>Width of the shape outline on every bordered component. Internal dividers (card section rules, list-group separators) stay a literal hairline</td></tr>
+        <tr><td><code>--st-spacing</code></td><td>Spacing base (0.25rem). Every component padding, gap, and height is a multiple of it via the <code>space()</code> helper, as are the spacing utilities. Raise it for a roomier system, lower it for compact</td></tr>
       </tbody>
     </table>
-    <p>Each radius tier and shadow tier also has a per-component override. To pill every button without touching cards, set <code>--st-btn-radius: 9999px</code> at <code>:root</code>. To make dialogs heavier without touching popovers, set <code>--st-dialog-shadow</code>. Every shape component exposes <code>--st-{name}-radius</code>; every elevated component exposes <code>--st-{name}-shadow</code>. The per-component knob defaults to the matching tier, so untouched components still follow your global radius and shadow choices.</p>
+    <p>Theming runs on two tiers, with nothing in between. Override one of these scale tokens and it cascades into every component that defaults to it, so a whole-system retune is a handful of lines. To retune one component instead, set its own variable (covered next). There is no per-family middle token: a component reads its own <code>--&lt;name&gt;-radius</code> / <code>-shadow</code> / <code>-border-width</code>, whose default chains straight to the scale token above. To pill every button, set <code>--btn-radius: 9999px</code> at <code>:root</code>; to make dialogs heavier, set <code>--dialog-shadow</code>.</p>
 
     <h3>Type</h3>
     <table>
@@ -520,11 +520,11 @@
     {% endcall %}
 
     <h3>Override a component knob for a region</h3>
-    <p>Set the component&rsquo;s own variable on a wrapper. Stisla components read their primary knobs via a <code>--st-&lt;component&gt;-&lt;prop&gt;</code> fallback chain, so a wrapper override flows through inheritance.</p>
+    <p>Set the component&rsquo;s own variable on a wrapper. Stisla components read their knobs via a <code>--&lt;component&gt;-&lt;prop&gt;</code> fallback whose default chains to the scale, so a wrapper override flows through inheritance to every instance inside.</p>
     {% call ui.demo() %}
 <div class="demo-row demo-row--gap-md">
   <button type="button" class="btn btn--primary">Default radius</button>
-  <div class="demo-row" style="--st-btn-radius: 0">
+  <div class="demo-row" style="--btn-radius: 0">
     <button type="button" class="btn btn--primary">Square (wrapper knob)</button>
     <button type="button" class="btn btn--neutral">Square neutral</button>
   </div>
@@ -567,9 +567,9 @@
     <p>A short banner with an icon, a message, and an intent. Forty lines of Sass using Stisla patterns end to end.</p>
     {% call ui.code(lang='scss', title='src/scss/components/_notice.scss') %}
 .notice {
-  // Component-scoped vars. Each one falls back through a global token so
-  // the global density / radius / surface knobs reach this component.
-  --notice-padding: calc(0.625rem * var(--st-density)) calc(0.875rem * var(--st-density));
+  // Component-scoped vars. --notice-radius derives from a global token so your
+  // radius choice reaches this component; spacing is plain rem you can tune.
+  --notice-padding: 0.625rem 0.875rem;
   --notice-radius:  var(--st-radius);
   --notice-gap:     0.625rem;
 
@@ -612,7 +612,7 @@
     {% call ui.demo() %}
 <style>
   .notice {
-    --notice-padding: calc(0.625rem * var(--st-density)) calc(0.875rem * var(--st-density));
+    --notice-padding: 0.625rem 0.875rem;
     --notice-radius:  var(--st-radius);
     --notice-gap:     0.625rem;
     --notice-tone:    var(--st-foreground);
@@ -659,7 +659,7 @@
 </div>
     {% endcall %}
     <p>The component composes with the rest of the system for free. Put a <code>.btn</code> inside a notice, and the button still reads from <code>--st-primary</code> as expected. Override <code>--st-info</code> on a parent and the info-toned notice repaints. Override <code>--notice-tone</code> inline for a one-off and you get the same machinery without authoring a new modifier.</p>
-    <p>Document the component the same way every Stisla component is documented. A Customization table at the end of its demo page listing the <code>--notice-*</code> variables (Variable, Default, Use). The <a class="link" href="/slider#customization">Slider</a> page is the reference shape.</p>
+    <p>Document the component the same way every Stisla component is documented. A Customization table at the end of its demo page listing the <code>--notice-*</code> variables (Variable, Use). The <a class="link" href="/slider#customization">Slider</a> page is the reference shape.</p>
   </section>
 
   <section id="what-to-expose">
@@ -668,7 +668,7 @@
 
     <h3>Expose a CSS variable when</h3>
     <ul>
-      <li>The value is something a designer would tune per project (color, radius, density, type scale).</li>
+      <li>The value is something a designer would tune per project (color, radius, spacing, type scale).</li>
       <li>The value is a meaningful per-instance override (button tone, dialog width, icon size for an icon-prominent UI).</li>
       <li>Multiple components share the same recipe (focus ring color, overlay scrim).</li>
     </ul>
@@ -743,7 +743,7 @@
   --st-radius-sm:       0;
   --st-radius:          0;
   --st-radius-lg:       0;
-  --st-checkbox-radius: 0;  /* checkbox sits outside the tier system */
+  --checkbox-radius:    0;  /* checkbox keeps its own radius knob */
   --st-shadow:          6px 6px 0 var(--st-foreground);
   --st-border:          var(--st-foreground);
   --st-border-width:    2px;
@@ -761,13 +761,13 @@
 
   <section>
     <h2>Density</h2>
-    <p>One knob shrinks or grows every component proportionally. Padding and gap tokens wrap <code>calc(X * var(--st-density))</code>, so the multiplier reaches every spacing decision in the system. Chip-like components (buttons, form fields, pagination chips, navbar buttons, toggles, tabs) bake the multiplier into their <code>--*-height</code> tokens as a density-delta calc, so the box grows by the same number of pixels on both axes. Utility-class spacing (<code>.mb-4</code>, <code>.p-2</code>, <code>.my-3</code>) inherits the same multiplier.</p>
+    <p>One knob shrinks or grows every component proportionally. Component padding, gap, and height are all multiples of the spacing base <code>--st-spacing</code> through the <code>space()</code> helper, so changing the base reaches every spacing decision in the system at once. Chip-like components (buttons, form fields, pagination chips, navbar buttons, toggles, tabs) read their height the same way, so the box grows on both axes together. Utility-class spacing (<code>.mb-4</code>, <code>.p-2</code>, <code>.my-3</code>) rides the same base.</p>
     <table>
       <thead><tr><th>Preset</th><th>Value</th><th>Use</th></tr></thead>
       <tbody>
-        <tr><td>Compact</td><td><code>0.875</code></td><td>Information-dense apps, admin dashboards, tabular UIs</td></tr>
-        <tr><td>Default</td><td><code>1</code></td><td>General-purpose product UI</td></tr>
-        <tr><td>Comfortable</td><td><code>1.125</code></td><td>Marketing surfaces, content-first reading flows</td></tr>
+        <tr><td>Compact</td><td><code>0.2rem</code></td><td>Information-dense apps, admin dashboards, tabular UIs</td></tr>
+        <tr><td>Default</td><td><code>0.25rem</code></td><td>General-purpose product UI</td></tr>
+        <tr><td>Comfortable</td><td><code>0.28rem</code></td><td>Marketing surfaces, content-first reading flows</td></tr>
       </tbody>
     </table>
     {% call ui.demo() %}
@@ -777,45 +777,45 @@
     {% endcall %}
     {% call ui.code(lang='css', title='_customization-presets.scss') %}
 .preset-dense {
-  --st-density: 0.875;
+  --st-spacing: 0.2rem;
 }
     {% endcall %}
-    <p>Density is a single number you can interpolate freely. <code>0.95</code> for a slight squeeze, <code>1.05</code> for a slight stretch. The whole system retunes at runtime.</p>
+    <p>The base is a single length you can dial freely. <code>0.22rem</code> for a slight squeeze, <code>0.27rem</code> for a slight stretch. The whole system retunes at runtime.</p>
   </section>
 
   <section>
     <h2>Sizing model</h2>
     <p>Chip-like components (buttons, form fields, pagination chips, navbar buttons, toggles, tabs) ship three independent knobs. Shape, content, icon. Override any one without touching the others.</p>
     <ul>
-      <li><strong><code>--*-height</code></strong> is the shape knob. The value bakes in a density-aware growth formula (<code>nominal + default-padding-x &times; (density &minus; 1)</code>), so dialing density grows the box a fraction of the padding-x delta, keeping the chip&rsquo;s visible aspect ratio close to its default. Override with a plain value (<code>3rem</code>) for a rigid shape; override with the same calc shape (<code>calc(3rem + 0.75rem &times; (var(--st-density) &minus; 1))</code>) to keep density growth at a custom nominal.</li>
+      <li><strong><code>--*-height</code></strong> is the shape knob. It defaults to a <code>space()</code> multiple (the button&rsquo;s is <code>space(9)</code>), so it tracks <code>--st-spacing</code> along with the rest of the system. Override with a plain value (<code>3rem</code>) for a rigid shape that ignores the base, or with your own <code>space()</code> multiple to keep it tracking.</li>
       <li><strong><code>--*-font-size</code></strong> is the label knob. Defaults to <code>0.875rem</code>. Doesn&rsquo;t affect shape; text sits centered inside whatever height you set.</li>
       <li><strong><code>--*-icon-size</code></strong> (and similar) is the icon knob. Defaults to <code>1em</code> so the glyph tracks the font. Bump it to <code>1.25em</code> for icon-prominent UIs without touching height or label size.</li>
     </ul>
-    <p>Each size variant (<code>--sm</code>, <code>--lg</code>) reassigns <code>--*-height</code>, <code>--*-padding-x</code>, and <code>--*-font-size</code> so the sized chip lands on the documented 28 / 36 / 44 cadence at the default density.</p>
+    <p>Each size variant (<code>--compact</code>, <code>--roomy</code>) reassigns <code>--*-height</code>, <code>--*-padding-inline</code>, and <code>--*-font-size</code> so the sized chip lands on its compact / default / roomy cadence at the default spacing base.</p>
 
     <h3>Make one element taller or shorter</h3>
-    <p>Override <code>--*-height</code> on the element. A plain value gives a rigid shape that doesn&rsquo;t move with density.</p>
+    <p>Override <code>--*-height</code> on the element. A plain value gives a rigid shape that doesn&rsquo;t track the spacing base.</p>
     {% call ui.demo() %}
 <div class="demo-row demo-row--gap-md" style="align-items: center">
   <button type="button" class="btn btn--primary">Default</button>
-  <button type="button" class="btn btn--primary" style="--btn-height: 3rem">Rigid 48 px</button>
-</div>
-    {% endcall %}
-    {% call ui.code(lang='html') %}
-<button class="btn btn--primary" style="--btn-height: 3rem">Rigid 48 px</button>
-    {% endcall %}
-    <p>Use the same calc shape if you want density to keep acting on the element. The two buttons below sit inside a <code>--st-density: 1.2</code> region. The first one (rigid) stays put; the second one (calc) grows with the region.</p>
-    {% call ui.demo() %}
-<div class="demo-row demo-row--gap-md" style="align-items: center; --st-density: 1.2">
   <button type="button" class="btn btn--primary" style="--btn-height: 3rem">Rigid</button>
-  <button type="button" class="btn btn--primary" style="--btn-height: calc(3rem + 0.75rem * (var(--st-density) - 1))">Density-aware</button>
 </div>
     {% endcall %}
     {% call ui.code(lang='html') %}
-<button class="btn btn--primary"
-  style="--btn-height: calc(3rem + 0.75rem * (var(--st-density) - 1))">
-  Density-aware
-</button>
+<button class="btn btn--primary" style="--btn-height: 3rem">Rigid</button>
+    {% endcall %}
+    <p>Leave the height alone if you want the element to keep tracking the base. The two buttons below sit inside a region with a larger <code>--st-spacing</code>. The first one (rigid <code>3rem</code>) stays put; the second one (default height, a <code>space()</code> multiple) grows with the region.</p>
+    {% call ui.demo() %}
+<div class="demo-row demo-row--gap-md" style="align-items: center; --st-spacing: 0.34rem">
+  <button type="button" class="btn btn--primary" style="--btn-height: 3rem">Rigid</button>
+  <button type="button" class="btn btn--primary">Tracks the base</button>
+</div>
+    {% endcall %}
+    {% call ui.code(lang='html') %}
+<div style="--st-spacing: 0.34rem">
+  <button class="btn btn--primary" style="--btn-height: 3rem">Rigid</button>
+  <button class="btn btn--primary">Tracks the base</button>
+</div>
     {% endcall %}
 
     <h3>Bigger content, same shape</h3>
@@ -840,19 +840,19 @@
     {% endcall %}
 
     <h3>Resize a region</h3>
-    <p>Scope <code>--st-density</code> on a wrapper. Every button, field, and chip inside scales together. Use this when &ldquo;the form is tight&rdquo; or &ldquo;the dashboard is roomy&rdquo; describes a whole area. For a single element, the height override above is enough.</p>
+    <p>Scope <code>--st-spacing</code> on a wrapper. Every button, field, and chip inside scales together. Use this when &ldquo;the form is tight&rdquo; or &ldquo;the dashboard is roomy&rdquo; describes a whole area. For a single element, the height override above is enough.</p>
     {% call ui.demo() %}
 <div class="demo-row demo-row--gap-md" style="align-items: flex-start">
   <div style="display: flex; flex-direction: column; gap: 0.5rem; padding: 1rem; border: 1px solid var(--st-border); border-radius: var(--st-radius); flex: 1">
-    <span style="font-size: 0.75rem; color: var(--st-muted-foreground); text-transform: uppercase; letter-spacing: 0.05em">Default density</span>
+    <span style="font-size: 0.75rem; color: var(--st-muted-foreground); text-transform: uppercase; letter-spacing: 0.05em">Default spacing</span>
     <input class="input" placeholder="Email" />
     <div style="display: flex; gap: 0.5rem; justify-content: flex-end">
       <button type="button" class="btn btn--ghost btn--neutral">Cancel</button>
       <button type="button" class="btn btn--primary">Save</button>
     </div>
   </div>
-  <div style="--st-density: 1.15; display: flex; flex-direction: column; gap: 0.5rem; padding: 1rem; border: 1px solid var(--st-border); border-radius: var(--st-radius); flex: 1">
-    <span style="font-size: 0.75rem; color: var(--st-muted-foreground); text-transform: uppercase; letter-spacing: 0.05em">--st-density: 1.15</span>
+  <div style="--st-spacing: 0.3rem; display: flex; flex-direction: column; gap: 0.5rem; padding: 1rem; border: 1px solid var(--st-border); border-radius: var(--st-radius); flex: 1">
+    <span style="font-size: 0.75rem; color: var(--st-muted-foreground); text-transform: uppercase; letter-spacing: 0.05em">--st-spacing: 0.3rem</span>
     <input class="input" placeholder="Email" />
     <div style="display: flex; gap: 0.5rem; justify-content: flex-end">
       <button type="button" class="btn btn--ghost btn--neutral">Cancel</button>
@@ -862,7 +862,7 @@
 </div>
     {% endcall %}
     {% call ui.code(lang='html') %}
-<form style="--st-density: 1.1">
+<form style="--st-spacing: 0.3rem">
   ...
 </form>
     {% endcall %}
@@ -871,6 +871,6 @@
   <section>
     <h2>Per-component variables</h2>
     <p>Each component exposes its own scoped variables on top of the global tokens. Set <code>--btn-radius</code> to give buttons a different radius from cards. Set <code>--dialog-bg</code> to retune a dialog without retinting the rest of the system. Component variables fall back through to the matching global token, so leaving them alone gives you the global default.</p>
-    <p>Every component page ends with a Customization section that tables its <code>--component-*</code> variables. <a class="link" href="/slider#customization">Slider</a> is the reference shape (Variable, Default, Use). When you find yourself overriding the same property across three or more components, that&rsquo;s the signal to file an issue. The <a class="link" href="#tweaking-when-theres-no-knob">feedback loop above</a> covers when to ask for a new knob and when to leave the override on the project side.</p>
+    <p>Every component page ends with a Customization section that tables its <code>--component-*</code> variables. <a class="link" href="/slider#customization">Slider</a> is the reference shape (Variable, Use). When you find yourself overriding the same property across three or more components, that&rsquo;s the signal to file an issue. The <a class="link" href="#tweaking-when-theres-no-knob">feedback loop above</a> covers when to ask for a new knob and when to leave the override on the project side.</p>
   </section>
 {% endblock %}

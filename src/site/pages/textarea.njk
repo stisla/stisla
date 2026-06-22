@@ -22,12 +22,12 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Three sizes match the input scale so a textarea sits beside an input in the same row. Add <code>.textarea--sm</code> or <code>.textarea--lg</code>.</p>
+    <p>Three sizes match the input scale so a textarea sits beside an input in the same row. Add <code>.textarea--compact</code> or <code>.textarea--roomy</code>.</p>
     {% call ui.demo() %}
     <div class="demo-stack" style="max-width: 24rem;">
-      <textarea class="textarea textarea--sm" rows="2" placeholder="Small"></textarea>
+      <textarea class="textarea textarea--compact" rows="2" placeholder="Small"></textarea>
       <textarea class="textarea" rows="2" placeholder="Default"></textarea>
-      <textarea class="textarea textarea--lg" rows="2" placeholder="Large"></textarea>
+      <textarea class="textarea textarea--roomy" rows="2" placeholder="Large"></textarea>
     </div>
     {% endcall %}
   </section>
@@ -91,7 +91,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Eight variables retune <code>.textarea</code> independently of <code>.input</code>. Override on the field itself, on a parent scope, or on <code>:root</code>. <code>--textarea-height</code> acts as a min-height floor (the field grows past it as content fills in).</p>
+    <p>These variables retune <code>.textarea</code> independently of <code>.input</code>. Override on the field itself, on a parent scope, or on <code>:root</code>. <code>--textarea-height</code> acts as a min-height floor (the field grows past it as content fills in).</p>
     <p>On touch devices (<code>@media (pointer: coarse)</code>) <code>--textarea-font-size</code> is bumped to <code>1rem</code> so iOS Safari doesn't zoom the viewport on focus. The browser auto-zooms any field with computed font-size below 16px and never zooms back; desktop keeps the tighter default.</p>
     <table>
       <thead>
@@ -103,19 +103,19 @@
       <tbody>
         <tr>
           <td><code>--textarea-radius</code></td>
-          <td>Corner radius; sizes pull <code>--st-radius-sm</code> / <code>-lg</code></td>
+          <td>Corner radius; the compact and roomy variants reassign this</td>
         </tr>
         <tr>
           <td><code>--textarea-height</code></td>
-          <td>Min-height floor; the field grows past this with content. sm and lg reassign this</td>
+          <td>Min-height floor; the field grows past this with content. The compact and roomy variants reassign this</td>
         </tr>
         <tr>
-          <td><code>--textarea-padding-x</code></td>
-          <td>Horizontal padding; sm and lg reassign this</td>
+          <td><code>--textarea-padding-inline</code></td>
+          <td>Horizontal padding; the compact and roomy variants reassign this</td>
         </tr>
         <tr>
           <td><code>--textarea-font-size</code></td>
-          <td>Text size; sm and lg reassign this</td>
+          <td>Text size; the compact and roomy variants reassign this</td>
         </tr>
         <tr>
           <td><code>--textarea-bg</code></td>
@@ -126,7 +126,11 @@
           <td>Text color</td>
         </tr>
         <tr>
-          <td><code>--textarea-border</code></td>
+          <td><code>--textarea-border-width</code></td>
+          <td>Border thickness</td>
+        </tr>
+        <tr>
+          <td><code>--textarea-border-color</code></td>
           <td>Border color; validation hooks flip this to <code>--st-danger</code></td>
         </tr>
         <tr>

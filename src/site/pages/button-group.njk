@@ -47,10 +47,10 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Add <code>.btn-group--sm</code> or <code>.btn-group--lg</code> on the wrapper. The modifier retunes child <code>--btn-*</code> vars so every member shrinks or grows at once, matching the standalone <code>.btn--sm</code> / <code>.btn--lg</code> cadence.</p>
+    <p>Add <code>.btn-group--compact</code> or <code>.btn-group--roomy</code> on the wrapper. The modifier retunes child <code>--btn-*</code> vars so every member shrinks or grows at once, matching the standalone <code>.btn--compact</code> / <code>.btn--roomy</code> cadence.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-column gap-2 align-items-start">
-      <div class="btn-group btn-group--sm" role="group" aria-label="Small">
+      <div class="btn-group btn-group--compact" role="group" aria-label="Small">
         <button type="button" class="btn btn--outline btn--neutral">Left</button>
         <button type="button" class="btn btn--outline btn--neutral">Middle</button>
         <button type="button" class="btn btn--outline btn--neutral">Right</button>
@@ -60,7 +60,7 @@
         <button type="button" class="btn btn--outline btn--neutral">Middle</button>
         <button type="button" class="btn btn--outline btn--neutral">Right</button>
       </div>
-      <div class="btn-group btn-group--lg" role="group" aria-label="Large">
+      <div class="btn-group btn-group--roomy" role="group" aria-label="Large">
         <button type="button" class="btn btn--outline btn--neutral">Left</button>
         <button type="button" class="btn btn--outline btn--neutral">Middle</button>
         <button type="button" class="btn btn--outline btn--neutral">Right</button>
@@ -137,7 +137,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Two variables retune <code>.btn-group</code> + <code>.btn-toolbar</code>. Sizes retune the child <code>--btn-*</code> vars in modifier scope rather than introducing per-size vars on the group, the same model as <code>.btn--sm</code> / <code>.btn--lg</code>. Override on the wrapper, a parent scope, or <code>:root</code>; the cascade scopes the change.</p>
+    <p>Two variables retune <code>.btn-group</code> + <code>.btn-toolbar</code>. Sizes retune the child <code>--btn-*</code> vars in modifier scope rather than introducing per-size vars on the group, the same model as <code>.btn--compact</code> / <code>.btn--roomy</code>. Override on the wrapper, a parent scope, or <code>:root</code>; the cascade scopes the change.</p>
     <table>
       <thead>
         <tr>
@@ -148,7 +148,7 @@
       <tbody>
         <tr>
           <td><code>--btn-group-radius</code></td>
-          <td>Outer corner radius. Inner corners stay square. <code>--sm</code> / <code>--lg</code> retune this in modifier scope.</td>
+          <td>Outer corner radius. Inner corners stay square. <code>--compact</code> / <code>--roomy</code> retune this in modifier scope.</td>
         </tr>
         <tr>
           <td><code>--btn-toolbar-gap</code></td>

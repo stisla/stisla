@@ -1,0 +1,142 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/_demo.njk" as ui %}
+
+{% block title %}Indicator · Stisla{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Indicator</h1>
+    <p class="lead">A small status dot for presence, liveness, and unread signals.</p>
+  </header>
+
+  <section>
+    <p>An indicator is just the dot. Where a badge labels something with a count or word, an indicator only signals. Reach for it to show presence, a live stream, or an unread state.</p>
+  </section>
+
+  <section>
+    <h2>Basic</h2>
+    <p>A bare <code>.indicator</code> sits on the muted foreground tone. Drop it inline next to a label.</p>
+    {% call ui.demo() %}
+    <div class="demo-row align-items-center">
+      <span class="d-inline-flex align-items-center gap-2"><span class="indicator"></span> Offline</span>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Intents</h2>
+    <p>Add an intent modifier to recolor the dot. Each reads the matching <code>--st-</code> token, so a runtime override retints every indicator of that intent at once.</p>
+    {% call ui.demo() %}
+    <div class="demo-row align-items-center gap-3">
+      <span class="indicator indicator--primary"></span>
+      <span class="indicator indicator--success"></span>
+      <span class="indicator indicator--warning"></span>
+      <span class="indicator indicator--danger"></span>
+      <span class="indicator indicator--info"></span>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Pulse</h2>
+    <p>Add <code>.indicator--pulse</code> for an expanding halo in the dot's own color. Use it for live or active signals where the motion earns attention. Under reduced-motion the halo is dropped and the dot stays.</p>
+    {% call ui.demo() %}
+    <div class="demo-row align-items-center gap-3">
+      <span class="d-inline-flex align-items-center gap-2"><span class="indicator indicator--success indicator--pulse"></span> Online</span>
+      <span class="d-inline-flex align-items-center gap-2"><span class="indicator indicator--danger indicator--pulse"></span> Live</span>
+      <span class="d-inline-flex align-items-center gap-2"><span class="indicator indicator--info indicator--pulse"></span> Streaming</span>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Sizes</h2>
+    <p>Default sits between <code>.indicator--compact</code> and <code>.indicator--roomy</code>. For an off-scale dot, set <code>--indicator-size</code> directly.</p>
+    {% call ui.demo() %}
+    <div class="demo-row" style="align-items: center;">
+      <span class="indicator indicator--success indicator--compact"></span>
+      <span class="indicator indicator--success"></span>
+      <span class="indicator indicator--success indicator--roomy"></span>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Pinned to a host</h2>
+    <p>Pair the indicator with a <code>.pin-*</code> utility to overlay it on a corner. The host carries <code>.position-relative</code>; the indicator carries position and corner in one class. This is the notification-dot pattern for icon buttons and nav items.</p>
+    {% call ui.demo() %}
+    <div class="demo-row">
+      <span class="position-relative d-inline-flex">
+        <button type="button" class="btn btn--outline btn--neutral btn--icon-only" aria-label="Notifications">
+          <i data-lucide="bell"></i>
+        </button>
+        <span class="indicator indicator--danger pin-top-end"></span>
+      </span>
+      <span class="position-relative d-inline-flex">
+        <button type="button" class="btn btn--outline btn--neutral btn--icon-only" aria-label="Messages">
+          <i data-lucide="mail"></i>
+        </button>
+        <span class="indicator indicator--primary indicator--pulse pin-top-end"></span>
+      </span>
+    </div>
+    {% endcall %}
+    <p>On avatars, reach for the built-in <a href="/avatar"><code>.avatar__indicator</code></a> instead. It already knows the avatar's shape and ring. Use <code>.indicator</code> plus <code>.pin-*</code> everywhere else.</p>
+  </section>
+
+  <section>
+    <h2>Corners and offset</h2>
+    <p>The four <code>.pin-*</code> corners use logical insets, so the horizontal edge flips in RTL. One token, <code>--st-pin-inset</code>, tunes how far the dot overhangs.</p>
+    {% call ui.demo() %}
+    <div class="demo-row">
+      <span class="position-relative d-inline-flex" style="width: 3rem; height: 3rem; background: var(--st-muted); border-radius: var(--st-radius);">
+        <span class="indicator indicator--success pin-top-start"></span>
+        <span class="indicator indicator--warning pin-top-end"></span>
+        <span class="indicator indicator--info pin-bottom-start"></span>
+        <span class="indicator indicator--danger pin-bottom-end"></span>
+      </span>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Customization</h2>
+    <p>Five variables retune <code>.indicator</code>. Override on the indicator itself, on a parent scope, or on <code>:root</code>; the cascade scopes the change.</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Default</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--indicator-size</code></td>
+          <td><code>0.625rem</code></td>
+          <td>Dot diameter; size modifiers set this.</td>
+        </tr>
+        <tr>
+          <td><code>--indicator-color</code></td>
+          <td><code>--st-muted-foreground</code></td>
+          <td>Dot fill, and the pulse halo color. Intents reassign it.</td>
+        </tr>
+        <tr>
+          <td><code>--indicator-ring-width</code></td>
+          <td><code>0px</code></td>
+          <td>Separator halo width; raise above zero to lift the dot off a busy surface.</td>
+        </tr>
+        <tr>
+          <td><code>--indicator-ring-color</code></td>
+          <td><code>--st-background</code></td>
+          <td>Halo color; match the surface the dot overhangs.</td>
+        </tr>
+        <tr>
+          <td><code>--indicator-pulse-duration</code></td>
+          <td><code>1.2s</code></td>
+          <td>Length of one pulse loop on <code>.indicator--pulse</code>.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>The <code>.pin-*</code> utilities read one global, <code>--st-pin-inset</code> (default <code>-0.25rem</code>), for the corner overhang. Set it on the host to nudge every pinned child in scope.</p>
+  </section>
+{% endblock %}

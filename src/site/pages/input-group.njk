@@ -41,20 +41,20 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Add <code>.input-group--sm</code> or <code>.input-group--lg</code> on the wrapper and the matching size modifier on the field child (e.g. <code>.input--sm</code>, <code>.select--lg</code>) to scale every member together.</p>
+    <p>Add <code>.input-group--compact</code> or <code>.input-group--roomy</code> on the wrapper and the matching size modifier on the field child (e.g. <code>.input--compact</code>, <code>.select--roomy</code>) to scale every member together.</p>
     {% call ui.demo() %}
     <div class="demo-stack" style="max-width: 24rem;">
-      <div class="input-group input-group--sm">
+      <div class="input-group input-group--compact">
         <span class="input-group__text"><i data-lucide="at-sign"></i></span>
-        <input type="text" class="input input--sm" placeholder="Small" />
+        <input type="text" class="input input--compact" placeholder="Small" />
       </div>
       <div class="input-group">
         <span class="input-group__text"><i data-lucide="at-sign"></i></span>
         <input type="text" class="input" placeholder="Default" />
       </div>
-      <div class="input-group input-group--lg">
+      <div class="input-group input-group--roomy">
         <span class="input-group__text"><i data-lucide="at-sign"></i></span>
-        <input type="text" class="input input--lg" placeholder="Large" />
+        <input type="text" class="input input--roomy" placeholder="Large" />
       </div>
     </div>
     {% endcall %}
@@ -75,20 +75,20 @@
       </div>
     </div>
     {% endcall %}
-    <p>Pair the button size with the wrapper size so the chip's text fits its chip. <code>.input-group--sm</code> + <code>.btn--sm</code>, default + default, <code>.input-group--lg</code> + <code>.btn--lg</code>.</p>
+    <p>Pair the button size with the wrapper size so the chip's text fits its chip. <code>.input-group--compact</code> + <code>.btn--compact</code>, default + default, <code>.input-group--roomy</code> + <code>.btn--roomy</code>.</p>
     {% call ui.demo() %}
     <div class="demo-stack" style="max-width: 24rem;">
-      <div class="input-group input-group--sm">
-        <input type="search" class="input input--sm" placeholder="Small" />
-        <button type="button" class="btn btn--sm btn--primary">Go</button>
+      <div class="input-group input-group--compact">
+        <input type="search" class="input input--compact" placeholder="Small" />
+        <button type="button" class="btn btn--compact btn--primary">Go</button>
       </div>
       <div class="input-group">
         <input type="search" class="input" placeholder="Default" />
         <button type="button" class="btn btn--primary">Go</button>
       </div>
-      <div class="input-group input-group--lg">
-        <input type="search" class="input input--lg" placeholder="Large" />
-        <button type="button" class="btn btn--lg btn--primary">Go</button>
+      <div class="input-group input-group--roomy">
+        <input type="search" class="input input--roomy" placeholder="Large" />
+        <button type="button" class="btn btn--roomy btn--primary">Go</button>
       </div>
     </div>
     {% endcall %}
@@ -217,7 +217,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Seven variables retune <code>.input-group</code> without touching component CSS. Override on <code>.input-group</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
+    <p>These variables retune <code>.input-group</code> without touching component CSS. Override on <code>.input-group</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
     <table>
       <thead>
         <tr>
@@ -228,23 +228,27 @@
       <tbody>
         <tr>
           <td><code>--input-group-radius</code></td>
-          <td>Wrapper corner radius (per-component override via <code>--st-input-radius</code>; sizes pull <code>--st-radius-sm</code> / <code>-lg</code>)</td>
+          <td>Wrapper corner radius; the compact and roomy variants reassign this</td>
         </tr>
         <tr>
           <td><code>--input-group-height</code></td>
-          <td>Wrapper height; sm and lg reassign this</td>
+          <td>Wrapper height; the compact and roomy variants reassign this</td>
         </tr>
         <tr>
           <td><code>--input-group-bg</code></td>
           <td>Wrapper background</td>
         </tr>
         <tr>
-          <td><code>--input-group-border</code></td>
+          <td><code>--input-group-border-width</code></td>
+          <td>Wrapper border thickness</td>
+        </tr>
+        <tr>
+          <td><code>--input-group-border-color</code></td>
           <td>Wrapper border color</td>
         </tr>
         <tr>
-          <td><code>--input-group-padding-x</code></td>
-          <td>Addon horizontal padding; matches the field child's padding-x at each size so an addon's text baseline aligns with the input's</td>
+          <td><code>--input-group-padding-inline</code></td>
+          <td>Addon horizontal padding; matches the field child's inline padding at each size so an addon's text baseline aligns with the input's</td>
         </tr>
         <tr>
           <td><code>--input-group-inset</code></td>

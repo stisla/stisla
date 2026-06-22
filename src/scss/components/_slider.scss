@@ -19,23 +19,16 @@
 // reading as the prior pseudo-element design.
 
 .slider {
-  --slider-h: 2.25rem; // 36 — matches .input vertical rhythm
-  --slider-thumb-w: 0.5rem;
-  --slider-thumb-h: 1rem; // 16 — vertical pill, shorter than track
-  --slider-thumb-gap: 0.2rem; //  4 — fill-colored sliver to the right of thumb
-  --slider-radius: var(--st-slider-radius, 999px);
-  --slider-track-bg: var(--st-neutral);
-  --slider-fill: var(--st-primary);
-  --slider-thumb-bg: #fff; // literal — readable on filled (primary) AND unfilled (neutral) in both themes; drop shadow carries edge definition
-  --slider-thumb-shadow: 0 1px 3px oklch(0 0 0 / 0.25);
-  --slider-ring: var(--st-ring);
-  --slider-fraction: 0; // JS writes 0..1; CSS positions thumb + range
-
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing on the base, so a
+  // scope / inline retunes any of them; track / range / thumb read them with
+  // the same defaults (thumb-w / -gap / radius / fraction repeat in the
+  // position calcs). --slider-fraction is JS-written (0..1) inline; the 0
+  // fallback holds before JS runs.
   position: relative;
   display: block;
   width: 100%;
-  height: calc(var(--slider-h) * var(--st-density));
-  border-radius: var(--slider-radius);
+  height: var(--slider-height, #{space(9)});    // 2.25rem
+  border-radius: var(--slider-radius, #{radius(full)});
   user-select: none;
   cursor: pointer;
   touch-action: none; // own pointer; don't scroll on drag
@@ -53,8 +46,8 @@
 .slider__track {
   position: absolute;
   inset: 0;
-  background: var(--slider-track-bg);
-  border-radius: var(--slider-radius);
+  background: var(--slider-track-bg, var(--st-neutral));
+  border-radius: var(--slider-radius, #{radius(full)});
   overflow: hidden;
   transition: border-color 0.12s ease;
 }
@@ -77,11 +70,11 @@
   inset-block: 0;
   inset-inline-start: 0;
   width: calc(
-    var(--slider-thumb-w) + 2 * var(--slider-thumb-gap) +
-      var(--slider-fraction) *
-      (100% - var(--slider-thumb-w) - 2 * var(--slider-thumb-gap))
+    var(--slider-thumb-width, #{space(2)}) + 2 * var(--slider-thumb-gap, 0.2rem) +
+      var(--slider-fraction, 0) *
+      (100% - var(--slider-thumb-width, #{space(2)}) - 2 * var(--slider-thumb-gap, 0.2rem))
   );
-  background: var(--slider-fill);
+  background: var(--slider-fill, var(--st-primary));
 }
 
 // === Thumb ==============================================================
@@ -93,17 +86,17 @@
   position: absolute;
   top: 50%;
   left: calc(
-    var(--slider-thumb-w) / 2 + var(--slider-thumb-gap) +
-      var(--slider-fraction) *
-      (100% - var(--slider-thumb-w) - 2 * var(--slider-thumb-gap))
+    var(--slider-thumb-width, #{space(2)}) / 2 + var(--slider-thumb-gap, 0.2rem) +
+      var(--slider-fraction, 0) *
+      (100% - var(--slider-thumb-width, #{space(2)}) - 2 * var(--slider-thumb-gap, 0.2rem))
   );
   transform: translate(-50%, -50%);
-  width: var(--slider-thumb-w);
-  height: var(--slider-thumb-h);
-  background: var(--slider-thumb-bg);
+  width: var(--slider-thumb-width, #{space(2)});
+  height: var(--slider-thumb-height, #{space(4)});
+  background: var(--slider-thumb-bg, #fff);
   border: 0;
-  border-radius: var(--slider-radius);
-  box-shadow: var(--slider-thumb-shadow);
+  border-radius: var(--slider-radius, #{radius(full)});
+  box-shadow: var(--slider-thumb-shadow, 0 1px 3px oklch(0 0 0 / 0.25));
   cursor: pointer;
   touch-action: none;
   transition:
@@ -118,8 +111,8 @@
   // shadow. focus-visible only paints when keyboard-focused.
   &:focus-visible {
     box-shadow:
-      var(--slider-thumb-shadow),
-      0 0 0 3px color-mix(in oklch, var(--slider-ring) 25%, transparent);
+      var(--slider-thumb-shadow, 0 1px 3px oklch(0 0 0 / 0.25)),
+      0 0 0 3px color-mix(in oklch, var(--slider-ring, var(--st-ring)) 25%, transparent);
   }
 
   // Pressed feedback — preserve the centering translate.
@@ -154,24 +147,23 @@
 
 .slider[aria-invalid="true"] .slider__thumb:focus-visible {
   box-shadow:
-    var(--slider-thumb-shadow),
+    var(--slider-thumb-shadow, 0 1px 3px oklch(0 0 0 / 0.25)),
     0 0 0 3px color-mix(in oklch, var(--st-danger) 25%, transparent);
 }
 
 // === Sizes ==============================================================
-// Track height matches .input--sm / --lg so sliders sit cleanly next to
-// inputs in the same row. Thumb dimensions scale with the variant; the
-// shell height scales further with --st-density.
-.slider--sm {
-  --slider-h: 1.75rem; // 28
-  --slider-thumb-w: 0.375rem; //  6
-  --slider-thumb-h: 1rem; // 16
+// Track height matches .input--compact / --roomy so sliders sit cleanly next to
+// inputs in the same row. Dims are space() multiples (ride --st-spacing).
+.slider--compact {
+  --slider-height: #{space(7)};         // 1.75rem
+  --slider-thumb-width: #{space(1.5)}; // 0.375rem
+  --slider-thumb-height: #{space(4)};   // 1rem
 }
 
-.slider--lg {
-  --slider-h: 2.75rem; // 44
-  --slider-thumb-w: 0.625rem; // 10
-  --slider-thumb-h: 1.5rem; // 24
+.slider--roomy {
+  --slider-height: #{space(11)};        // 2.75rem
+  --slider-thumb-width: #{space(2.5)}; // 0.625rem
+  --slider-thumb-height: #{space(6)};   // 1.5rem
 }
 
 // === Coarse pointer =====================================================
@@ -179,8 +171,8 @@
 // grab. Desktop (pointer: fine) keeps the compact default.
 @media (pointer: coarse) {
   .slider {
-    --slider-thumb-w: 0.75rem; // 12
-    --slider-thumb-h: 1.25rem; // 20
+    --slider-thumb-width: #{space(3)};  // 0.75rem
+    --slider-thumb-height: #{space(5)};  // 1.25rem
   }
 }
 

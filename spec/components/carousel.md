@@ -255,18 +255,19 @@ affects.
 | `--carousel-indicator-size` | Inactive indicator dot diameter. |
 | `--carousel-indicator-gap` | Space between indicators. |
 | `--carousel-indicator-bg` | Inactive indicator fill. |
-| `--carousel-indicator-active-bg` | Active indicator fill. |
-| `--carousel-indicator-active-width` | Active indicator pill width (animates from dot to pill). |
-| `--carousel-caption-padding-y` | Caption vertical padding. |
-| `--carousel-caption-padding-x` | Caption horizontal padding. |
+| `--carousel-indicator-bg-active` | Active indicator fill. |
+| `--carousel-indicator-width-active` | Active indicator pill width (animates from dot to pill). |
+| `--carousel-caption-padding-block` | Caption vertical padding. |
+| `--carousel-caption-padding-inline` | Caption horizontal padding. |
 | `--carousel-caption-color` | Caption text colour. |
 | `--carousel-caption-bg` | Caption background. Default is a transparent-to-dark gradient so caption text reads over any image. |
 | `--carousel-transition-duration` | Chrome (control hover, indicator width) transition duration. Reduced motion zeros this. |
 
 **Global tokens consumed.**
 
-`--st-radius-lg` (default viewport radius), `--st-ring` (focus ring on
-the root, controls, indicators).
+`--st-overlay` and `--st-overlay-foreground` (theme-independent chrome
+fills for controls, indicators, and caption gradient), `--st-ring`
+(focus ring on the root, controls, indicators).
 
 **Dark mode.** The carousel chrome uses self-contained OKLCH literals
 that read against any image regardless of theme. No tokens flip under

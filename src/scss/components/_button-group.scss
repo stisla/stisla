@@ -15,15 +15,15 @@
 // groups apart without inline flex utilities at each call site.
 //
 // BS5 history: .btn-group-vertical → .btn-group--vertical;
-// .btn-group-sm / .btn-group-lg → .btn-group--sm / .btn-group--lg
+// .btn-group-sm / .btn-group-lg → .btn-group--compact / .btn-group--roomy
 // (retunes child --btn-* vars in modifier scope, no per-size vars);
 // .dropdown-toggle-split dropped — use .btn--icon-only with a chevron.
 // .btn-check moved to .toggle-input (under /toggle and /toggle-group).
 
 .btn-group,
 .btn-group--vertical {
-  --btn-group-radius: var(--st-btn-radius, var(--st-radius));
-
+  // --btn-group-radius is read at the outer corners (fallback radius(md)); a
+  // scope or the size modifiers retune it. Fallback-default (§2).
   position: relative;
   display: inline-flex;
   vertical-align: middle;
@@ -60,13 +60,13 @@
   }
 
   > .btn:first-child {
-    border-start-start-radius: var(--btn-group-radius);
-    border-end-start-radius:   var(--btn-group-radius);
+    border-start-start-radius: var(--btn-group-radius, #{radius(md)});
+    border-end-start-radius:   var(--btn-group-radius, #{radius(md)});
   }
 
   > .btn:last-child {
-    border-start-end-radius: var(--btn-group-radius);
-    border-end-end-radius:   var(--btn-group-radius);
+    border-start-end-radius: var(--btn-group-radius, #{radius(md)});
+    border-end-end-radius:   var(--btn-group-radius, #{radius(md)});
   }
 }
 
@@ -77,43 +77,43 @@
   align-items: stretch;
 
   > .btn + .btn {
-    margin-top: -1px;
+    margin-block-start: -1px;
   }
 
   > .btn:first-child {
-    border-start-start-radius: var(--btn-group-radius);
-    border-start-end-radius:   var(--btn-group-radius);
+    border-start-start-radius: var(--btn-group-radius, #{radius(md)});
+    border-start-end-radius:   var(--btn-group-radius, #{radius(md)});
   }
 
   > .btn:last-child {
-    border-end-start-radius: var(--btn-group-radius);
-    border-end-end-radius:   var(--btn-group-radius);
+    border-end-start-radius: var(--btn-group-radius, #{radius(md)});
+    border-end-end-radius:   var(--btn-group-radius, #{radius(md)});
   }
 }
 
 // === Sizes ==============================================================
 // Retune the child .btn's component vars in modifier scope. No per-size
 // vars on .btn-group itself — the children stay consistent with the
-// standalone .btn--sm / .btn--lg (28 / 44 px under default density).
-.btn-group--sm {
-  --btn-group-radius: var(--st-btn-radius, var(--st-radius-sm));
+// standalone .btn--compact / .btn--roomy (28 / 44 px under default density).
+.btn-group--compact {
+  --btn-group-radius: #{radius(sm)};
 
   > .btn {
-    --btn-height:    calc(1.75rem + 0.625rem * (var(--st-density) - 1));
-    --btn-padding-x: calc(0.625rem * var(--st-density));
-    --btn-font-size: 0.8125rem;
-    --btn-radius:    var(--st-btn-radius, var(--st-radius-sm));
+    --btn-height:         #{space(7)};    // 1.75rem
+    --btn-padding-inline: #{space(2.5)};  // 0.625rem
+    --btn-font-size:      0.8125rem;
+    --btn-radius:         #{radius(sm)};
   }
 }
 
-.btn-group--lg {
-  --btn-group-radius: var(--st-btn-radius, var(--st-radius-lg));
+.btn-group--roomy {
+  --btn-group-radius: #{radius(lg)};
 
   > .btn {
-    --btn-height:    calc(2.75rem + 1rem * (var(--st-density) - 1));
-    --btn-padding-x: calc(1rem * var(--st-density));
-    --btn-font-size: 1rem;
-    --btn-radius:    var(--st-btn-radius, var(--st-radius-lg));
+    --btn-height:         #{space(11)};  // 2.75rem
+    --btn-padding-inline: #{space(4)};   // 1rem
+    --btn-font-size:      #{text(base)};
+    --btn-radius:         #{radius(lg)};
   }
 }
 
@@ -121,9 +121,7 @@
 // A separate block. Gaps multiple .btn-group children apart without
 // requiring inline flex utilities at each call site.
 .btn-toolbar {
-  --btn-toolbar-gap: 0.5rem;
-
   display: flex;
   flex-wrap: wrap;
-  gap: var(--btn-toolbar-gap);
+  gap: var(--btn-toolbar-gap, #{space(2)});
 }

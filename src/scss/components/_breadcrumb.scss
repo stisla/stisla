@@ -44,61 +44,42 @@
 // reads as a nav by shape.
 
 .breadcrumb {
-  // === Layout ===
-  --breadcrumb-padding-y:    0;
-  --breadcrumb-padding-x:    0;
-  --breadcrumb-gap:          calc(0.5rem * var(--st-density));
-  --breadcrumb-margin-bottom: 0;
-  --breadcrumb-font-size:    inherit;
-
-  // === Surface ===
-  --breadcrumb-bg:           transparent;
-  --breadcrumb-radius:       0;
-  --breadcrumb-color:        var(--st-muted-foreground);
-
-  // === States ===
-  --breadcrumb-hover-color:  var(--st-foreground);
-  --breadcrumb-active-color: var(--st-foreground);
-  // --breadcrumb-divider intentionally undeclared here. The default
-  // "›" lives as the var() fallback in the ::before content rule so
-  // ancestor overrides on the <nav> wrapper aren't shadowed.
-
-  // === Icon ===
-  --breadcrumb-icon-size:    1rem;
-
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing on the base, so a
+  // scope / inline retunes any of them; gap + color are read by __item too, so
+  // their defaults repeat there. --breadcrumb-divider stays undeclared (its
+  // default lives in the ::before content fallback) so wrapper overrides win.
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--breadcrumb-gap);
-  padding: var(--breadcrumb-padding-y) var(--breadcrumb-padding-x);
-  margin-bottom: var(--breadcrumb-margin-bottom);
-  font-size: var(--breadcrumb-font-size);
-  background: var(--breadcrumb-bg);
-  border-radius: var(--breadcrumb-radius);
-  color: var(--breadcrumb-color);
+  gap: var(--breadcrumb-gap, #{space(2)});                                // 0.5rem
+  padding: var(--breadcrumb-padding-block, 0) var(--breadcrumb-padding-inline, 0);
+  font-size: var(--breadcrumb-font-size, inherit);
+  background: var(--breadcrumb-bg, transparent);
+  border-radius: var(--breadcrumb-radius, 0);
+  color: var(--breadcrumb-color, var(--st-muted-foreground));
 }
 
 .breadcrumb__item {
   display: inline-flex;
   align-items: center;
-  gap: var(--breadcrumb-gap);
+  gap: var(--breadcrumb-gap, #{space(2)});
 
   > a {
     display: inline-flex;
     align-items: center;
-    gap: var(--breadcrumb-gap);
+    gap: var(--breadcrumb-gap, #{space(2)});
     color: inherit;
     text-decoration: none;
     transition: color 150ms ease;
 
     &:hover {
-      color: var(--breadcrumb-hover-color);
+      color: var(--breadcrumb-color-hover, var(--st-foreground));
     }
 
     &:focus-visible {
       outline: 2px solid var(--st-ring);
       outline-offset: 2px;
-      border-radius: var(--st-radius-sm);
+      border-radius: #{radius(sm)};
     }
   }
 
@@ -107,13 +88,13 @@
   // item (e.g. the current crumb where there's no <a> to nest under).
   > :is(svg, i),
   > a > :is(svg, i) {
-    width: var(--breadcrumb-icon-size);
-    height: var(--breadcrumb-icon-size);
+    width: var(--breadcrumb-icon-size, 1rem);
+    height: var(--breadcrumb-icon-size, 1rem);
     flex-shrink: 0;
   }
 
   &[aria-current="page"] {
-    color: var(--breadcrumb-active-color);
+    color: var(--breadcrumb-color-active, var(--st-foreground));
   }
 
   // Divider — chevron between items. ::before lives on every crumb
@@ -127,7 +108,7 @@
   // the <nav> wrapper (or anywhere up the tree) win. See header.
   + .breadcrumb__item::before {
     content: var(--breadcrumb-divider, "›");
-    color: var(--breadcrumb-color);
+    color: var(--breadcrumb-color, var(--st-muted-foreground));
   }
 }
 

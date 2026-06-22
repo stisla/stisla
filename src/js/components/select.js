@@ -15,7 +15,7 @@
 //     <span class="select__value">…</span>
 //     <span class="select__more">+N more</span>     (multi only, when extra > 0)
 //   <ul class="select__popup" role="listbox" hidden>
-//     <li class="select__option" role="option" data-value="…">…</li>
+//     <li class="select__item" role="option" data-value="…">…</li>
 //     …
 //
 // Events (bubbling, detail: { select: this, value }):
@@ -97,8 +97,8 @@ export class Select extends Component {
     this._trigger = document.createElement('button');
     this._trigger.type = 'button';
     this._trigger.className = `select select__trigger ${
-      el.classList.contains('select--sm') ? 'select--sm' : ''
-    } ${el.classList.contains('select--lg') ? 'select--lg' : ''}`.trim();
+      el.classList.contains('select--compact') ? 'select--compact' : ''
+    } ${el.classList.contains('select--roomy') ? 'select--roomy' : ''}`.trim();
     this._popupId = `stisla-select-${id}-popup`;
     this._trigger.setAttribute('aria-haspopup', 'listbox');
     this._trigger.setAttribute('aria-expanded', 'false');
@@ -264,11 +264,22 @@ export class Select extends Component {
     let idx = 0;
     const mkOption = (opt) => {
       const li = document.createElement('li');
-      li.className = 'select__option';
+      li.className = 'select__item';
       li.id = `stisla-select-${scopeId}-opt-${idx++}`;
       li.setAttribute('role', 'option');
       li.dataset.value = opt.value;
-      li.textContent = opt.textContent;
+      // Leading check indicator (shown via .is-selected; the slot is always
+      // reserved for column alignment). aria-hidden — aria-selected on the row
+      // carries the state for assistive tech.
+      const ind = document.createElement('span');
+      ind.className = 'select__indicator';
+      ind.setAttribute('aria-hidden', 'true');
+      ind.innerHTML =
+        '<svg viewBox="0 0 16 16" width="16" height="16" fill="none" aria-hidden="true">' +
+        '<polyline points="3 8.5 6.5 12 13 5" stroke="currentColor" stroke-width="2" ' +
+        'stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      li.appendChild(ind);
+      li.appendChild(document.createTextNode(opt.textContent));
       li.setAttribute('aria-selected', 'false');
       if (opt.disabled) li.setAttribute('aria-disabled', 'true');
       return li;
@@ -276,7 +287,7 @@ export class Select extends Component {
     for (const node of this._source.children) {
       if (node.tagName === 'OPTGROUP') {
         const header = document.createElement('li');
-        header.className = 'select__group';
+        header.className = 'select__group-label';
         header.setAttribute('role', 'presentation');
         header.textContent = node.label;
         this._popup.appendChild(header);
@@ -527,7 +538,7 @@ export class Select extends Component {
   }
 
   _onPopupClick(e) {
-    const li = e.target.closest('.select__option');
+    const li = e.target.closest('.select__item');
     if (!li) return;
     const idx = this._optionEls.indexOf(li);
     if (idx < 0) return;

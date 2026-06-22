@@ -4,52 +4,36 @@
 // .placeholder to any inline element and size it via a width utility
 // or inline style.
 //
-//   <p class="text-muted-foreground" aria-hidden="true">
+//   <p aria-hidden="true">
 //     <span class="placeholder" style="width: 60%"></span>
 //   </p>
 //
-// Fill is currentColor at low opacity — wrap the placeholder tree in
-// .text-muted-foreground so bars sit on a muted gray instead of the
-// high-contrast body color. Any .text-{intent} utility recolors too.
+// Fill is a neutral muted gray by default (no wrapper needed). Override
+// --placeholder-bg for a different tone.
 //
 // Animations: wrap a group in .placeholder--glow for a pulse, or
 // .placeholder--wave for a left-to-right shimmer.
 
 .placeholder {
-  --placeholder-opacity:  0.5;
-  --placeholder-radius:   var(--st-placeholder-radius, var(--st-radius-sm));
-  --placeholder-height:   1em;
-
   display: inline-block;
-  min-height: var(--placeholder-height);
+  min-height: var(--placeholder-height, 1em);
   vertical-align: middle;
   cursor: wait;
-  background: currentColor;
-  opacity: var(--placeholder-opacity);
-  border-radius: var(--placeholder-radius);
-  margin-bottom: 0.375rem;
-}
-
-// .btn carries its own radius and spacing — opt out of placeholder's
-// shape overrides when the placeholder lands on a button (disabled
-// loading-state button).
-.placeholder.btn {
-  border-radius: var(--btn-radius);
-  margin-bottom: 0;
+  background: var(--placeholder-bg, var(--st-muted-foreground));
+  opacity: var(--placeholder-opacity, 0.5);
+  border-radius: var(--placeholder-radius, #{radius(sm)});
 }
 
 // === Sizes ============================================================
-.placeholder--xs { --placeholder-height: 0.5em;  }
-.placeholder--sm { --placeholder-height: 0.75em; }
-.placeholder--lg { --placeholder-height: 1.5em;  }
+.placeholder--compact { --placeholder-height: 0.75em; }
+.placeholder--roomy { --placeholder-height: 1.5em;  }
 
 // === Animations =======================================================
-// Both wrappers target descendant .placeholder so the animation runs
-// across a group. Reduced motion stops them entirely — a paused
-// placeholder still reads as "not loaded yet" because of the bar shape
-// itself; the animation is decoration, not signal.
+// Modifiers on the .placeholder itself (not a wrapper): add the class to each
+// bar you want animated. Reduced motion stops them — a paused bar still reads
+// as "not loaded yet" from its shape alone; the animation is decoration.
 
-.placeholder--glow .placeholder {
+.placeholder--glow {
   animation: st-placeholder-glow 2s ease-in-out infinite;
 }
 
@@ -65,7 +49,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .placeholder--glow .placeholder,
+  .placeholder--glow,
   .placeholder--wave { animation: none; }
 }
 

@@ -19,7 +19,7 @@
     {% call ui.demo() %}
     <div class="app-shell overflow-hidden" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); min-height: 0; transform: translate(0); height: 22rem;">
       <aside class="d-flex flex-wrap sidebar align-items-center justify-content-center text-muted-foreground fs-2" style="background: var(--st-surface-2); border-right: 1px solid var(--st-border);">Sidebar</aside>
-      <main class="app-shell__main" style="padding: calc(1rem * var(--st-density))">
+      <main class="app-shell__main" style="padding: 1rem">
         <h3 class="h6">Dashboard</h3>
         <p class="text-muted-foreground">Page content goes here.</p>
       </main>
@@ -33,10 +33,10 @@
     <p>Add a direct <code>.navbar</code> child to the shell and wrap the sidebar and main in an <code>.app-shell__body</code>. The shell auto-detects this shape via <code>:has()</code> and switches to flex-column. No modifier class needed.</p>
     {% call ui.demo() %}
     <div class="app-shell overflow-hidden" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); min-height: 0; transform: translate(0); height: 24rem;">
-      <nav class="navbar text-muted-foreground fs-2" style="background: var(--st-surface-2); border-bottom: 1px solid var(--st-border); padding-block: calc(0.75rem * var(--st-density)); padding-inline: calc(1rem * var(--st-density))">Navbar</nav>
+      <nav class="navbar text-muted-foreground fs-2" style="background: var(--st-surface-2); border-bottom: 1px solid var(--st-border); padding-block: 0.75rem; padding-inline: 1rem">Navbar</nav>
       <div class="app-shell__body">
         <aside class="d-flex flex-wrap sidebar align-items-center justify-content-center text-muted-foreground fs-2" style="background: var(--st-surface-2); border-right: 1px solid var(--st-border);">Sidebar</aside>
-        <main class="app-shell__main" style="padding: calc(1rem * var(--st-density))">
+        <main class="app-shell__main" style="padding: 1rem">
           <h3 class="h6">Dashboard</h3>
           <p class="text-muted-foreground">Page content goes here.</p>
         </main>
@@ -50,8 +50,8 @@
     <div class="app-shell overflow-hidden" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); min-height: 0; transform: translate(0); height: 24rem;">
       <aside class="d-flex flex-wrap sidebar align-items-center justify-content-center text-muted-foreground fs-2" style="background: var(--st-surface-2); border-right: 1px solid var(--st-border);">Sidebar</aside>
       <main class="app-shell__main">
-        <nav class="navbar text-muted-foreground fs-2" style="background: var(--st-surface-2); border-bottom: 1px solid var(--st-border); padding-block: calc(0.75rem * var(--st-density)); padding-inline: calc(1rem * var(--st-density))">Navbar</nav>
-        <div class="flex-fill" style="padding: calc(1rem * var(--st-density))">
+        <nav class="navbar text-muted-foreground fs-2" style="background: var(--st-surface-2); border-bottom: 1px solid var(--st-border); padding-block: 0.75rem; padding-inline: 1rem">Navbar</nav>
+        <div class="flex-fill" style="padding: 1rem">
           <h3 class="h6">Dashboard</h3>
           <p class="text-muted-foreground">Page content goes here.</p>
         </div>
@@ -67,11 +67,11 @@
     <div class="app-shell overflow-hidden" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); min-height: 0; transform: translate(0); height: 22rem;">
       <aside class="d-flex flex-wrap sidebar align-items-center justify-content-center text-muted-foreground fs-2" style="background: var(--st-surface-2); border-right: 1px solid var(--st-border);">Sidebar</aside>
       <main class="app-shell__main">
-        <div style="padding: calc(1rem * var(--st-density))">
+        <div style="padding: 1rem">
           <h3 class="h6">Dashboard</h3>
           <p class="text-muted-foreground">Page content goes here.</p>
         </div>
-        <footer class="fs-2 text-muted-foreground mt-auto" style="border-top: 1px solid var(--st-border); padding-block: calc(0.75rem * var(--st-density)); padding-inline: calc(1rem * var(--st-density))">
+        <footer class="fs-2 text-muted-foreground mt-auto" style="border-top: 1px solid var(--st-border); padding-block: 0.75rem; padding-inline: 1rem">
           &copy; 2026 Acme. Built with Stisla.
         </footer>
       </main>
@@ -107,12 +107,12 @@
     <div class="app-shell overflow-hidden" data-stisla-app-shell style="border: 1px solid var(--st-border); border-radius: var(--st-radius); min-height: 0; transform: translate(0); height: 22rem;">
       <aside class="d-flex flex-wrap sidebar align-items-center justify-content-center text-muted-foreground fs-2" style="background: var(--st-surface-2); border-right: 1px solid var(--st-border);">Sidebar</aside>
       <main class="app-shell__main">
-        <nav style="border-bottom: 1px solid var(--st-border); padding-block: calc(0.5rem * var(--st-density)); padding-inline: calc(0.75rem * var(--st-density))">
-          <button class="btn btn--ghost btn--neutral btn--icon-only btn--sm" type="button" data-stisla-app-shell-toggle="collapse" aria-label="Toggle sidebar">
+        <nav style="border-bottom: 1px solid var(--st-border); padding-block: 0.5rem; padding-inline: 0.75rem">
+          <button class="btn btn--ghost btn--neutral btn--icon-only btn--compact" type="button" data-stisla-app-shell-toggle="collapse" aria-label="Toggle sidebar">
             <i data-lucide="panel-left"></i>
           </button>
         </nav>
-        <div class="flex-fill" style="padding: calc(1rem * var(--st-density))">
+        <div class="flex-fill" style="padding: 1rem">
           <p class="text-muted-foreground">Click the icon to collapse the sidebar to a rail.</p>
         </div>
       </main>
@@ -127,12 +127,12 @@
     <div class="app-shell overflow-hidden" data-stisla-app-shell style="border: 1px solid var(--st-border); border-radius: var(--st-radius); min-height: 0; transform: translate(0); height: 22rem;">
       <aside class="d-flex flex-wrap sidebar align-items-center justify-content-center text-muted-foreground fs-2" style="background: var(--st-surface-2); border-right: 1px solid var(--st-border);">Sidebar</aside>
       <main class="app-shell__main">
-        <nav style="border-bottom: 1px solid var(--st-border); padding-block: calc(0.5rem * var(--st-density)); padding-inline: calc(0.75rem * var(--st-density))">
-          <button class="btn btn--ghost btn--neutral btn--icon-only btn--sm" type="button" data-stisla-app-shell-toggle="visibility" aria-label="Open sidebar">
+        <nav style="border-bottom: 1px solid var(--st-border); padding-block: 0.5rem; padding-inline: 0.75rem">
+          <button class="btn btn--ghost btn--neutral btn--icon-only btn--compact" type="button" data-stisla-app-shell-toggle="visibility" aria-label="Open sidebar">
             <i data-lucide="menu"></i>
           </button>
         </nav>
-        <div class="flex-fill" style="padding: calc(1rem * var(--st-density))">
+        <div class="flex-fill" style="padding: 1rem">
           <p class="text-muted-foreground">Resize the browser below <code>lg</code> (992px) and tap the menu icon. A backdrop covers the rest of the shell while open; tap anywhere outside the sidebar or press <kbd>Esc</kbd> to dismiss.</p>
         </div>
       </main>
@@ -147,12 +147,12 @@
     <div class="app-shell overflow-hidden" data-stisla-app-shell style="border: 1px solid var(--st-border); border-radius: var(--st-radius); min-height: 0; transform: translate(0); height: 22rem;">
       <aside class="d-flex flex-wrap sidebar align-items-center justify-content-center text-muted-foreground fs-2" style="background: var(--st-surface-2); border-right: 1px solid var(--st-border);">Sidebar</aside>
       <main class="app-shell__main">
-        <nav style="border-bottom: 1px solid var(--st-border); padding-block: calc(0.5rem * var(--st-density)); padding-inline: calc(0.75rem * var(--st-density))">
-          <button class="btn btn--ghost btn--neutral btn--icon-only btn--sm" type="button" data-stisla-app-shell-toggle="auto" aria-label="Toggle sidebar">
+        <nav style="border-bottom: 1px solid var(--st-border); padding-block: 0.5rem; padding-inline: 0.75rem">
+          <button class="btn btn--ghost btn--neutral btn--icon-only btn--compact" type="button" data-stisla-app-shell-toggle="auto" aria-label="Toggle sidebar">
             <i data-lucide="panel-left"></i>
           </button>
         </nav>
-        <div class="flex-fill" style="padding: calc(1rem * var(--st-density))">
+        <div class="flex-fill" style="padding: 1rem">
           <p class="text-muted-foreground">On desktop, the icon rails the sidebar. On mobile, it opens the drawer.</p>
         </div>
       </main>
@@ -176,7 +176,7 @@
         <tr><td><code>--app-shell-sidebar-width-collapsed</code></td><td>Desktop collapsed (rail) width</td></tr>
         <tr><td><code>--app-shell-sidebar-mobile-bg</code></td><td>Mobile drawer surface (opaque so content underneath doesn't bleed through)</td></tr>
         <tr><td><code>--app-shell-sidebar-mobile-shadow</code></td><td>Drawer shadow, cast right-ward to signal the slide-from-left motion</td></tr>
-        <tr><td><code>--app-shell-sidebar-z</code></td><td>Z-index of the mobile drawer; the backdrop sits one below</td></tr>
+        <tr><td><code>--app-shell-sidebar-z-index</code></td><td>Z-index of the mobile drawer; the backdrop sits one below</td></tr>
         <tr><td><code>--app-shell-backdrop-bg</code></td><td>Mobile backdrop color (fixed-dark in both themes)</td></tr>
         <tr><td><code>--app-shell-transition-duration</code></td><td>Width and slide transition speed</td></tr>
       </tbody>

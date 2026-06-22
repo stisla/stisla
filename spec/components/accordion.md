@@ -197,35 +197,38 @@ globally).**
 | Variable | Affects |
 | --- | --- |
 | `--accordion-radius` | Outer frame corner radius. |
-| `--accordion-padding` | Inner padding inside the frame (the inset that lets items chip out concentrically). |
+| `--accordion-padding-inline` | Inner inline padding inside the frame (the inset that lets items chip out concentrically). |
+| `--accordion-padding-block` | Inner block padding inside the frame. |
 | `--accordion-gap` | Vertical gap between items. |
 | `--accordion-bg` | Frame background. |
+| `--accordion-border-width` | Frame border width. |
 | `--accordion-border-color` | Frame border colour. |
 | `--accordion-shadow` | Frame drop shadow. |
 | `--accordion-item-open-bg` | Background of an item when open. |
 | `--accordion-item-open-border-color` | Border colour of an item when open. |
-| `--accordion-header-padding-y` | Header vertical padding. |
-| `--accordion-header-padding-x` | Header horizontal padding. |
+| `--accordion-header-padding-block` | Header vertical padding. |
+| `--accordion-header-padding-inline` | Header horizontal padding. |
 | `--accordion-header-font-size` | Header text size. |
 | `--accordion-header-font-weight` | Header text weight. |
 | `--accordion-header-color` | Header text colour (rest and open). |
 | `--accordion-header-bg` | Header background (rest). |
-| `--accordion-header-hover-bg` | Header background on hover (closed items only). |
+| `--accordion-header-bg-hover` | Header background on hover (closed items only). |
 | `--accordion-header-divider-color` | Divider between header and body on open items. |
 | `--accordion-icon-size` | Chevron size. |
 | `--accordion-icon-color` | Chevron colour. |
 | `--accordion-icon-transition-duration` | Chevron rotation duration. |
-| `--accordion-body-padding-y` | Body inner vertical padding. |
-| `--accordion-body-padding-x` | Body inner horizontal padding. |
+| `--accordion-body-padding-block` | Body inner vertical padding. |
+| `--accordion-body-padding-inline` | Body inner horizontal padding. |
 | `--accordion-body-color` | Body text colour. |
 | `--accordion-body-transition-duration` | Body height transition duration. |
 | `--accordion-ring` | Focus ring colour on header. |
 
 **Global tokens consumed.**
 
-`--st-radius-lg`, `--st-surface`, `--st-surface-2`, `--st-border`,
-`--st-shadow`, `--st-foreground`, `--st-muted-foreground` (disabled
-header), `--st-accent` (header hover), `--st-ring`, `--st-density`.
+`--st-surface`, `--st-surface-2`, `--st-border`, `--st-foreground`,
+`--st-muted-foreground` (disabled header), `--st-accent` (header hover),
+`--st-ring`. Padding and gaps ride the spacing base `--st-spacing` via
+the `space()` helper.
 
 **Dark-mode flips.** None. The frame and open-chip paints read surface
 tokens which the theme block re-defines; no per-component dark logic is

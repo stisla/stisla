@@ -94,7 +94,7 @@
       <i data-lucide="info"></i>
       <div>Message deleted successfully.</div>
       <div class="alert__action">
-        <button type="button" class="btn btn--neutral btn--sm">Undo</button>
+        <button type="button" class="btn btn--neutral btn--compact">Undo</button>
       </div>
     </div>
     {% endcall %}
@@ -106,8 +106,8 @@
         <i data-lucide="triangle-alert"></i>
         <div>Your session is about to expire.</div>
         <div class="alert__action">
-          <button type="button" class="btn btn--ghost btn--neutral btn--sm">Stay</button>
-          <button type="button" class="btn btn--neutral btn--sm">Extend</button>
+          <button type="button" class="btn btn--ghost btn--neutral btn--compact">Stay</button>
+          <button type="button" class="btn btn--neutral btn--compact">Extend</button>
         </div>
       </div>
       <div class="alert alert--info">
@@ -115,7 +115,7 @@
         <div class="alert__heading">New version available</div>
         <div class="alert__description">Reload to pick up the latest changes.</div>
         <div class="alert__action">
-          <button type="button" class="btn btn--primary btn--sm">Reload</button>
+          <button type="button" class="btn btn--primary btn--compact">Reload</button>
         </div>
       </div>
     </div>
@@ -124,14 +124,14 @@
 
   <section>
     <h2>Dismissible</h2>
-    <p>Alert ships no special close control. Drop a <code>.btn--ghost.btn--neutral.btn--icon-only.btn--sm</code> with an X icon inside <code>.alert__action</code> and wire your own dismiss handler.</p>
+    <p>Alert ships no special close control. Drop a <code>.btn--ghost.btn--neutral.btn--icon-only.btn--compact</code> with an X icon inside <code>.alert__action</code> and wire your own dismiss handler.</p>
     {% call ui.demo() %}
     <div class="demo-stack">
       <div class="alert alert--success">
         <i data-lucide="check-circle-2"></i>
         <div>Your changes have been saved.</div>
         <div class="alert__action">
-          <button type="button" class="btn btn--ghost btn--neutral btn--icon-only btn--sm" aria-label="Dismiss">
+          <button type="button" class="btn btn--ghost btn--neutral btn--icon-only btn--compact" aria-label="Dismiss">
             <i data-lucide="x"></i>
           </button>
         </div>
@@ -141,7 +141,7 @@
         <div class="alert__heading">Couldn't connect</div>
         <div class="alert__description">We lost contact with the server. Try again in a moment.</div>
         <div class="alert__action">
-          <button type="button" class="btn btn--ghost btn--neutral btn--icon-only btn--sm" aria-label="Dismiss">
+          <button type="button" class="btn btn--ghost btn--neutral btn--icon-only btn--compact" aria-label="Dismiss">
             <i data-lucide="x"></i>
           </button>
         </div>
@@ -169,7 +169,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Eight variables retune <code>.alert</code> without touching component CSS. Override on <code>.alert</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
+    <p>These variables retune <code>.alert</code> without touching component CSS. Override on <code>.alert</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
     <table>
       <thead>
         <tr>
@@ -180,19 +180,23 @@
       <tbody>
         <tr>
           <td><code>--alert-radius</code></td>
-          <td>Corner radius (per-component override via <code>--st-alert-radius</code>)</td>
+          <td>Corner radius</td>
         </tr>
         <tr>
-          <td><code>--alert-padding-y</code></td>
-          <td>Vertical padding; doubles when <code>.alert__description</code> is present</td>
+          <td><code>--alert-padding-block</code></td>
+          <td>Top and bottom padding; grows when <code>.alert__description</code> is present</td>
         </tr>
         <tr>
-          <td><code>--alert-padding-x</code></td>
-          <td>Horizontal padding</td>
+          <td><code>--alert-padding-inline</code></td>
+          <td>Left and right padding</td>
         </tr>
         <tr>
           <td><code>--alert-bg</code></td>
           <td>Background; <code>--neutral</code> sets <code>--st-surface</code>, intents set a 7% tint of the intent color</td>
+        </tr>
+        <tr>
+          <td><code>--alert-border-width</code></td>
+          <td>Border thickness; set <code>0</code> to drop the border</td>
         </tr>
         <tr>
           <td><code>--alert-border-color</code></td>

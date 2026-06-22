@@ -14,7 +14,7 @@
     <h2>Basic</h2>
     <p>A trigger button and a content region tied by id. The trigger points at the region via <code>data-stisla-collapsible-trigger</code>; the region carries <code>data-stisla-collapsible</code> and <code>data-state="open"</code> or <code>"closed"</code> driving the paint. The height transition runs around every state flip; the JS measures, animates, and clears the inline height once it lands.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-column gap-3 align-items-start">
+    <div class="d-flex flex-column gap-3 align-items-center">
       <button type="button" class="btn btn--neutral"
               data-stisla-collapsible-trigger="collapsible-basic"
               aria-controls="collapsible-basic" aria-expanded="false">
@@ -42,7 +42,7 @@
     <h2>Open by default</h2>
     <p>Render the region with <code>data-state="open"</code> to start open. The trigger's <code>aria-expanded</code> follows on construction.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-column gap-3 align-items-start">
+    <div class="d-flex flex-column gap-3 align-items-center">
       <button type="button" class="btn btn--neutral"
               data-stisla-collapsible-trigger="collapsible-open"
               aria-controls="collapsible-open" aria-expanded="true">
@@ -66,14 +66,14 @@
         <h4 class="card__title">API token</h4>
         <p class="card__text text-muted-foreground">Created two weeks ago. Last used yesterday.</p>
         <div class="d-flex flex-wrap align-items-center gap-2 mt-3">
-          <button type="button" class="btn btn--sm btn--ghost btn--neutral"
+          <button type="button" class="btn btn--compact btn--ghost btn--neutral btn--flush-start"
                   data-stisla-collapsible-trigger="collapsible-card"
                   aria-controls="collapsible-card" aria-expanded="false">
             Show permissions
           </button>
         </div>
-        <div id="collapsible-card" class="collapsible mt-2" data-stisla-collapsible data-state="closed" role="region">
-          <ul class="m-0 text-muted-foreground" style="padding-inline-start: calc(1.25rem * var(--st-density))">
+        <div id="collapsible-card" class="collapsible" data-stisla-collapsible data-state="closed" role="region">
+          <ul class="m-0 text-muted-foreground">
             <li>read:repo</li>
             <li>write:issues</li>
             <li>read:user</li>
@@ -88,11 +88,11 @@
     <h2>Programmatic control</h2>
     <p>Build a <code>Stisla.Collapsible</code> directly to drive a region from code. Pass any element as <code>opts.triggers</code>, or let the constructor scan for matching <code>data-stisla-collapsible-trigger</code>s by id.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-column gap-3 align-items-start">
+    <div class="d-flex flex-column gap-3 align-items-center">
       <div class="d-flex flex-wrap align-items-center gap-2">
-        <button type="button" class="btn btn--sm btn--neutral" data-demo-collapsible="open">Open</button>
-        <button type="button" class="btn btn--sm btn--neutral" data-demo-collapsible="close">Close</button>
-        <button type="button" class="btn btn--sm btn--neutral" data-demo-collapsible="toggle">Toggle</button>
+        <button type="button" class="btn btn--compact btn--neutral" data-demo-collapsible="open">Open</button>
+        <button type="button" class="btn btn--compact btn--neutral" data-demo-collapsible="close">Close</button>
+        <button type="button" class="btn btn--compact btn--neutral" data-demo-collapsible="toggle">Toggle</button>
       </div>
       <div id="collapsible-programmatic" class="collapsible" data-stisla-collapsible data-state="closed" role="region">
         <div style="padding: 1rem; border: 1px solid var(--st-border); border-radius: var(--st-radius); background: var(--st-surface);">

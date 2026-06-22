@@ -16,7 +16,7 @@
 @layer foundation, theme, components, utilities;
 
 // Sass-only mixins the combobox partial depends on (form-field-base,
-// popup-base/item/header, ts-popup, color-mode). Loaded outside any
+// menu-surface/item/group-label, ts-popup, color-mode). Loaded outside any
 // @layer so the symbols are in scope when the component compiles.
 @import '../../foundation/mixins';
 

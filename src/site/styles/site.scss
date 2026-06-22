@@ -15,7 +15,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 20px;
 }
 
 .demo-row--gap-md {
@@ -97,7 +97,6 @@ body {
   margin-bottom: 1rem;
   border-radius: var(--st-radius);
   border: 1px solid var(--st-border);
-  overflow: hidden;
 }
 
 .demo-preview {
@@ -116,7 +115,7 @@ body {
 // position: fixed (escaping .demo's overflow: hidden), so the preview only
 // needs enough room for the centered trigger to sit comfortably while the
 // menu drops down past the demo boundary into open viewport space.
-.demo-preview:has(.dropdown-menu) {
+.demo-preview:has(.menu) {
   min-height: 24rem;
 }
 
@@ -402,7 +401,7 @@ body {
 // inside the new scroll container. Tighter than the framework default
 // (2em) to sit closer to the docs paragraph rhythm.
 .main-container.prose .table-responsive {
-  margin-block: calc(1.25em * var(--st-density));
+  margin-block: 1.25em;
 
   > table {
     margin-block: 0;
@@ -571,7 +570,7 @@ $shell-max: 90rem;
   .sidebar__button {
     width: auto;
   }
-  &.sidebar--sm {
+  &.sidebar--compact {
     --sidebar-group-gap: 1.75rem;
   }
 

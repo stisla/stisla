@@ -187,12 +187,12 @@
     <p>Slides aren't limited to images. Add <code>.carousel--no-aspect</code> on the root and the viewport sizes to its tallest slide instead of locking to <code>16 / 9</code>. The chrome tokens can be retuned to track theme surfaces so the controls and indicators read on both light and dark.</p>
     {% call ui.demo() %}
     <div class="carousel carousel--no-aspect" data-stisla-carousel data-stisla-carousel-loop="true" role="region" aria-roledescription="carousel" aria-label="Customer stories"
-         style="--carousel-control-bg: var(--st-surface); --carousel-control-bg-hover: var(--st-accent); --carousel-control-color: var(--st-foreground); --carousel-indicator-bg: var(--st-border); --carousel-indicator-active-bg: var(--st-primary); --carousel-indicators-inset: -1rem;">
+         style="--carousel-control-bg: var(--st-surface); --carousel-control-bg-hover: var(--st-accent); --carousel-control-color: var(--st-foreground); --carousel-indicator-bg: var(--st-border); --carousel-indicator-bg-active: var(--st-primary); --carousel-indicators-inset: -1rem;">
       <div class="carousel__viewport">
         <div class="carousel__track">
           <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="1 of 3">
             <div class="card m-0">
-              <div class="card__body" style="padding: calc(2rem * var(--st-density))">
+              <div class="card__body">
                 <p class="m-0" style="font-size: 1.0625rem; line-height: 1.6;">"Stisla took the headache out of rebuilding our internal admin tool. The token system meant we could ship a brand refresh in a single PR, with no per-component overrides."</p>
                 <div class="mt-5">
                   <strong>Maya Tanaka</strong>
@@ -203,7 +203,7 @@
           </div>
           <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="2 of 3">
             <div class="card m-0">
-              <div class="card__body" style="padding: calc(2rem * var(--st-density))">
+              <div class="card__body">
                 <p class="m-0" style="font-size: 1.0625rem; line-height: 1.6;">"We bought into the BS5 version for a client project two years ago. The v3 rewrite kept everything we liked and dropped the bits we were already hacking around."</p>
                 <div class="mt-5">
                   <strong>Diego Romero</strong>
@@ -214,7 +214,7 @@
           </div>
           <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="3 of 3">
             <div class="card m-0">
-              <div class="card__body" style="padding: calc(2rem * var(--st-density))">
+              <div class="card__body">
                 <p class="m-0" style="font-size: 1.0625rem; line-height: 1.6;">"Dark mode used to be a quarterly bug ticket. Now it's a single <code>[data-theme]</code> flip on the root element and we don't think about it again."</p>
                 <div class="mt-5">
                   <strong>Priya Reddy</strong>
@@ -346,8 +346,8 @@
         <tr><td><code>--carousel-indicator-size</code></td><td>Dot diameter at rest.</td></tr>
         <tr><td><code>--carousel-indicator-gap</code></td><td>Space between dots.</td></tr>
         <tr><td><code>--carousel-indicator-bg</code></td><td>Inactive dot fill.</td></tr>
-        <tr><td><code>--carousel-indicator-active-bg</code></td><td>Active pill fill.</td></tr>
-        <tr><td><code>--carousel-indicator-active-width</code></td><td>Active pill width. Width transitions between dot and pill.</td></tr>
+        <tr><td><code>--carousel-indicator-bg-active</code></td><td>Active pill fill.</td></tr>
+        <tr><td><code>--carousel-indicator-width-active</code></td><td>Active pill width. Width transitions between dot and pill.</td></tr>
       </tbody>
     </table>
 
@@ -357,8 +357,8 @@
         <tr><th>Variable</th><th>Use</th></tr>
       </thead>
       <tbody>
-        <tr><td><code>--carousel-caption-padding-y</code></td><td>Caption vertical padding.</td></tr>
-        <tr><td><code>--carousel-caption-padding-x</code></td><td>Caption horizontal padding.</td></tr>
+        <tr><td><code>--carousel-caption-padding-block</code></td><td>Caption vertical padding.</td></tr>
+        <tr><td><code>--carousel-caption-padding-inline</code></td><td>Caption horizontal padding.</td></tr>
         <tr><td><code>--carousel-caption-color</code></td><td>Caption text color.</td></tr>
         <tr><td><code>--carousel-caption-bg</code></td><td>Background. Defaults to a transparent-to-dark gradient so text reads over the image.</td></tr>
       </tbody>

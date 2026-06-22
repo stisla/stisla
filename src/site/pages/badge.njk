@@ -73,19 +73,19 @@
 
   <section>
     <h2>Loading</h2>
-    <p>Slot a <code>.spinner.spinner--sm</code> in to signal in-flight work. It inherits the badge's text color and shrinks to the badge's font size.</p>
+    <p>Slot a <code>.spinner.spinner--compact</code> in to signal in-flight work. It inherits the badge's text color and shrinks to the badge's font size.</p>
     {% call ui.demo() %}
     <div class="demo-row">
       <span class="badge badge--soft badge--primary">
-        <span class="spinner spinner--sm" role="status" aria-hidden="true"></span>
+        <span class="spinner spinner--compact" role="status" aria-hidden="true"></span>
         Syncing
       </span>
       <span class="badge badge--soft">
-        <span class="spinner spinner--sm" role="status" aria-hidden="true"></span>
+        <span class="spinner spinner--compact" role="status" aria-hidden="true"></span>
         Loading
       </span>
       <span class="badge badge--info">
-        <span class="spinner spinner--sm" role="status" aria-hidden="true"></span>
+        <span class="spinner spinner--compact" role="status" aria-hidden="true"></span>
         Uploading
       </span>
     </div>
@@ -111,7 +111,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Nine variables retune <code>.badge</code> without touching component CSS. Override on <code>.badge</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
+    <p>These variables retune <code>.badge</code> without touching component CSS. Override on <code>.badge</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change.</p>
     <table>
       <thead>
         <tr>
@@ -122,19 +122,19 @@
       <tbody>
         <tr>
           <td><code>--badge-radius</code></td>
-          <td>Corner radius (pill). Reads <code>--st-badge-radius</code> first; override either to flatten.</td>
+          <td>Corner radius; pilled by default, set a smaller value to flatten</td>
         </tr>
         <tr>
           <td><code>--badge-min-height</code></td>
-          <td>Minimum height; pill adapts to content above this</td>
+          <td>Minimum height; the chip adapts to content above this</td>
         </tr>
         <tr>
-          <td><code>--badge-padding-y</code></td>
-          <td>Vertical padding</td>
+          <td><code>--badge-padding-block</code></td>
+          <td>Top and bottom padding</td>
         </tr>
         <tr>
-          <td><code>--badge-padding-x</code></td>
-          <td>Horizontal padding</td>
+          <td><code>--badge-padding-inline</code></td>
+          <td>Left and right padding</td>
         </tr>
         <tr>
           <td><code>--badge-font-size</code></td>
@@ -158,6 +158,6 @@
         </tr>
       </tbody>
     </table>
-    <p>Pill is intentional, so the badge opts out of <code>--st-radius</code> by default. Set <code>--st-badge-radius</code> at the scope you want flattened (a preset wrapper, <code>:root</code>) or <code>--badge-radius</code> on the badge itself for a one-off.</p>
+    <p>Pill is intentional, so the badge opts out of <code>--st-radius</code> by default. Set <code>--badge-radius</code> at the scope you want flattened (a preset wrapper, <code>:root</code>) or on the badge itself for a one-off.</p>
   </section>
 {% endblock %}

@@ -13,7 +13,7 @@
 //      <ul class="select__popup" role="listbox">. The button reuses the
 //      same .select shell, so it inherits sizes, density, validation,
 //      and theming. The popup picks up the shared popup-* mixins so it
-//      matches .dropdown-menu visually.
+//      matches .menu visually.
 //
 // BEM: .select (base) + .select--{sm,lg}.
 // Validation: [aria-invalid="true"] + :user-invalid (see form-field-base).
@@ -21,15 +21,13 @@
 .select {
   @include form-field-base('select');
 
-  // Chevron for the trigger. Authored as a custom prop so consumers can
-  // swap the SVG via root override without subclassing. The stroke
-  // color inside the data: URL has to be a literal — CSS vars don't
-  // resolve inside url() — so the dark block at the bottom swaps the
-  // SVG for the dark theme.
-  --select-indicator: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 6 8 10 12 6'/%3E%3C/svg%3E");
-
-  padding-inline-end: 2.25rem;
-  background-image: var(--select-indicator);
+  // Chevron for the trigger. Read as a fallback-default custom prop so a
+  // consumer can swap the SVG from any scope. The stroke colour inside the
+  // data: URL must be a literal (CSS vars don't resolve in url()), so the
+  // dark block at the bottom sets --select-indicator to the lighter SVG.
+  padding-inline-end: #{space(9)};
+  background-image: var(--select-indicator,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 6 8 10 12 6'/%3E%3C/svg%3E"));
   background-position: right 0.75rem center;
   background-repeat: no-repeat;
   background-size: 0.75rem 0.75rem;
@@ -44,8 +42,9 @@
 select.select[multiple],
 select.select[size]:not([size="1"]) {
   height: auto;
-  min-height: var(--select-height);
-  padding: calc(0.375rem * var(--st-density)) var(--select-padding-x);
+  min-height: var(--select-height, #{space(9)});
+  padding-block: #{space(1.5)};   // 0.375rem
+  padding-inline: var(--select-padding-inline, #{space(2.5)});
   appearance: auto;
   background-image: none;
 }
@@ -84,14 +83,14 @@ select.select[data-stisla-select][hidden] {
   // non-empty.
   &:empty::before {
     content: attr(data-placeholder);
-    color: var(--select-placeholder);
+    color: var(--select-placeholder, var(--st-muted-foreground));
   }
 }
 
 .select__more {
   flex-shrink: 0;
   font-size: 0.8125rem;
-  color: var(--select-placeholder);
+  color: var(--select-placeholder, var(--st-muted-foreground));
 }
 
 // === Popup ==============================================================
@@ -99,14 +98,14 @@ select.select[data-stisla-select][hidden] {
 // by the JS (Floating UI) which sets position/left/top inline; we just
 // declare the absolute strategy and a sane z-index here.
 .select__popup {
-  @include popup-base;
+  @include menu-surface('select');
   position: absolute;
   top: 0;
   left: 0;
   z-index: 1030;
   display: flex;
   flex-direction: column;
-  gap: 0.125rem; // matches --dropdown-gap
+  gap: 0.125rem; // matches --menu-gap
   margin: 0;
   list-style: none;
   overflow-y: auto;
@@ -116,15 +115,15 @@ select.select[data-stisla-select][hidden] {
   }
 }
 
-.select__option {
-  @include popup-item;
+.select__item {
+  @include menu-item('select');
 
   // Hover (mouse) + .is-highlighted (keyboard nav) paint the same accent
   // chip. Tracks Dropdown's pattern: keyboard owns the visible position,
   // mouse mirrors it.
   &:hover,
   &.is-highlighted {
-    @include popup-item-hover;
+    @include menu-item-hover('select');
   }
 
   // Currently selected — persists past hover/highlight so the chosen
@@ -132,46 +131,61 @@ select.select[data-stisla-select][hidden] {
   &.is-selected,
   &.is-selected:hover,
   &.is-selected.is-highlighted {
-    @include popup-item-active;
+    @include menu-item-active('select');
   }
 
   &[aria-disabled="true"] {
-    @include popup-item-disabled;
+    @include menu-item-disabled('select');
   }
 }
 
-.select__group {
-  @include popup-header;
+// Selected-option check (Base UI Select parity). The shared menu-indicator
+// slot is rendered first in the DOM but sits on the TRAILING edge: order: 1
+// moves it past the label and margin-inline-start: auto pushes it to the far
+// end. visibility: hidden keeps the column reserved so rows stay aligned; the
+// check shows only on the selected row. JS renders the slot + glyph in every
+// .select__item.
+.select__indicator {
+  @include menu-indicator('select');
+  order: 1;
+  margin-inline-start: auto;
+}
+.select__item.is-selected .select__indicator {
+  visibility: visible;
+}
+
+.select__group-label {
+  @include menu-group-label('select');
 }
 
 // Subsequent group headers get extra top space so the section break
 // reads as a divider (matches the dropdown rhythm).
-.select__group + .select__option,
-.select__option + .select__group {
+.select__group-label + .select__item,
+.select__item + .select__group-label {
   // First option after a header sits flush; subsequent groups get the
   // margin via the second selector.
 }
-.select__option + .select__group {
-  margin-top: 0.5rem;
+.select__item + .select__group-label {
+  margin-block-start: #{space(2)};
 }
 
 // === Sizes ==============================================================
-.select--sm {
-  --select-radius:    var(--st-input-radius, var(--st-radius-sm));
-  --select-height:    calc(1.75rem + 0.5rem * (var(--st-density) - 1));    // 28 @ 1
-  --select-padding-x: calc(0.5rem * var(--st-density));                    //  8
-  --select-font-size: 0.8125rem;
+.select--compact {
+  --select-radius:         #{radius(sm)};
+  --select-height:         #{space(7)};   // 1.75rem
+  --select-padding-inline: #{space(2)};   // 0.5rem
+  --select-font-size:      0.8125rem;     // 13px, intentionally off-scale
   // See form-field-base — iOS auto-zoom guard for sub-16px fields.
   @media (pointer: coarse) {
-    --select-font-size: 1rem;
+    --select-font-size: #{text(base)};
   }
 }
 
-.select--lg {
-  --select-radius:    var(--st-input-radius, var(--st-radius-lg));
-  --select-height:    calc(2.75rem + 0.875rem * (var(--st-density) - 1));  // 44 @ 1
-  --select-padding-x: calc(0.875rem * var(--st-density));                  // 14
-  --select-font-size: 1rem;
+.select--roomy {
+  --select-radius:         #{radius(lg)};
+  --select-height:         #{space(11)};  // 2.75rem
+  --select-padding-inline: #{space(3.5)}; // 0.875rem
+  --select-font-size:      #{text(base)};
 }
 
 // === Dark mode ==========================================================

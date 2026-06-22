@@ -14,12 +14,19 @@
 // "Custom color" section on /buttons). Promote to a project-scoped class
 // when the color appears in three or more places.
 //
-// State derivation (hover, active, focus, disabled) lives on .btn base
-// reading --btn-tone. --btn-tone is the user-facing knob — set it on a
-// custom button and bg, hover, active, rim, and bevel all derive from
-// it. The internal --btn-bg starts as var(--btn-tone) and gets mutated
-// per state; --btn-tone itself never changes, which avoids the var
-// cycle that would kill state transitions on custom buttons.
+// State model (V3-ARCHITECTURE.md §2). No token is declared on the .btn
+// base — every knob reads `var(--btn-*, <default>)` so a parent scope, a
+// modifier, or an inline style can retune it. Rest bg is --btn-bg (defaults
+// to --btn-tone). Hover / active are flat per-state hooks —
+// --btn-bg-hover / --btn-bg-active — whose defaults derive from --btn-tone
+// via color-mix, so a custom button gets correct states from a single
+// --btn-tone knob while any instance can still override one state directly.
+//
+// Sizing (V3-ARCHITECTURE.md §1/§5). Height + inline padding both ride
+// --st-spacing through space(), so a denser scope (smaller --st-spacing)
+// shrinks them proportionally. This replaces the old --st-density
+// multiplier. Size variants are .btn--compact / .btn--roomy (the density
+// vocabulary; sm/md/lg are reserved for breakpoints — V3-ARCHITECTURE §5).
 
 // === Recipe constants ===================================================
 // State-derivation mix ratios. Single source so shape and tone overrides
@@ -31,94 +38,71 @@
 // Naming convention: $btn-<shape>-<state>, percentage = tone retention in
 // the color-mix recipe. Lower number → more of the second color (black for
 // filled, transparent for outline/ghost/soft).
-$btn-fill-hover:     88%;
-$btn-fill-active:    78%;
-$btn-outline-hover:  14%;
+$btn-fill-hover: 88%;
+$btn-fill-active: 78%;
+$btn-outline-hover: 14%;
 $btn-outline-active: 22%;
-$btn-ghost-hover:    18%;
-$btn-ghost-active:   26%;
-$btn-soft-rest:      12%;
-$btn-soft-hover:     20%;
-$btn-soft-active:    28%;
+$btn-ghost-hover: 18%;
+$btn-ghost-active: 26%;
+$btn-soft-rest: 12%;
+$btn-soft-hover: 20%;
+$btn-soft-active: 28%;
 
 .btn {
-  --btn-radius:       var(--st-btn-radius, var(--st-radius));
-  // Shape knob. Bakes in the density-aware growth (nominal + 2 × default
-  // padding-x × (density - 1)) so both axes grow by the same absolute
-  // pixels under density. Override with a plain value (e.g. `2.5rem`) for
-  // a rigid taller button; override with the same calc shape to keep
-  // density-aware growth at a custom nominal.
-  --btn-height:       calc(2.25rem + 0.75rem * (var(--st-density) - 1));   // 36 @ 1 → 39 @ 1.25 → 33 @ 0.75
-  --btn-padding-x:    calc(0.75rem * var(--st-density));
-  --btn-font-size:    0.875rem;
-  --btn-font-weight:  500;
-  --btn-icon-size:    1em;
-
-  // Derive the rest bg from --btn-tone. Tones with a non-matching bg
-  // (neutral fills with --st-neutral, not its tone) override below.
-  // State rules always mix from --btn-tone (source), never from --btn-bg
-  // (derived) — chaining derived values produces double-mixed mud under
-  // stacked states.
-  --btn-bg:           var(--btn-tone);
-
-  // Universal rim + bevel. Border derives from --btn-tone so every
-  // filled tone (shipped or one-off via --btn-tone override) gets a
-  // matching darker edge. --btn-rim-mix is the tone-retention pct in
-  // the rim color-mix — 85% at rest, .btn-group lifts to 92% so internal
-  // seams (two rims overlapping at the -1px margin) sit quieter. Outline
-  // /ghost/soft set --btn-border-color directly and bypass this knob.
-  // --btn-bevel is the inset top highlight that reads as a soft bevel on
-  // colored fills and is invisible on near-white fills. Set --btn-bevel:
-  // none on :root for a flat look, or override per-tone. Shape modifiers
-  // (outline/ghost/soft) null it.
-  //
-  // .btn-check has been removed in favor of .toggle / .toggle-group —
-  // see /toggle and /toggle-group for the input-driven (form-data) and
-  // JS-driven press / segmented control patterns.
-  --btn-rim-mix:      85%;
-  --btn-border-color: color-mix(in oklch, var(--btn-tone) var(--btn-rim-mix), black);
-  --btn-bevel:        inset 0 1px 0 rgba(255, 255, 255, 0.15);
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  // Rigid shape, content floats inside. Height grows by the same number
-  // of pixels as the width grows under density, so the box stays
-  // proportional without coupling shape to content. --btn-icon-size and
-  // --btn-font-size can grow independently (the icon rule below sizes
-  // glyphs to 1em so they track the font).
-  height: var(--btn-height);
-  padding: 0 var(--btn-padding-x);
+  gap: var(--btn-gap, #{space(2)});
+  // Rigid shape, content floats inside. --btn-height read in three places
+  // (here, .btn--icon-only width, .btn--wrap min-height); the space(9)
+  // default repeats per the fallback-default rule (nothing on the element).
+  height: var(--btn-height, #{space(9)});                  // 2.25rem @ base
+  padding-block: 0;
+  padding-inline: var(--btn-padding-inline, #{space(3)});  // 0.75rem
   font-family: inherit;
-  font-size: var(--btn-font-size);
-  font-weight: var(--btn-font-weight);
+  font-size: var(--btn-font-size, #{text(sm)});
+  font-weight: var(--btn-font-weight, #{weight(medium)});
   line-height: 1;
   color: var(--btn-color);
-  background: var(--btn-bg);
-  border: var(--st-border-width) solid var(--btn-border-color);
-  border-radius: var(--btn-radius);
-  box-shadow: var(--btn-bevel);
+  background: var(--btn-bg, var(--btn-tone));
+  // Universal rim: derives from --btn-tone so every filled tone (shipped or
+  // one-off) gets a matching darker edge. --btn-rim-mix is the tone-retention
+  // pct (85% rest; .btn-group lifts it to 92% so overlapping seams sit
+  // quieter). Outline / ghost / soft set --btn-border-color directly.
+  border: var(--btn-border-width, var(--st-border-width)) solid
+    var(--btn-border-color,
+      color-mix(in oklch, var(--btn-tone) var(--btn-rim-mix, 85%), black));
+  border-radius: var(--btn-radius, #{radius(md)});
+  // Inset top highlight: a soft bevel on colored fills, invisible on
+  // near-white. Set --btn-bevel: none for a flat look; shapes null it.
+  box-shadow: var(--btn-bevel, inset 0 1px 0 rgba(255, 255, 255, 0.15));
   cursor: pointer;
   user-select: none;
   text-decoration: none;
-  // Single-line by contract. Over-constrained widths truncate with an
-  // ellipsis rather than wrapping into a multi-line box that breaks the
-  // hard-height shape. .btn--wrap is the documented multi-line opt-out.
+  // Single-line by contract; .btn--wrap is the documented multi-line opt-out.
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: background-color .12s ease, border-color .12s ease,
-              color .12s ease, box-shadow .12s ease;
+  transition:
+    background-color #{duration(fast)} ease,
+    border-color #{duration(fast)} ease,
+    color #{duration(fast)} ease,
+    box-shadow #{duration(fast)} ease;
 
-  // Universal state derivations. Tones that need a different direction
-  // (neutral → accent, tertiary → toward background) override below.
-  // Shape modifiers (outline/ghost/light) override too — they tint over
-  // transparent rather than darkening a solid fill.
-  &:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) #{$btn-fill-hover}, black); }
+  // Universal state derivations. Tones that move in a different direction
+  // (neutral → darker neutral, tertiary → toward background) and shapes
+  // (outline / ghost / soft tint over transparent) override below; source
+  // order lets the more specific rule win for combined classes.
+  &:hover {
+    background: var(--btn-bg-hover,
+      color-mix(in oklch, var(--btn-tone) #{$btn-fill-hover}, black));
+  }
   &:active,
   &[aria-pressed="true"],
-  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--btn-tone) #{$btn-fill-active}, black); }
+  &[data-state="active"] {
+    background: var(--btn-bg-active,
+      color-mix(in oklch, var(--btn-tone) #{$btn-fill-active}, black));
+  }
 
   &:focus-visible {
     outline: 2px solid var(--st-ring);
@@ -136,61 +120,59 @@ $btn-soft-active:    28%;
 
 // Icons inside .btn scale via --btn-icon-size (defaults to 1em, so the
 // glyph tracks the label). Targets .btn__icon (BEM opt-in) plus inline
-// <svg>/<i> as a convenience so Lucide and Bootstrap-Icons markup just
-// work. Override per-instance for icon-prominent UIs:
-//   <button class="btn" style="--btn-icon-size: 1.25em">...</button>
+// <svg>/<i> so Lucide / Bootstrap-Icons markup just works. Override
+// per-instance: <button class="btn" style="--btn-icon-size: 1.25em">.
 .btn :is(svg, i, .btn__icon) {
-  width: var(--btn-icon-size);
-  height: var(--btn-icon-size);
+  width: var(--btn-icon-size, 1em);
+  height: var(--btn-icon-size, 1em);
   flex-shrink: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .btn { transition: none; }
+  .btn {
+    transition: none;
+  }
 }
 
 // === Sizes ============================================================
-// Each size pulls its own --st-radius-{sm,lg} derived sibling + retunes
-// --btn-height so the density-delta formula tracks the size's own
-// default padding-x (the source of width growth).
-.btn--sm {
-  --btn-radius:    var(--st-btn-radius, var(--st-radius-sm));
-  --btn-height:    calc(1.75rem + 0.625rem * (var(--st-density) - 1));  // 28 @ 1 → 30.5 @ 1.25 → 25.5 @ 0.75
-  --btn-padding-x: calc(0.625rem * var(--st-density));
+// Retune --btn-height / padding / font / radius. Heights are space()
+// multiples (7 / 9 / 11) so they track --st-spacing like the base. sm's
+// 0.8125rem font is an intentional off-scale value (13px) — the escape
+// hatch, not a magic number.
+.btn--compact {
+  --btn-height: #{space(7)};            // 1.75rem
+  --btn-padding-inline: #{space(2.5)};  // 0.625rem
   --btn-font-size: 0.8125rem;
+  --btn-radius: #{radius(sm)};
 }
-.btn--lg {
-  --btn-radius:    var(--st-btn-radius, var(--st-radius-lg));
-  --btn-height:    calc(2.75rem + 1rem * (var(--st-density) - 1));      // 44 @ 1 → 48 @ 1.25 → 40 @ 0.75
-  --btn-padding-x: calc(1rem * var(--st-density));
-  --btn-font-size: 1rem;
+.btn--roomy {
+  --btn-height: #{space(11)};           // 2.75rem
+  --btn-padding-inline: #{space(4)};    // 1rem
+  --btn-font-size: #{text(base)};
+  --btn-radius: #{radius(lg)};
 }
 
 // === Icon shapes ======================================================
-// Square at every size. Width tracks --btn-height (already density-aware)
-// so .btn--icon-only composes with .btn--sm / .btn--lg through every
-// --st-density value.
+// Square at every size: width tracks --btn-height, so .btn--icon-only
+// composes with .btn--compact / .btn--roomy.
 .btn--icon-only {
-  --btn-padding-x: 0;
-  width: var(--btn-height);
+  --btn-padding-inline: 0;
+  width: var(--btn-height, #{space(9)});
 }
 
-// Opt out of --st-radius for a circular silhouette.
+// Opt out of --btn-radius for a circular silhouette.
 .btn--icon-round {
   border-radius: 9999px;
 }
 
 // === Wrap =============================================================
-// Opt out of the single-line contract. Restores height: auto + a
-// min-height floor + vertical padding + normal wrapping, so a wide
-// button can grow into a multi-line label without breaking. Use
-// sparingly — multi-line buttons are usually a content-design smell.
-// Typical case: a full-width form-submit with a small helper line
-// inside the button. Pair with .btn--lg for breathing room.
+// Opt out of the single-line contract: height: auto + a min-height floor +
+// vertical padding + normal wrapping. Use sparingly. Pair with .btn--roomy for
+// breathing room.
 .btn--wrap {
   height: auto;
-  min-height: var(--btn-height);
-  padding-block: calc(0.375rem * var(--st-density));
+  min-height: var(--btn-height, #{space(9)});
+  padding-block: #{space(1.5)};         // 0.375rem
   white-space: normal;
   overflow: visible;
   text-overflow: clip;
@@ -198,13 +180,9 @@ $btn-soft-active:    28%;
 }
 
 // === Block ============================================================
-// Full-width button. The canonical answer to "make this button fill its
-// row" (SPEC §9 escape ramp, step 1) so consumers don't reach for
-// `.w-100` or inline `style="width: 100%"`. Pairs cleanly with
-// `.btn--wrap` when a long label needs to wrap inside a stretched
-// button. `display: flex` (vs the base `inline-flex`) makes the button
-// block-level so `width: 100%` fills the container without relying on
-// the parent's intrinsic sizing.
+// Full-width button (SPEC §9 escape ramp, step 1) so consumers don't reach
+// for `.w-100` / inline `width: 100%`. display: flex makes it block-level so
+// width: 100% fills the container.
 .btn--block {
   display: flex;
   width: 100%;
@@ -215,124 +193,153 @@ $btn-soft-active:    28%;
 // --btn-bg + --btn-color. State transitions come from .btn base.
 
 .btn--primary {
-  --btn-tone:  var(--st-primary);
+  --btn-tone: var(--st-primary);
   --btn-color: var(--st-primary-foreground);
 }
 
 .btn--danger {
-  --btn-tone:  var(--st-danger);
+  --btn-tone: var(--st-danger);
   --btn-color: var(--st-danger-foreground);
 }
 
-// Neutral — filled neutral button. Rest fills with --st-neutral. Hover
-// and active darken via the same color-mix math as primary/danger/custom
-// so every filled tone moves in the same direction on interaction. Tone
-// for shape modifiers stays --st-foreground so outline/ghost/light pick
-// up the body text color rather than the light --st-neutral fill.
-//
-// Border is asymmetric: mix toward --st-muted-foreground so the rim
-// reads as a recessed edge in light mode and a rim-light in dark mode
-// (the muted-foreground token flips with theme, so the same formula
-// pulls in opposite directions per mode).
-//
-// --st-accent is still the right hover bg for transparent-rest neutral
-// surfaces (.btn--outline.btn--neutral, .btn--ghost.btn--neutral, plus
-// sidebar / dropdown / table-row items further down the component tree).
+// Neutral — filled neutral button. Rest fills with --st-neutral; hover /
+// active darken via the same color-mix math as primary so every filled tone
+// moves in the same direction. Tone stays --st-foreground so outline / ghost
+// / soft pick up body text colour, not the light --st-neutral fill. Border
+// mixes toward --st-muted-foreground (recessed edge in light, rim-light in
+// dark — the token flips with theme).
 .btn--neutral {
-  --btn-tone:         var(--st-foreground);
-  --btn-bg:           var(--st-neutral);
-  --btn-color:        var(--st-neutral-foreground);
-  --btn-border-color: color-mix(in oklch, var(--st-neutral) var(--btn-rim-mix), var(--st-muted-foreground));
+  --btn-tone: var(--st-foreground);
+  --btn-bg: var(--st-neutral);
+  --btn-color: var(--st-neutral-foreground);
+  --btn-border-color: color-mix(
+    in oklch,
+    var(--st-neutral) var(--btn-rim-mix, 85%),
+    var(--st-muted-foreground)
+  );
 
-  &:hover  { --btn-bg: color-mix(in oklch, var(--st-neutral) #{$btn-fill-hover}, black); }
+  &:hover {
+    background: var(--btn-bg-hover,
+      color-mix(in oklch, var(--st-neutral) #{$btn-fill-hover}, black));
+  }
   &:active,
   &[aria-pressed="true"],
-  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--st-neutral) #{$btn-fill-active}, black); }
+  &[data-state="active"] {
+    background: var(--btn-bg-active,
+      color-mix(in oklch, var(--st-neutral) #{$btn-fill-active}, black));
+  }
 }
 
-// Tertiary — mono high-emphasis CTA. Inverts per theme automatically
-// (--st-foreground / --st-background flip). Hover goes LIGHTER (mix
-// toward background) because rest already sits at maximum contrast;
-// darkening further loses the contrast against the surrounding text.
+// Tertiary — mono high-emphasis CTA. Inverts per theme (--st-foreground /
+// --st-background flip). Hover goes LIGHTER (toward background) because rest
+// already sits at maximum contrast.
 .btn--tertiary {
-  --btn-tone:  var(--st-foreground);
+  --btn-tone: var(--st-foreground);
   --btn-color: var(--st-background);
 
-  &:hover  { --btn-bg: color-mix(in oklch, var(--st-foreground) #{$btn-fill-hover}, var(--st-background)); }
+  &:hover {
+    background: var(--btn-bg-hover,
+      color-mix(in oklch, var(--st-foreground) #{$btn-fill-hover}, var(--st-background)));
+  }
   &:active,
   &[aria-pressed="true"],
-  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--st-foreground) #{$btn-fill-active}, var(--st-background)); }
+  &[data-state="active"] {
+    background: var(--btn-bg-active,
+      color-mix(in oklch, var(--st-foreground) #{$btn-fill-active}, var(--st-background)));
+  }
 }
 
 // === Shape modifiers ==================================================
 // Read --btn-tone (set by the tone modifier) and re-resolve bg/color/border.
-// Source order matters: shape modifiers come AFTER tone modifiers so their
-// declarations win in the cascade for combined classes.
-
-// Tint percentages tuned for visibility against the darker page bg.
-// Lower values (8% / 10%) read fine in light mode where white shines
-// through but vanish on dark surfaces; 12–28% give a perceivable step
-// in both modes without competing with the tone-colored border
-// (outline) or label (ghost). Shape names match .badge--soft for
-// cross-component consistency — soft is the only filled-tinted shape.
+// Source order matters: shapes come AFTER tones so their declarations win
+// for combined classes.
+//
+// Tint percentages tuned for visibility in both modes. Shape names match
+// .badge--soft for cross-component consistency.
 .btn--outline {
-  --btn-bg:           transparent;
-  --btn-color:        var(--btn-tone);
+  --btn-bg: transparent;
+  --btn-color: var(--btn-tone);
   --btn-border-color: var(--btn-tone);
-  --btn-bevel:        none;
+  --btn-bevel: none;
 
-  &:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) #{$btn-outline-hover}, transparent); }
+  &:hover {
+    background: var(--btn-bg-hover,
+      color-mix(in oklch, var(--btn-tone) #{$btn-outline-hover}, transparent));
+  }
   &:active,
   &[aria-pressed="true"],
-  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--btn-tone) #{$btn-outline-active}, transparent); }
+  &[data-state="active"] {
+    background: var(--btn-bg-active,
+      color-mix(in oklch, var(--btn-tone) #{$btn-outline-active}, transparent));
+  }
 }
 
 .btn--ghost {
-  --btn-bg:           transparent;
-  --btn-color:        var(--btn-tone);
+  --btn-bg: transparent;
+  --btn-color: var(--btn-tone);
   --btn-border-color: transparent;
-  --btn-bevel:        none;
+  --btn-bevel: none;
 
-  &:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) #{$btn-ghost-hover}, transparent); }
+  &:hover {
+    background: var(--btn-bg-hover,
+      color-mix(in oklch, var(--btn-tone) #{$btn-ghost-hover}, transparent));
+  }
   &:active,
   &[aria-pressed="true"],
-  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--btn-tone) #{$btn-ghost-active}, transparent); }
+  &[data-state="active"] {
+    background: var(--btn-bg-active,
+      color-mix(in oklch, var(--btn-tone) #{$btn-ghost-active}, transparent));
+  }
 }
 
 .btn--soft {
-  --btn-bg:           color-mix(in oklch, var(--btn-tone) #{$btn-soft-rest}, transparent);
-  --btn-color:        var(--btn-tone);
+  --btn-bg: color-mix(in oklch, var(--btn-tone) #{$btn-soft-rest}, transparent);
+  --btn-color: var(--btn-tone);
   --btn-border-color: transparent;
-  --btn-bevel:        none;
+  --btn-bevel: none;
 
-  &:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) #{$btn-soft-hover}, transparent); }
+  &:hover {
+    background: var(--btn-bg-hover,
+      color-mix(in oklch, var(--btn-tone) #{$btn-soft-hover}, transparent));
+  }
   &:active,
   &[aria-pressed="true"],
-  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--btn-tone) #{$btn-soft-active}, transparent); }
+  &[data-state="active"] {
+    background: var(--btn-bg-active,
+      color-mix(in oklch, var(--btn-tone) #{$btn-soft-active}, transparent));
+  }
 }
 
-// Neutral × shape — neutral's tone is var(--st-foreground), which would
-// produce a near-black outline border via the generic .btn--outline rule.
-// Override outline to --st-border (soft neutral rim — the canonical Cancel
-// look) and tune ghost/outline hover to land on --st-accent.
+// Neutral × shape — neutral's tone is --st-foreground, which would produce a
+// near-black outline via the generic rule. Override outline to --st-border
+// (the canonical Cancel look) and land ghost / outline hover on --st-accent.
 .btn--outline.btn--neutral {
   --btn-border-color: var(--st-border);
-  &:hover  { --btn-bg: var(--st-accent); }
+  &:hover {
+    background: var(--btn-bg-hover, var(--st-accent));
+  }
   &:active,
   &[aria-pressed="true"],
-  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--st-accent) 92%, var(--st-foreground)); }
+  &[data-state="active"] {
+    background: var(--btn-bg-active,
+      color-mix(in oklch, var(--st-accent) 92%, var(--st-foreground)));
+  }
 }
 .btn--ghost.btn--neutral {
-  &:hover  { --btn-bg: var(--st-accent); }
+  &:hover {
+    background: var(--btn-bg-hover, var(--st-accent));
+  }
   &:active,
   &[aria-pressed="true"],
-  &[data-state="active"] { --btn-bg: color-mix(in oklch, var(--st-accent) 92%, var(--st-foreground)); }
+  &[data-state="active"] {
+    background: var(--btn-bg-active,
+      color-mix(in oklch, var(--st-accent) 92%, var(--st-foreground)));
+  }
 }
 
 // === Loading ==========================================================
 // .is-loading is Stisla-original (V3.md §3.6). Pair with aria-busy="true".
-// Spinner renders via ::before so the label stays in place; any inline
-// icons hide so the spinner sits where the leading icon was.
+// Spinner renders via ::before so the label stays put; inline icons hide.
 .btn.is-loading {
   cursor: progress;
   pointer-events: none;
@@ -345,26 +352,34 @@ $btn-soft-active:    28%;
     content: "";
     display: inline-block;
     flex-shrink: 0;
-    width: var(--btn-icon-size);
-    height: var(--btn-icon-size);
+    width: var(--btn-icon-size, 1em);
+    height: var(--btn-icon-size, 1em);
     border: 2px solid currentColor;
     border-right-color: transparent;
     border-radius: 50%;
-    animation: st-btn-spin .75s linear infinite;
+    animation: st-btn-spin 0.75s linear infinite;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .btn.is-loading::before { animation-duration: 3s; }
+  .btn.is-loading::before {
+    animation-duration: 3s;
+  }
 }
 
 @keyframes st-btn-spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 // === Flush ============================================================
-// Pull a button by its own horizontal padding so the label aligns with
-// the container's content edge. Use on ghost / link-style buttons inside
-// content rows (toolbar trailing, table cells, alert actions).
-.btn--flush-start { margin-inline-start: calc(-1 * var(--btn-padding-x)); }
-.btn--flush-end   { margin-inline-end:   calc(-1 * var(--btn-padding-x)); }
+// Pull a button by its own inline padding so the label aligns with the
+// container's content edge. Use on ghost / link-style buttons in content
+// rows (toolbar trailing, table cells, alert actions).
+.btn--flush-start {
+  margin-inline-start: calc(-1 * var(--btn-padding-inline, #{space(3)}));
+}
+.btn--flush-end {
+  margin-inline-end: calc(-1 * var(--btn-padding-inline, #{space(3)}));
+}

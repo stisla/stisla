@@ -95,12 +95,12 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Three sizes match the <code>.input</code> family. The thumb is shorter than the track so it reads as a vertical pill, and every dimension scales with <code>--st-density</code>.</p>
+    <p>Three sizes match the <code>.input</code> family. The thumb is shorter than the track so it reads as a vertical pill, and every dimension rides the base spacing scale.</p>
     {% call ui.demo() %}
     <div class="demo-stack" style="max-width: 36rem;">
       <div class="field">
         <label for="smSlider" class="field__label">Small</label>
-        <div class="slider slider--sm" id="smSlider" data-stisla-slider data-value="40">
+        <div class="slider slider--compact" id="smSlider" data-stisla-slider data-value="40">
           <div class="slider__track"><div class="slider__range"></div></div>
           <div class="slider__thumb"></div>
         </div>
@@ -114,7 +114,7 @@
       </div>
       <div class="field">
         <label for="lgSlider" class="field__label">Large</label>
-        <div class="slider slider--lg" id="lgSlider" data-stisla-slider data-value="80">
+        <div class="slider slider--roomy" id="lgSlider" data-stisla-slider data-value="80">
           <div class="slider__track"><div class="slider__range"></div></div>
           <div class="slider__thumb"></div>
         </div>
@@ -172,15 +172,15 @@
       </thead>
       <tbody>
         <tr>
-          <td><code>--slider-h</code></td>
+          <td><code>--slider-height</code></td>
           <td>Track + shell height (matches <code>.input</code>)</td>
         </tr>
         <tr>
-          <td><code>--slider-thumb-w</code></td>
+          <td><code>--slider-thumb-width</code></td>
           <td>Thumb width (narrow vertical pill)</td>
         </tr>
         <tr>
-          <td><code>--slider-thumb-h</code></td>
+          <td><code>--slider-thumb-height</code></td>
           <td>Thumb height (centered inside track)</td>
         </tr>
         <tr>
@@ -189,7 +189,7 @@
         </tr>
         <tr>
           <td><code>--slider-radius</code></td>
-          <td>Track + thumb corner radius (pill). Reads <code>--st-slider-radius</code> first; override either to flatten.</td>
+          <td>Track + thumb corner radius. Pilled by default; override to flatten.</td>
         </tr>
         <tr>
           <td><code>--slider-track-bg</code></td>
@@ -213,6 +213,6 @@
         </tr>
       </tbody>
     </table>
-    <p>Track and thumb opt out of <code>--st-radius</code> by default. The pill shape carries meaning, so it isn't a style choice. Set <code>--st-slider-radius</code> at the scope you want flattened (a preset wrapper, <code>:root</code>) or <code>--slider-radius</code> on the slider itself for a one-off.</p>
+    <p>Track and thumb opt out of <code>--st-radius</code> by default. The pill shape carries meaning, so it isn't a style choice. Set <code>--slider-radius</code> at the scope you want flattened (a preset wrapper, <code>:root</code>, or the slider itself) to soften or square the corners.</p>
   </section>
 {% endblock %}

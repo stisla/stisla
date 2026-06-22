@@ -16,55 +16,19 @@
 // Scroll lock sits on <html>.is-dialog-open so the page behind doesn't move.
 
 .dialog {
-  // Geometry
-  --dialog-width: 28rem;
-  --dialog-margin: 1rem;
-  --dialog-padding: calc(1.25rem * var(--st-density));
-  --dialog-radius: var(--st-dialog-radius, var(--st-radius-lg));
-  --dialog-z-index: 1055;
-
-  // Surface
-  --dialog-bg: var(--st-surface);
-  --dialog-color: var(--st-foreground);
-  --dialog-border-color: var(--st-border);
-  --dialog-shadow: var(--st-dialog-shadow, var(--st-shadow-heavy));
-
-  // Backdrop — solid dark dim in both themes (matches the prior v3). The
-  // backdrop-filter blur keeps the frosted character without the per-theme
-  // inversion that made light mode read as "wash out" instead of "dialog
-  // up front".
-  --dialog-backdrop-bg: oklch(0 0 0 / 0.55);
-  --dialog-backdrop-blur: 12px;
-
-  // Title
-  --dialog-title-font-size: 1.125rem;
-  --dialog-title-font-weight: 600;
-
-  // Close chip — frosted translucent dark chip with white icon in light
-  // mode; the dark-mode block at the bottom flips to a subtle light chip
-  // + white icon. The icon stays white in both themes so the chip reads
-  // against any surface — including the photo-bg media-hero variant.
-  --dialog-close-size: 1.75rem;
-  --dialog-close-bg: oklch(0 0 0 / 0.35);
-  --dialog-close-bg-hover: oklch(0 0 0 / 0.55);
-  --dialog-close-color: oklch(1 0 0 / 0.92);
-  --dialog-close-color-hover: oklch(1 0 0);
-
-  // Footer
-  --dialog-footer-padding-y: calc(0.875rem * var(--st-density));
-  --dialog-footer-bg: var(--st-surface-2);
-  --dialog-footer-border-color: var(--st-border);
-
-  // Motion
-  --dialog-transition-duration: 0.2s;
-
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing on the base, so a
+  // scope / inline retunes any of them; the parts read them with the same
+  // defaults (margin / padding / color read in several places; close chip +
+  // dark block declare in their own scopes). Radius + shadow chain straight
+  // to the scale (panel + floating surface). z-index kept literal (hand-tuned
+  // overlay stacking).
   position: fixed;
   inset: 0;
-  z-index: var(--dialog-z-index);
+  z-index: var(--dialog-z-index, 1055);
   display: none;
   align-items: center;
   justify-content: center;
-  padding: var(--dialog-margin);
+  padding: var(--dialog-margin-block, #{space(4)}) var(--dialog-margin-inline, #{space(4)});
   overflow: hidden;
 }
 
@@ -75,11 +39,11 @@
 .dialog__backdrop {
   position: absolute;
   inset: 0;
-  background-color: var(--dialog-backdrop-bg);
-  backdrop-filter: blur(var(--dialog-backdrop-blur));
-  -webkit-backdrop-filter: blur(var(--dialog-backdrop-blur));
+  background-color: var(--dialog-backdrop-bg, oklch(0 0 0 / 0.55));
+  backdrop-filter: blur(var(--dialog-backdrop-blur, 12px));
+  -webkit-backdrop-filter: blur(var(--dialog-backdrop-blur, 12px));
   opacity: 0;
-  transition: opacity var(--dialog-transition-duration) ease;
+  transition: opacity var(--dialog-transition-duration, 0.2s) ease;
   cursor: pointer;
 }
 
@@ -92,14 +56,14 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: var(--dialog-width);
-  max-height: calc(100dvh - 2 * var(--dialog-margin));
+  max-width: var(--dialog-width, 28rem);
+  max-height: calc(100dvh - 2 * var(--dialog-margin-block, #{space(4)}));
   margin: auto;
   opacity: 0;
   transform: scale(0.9);
   transition:
-    opacity var(--dialog-transition-duration) ease,
-    transform var(--dialog-transition-duration) ease;
+    opacity var(--dialog-transition-duration, 0.2s) ease,
+    transform var(--dialog-transition-duration, 0.2s) ease;
 }
 
 .dialog[data-state='open'] .dialog__panel {
@@ -113,11 +77,11 @@
   flex-direction: column;
   width: 100%;
   max-height: 100%;
-  background-color: var(--dialog-bg);
-  color: var(--dialog-color);
-  border: var(--st-border-width) solid var(--dialog-border-color);
-  border-radius: var(--dialog-radius);
-  box-shadow: var(--dialog-shadow);
+  background-color: var(--dialog-bg, var(--st-surface));
+  color: var(--dialog-color, var(--st-foreground));
+  border: var(--dialog-border-width, var(--st-border-width)) solid var(--dialog-border-color, var(--st-border));
+  border-radius: var(--dialog-radius, #{radius(lg)});
+  box-shadow: var(--dialog-shadow, #{shadow(lg)});
   overflow: hidden;
   outline: none;
 }
@@ -126,23 +90,23 @@
   display: flex;
   align-items: center;
   flex: 0 0 auto;
-  padding: var(--dialog-padding);
-  padding-bottom: 0;
+  padding: var(--dialog-padding-block, #{space(5)}) var(--dialog-padding-inline, #{space(5)});
+  padding-block-end: 0;
 }
 
 .dialog__title {
   margin: 0;
-  font-size: var(--dialog-title-font-size);
-  font-weight: var(--dialog-title-font-weight);
+  font-size: var(--dialog-title-font-size, 1.125rem);
+  font-weight: var(--dialog-title-font-weight, #{weight(semibold)});
   line-height: 1.3;
-  color: var(--dialog-color);
+  color: var(--dialog-color, var(--st-foreground));
 }
 
 .dialog__body {
   flex: 1 1 auto;
   min-height: 0;
-  padding: var(--dialog-padding);
-  color: var(--dialog-color);
+  padding: var(--dialog-padding-block, #{space(5)}) var(--dialog-padding-inline, #{space(5)});
+  color: var(--dialog-color, var(--st-foreground));
 }
 
 .dialog__footer {
@@ -152,9 +116,9 @@
   align-items: center;
   justify-content: flex-end;
   gap: 0.5rem;
-  padding: var(--dialog-footer-padding-y) var(--dialog-padding);
-  background-color: var(--dialog-footer-bg);
-  border-top: 1px solid var(--dialog-footer-border-color);
+  padding: var(--dialog-footer-padding-block, #{space(3.5)}) var(--dialog-padding-inline, #{space(5)});
+  background-color: var(--dialog-footer-bg, var(--st-surface-2));
+  border-top: 1px solid var(--dialog-footer-border-color, var(--st-border));
 }
 
 // Floating dismiss chip. Reads on white surface, dark surface, and on media.
@@ -166,11 +130,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--dialog-close-size);
-  height: var(--dialog-close-size);
+  width: var(--dialog-close-size, #{space(7)});
+  height: var(--dialog-close-size, #{space(7)});
   padding: 0;
-  color: var(--dialog-close-color);
-  background-color: var(--dialog-close-bg);
+  color: var(--dialog-close-color, oklch(1 0 0 / 0.92));
+  background-color: var(--dialog-close-bg, oklch(0 0 0 / 0.35));
   border: 0;
   border-radius: 50%;
   cursor: pointer;
@@ -181,8 +145,8 @@
     color 0.15s ease;
 
   &:hover {
-    color: var(--dialog-close-color-hover);
-    background-color: var(--dialog-close-bg-hover);
+    color: var(--dialog-close-color-hover, oklch(1 0 0));
+    background-color: var(--dialog-close-bg-hover, oklch(0 0 0 / 0.55));
   }
 
   &:focus-visible {
@@ -198,12 +162,13 @@
 }
 
 // === Size modifiers ======================================================
-.dialog--sm { --dialog-width: 20rem; }
-.dialog--lg { --dialog-width: 40rem; }
-.dialog--xl { --dialog-width: 60rem; }
+.dialog--compact { --dialog-width: 20rem; }
+.dialog--roomy { --dialog-width: 40rem; }
+.dialog--spacious { --dialog-width: 60rem; }
 
 .dialog--fullscreen {
-  --dialog-margin: 0;
+  --dialog-margin-inline: 0;
+  --dialog-margin-block: 0;
 
   .dialog__panel {
     max-width: 100vw;
@@ -223,11 +188,12 @@
 // viewport. Useful for immersive editors, onboarding panels, lightbox-
 // adjacent layouts where the surrounding context still belongs in view.
 .dialog--almost-fullscreen {
-  --dialog-margin: 2.5rem;
-  --dialog-width: calc(100vw - 2 * var(--dialog-margin));
+  --dialog-margin-inline: 2.5rem;
+  --dialog-margin-block: 2.5rem;
+  --dialog-width: calc(100vw - 2 * var(--dialog-margin-inline, #{space(4)}));
 
   .dialog__panel {
-    height: calc(100dvh - 2 * var(--dialog-margin));
+    height: calc(100dvh - 2 * var(--dialog-margin-block, #{space(4)}));
   }
 
   .dialog__content {
@@ -238,13 +204,13 @@
 // === Position modifiers ==================================================
 // Default is centered. --top and --bottom override via auto margins.
 .dialog__panel--top {
-  margin-top: 0;
-  margin-bottom: auto;
+  margin-block-start: 0;
+  margin-block-end: auto;
 }
 
 .dialog__panel--bottom {
-  margin-top: auto;
-  margin-bottom: 0;
+  margin-block-start: auto;
+  margin-block-end: 0;
 }
 
 // === Scrollable body =====================================================

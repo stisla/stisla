@@ -112,10 +112,10 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Add <code>.combobox--sm</code> or <code>.combobox--lg</code> for the small or large variant. Sizes match the input scale.</p>
+    <p>Add <code>.combobox--compact</code> or <code>.combobox--roomy</code> for the small or large variant. Sizes match the input scale.</p>
     {% call ui.demo() %}
     <div class="demo-stack" style="max-width: 24rem;">
-      <select class="combobox combobox--sm" data-stisla-combobox data-placeholder="Small" aria-label="Small combobox">
+      <select class="combobox combobox--compact" data-stisla-combobox data-placeholder="Small" aria-label="Small combobox">
         <option value=""></option>
         <option value="1">One</option>
         <option value="2">Two</option>
@@ -127,7 +127,7 @@
         <option value="2">Two</option>
         <option value="3">Three</option>
       </select>
-      <select class="combobox combobox--lg" data-stisla-combobox data-placeholder="Large" aria-label="Large combobox">
+      <select class="combobox combobox--roomy" data-stisla-combobox data-placeholder="Large" aria-label="Large combobox">
         <option value=""></option>
         <option value="1">One</option>
         <option value="2">Two</option>
@@ -238,7 +238,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>The trigger ships its own <code>--combobox-*</code> variables that mirror the input surface. The popup picks up the shared <code>--popup-*</code> variables (also used by <a class="link" href="/dropdown">Dropdown menu</a> and <a class="link" href="/select">Select</a>), so retuning <code>--popup-radius</code> at <code>:root</code> changes every popup the same way.</p>
+    <p>The trigger ships its own <code>--combobox-*</code> variables that mirror the input surface. The popup adds more <code>--combobox-*</code> variables that follow the same surface recipe as <a class="link" href="/menu">Menu</a> and <a class="link" href="/select">Select</a>.</p>
     <p>On touch devices (<code>@media (pointer: coarse)</code>) <code>--combobox-font-size</code> is bumped to <code>1rem</code> so iOS Safari doesn't zoom the viewport on focus. The browser auto-zooms any field with computed font-size below 16px and never zooms back; desktop keeps the tighter default.</p>
     <table>
       <thead>
@@ -246,13 +246,12 @@
       </thead>
       <tbody>
         <tr><td><code>--combobox-height</code></td><td>Trigger height; multi treats this as a floor and grows with chip rows</td></tr>
-        <tr><td><code>--combobox-padding-x</code></td><td>Trigger horizontal padding</td></tr>
-        <tr><td><code>--combobox-radius</code></td><td>Trigger corner radius; chips use <code>radius − 0.25rem</code></td></tr>
+        <tr><td><code>--combobox-padding-inline</code></td><td>Trigger horizontal padding</td></tr>
+        <tr><td><code>--combobox-radius</code></td><td>Corner radius, shared by trigger and popup; chips inset from it</td></tr>
         <tr><td><code>--combobox-indicator</code></td><td>Chevron SVG; data: URL with literal stroke per theme</td></tr>
-        <tr><td><code>--popup-radius</code></td><td>Popup corner radius (shared)</td></tr>
-        <tr><td><code>--popup-bg</code></td><td>Popup surface</td></tr>
-        <tr><td><code>--popup-item-bg-hover</code></td><td>Highlighted row background</td></tr>
-        <tr><td><code>--popup-item-bg-active</code></td><td>Currently-selected row background</td></tr>
+        <tr><td><code>--combobox-bg</code></td><td>Surface, shared by trigger and popup</td></tr>
+        <tr><td><code>--combobox-item-bg-hover</code></td><td>Highlighted row background</td></tr>
+        <tr><td><code>--combobox-item-bg-active</code></td><td>Currently-selected row background</td></tr>
       </tbody>
     </table>
   </section>

@@ -19,25 +19,26 @@
 //     <input class="input" type="text">
 //   </div>
 //
-// Sizes pair with the field child's own size modifier (.input--sm, etc.).
+// Sizes pair with the field child's own size modifier (.input--compact, etc.).
 // Pull --st-radius-{sm,lg} so corners scale with --st-radius
 // proportionally.
 
 .input-group {
-  --input-group-radius:        var(--st-input-radius, var(--st-radius));
-  --input-group-height:        calc(2.25rem + 0.625rem * (var(--st-density) - 1));   // tracks .input's --input-height
-  --input-group-bg:            var(--st-surface);
-  --input-group-border:        var(--st-border);
-  --input-group-padding-x:     calc(0.625rem * var(--st-density));       // 10
-  --input-group-inset:         calc(0.25rem  * var(--st-density));       //  4
-  --input-group-addon-color:   var(--st-muted-foreground);
-
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing on the base; addon
+  // + child rules read them with their defaults (radius / height / inset repeat
+  // in several places). Size variants set height / padding-inline / radius.
   display: flex;
   align-items: stretch;
   width: 100%;
-  background: var(--input-group-bg);
-  border: var(--st-border-width) solid var(--input-group-border);
-  border-radius: var(--input-group-radius);
+  // Border-inclusive height (box-sizing: border-box is global). The wrapper
+  // owns the control height; its 1px border eats INTO this value, so the group
+  // is 36px tall total — not 36 + 2 (the old "38px" bug). Inner fields drop
+  // their own height and stretch to fill the 34px content box. Textarea groups
+  // opt out below so they can grow.
+  height: var(--input-group-height, #{space(9)});
+  background: var(--input-group-bg, var(--st-surface));
+  border: var(--input-group-border-width, var(--st-border-width)) solid var(--input-group-border-color, var(--st-border));
+  border-radius: var(--input-group-radius, #{radius(md)});
   transition: border-color .12s ease, box-shadow .12s ease;
 
   // Focus the whole group when an editable child is focused. Matches any
@@ -69,6 +70,9 @@
     background-color: transparent;
     border-color: transparent;
     box-shadow: none;
+    // Drop the field's own fixed height so it stretches to the wrapper's
+    // content box (align-items: stretch) — the wrapper owns the height now.
+    height: auto;
 
     &:hover,
     &:focus-visible {
@@ -76,6 +80,11 @@
       border-color: transparent;
       box-shadow: none;
     }
+  }
+
+  // Textarea groups grow with content — release the fixed wrapper height.
+  &:has(> .textarea) {
+    height: auto;
   }
 
   // Readonly inputs repaint themselves with --st-surface-2 over the
@@ -93,15 +102,19 @@
   // density genuinely compresses the chip. Inner radius is concentric
   // with the wrapper (outer minus inset), so the corners stay aligned.
   > .btn {
-    height: calc(var(--input-group-height) - 2 * var(--input-group-inset));
-    margin: var(--input-group-inset);
-    border-radius: calc(var(--input-group-radius) - var(--input-group-inset));
+    // --input-group-height is the wrapper's border-box height, so the 1px border
+    // eats into the content box the chip + its margin live in. Subtract both the
+    // border and the inset (×2) so height + 2×margin fills the content box exactly
+    // and the chip sits centered with even gaps on every side.
+    height: calc(var(--input-group-height, #{space(9)}) - 2 * var(--st-border-width) - 2 * var(--input-group-inset, #{space(1)}));
+    margin: var(--input-group-inset, #{space(1)});
+    border-radius: calc(var(--input-group-radius, #{radius(md)}) - var(--input-group-inset, #{space(1)}));
   }
 
   // Drop the addon's inner padding where it meets a sibling field. With
   // no visible seam, BS5's matching padding doubles into a too-wide gap.
   // Keeps the outside padding so the addon hugs the wrapper edge at the
-  // input's own padding-x cadence.
+  // input's own inline-padding cadence.
   > .input-group__text:first-child { padding-inline-end:   0; }
   > .input-group__text:last-child  { padding-inline-start: 0; }
 
@@ -109,7 +122,7 @@
   // instead of letting flex center them through the full field height.
   &:has(> .textarea) > .input-group__text {
     align-self: flex-start;
-    height: var(--input-group-height);
+    height: var(--input-group-height, #{space(9)});
   }
 
   // Disabled forwarding — the transparent inner field can't show its own
@@ -128,20 +141,20 @@
 }
 
 // === Sizes ==============================================================
-// Pair with the field child's own size modifier (.input--sm, etc.).
-// Padding-x matches the field's padding-x at each size so a leading
+// Pair with the field child's own size modifier (.input--compact, etc.).
+// Inline padding matches the field's at each size so a leading
 // addon's text x baseline aligns with the input's text x baseline
 // across sizes.
-.input-group--sm {
-  --input-group-radius:    var(--st-input-radius, var(--st-radius-sm));
-  --input-group-height:    calc(1.75rem + 0.5rem * (var(--st-density) - 1));    // tracks .input--sm
-  --input-group-padding-x: calc(0.5rem  * var(--st-density));            //  8
+.input-group--compact {
+  --input-group-radius:         #{radius(sm)};
+  --input-group-height:         #{space(7)};   // 1.75rem, tracks .input--compact
+  --input-group-padding-inline: #{space(2)};   // 0.5rem
 }
 
-.input-group--lg {
-  --input-group-radius:    var(--st-input-radius, var(--st-radius-lg));
-  --input-group-height:    calc(2.75rem + 0.875rem * (var(--st-density) - 1)); // tracks .input--lg
-  --input-group-padding-x: calc(0.875rem * var(--st-density));           // 14
+.input-group--roomy {
+  --input-group-radius:         #{radius(lg)};
+  --input-group-height:         #{space(11)};  // 2.75rem, tracks .input--roomy
+  --input-group-padding-inline: #{space(3.5)}; // 0.875rem
 }
 
 // === Addon ==============================================================
@@ -150,10 +163,10 @@
 .input-group__text {
   display: inline-flex;
   align-items: center;
-  padding-inline: var(--input-group-padding-x);
+  padding-inline: var(--input-group-padding-inline, #{space(2.5)});
   background: transparent;
   border: 0;
-  color: var(--input-group-addon-color);
+  color: var(--input-group-addon-color, var(--st-muted-foreground));
   font-size: inherit;
   line-height: 1.2;
   white-space: nowrap;

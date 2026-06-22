@@ -14,21 +14,9 @@
 // rules below don't have to mention .os-* selectors.
 
 .scroll-area {
-  --scroll-area-radius: var(--st-scroll-area-radius, var(--st-radius));
-
-  --scroll-area-bar-size: 0.625rem;
-  --scroll-area-bar-padding: 0.125rem;
-  --scroll-area-bar-radius: 999px;
-  --scroll-area-handle-min-size: 1.5rem;
-
-  --scroll-area-track-bg: transparent;
-  --scroll-area-handle-bg:        color-mix(in oklch, var(--st-foreground) 25%, transparent);
-  --scroll-area-handle-bg-hover:  color-mix(in oklch, var(--st-foreground) 45%, transparent);
-  --scroll-area-handle-bg-active: color-mix(in oklch, var(--st-foreground) 65%, transparent);
-
   position: relative;
   overflow: hidden;
-  border-radius: var(--scroll-area-radius);
+  border-radius: var(--scroll-area-radius, #{radius(md)});
 }
 
 // === Forward our tokens to OverlayScrollbars' var surface ============
@@ -37,20 +25,24 @@
 // injects the plugin's stylesheet inside `@layer foundation` so this
 // rule (in @layer components) outranks the reset; specificity then
 // resolves cleanly. See scroll-area.js for the injection.
+//
+// Fallback-default lives here, not on the .scroll-area root: a consumer
+// override of --scroll-area-* on the root inherits down to this descendant
+// and wins the fallback, so the knobs stay overridable from any scope.
 .scroll-area .os-scrollbar {
-  --os-size: var(--scroll-area-bar-size);
-  --os-padding-perpendicular: var(--scroll-area-bar-padding);
-  --os-padding-axis: var(--scroll-area-bar-padding);
-  --os-track-bg: var(--scroll-area-track-bg);
-  --os-handle-bg: var(--scroll-area-handle-bg);
-  --os-handle-bg-hover: var(--scroll-area-handle-bg-hover);
-  --os-handle-bg-active: var(--scroll-area-handle-bg-active);
-  --os-handle-border-radius: var(--scroll-area-bar-radius);
-  --os-handle-min-size: var(--scroll-area-handle-min-size);
+  --os-size: var(--scroll-area-bar-size, 0.625rem);
+  --os-padding-perpendicular: var(--scroll-area-bar-padding, 0.125rem);
+  --os-padding-axis: var(--scroll-area-bar-padding, 0.125rem);
+  --os-track-bg: var(--scroll-area-track-bg, transparent);
+  --os-handle-bg: var(--scroll-area-handle-bg, color-mix(in oklch, var(--st-foreground) 25%, transparent));
+  --os-handle-bg-hover: var(--scroll-area-handle-bg-hover, color-mix(in oklch, var(--st-foreground) 45%, transparent));
+  --os-handle-bg-active: var(--scroll-area-handle-bg-active, color-mix(in oklch, var(--st-foreground) 65%, transparent));
+  --os-handle-border-radius: var(--scroll-area-bar-radius, #{radius(full)});
+  --os-handle-min-size: var(--scroll-area-handle-min-size, 1.5rem);
 }
 
 .scroll-area--bordered {
-  border: var(--st-border-width) solid var(--st-border);
+  border: var(--scroll-area-border-width, var(--st-border-width)) solid var(--scroll-area-border-color, var(--st-border));
 }
 
 // The plugin transitions the handle on its own (opacity, background-color,

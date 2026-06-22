@@ -39,7 +39,7 @@ npm run dev
     <h3>1. Write the Sass</h3>
     <p>Add <code>src/scss/components/_my-thing.scss</code> defining <code>.my-thing</code>. BEM names follow <code>.block</code>, <code>.block__element</code>, <code>.block--modifier</code>. Lowercase, hyphen-separated. Multiple modifiers stack flat on the root and never nest.</p>
     <p>Read tokens via component-scoped fallback like <code>border-radius: var(--my-thing-radius, var(--st-radius))</code>. Users get a per-component knob and a global default for free.</p>
-    <p>Wrap padding and gap in <code>calc(N * var(--st-density))</code>. Without it, your component opts out of the density knob and feels foreign next to the rest.</p>
+    <p>Build padding and gap from the spacing base with the <code>space()</code> helper, like <code>space(3)</code>. Without it, your component opts out of the global spacing knob and feels foreign next to the rest.</p>
     <p>Derive states with <code>color-mix(in oklch, …)</code>, no per-state tokens. Hover is a runtime mix off the base hue, so if a user overrides the base, the hover follows.</p>
     <p>Import the partial from <code>src/scss/bundles/stisla.scss</code> (or <code>stisla-full.scss</code> if it&rsquo;s an optional component that ships alongside core). One <code>@import</code> per line, so deleting any line removes that component from the bundle.</p>
 
@@ -59,12 +59,12 @@ npm run dev
 
   <section>
     <h2>Adding a customization variable</h2>
-    <p>Component-scoped variables open up a knob without forcing users into Sass. Pick a hyphenated name under the block prefix, like <code>--btn-radius</code>, <code>--slider-thumb-w</code>, or <code>--card-padding</code>.</p>
-    <p>Default to a global token via fallback when the knob is a global concept (radius, density, ring color, surface tier). Default to a literal when the knob is component-private (slider thumb width, badge font-size).</p>
+    <p>Component-scoped variables open up a knob without forcing users into Sass. Pick a hyphenated name under the block prefix, like <code>--btn-radius</code>, <code>--slider-thumb-width</code>, or <code>--card-padding</code>.</p>
+    <p>Default to a global token via fallback when the knob is a global concept (radius, spacing, ring color, surface tier). Default to a literal when the knob is component-private (slider thumb width, badge font-size).</p>
     {% call ui.code(lang='scss', title='src/scss/components/_my-thing.scss') %}
 .my-thing {
   // Component-private default.
-  --my-thing-thumb-w: 0.5rem;
+  --my-thing-thumb-width: 0.5rem;
 
   // Falls back to a global token, so overriding --st-radius retunes
   // this component too unless the user sets --my-thing-radius explicitly.
@@ -87,7 +87,7 @@ npm run dev
           <td>Corner radius</td>
         </tr>
         <tr>
-          <td><code>--my-thing-thumb-w</code></td>
+          <td><code>--my-thing-thumb-width</code></td>
           <td>Thumb width</td>
         </tr>
       </tbody>

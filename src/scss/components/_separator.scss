@@ -12,15 +12,12 @@
 // attributes entirely if the rule is purely decorative.
 
 .separator {
-  --separator-thickness: 1px;
-  --separator-color:     var(--st-border);
-
   display: block;
   flex-shrink: 0;
   width: 100%;
-  height: var(--separator-thickness);
+  height: var(--separator-thickness, 1px);
   margin: 0;
-  background: var(--separator-color);
+  background: var(--separator-color, var(--st-border));
   border: 0;
 }
 
@@ -29,8 +26,8 @@
 // when the parent is not a flex container (e.g. inline next to short
 // text), without forcing a fixed height that would chop tall siblings.
 .separator--vertical {
-  width: var(--separator-thickness);
+  width: var(--separator-thickness, 1px);
   height: auto;
-  min-height: 1.25rem;
+  min-height: var(--separator-min-height, #{space(5)});
   align-self: stretch;
 }

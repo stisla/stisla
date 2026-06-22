@@ -43,10 +43,17 @@ export default function nunjucksDevPlugin({ siteRoot }) {
       server.middlewares.use(async (req, res, next) => {
         try {
           const url = (req.url || '/').split('?')[0];
-          if (path.extname(url)) return next(); // let Vite handle assets
+          const ext = path.extname(url);
+          if (ext && ext !== '.html') return next(); // let Vite handle assets
+
+          // Mirror the built output's .html routes: a request for
+          // /dashboard/orders.html resolves to the same template as the clean
+          // /dashboard/orders, so links written with .html (for the zip) work
+          // in dev too.
+          const route = ext === '.html' ? url.slice(0, -ext.length) : url;
 
           await highlighterReady;
-          const candidates = urlToCandidates(url);
+          const candidates = urlToCandidates(route);
           let template = null;
           for (const c of candidates) {
             try {

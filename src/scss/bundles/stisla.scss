@@ -18,6 +18,7 @@
 // @layer so the symbols are in scope when foundation/components compile.
 @import '../tokens/breakpoints';
 @import '../foundation/mixins';
+@import '../tokens/scales';
 
 // === Foundation ========================================================
 @layer foundation {
@@ -57,9 +58,8 @@
   @import '../components/toggle-group';
   @import '../components/tabs';
   @import '../components/slider';
-  @import '../components/dropdown';
+  @import '../components/menu';
   @import '../components/button-group';
-  // @import '../components/nav';
   @import '../components/navbar';
   @import '../components/card';
   @import '../components/sidebar';
@@ -70,11 +70,12 @@
   @import '../components/breadcrumb';
   @import '../components/pagination';
   @import '../components/badge';
+  @import '../components/indicator';
   @import '../components/avatar';
   @import '../components/avatar-group';
   @import '../components/alert';
   @import '../components/icon-box';
-  @import '../components/item';
+  @import '../components/media';
   @import '../components/progress';
   @import '../components/meter';
   @import '../components/list-group';

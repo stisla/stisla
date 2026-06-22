@@ -134,7 +134,7 @@
           <button type="button" class="drawer__close" data-stisla-drawer-dismiss aria-label="Close"><i data-lucide="x"></i></button>
         </div>
         <div class="drawer__body">
-          <div class="d-flex flex-wrap align-items-center gap-3 mb-4" style="border-bottom: 1px solid var(--st-border); padding-block-end: calc(1rem * var(--st-density))">
+          <div class="d-flex flex-wrap flex-md-nowrap gap-3 mb-4" style="border-bottom: 1px solid var(--st-border); padding-block-end: 1rem">
             <span class="icon-box icon-box--success icon-box--round flex-shrink-0"><i data-lucide="check"></i></span>
             <div>
               <div class="fw-medium">Deploy finished</div>
@@ -142,7 +142,7 @@
               <span class="fs-2 text-muted-foreground">2 minutes ago</span>
             </div>
           </div>
-          <div class="d-flex flex-wrap align-items-center gap-3 mb-4" style="border-bottom: 1px solid var(--st-border); padding-block-end: calc(1rem * var(--st-density))">
+          <div class="d-flex flex-wrap flex-md-nowrap gap-3 mb-4" style="border-bottom: 1px solid var(--st-border); padding-block-end: 1rem">
             <span class="icon-box icon-box--info icon-box--round flex-shrink-0"><i data-lucide="message-square"></i></span>
             <div>
               <div class="fw-medium">Amelia replied</div>
@@ -150,7 +150,7 @@
               <span class="fs-2 text-muted-foreground">12 minutes ago</span>
             </div>
           </div>
-          <div class="d-flex flex-wrap align-items-center gap-3">
+          <div class="d-flex flex-wrap flex-md-nowrap gap-3">
             <span class="icon-box icon-box--warning icon-box--round flex-shrink-0"><i data-lucide="alert-triangle"></i></span>
             <div>
               <div class="fw-medium">Disk above 80%</div>
@@ -292,14 +292,6 @@
               <div>
                 <div><span class="fw-medium">Jonas</span> completed "Audit checkout copy"</div>
                 <span class="fs-2 text-muted-foreground">9:31 AM</span>
-              </div>
-            </li>
-            <li class="d-flex flex-wrap align-items-center gap-3 mb-4">
-              <div class="icon-box icon-box--info icon-box--round flex-shrink-0" style="--icon-box-size: 2rem;"><i data-lucide="message-square"></i></div>
-              <div>
-                <div><span class="fw-medium">Priya</span> commented on "Onboarding redesign"</div>
-                <p class="text-muted-foreground m-0 mb-1 fs-2">"Step 3 looks good. The empty state on step 4 still needs a copy pass."</p>
-                <span class="fs-2 text-muted-foreground">9:18 AM</span>
               </div>
             </li>
             <li class="d-flex flex-wrap align-items-center gap-3 mb-4">
@@ -463,7 +455,8 @@
       <tbody>
         <tr><td><code>--drawer-width</code></td><td>Panel width for <code>--start</code> and <code>--end</code> (default).</td></tr>
         <tr><td><code>--drawer-height</code></td><td>Panel height for <code>--top</code> and <code>--bottom</code>.</td></tr>
-        <tr><td><code>--drawer-padding</code></td><td>Header and body padding. Scales with <code>--st-density</code>.</td></tr>
+        <tr><td><code>--drawer-padding-block</code></td><td>Top and bottom padding of the header and body.</td></tr>
+        <tr><td><code>--drawer-padding-inline</code></td><td>Left and right padding of the header and body.</td></tr>
         <tr><td><code>--drawer-z-index</code></td><td>Stack level. One tier below dialog.</td></tr>
       </tbody>
     </table>
@@ -474,6 +467,7 @@
       <tbody>
         <tr><td><code>--drawer-bg</code></td><td>Panel fill.</td></tr>
         <tr><td><code>--drawer-color</code></td><td>Panel text color.</td></tr>
+        <tr><td><code>--drawer-border-width</code></td><td>Inner-edge border thickness; set <code>0</code> to drop it.</td></tr>
         <tr><td><code>--drawer-border-color</code></td><td>Inner-edge border (only the side facing the viewport).</td></tr>
         <tr><td><code>--drawer-shadow</code></td><td>Soft ambient shadow around the panel.</td></tr>
       </tbody>
@@ -512,7 +506,7 @@
     <table>
       <thead><tr><th>Variable</th><th>Use</th></tr></thead>
       <tbody>
-        <tr><td><code>--drawer-footer-padding-y</code></td><td>Vertical padding for the footer band.</td></tr>
+        <tr><td><code>--drawer-footer-padding-block</code></td><td>Top and bottom padding for the footer band.</td></tr>
         <tr><td><code>--drawer-footer-bg</code></td><td>Footer fill. Tints to the alt surface so the seam reads against the body.</td></tr>
         <tr><td><code>--drawer-footer-border-color</code></td><td>Top border of the footer band.</td></tr>
       </tbody>

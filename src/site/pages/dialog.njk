@@ -56,9 +56,9 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Add <code>.dialog--sm</code>, <code>.dialog--lg</code>, or <code>.dialog--xl</code> on the <code>.dialog</code> root to swap widths. The default sits in the middle of the scale. <code>.dialog--almost-fullscreen</code> keeps a 2.5rem breathing strip around the panel so the page still hints through; <code>.dialog--fullscreen</code> edge-bleeds the panel to the viewport.</p>
+    <p>Add <code>.dialog--compact</code>, <code>.dialog--roomy</code>, or <code>.dialog--spacious</code> on the <code>.dialog</code> root to swap widths. The default sits in the middle of the scale. <code>.dialog--almost-fullscreen</code> keeps a 2.5rem breathing strip around the panel so the page still hints through; <code>.dialog--fullscreen</code> edge-bleeds the panel to the viewport.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-wrap align-items-center gap-2">
+    <div class="d-flex flex-wrap align-items-center justify-content-center gap-2">
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogSm">Small</button>
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogDefault">Default</button>
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogLg">Large</button>
@@ -67,7 +67,7 @@
       <button type="button" class="btn btn--outline btn--neutral" data-stisla-dialog-trigger="dialogFs">Fullscreen</button>
     </div>
 
-    <div class="dialog dialog--sm" id="dialogSm" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1">
+    <div class="dialog dialog--compact" id="dialogSm" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1">
       <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
       <div class="dialog__panel">
         <div class="dialog__content">
@@ -93,7 +93,7 @@
       </div>
     </div>
 
-    <div class="dialog dialog--lg" id="dialogLg" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1">
+    <div class="dialog dialog--roomy" id="dialogLg" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1">
       <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
       <div class="dialog__panel">
         <div class="dialog__content">
@@ -106,7 +106,7 @@
       </div>
     </div>
 
-    <div class="dialog dialog--xl" id="dialogXl" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1">
+    <div class="dialog dialog--spacious" id="dialogXl" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1">
       <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
       <div class="dialog__panel">
         <div class="dialog__content">
@@ -214,7 +214,7 @@
           <div class="dialog__header">
             <h3 class="dialog__title" id="dialogScrollLabel">Terms of service</h3>
           </div>
-          <div class="dialog__body">
+          <div class="dialog__body d-flex flex-column gap-2">
             <p>Welcome. By using this service you agree to the terms below. Please read carefully before continuing.</p>
             <p>You may use the service for any lawful purpose. You may not use it to do harm, to interfere with other users, or to break the law where you live or where our servers run.</p>
             <p>We collect the minimum data needed to deliver the product. We don't sell it, we don't share it with advertisers, and we delete it when you ask.</p>
@@ -301,7 +301,7 @@
       <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt="" width="240" height="160" style="border-radius: var(--st-radius); object-fit: cover;">
     </a>
 
-    <div class="dialog dialog--xl" id="dialogLightbox" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1" style="--dialog-bg: transparent; --dialog-border-color: transparent; --dialog-shadow: none;">
+    <div class="dialog dialog--spacious" id="dialogLightbox" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1" style="--dialog-bg: transparent; --dialog-border-color: transparent; --dialog-shadow: none;">
       <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
       <div class="dialog__panel">
         <div class="dialog__content">
@@ -323,12 +323,12 @@
       Delete workspace
     </button>
 
-    <div class="dialog dialog--sm" id="dialogConfirm" data-stisla-dialog data-state="closed" role="alertdialog" aria-modal="true" aria-labelledby="dialogConfirmLabel" aria-describedby="dialogConfirmDesc" aria-hidden="true" tabindex="-1">
+    <div class="dialog dialog--compact" id="dialogConfirm" data-stisla-dialog data-state="closed" role="alertdialog" aria-modal="true" aria-labelledby="dialogConfirmLabel" aria-describedby="dialogConfirmDesc" aria-hidden="true" tabindex="-1">
       <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
       <div class="dialog__panel">
         <div class="dialog__content">
           <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
-          <div class="dialog__body text-center" style="padding-block-start: calc(1.5rem * var(--st-density))">
+          <div class="dialog__body text-center" style="padding-block-start: 1.5rem">
             <span class="icon-box icon-box--danger icon-box--round mb-3" style="--icon-box-size: 3rem; --icon-box-icon-size: 1.25rem;">
               <i data-lucide="trash-2"></i>
             </span>
@@ -353,14 +353,14 @@
       Submit order
     </button>
 
-    <div class="dialog dialog--sm" id="dialogSuccess" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" aria-labelledby="dialogSuccessLabel" aria-hidden="true" tabindex="-1">
+    <div class="dialog dialog--compact" id="dialogSuccess" data-stisla-dialog data-state="closed" role="dialog" aria-modal="true" aria-labelledby="dialogSuccessLabel" aria-hidden="true" tabindex="-1">
       <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
       <div class="dialog__panel">
         <div class="dialog__content">
           <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close">
             <i data-lucide="x"></i>
           </button>
-          <div class="dialog__body text-center" style="padding-block-start: calc(1.5rem * var(--st-density))">
+          <div class="dialog__body text-center" style="padding-block-start: 1.5rem">
             <span class="icon-box icon-box--success icon-box--round mb-3" style="--icon-box-size: 3.5rem; --icon-box-icon-size: 1.5rem;">
               <i data-lucide="check"></i>
             </span>
@@ -387,7 +387,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Twenty-two variables retune <code>.dialog</code> without touching component CSS. Override on the <code>.dialog</code> element, on a parent scope, or on <code>:root</code>. Size modifiers <code>--sm</code> / <code>--lg</code> / <code>--xl</code> retune <code>--dialog-width</code> in their own scope. The dark-mode block flips the close chip from a solid dark overlay to a subtle light translucent overlay so it reads against the deep dark surface.</p>
+    <p>These variables retune <code>.dialog</code> without touching component CSS. Override on the <code>.dialog</code> element, on a parent scope, or on <code>:root</code>. Size modifiers <code>--compact</code> / <code>--roomy</code> / <code>--spacious</code> retune <code>--dialog-width</code> in their own scope. The dark-mode block flips the close chip from a solid dark overlay to a subtle light translucent overlay so it reads against the deep dark surface.</p>
     <h3>Geometry</h3>
     <table>
       <thead>
@@ -396,15 +396,23 @@
       <tbody>
         <tr>
           <td><code>--dialog-width</code></td>
-          <td>Max panel width. Retuned by <code>.dialog--sm</code> / <code>--lg</code> / <code>--xl</code> in modifier scope.</td>
+          <td>Max panel width. Retuned by <code>.dialog--compact</code> / <code>--roomy</code> / <code>--spacious</code> in modifier scope.</td>
         </tr>
         <tr>
-          <td><code>--dialog-margin</code></td>
-          <td>Breathing space between panel and viewport edge.</td>
+          <td><code>--dialog-margin-block</code></td>
+          <td>Top and bottom breathing space between panel and viewport edge.</td>
         </tr>
         <tr>
-          <td><code>--dialog-padding</code></td>
-          <td>Header, body, and footer inset.</td>
+          <td><code>--dialog-margin-inline</code></td>
+          <td>Left and right breathing space between panel and viewport edge.</td>
+        </tr>
+        <tr>
+          <td><code>--dialog-padding-block</code></td>
+          <td>Top and bottom inset of the header and body.</td>
+        </tr>
+        <tr>
+          <td><code>--dialog-padding-inline</code></td>
+          <td>Left and right inset of the header, body, and footer.</td>
         </tr>
         <tr>
           <td><code>--dialog-radius</code></td>
@@ -430,6 +438,10 @@
         <tr>
           <td><code>--dialog-color</code></td>
           <td>Body and title text.</td>
+        </tr>
+        <tr>
+          <td><code>--dialog-border-width</code></td>
+          <td>Content rim thickness; set <code>0</code> to drop the border.</td>
         </tr>
         <tr>
           <td><code>--dialog-border-color</code></td>
@@ -512,8 +524,8 @@
       </thead>
       <tbody>
         <tr>
-          <td><code>--dialog-footer-padding-y</code></td>
-          <td>Vertical padding inside the footer. Slightly tighter than the body padding so the seam reads as an action row.</td>
+          <td><code>--dialog-footer-padding-block</code></td>
+          <td>Top and bottom padding inside the footer. Slightly tighter than the body padding so the seam reads as an action row.</td>
         </tr>
         <tr>
           <td><code>--dialog-footer-bg</code></td>

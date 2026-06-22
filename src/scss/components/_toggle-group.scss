@@ -47,40 +47,32 @@
 //     <label class="toggle" for="b">Bold</label>
 //   </div>
 //
-// Sizes: --sm / --lg retune --toggle-group-* in modifier scope.
+// Sizes: --compact / --roomy retune --toggle-group-* in modifier scope.
 
 // === Shared base ========================================================
 // Container chrome + member overrides shared between horizontal + vertical.
 .toggle-group,
 .toggle-group--vertical {
-  --toggle-group-radius:       var(--st-toggle-group-radius, var(--st-radius));
-  // Mirrors .toggle's --toggle-height formula so the outer pill tracks
-  // the same growth as a standalone .toggle. Children stretch via flex
-  // + height: 100% so the inner area math (height − 2*border − 2*padding)
-  // resolves through the box model.
-  --toggle-group-height:       calc(2.25rem + 0.75rem * (var(--st-density) - 1));
-  --toggle-group-padding:      0.125rem;                         //  2 raw
-  --toggle-group-gap:          0.125rem;                         //  2 raw
-
-  --toggle-group-bg:           transparent;
-  --toggle-group-border-color: var(--st-border);
-
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing on the base, so a
+  // scope / inline retunes any of them. Height tracks .toggle's space(9)
+  // cadence; padding + radius are read again in the concentric inner-radius
+  // calc, so their defaults repeat there.
   position: relative;
   display: inline-flex;
   align-items: stretch;
   vertical-align: middle;
-  padding: calc(var(--toggle-group-padding) * var(--st-density));
-  gap: calc(var(--toggle-group-gap) * var(--st-density));
-  background: var(--toggle-group-bg);
-  border: var(--st-border-width) solid var(--toggle-group-border-color);
-  border-radius: var(--toggle-group-radius);
+  padding: var(--toggle-group-padding-block, #{space(0.5)}) var(--toggle-group-padding-inline, #{space(0.5)});   // 0.125rem
+  gap: var(--toggle-group-gap, #{space(0.5)});
+  background: var(--toggle-group-bg, transparent);
+  border: var(--toggle-group-border-width, var(--st-border-width)) solid var(--toggle-group-border-color, var(--st-border));
+  border-radius: var(--toggle-group-radius, #{radius(md)});
 
   // Member toggles — concentric inner radius (V3.md §3.4) + ghost rest
   // (parent rim owns the frame, individual children sit quiet at rest).
-  // Active paint stays the standalone .toggle default (highlight bg +
-  // border matches bg) — no override needed.
   > .toggle {
-    --toggle-radius:       calc(var(--toggle-group-radius) - var(--toggle-group-padding));
+    --toggle-radius: calc(
+      var(--toggle-group-radius, #{radius(md)}) - var(--toggle-group-padding-inline, #{space(0.5)})
+    );
     --toggle-bg:           transparent;
     --toggle-border-color: transparent;
   }
@@ -97,7 +89,7 @@
 // both. height: 100% on vertical children would override the standalone
 // --toggle-height calc and break the row-height knob.
 .toggle-group:not(.toggle-group--vertical) {
-  height: var(--toggle-group-height);
+  height: var(--toggle-group-height, #{space(9)});
 
   > .toggle {
     height: 100%;
@@ -134,7 +126,7 @@
   // menu-list cadence (matches Notion / Linear / shadcn sidebar rhythm).
   // The full 36 px chip read too tall for a stacked menu.
   > .toggle {
-    --toggle-height: calc(2rem * var(--st-density));   // 32 cadence (menu-list rhythm)
+    --toggle-height: #{space(8)};   // 2rem, menu-list cadence
     width: 100%;
     justify-content: flex-start;
     text-align: start;
@@ -144,12 +136,12 @@
 // === Sizes ==============================================================
 // Outer container shrinks / grows; padding + gap stay at 2 raw so the
 // inner clickable area scales with the outer dimension.
-.toggle-group--sm {
-  --toggle-group-radius: var(--st-toggle-group-radius, var(--st-radius-sm));
-  --toggle-group-height: calc(1.75rem + 0.625rem * (var(--st-density) - 1));   // tracks .toggle--sm
+.toggle-group--compact {
+  --toggle-group-radius: #{radius(sm)};
+  --toggle-group-height: #{space(7)};    // 1.75rem, tracks .toggle--compact
 }
 
-.toggle-group--lg {
-  --toggle-group-radius: var(--st-toggle-group-radius, var(--st-radius-lg));
-  --toggle-group-height: calc(2.75rem + 1rem * (var(--st-density) - 1));      // tracks .toggle--lg
+.toggle-group--roomy {
+  --toggle-group-radius: #{radius(lg)};
+  --toggle-group-height: #{space(11)};   // 2.75rem, tracks .toggle--roomy
 }

@@ -1,0 +1,88 @@
+// Stisla v3 — indicator.
+//
+// A contentless status dot: presence (online / offline / away), liveness,
+// unread. Distinct from .badge — a badge *labels* (it carries a count or
+// word), an indicator *signals* (it is just the dot). Pair with the .pin-*
+// utilities and .position-relative on the host to overlay it on an avatar
+// corner or an icon button.
+//
+//   <span class="indicator indicator--success"></span>                 inline dot
+//   <span class="indicator indicator--danger indicator--pulse"></span> live, with ping
+//
+//   <span class="position-relative d-inline-flex">
+//     <img class="avatar" …>
+//     <span class="indicator indicator--success pin-bottom-end"></span>
+//   </span>
+//
+// Opts out of --st-radius (must stay round — V3.md §3.4). Colour follows
+// --indicator-color; intents reassign it. The ring (--indicator-ring-*) is an
+// opt-in separator halo for sitting the dot over a busy surface (an avatar
+// photo); 0-width by default so it costs nothing until asked for.
+
+.indicator {
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2). Size rides --st-spacing.
+  // --indicator-color is read by both the dot (::after) and the pulse
+  // (::before), so its muted-foreground default repeats at each; intents set it.
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+  width:  var(--indicator-size, #{space(2.5)});   // 0.625rem
+  height: var(--indicator-size, #{space(2.5)});
+  vertical-align: middle;
+}
+
+// The dot itself, painted as ::after so it sits above the ::before pulse
+// halo (later pseudo paints on top — no z-index needed, so nothing escapes
+// behind an ancestor background).
+.indicator::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--indicator-color, var(--st-muted-foreground));
+  border-radius: 50%;
+  // Separator halo when pinned over an avatar / photo. Invisible at the
+  // 0px default width regardless of colour.
+  box-shadow: 0 0 0 var(--indicator-ring-width, 0px) var(--indicator-ring-color, var(--st-background));
+}
+
+// === Intent modifiers =================================================
+@mixin indicator-intent($token) {
+  --indicator-color: var(--st-#{$token});
+}
+
+.indicator--primary { @include indicator-intent(primary); }
+.indicator--success { @include indicator-intent(success); }
+.indicator--warning { @include indicator-intent(warning); }
+.indicator--danger  { @include indicator-intent(danger);  }
+.indicator--info    { @include indicator-intent(info);    }
+
+// === Sizes ============================================================
+.indicator--compact { --indicator-size: #{space(2)};   }   // 0.5rem
+.indicator--roomy { --indicator-size: #{space(3.5)}; }   // 0.875rem
+
+// === Pulse (ping halo) ================================================
+// An expanding, fading ring in the dot's own colour — decorative emphasis
+// for "live" / active signals. The ::before paints before the ::after dot,
+// so the halo sits behind the crisp dot and emanates outward past its edge.
+.indicator--pulse::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--indicator-color, var(--st-muted-foreground));
+  border-radius: 50%;
+  opacity: 0;
+  animation: st-indicator-pulse var(--indicator-pulse-duration, 1.2s) cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+// === Reduced motion ===================================================
+// Unlike the spinner (V3.md §2), a still indicator does not read as
+// "stuck" — the dot alone is a valid status. So drop the ping entirely
+// rather than slow it; the dot stays.
+@media (prefers-reduced-motion: reduce) {
+  .indicator--pulse::before { animation: none; }
+}
+
+@keyframes st-indicator-pulse {
+  0%        { transform: scale(1);   opacity: 0.55; }
+  75%, 100% { transform: scale(2.5); opacity: 0;    }
+}

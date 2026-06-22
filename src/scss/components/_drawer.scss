@@ -20,49 +20,14 @@
 // scroll-lock counter (`<html>.is-drawer-open`).
 
 .drawer {
-  // Geometry
-  --drawer-width: 22rem;
-  --drawer-height: 16rem;
-  --drawer-padding: calc(1.25rem * var(--st-density));
-  --drawer-z-index: 1045;
-
-  // Surface
-  --drawer-bg: var(--st-surface);
-  --drawer-color: var(--st-foreground);
-  --drawer-border-color: var(--st-border);
-  --drawer-shadow: var(--st-drawer-shadow, var(--st-shadow-heavy));
-
-  // Backdrop — solid dark dim, same treatment as dialog so a stacked
-  // open (drawer → dialog) reads consistently.
-  --drawer-backdrop-bg: oklch(0 0 0 / 0.55);
-  --drawer-backdrop-blur: 12px;
-
-  // Title
-  --drawer-title-font-size: 1.125rem;
-  --drawer-title-font-weight: 600;
-
-  // Close chip — inline ghost icon button at the trailing edge of the
-  // header row. Rest bg is transparent so the chip reads as a quiet
-  // affordance; hover surfaces it as --st-accent (same muscle memory as
-  // navbar/sidebar hover chips). Color rides theme tokens so dark mode
-  // tracks automatically.
-  --drawer-close-size: 1.75rem;
-  --drawer-close-color: var(--st-muted-foreground);
-  --drawer-close-color-hover: var(--st-foreground);
-  --drawer-close-bg-hover: var(--st-accent);
-
-  // Footer
-  --drawer-footer-padding-y: calc(0.875rem * var(--st-density));
-  --drawer-footer-bg: var(--st-surface-2);
-  --drawer-footer-border-color: var(--st-border);
-
-  // Motion — slightly slower than dialog's 0.2s because the slide
-  // distance is longer than a scale.
-  --drawer-transition-duration: 0.25s;
-
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing on the base, so a
+  // scope / inline retunes any of them; the parts read them with the same
+  // defaults (color / border-color / padding read in several edge variants).
+  // No radius (edge-anchored). Shadow chains to the shadow scale.
+  // z-index kept literal (hand-tuned overlay stacking).
   position: fixed;
   inset: 0;
-  z-index: var(--drawer-z-index);
+  z-index: var(--drawer-z-index, 1045);
   display: none;
   pointer-events: none;
 }
@@ -75,11 +40,11 @@
 .drawer__backdrop {
   position: absolute;
   inset: 0;
-  background-color: var(--drawer-backdrop-bg);
-  backdrop-filter: blur(var(--drawer-backdrop-blur));
-  -webkit-backdrop-filter: blur(var(--drawer-backdrop-blur));
+  background-color: var(--drawer-backdrop-bg, oklch(0 0 0 / 0.55));
+  backdrop-filter: blur(var(--drawer-backdrop-blur, 12px));
+  -webkit-backdrop-filter: blur(var(--drawer-backdrop-blur, 12px));
   opacity: 0;
-  transition: opacity var(--drawer-transition-duration) ease;
+  transition: opacity var(--drawer-transition-duration, 0.25s) ease;
   cursor: pointer;
 }
 
@@ -97,12 +62,12 @@
   position: absolute;
   display: flex;
   flex-direction: column;
-  background-color: var(--drawer-bg);
-  color: var(--drawer-color);
-  box-shadow: var(--drawer-shadow);
+  background-color: var(--drawer-bg, var(--st-surface));
+  color: var(--drawer-color, var(--st-foreground));
+  box-shadow: var(--drawer-shadow, #{shadow(lg)});
   overflow: hidden;
   outline: none;
-  transition: transform var(--drawer-transition-duration) ease;
+  transition: transform var(--drawer-transition-duration, 0.25s) ease;
 }
 
 // === Placement modifiers =================================================
@@ -116,9 +81,9 @@
     top: 0;
     bottom: 0;
     inset-inline-end: 0;
-    width: var(--drawer-width);
+    width: var(--drawer-width, 22rem);
     max-width: 100vw;
-    border-inline-start: 1px solid var(--drawer-border-color);
+    border-inline-start: var(--drawer-border-width, var(--st-border-width)) solid var(--drawer-border-color, var(--st-border));
     transform: translateX(100%);
   }
 }
@@ -129,10 +94,10 @@
     bottom: 0;
     inset-inline-start: 0;
     inset-inline-end: auto;
-    width: var(--drawer-width);
+    width: var(--drawer-width, 22rem);
     max-width: 100vw;
     border-inline-start: 0;
-    border-inline-end: 1px solid var(--drawer-border-color);
+    border-inline-end: var(--drawer-border-width, var(--st-border-width)) solid var(--drawer-border-color, var(--st-border));
     transform: translateX(-100%);
   }
 }
@@ -143,10 +108,10 @@
     inset-inline: 0;
     bottom: auto;
     width: auto;
-    height: var(--drawer-height);
+    height: var(--drawer-height, 16rem);
     max-height: 100dvh;
     border: 0;
-    border-bottom: 1px solid var(--drawer-border-color);
+    border-bottom: var(--drawer-border-width, var(--st-border-width)) solid var(--drawer-border-color, var(--st-border));
     transform: translateY(-100%);
   }
 }
@@ -157,10 +122,10 @@
     bottom: 0;
     inset-inline: 0;
     width: auto;
-    height: var(--drawer-height);
+    height: var(--drawer-height, 16rem);
     max-height: 100dvh;
     border: 0;
-    border-top: 1px solid var(--drawer-border-color);
+    border-top: var(--drawer-border-width, var(--st-border-width)) solid var(--drawer-border-color, var(--st-border));
     transform: translateY(100%);
   }
 }
@@ -191,23 +156,23 @@
   align-items: center;
   gap: 0.5rem;
   flex: 0 0 auto;
-  padding: var(--drawer-padding);
-  padding-bottom: 0;
+  padding: var(--drawer-padding-block, #{space(5)}) var(--drawer-padding-inline, #{space(5)});
+  padding-block-end: 0;
 }
 
 .drawer__title {
   margin: 0;
-  font-size: var(--drawer-title-font-size);
-  font-weight: var(--drawer-title-font-weight);
+  font-size: var(--drawer-title-font-size, 1.125rem);
+  font-weight: var(--drawer-title-font-weight, #{weight(semibold)});
   line-height: 1.3;
-  color: var(--drawer-color);
+  color: var(--drawer-color, var(--st-foreground));
 }
 
 .drawer__body {
   flex: 1 1 auto;
   min-height: 0;
-  padding: var(--drawer-padding);
-  color: var(--drawer-color);
+  padding: var(--drawer-padding-block, #{space(5)}) var(--drawer-padding-inline, #{space(5)});
+  color: var(--drawer-color, var(--st-foreground));
   overflow-y: auto;
 }
 
@@ -218,9 +183,9 @@
   align-items: center;
   justify-content: flex-end;
   gap: 0.5rem;
-  padding: var(--drawer-footer-padding-y) var(--drawer-padding);
-  background-color: var(--drawer-footer-bg);
-  border-top: 1px solid var(--drawer-footer-border-color);
+  padding: var(--drawer-footer-padding-block, #{space(3.5)}) var(--drawer-padding-inline, #{space(5)});
+  background-color: var(--drawer-footer-bg, var(--st-surface-2));
+  border-top: 1px solid var(--drawer-footer-border-color, var(--st-border));
 }
 
 // Inline ghost dismiss chip. Pushed to the trailing edge regardless of
@@ -232,10 +197,10 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: var(--drawer-close-size);
-  height: var(--drawer-close-size);
+  width: var(--drawer-close-size, #{space(7)});
+  height: var(--drawer-close-size, #{space(7)});
   padding: 0;
-  color: var(--drawer-close-color);
+  color: var(--drawer-close-color, var(--st-muted-foreground));
   background-color: transparent;
   border: 0;
   border-radius: 50%;
@@ -245,15 +210,15 @@
     color 0.15s ease;
 
   &:hover {
-    color: var(--drawer-close-color-hover);
-    background-color: var(--drawer-close-bg-hover);
+    color: var(--drawer-close-color-hover, var(--st-foreground));
+    background-color: var(--drawer-close-bg-hover, var(--st-accent));
   }
 
   &:focus-visible {
     outline: 2px solid var(--st-ring);
     outline-offset: 2px;
-    color: var(--drawer-close-color-hover);
-    background-color: var(--drawer-close-bg-hover);
+    color: var(--drawer-close-color-hover, var(--st-foreground));
+    background-color: var(--drawer-close-bg-hover, var(--st-accent));
   }
 
   > svg,

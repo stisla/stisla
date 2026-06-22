@@ -63,10 +63,10 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Three sizes match the input scale. Add <code>.select--sm</code> or <code>.select--lg</code> to the <code>&lt;select&gt;</code>; the trigger button inherits the variant.</p>
+    <p>Three sizes match the input scale. Add <code>.select--compact</code> or <code>.select--roomy</code> to the <code>&lt;select&gt;</code>; the trigger button inherits the variant.</p>
     {% call ui.demo() %}
     <div class="demo-stack" style="max-width: 24rem;">
-      <select class="select select--sm" data-stisla-select data-placeholder="Small" aria-label="Small select">
+      <select class="select select--compact" data-stisla-select data-placeholder="Small" aria-label="Small select">
         <option value=""></option>
         <option value="1">One</option>
         <option value="2">Two</option>
@@ -78,7 +78,7 @@
         <option value="2">Two</option>
         <option value="3">Three</option>
       </select>
-      <select class="select select--lg" data-stisla-select data-placeholder="Large" aria-label="Large select">
+      <select class="select select--roomy" data-stisla-select data-placeholder="Large" aria-label="Large select">
         <option value=""></option>
         <option value="1">One</option>
         <option value="2">Two</option>
@@ -187,7 +187,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>The trigger reuses the <code>--select-*</code> variables from <a class="link" href="/native-select">Native select</a>. The popup picks up the shared <code>--popup-*</code> variables that <a class="link" href="/dropdown">Dropdown menu</a> uses, and that Combobox and Autocomplete will share when they land.</p>
+    <p>The trigger reuses the <code>--select-*</code> variables from <a class="link" href="/native-select">Native select</a>. The popup adds its own <code>--select-*</code> variables that follow the same surface recipe as <a class="link" href="/menu">Menu</a>, Combobox, and Autocomplete.</p>
     <p>On touch devices (<code>@media (pointer: coarse)</code>) <code>--select-font-size</code> is bumped to <code>1rem</code> so iOS Safari doesn't zoom the viewport on focus. The browser auto-zooms any field with computed font-size below 16px and never zooms back; desktop keeps the tighter default.</p>
     <table>
       <thead>
@@ -195,19 +195,18 @@
       </thead>
       <tbody>
         <tr><td><code>--select-height</code></td><td>Trigger height (matches <code>.input</code>)</td></tr>
-        <tr><td><code>--select-padding-x</code></td><td>Trigger horizontal padding</td></tr>
-        <tr><td><code>--select-radius</code></td><td>Trigger corner radius; sm/lg variants reassign</td></tr>
+        <tr><td><code>--select-padding-inline</code></td><td>Trigger horizontal padding</td></tr>
+        <tr><td><code>--select-radius</code></td><td>Corner radius, shared by trigger and popup; the compact and roomy variants reassign it on the trigger</td></tr>
         <tr><td><code>--select-indicator</code></td><td>Chevron SVG; data: URL with literal stroke per theme</td></tr>
-        <tr><td><code>--popup-radius</code></td><td>Popup corner radius (defaults to <code>--st-popup-radius</code> then <code>--st-radius</code>)</td></tr>
-        <tr><td><code>--popup-bg</code></td><td>Popup surface</td></tr>
-        <tr><td><code>--popup-border-color</code></td><td>Popup border</td></tr>
-        <tr><td><code>--popup-shadow</code></td><td>Popup shadow</td></tr>
-        <tr><td><code>--popup-item-padding-y</code> / <code>-x</code></td><td>Option row padding (scales with density)</td></tr>
-        <tr><td><code>--popup-item-min-height</code></td><td>Option row min height</td></tr>
-        <tr><td><code>--popup-item-bg-hover</code></td><td>Highlighted row background (mouse hover + keyboard nav)</td></tr>
-        <tr><td><code>--popup-item-bg-active</code></td><td>Currently-selected row background</td></tr>
+        <tr><td><code>--select-bg</code></td><td>Surface, shared by trigger and popup</td></tr>
+        <tr><td><code>--select-border-color</code></td><td>Border color, shared by trigger and popup</td></tr>
+        <tr><td><code>--select-shadow</code></td><td>Popup shadow</td></tr>
+        <tr><td><code>--select-item-padding-block</code> / <code>--select-item-padding-inline</code></td><td>Option row padding</td></tr>
+        <tr><td><code>--select-item-min-height</code></td><td>Option row min height</td></tr>
+        <tr><td><code>--select-item-bg-hover</code></td><td>Highlighted row background (mouse hover + keyboard nav)</td></tr>
+        <tr><td><code>--select-item-bg-active</code></td><td>Currently-selected row background</td></tr>
       </tbody>
     </table>
-    <p>Because the popup variables are shared, setting <code>--popup-radius</code> at <code>:root</code> retunes every popup the same way. Set it on <code>.select__popup</code> for a one-off.</p>
+    <p>Because the popup variables are shared, setting <code>--select-radius</code> at <code>:root</code> retunes every popup the same way. Set it on <code>.select__popup</code> for a one-off.</p>
   </section>
 {% endblock %}

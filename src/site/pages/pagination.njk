@@ -107,11 +107,11 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Add <code>.pagination--sm</code> or <code>.pagination--lg</code> for compact or large chips. Heights match the button scale at 28 / 36 / 44 px under default density.</p>
+    <p>Add <code>.pagination--compact</code> or <code>.pagination--roomy</code> for compact or large chips. Heights match the button scale.</p>
     {% call ui.demo() %}
-    <div class="d-flex flex-column gap-4 w-100">
+    <div class="d-flex flex-column gap-4 w-100 align-items-center">
       <nav aria-label="Small page navigation">
-        <ul class="pagination pagination--sm">
+        <ul class="pagination pagination--compact">
           <li><a class="pagination__button" href="#">Previous</a></li>
           <li><a class="pagination__button" href="#">1</a></li>
           <li><a class="pagination__button" href="#" data-state="active" aria-current="page">2</a></li>
@@ -129,7 +129,7 @@
         </ul>
       </nav>
       <nav aria-label="Large page navigation">
-        <ul class="pagination pagination--lg">
+        <ul class="pagination pagination--roomy">
           <li><a class="pagination__button" href="#">Previous</a></li>
           <li><a class="pagination__button" href="#">1</a></li>
           <li><a class="pagination__button" href="#" data-state="active" aria-current="page">2</a></li>
@@ -170,7 +170,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Sixteen variables retune <code>.pagination</code> without touching component CSS. Override on <code>.pagination</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change. Size modifiers <code>--sm</code> / <code>--lg</code> retune the chip height, padding, and font size in their own scope, so there are no per-size vars to maintain.</p>
+    <p>Eighteen variables retune <code>.pagination</code> without touching component CSS. Override on <code>.pagination</code> itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change. Size modifiers <code>--compact</code> / <code>--roomy</code> retune the chip height, padding, and font size in their own scope, so there are no per-size vars to maintain.</p>
     <table>
       <thead>
         <tr>
@@ -184,10 +184,6 @@
           <td>Space between chips</td>
         </tr>
         <tr>
-          <td><code>--pagination-margin-bottom</code></td>
-          <td>Trailing space below the row</td>
-        </tr>
-        <tr>
           <td><code>--pagination-font-size</code></td>
           <td>Chip text size</td>
         </tr>
@@ -196,7 +192,7 @@
           <td>Chip height (also doubles as <code>min-width</code> so single-glyph chips land as squares)</td>
         </tr>
         <tr>
-          <td><code>--pagination-button-padding-x</code></td>
+          <td><code>--pagination-button-padding-inline</code></td>
           <td>Chip horizontal padding (longer labels grow from this)</td>
         </tr>
         <tr>
@@ -205,7 +201,7 @@
         </tr>
         <tr>
           <td><code>--pagination-button-radius</code></td>
-          <td>Chip corner radius (set 9999px for pill chips)</td>
+          <td>Chip corner radius (set a large value for pilled chips)</td>
         </tr>
         <tr>
           <td><code>--pagination-button-bg</code></td>
@@ -220,28 +216,36 @@
           <td>Chip border color (set <code>var(--st-border)</code> for outlined chips)</td>
         </tr>
         <tr>
-          <td><code>--pagination-button-hover-bg</code></td>
+          <td><code>--pagination-button-border-width</code></td>
+          <td>Chip border thickness</td>
+        </tr>
+        <tr>
+          <td><code>--pagination-button-bg-hover</code></td>
           <td>Hover background (interactive chips only)</td>
         </tr>
         <tr>
-          <td><code>--pagination-button-hover-color</code></td>
+          <td><code>--pagination-button-color-hover</code></td>
           <td>Hover text color</td>
         </tr>
         <tr>
-          <td><code>--pagination-button-active-bg</code></td>
+          <td><code>--pagination-button-bg-active</code></td>
           <td>Current page background (<code>data-state="active"</code> / <code>aria-current="page"</code>)</td>
         </tr>
         <tr>
-          <td><code>--pagination-button-active-color</code></td>
+          <td><code>--pagination-button-color-active</code></td>
           <td>Current page text color</td>
         </tr>
         <tr>
-          <td><code>--pagination-button-disabled-color</code></td>
+          <td><code>--pagination-button-color-disabled</code></td>
           <td>Disabled / ellipsis text color</td>
         </tr>
         <tr>
           <td><code>--pagination-button-ring</code></td>
           <td>Focus outline color</td>
+        </tr>
+        <tr>
+          <td><code>--pagination-transition-duration</code></td>
+          <td>Chip hover and focus transition speed</td>
         </tr>
       </tbody>
     </table>

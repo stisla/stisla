@@ -84,10 +84,10 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Three sizes are available. <code>.sidebar--sm</code>, default, and <code>.sidebar--lg</code>. The modifier retunes button height, padding, and group gap. Outer panel padding stays the same so gutters read identically across sizes.</p>
+    <p>Three sizes are available. <code>.sidebar--compact</code>, default, and <code>.sidebar--roomy</code>. The modifier retunes button height, padding, and group gap. Outer panel padding stays the same so gutters read identically across sizes.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-wrap gap-3 align-items-start">
-      <aside data-stisla-sidebar class="sidebar sidebar--sm" style="width: 14rem;">
+      <aside data-stisla-sidebar class="sidebar sidebar--compact" style="width: 14rem;">
         <div class="sidebar__content">
           <nav class="sidebar__menu">
             <div class="sidebar__group">
@@ -117,7 +117,7 @@
         </div>
       </aside>
 
-      <aside data-stisla-sidebar class="sidebar sidebar--lg" style="width: 14rem;">
+      <aside data-stisla-sidebar class="sidebar sidebar--roomy" style="width: 14rem;">
         <div class="sidebar__content">
           <nav class="sidebar__menu">
             <div class="sidebar__group">
@@ -336,10 +336,10 @@
       border-radius: var(--st-radius);
       --sidebar-bg: var(--st-primary);
       --sidebar-color: var(--st-primary-foreground);
-      --sidebar-button-hover-bg: color-mix(in oklch, var(--st-primary-foreground) 12%, transparent);
-      --sidebar-button-hover-color: var(--st-primary-foreground);
-      --sidebar-button-active-bg: color-mix(in oklch, var(--st-primary-foreground) 20%, transparent);
-      --sidebar-button-active-color: var(--st-primary-foreground);
+      --sidebar-button-bg-hover: color-mix(in oklch, var(--st-primary-foreground) 12%, transparent);
+      --sidebar-button-color-hover: var(--st-primary-foreground);
+      --sidebar-button-bg-active: color-mix(in oklch, var(--st-primary-foreground) 20%, transparent);
+      --sidebar-button-color-active: var(--st-primary-foreground);
       --sidebar-button-icon-color: color-mix(in oklch, var(--st-primary-foreground) 75%, transparent);
       --sidebar-group-title-color: color-mix(in oklch, var(--st-primary-foreground) 70%, transparent);
       --sidebar-submenu-border-color: color-mix(in oklch, var(--st-primary-foreground) 25%, transparent);
@@ -389,10 +389,10 @@
   <section>
     <h2>Rail / mini mode</h2>
     <p>Add <code>.is-collapsed</code> to the panel to shrink it to icons only. Each button becomes a square with its icon centered. Labels, submenus, and chevrons fade out coordinated with whatever width transition your layout runs. Wrap label text in a <code>&lt;span&gt;</code> so it can be hidden cleanly. Bare text nodes get clipped as a fallback but produce a less smooth transition.</p>
-    <p>The button size follows <code>.sidebar--sm</code> and <code>.sidebar--lg</code>. The panel <code>width</code> is the layout's job. Match it to the button size for a clean square cell. The recipe is <code>(button-height + 2 × --sidebar-padding-x) × --st-density</code>, which gives 4rem (sm), 4.25rem (default), 4.5rem (lg) at density 1, and scales proportionally at <code>0.875</code> or <code>1.125</code>. Add 2 × border-width on top when the panel carries a border (<code>box-sizing: border-box</code> trims the interior by the border, squeezing the icon cell). The demos below use <code>calc(4rem * var(--st-density) + 2px)</code> for a 1px border at the sm size.</p>
+    <p>The button size follows <code>.sidebar--compact</code> and <code>.sidebar--roomy</code>. The collapsed panel hugs the icon column on its own (its width is <code>fit-content</code>), so the icon stays centered with no width to compute and a border is handled cleanly. The demos below just add a hairline. Set a fixed <code>--sidebar-width-collapsed</code> only when you want the collapse to animate (see below).</p>
     {% call ui.demo() %}
     <div class="d-flex flex-wrap gap-3 align-items-start">
-      <aside data-stisla-sidebar class="sidebar sidebar--sm is-collapsed" style="width: calc(4rem * var(--st-density) + 2px); border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
+      <aside data-stisla-sidebar class="sidebar sidebar--compact is-collapsed" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
         <header class="sidebar__header">
           <a class="sidebar__brand" href="#" aria-label="Stisla"><i data-lucide="hexagon"></i><span>Stisla</span></a>
         </header>
@@ -410,7 +410,7 @@
         </div>
       </aside>
 
-      <aside data-stisla-sidebar class="sidebar is-collapsed" style="width: calc(4.25rem * var(--st-density) + 2px); border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
+      <aside data-stisla-sidebar class="sidebar is-collapsed" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
         <header class="sidebar__header">
           <a class="sidebar__brand" href="#" aria-label="Stisla"><i data-lucide="hexagon"></i><span>Stisla</span></a>
         </header>
@@ -428,7 +428,7 @@
         </div>
       </aside>
 
-      <aside data-stisla-sidebar class="sidebar sidebar--lg is-collapsed" style="width: calc(4.5rem * var(--st-density) + 2px); border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
+      <aside data-stisla-sidebar class="sidebar sidebar--roomy is-collapsed" style="border: 1px solid var(--st-border); border-radius: var(--st-radius); --sidebar-bg: var(--st-surface);">
         <header class="sidebar__header">
           <a class="sidebar__brand" href="#" aria-label="Stisla"><i data-lucide="hexagon"></i><span>Stisla</span></a>
         </header>
@@ -452,10 +452,10 @@
   <section>
     <h2>Collapse toggle</h2>
     <p>Add <code>data-stisla-sidebar-toggle="collapse"</code> to any element to flip the panel between expanded and rail. The framework JS toggles <code>.is-collapsed</code> on the closest <code>[data-stisla-sidebar]</code>, or, when the trigger lives outside the sidebar, on the panel referenced by <code>aria-controls</code>. The trigger's <code>aria-expanded</code> stays in sync; bubble up <code>stisla:sidebar:collapse-change</code> to react to the state in your own code.</p>
-    <p>Pair the toggle with the opt-in <code>--sidebar-width</code> and <code>--sidebar-width-collapsed</code> variables and the width animates pure-CSS, with no inline width changes and no script. The width transition rides <code>--sidebar-transition</code>.</p>
+    <p>By default the panel is <code>16rem</code> expanded and hugs its icons when collapsed. To make the width <em>animate</em> on toggle, set <code>--sidebar-width</code> and <code>--sidebar-width-collapsed</code> to fixed lengths (as below) — the transition can't interpolate <code>fit-content</code>. It animates pure-CSS, with no inline width changes and no script, riding <code>--sidebar-transition-duration</code>.</p>
     <p>Inside an <code>.app-shell</code>, prefer <code>data-stisla-app-shell-toggle="collapse"</code> instead. <code>Stisla.AppShell</code> flips <code>.is-sidebar-collapsed</code> on the shell and delegates to the sidebar's <code>collapse()</code>/<code>expand()</code> API in one click, keeping the panel's <code>.is-collapsed</code> + submenu close + ARIA all in sync.</p>
     {% call ui.demo() %}
-    <aside id="demo-toggleable-sidebar" data-stisla-sidebar class="sidebar position-absolute" style="inset: 0 auto 0 0; --sidebar-width: 18rem; --sidebar-width-collapsed: calc(4.25rem * var(--st-density) + 1px); border-right: 1px solid var(--st-border); --sidebar-bg: var(--st-surface);">
+    <aside id="demo-toggleable-sidebar" data-stisla-sidebar class="sidebar position-absolute" style="inset: 0 auto 0 0; --sidebar-width: 18rem; --sidebar-width-collapsed: calc(3.5rem + 1px); border-right: 1px solid var(--st-border); --sidebar-bg: var(--st-surface);">
       <header class="sidebar__header">
         <a class="sidebar__brand" href="#">
           <i data-lucide="hexagon"></i>
@@ -580,7 +580,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Thirty-one variables retune <code>.sidebar</code> without touching component CSS. Override on the panel, a parent scope, or <code>:root</code>. Density-tuned values multiply <code>--st-density</code> automatically.</p>
+    <p>Thirty-one variables retune <code>.sidebar</code> without touching component CSS. Override on the panel, a parent scope, or <code>:root</code>.</p>
 
     <h3>Shell</h3>
     <table>
@@ -600,11 +600,11 @@
           <td>Panel foreground (brand + buttons inherit)</td>
         </tr>
         <tr>
-          <td><code>--sidebar-padding-y</code></td>
+          <td><code>--sidebar-padding-block</code></td>
           <td>Top + bottom padding on header / footer</td>
         </tr>
         <tr>
-          <td><code>--sidebar-padding-x</code></td>
+          <td><code>--sidebar-padding-inline</code></td>
           <td>Panel outer gutter. Feeds the rail-width recipe.</td>
         </tr>
         <tr>
@@ -617,7 +617,7 @@
         </tr>
         <tr>
           <td><code>--sidebar-width-collapsed</code></td>
-          <td>Rail width applied when <code>.is-collapsed</code> is present. Pair with <code>--sidebar-width</code>; the class flip animates pure-CSS via <code>--sidebar-transition</code>.</td>
+          <td>Rail width applied when <code>.is-collapsed</code> is present. Pair with <code>--sidebar-width</code>; the class flip animates pure-CSS via <code>--sidebar-transition-duration</code>.</td>
         </tr>
       </tbody>
     </table>
@@ -657,11 +657,11 @@
       <tbody>
         <tr>
           <td><code>--sidebar-button-height</code></td>
-          <td>Hard height; multiplied by <code>--st-density</code></td>
+          <td>Hard height</td>
         </tr>
         <tr>
-          <td><code>--sidebar-button-padding-x</code></td>
-          <td>Horizontal inset. Load-bearing for rail symmetry. <code>padding-x + icon-size + padding-x</code> equals <code>button-height</code> so the icon centers naturally at rail width without any <code>justify-content</code> override.</td>
+          <td><code>--sidebar-button-padding-inline</code></td>
+          <td>Horizontal inset. Load-bearing for rail symmetry. <code>padding-inline + icon-size + padding-inline</code> equals <code>button-height</code> so the icon centers naturally at rail width without any <code>justify-content</code> override.</td>
         </tr>
         <tr>
           <td><code>--sidebar-button-radius</code></td>
@@ -680,28 +680,28 @@
           <td>Rest text color</td>
         </tr>
         <tr>
-          <td><code>--sidebar-button-hover-bg</code></td>
+          <td><code>--sidebar-button-bg-hover</code></td>
           <td>Hover chip fill</td>
         </tr>
         <tr>
-          <td><code>--sidebar-button-hover-color</code></td>
+          <td><code>--sidebar-button-color-hover</code></td>
           <td>Hover text color</td>
         </tr>
         <tr>
-          <td><code>--sidebar-button-active-bg</code></td>
+          <td><code>--sidebar-button-bg-active</code></td>
           <td>Active chip fill (aria-current="page" or data-state="active")</td>
         </tr>
         <tr>
-          <td><code>--sidebar-button-active-color</code></td>
+          <td><code>--sidebar-button-color-active</code></td>
           <td>Active text color</td>
         </tr>
         <tr>
           <td><code>--sidebar-button-icon-size</code></td>
-          <td>Icon dimensions; load-bearing for rail recipe (see <code>--sidebar-button-padding-x</code>) + chevron</td>
+          <td>Icon dimensions; load-bearing for rail recipe (see <code>--sidebar-button-padding-inline</code>) + chevron</td>
         </tr>
         <tr>
           <td><code>--sidebar-button-icon-color</code></td>
-          <td>Icon color at rest + hover. Active rows flip the icon to <code>--sidebar-button-active-color</code> so the row reads unified.</td>
+          <td>Icon color at rest + hover. Active rows flip the icon to <code>--sidebar-button-color-active</code> so the row reads unified.</td>
         </tr>
       </tbody>
     </table>
@@ -764,11 +764,11 @@
           <td>Guide-line color</td>
         </tr>
         <tr>
-          <td><code>--sidebar-submenu-padding-start</code></td>
+          <td><code>--sidebar-submenu-padding-inline-start</code></td>
           <td>Space between the guide line and submenu rows</td>
         </tr>
         <tr>
-          <td><code>--sidebar-submenu-margin-start</code></td>
+          <td><code>--sidebar-submenu-margin-inline-start</code></td>
           <td>Inset from the panel edge; aligns the guide line on the parent icon's center axis</td>
         </tr>
       </tbody>
@@ -784,7 +784,7 @@
       </thead>
       <tbody>
         <tr>
-          <td><code>--sidebar-transition</code></td>
+          <td><code>--sidebar-transition-duration</code></td>
           <td>Rail-mode soft-hide transition. Zeroed under <code>prefers-reduced-motion</code>.</td>
         </tr>
       </tbody>

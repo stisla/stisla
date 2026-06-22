@@ -49,39 +49,16 @@
 // .card > .table:last-child in _table.scss.
 
 .list-group {
-  // === Geometry ========================================================
-  --list-group-radius: var(--st-list-group-radius, var(--st-radius-lg));
-  --list-group-item-padding-y: calc(0.75rem * var(--st-density));
-  --list-group-item-padding-x: calc(1rem * var(--st-density));
-  --list-group-item-gap: 0.75rem;
-  --list-group-item-icon-size: 1rem;
-
-  // === Surface =========================================================
-  --list-group-bg: var(--st-surface);
-  --list-group-color: var(--st-foreground);
-  --list-group-border-color: var(--st-border);
-  --list-group-border-width: 1px;
-  --list-group-divider-color: var(--st-border);
-
-  // === Item states =====================================================
-  --list-group-item-hover-bg: var(--st-accent);
-  --list-group-item-hover-color: var(--st-accent-foreground);
-  --list-group-item-active-bg: var(--st-highlight);
-  --list-group-item-active-color: var(--st-foreground);
-  --list-group-item-disabled-color: var(--st-muted-foreground);
-
-  // === Focus ===========================================================
-  --list-group-ring: var(--st-ring);
-
-  // === Motion ==========================================================
-  --list-group-transition: background-color 0.12s ease, color 0.12s ease;
-
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing on the base, so a
+  // scope / inline retunes any of them; the item + state + variant rules read
+  // them with the same defaults (divider-color / bg / item-padding-inline repeat
+  // their fallbacks where read more than once).
   display: flex;
   flex-direction: column;
-  background-color: var(--list-group-bg);
-  color: var(--list-group-color);
-  border: var(--list-group-border-width) solid var(--list-group-border-color);
-  border-radius: var(--list-group-radius);
+  background-color: var(--list-group-bg, var(--st-surface));
+  color: var(--list-group-color, var(--st-foreground));
+  border: var(--list-group-border-width, var(--st-border-width)) solid var(--list-group-border-color, var(--st-border));
+  border-radius: var(--list-group-radius, #{radius(lg)});
   // Clip square inner-row corners to the rounded outer shape; same trick
   // as .card. Inset focus halos (outline-offset: -2px below) sit inside
   // the box so this overflow doesn't fight them.
@@ -93,22 +70,24 @@
 .list-group__item {
   display: flex;
   align-items: center;
-  gap: var(--list-group-item-gap);
-  padding: var(--list-group-item-padding-y) var(--list-group-item-padding-x);
-  color: var(--list-group-color);
+  gap: var(--list-group-item-gap, #{space(3)});
+  padding: var(--list-group-item-padding-block, #{space(3)}) var(--list-group-item-padding-inline, #{space(4)});
+  color: var(--list-group-color, var(--st-foreground));
   // Transparent base lets variant tints + state paints stack on top
   // without per-rule conflicts.
   background-color: transparent;
   // Inter-row rule. The root border owns the top/bottom edges; subsequent
   // items get a top divider, first item stays flush.
-  border-top: 1px solid var(--list-group-divider-color);
+  border-top: 1px solid var(--list-group-divider-color, var(--st-border));
   // Local stacking context — needed so a focus halo (z-index: 1 below)
   // sits above neighbor row backgrounds without jumping out of the frame.
   position: relative;
   // Smooth hover + selection transitions. Tracks the .btn / .input
   // baseline (.12s ease). Zeroed under reduced-motion at the bottom of
   // this file.
-  transition: var(--list-group-transition);
+  transition:
+    background-color var(--list-group-transition-duration, #{duration(fast)}) ease,
+    color var(--list-group-transition-duration, #{duration(fast)}) ease;
 
   &:first-child {
     border-top: 0;
@@ -146,8 +125,8 @@ button.list-group__item:hover:not(
     [aria-current="true"],
     [aria-disabled="true"]
   ):not(:disabled) {
-  background-color: var(--list-group-item-hover-bg);
-  color: var(--list-group-item-hover-color);
+  background-color: var(--list-group-item-bg-hover, var(--st-accent));
+  color: var(--list-group-item-color-hover, var(--st-accent-foreground));
 }
 
 a.list-group__item:focus-visible,
@@ -155,7 +134,7 @@ button.list-group__item:focus-visible {
   // Inset halo so the outer overflow: hidden on .list-group doesn't clip
   // it. z-index lifts the row above siblings so the bottom-edge outline
   // paints over the next item's top divider.
-  outline: 2px solid var(--list-group-ring);
+  outline: 2px solid var(--list-group-ring, var(--st-ring));
   outline-offset: -2px;
   z-index: 1;
 }
@@ -167,15 +146,15 @@ button.list-group__item:focus-visible {
 .list-group__item[data-state="active"],
 .list-group__item[aria-current="page"],
 .list-group__item[aria-current="true"] {
-  background-color: var(--list-group-item-active-bg);
-  color: var(--list-group-item-active-color);
+  background-color: var(--list-group-item-bg-active, var(--st-highlight));
+  color: var(--list-group-item-color-active, var(--st-foreground));
 }
 
 // === Disabled =========================================================
 
 .list-group__item[aria-disabled="true"],
 .list-group__item:disabled {
-  color: var(--list-group-item-disabled-color);
+  color: var(--list-group-item-color-disabled, var(--st-muted-foreground));
   pointer-events: none;
   cursor: not-allowed;
   background-color: transparent;
@@ -187,8 +166,8 @@ button.list-group__item:focus-visible {
 // active surfaces along with the text.
 
 .list-group__item > :is(svg, i):first-child {
-  width: var(--list-group-item-icon-size);
-  height: var(--list-group-item-icon-size);
+  width: var(--list-group-item-icon-size, 1rem);
+  height: var(--list-group-item-icon-size, 1rem);
   flex-shrink: 0;
   color: currentColor;
 }
@@ -206,7 +185,7 @@ button.list-group__item:focus-visible {
     background-color: color-mix(
       in oklab,
       var(--st-#{$intent}) 10%,
-      var(--list-group-bg)
+      var(--list-group-bg, var(--st-surface))
     );
     color: var(--st-foreground);
   }
@@ -227,6 +206,7 @@ button.list-group__item:focus-visible {
 // already does this — keep --flush for non-card parents.
 
 .list-group--flush {
+  --list-group-bg: transparent;
   border-width: 0;
   border-radius: 0;
 }
@@ -256,7 +236,7 @@ button.list-group__item:focus-visible {
 
   > .list-group__item {
     border-top: 0;
-    border-inline-start: 1px solid var(--list-group-divider-color);
+    border-inline-start: 1px solid var(--list-group-divider-color, var(--st-border));
 
     &:first-child {
       border-inline-start: 0;
@@ -271,7 +251,7 @@ button.list-group__item:focus-visible {
 
       > .list-group__item {
         border-top: 0;
-        border-inline-start: 1px solid var(--list-group-divider-color);
+        border-inline-start: 1px solid var(--list-group-divider-color, var(--st-border));
 
         &:first-child {
           border-inline-start: 0;
@@ -292,11 +272,28 @@ button.list-group__item:focus-visible {
   border-radius: 0;
 }
 
+// First child (no header above): the card's top edge owns the boundary — drop
+// the list-group's top border and round its top corners to the card's inner
+// radius (overflow: hidden clips the first item to the rounded shape).
 .card > .list-group:first-child {
   border-top-width: 0;
+  border-start-start-radius: calc(var(--card-radius, #{radius(lg)}) - var(--st-border-width));
+  border-start-end-radius: calc(var(--card-radius, #{radius(lg)}) - var(--st-border-width));
 }
+
+// After a card header: the header's bottom border is the divider, so drop the
+// list-group's top border to avoid doubling the seam.
+.card > .card__header + .list-group {
+  border-top-width: 0;
+}
+
+// Last child (no footer below): the card's bottom edge owns the boundary — drop
+// the bottom border and round the bottom corners so the last item fills the
+// card's rounded bottom.
 .card > .list-group:last-child {
   border-bottom-width: 0;
+  border-end-start-radius: calc(var(--card-radius, #{radius(lg)}) - var(--st-border-width));
+  border-end-end-radius: calc(var(--card-radius, #{radius(lg)}) - var(--st-border-width));
 }
 
 // === Reduced motion ===================================================
@@ -311,4 +308,10 @@ button.list-group__item:focus-visible {
 // Block — fills its container width per SPEC §9 escape ramp.
 .list-group--block {
   width: 100%;
+}
+
+.card {
+  .list-group {
+    --list-group-item-padding-inline: var(--card-padding-inline, #{space(5)});
+  }
 }

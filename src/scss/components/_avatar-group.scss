@@ -22,10 +22,8 @@
 // element directly.
 
 .avatar-group {
-  --avatar-group-overlap:     0.625rem;              // 10 — half of md size
-  --avatar-group-ring-width:  2px;
-  --avatar-group-ring-color:  var(--st-background);
-
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing on the base; the
+  // member-publish + overlap rules read them with the same defaults.
   display: inline-flex;
   vertical-align: middle;
 }
@@ -34,8 +32,8 @@
 // separated. Members declare --avatar-ring-* slots; the group just
 // publishes values into them.
 .avatar-group > .avatar {
-  --avatar-ring-width: var(--avatar-group-ring-width);
-  --avatar-ring-color: var(--avatar-group-ring-color);
+  --avatar-ring-width: var(--avatar-group-ring-width, 2px);
+  --avatar-ring-color: var(--avatar-group-ring-color, var(--st-background));
   position: relative;
 }
 
@@ -43,7 +41,7 @@
 // Density-scaled so a compact / comfortable theme retunes the overlap
 // together with the avatar size.
 .avatar-group > .avatar + .avatar {
-  margin-inline-start: calc(-1 * var(--avatar-group-overlap) * var(--st-density));
+  margin-inline-start: calc(-1 * var(--avatar-group-overlap, #{space(2.5)}));
 }
 
 // Stacking order matches .btn-group — hovered / focused member rises so

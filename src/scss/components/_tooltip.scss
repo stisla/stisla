@@ -12,43 +12,24 @@
 //
 // Position strategy: position: fixed so the tooltip escapes any ancestor with
 // overflow: hidden. Floating UI's strategy: 'fixed' computes top/left in
-// viewport coordinates to match (same as .dropdown-menu).
+// viewport coordinates to match (same as .menu).
 //
 // Color model: inverse surface — bg = --st-foreground, color = --st-background.
 // The chip reads dark-on-light in light mode, light-on-dark in dark mode via
 // the token swap. Distinguishes from popover (which uses --st-surface).
 
 .tooltip {
-  // Geometry — small floating label, not a card. --st-radius-sm = 8px under
-  // default --st-radius (12px) per the 3.6c three-tier rhythm.
-  --tooltip-max-width: 240px;
-  --tooltip-padding-y: 6px;
-  --tooltip-padding-x: 10px;
-  --tooltip-radius: var(--st-tooltip-radius, var(--st-radius-sm));
-  --tooltip-z-index: 1050;
-  --tooltip-font-size: 0.8125rem;
-  --tooltip-line-height: 1.4;
-
-  // Surface — inverse treatment. Auto-flips with theme via the token swap;
-  // no [data-theme] override block needed.
-  --tooltip-bg: var(--st-foreground);
-  --tooltip-color: var(--st-background);
-  --tooltip-shadow: var(--st-tooltip-shadow, var(--st-shadow-light));
-
-  // Arrow — 8px square rotated 45° for the diamond caret. Half buries under
-  // .tooltip__inner; the other half sticks out as the visible point.
-  --tooltip-arrow-size: 8px;
-
-  // Motion — short fade + small translate toward the trigger so the tooltip
-  // appears to rise from the anchored edge.
-  --tooltip-transition-duration: 0.15s;
-
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing on the base, so a
+  // scope / inline retunes any of them; __inner + __arrow read them with the
+  // same defaults (bg + arrow-size are read in both, so their defaults repeat).
   position: fixed;
   top: 0;
   left: 0;
-  z-index: var(--tooltip-z-index);
+  // z-index kept as a literal (the overlay stacking order is hand-tuned
+  // cross-component; not routed through the z() scale — see V3-ARCH §z-index).
+  z-index: var(--tooltip-z-index, 1050);
   display: none;
-  max-width: var(--tooltip-max-width);
+  max-width: var(--tooltip-max-width, 240px);
   margin: 0;
   pointer-events: none;
   opacity: 0;
@@ -58,8 +39,8 @@
   // away from the trigger.
   transform: translateY(4px);
   transition:
-    opacity var(--tooltip-transition-duration) ease,
-    transform var(--tooltip-transition-duration) ease;
+    opacity var(--tooltip-transition-duration, 0.15s) ease,
+    transform var(--tooltip-transition-duration, 0.15s) ease;
 }
 
 .tooltip[data-state='open'] {
@@ -91,14 +72,14 @@
 // edge cleanly without affecting layout.
 
 .tooltip__inner {
-  padding: var(--tooltip-padding-y) var(--tooltip-padding-x);
-  font-size: var(--tooltip-font-size);
-  line-height: var(--tooltip-line-height);
-  color: var(--tooltip-color);
+  padding: var(--tooltip-padding-block, #{space(1.5)}) var(--tooltip-padding-inline, #{space(2.5)});
+  font-size: var(--tooltip-font-size, 0.8125rem);
+  line-height: var(--tooltip-line-height, 1.4);
+  color: var(--tooltip-color, var(--st-background));
   text-align: center;
-  background-color: var(--tooltip-bg);
-  border-radius: var(--tooltip-radius);
-  box-shadow: var(--tooltip-shadow);
+  background-color: var(--tooltip-bg, var(--st-foreground));
+  border-radius: var(--tooltip-radius, #{radius(sm)});
+  box-shadow: var(--tooltip-shadow, #{shadow(sm)});
   word-wrap: break-word;
 }
 
@@ -110,23 +91,23 @@
 
 .tooltip__arrow {
   position: absolute;
-  width: var(--tooltip-arrow-size);
-  height: var(--tooltip-arrow-size);
-  background-color: var(--tooltip-bg);
+  width: var(--tooltip-arrow-size, 8px);
+  height: var(--tooltip-arrow-size, 8px);
+  background-color: var(--tooltip-bg, var(--st-foreground));
   transform: rotate(45deg);
 }
 
 .tooltip[data-placement^='top'] .tooltip__arrow {
-  bottom: calc(var(--tooltip-arrow-size) * -0.5);
+  bottom: calc(var(--tooltip-arrow-size, 8px) * -0.5);
 }
 .tooltip[data-placement^='bottom'] .tooltip__arrow {
-  top: calc(var(--tooltip-arrow-size) * -0.5);
+  top: calc(var(--tooltip-arrow-size, 8px) * -0.5);
 }
 .tooltip[data-placement^='left'] .tooltip__arrow {
-  right: calc(var(--tooltip-arrow-size) * -0.5);
+  right: calc(var(--tooltip-arrow-size, 8px) * -0.5);
 }
 .tooltip[data-placement^='right'] .tooltip__arrow {
-  left: calc(var(--tooltip-arrow-size) * -0.5);
+  left: calc(var(--tooltip-arrow-size, 8px) * -0.5);
 }
 
 // === Reduced motion ========================================================

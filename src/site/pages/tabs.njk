@@ -178,11 +178,11 @@
         <div class="tabs__panel" data-value="gamma"><p>Gamma pane.</p></div>
       </div>
       <div class="d-flex flex-wrap align-items-center gap-2">
-        <button type="button" class="btn btn--outline btn--neutral btn--sm" data-tabs-demo="alpha">Open Alpha</button>
-        <button type="button" class="btn btn--outline btn--neutral btn--sm" data-tabs-demo="beta">Open Beta</button>
-        <button type="button" class="btn btn--outline btn--neutral btn--sm" data-tabs-demo="gamma">Open Gamma</button>
+        <button type="button" class="btn btn--outline btn--neutral btn--compact" data-tabs-demo="alpha">Open Alpha</button>
+        <button type="button" class="btn btn--outline btn--neutral btn--compact" data-tabs-demo="beta">Open Beta</button>
+        <button type="button" class="btn btn--outline btn--neutral btn--compact" data-tabs-demo="gamma">Open Gamma</button>
       </div>
-      <pre id="tabsDemoLog" class="kbd d-block" style="padding: 0.5rem 0.75rem; min-height: 2.25rem; white-space: pre-wrap;">Listening for stisla:tabs:changed…</pre>
+      <pre id="tabsDemoLog" class="d-block">Listening for stisla:tabs:changed…</pre>
     </div>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
@@ -213,9 +213,9 @@
     {% call ui.demo() %}
     <div class="d-flex flex-column gap-4 w-100">
       <div class="d-flex flex-wrap align-items-center gap-2">
-        <button type="button" class="btn btn--outline btn--neutral btn--sm" aria-controls="tabsDemoExternal" data-stisla-tabs-value="overview">Jump to Overview</button>
-        <button type="button" class="btn btn--outline btn--neutral btn--sm" aria-controls="tabsDemoExternal" data-stisla-tabs-value="activity">Jump to Activity</button>
-        <button type="button" class="btn btn--outline btn--neutral btn--sm" aria-controls="tabsDemoExternal" data-stisla-tabs-value="settings">Jump to Settings</button>
+        <button type="button" class="btn btn--outline btn--neutral btn--compact" aria-controls="tabsDemoExternal" data-stisla-tabs-value="overview">Jump to Overview</button>
+        <button type="button" class="btn btn--outline btn--neutral btn--compact" aria-controls="tabsDemoExternal" data-stisla-tabs-value="activity">Jump to Activity</button>
+        <button type="button" class="btn btn--outline btn--neutral btn--compact" aria-controls="tabsDemoExternal" data-stisla-tabs-value="settings">Jump to Settings</button>
       </div>
       <div id="tabsDemoExternal" class="tabs" data-stisla-tabs>
         <div class="tabs__list">
@@ -240,7 +240,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Tabs ship 17 component variables across three groups. Concentric inner radius is derived from the outer radius minus the rail padding (V3.md §3.4).</p>
+    <p>Tabs ship 18 component variables across three groups. Concentric inner radius is derived from the outer radius minus the rail padding.</p>
     <h3>List (the rail)</h3>
     <table>
       <thead>
@@ -256,11 +256,15 @@
         </tr>
         <tr>
           <td><code>--tabs-list-height</code></td>
-          <td>Outer rail height. Bakes in the density-aware growth formula. Trigger height fills via flex stretch.</td>
+          <td>Outer rail height. Trigger height fills via flex stretch.</td>
         </tr>
         <tr>
-          <td><code>--tabs-list-padding</code></td>
-          <td>Padding around triggers. Subtracts from the trigger's effective height and the concentric inner radius.</td>
+          <td><code>--tabs-list-padding-block</code></td>
+          <td>Vertical padding around triggers. Subtracts from the trigger's effective height and the concentric inner radius.</td>
+        </tr>
+        <tr>
+          <td><code>--tabs-list-padding-inline</code></td>
+          <td>Horizontal padding around triggers.</td>
         </tr>
         <tr>
           <td><code>--tabs-list-gap</code></td>
@@ -291,7 +295,7 @@
       </thead>
       <tbody>
         <tr>
-          <td><code>--tabs-trigger-padding-x</code></td>
+          <td><code>--tabs-trigger-padding-inline</code></td>
           <td>Horizontal padding inside each trigger.</td>
         </tr>
         <tr>
@@ -307,20 +311,20 @@
           <td>Trigger label weight.</td>
         </tr>
         <tr>
-          <td><code>--tabs-trigger-hover-color</code></td>
+          <td><code>--tabs-trigger-color-hover</code></td>
           <td>Color applied on hover for non-active triggers (no bg change, so the active paper stays distinct).</td>
         </tr>
         <tr>
-          <td><code>--tabs-trigger-active-bg</code></td>
+          <td><code>--tabs-trigger-bg-active</code></td>
           <td>Background of the active trigger. Highlight tint matches <code>.toggle</code>'s active member paint, so a tab strip baselines with a toggle-group cluster on the same surface.</td>
         </tr>
         <tr>
-          <td><code>--tabs-trigger-active-color</code></td>
+          <td><code>--tabs-trigger-color-active</code></td>
           <td>Active trigger text color, paired with the highlight bg.</td>
         </tr>
         <tr>
-          <td><code>--tabs-trigger-active-border-color</code></td>
-          <td>Active border color. Defaults to match the bg for a clean solid chip with no visible rim. Rest triggers carry a transparent 1px border so the active border doesn't reflow the layout. Override to add a distinct ring.</td>
+          <td><code>--tabs-trigger-border-color-active</code></td>
+          <td>Active border color. Defaults to match the bg for a clean solid chip with no visible rim. Rest triggers carry a transparent hairline border so the active border doesn't reflow the layout. Override to add a distinct ring.</td>
         </tr>
       </tbody>
     </table>

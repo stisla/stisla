@@ -40,44 +40,42 @@
 // between toasts; each toast re-enables pointer events on itself.
 
 .toast-region {
-  --toast-region-inset: 1rem;
-  --toast-region-gap: 1rem;
-  --toast-region-max-width: 24rem;
-  --toast-region-z-index: 1090;
-
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing on the base; the
+  // placement rules read --toast-region-inset with the default repeated. z-index
+  // kept literal (hand-tuned overlay stacking).
   position: fixed;
-  z-index: var(--toast-region-z-index);
+  z-index: var(--toast-region-z-index, 1090);
   display: flex;
   flex-direction: column;
-  gap: var(--toast-region-gap);
-  max-width: var(--toast-region-max-width);
-  width: calc(100% - 2 * var(--toast-region-inset));
+  gap: var(--toast-region-gap, #{space(4)});
+  max-width: var(--toast-region-max-width, 24rem);
+  width: calc(100% - 2 * var(--toast-region-inset, #{space(4)}));
   pointer-events: none;
 
   // Default placement: top-end (mirrors Sonner, common dashboard corner).
-  inset-block-start: var(--toast-region-inset);
-  inset-inline-end: var(--toast-region-inset);
+  inset-block-start: var(--toast-region-inset, #{space(4)});
+  inset-inline-end: var(--toast-region-inset, #{space(4)});
 }
 
 .toast-region--top-start {
-  inset-block-start: var(--toast-region-inset);
+  inset-block-start: var(--toast-region-inset, #{space(4)});
   inset-block-end: auto;
-  inset-inline-start: var(--toast-region-inset);
+  inset-inline-start: var(--toast-region-inset, #{space(4)});
   inset-inline-end: auto;
 }
 
 .toast-region--top-center {
-  inset-block-start: var(--toast-region-inset);
+  inset-block-start: var(--toast-region-inset, #{space(4)});
   inset-block-end: auto;
   inset-inline: 0;
   margin-inline: auto;
 }
 
 .toast-region--top-end {
-  inset-block-start: var(--toast-region-inset);
+  inset-block-start: var(--toast-region-inset, #{space(4)});
   inset-block-end: auto;
   inset-inline-start: auto;
-  inset-inline-end: var(--toast-region-inset);
+  inset-inline-end: var(--toast-region-inset, #{space(4)});
   align-items: end;
 }
 
@@ -85,15 +83,15 @@
 // bottom edge (closest to viewport corner) and older toasts push up.
 .toast-region--bottom-start {
   inset-block-start: auto;
-  inset-block-end: var(--toast-region-inset);
-  inset-inline-start: var(--toast-region-inset);
+  inset-block-end: var(--toast-region-inset, #{space(4)});
+  inset-inline-start: var(--toast-region-inset, #{space(4)});
   inset-inline-end: auto;
   flex-direction: column-reverse;
 }
 
 .toast-region--bottom-center {
   inset-block-start: auto;
-  inset-block-end: var(--toast-region-inset);
+  inset-block-end: var(--toast-region-inset, #{space(4)});
   inset-inline: 0;
   margin-inline: auto;
   flex-direction: column-reverse;
@@ -101,60 +99,19 @@
 
 .toast-region--bottom-end {
   inset-block-start: auto;
-  inset-block-end: var(--toast-region-inset);
+  inset-block-end: var(--toast-region-inset, #{space(4)});
   inset-inline-start: auto;
-  inset-inline-end: var(--toast-region-inset);
+  inset-inline-end: var(--toast-region-inset, #{space(4)});
   flex-direction: column-reverse;
   align-items: end;
 }
 
 // === Toast ===============================================================
 .toast {
-  // Geometry — max-width 21.875rem (350px) matches BS5 snapshot.
-  --toast-min-width: 18rem;
-  --toast-max-width: 21.875rem;
-  --toast-padding: 1rem;
-  --toast-radius: var(--st-toast-radius, var(--st-radius-lg));
-  --toast-z-index: 1090;
-
-  // Surface — snapshot routed bg through --bs-surface and forced an
-  // OPAQUE --bs-border-color (not the translucent variant). Preserving.
-  --toast-bg: var(--st-surface);
-  --toast-color: var(--st-foreground);
-  --toast-border-color: var(--st-border);
-  --toast-shadow: var(--st-toast-shadow, var(--st-shadow));
-
-  // Column gap (icon | content | close) + vertical gap inside the
-  // middle .toast__content stack.
-  --toast-column-gap: 0.75rem;
-  --toast-content-gap: 0.25rem;
-
-  // Header — title row.
-  --toast-header-font-weight: 600;
-  --toast-header-font-size: 0.875rem;
-
-  // Body — description.
-  --toast-body-color: var(--st-muted-foreground);
-  --toast-body-font-size: 0.875rem;
-
-  // Icon — single intent var (modifiers override this and nothing else).
-  --toast-icon-size: 1.125rem;
-  --toast-icon-color: var(--st-muted-foreground);
-
-  // Close chip — sits at the trailing edge of .toast__action; small
-  // ghost-button shape (smaller than dialog's 1.75rem since toast is
-  // non-blocking).
-  --toast-close-size: 1.5rem;
-  --toast-close-color: var(--st-muted-foreground);
-  --toast-close-color-hover: var(--st-foreground);
-  --toast-close-bg-hover: var(--st-accent);
-
-  // Action + Motion.
-  --toast-action-gap: 0.25rem;
-  --toast-transition-duration: 0.2s;
-  // Direction the toast slides from on entry. Bottom regions override
-  // so the motion matches the stack growth direction.
-  --toast-enter-transform: translateY(-0.5rem);
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing on the base, so a
+  // scope / inline retunes any of them; the icon / header / body / close rules
+  // read them with the same defaults. Radius chains to the radius scale,   // shadow to the shadow scale. Intent modifiers set --toast-icon-color;
+  // bottom-region modifiers set --toast-enter-transform. z-index kept literal.
 
   // Base = displayed. Static demos in docs (`data-state="open"` inline,
   // no region) read straight from this rule and render without a fade.
@@ -163,27 +120,27 @@
   // region doesn't push the next-to-open one down the page. The
   // `allow-discrete` on `display` holds the grid value through the close
   // fade-out so the transition can play before layout collapses.
-  z-index: var(--toast-z-index);
+  z-index: var(--toast-z-index, 1090);
   pointer-events: auto;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: start;
-  column-gap: var(--toast-column-gap);
+  column-gap: var(--toast-column-gap, #{space(3)});
   width: 100%;
-  min-width: var(--toast-min-width);
-  max-width: var(--toast-max-width);
-  padding: var(--toast-padding);
-  background-color: var(--toast-bg);
-  color: var(--toast-color);
-  border: var(--st-border-width) solid var(--toast-border-color);
-  border-radius: var(--toast-radius);
-  box-shadow: var(--toast-shadow);
+  min-width: var(--toast-min-width, 18rem);
+  max-width: var(--toast-max-width, 21.875rem);
+  padding: var(--toast-padding-block, #{space(4)}) var(--toast-padding-inline, #{space(4)});
+  background-color: var(--toast-bg, var(--st-surface));
+  color: var(--toast-color, var(--st-foreground));
+  border: var(--toast-border-width, var(--st-border-width)) solid var(--toast-border-color, var(--st-border));
+  border-radius: var(--toast-radius, #{radius(lg)});
+  box-shadow: var(--toast-shadow, #{shadow(md)});
   opacity: 1;
   transform: none;
   transition:
-    opacity var(--toast-transition-duration) ease,
-    transform var(--toast-transition-duration) ease,
-    display var(--toast-transition-duration) ease allow-discrete;
+    opacity var(--toast-transition-duration, 0.2s) ease,
+    transform var(--toast-transition-duration, 0.2s) ease,
+    display var(--toast-transition-duration, 0.2s) ease allow-discrete;
 }
 
 // Bottom-region toasts slide in from below instead of above so the
@@ -209,7 +166,7 @@
 .toast[data-state="closed"] {
   display: none;
   opacity: 0;
-  transform: var(--toast-enter-transform);
+  transform: var(--toast-enter-transform, translateY(-0.5rem));
 }
 
 // Region-mounted open toasts get an entrance fade via `@starting-style`,
@@ -219,7 +176,7 @@
 .toast-region > .toast[data-state="open"] {
   @starting-style {
     opacity: 0;
-    transform: var(--toast-enter-transform);
+    transform: var(--toast-enter-transform, translateY(-0.5rem));
   }
 }
 
@@ -235,9 +192,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--toast-icon-size);
-  height: var(--toast-icon-size);
-  color: var(--toast-icon-color);
+  width: var(--toast-icon-size, 1.125rem);
+  height: var(--toast-icon-size, 1.125rem);
+  color: var(--toast-icon-color, var(--st-muted-foreground));
   line-height: 1;
   flex-shrink: 0;
 
@@ -254,7 +211,7 @@
   grid-column: 2;
   display: flex;
   flex-direction: column;
-  gap: var(--toast-content-gap);
+  gap: var(--toast-content-gap, #{space(1)});
   min-width: 0;
 }
 
@@ -262,10 +219,10 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: var(--toast-header-font-size);
-  font-weight: var(--toast-header-font-weight);
+  font-size: var(--toast-header-font-size, #{text(sm)});
+  font-weight: var(--toast-header-font-weight, #{weight(semibold)});
   line-height: 1.5;
-  color: var(--toast-color);
+  color: var(--toast-color, var(--st-foreground));
   min-width: 0;
 }
 
@@ -278,16 +235,16 @@
 }
 
 .toast__body {
-  font-size: var(--toast-body-font-size);
+  font-size: var(--toast-body-font-size, #{text(sm)});
   line-height: 1.5;
-  color: var(--toast-body-color);
+  color: var(--toast-body-color, var(--st-muted-foreground));
   min-width: 0;
 }
 
 .toast__action {
   display: flex;
   align-items: center;
-  gap: var(--toast-action-gap);
+  gap: var(--toast-action-gap, #{space(1)});
 }
 
 // Col 3 — close chip. Anchors top-right of the row; never inflates
@@ -299,10 +256,10 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: var(--toast-close-size);
-  height: var(--toast-close-size);
+  width: var(--toast-close-size, #{space(6)});
+  height: var(--toast-close-size, #{space(6)});
   padding: 0;
-  color: var(--toast-close-color);
+  color: var(--toast-close-color, var(--st-muted-foreground));
   background-color: transparent;
   border: 0;
   border-radius: 50%;
@@ -312,15 +269,15 @@
     color 0.15s ease;
 
   &:hover {
-    color: var(--toast-close-color-hover);
-    background-color: var(--toast-close-bg-hover);
+    color: var(--toast-close-color-hover, var(--st-foreground));
+    background-color: var(--toast-close-bg-hover, var(--st-accent));
   }
 
   &:focus-visible {
     outline: 2px solid var(--st-ring);
     outline-offset: 2px;
-    color: var(--toast-close-color-hover);
-    background-color: var(--toast-close-bg-hover);
+    color: var(--toast-close-color-hover, var(--st-foreground));
+    background-color: var(--toast-close-bg-hover, var(--st-accent));
   }
 
   > svg,

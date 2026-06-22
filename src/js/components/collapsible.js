@@ -35,8 +35,8 @@
 //              document for [data-stisla-collapsible-trigger="<el.id>"].
 //   open — initial state if data-state isn't already set.
 //   duration — transition duration override in ms. When set, mirrors the
-//              value to inline --collapsible-duration so CSS and JS use
-//              the same number. Null reads --collapsible-duration from
+//              value to inline --collapsible-transition-duration so CSS and JS use
+//              the same number. Null reads --collapsible-transition-duration from
 //              the element's computed style and falls back to 200ms.
 //
 // Events (bubbling, detail: { collapsible: this }):
@@ -81,7 +81,7 @@ export class Collapsible extends Component {
     // and the JS fallback timeout agree on the value.
     if (typeof this.opts.duration === 'number') {
       this.el.style.setProperty(
-        '--collapsible-duration',
+        '--collapsible-transition-duration',
         `${this.opts.duration}ms`,
       );
     }
@@ -206,7 +206,7 @@ export class Collapsible extends Component {
     if (this.el) {
       this.el.classList.remove(COLLAPSING_CLASS);
       this.el.style.height = '';
-      this.el.style.removeProperty('--collapsible-duration');
+      this.el.style.removeProperty('--collapsible-transition-duration');
     }
     super.destroy();
     this._stateEl = null;
@@ -250,7 +250,7 @@ export class Collapsible extends Component {
   _duration() {
     if (typeof this.opts.duration === 'number') return this.opts.duration;
     const computed = getComputedStyle(this.el).getPropertyValue(
-      '--collapsible-duration',
+      '--collapsible-transition-duration',
     );
     if (computed) {
       const parsed = parseFloat(computed);

@@ -78,8 +78,8 @@ edge.
 ## 3. Modifiers
 
 ```
-.sidebar--sm                             button height 2rem, tighter group gap
-.sidebar--lg                             button height 2.5rem, looser group gap
+.sidebar--compact                             button height 2rem, tighter group gap
+.sidebar--roomy                             button height 2.5rem, looser group gap
 .sidebar__item-action--reveal            action fades in on row hover / focus
 ```
 
@@ -215,24 +215,24 @@ name and its surface stay the same.
 | --- | --- |
 | `--sidebar-bg` | Panel background fill. |
 | `--sidebar-color` | Default text colour inside the panel. |
-| `--sidebar-padding-y` | Vertical padding on header and footer. |
-| `--sidebar-padding-x` | Inline padding on header, content, and footer. |
+| `--sidebar-padding-block` | Vertical padding on header and footer. |
+| `--sidebar-padding-inline` | Inline padding on header, content, and footer. |
 | `--sidebar-gap` | Vertical gap between header, content, and footer. |
 | `--sidebar-width` | Opt-in expanded panel width. Unset = panel sizes externally. |
 | `--sidebar-width-collapsed` | Opt-in rail width when `.is-collapsed` applies. |
 | `--sidebar-brand-color` | Brand text and icon colour. |
 | `--sidebar-brand-icon-size` | Square size of the brand icon. |
 | `--sidebar-brand-gap` | Gap between brand icon and brand text. |
-| `--sidebar-button-height` | Hard height of `.sidebar__button`. Multiplied by `--st-density`. |
-| `--sidebar-button-padding-x` | Inline padding on `.sidebar__button`. Load-bearing for rail-mode icon centring. |
+| `--sidebar-button-height` | Hard height of `.sidebar__button`. |
+| `--sidebar-button-padding-inline` | Inline padding on `.sidebar__button`. Load-bearing for rail-mode icon centring. |
 | `--sidebar-button-radius` | Corner radius of `.sidebar__button`. |
 | `--sidebar-button-gap` | Gap between icon and label inside a row. |
 | `--sidebar-button-font-weight` | Row text weight. |
 | `--sidebar-button-color` | Row text colour (rest). |
-| `--sidebar-button-hover-bg` | Row background on hover. |
-| `--sidebar-button-hover-color` | Row text colour on hover. |
-| `--sidebar-button-active-bg` | Row background when current / active. |
-| `--sidebar-button-active-color` | Row text colour when current / active. |
+| `--sidebar-button-bg-hover` | Row background on hover. |
+| `--sidebar-button-color-hover` | Row text colour on hover. |
+| `--sidebar-button-bg-active` | Row background when current / active. |
+| `--sidebar-button-color-active` | Row text colour when current / active. |
 | `--sidebar-button-icon-size` | Square size of a row icon. |
 | `--sidebar-button-icon-color` | Row icon colour (rest). |
 | `--sidebar-item-action-size` | Square size of the trailing action slot. |
@@ -241,16 +241,17 @@ name and its surface stay the same.
 | `--sidebar-group-title-font-weight` | Group title weight. |
 | `--sidebar-group-title-color` | Group title and action colour. |
 | `--sidebar-submenu-border-color` | Colour of the guide line under a submenu. |
-| `--sidebar-submenu-padding-start` | Inline padding inside the submenu. |
-| `--sidebar-submenu-margin-start` | Inline margin on the submenu — aligns the guide line on the parent icon column. |
-| `--sidebar-transition` | Duration / easing of coordinated rail-mode transitions. |
+| `--sidebar-submenu-padding-inline-start` | Inline padding inside the submenu. |
+| `--sidebar-submenu-margin-inline-start` | Inline margin on the submenu — aligns the guide line on the parent icon column. |
+| `--sidebar-transition-duration` | Duration of coordinated rail-mode transitions. |
 
 **Global tokens consumed.**
 
 `--st-foreground`, `--st-muted-foreground`, `--st-accent`,
 `--st-accent-foreground`, `--st-highlight`, `--st-highlight-foreground`,
-`--st-border`, `--st-radius-sm`, `--st-density`, `--st-ring` (focus ring
-on `.sidebar__button`).
+`--st-border`, `--st-border-width`, `--st-radius-sm`, `--st-spacing`
+(spacing base behind `space()` paddings, gaps, and button height),
+`--st-ring` (focus ring on `.sidebar__button`).
 
 **Dark-mode flips.** None component-local — the sidebar inherits the
 theme's surface and accent tokens. Active and hover rows track whichever

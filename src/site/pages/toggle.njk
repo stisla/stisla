@@ -46,12 +46,12 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Add <code>.toggle--sm</code> or <code>.toggle--lg</code> to match the <code>.btn</code> size cadence.</p>
+    <p>Add <code>.toggle--compact</code> or <code>.toggle--roomy</code> to match the <code>.btn</code> size cadence.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-wrap gap-2 align-items-center">
-      <button type="button" class="toggle toggle--sm" data-stisla-toggle aria-pressed="true">Bold</button>
+      <button type="button" class="toggle toggle--compact" data-stisla-toggle aria-pressed="true">Bold</button>
       <button type="button" class="toggle" data-stisla-toggle aria-pressed="true">Bold</button>
-      <button type="button" class="toggle toggle--lg" data-stisla-toggle aria-pressed="true">Bold</button>
+      <button type="button" class="toggle toggle--roomy" data-stisla-toggle aria-pressed="true">Bold</button>
     </div>
     {% endcall %}
   </section>
@@ -76,7 +76,7 @@
 
   <section>
     <h2>Icon-round</h2>
-    <p>Add <code>.toggle--icon-round</code> alongside <code>.toggle--icon-only</code> for a circular silhouette. Same opt-out as <code>.btn--icon-round</code>. Radius forces 9999px and ignores <code>--st-radius</code>.</p>
+    <p>Add <code>.toggle--icon-round</code> alongside <code>.toggle--icon-only</code> for a circular silhouette. Same opt-out as <code>.btn--icon-round</code>. The radius forces a fully pilled corner.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-wrap gap-2 align-items-center">
       <button type="button" class="toggle toggle--icon-only toggle--icon-round" data-stisla-toggle aria-pressed="false" aria-label="Like">
@@ -114,7 +114,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Twelve variables retune <code>.toggle</code>. Geometry mirrors <code>.btn</code>. Surface variables follow the interactional trio (rest, accent hover, highlight active). It's the same vocabulary sidebar, list-group, table and pagination use for selected state.</p>
+    <p>Sixteen variables retune <code>.toggle</code>. Geometry mirrors <code>.btn</code>. Surface variables follow the interactional trio (rest, accent hover, highlight active). It's the same vocabulary sidebar, list-group, table and pagination use for selected state.</p>
     <table>
       <thead>
         <tr>
@@ -129,11 +129,15 @@
         </tr>
         <tr>
           <td><code>--toggle-height</code></td>
-          <td>Hard single-line height. Bakes in the density-aware growth formula. sm and lg reassign this.</td>
+          <td>Hard single-line height. The compact and roomy modifiers reassign this.</td>
         </tr>
         <tr>
-          <td><code>--toggle-padding-x</code></td>
-          <td>Horizontal padding; sm and lg reassign this. Density multiplies once.</td>
+          <td><code>--toggle-padding-inline</code></td>
+          <td>Horizontal padding; the compact and roomy modifiers reassign this.</td>
+        </tr>
+        <tr>
+          <td><code>--toggle-gap</code></td>
+          <td>Space between an icon and its label inside the chip.</td>
         </tr>
         <tr>
           <td><code>--toggle-font-size</code></td>
@@ -156,20 +160,32 @@
           <td>Rim color.</td>
         </tr>
         <tr>
-          <td><code>--toggle-hover-bg</code></td>
+          <td><code>--toggle-border-width</code></td>
+          <td>Rim thickness.</td>
+        </tr>
+        <tr>
+          <td><code>--toggle-bg-hover</code></td>
           <td>Hover fill (transient).</td>
         </tr>
         <tr>
-          <td><code>--toggle-active-bg</code></td>
+          <td><code>--toggle-color-hover</code></td>
+          <td>Hover text color.</td>
+        </tr>
+        <tr>
+          <td><code>--toggle-bg-active</code></td>
           <td>Active fill (persistent).</td>
         </tr>
         <tr>
-          <td><code>--toggle-active-color</code></td>
+          <td><code>--toggle-color-active</code></td>
           <td>Active text color.</td>
         </tr>
         <tr>
-          <td><code>--toggle-active-border-color</code></td>
+          <td><code>--toggle-border-color-active</code></td>
           <td>Active rim. Default matches the bg so the chip reads as a clean solid fill. Override it for a distinct rim.</td>
+        </tr>
+        <tr>
+          <td><code>--toggle-ring</code></td>
+          <td>Focus outline color.</td>
         </tr>
       </tbody>
     </table>

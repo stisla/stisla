@@ -125,7 +125,7 @@
     <h2>Item, inline</h2>
     <p>Add <code>.field--inline</code> on the field root to lay items on one row with wrap. The modifier flips the root to <code>flex-direction: row</code> and bumps the gap so neighbours don't crowd.</p>
     {% call ui.demo() %}
-    <div class="field field--inline">
+    <div class="field field--inline w-auto">
       <div class="field__item">
         <input class="radio" type="radio" name="fieldItemInline" id="fieldItemInline1" checked />
         <label class="field__label" for="fieldItemInline1">Daily</label>
@@ -182,7 +182,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Nine variables retune <code>.field</code> and its parts without touching component CSS. Override on the field itself, on a parent scope, or on <code>:root</code>.</p>
+    <p>These variables retune <code>.field</code> and its parts without touching component CSS. Override on the field itself, on a parent scope, or on <code>:root</code>.</p>
     <table>
       <thead>
         <tr>
@@ -224,7 +224,7 @@
           <td>Horizontal gap between input and label inside an item</td>
         </tr>
         <tr>
-          <td><code>--field-item-padding-y</code></td>
+          <td><code>--field-item-padding-block</code></td>
           <td>Vertical breathing room around an item row</td>
         </tr>
         <tr>

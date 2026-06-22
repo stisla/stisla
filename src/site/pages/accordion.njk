@@ -302,7 +302,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Override any variable on the element, on a parent scope, or on <code>:root</code>, and the cascade scopes the change. Geometry values multiply through <code>var(--st-density)</code>, so the global density knob rescales the whole accordion.</p>
+    <p>Override any variable on the element, on a parent scope, or on <code>:root</code>, and the cascade scopes the change.</p>
     <h3>Geometry</h3>
     <table>
       <thead>
@@ -314,11 +314,15 @@
       <tbody>
         <tr>
           <td><code>--accordion-radius</code></td>
-          <td>Outer frame radius. Large-surface tier, so it picks up <code>--st-radius-lg</code> (16 px under default density). The inner item radius derives concentrically. With the 4 px wrapper inset, the inner chip lands at 12 px, matching the standalone <code>--st-radius</code> default.</td>
+          <td>Outer frame radius. The inner item radius derives concentrically by subtracting the wrapper inset.</td>
         </tr>
         <tr>
-          <td><code>--accordion-padding</code></td>
-          <td>Inset between frame edge and items. Drives the concentric inner radius.</td>
+          <td><code>--accordion-padding-block</code></td>
+          <td>Top and bottom inset between frame edge and items. Drives the concentric inner radius.</td>
+        </tr>
+        <tr>
+          <td><code>--accordion-padding-inline</code></td>
+          <td>Left and right inset between frame edge and items.</td>
         </tr>
         <tr>
           <td><code>--accordion-gap</code></td>
@@ -381,12 +385,12 @@
       </thead>
       <tbody>
         <tr>
-          <td><code>--accordion-header-padding-y</code></td>
+          <td><code>--accordion-header-padding-block</code></td>
           <td>Vertical padding inside the trigger row.</td>
         </tr>
         <tr>
-          <td><code>--accordion-header-padding-x</code></td>
-          <td>Horizontal padding inside the trigger row. Pairs with the 4 px frame inset for 20 px from frame edge to content, which aligns with card content padding.</td>
+          <td><code>--accordion-header-padding-inline</code></td>
+          <td>Horizontal padding inside the trigger row. Pairs with the frame inset so content aligns with card content padding.</td>
         </tr>
         <tr>
           <td><code>--accordion-header-font-size</code></td>
@@ -405,12 +409,12 @@
           <td>Trigger background at rest.</td>
         </tr>
         <tr>
-          <td><code>--accordion-header-hover-bg</code></td>
+          <td><code>--accordion-header-bg-hover</code></td>
           <td>Trigger background under hover. Only paints when the item is closed; the open chip stays flat.</td>
         </tr>
         <tr>
           <td><code>--accordion-header-divider-color</code></td>
-          <td>1 px line between header and body when the item is open.</td>
+          <td>Hairline between header and body when the item is open.</td>
         </tr>
       </tbody>
     </table>
@@ -449,11 +453,11 @@
       </thead>
       <tbody>
         <tr>
-          <td><code>--accordion-body-padding-y</code></td>
+          <td><code>--accordion-body-padding-block</code></td>
           <td>Vertical padding inside the body region.</td>
         </tr>
         <tr>
-          <td><code>--accordion-body-padding-x</code></td>
+          <td><code>--accordion-body-padding-inline</code></td>
           <td>Horizontal padding inside the body region. Matches header padding so the body content lines up flush with the trigger label.</td>
         </tr>
         <tr>

@@ -16,23 +16,24 @@
 // long-form copy).
 
 .kbd {
-  --kbd-padding-y: calc(0.1875rem * var(--st-density));
-  --kbd-padding-x: calc(0.5rem    * var(--st-density));
-  --kbd-radius:    var(--st-kbd-radius, var(--st-radius-sm));
-  --kbd-rim:       color-mix(in oklch, var(--st-neutral) 85%, var(--st-muted-foreground));
-
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing on the base, so a
+  // scope / inline retunes any of these. --kbd-rim is read twice (border +
+  // key-cap shadow), so its color-mix default repeats.
   display: inline-block;
-  padding: var(--kbd-padding-y) var(--kbd-padding-x);
+  padding-block: var(--kbd-padding-block, #{space(0.75)});  // 0.1875rem
+  padding-inline: var(--kbd-padding-inline, #{space(2)});   // 0.5rem
   font-family: var(--st-font-mono);
-  font-size: 0.8125rem;
-  font-weight: 500;
+  font-size: var(--kbd-font-size, 0.8125rem);               // 13px, off-scale
+  font-weight: var(--kbd-font-weight, #{weight(medium)});
   line-height: 1;
-  color: var(--st-neutral-foreground);
-  background: var(--st-neutral);
-  border: var(--st-border-width) solid var(--kbd-rim);
-  border-radius: var(--kbd-radius);
+  color: var(--kbd-color, var(--st-neutral-foreground));
+  background: var(--kbd-bg, var(--st-neutral));
+  border: var(--st-border-width) solid
+    var(--kbd-rim, color-mix(in oklch, var(--st-neutral) 85%, var(--st-muted-foreground)));
+  border-radius: var(--kbd-radius, #{radius(sm)});
   // Bottom edge in the rim color so the chip reads as a key cap.
-  box-shadow: 0 1px 0 var(--kbd-rim);
+  box-shadow: 0 1px 0
+    var(--kbd-rim, color-mix(in oklch, var(--st-neutral) 85%, var(--st-muted-foreground)));
 }
 
 // When .kbd wraps nested .kbd elements (combo shortcuts), the outer

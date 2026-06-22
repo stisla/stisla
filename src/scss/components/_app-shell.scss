@@ -37,22 +37,14 @@
 // { dismissOnBackdrop: false, dismissOnEscape: false }.
 
 .app-shell {
-  --app-shell-bg:                      var(--st-background);
-  --app-shell-color:                   var(--st-foreground);
-  --app-shell-main-bg:                 var(--st-background);
-  --app-shell-main-color:              var(--st-foreground);
-  --app-shell-sidebar-width:           16rem;
-  --app-shell-sidebar-width-collapsed: 4.25rem;
-  --app-shell-sidebar-mobile-bg:       var(--st-surface);
-  --app-shell-sidebar-mobile-shadow:   2px 0 8px -2px oklch(0 0 0 / 0.15);
-  --app-shell-sidebar-z:               1030;
-  --app-shell-backdrop-bg:             oklch(0 0 0 / 0.5);
-  --app-shell-transition-duration:     200ms;
-
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing on the base, so a
+  // scope / inline retunes any of them; the layout rules read them with the
+  // same defaults (sidebar-z-index / transition-duration read in several
+  // places, so their fallbacks repeat).
   display: flex;
   min-height: 100vh;
-  background-color: var(--app-shell-bg);
-  color: var(--app-shell-color);
+  background-color: var(--app-shell-bg, var(--st-background));
+  color: var(--app-shell-color, var(--st-foreground));
 }
 
 // Top-bar layout — a direct .navbar child means the shell stacks the
@@ -75,9 +67,9 @@
 // Sidebar positioning — width owned by the shell, not the panel.
 .app-shell > .sidebar,
 .app-shell__body > .sidebar {
-  width: var(--app-shell-sidebar-width);
+  width: var(--app-shell-sidebar-width, 16rem);
   flex-shrink: 0;
-  transition: width var(--app-shell-transition-duration) ease;
+  transition: width var(--app-shell-transition-duration, 200ms) ease;
 }
 
 // Main column — flex column so an optional navbar inside main and an
@@ -90,8 +82,8 @@
   flex-direction: column;
   flex: 1 1 auto;
   min-width: 0;
-  background-color: var(--app-shell-main-bg);
-  color: var(--app-shell-main-color);
+  background-color: var(--app-shell-main-bg, var(--st-background));
+  color: var(--app-shell-main-color, var(--st-foreground));
 }
 
 // === Desktop collapsed (rail) state =====================================
@@ -99,7 +91,11 @@
 // the internal rail visuals — pair these two classes on the same toggle.
 .app-shell.is-sidebar-collapsed > .sidebar,
 .app-shell.is-sidebar-collapsed > .app-shell__body > .sidebar {
-  width: var(--app-shell-sidebar-width-collapsed);
+  // 3.625rem = 56px rail (square 36px cell + 2×10px trimmed gutter) + ~2px
+  // for the panel border. Matches the sidebar's collapsed rail-width recipe
+  // (see _sidebar.scss §Rail), which trims --sidebar-padding-inline so the
+  // icon cell isn't squeezed by the roomy expanded gutter.
+  width: var(--app-shell-sidebar-width-collapsed, 3.625rem);
 }
 
 // === Mobile drawer state ================================================
@@ -117,10 +113,10 @@
     position: fixed;
     inset-block: 0;
     inset-inline-start: 0;
-    z-index: var(--app-shell-sidebar-z);
+    z-index: var(--app-shell-sidebar-z-index, 1030);
     // Floating drawer needs an opaque surface (the sidebar component's own
     // bg defaults to transparent for the desktop inline-in-shell layout).
-    background-color: var(--app-shell-sidebar-mobile-bg);
+    background-color: var(--app-shell-sidebar-mobile-bg, var(--st-surface));
     transform: translateX(-100%);
     // Shadow cast inline-end-ward — lives only on the visible state so
     // it doesn't peek into the viewport while the panel is translated
@@ -128,9 +124,9 @@
     // halo at the anchored edge). Fades in with the slide via the
     // transition list.
     transition:
-      transform  var(--app-shell-transition-duration) ease,
-      box-shadow var(--app-shell-transition-duration) ease,
-      width      var(--app-shell-transition-duration) ease;
+      transform var(--app-shell-transition-duration, 200ms) ease,
+      box-shadow var(--app-shell-transition-duration, 200ms) ease,
+      width var(--app-shell-transition-duration, 200ms) ease;
   }
 
   // RTL flip — the panel anchors at the visual right edge in dir="rtl",
@@ -144,7 +140,7 @@
   .app-shell.is-sidebar-visible > .sidebar,
   .app-shell.is-sidebar-visible > .app-shell__body > .sidebar {
     transform: translateX(0);
-    box-shadow: var(--app-shell-sidebar-mobile-shadow);
+    box-shadow: var(--app-shell-sidebar-mobile-shadow, 2px 0 8px -2px oklch(0 0 0 / 0.15));
   }
 
   // Backdrop — pseudo-element on the shell, one z-index below the
@@ -156,11 +152,11 @@
     content: "";
     position: fixed;
     inset: 0;
-    z-index: calc(var(--app-shell-sidebar-z) - 1);
-    background-color: var(--app-shell-backdrop-bg);
+    z-index: calc(var(--app-shell-sidebar-z-index, 1030) - 1);
+    background-color: var(--app-shell-backdrop-bg, oklch(0 0 0 / 0.5));
     opacity: 0;
     pointer-events: none;
-    transition: opacity var(--app-shell-transition-duration) ease;
+    transition: opacity var(--app-shell-transition-duration, 200ms) ease;
   }
 
   .app-shell.is-sidebar-visible::before {

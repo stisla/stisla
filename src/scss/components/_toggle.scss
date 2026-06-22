@@ -37,69 +37,41 @@
 // rims, parent owns the frame) — see _toggle-group.scss for the overrides.
 
 .toggle {
-  // Geometry — matches .btn cadence so a standalone .toggle sits in the
-  // same rhythm as a standalone .btn next to it.
-  --toggle-radius:        var(--st-toggle-radius, var(--st-radius));
-  --toggle-height:        calc(2.25rem + 0.75rem * (var(--st-density) - 1));   // 36 @ 1 → 39 @ 1.25
-  --toggle-padding-x:     calc(0.75rem * var(--st-density));
-  --toggle-font-size:     0.875rem;
-  --toggle-font-weight:   500;
-  --toggle-gap:           0.5rem;                           // icon ↔ label
-
-  // Surface — outline-neutral rest.
-  --toggle-bg:                  transparent;
-  --toggle-color:               var(--st-foreground);
-  --toggle-border-color:        var(--st-border);
-
-  // Hover — accent fill (transient, neutral). Rim stays --st-border.
-  --toggle-hover-bg:            var(--st-accent);
-  --toggle-hover-color:         var(--st-accent-foreground);
-
-  // Active — highlight bg, border matches bg so the chip reads as a
-  // clean solid fill with no visible rim. The earlier foreground-mix
-  // border ghosted around the fill in dark mode; matching the bg
-  // keeps the active chip cohesive across both themes. Consumers who
-  // want a distinct active rim override --toggle-active-border-color.
-  --toggle-active-bg:           var(--st-highlight);
-  --toggle-active-color:        var(--st-highlight-foreground);
-  --toggle-active-border-color: var(--toggle-active-bg);
-
-  // Focus
-  --toggle-ring:                var(--st-ring);
-
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing on the base, so a
+  // scope / inline retunes any of them. Geometry matches .btn cadence.
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--toggle-gap);
-  // Rigid shape, content floats inside. Inside a .toggle-group, the
-  // group overrides height: 100% so children stretch to fill the locked
-  // outer.
-  height: var(--toggle-height);
-  padding: 0 var(--toggle-padding-x);
+  gap: var(--toggle-gap, #{space(2)});
+  // Rigid shape, content floats inside. Inside a .toggle-group, the group
+  // overrides height: 100% so children stretch to fill the locked outer.
+  height: var(--toggle-height, #{space(9)});                   // 2.25rem
+  padding-block: 0;
+  padding-inline: var(--toggle-padding-inline, #{space(3)});   // 0.75rem
   font-family: inherit;
-  font-size: var(--toggle-font-size);
-  font-weight: var(--toggle-font-weight);
+  font-size: var(--toggle-font-size, #{text(sm)});
+  font-weight: var(--toggle-font-weight, #{weight(medium)});
   line-height: 1;
-  color: var(--toggle-color);
-  background: var(--toggle-bg);
-  border: var(--st-border-width) solid var(--toggle-border-color);
-  border-radius: var(--toggle-radius);
+  color: var(--toggle-color, var(--st-foreground));
+  background: var(--toggle-bg, transparent);
+  border: var(--toggle-border-width, var(--st-border-width)) solid var(--toggle-border-color, var(--st-border));
+  border-radius: var(--toggle-radius, #{radius(md)});
   cursor: pointer;
   user-select: none;
   text-decoration: none;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: background-color .12s ease, border-color .12s ease,
-              color .12s ease;
+  transition: background-color #{duration(fast)} ease, border-color #{duration(fast)} ease,
+              color #{duration(fast)} ease;
 
   &:hover {
-    background: var(--toggle-hover-bg);
-    color: var(--toggle-hover-color);
+    background: var(--toggle-bg-hover, var(--st-accent));
+    color: var(--toggle-color-hover, var(--st-accent-foreground));
   }
 
   &:focus-visible {
-    outline: 2px solid var(--toggle-ring);
+    outline: 2px solid var(--toggle-ring, var(--st-ring));
     outline-offset: 2px;
   }
 
@@ -116,13 +88,13 @@
 .toggle[aria-pressed="true"],
 .toggle[data-state="active"],
 .toggle-input:checked + .toggle {
-  background: var(--toggle-active-bg);
-  color: var(--toggle-active-color);
-  border-color: var(--toggle-active-border-color);
+  background: var(--toggle-bg-active, var(--st-highlight));
+  color: var(--toggle-color-active, var(--st-highlight-foreground));
+  border-color: var(--toggle-border-color-active, var(--toggle-bg-active, var(--st-highlight)));
 }
 
 // Icons inside .toggle scale to its font-size. 1em (not 1rem) so the icon
-// shrinks with --sm / grows with --lg automatically.
+// shrinks with --compact / grows with --roomy automatically.
 .toggle :is(svg, i, .toggle__icon) {
   width: 1em;
   height: 1em;
@@ -134,32 +106,32 @@
 }
 
 // === Sizes ============================================================
-// Match .btn--sm / .btn--lg cadence (28 / 44 px under default density)
+// Match .btn--compact / .btn--roomy cadence (28 / 44 px under default density)
 // so a sized .toggle baselines with the rest of the v3 control family.
-.toggle--sm {
-  --toggle-radius:    var(--st-toggle-radius, var(--st-radius-sm));
-  --toggle-height:    calc(1.75rem + 0.625rem * (var(--st-density) - 1));  // 28 @ 1 → 30.5 @ 1.25
-  --toggle-padding-x: calc(0.625rem * var(--st-density));
-  --toggle-font-size: 0.8125rem;
+.toggle--compact {
+  --toggle-radius:         #{radius(sm)};
+  --toggle-height:         #{space(7)};    // 1.75rem
+  --toggle-padding-inline: #{space(2.5)};  // 0.625rem
+  --toggle-font-size:      0.8125rem;      // 13px, off-scale
 }
 
-.toggle--lg {
-  --toggle-radius:    var(--st-toggle-radius, var(--st-radius-lg));
-  --toggle-height:    calc(2.75rem + 1rem * (var(--st-density) - 1));      // 44 @ 1 → 48 @ 1.25
-  --toggle-padding-x: calc(1rem * var(--st-density));
-  --toggle-font-size: 1rem;
+.toggle--roomy {
+  --toggle-radius:         #{radius(lg)};
+  --toggle-height:         #{space(11)};   // 2.75rem
+  --toggle-padding-inline: #{space(4)};    // 1rem
+  --toggle-font-size:      #{text(base)};
 }
 
 // === Icon shapes ======================================================
 // Square at every size (mirrors .btn--icon-only).
 .toggle--icon-only {
-  --toggle-padding-x: 0;
-  width: var(--toggle-height);
+  --toggle-padding-inline: 0;
+  width: var(--toggle-height, #{space(9)});
 }
 
-// Opt out of --st-radius for a circular silhouette (mirrors .btn--icon-round).
+// Opt out of --toggle-radius for a circular silhouette (mirrors .btn--icon-round).
 .toggle--icon-round {
-  border-radius: 9999px;
+  border-radius: #{radius(full)};
 }
 
 // === .toggle-input ====================================================

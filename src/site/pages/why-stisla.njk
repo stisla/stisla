@@ -77,7 +77,7 @@ function Button({ variant, children }) {
   background: var(--btn-bg);
   color: var(--btn-color);
   border-radius: var(--btn-radius);
-  padding: 0 var(--btn-padding-x);
+  padding: 0 var(--btn-padding-inline);
 }
 .btn:hover { --btn-bg: color-mix(in oklch, var(--btn-tone) 88%, black); }
     {% endcall %}
@@ -87,7 +87,7 @@ function Button({ variant, children }) {
     <h3>The tooling tax that follows</h3>
     <p>Conditional class strings got long quickly in our work. The ecosystem has helpers for this, and some of them work for any class-based system. <code>clsx</code> and <code>classnames</code> are sub-kilobyte string joiners useful in any class-based codebase. The extra cost specific to Tailwind sits in two other places.</p>
     <p><code>tailwind-merge</code> (around 9 KB gzipped) sorts out conflicts when two utility classes like <code>px-4</code> and <code>px-6</code> both apply, since the cascade can pick the wrong one and the result varies by component. <code>cva</code> (around 1.5 KB) provides the variant grammar that long utility chains push you toward, because each Tailwind variant expands into a list of classes that needs a grammar to organize. Both libraries exist to solve problems that come from Tailwind&rsquo;s vocabulary.</p>
-    <p>In a BEM-based system, the same variants are modifier classes (<code>.btn--primary</code>, <code>.btn--lg</code>). You do not need a conflict resolver, and you do not need a variant grammar. Selectors and the cascade already handle that, and they ship in every browser at no install cost.</p>
+    <p>In a BEM-based system, the same variants are modifier classes (<code>.btn--primary</code>, <code>.btn--roomy</code>). You do not need a conflict resolver, and you do not need a variant grammar. Selectors and the cascade already handle that, and they ship in every browser at no install cost.</p>
 
     <h3>BEM and <code>@apply</code></h3>
     <p>Stisla is class-based. <code>.btn</code>, <code>.btn--primary</code>, <code>.btn__icon</code>. Tailwind has a path for this. You write <code>@layer components { .btn { @apply px-4 py-2 rounded &hellip; } }</code> and you end up with a reusable BEM-style class. We tried it. What we got was CSS rules written in a limited Tailwind subset (utility names instead of CSS property names), and we still needed the Tailwind build pipeline to compile <code>@apply</code>. Once we were back to writing rules, the layer on top of plain CSS was not paying for itself. The choice came down to writing Tailwind-flavored CSS with the build step, or writing plain CSS without it. We picked plain CSS.</p>

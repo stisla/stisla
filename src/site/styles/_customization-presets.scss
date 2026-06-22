@@ -38,12 +38,12 @@
   --st-radius-sm:       0;
   --st-radius:          0;
   --st-radius-lg:       0;
-  --st-checkbox-radius: 0;
-  --st-slider-radius:   0;
-  --st-switch-radius:   0;
-  --st-progress-radius: 0;
-  --st-meter-radius:    0;
-  --st-badge-radius:    0;
+  --checkbox-radius: 0;
+  --slider-radius:   0;
+  --switch-radius:   0;
+  --progress-radius: 0;
+  --meter-radius:    0;
+  --badge-radius:    0;
   // Literal white matches --switch-thumb-color's default; the preset's
   // paint substitution would resolve var(--switch-thumb-color) at the
   // wrapper scope (where it isn't declared) and fall back to the circle.
@@ -75,7 +75,7 @@
 
 // === Dense ==================================================================
 // One knob, every component shrinks proportionally. Padding, gap, and
-// height tokens all wrap `calc(X * var(--st-density))` (V3.md §3.4).
+// height tokens are all space() multiples of --st-spacing.
 .preset-dense {
-  --st-density: 0.875;
+  --st-spacing: 0.2rem;
 }

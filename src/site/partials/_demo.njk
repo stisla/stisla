@@ -34,7 +34,7 @@
   <div class="demo-code"{% if collapsible %} data-demo-code{% endif %}>
     <div class="demo-code-source">{{ deded | highlight('html') | safe }}</div>
     {%- if collapsible %}
-    <button type="button" class="demo-code-toggle btn btn--sm btn--ghost btn--neutral" data-demo-code-toggle aria-expanded="false">
+    <button type="button" class="demo-code-toggle btn btn--compact btn--ghost btn--neutral" data-demo-code-toggle aria-expanded="false">
       <span class="demo-code-toggle-show">View Code</span>
       <span class="demo-code-toggle-hide">Hide Code</span>
     </button>

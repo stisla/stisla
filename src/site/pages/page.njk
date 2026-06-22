@@ -158,8 +158,8 @@
         <header class="page__section-header">
           <h2 class="page__section-title">Active customers</h2>
           <div class="page__action">
-            <button type="button" class="btn btn--outline btn--neutral btn--sm">Filter</button>
-            <button type="button" class="btn btn--primary btn--sm">Invite</button>
+            <button type="button" class="btn btn--outline btn--neutral btn--compact">Filter</button>
+            <button type="button" class="btn btn--primary btn--compact">Invite</button>
           </div>
         </header>
         <p class="text-muted-foreground">1,284 accounts.</p>
@@ -192,6 +192,21 @@
       <div class="page" style="margin-inline: auto; max-width: 48rem;">...</div>
     </main>
     {% endcall %}
+
+    <h3>Nesting a container</h3>
+    <p>Putting <code>.container</code> on the <code>.page</code> element itself, as above, keeps the sections as direct children, so the row gap still spaces them. When the container has to be a separate wrapper, it becomes the only child of <code>.page</code> and the sections inside it fall outside the gap. Move the flow into <code>.page__body</code>. It owns the same section rhythm, so a container can sit between the frame and the content without flattening the spacing.</p>
+    {% call ui.code() %}
+    <div class="page">
+      <div class="container">
+        <div class="page__body">
+          <header class="page__header">...</header>
+          <section class="page__section">...</section>
+          <section class="page__section">...</section>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+    <p><code>.page__body</code> reads the same <code>--page-section-gap</code> as <code>.page</code>, so a gap override set on the page still reaches the nested sections. Reach for it only when a container nests inside the page; the plain <code>.page</code> already flows its own direct children.</p>
   </section>
 
   <section>
@@ -213,7 +228,7 @@
         <header class="page__section-header">
           <h2 class="page__section-title">Active</h2>
           <div class="page__action">
-            <button type="button" class="btn btn--outline btn--neutral btn--sm">Filter</button>
+            <button type="button" class="btn btn--outline btn--neutral btn--compact">Filter</button>
           </div>
         </header>
         <p class="text-muted-foreground">1,284 customers.</p>

@@ -60,9 +60,9 @@ html.is-dialog-open                      page scroll lock while any dialog is op
 ## 3. Modifiers
 
 ```
-.dialog--sm                              width: 20rem
-.dialog--lg                              width: 40rem
-.dialog--xl                              width: 60rem
+.dialog--compact                              width: 20rem
+.dialog--roomy                              width: 40rem
+.dialog--spacious                              width: 60rem
 .dialog--fullscreen                      covers the viewport, no border / radius
 .dialog--almost-fullscreen               2.5rem breathing margin around the dialog
 .dialog__panel--top                      pin to top of viewport
@@ -71,8 +71,8 @@ html.is-dialog-open                      page scroll lock while any dialog is op
 ```
 
 Default (no size modifier) is `width: 28rem`, centered. Size modifiers
-retune `--dialog-width` only; vertical position modifiers retune
-`--dialog-margin` and panel positioning.
+retune `--dialog-width` only; vertical position modifiers retune the
+margin tokens and panel positioning.
 
 `--fullscreen` and `--almost-fullscreen` are exclusive — applying both is
 undefined. Pick one.
@@ -211,13 +211,16 @@ name and its surface (background, padding, radius, etc.) stay the same.
 
 | Variable | Affects |
 | --- | --- |
-| `--dialog-width` | Max panel width. Retuned by `--sm` / `--lg` / `--xl` modifiers. |
-| `--dialog-margin` | Viewport padding around the dialog. |
-| `--dialog-padding` | Padding on header and body. |
+| `--dialog-width` | Max panel width. Retuned by `--compact` / `--roomy` / `--spacious` modifiers. |
+| `--dialog-margin-inline` | Horizontal viewport padding around the dialog. |
+| `--dialog-margin-block` | Vertical viewport padding around the dialog. |
+| `--dialog-padding-inline` | Inline padding on header, body, and footer. |
+| `--dialog-padding-block` | Block padding on header and body. |
 | `--dialog-radius` | Corner radius of `.dialog__content`. |
 | `--dialog-z-index` | Stack order. |
 | `--dialog-bg` | Content surface colour. |
 | `--dialog-color` | Content text colour. |
+| `--dialog-border-width` | Content border width. |
 | `--dialog-border-color` | Content border colour. |
 | `--dialog-shadow` | Drop shadow under `.dialog__content`. |
 | `--dialog-backdrop-bg` | Backdrop fill. |
@@ -229,7 +232,7 @@ name and its surface (background, padding, radius, etc.) stay the same.
 | `--dialog-close-bg-hover` | Close chip background (hover). |
 | `--dialog-close-color` | Close chip icon (rest). |
 | `--dialog-close-color-hover` | Close chip icon (hover). |
-| `--dialog-footer-padding-y` | Footer vertical padding. |
+| `--dialog-footer-padding-block` | Footer vertical padding. |
 | `--dialog-footer-bg` | Footer background. |
 | `--dialog-footer-border-color` | Footer top border. |
 | `--dialog-transition-duration` | Open / close transition. |
@@ -237,8 +240,8 @@ name and its surface (background, padding, radius, etc.) stay the same.
 **Global tokens consumed.**
 
 `--st-surface`, `--st-surface-2`, `--st-foreground`, `--st-border`,
-`--st-radius-lg`, `--st-density`, `--st-ring` (focus ring on
-`.dialog__close`).
+`--st-ring` (focus ring on `.dialog__close`). Padding and margins ride
+the spacing base `--st-spacing` via the `space()` helper.
 
 **Dark-mode flips.** In dark mode, the close-chip variables
 (`--dialog-close-bg`, `--dialog-close-bg-hover`, `--dialog-close-color`,

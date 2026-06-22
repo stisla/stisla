@@ -1,14 +1,28 @@
 // Stisla v3 — page. Stisla-original structural component (no BS5 equivalent).
 //
-// Pure CSS layout primitive for what sits inside <main>. The .page parent
-// owns the rhythm so children carry zero outer margin: .page is a
-// flex-column with row-gap; .page__header / .page__section /
-// .page__section-header are siblings whose vertical spacing comes from
-// that gap, not from element margins. The Preflight reset already zeroes
-// margins on h1–h6 and p; this component relies on that and adds gap.
+// Pure CSS layout primitive for what sits inside <main>. The flow owns the
+// rhythm so children carry zero outer margin: it's a flex-column with
+// row-gap; .page__header / .page__section / .page__section-header are
+// siblings whose vertical spacing comes from that gap, not from element
+// margins. The Preflight reset already zeroes margins on h1–h6 and p; this
+// component relies on that and adds gap.
+//
+// Frame vs flow (notes §Bugs). The rhythm gap only spaces DIRECT children,
+// so wrapping the sections in a max-width .container would make the
+// container the lone flex child and collapse every section gap. To keep a
+// container in the tree, nest the flow inside it via .page__body — the body
+// is the gap-owning flow, the container only constrains width:
+//   <div class="page">                     (frame)
+//     <div class="container">              (optional max-width)
+//       <div class="page__body">           (flow — owns the section rhythm)
+//         <header class="page__header">…
+//         <section class="page__section">…
+// For the common no-container case .page is itself the flow — drop the
+// header/sections straight in and the same gap applies.
 //
 // === Anatomy =============================================================
-//   .page                  — vertical flex container with row-gap
+//   .page                  — frame; also the flow when used without a container
+//   .page__body            — gap-owning flow for the container-nested case
 //   .page__header          — top header row (heading group + actions)
 //   .page__heading         — heading group (title + optional description)
 //   .page__title           — opinionated heading (h3-equivalent cadence)
@@ -18,16 +32,23 @@
 //   .page__section-header  — mini header row inside a section
 //   .page__section-title   — opinionated heading (h5-equivalent cadence)
 //
-// All gaps wrap calc(X * var(--st-density)) so the global density knob
-// retunes page rhythm with the rest of the system.
+// Gaps ride the space() scale (space(n) = n × --st-spacing), so retuning
+// --st-spacing rescales page rhythm with the rest of the system. Every knob
+// is fallback-default (read with its default, never declared on the base) so
+// a scope or inline can retune any gap; set --page-section-gap on .page (or
+// any ancestor) and it cascades to .page__body too — custom props inherit.
 
-.page {
-  --page-section-gap: calc(1.5rem * var(--st-density));
-
+.page,
+.page__body {
   display: flex;
   flex-direction: column;
-  gap: var(--page-section-gap);
+  gap: var(--page-section-gap, #{space(6)});
 }
+
+// Container-nested flow. When a .container sits between .page and the
+// sections, .page holds a single flex child (the container) so its own gap
+// is a no-op — no double spacing — and .page__body re-establishes the
+// section rhythm inside the container.
 
 // Page header — flex row, heading leading, optional actions trailing.
 // flex-wrap drops actions to a new line on narrow viewports instead of
@@ -35,13 +56,11 @@
 // "two direct children, no .page__heading wrapper" case; when the heading
 // group is present, its flex: 1 1 auto pushes actions to the end.
 .page__header {
-  --page-header-gap: calc(1rem * var(--st-density));
-
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--page-header-gap);
+  gap: var(--page-header-gap, #{space(4)});
 }
 
 // Heading group — flex-column so the title + description stack with a
@@ -49,12 +68,10 @@
 // flex: 1 1 auto lets the group grow into the row; min-width: 0 keeps a
 // long title wrapping inside its column instead of forcing actions off-screen.
 .page__heading {
-  --page-heading-gap: calc(0.25rem * var(--st-density));
-
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  gap: var(--page-heading-gap);
+  gap: var(--page-heading-gap, #{space(1)});
   min-width: 0;
 }
 
@@ -63,26 +80,20 @@
 // .page__section-title at a larger scale. Override via tokens, or by
 // adding a different heading utility class.
 .page__title {
-  --page-title-size:   1.25rem;
-  --page-title-weight: 600;
-
-  font-size: var(--page-title-size);
-  font-weight: var(--page-title-weight);
+  font-size: var(--page-title-size, #{text(xl)});
+  font-weight: var(--page-title-weight, #{weight(semibold)});
   line-height: 1.2;
 }
 
 // Description slot — optional one-line helper copy under the title. Mirrors
-// .item__description / .field__description / .alert__description: muted
+// .media__description / .field__description / .alert__description: muted
 // color is baked in so consumers don't reach for a utility, and size /
 // weight ride tokens for theme tuning.
 .page__description {
-  --page-description-size: 0.875rem;
-  --page-description-weight: 400;
-
-  font-size: var(--page-description-size);
-  font-weight: var(--page-description-weight);
+  font-size: var(--page-description-size, #{text(sm)});
+  font-weight: var(--page-description-weight, #{weight(normal)});
   line-height: 1.5;
-  color: var(--st-muted-foreground);
+  color: var(--page-description-color, var(--st-muted-foreground));
 }
 
 // Actions slot — used by both .page__header and .page__section-header.
@@ -90,11 +101,9 @@
 // grows too wide, the parent header's flex-wrap drops actions to the
 // next line.
 .page__action {
-  --page-action-gap: calc(0.5rem * var(--st-density));
-
   display: flex;
   flex-shrink: 0;
-  gap: var(--page-action-gap);
+  gap: var(--page-action-gap, #{space(2)});
 }
 
 // Page section — mini-layout for each block inside a page. Flex-column
@@ -102,23 +111,19 @@
 // room. No outer margin — the .page parent owns the rhythm between
 // sections via --page-section-gap.
 .page__section {
-  --page-section-inner-gap: calc(1rem * var(--st-density));
-
   display: flex;
   flex-direction: column;
-  gap: var(--page-section-inner-gap);
+  gap: var(--page-section-inner-gap, #{space(4)});
 }
 
 // Section header — same flex recipe as .page__header at a tighter
 // scale. Shares the .page__action slot.
 .page__section-header {
-  --page-section-header-gap: calc(0.75rem * var(--st-density));
-
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--page-section-header-gap);
+  gap: var(--page-section-header-gap, #{space(3)});
 }
 
 // Section title — opinionated cadence (h5-equivalent) so consumers can
@@ -127,10 +132,7 @@
 // different heading utility class (the rule below has element-only
 // specificity).
 .page__section-title {
-  --page-section-title-size: 1.125rem;
-  --page-section-title-weight: 600;
-
-  font-size: var(--page-section-title-size);
-  font-weight: var(--page-section-title-weight);
+  font-size: var(--page-section-title-size, #{text(lg)});
+  font-weight: var(--page-section-title-weight, #{weight(semibold)});
   line-height: 1.4;
 }

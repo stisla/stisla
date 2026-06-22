@@ -50,7 +50,7 @@
     <div class="popover" id="popover-anatomy" data-stisla-popover
          aria-labelledby="popover-anatomy-title">
       <h3 class="popover__title" id="popover-anatomy-title">Release notes</h3>
-      <div class="popover__body">v3.0 ships the popover, dropdown, and tooltip components on the Floating UI foundation.</div>
+      <div class="popover__body">Stisla ships the popover, menu, and tooltip components on the Floating UI foundation.</div>
       <button type="button" class="popover__close" data-stisla-popover-dismiss aria-label="Dismiss">
         <i data-lucide="x"></i>
       </button>
@@ -136,8 +136,8 @@
         <div class="d-flex flex-column gap-2">
           <input type="email" class="input" placeholder="name@example.com" aria-label="Email address">
           <div class="d-flex flex-wrap align-items-center gap-2 justify-content-end">
-            <button type="button" class="btn btn--sm btn--ghost btn--neutral" data-stisla-popover-dismiss>Cancel</button>
-            <button type="button" class="btn btn--sm btn--primary">Send invite</button>
+            <button type="button" class="btn btn--compact btn--ghost btn--neutral" data-stisla-popover-dismiss>Cancel</button>
+            <button type="button" class="btn btn--compact btn--primary">Send invite</button>
           </div>
         </div>
       </div>
@@ -188,9 +188,10 @@
       <tbody>
         <tr><td><code>--popover-max-width</code></td><td>Wrap point for body text. Long content wraps; rich content can set its own min-width.</td></tr>
         <tr><td><code>--popover-min-width</code></td><td>Floor so single-line action labels don't collapse the panel.</td></tr>
-        <tr><td><code>--popover-padding</code></td><td>Single frame inset. Title, body, and close chip share it.</td></tr>
+        <tr><td><code>--popover-padding-block</code></td><td>Top and bottom frame inset. Title, body, and close chip share it.</td></tr>
+        <tr><td><code>--popover-padding-inline</code></td><td>Left and right frame inset. Title, body, and close chip share it.</td></tr>
         <tr><td><code>--popover-radius</code></td><td>Frame radius. Matches dialog and card large-frame tier.</td></tr>
-        <tr><td><code>--popover-z-index</code></td><td>Stack level. Sits above an open dropdown, below a toast.</td></tr>
+        <tr><td><code>--popover-z-index</code></td><td>Stack level. Sits above an open menu, below a toast.</td></tr>
       </tbody>
     </table>
 
@@ -217,7 +218,7 @@
         <tr><td><code>--popover-title-color</code></td><td>Heading color.</td></tr>
         <tr><td><code>--popover-title-font-weight</code></td><td>Heading weight.</td></tr>
         <tr><td><code>--popover-title-font-size</code></td><td>Slightly larger than body for hierarchy.</td></tr>
-        <tr><td><code>--popover-title-margin-bottom</code></td><td>Gap between title and body. Sized so a bare-text body and an input body both read cleanly under the title.</td></tr>
+        <tr><td><code>--popover-title-margin-block-end</code></td><td>Gap between title and body. Sized so a bare-text body and an input body both read cleanly under the title.</td></tr>
       </tbody>
     </table>
 

@@ -22,12 +22,12 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Three sizes match the <code>.btn</code> scale. Add <code>.input--sm</code> or <code>.input--lg</code>.</p>
+    <p>Three sizes match the <code>.btn</code> scale. Add <code>.input--compact</code> or <code>.input--roomy</code>.</p>
     {% call ui.demo() %}
     <div class="demo-stack" style="max-width: 24rem;">
-      <input type="text" class="input input--sm" placeholder="Small" />
+      <input type="text" class="input input--compact" placeholder="Small" />
       <input type="text" class="input" placeholder="Default" />
-      <input type="text" class="input input--lg" placeholder="Large" />
+      <input type="text" class="input input--roomy" placeholder="Large" />
     </div>
     {% endcall %}
   </section>
@@ -129,7 +129,7 @@
 
   <section>
     <h2>File input</h2>
-    <p>The same class styles <code>type="file"</code>. The selector button sits as a small inset chip inside the field (same shape as a <code>.btn--sm.btn--neutral</code>) and the filename trails after it.</p>
+    <p>The same class styles <code>type="file"</code>. The selector button sits as a small inset chip inside the field (same shape as a <code>.btn--compact.btn--neutral</code>) and the filename trails after it.</p>
     {% call ui.demo() %}
     <div class="field" style="max-width: 24rem;">
       <label for="fileInput" class="field__label">Upload</label>
@@ -140,7 +140,7 @@
 
   <section>
     <h2>Customization</h2>
-    <p>Eight variables retune <code>.input</code> without touching component CSS. Override on the field itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change. The same surface appears on <a class="link" href="/select">.select</a> and <a class="link" href="/textarea">.textarea</a> under their own prefix so each field component can be tuned independently.</p>
+    <p>These variables retune <code>.input</code> without touching component CSS. Override on the field itself, on a parent scope, or on <code>:root</code>. The cascade scopes the change. The same surface appears on <a class="link" href="/select">.select</a> and <a class="link" href="/textarea">.textarea</a> under their own prefix so each field component can be tuned independently.</p>
     <p>On touch devices (<code>@media (pointer: coarse)</code>) <code>--input-font-size</code> is bumped to <code>1rem</code> so iOS Safari doesn't zoom the viewport on focus. The browser auto-zooms any field with computed font-size below 16px and never zooms back; desktop keeps the tighter default.</p>
     <table>
       <thead>
@@ -152,19 +152,19 @@
       <tbody>
         <tr>
           <td><code>--input-radius</code></td>
-          <td>Corner radius (per-component override via <code>--st-input-radius</code>; sizes pull <code>--st-radius-sm</code> / <code>-lg</code>)</td>
+          <td>Corner radius; the compact and roomy variants reassign this</td>
         </tr>
         <tr>
           <td><code>--input-height</code></td>
-          <td>Single-line height; sm and lg reassign this. Bakes in the density-aware growth formula</td>
+          <td>Single-line height; the compact and roomy variants reassign this</td>
         </tr>
         <tr>
-          <td><code>--input-padding-x</code></td>
-          <td>Horizontal padding; sm and lg reassign this. Multiplied by <code>--st-density</code></td>
+          <td><code>--input-padding-inline</code></td>
+          <td>Horizontal padding; the compact and roomy variants reassign this</td>
         </tr>
         <tr>
           <td><code>--input-font-size</code></td>
-          <td>Text size; sm and lg reassign this</td>
+          <td>Text size; the compact and roomy variants reassign this</td>
         </tr>
         <tr>
           <td><code>--input-bg</code></td>
@@ -175,7 +175,11 @@
           <td>Text color</td>
         </tr>
         <tr>
-          <td><code>--input-border</code></td>
+          <td><code>--input-border-width</code></td>
+          <td>Border thickness</td>
+        </tr>
+        <tr>
+          <td><code>--input-border-color</code></td>
           <td>Border color; validation hooks flip this to <code>--st-danger</code></td>
         </tr>
         <tr>

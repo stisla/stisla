@@ -77,10 +77,10 @@
     <p>Every component that <em>inherits</em> from body shrank by about an eighth. That includes the default text in buttons, inputs, badges, and table cells. The grid stayed where it was, so column layouts kept their place.</p>
     <ul>
       <li>Headings dropped proportionally, since the scale is hand-tuned for the 14px baseline.</li>
-      <li>Form controls held their pixel heights through <code>height &times; density</code>, so dense forms kept their rhythm.
+      <li>Form controls keep their heights as <code>space()</code> multiples, so a lower spacing base shrinks dense forms while holding their rhythm.
         <ul>
-          <li>Default control height stays at 36px.</li>
-          <li>Compact preset drops it to 31.5px via <code>--st-density: 0.875</code>.</li>
+          <li>The default control height tracks the spacing base.</li>
+          <li>The compact size, or a lower <code>--st-spacing</code>, tightens it.</li>
         </ul>
       </li>
       <li>Icons sized in <code>em</code> tracked the new baseline for free.</li>
@@ -213,8 +213,12 @@ background-color: var(--st-background);
           <td><code>--prose-line-height</code></td>
           <td>Reading leading</td>
         </tr>
+        <tr>
+          <td><code>--prose-rhythm</code></td>
+          <td>Vertical-rhythm multiplier on every block margin. Defaults to <code>1</code>; raise to loosen the spacing between paragraphs, headings, and lists, lower to tighten it</td>
+        </tr>
       </tbody>
     </table>
-    <p>Components nested inside prose customize through the cascade. To enlarge <code>&lt;kbd&gt;</code> chips inside long-form content, set <code>--st-kbd-padding-y</code> on <code>.prose</code>. The kbd component reads its own variable and the cascade scopes the change. No prose-specific variable is invented for the nested component.</p>
+    <p>Components nested inside prose customize through the cascade. To enlarge <code>&lt;kbd&gt;</code> chips inside long-form content, set <code>--kbd-padding-block</code> on <code>.prose</code>. The kbd component reads its own variable and the cascade scopes the change. No prose-specific variable is invented for the nested component.</p>
   </section>
 {% endblock %}

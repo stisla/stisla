@@ -183,27 +183,30 @@ visible under `forced-colors: active`.
 | `--tabs-gap` | Gap between list and panels. |
 | `--tabs-list-radius` | Outer rail corner radius. |
 | `--tabs-list-height` | Outer rail height in horizontal mode. |
-| `--tabs-list-padding` | Inner padding inside the rail. |
+| `--tabs-list-padding-inline` | Inline padding inside the rail. |
+| `--tabs-list-padding-block` | Block padding inside the rail. |
 | `--tabs-list-gap` | Gap between adjacent triggers. |
 | `--tabs-list-bg` | Rail background. |
 | `--tabs-list-color` | Rail text colour (inherited as muted resting colour for triggers). |
-| `--tabs-trigger-radius` | Trigger corner radius. Defaults to the rail radius minus rail padding for concentric corners. |
-| `--tabs-trigger-padding-x` | Trigger horizontal padding. |
+| `--tabs-trigger-radius` | Trigger corner radius. Defaults to the rail radius minus rail inline padding for concentric corners. |
+| `--tabs-trigger-padding-inline` | Trigger horizontal padding. |
 | `--tabs-trigger-gap` | Gap between icon and label inside a trigger. |
 | `--tabs-trigger-font-size` | Trigger label size. |
 | `--tabs-trigger-font-weight` | Trigger label weight. |
-| `--tabs-trigger-hover-color` | Trigger label colour on hover (rest only, not the active pill). |
-| `--tabs-trigger-active-bg` | Active trigger fill. |
-| `--tabs-trigger-active-color` | Active trigger text colour. |
-| `--tabs-trigger-active-border-color` | Active trigger border colour. |
+| `--tabs-trigger-color-hover` | Trigger label colour on hover (rest only, not the active pill). |
+| `--tabs-trigger-bg-active` | Active trigger fill. |
+| `--tabs-trigger-color-active` | Active trigger text colour. |
+| `--tabs-trigger-border-color-active` | Active trigger border colour. |
 | `--tabs-ring` | Focus ring colour on trigger and panel. |
 | `--tabs-transition-duration` | Trigger paint transition. |
 
 **Global tokens consumed.**
 
 `--st-radius`, `--st-surface-2`, `--st-muted-foreground`, `--st-foreground`,
-`--st-highlight`, `--st-highlight-foreground`, `--st-ring`, `--st-density`,
-`--st-radius-sm` (focus-ring radius on the panel).
+`--st-highlight`, `--st-highlight-foreground`, `--st-ring`,
+`--st-border-width` (trigger rim weight), `--st-spacing` (spacing base
+behind `space()` rail height, paddings, and gaps), `--st-radius-sm`
+(focus-ring radius on the panel).
 
 **Dark-mode flips.** None. The rail and active-pill paints read surface
 and intent tokens which the theme block re-defines; no per-component

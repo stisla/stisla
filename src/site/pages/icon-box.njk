@@ -45,12 +45,12 @@
 
   <section>
     <h2>Sizes</h2>
-    <p>Three sizes match the <code>.btn</code> family. Add <code>.icon-box--sm</code> or <code>.icon-box--lg</code>. Every dimension scales with <code>--st-density</code>.</p>
+    <p>Three sizes match the <code>.btn</code> family. Add <code>.icon-box--compact</code> or <code>.icon-box--roomy</code>.</p>
     {% call ui.demo() %}
     <div class="demo-row demo-row--top">
-      <span class="icon-box icon-box--primary icon-box--sm"><i data-lucide="zap"></i></span>
+      <span class="icon-box icon-box--primary icon-box--compact"><i data-lucide="zap"></i></span>
       <span class="icon-box icon-box--primary"><i data-lucide="zap"></i></span>
-      <span class="icon-box icon-box--primary icon-box--lg"><i data-lucide="zap"></i></span>
+      <span class="icon-box icon-box--primary icon-box--roomy"><i data-lucide="zap"></i></span>
     </div>
     {% endcall %}
   </section>
@@ -86,7 +86,7 @@
       <tbody>
         <tr>
           <td><code>--icon-box-size</code></td>
-          <td>Outer square dimension; sm and lg reassign this</td>
+          <td>Outer square dimension; size modifiers reassign this</td>
         </tr>
         <tr>
           <td><code>--icon-box-icon-size</code></td>
@@ -94,7 +94,7 @@
         </tr>
         <tr>
           <td><code>--icon-box-radius</code></td>
-          <td>Corner radius (per-component override via <code>--st-icon-box-radius</code>); <code>--round</code> forces 50%, <code>--square</code> forces 0</td>
+          <td>Corner radius; <code>--round</code> forces a circle, <code>--square</code> forces hard corners</td>
         </tr>
         <tr>
           <td><code>--icon-box-tone</code></td>

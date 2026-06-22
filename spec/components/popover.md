@@ -197,7 +197,8 @@ affects.
 | --- | --- |
 | `--popover-max-width` | Maximum surface width. |
 | `--popover-min-width` | Minimum surface width. |
-| `--popover-padding` | Inner padding around title + body + close. |
+| `--popover-padding-inline` | Inner inline padding around title + body + close. |
+| `--popover-padding-block` | Inner block padding around title + body + close. |
 | `--popover-radius` | Corner radius of the surface. |
 | `--popover-z-index` | Stack order. |
 | `--popover-bg` | Surface background. |
@@ -208,7 +209,7 @@ affects.
 | `--popover-title-color` | Title colour. |
 | `--popover-title-font-weight` | Title weight. |
 | `--popover-title-font-size` | Title size. |
-| `--popover-title-margin-bottom` | Gap between title and body. |
+| `--popover-title-margin-block-end` | Gap between title and body. |
 | `--popover-body-color` | Body text colour. |
 | `--popover-body-font-size` | Body text size. |
 | `--popover-body-line-height` | Body text line height. |
@@ -233,7 +234,7 @@ theme block re-defines; no per-component dark logic is required.
 - Tooltips — small hover-only annotations on a single string of text use
   the tooltip spec
 - Dropdown menus — focusable item lists with menu semantics use the
-  dropdown spec
+  menu spec
 - Confirm / form-in-popover patterns — these are recipe-level
   compositions on top of the popover, not separate components
 - Programmatic content rewrites as a contract requirement — an

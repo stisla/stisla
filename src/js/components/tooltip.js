@@ -119,6 +119,16 @@ export class Tooltip extends Component {
       this.on(el, 'focusin', () => this._scheduleShow());
       this.on(el, 'focusout', () => this._scheduleHide());
     }
+
+    // Escape closes an open tooltip without moving focus off the trigger.
+    // Only consume the key when actually open so a parent overlay's own
+    // Escape handling still fires otherwise.
+    this.on(el, 'keydown', (e) => {
+      if (e.key === 'Escape' && this._tooltipEl.dataset.state === OPEN) {
+        e.stopPropagation();
+        this.hide();
+      }
+    });
   }
 
   show() {

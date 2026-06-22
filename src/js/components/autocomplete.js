@@ -10,7 +10,7 @@
 //   <input class="autocomplete" role="combobox" aria-autocomplete="list"
 //          aria-expanded="false" aria-controls="…">
 //   <ul class="autocomplete__popup" role="listbox" hidden>
-//     <li class="autocomplete__option" role="option" data-value="…">…</li>
+//     <li class="autocomplete__item" role="option" data-value="…">…</li>
 //
 // Events (bubbling, detail: { autocomplete, value }):
 //   stisla:autocomplete:open   — popup opens
@@ -205,7 +205,7 @@ export class Autocomplete extends Component {
     const q = this._input.value.trim().toLowerCase();
     matches.forEach((o, idx) => {
       const li = document.createElement('li');
-      li.className = 'autocomplete__option';
+      li.className = 'autocomplete__item';
       li.id = `${this._popupId}-opt-${idx}`;
       li.setAttribute('role', 'option');
       li.setAttribute('aria-selected', 'false');
@@ -366,7 +366,7 @@ export class Autocomplete extends Component {
   }
 
   _onPopupClick(e) {
-    const li = e.target.closest('.autocomplete__option');
+    const li = e.target.closest('.autocomplete__item');
     if (!li) return;
     const idx = this._optionEls?.indexOf(li) ?? -1;
     if (idx >= 0) this._selectIndex(idx);

@@ -43,51 +43,18 @@
   // the 4px wrapper inset, the inner item lands at 12px = the standalone
   // --st-radius default, so the inner chip reads like a normal rounded
   // element framed by a softer outer rim.
-  --accordion-radius: var(--st-accordion-radius, var(--st-radius-lg));
-  --accordion-padding: 0.25rem;
-  --accordion-gap: 0.25rem;
-
-  // Frame surface
-  --accordion-bg: var(--st-surface);
-  --accordion-border-color: var(--st-border);
-  --accordion-shadow: var(--st-accordion-shadow, var(--st-shadow));
-
-  // Open-item chip
-  --accordion-item-open-bg: var(--st-surface-2);
-  --accordion-item-open-border-color: var(--st-border);
-
-  // Header
-  --accordion-header-padding-y: calc(0.75rem * var(--st-density));
-  --accordion-header-padding-x: calc(1rem * var(--st-density));
-  --accordion-header-font-size: inherit;
-  --accordion-header-font-weight: 500;
-  --accordion-header-color: var(--st-foreground);
-  --accordion-header-bg: transparent;
-  --accordion-header-hover-bg: var(--st-accent);
-  --accordion-header-divider-color: var(--st-border);
-
-  // Icon
-  --accordion-icon-size: 1rem;
-  --accordion-icon-color: currentColor;
-  --accordion-icon-transition-duration: 0.15s;
-
-  // Body
-  --accordion-body-padding-y: calc(0.75rem * var(--st-density));
-  --accordion-body-padding-x: calc(1rem * var(--st-density));
-  --accordion-body-color: var(--st-foreground);
-  --accordion-body-transition-duration: 0.2s;
-
-  // Focus
-  --accordion-ring: var(--st-ring);
-
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing on the base, so a
+  // scope / inline retunes any of them; the item / header / body / icon rules
+  // read them with the same defaults. --accordion-radius + -padding are read
+  // again in the concentric item-radius calc, so their defaults repeat.
   display: flex;
   flex-direction: column;
-  gap: var(--accordion-gap);
-  padding: var(--accordion-padding);
-  background-color: var(--accordion-bg);
-  border: var(--st-border-width) solid var(--accordion-border-color);
-  border-radius: var(--accordion-radius);
-  box-shadow: var(--accordion-shadow);
+  gap: var(--accordion-gap, #{space(1)});           // 0.25rem
+  padding: var(--accordion-padding-block, #{space(1)}) var(--accordion-padding-inline, #{space(1)});
+  background-color: var(--accordion-bg, var(--st-surface));
+  border: var(--accordion-border-width, var(--st-border-width)) solid var(--accordion-border-color, var(--st-border));
+  border-radius: var(--accordion-radius, #{radius(lg)});
+  box-shadow: var(--accordion-shadow, #{shadow(md)});
 }
 
 // Item carries a transparent border at rest so the chip-out treatment
@@ -96,7 +63,7 @@
 // bleeding past the rounded edge while the body is hidden.
 .accordion__item {
   border: var(--st-border-width) solid transparent;
-  border-radius: calc(var(--accordion-radius) - var(--accordion-padding));
+  border-radius: calc(var(--accordion-radius, #{radius(lg)}) - var(--accordion-padding-inline, #{space(1)}));
   overflow: hidden;
   transition:
     background-color 0.12s ease,
@@ -104,32 +71,38 @@
 }
 
 .accordion__item[data-state="open"] {
-  background-color: var(--accordion-item-open-bg);
-  border-color: var(--accordion-item-open-border-color);
+  background-color: var(--accordion-item-open-bg, var(--st-surface-2));
+  border-color: var(--accordion-item-open-border-color, var(--st-border));
 }
 
 .accordion__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: #{space(3)};
   width: 100%;
-  padding: var(--accordion-header-padding-y) var(--accordion-header-padding-x);
+  padding-block: var(--accordion-header-padding-block, #{space(3)});
+  padding-inline: var(--accordion-header-padding-inline, #{space(4)});
   font: inherit;
-  font-size: var(--accordion-header-font-size);
-  font-weight: var(--accordion-header-font-weight);
+  font-size: var(--accordion-header-font-size, inherit);
+  font-weight: var(--accordion-header-font-weight, #{weight(medium)});
   text-align: start;
-  color: var(--accordion-header-color);
-  background-color: var(--accordion-header-bg);
+  color: var(--accordion-header-color, var(--st-foreground));
+  background-color: var(--accordion-header-bg, transparent);
   border: 0;
   border-bottom: 1px solid transparent;
+  // Round the top corners to the item radius so the inset focus ring follows
+  // the curve instead of being clipped square by the item's overflow: hidden.
+  // (Bottom corners round only when the item is closed — see below.)
+  border-start-start-radius: calc(var(--accordion-radius, #{radius(lg)}) - var(--accordion-padding-inline, #{space(1)}));
+  border-start-end-radius: calc(var(--accordion-radius, #{radius(lg)}) - var(--accordion-padding-inline, #{space(1)}));
   cursor: pointer;
   transition:
     background-color 0.12s ease,
     border-color 0.12s ease;
 
   &:focus-visible {
-    outline: 2px solid var(--accordion-ring);
+    outline: 2px solid var(--accordion-ring, var(--st-ring));
     outline-offset: -2px;
   }
 
@@ -152,20 +125,28 @@
 .accordion__item[data-state="closed"]
   > *
   > .accordion__header:hover:not(:disabled) {
-  background-color: var(--accordion-header-hover-bg);
+  background-color: var(--accordion-header-bg-hover, var(--st-accent));
+}
+
+// Closed item: the header is the whole chip, so round its bottom corners too
+// (the open header keeps square bottoms where it meets the body) — keeps the
+// focus ring fully rounded on a collapsed item.
+.accordion__item[data-state="closed"] > * > .accordion__header {
+  border-end-start-radius: calc(var(--accordion-radius, #{radius(lg)}) - var(--accordion-padding-inline, #{space(1)}));
+  border-end-end-radius: calc(var(--accordion-radius, #{radius(lg)}) - var(--accordion-padding-inline, #{space(1)}));
 }
 
 // Open item header — divider line between header and body emerges.
 .accordion__item[data-state="open"] > * > .accordion__header {
-  border-bottom-color: var(--accordion-header-divider-color);
+  border-bottom-color: var(--accordion-header-divider-color, var(--st-border));
 }
 
 .accordion__icon {
   flex-shrink: 0;
-  width: var(--accordion-icon-size);
-  height: var(--accordion-icon-size);
-  color: var(--accordion-icon-color);
-  transition: transform var(--accordion-icon-transition-duration) ease;
+  width: var(--accordion-icon-size, 1rem);
+  height: var(--accordion-icon-size, 1rem);
+  color: var(--accordion-icon-color, currentColor);
+  transition: transform var(--accordion-icon-transition-duration, 0.15s) ease;
 }
 
 .accordion__item[data-state="open"]
@@ -182,11 +163,12 @@
 // natural size while the body's height clips it via overflow: hidden.
 // Matches the Radix Accordion.Content + inner-div convention.
 .accordion__body {
-  color: var(--accordion-body-color);
+  color: var(--accordion-body-color, var(--st-foreground));
 }
 
 .accordion__body-inner {
-  padding: var(--accordion-body-padding-y) var(--accordion-body-padding-x);
+  padding-block: var(--accordion-body-padding-block, #{space(3)});
+  padding-inline: var(--accordion-body-padding-inline, #{space(4)});
 }
 
 // CSS-only collapse. Step 4 swaps in a JS-measured height transition

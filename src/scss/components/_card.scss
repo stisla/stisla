@@ -4,29 +4,28 @@
 // __subtitle / __text / __link / __image / __overlay). Variants stay
 // flat on the root (.card--flat).
 //
-// Tokens: --st-surface (bg), --st-border, --st-card-radius → --st-radius-lg
-// (large-surface tier), --st-card-shadow → --st-shadow, padding × var(--st-density).
+// Knobs (all fallback-default): --card-bg / --card-color / --card-border-width
+// + --card-border-color / --card-radius (radius(lg)) / --card-shadow (shadow(md))
+// / --card-padding-block
+// + --card-padding-inline (space(5) each). --card-padding-inline is the shared
+// gutter the header / body / footer / image align to; --card-padding-block is
+// the body's vertical padding (header/footer set their own block padding).
 
 .card {
-  --card-radius:    var(--st-card-radius, var(--st-radius-lg));
-  --card-padding:   calc(1.25rem * var(--st-density));
-  --card-shadow:    var(--st-card-shadow, var(--st-shadow));
-  --card-bg:        var(--st-surface);
-  --card-color:     var(--st-foreground);
-  --card-border: var(--st-border-width) solid var(--st-border);
-
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing on the base, so a
+  // scope / inline retunes any of them. --card-radius + --card-padding-inline
+  // are read by the parts (header / body / footer / image / overlay), so their
+  // defaults repeat at those read sites.
   position: relative;
   display: flex;
   flex-direction: column;
   min-width: 0;
-  color: var(--card-color);
-  background: var(--card-bg);
-  border: var(--card-border);
-  border-radius: var(--card-radius);
-  box-shadow: var(--card-shadow);
-  // Clip inner backgrounds (header alt fill, image) to the outer radius.
-  // Box-shadow renders outside the box, so this does not clip the elevation.
-  overflow: hidden;
+  color: var(--card-color, var(--st-foreground));
+  background: var(--card-bg, var(--st-surface));
+  border: var(--card-border-width, var(--st-border-width)) solid
+    var(--card-border-color, var(--st-border));
+  border-radius: var(--card-radius, #{radius(lg)});
+  box-shadow: var(--card-shadow, #{shadow(md)});
 }
 
 // Drop the shadow so the card reads as a frame rather than a raised
@@ -43,23 +42,48 @@
 .card__body {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding: var(--card-padding);
+  align-items: start;
+  gap: #{space(2)};
+  padding: var(--card-padding-block, #{space(5)})
+    var(--card-padding-inline, #{space(5)});
 }
 
 .card__header {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  min-height: calc(2.875rem * var(--st-density));
-  padding: 0 var(--card-padding);
+  gap: #{space(2)};
+  min-height: var(--card-header-height, #{space(11.5)}); // 2.875rem
+  padding: 0 var(--card-padding-inline, #{space(5)});
   border-bottom: 1px solid var(--st-border);
+}
+
+// Round the top corners when the header is the card's first child, so a filled
+// (--alt) header fills the card's rounded top instead of showing square corners
+// (the card carries no overflow: hidden). Inner radius (outer − border) keeps it
+// concentric with the border, matching the image + footer.
+.card__header:first-child {
+  border-start-start-radius: calc(
+    var(--card-radius, #{radius(lg)}) - var(
+        --card-border-width,
+        var(--st-border-width)
+      )
+  );
+  border-start-end-radius: calc(
+    var(--card-radius, #{radius(lg)}) - var(
+        --card-border-width,
+        var(--st-border-width)
+      )
+  );
 }
 
 // Opt the header onto the alt surface to mirror the footer's contrast.
 // Composes with .card__header: <div class="card__header card__header--alt">.
 .card__header--alt {
   background: var(--st-surface-2);
+}
+
+.card__header--tall {
+  --card-header-height: #{space(15)}; // 3.75rem
 }
 
 .card__footer {
@@ -69,10 +93,23 @@
   // line-box. Aligns gap behavior with .card__header too.
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: calc(0.75rem * var(--st-density)) var(--card-padding);
+  gap: #{space(2)};
+  padding: #{space(3)} var(--card-padding-inline, #{space(5)});
   background: var(--st-surface-2);
   border-top: 1px solid var(--st-border);
+  border-radius: 0 0
+    calc(
+      var(--card-radius, #{radius(lg)}) - var(
+          --card-border-width,
+          var(--st-border-width)
+        )
+    )
+    calc(
+      var(--card-radius, #{radius(lg)}) - var(
+          --card-border-width,
+          var(--st-border-width)
+        )
+    );
 }
 
 .card__title {
@@ -93,21 +130,77 @@
 .card__link {
   color: var(--st-primary);
   text-decoration: none;
-  & + .card__link { margin-inline-start: 1rem; }
-  &:hover { text-decoration: underline; }
+  & + .card__link {
+    margin-inline-start: 1rem;
+  }
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
-// Image position-aware. .card has overflow:hidden so corners clip
-// automatically; explicit radii keep the image correct in contexts
-// where overflow is reset.
+// Image position-aware. .card carries no overflow: hidden (focus rings,
+// sticky headers, and overflowing menus must escape), so the image rounds
+// its own corners at whichever edge it meets the card — same approach the
+// flush table-in-card composition uses. It rounds to the card's INNER radius
+// (outer − border width) so the curve sits concentric with the border the
+// image is inset behind, rather than poking a hair proud of it.
+// Inner radius (outer − border width) repeats at each edge, matching the
+// concentric-calc convention used by table-in-card / toggle-group / tabs.
 .card__image {
   display: block;
   width: 100%;
   height: auto;
 
-  &:first-child { border-radius: var(--card-radius) var(--card-radius) 0 0; }
-  &:last-child  { border-radius: 0 0 var(--card-radius) var(--card-radius); }
-  &:only-child  { border-radius: var(--card-radius); }
+  &:first-child {
+    border-radius: calc(
+        var(--card-radius, #{radius(lg)}) - var(
+            --card-border-width,
+            var(--st-border-width)
+          )
+      )
+      calc(
+        var(--card-radius, #{radius(lg)}) - var(
+            --card-border-width,
+            var(--st-border-width)
+          )
+      )
+      0 0;
+  }
+  &:last-child {
+    border-radius: 0 0
+      calc(
+        var(--card-radius, #{radius(lg)}) - var(
+            --card-border-width,
+            var(--st-border-width)
+          )
+      )
+      calc(
+        var(--card-radius, #{radius(lg)}) - var(
+            --card-border-width,
+            var(--st-border-width)
+          )
+      );
+  }
+  &:only-child {
+    border-radius: calc(
+      var(--card-radius, #{radius(lg)}) - var(
+          --card-border-width,
+          var(--st-border-width)
+        )
+    );
+  }
+}
+
+// Overlay card: the image is the full-bleed background under .card__overlay,
+// not an image-above-body, so it rounds ALL four corners (overriding the
+// top-only :first-child rule above) to fill the card's whole rounded frame.
+.card:has(> .card__overlay) > .card__image {
+  border-radius: calc(
+    var(--card-radius, #{radius(lg)}) - var(
+        --card-border-width,
+        var(--st-border-width)
+      )
+  );
 }
 
 // Overlay sits over a .card__image (or any background sibling). Positions
@@ -118,7 +211,8 @@
   inset: 0;
   display: flex;
   flex-direction: column;
-  padding: var(--card-padding);
+  padding: var(--card-padding-block, #{space(5)})
+    var(--card-padding-inline, #{space(5)});
   color: #fff;
 
   .card__title,
@@ -130,14 +224,17 @@
 
 // === Item integration =================================================
 // A flushed item inside a card reads as a continuous row of the card's
-// surface. Pick up --card-padding so the row's inline edges align with
+// surface. Pick up --card-padding-inline so the row's inline edges align with
 // the header and footer paddings, and drop the radius since the outer
 // card already owns rounded corners. Mirrors the .card > .list-group
 // integration above.
-.card > .item--flush {
-  --item-padding: var(--card-padding);
+.card > .media--flush {
+  --media-padding-inline: var(--card-padding-inline, #{space(5)});
+  --media-padding-block: var(--card-padding-block, #{space(5)});
   border-radius: 0;
 }
 
 // Block — fills its container width per SPEC §9 escape ramp.
-.card--block { width: 100%; }
+.card--block {
+  width: 100%;
+}

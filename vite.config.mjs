@@ -1,7 +1,19 @@
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import nunjucksDev from './tools/vite-plugin-nunjucks.mjs';
 
 const SITE_ROOT = 'src/site';
+
+// Let template/site Sass resolve `@stisla/css/scss/...` against the live
+// source tree, so consumer-facing `@use "@stisla/css/scss/..."` lines (e.g.
+// in the shipped dashboard starter) compile in this monorepo exactly as they
+// will for a consumer who `npm i @stisla/css`. Maps only the `scss` subpath
+// to src/scss; the package's runtime CSS is still linked separately.
+const resolveConfig = {
+  alias: {
+    '@stisla/css/scss': fileURLToPath(new URL('./src/scss', import.meta.url)),
+  },
+};
 
 // BS5 5.3 internals still use deprecated Sass APIs (color-functions,
 // global-builtin, @import). Silence warnings from node_modules but keep
@@ -26,6 +38,7 @@ export default defineConfig(({ command }) => {
     return {
       plugins: [nunjucksDev({ siteRoot: SITE_ROOT })],
       server: { open: true },
+      resolve: resolveConfig,
       css,
     };
   }
@@ -65,6 +78,7 @@ export default defineConfig(({ command }) => {
   const finalNames = new Set(Object.values(renames));
 
   return {
+    resolve: resolveConfig,
     css,
     build: {
       outDir: 'site-dist/assets',

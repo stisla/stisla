@@ -1,4 +1,4 @@
-// Stisla v3 — item.
+// Stisla v3 — media.
 //
 // Two-column media-object row: media (icon / avatar / image) on the
 // inline-start, text column in the middle, action on the inline-end.
@@ -7,56 +7,54 @@
 // border + bg for stacks (typically inside a .card with separators
 // between rows).
 //
-// BEM: .item root + .item__media / __content / __title / __description /
-// __meta / __action. Modifiers stay flat on the root (.item--flush /
-// .item--vertical).
+// BEM: .media root + .media__figure / __content / __title / __description /
+// __meta / __action. Modifiers stay flat on the root (.media--flush /
+// .media--vertical).
 //
-// Tokens: --st-surface (bg), --st-border, --st-radius, --st-foreground,
-// --st-muted-foreground. 16px padding × --st-density.
+// Knobs: --media-bg / --media-color / --media-border-width + --media-border-color
+// / --media-radius /
+// --media-padding-block + --media-padding-inline / --media-gap, all
+// fallback-default. 16px padding = space(4).
 
-.item {
-  --item-radius:        var(--st-item-radius, var(--st-radius));
-  --item-padding:       calc(1rem * var(--st-density));
-  --item-gap:           0.75rem;
-  --item-bg:            var(--st-surface);
-  --item-color:         var(--st-foreground);
-  --item-border: var(--st-border-width) solid var(--st-border);
-
+.media {
+  // Fallback-default knobs (V3-ARCHITECTURE.md §2): nothing on the base, so a
+  // scope / inline retunes any of them. .media--flush strips chrome by
+  // overriding bg / border / radius.
   position: relative;
   display: flex;
   align-items: center;
-  gap: var(--item-gap);
-  padding: var(--item-padding);
-  color: var(--item-color);
-  background: var(--item-bg);
-  border: var(--item-border);
-  border-radius: var(--item-radius);
+  gap: var(--media-gap, #{space(3)});            // 0.75rem
+  padding: var(--media-padding-block, #{space(4)}) var(--media-padding-inline, #{space(4)});    // 1rem
+  color: var(--media-color, var(--st-foreground));
+  background: var(--media-bg, var(--st-surface));
+  border: var(--media-border-width, var(--st-border-width)) solid var(--media-border-color, var(--st-border));
+  border-radius: var(--media-radius, #{radius(md)});
 }
 
 // === Modifiers ========================================================
 
 // Strip chrome. The host parent owns the frame, so a stack of rows
-// reads as one continuous surface. .card > .item--flush further
-// retunes padding to match --card-padding via the integration rule
+// reads as one continuous surface. .card > .media--flush further
+// retunes padding to match --card-padding-inline/-block via the integration rule
 // at the bottom of _card.scss.
-.item--flush {
-  --item-bg:     transparent;
-  --item-border: 0;
-  --item-radius: 0;
+.media--flush {
+  --media-bg:           transparent;
+  --media-border-width: 0;
+  --media-radius:       0;
 }
 
 // Lay parts top-to-bottom (media → content → action). The action's
 // inline-end pin (margin-inline-start: auto) makes no sense on a
 // column, so clear it here.
-.item--vertical {
+.media--vertical {
   flex-direction: column;
   align-items: stretch;
 }
-.item--vertical > .item__action { margin-inline-start: 0; }
+.media--vertical > .media__action { margin-inline-start: 0; }
 
 // === Parts ============================================================
 
-.item__media {
+.media__figure {
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;
@@ -67,13 +65,13 @@
 // wrapper) pins to a sensible size so rows align across icon packs.
 // :only-child gate so a media slot with multiple children (avatar +
 // indicator, image + badge) keeps its own sizing.
-.item__media > :is(svg, i):only-child {
+.media__figure > :is(svg, i):only-child {
   width: 1.125rem;
   height: 1.125rem;
   flex-shrink: 0;
 }
 
-.item__content {
+.media__content {
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
@@ -81,24 +79,24 @@
   gap: 0.125rem;
 }
 
-.item__title {
+.media__title {
   font-weight: 600;
   line-height: 1.3;
   color: var(--st-foreground);
 }
 
-.item__description {
+.media__description {
   color: var(--st-muted-foreground);
   line-height: 1.5;
 }
 
-.item__meta {
+.media__meta {
   font-size: 0.8125rem;
   line-height: 1.4;
   color: var(--st-muted-foreground);
 }
 
-.item__action {
+.media__action {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
