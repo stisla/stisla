@@ -1,0 +1,12 @@
+/* @stisla/style — Card. Ported from src/scss/components/_card.scss. References the @theme
+ * tokens: colors var(--color-*), spacing --spacing(n), type var(--text-*) / var(--leading-*) /
+ * var(--font-weight-*), radius var(--radius-*). Only no-namespace customs use --st-*
+ * (border-width, duration, z). Knobs are --card-* (fallback-default). @layer components.
+ * Authoring rules: ../../../../PORTING.md */
+
+@layer components {
+  .card {
+    /* TODO: port from src/scss/components/_card.scss — token refs only, --card-* knobs.
+       State via attributes / ARIA (never is-*); sizes sm/md(base)/lg/xl. */
+  }
+}

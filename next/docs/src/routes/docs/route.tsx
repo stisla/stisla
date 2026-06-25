@@ -36,17 +36,17 @@ function DocsLayout() {
           </div>
           <nav>
             <p className="nav-group">Vanilla</p>
-            <Link
-              to="/docs/vanilla/alert"
-              activeProps={{ className: "active" }}
-            >
+            <Link to="/docs/vanilla/alert" activeProps={{ className: "active" }}>
               Alert
             </Link>
-            <Link
-              to="/docs/vanilla/button"
-              activeProps={{ className: "active" }}
-            >
+            <Link to="/docs/vanilla/badge" activeProps={{ className: "active" }}>
+              Badge
+            </Link>
+            <Link to="/docs/vanilla/button" activeProps={{ className: "active" }}>
               Button
+            </Link>
+            <Link to="/docs/vanilla/card" activeProps={{ className: "active" }}>
+              Card
             </Link>
           </nav>
         </aside>

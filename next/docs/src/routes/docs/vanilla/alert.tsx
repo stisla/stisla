@@ -177,7 +177,7 @@ function AlertDocs() {
             </tr>
             <tr>
               <td><code>--alert-bg</code></td>
-              <td>Background; <code>--neutral</code> sets <code>--st-surface</code>, intents set a 7% tint</td>
+              <td>Background; <code>--neutral</code> sets <code>--color-surface</code>, intents set a 7% tint</td>
             </tr>
             <tr>
               <td><code>--alert-border-width</code></td>
@@ -185,7 +185,7 @@ function AlertDocs() {
             </tr>
             <tr>
               <td><code>--alert-border-color</code></td>
-              <td>Border color; <code>--neutral</code> sets <code>--st-border</code>, intents a 40% tint</td>
+              <td>Border color; <code>--neutral</code> sets <code>--color-border</code>, intents a 40% tint</td>
             </tr>
             <tr>
               <td><code>--alert-color</code></td>

@@ -4,3 +4,5 @@
 @import "../../../packages/tokens/src/theme.css";
 @import "../../../packages/style/src/button/button.css";
 @import "../../../packages/style/src/alert/alert.css";
+@import "../../../packages/style/src/badge/badge.css";
+@import "../../../packages/style/src/card/card.css";

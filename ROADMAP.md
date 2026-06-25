@@ -39,8 +39,12 @@ actual next task always lives under **Next** below.
 > OWN Tailwind: `DemoFrame` imports `demo.css?inline` (compiled by `@tailwindcss/vite`, HMR-tracked)
 > — no separate CLI / `demo:css` / `concurrently`, so editing `theme.css` or a component's CSS
 > live-reloads the demos. **`/docs/vanilla/alert`** ported
-> too (Alert CSS + page; nav now lists Alert + Button; `Demo` gained `layout="stack"` for
-> block components like alerts). State convention: no `is-*` — attributes instead
+> too (Alert CSS + page; `Demo` gained `layout="stack"` for block components like alerts).
+> **`/docs/vanilla/badge`** ported (Badge CSS + page; nav now lists Alert + Badge + Button):
+> filled intents + `--soft` tinted variant + leading-icon convention + pill default; soft tint
+> uses `color-mix` on the dynamic `--badge-tone` (the `.button--soft` precedent, not compile-time
+> `--alpha()` which alert reserves for static per-modifier colors). Build clean (client + SSR).
+> State convention: no `is-*` — attributes instead
 > (`[aria-busy]`, `:disabled`/`[aria-disabled]`, `data-*`). **Token model corrected:** ONE Tailwind
 > `@theme` layer — semantic colors are `--color-*` (+ tuned `--radius-*`/`--shadow-*`; spacing/type
 > from Tailwind defaults), components reference theme vars directly (no `--st-*` colors, no magic
@@ -49,9 +53,19 @@ actual next task always lives under **Next** below.
 > All builds clean (client + SSR). **ARCHITECTURE.md** token sections (§1–§7, §9, §11–§12) were
 > rewritten to match this corrected model (no stale `@theme inline` / `tokens.css` text remains).
 >
+> **Porting tooling (new):** `next/PORTING.md` is the repeatable recipe (output files, wire-up
+> points, the lessons: token refs, no `is-*`, attribute/ARIA state, docs shape, verify steps).
+> `pnpm scaffold <name>` generates CSS + docs-page skeletons and wires `demo.css` + the nav link
+> (alphabetical). `pnpm check` (`scripts/check-tokens.mjs`) greps for forbidden patterns (`--bs-*`,
+> `@theme inline`, non-custom `--st-*`, `is-*`, scale-literal fallbacks) — it already caught + we
+> fixed stale `var(--st-*)` color refs in `button.tsx`/`alert.tsx` docs tables.
+>
 > **Next (do in this order):**
-> 1. **Port the next vanilla component** — Card or Badge (config + `*.css` + `/docs/vanilla/<name>`
->    page + nav entry), same pipeline as Button/Alert. This is the live work.
+> 1. **Fill in the scaffolded Card** — `packages/style/src/card/card.css` (port `_card.scss`,
+>    token refs only) + `docs/src/routes/docs/vanilla/card.tsx` (demos from `card.njk` +
+>    Customization table). Skeletons + nav + `demo.css` import already exist (`pnpm scaffold card`).
+>    Then `pnpm check && pnpm --filter docs build`. NOTE: Card's `.card > .media--flush` references
+>    the un-ported `.media` — defer that one slice until Media lands.
 > 2. Align or drop the throwaway **playground** `--st-*` colors (it predates the `--color-*` model).
 > 3. Share `Demo`/`DemoFrame` out of the duplicated playground copy.
 >

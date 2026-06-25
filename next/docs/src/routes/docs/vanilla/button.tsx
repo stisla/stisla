@@ -263,19 +263,19 @@ function ButtonDocs() {
           <tbody>
             <tr>
               <td><code>.button--primary</code></td>
-              <td><code>var(--st-primary)</code> + <code>--button-color: var(--st-primary-foreground)</code></td>
+              <td><code>var(--color-primary)</code> + <code>--button-color: var(--color-primary-foreground)</code></td>
             </tr>
             <tr>
               <td><code>.button--danger</code></td>
-              <td><code>var(--st-danger)</code> + <code>--button-color: var(--st-danger-foreground)</code></td>
+              <td><code>var(--color-danger)</code> + <code>--button-color: var(--color-danger-foreground)</code></td>
             </tr>
             <tr>
               <td><code>.button--neutral</code></td>
-              <td><code>var(--st-foreground)</code>; <code>--button-bg</code> forced to <code>--st-neutral</code></td>
+              <td><code>var(--color-foreground)</code>; <code>--button-bg</code> forced to <code>--color-neutral</code></td>
             </tr>
             <tr>
               <td><code>.button--tertiary</code></td>
-              <td><code>var(--st-foreground)</code> + <code>--button-color: var(--st-background)</code>; flips with theme</td>
+              <td><code>var(--color-foreground)</code> + <code>--button-color: var(--color-background)</code>; flips with theme</td>
             </tr>
           </tbody>
         </table>
