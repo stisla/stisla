@@ -1,0 +1,85 @@
+/* Docs shell stylesheet — Tailwind + Stisla tokens/theme + Tailwind Typography for prose,
+ * plus the Button component CSS (the shell dogfoods @stisla/react Button for the theme
+ * toggle). Per-demo component CSS is loaded inside the sandboxed iframes, not here. */
+@import "../../packages/tokens/src/theme.css";
+@import "../../packages/style/src/button/button.css";
+@plugin "@tailwindcss/typography";
+@source ".";
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--color-background);
+  color: var(--color-foreground);
+}
+
+/* === Docs shell: nav sidebar + content === */
+.docs-shell {
+  display: flex;
+  align-items: flex-start;
+}
+.docs-nav {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 15rem;
+  flex-shrink: 0;
+  overflow-y: auto;
+  padding: 1.25rem;
+  border-inline-end: 1px solid var(--color-border);
+}
+.docs-nav-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+.docs-nav .nav-group {
+  margin: 1rem 0 0.25rem;
+  color: var(--color-muted-foreground);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.docs-nav a {
+  display: block;
+  padding: 0.3rem 0.5rem;
+  border-radius: var(--radius-sm);
+  color: var(--color-foreground);
+  text-decoration: none;
+  font-size: var(--text-sm);
+}
+.docs-nav a:hover {
+  background: var(--color-accent);
+}
+.docs-nav a.active {
+  background: var(--color-highlight);
+  color: var(--color-highlight-foreground);
+}
+
+/* Content column (the .prose page sits inside the shell flex row). */
+.docs-shell .page {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 52rem;
+  margin-inline: auto;
+  padding: 2.5rem 1.5rem 6rem;
+}
+
+/* Demo block: preview (iframe) on top, highlighted source below, as one card. */
+.demo-block {
+  margin: 0 0 1.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+.demo-block pre {
+  margin: 0;
+  padding: 1rem;
+  border-top: 1px solid var(--color-border);
+  border-radius: 0;
+  overflow: auto;
+  max-height: 24rem;
+  font-size: var(--text-sm);
+}

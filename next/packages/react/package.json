@@ -1,0 +1,40 @@
+{
+  "name": "@stisla/react",
+  "version": "0.0.0",
+  "description": "Stisla React components — thin Base UI wrappers over the @stisla/style composer.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./button": {
+      "types": "./dist/button/index.d.ts",
+      "import": "./dist/button/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "build": "echo 'TODO Phase 3: tsup (ESM, per-component, sideEffects css)' && exit 0"
+  },
+  "dependencies": {
+    "@base-ui/react": "^1.6.0",
+    "@stisla/style": "workspace:*",
+    "@stisla/tokens": "workspace:*",
+    "clsx": "^2.1.0"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
+}

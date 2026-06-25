@@ -1,0 +1,318 @@
+/* @stisla/style — Button. Ported from src/scss/components/_btn.scss. References the Tailwind
+ * @theme tokens: colors var(--color-*), spacing --spacing(n), type var(--text-*) /
+ * var(--font-weight-*) / var(--leading-*), radius var(--radius-*). Only no-namespace customs
+ * use --st-* (border-width, duration). Knobs are --button-* (fallback-default). @layer components. */
+
+@layer components {
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--button-gap, --spacing(2));
+    height: var(--button-height, --spacing(9)); /* md */
+    padding-block: 0;
+    padding-inline: var(--button-padding-inline, --spacing(3));
+    font-family: inherit;
+    font-size: var(--button-font-size, var(--text-sm));
+    font-weight: var(--button-font-weight, var(--font-weight-medium));
+    line-height: var(--leading-none);
+    color: var(--button-color);
+    background: var(--button-bg, var(--button-tone));
+    border: var(--button-border-width, var(--st-border-width)) solid
+      var(
+        --button-border-color,
+        color-mix(
+          in oklch,
+          var(--button-tone) var(--button-rim-mix, 85%),
+          black
+        )
+      );
+    border-radius: var(--button-radius, var(--radius-md));
+    box-shadow: var(--button-bevel, inset 0 1px 0 rgba(255, 255, 255, 0.15));
+    cursor: pointer;
+    user-select: none;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition:
+      background-color var(--st-duration-fast) ease,
+      border-color var(--st-duration-fast) ease,
+      color var(--st-duration-fast) ease,
+      box-shadow var(--st-duration-fast) ease;
+
+    &:hover {
+      background: var(
+        --button-bg-hover,
+        color-mix(in oklch, var(--button-tone) 88%, black)
+      );
+    }
+    &:active,
+    &[aria-pressed="true"],
+    &[data-state="active"] {
+      background: var(
+        --button-bg-active,
+        color-mix(in oklch, var(--button-tone) 78%, black)
+      );
+    }
+    &:focus-visible {
+      outline: 2px solid var(--color-ring);
+      outline-offset: 2px;
+    }
+    &:disabled,
+    &[aria-disabled="true"] {
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: 0.55;
+    }
+  }
+
+  .button :is(svg, i, .button__icon) {
+    width: var(--button-icon-size, 1rem);
+    height: var(--button-icon-size, 1rem);
+    flex-shrink: 0;
+  }
+
+  /* === Sizes (base = md) === */
+  .button--sm {
+    --button-height: --spacing(7);
+    --button-padding-inline: --spacing(2.5);
+    --button-font-size: var(--text-sm);
+    --button-radius: var(--radius-sm);
+  }
+  .button--lg {
+    --button-height: --spacing(11);
+    --button-padding-inline: --spacing(4);
+    --button-radius: var(--radius-lg);
+  }
+  .button--xl {
+    --button-height: --spacing(13);
+    --button-padding-inline: --spacing(5);
+    --button-font-size: var(--text-base);
+    --button-radius: var(--radius-lg);
+  }
+
+  /* === Icon shapes === */
+  .button--icon-only {
+    --button-padding-inline: 0;
+    width: var(--button-height, --spacing(9));
+  }
+  .button--icon-round {
+    border-radius: 9999px;
+  }
+
+  /* === Wrap / block === */
+  .button--wrap {
+    height: auto;
+    min-height: var(--button-height, --spacing(9));
+    padding-block: --spacing(1.5);
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    line-height: var(--leading-tight);
+  }
+  .button--block {
+    display: flex;
+    width: 100%;
+  }
+
+  /* === Tones — filled === */
+  .button--primary {
+    --button-tone: var(--color-primary);
+    --button-color: var(--color-primary-foreground);
+  }
+  .button--danger {
+    --button-tone: var(--color-danger);
+    --button-color: var(--color-danger-foreground);
+  }
+  .button--neutral {
+    --button-tone: var(--color-foreground);
+    --button-bg: var(--color-neutral);
+    --button-color: var(--color-neutral-foreground);
+    --button-border-color: color-mix(
+      in oklch,
+      var(--color-neutral) var(--button-rim-mix, 85%),
+      var(--color-muted-foreground)
+    );
+
+    &:hover {
+      background: var(
+        --button-bg-hover,
+        color-mix(in oklch, var(--color-neutral) 88%, black)
+      );
+    }
+    &:active,
+    &[aria-pressed="true"],
+    &[data-state="active"] {
+      background: var(
+        --button-bg-active,
+        color-mix(in oklch, var(--color-neutral) 78%, black)
+      );
+    }
+  }
+  .button--tertiary {
+    --button-tone: var(--color-foreground);
+    --button-color: var(--color-background);
+
+    &:hover {
+      background: var(
+        --button-bg-hover,
+        color-mix(
+          in oklch,
+          var(--color-foreground) 88%,
+          var(--color-background)
+        )
+      );
+    }
+    &:active,
+    &[aria-pressed="true"],
+    &[data-state="active"] {
+      background: var(
+        --button-bg-active,
+        color-mix(
+          in oklch,
+          var(--color-foreground) 78%,
+          var(--color-background)
+        )
+      );
+    }
+  }
+
+  /* === Shapes === */
+  .button--outline {
+    --button-bg: transparent;
+    --button-color: var(--button-tone);
+    --button-border-color: var(--button-tone);
+    --button-bevel: none;
+
+    &:hover {
+      background: var(
+        --button-bg-hover,
+        color-mix(in oklch, var(--button-tone) 14%, transparent)
+      );
+    }
+    &:active,
+    &[aria-pressed="true"],
+    &[data-state="active"] {
+      background: var(
+        --button-bg-active,
+        color-mix(in oklch, var(--button-tone) 22%, transparent)
+      );
+    }
+  }
+  .button--ghost {
+    --button-bg: transparent;
+    --button-color: var(--button-tone);
+    --button-border-color: transparent;
+    --button-bevel: none;
+
+    &:hover {
+      background: var(
+        --button-bg-hover,
+        color-mix(in oklch, var(--button-tone) 18%, transparent)
+      );
+    }
+    &:active,
+    &[aria-pressed="true"],
+    &[data-state="active"] {
+      background: var(
+        --button-bg-active,
+        color-mix(in oklch, var(--button-tone) 26%, transparent)
+      );
+    }
+  }
+  .button--soft {
+    --button-bg: color-mix(in oklch, var(--button-tone) 12%, transparent);
+    --button-color: var(--button-tone);
+    --button-border-color: transparent;
+    --button-bevel: none;
+
+    &:hover {
+      background: var(
+        --button-bg-hover,
+        color-mix(in oklch, var(--button-tone) 20%, transparent)
+      );
+    }
+    &:active,
+    &[aria-pressed="true"],
+    &[data-state="active"] {
+      background: var(
+        --button-bg-active,
+        color-mix(in oklch, var(--button-tone) 28%, transparent)
+      );
+    }
+  }
+
+  /* === Neutral × shape === */
+  .button--outline.button--neutral {
+    --button-border-color: var(--color-border);
+    &:hover {
+      background: var(--button-bg-hover, var(--color-accent));
+    }
+    &:active,
+    &[aria-pressed="true"],
+    &[data-state="active"] {
+      background: var(
+        --button-bg-active,
+        color-mix(in oklch, var(--color-accent) 92%, var(--color-foreground))
+      );
+    }
+  }
+  .button--ghost.button--neutral {
+    &:hover {
+      background: var(--button-bg-hover, var(--color-accent));
+    }
+    &:active,
+    &[aria-pressed="true"],
+    &[data-state="active"] {
+      background: var(
+        --button-bg-active,
+        color-mix(in oklch, var(--color-accent) 92%, var(--color-foreground))
+      );
+    }
+  }
+
+  /* === Loading — styled off aria-busy === */
+  .button[aria-busy="true"] {
+    cursor: progress;
+    pointer-events: none;
+
+    & > :is(svg, i, .button__icon) {
+      display: none;
+    }
+    &::before {
+      content: "";
+      display: inline-block;
+      flex-shrink: 0;
+      width: var(--button-icon-size, 1em);
+      height: var(--button-icon-size, 1em);
+      border: 2px solid currentColor;
+      border-right-color: transparent;
+      border-radius: 50%;
+      animation: st-button-spin 0.75s linear infinite;
+    }
+  }
+
+  /* === Flush === */
+  .button--flush-start {
+    margin-inline-start: calc(-1 * var(--button-padding-inline, --spacing(3)));
+  }
+  .button--flush-end {
+    margin-inline-end: calc(-1 * var(--button-padding-inline, --spacing(3)));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+  .button[aria-busy="true"]::before {
+    animation-duration: 3s;
+  }
+}
+
+@keyframes st-button-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

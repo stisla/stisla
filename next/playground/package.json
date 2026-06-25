@@ -1,0 +1,27 @@
+{
+  "name": "playground",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Stisla dev playground — renders @stisla/react components against the live workspace source. Not published.",
+  "scripts": {
+    "dev": "pnpm run demo:css && vite",
+    "build": "pnpm run demo:css && vite build",
+    "preview": "vite preview",
+    "demo:css": "tailwindcss -i src/demo/iframe-css.src.css -o src/demo/iframe.css"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.0.0",
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.4.0",
+    "vite": "^6.0.0"
+  }
+}

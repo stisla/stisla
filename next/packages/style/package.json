@@ -1,0 +1,36 @@
+{
+  "name": "@stisla/style",
+  "version": "0.0.0",
+  "description": "Stisla framework-agnostic style layer — pure-JS composer + per-component configs + compiled component CSS. Zero framework deps.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./button": {
+      "types": "./dist/button/index.d.ts",
+      "import": "./dist/button/index.js"
+    },
+    "./button.css": "./dist/button/button.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "build": "echo 'TODO Phase 2: tsup (composer/configs) + tailwindcss (component CSS)' && exit 0"
+  },
+  "peerDependencies": {
+    "@stisla/tokens": "workspace:*"
+  },
+  "devDependencies": {
+    "tailwindcss": "^4.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.0"
+  }
+}

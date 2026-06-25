@@ -1,0 +1,17 @@
+{
+  "name": "@stisla/tokens",
+  "version": "0.0.0",
+  "description": "Stisla design tokens — canonical --st-* CSS variables (tokens.css) + Tailwind @theme bridge (theme.css). Shared by every implementation.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    "./theme.css": "./src/theme.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src"
+  ],
+  "sideEffects": [
+    "*.css"
+  ]
+}

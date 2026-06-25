@@ -1,0 +1,119 @@
+/* @stisla/tokens — THE token layer. Tailwind v4 @theme: one definition emits the CSS
+ * variables (referenced in our component CSS) AND generates the utilities. There is no
+ * parallel token system — components read these theme vars directly:
+ *   colors → var(--color-*)   type → var(--text-*) / var(--leading-*) / var(--font-weight-*)
+ *   radius → var(--radius-*)  shadow → var(--shadow-*)   spacing → --spacing(n)
+ *   tint   → --alpha(var(--color-x) / N%)
+ * Only tokens with NO Tailwind namespace use --st-* (z-index, duration, border-width).
+ * Dark mode overrides --color-* in a scope.
+ *
+ *   Consumer: @import "tailwindcss"; @import "@stisla/tokens/theme.css";
+ *   (this file imports Tailwind itself, so a bare import of it also works.) */
+
+@import "tailwindcss";
+
+@theme {
+  /* Drop Tailwind's default palette; ship only semantic colors. */
+  --color-*: initial;
+
+  /* Intent (5 pairs) */
+  --color-primary: oklch(0.639 0.1844 257.69);
+  --color-primary-foreground: oklch(1 0 0);
+  --color-success: oklch(0.6966 0.1853 149.54);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.7697 0.1645 70.61);
+  --color-warning-foreground: oklch(0.27 0 0);
+  --color-danger: oklch(0.6155 0.2229 26.82);
+  --color-danger-foreground: oklch(1 0 0);
+  --color-info: oklch(0.677589 0.148143 238.1044);
+  --color-info-foreground: oklch(1 0 0);
+
+  /* Surface (8) */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.27 0 0);
+  --color-surface: oklch(1 0 0);
+  --color-surface-2: oklch(0.98 0 0);
+  --color-surface-3: oklch(0.97 0 0);
+  --color-border: oklch(0.95 0 0);
+  --color-border-strong: oklch(0.93 0 0);
+  --color-muted-foreground: oklch(0.52 0 0);
+
+  /* Overlay (theme-independent chrome) */
+  --color-overlay: oklch(0.155 0 0);
+  --color-overlay-foreground: oklch(0.98 0 0);
+
+  /* Interactional */
+  --color-neutral: oklch(0.91 0 0);
+  --color-neutral-foreground: oklch(0.27 0 0); /* = foreground (light) */
+  --color-accent: oklch(0.96 0 0);
+  --color-accent-foreground: oklch(0.27 0 0);
+  --color-highlight: color-mix(in oklch, var(--color-primary) 12%, transparent);
+  --color-highlight-foreground: var(--color-primary);
+
+  /* Focus */
+  --color-ring: var(--color-primary);
+
+  /* Geometry — our tuned radius + shadow (override Tailwind's defaults; spacing/type stay) */
+  --radius-sm: 0.65rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --shadow-sm:
+    0 1px 2px 0 color-mix(in oklch, black 5%, transparent),
+    0 1px 3px 0 color-mix(in oklch, black 4%, transparent);
+  --shadow-md:
+    0 2px 6px -1px color-mix(in oklch, black 5%, transparent),
+    0 8px 16px -4px color-mix(in oklch, black 6%, transparent);
+  --shadow-lg:
+    0 4px 12px -2px color-mix(in oklch, black 6%, transparent),
+    0 16px 36px -8px color-mix(in oklch, black 9%, transparent);
+  --shadow-xl:
+    0 8px 24px -4px color-mix(in oklch, black 7%, transparent),
+    0 24px 56px -12px color-mix(in oklch, black 12%, transparent);
+
+  /* Type families */
+  --font-sans:
+    "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+}
+
+/* Dark mode — surfaces + interactional flip; intents stay put. */
+[data-theme="dark"],
+.dark {
+  --color-background: oklch(0.155 0 0);
+  --color-foreground: oklch(0.97 0 0);
+  --color-surface: oklch(0.18 0 0);
+  --color-surface-2: oklch(0.21 0 0);
+  --color-surface-3: oklch(0.23 0 0);
+  --color-border: oklch(0.25 0 0);
+  --color-border-strong: oklch(0.32 0 0);
+  --color-muted-foreground: oklch(0.72 0 0);
+  --color-neutral: oklch(0.27 0 0);
+  --color-neutral-foreground: oklch(0.97 0 0);
+  --color-accent: oklch(0.26 0 0);
+  --color-accent-foreground: oklch(0.97 0 0);
+}
+
+/* Tokens with NO Tailwind namespace — plain :root vars, read directly as var(--st-*). */
+:root {
+  --st-border-width: 1px;
+
+  --st-z-base: 0;
+  --st-z-dropdown: 1000;
+  --st-z-sticky: 1020;
+  --st-z-overlay: 1030;
+  --st-z-modal: 1040;
+  --st-z-popover: 1050;
+  --st-z-toast: 1060;
+  --st-z-tooltip: 1070;
+
+  --st-duration-fast: 120ms;
+  --st-duration-normal: 200ms;
+  --st-duration-slow: 320ms;
+}
+
+/* Class-based dark mode for utilities (both hooks Stisla supports). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *, .dark, .dark *));

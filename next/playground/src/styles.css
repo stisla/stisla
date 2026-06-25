@@ -1,0 +1,11 @@
+/* Pulls Tailwind + our --st-* tokens + @theme bridge + dark variant, then the Button
+ * component CSS (processed in the same Tailwind pass so --spacing()/@layer resolve).
+ * Relative paths keep dev buildless. */
+@import "../../packages/tokens/src/theme.css";
+@import "../../packages/style/src/button/button.css";
+@source "./";
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+}

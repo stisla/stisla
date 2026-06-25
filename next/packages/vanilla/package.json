@@ -1,0 +1,8 @@
+{
+  "name": "@stisla/vanilla",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Stisla vanilla-JS behavior layer (no-build interactivity: dialog, drawer, dropdown, accordion, sidebar). Pairs with @stisla/css. Enters at ROADMAP Phase 5 (sidebar) / Phase 8 (docs). Placeholder until then.",
+  "license": "MIT",
+  "type": "module"
+}
