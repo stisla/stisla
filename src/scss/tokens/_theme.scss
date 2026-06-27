@@ -46,7 +46,11 @@
   --st-surface:          oklch(1    0 0);
   --st-surface-2:        oklch(0.98 0 0);
   --st-surface-3:        oklch(0.97 0 0);
-  --st-border:           oklch(0.93 0 0);
+  --st-border:           oklch(0.95 0 0);
+  // Denser rim for small form controls (input, select, textarea, checkbox,
+  // radio, input-group, combobox) where the faint --st-border is hard to
+  // scan. Larger surfaces and dividers stay on --st-border.
+  --st-border-strong:    oklch(0.93 0 0);
   --st-muted-foreground: oklch(0.52 0 0);
 
   // === Overlay (2) — 1 pair =============================================
@@ -87,15 +91,28 @@
   --st-radius:    0.75rem;
   --st-radius-lg: 1rem;
 
-  // Three elevation tiers, independent literals (same rationale as the
-  // radius tiers above). Tooltip-class surfaces read --st-shadow-light;
-  // cards / dropdowns / popovers / toasts / accordion read --st-shadow;
-  // dialog / drawer (modal surfaces) read --st-shadow-heavy. Shadow color
-  // is theme-independent on purpose (dark drop shadow on every theme); use
-  // --st-overlay or a component-scoped knob for theme-tracking effects.
-  --st-shadow-light: 0 4px 12px -2px color-mix(in oklch, black 12%, transparent);
-  --st-shadow:       0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
-  --st-shadow-heavy: 0 10px 40px -10px color-mix(in oklch, black 35%, transparent);
+  // Four elevation tiers, t-shirt-named to match shadow(sm/md/lg/xl) and the
+  // radius tiers above. A monotonic ramp: blur, spread, and opacity all climb
+  // sm → md → lg → xl, each tier a soft contact layer plus a wider ambient one.
+  // Tooltip-class surfaces read --st-shadow-sm; cards / dropdowns / popovers /
+  // toasts / accordion read --st-shadow-md; dialog / drawer (modal surfaces)
+  // read --st-shadow-lg; xl is the highest tier, unassigned by default (reach
+  // for it on the most-lifted surfaces). Shadow color is theme-independent (dark
+  // drop shadow on every theme); use --st-overlay or a component-scoped knob
+  // for theme-tracking effects.
+  --st-shadow-sm:
+    0 1px 2px 0 color-mix(in oklch, black 5%, transparent),
+    0 1px 3px 0 color-mix(in oklch, black 4%, transparent);
+  --st-shadow-md:
+    0 2px 6px -1px color-mix(in oklch, black 5%, transparent),
+    0 8px 16px -4px color-mix(in oklch, black 6%, transparent);
+  --st-shadow-lg:
+    0 4px 12px -2px color-mix(in oklch, black 6%, transparent),
+    0 16px 36px -8px color-mix(in oklch, black 9%, transparent);
+  --st-shadow-xl:
+    0 8px 24px -4px color-mix(in oklch, black 7%, transparent),
+    0 24px 56px -12px color-mix(in oklch, black 12%, transparent);
+  --st-shadow: var(--st-shadow-md);    // back-compat base alias (mirrors --st-radius)
 
   // Border width for the shape outline of every bordered component.
   // Internal dividers (card section rules, list-group separators, drawer
@@ -130,6 +147,7 @@
   --st-surface-2:        oklch(0.21  0 0);
   --st-surface-3:        oklch(0.23  0 0);
   --st-border:           oklch(0.25  0 0);
+  --st-border-strong:    oklch(0.32  0 0);
   --st-muted-foreground: oklch(0.72  0 0);
 
   --st-neutral: oklch(0.27 0 0);

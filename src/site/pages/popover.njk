@@ -146,6 +146,66 @@
   </section>
 
   <section>
+    <h2>Notification panel</h2>
+    <p>A panel-shaped popover. A <code>popover__header</code> holds the title with a trailing <code>popover__action</code>, a list sits in the body, and a <code>popover__footer</code> closes it out. The header drops the root padding so the dividers run edge to edge.</p>
+    <p>Add <code>.popover--menu</code> when the body is a list of rows. It lays the body out as a flex column with a small gap, tightens the padding on the <code>.media</code> rows, and lets each row carry its own hover, so the panel reads like a menu. Each row's leading slot takes an <a class="link" href="/icon-box">icon box</a> or an <a class="link" href="/avatar">avatar</a>.</p>
+    {% call ui.demo() %}
+    <button type="button" class="btn btn--outline btn--neutral"
+            data-stisla-popover-trigger="popover-notify"
+            aria-haspopup="dialog" aria-expanded="false" aria-controls="popover-notify">
+      Notifications
+    </button>
+
+    <div class="popover popover--menu" id="popover-notify" data-stisla-popover data-stisla-popover-placement="bottom-end"
+         aria-labelledby="popover-notify-title" style="width: 20rem; max-width: 100%;">
+      <div class="popover__header">
+        <h3 class="popover__title" id="popover-notify-title">Notifications</h3>
+        <div class="popover__action">
+          <a class="link" href="#">Mark all as read</a>
+        </div>
+      </div>
+      <div class="popover__body">
+        <a href="#" class="media media--unread align-items-start">
+          <div class="media__figure">
+            <span class="icon-box icon-box--primary"><i data-lucide="shopping-cart"></i></span>
+          </div>
+          <div class="media__content">
+            <div class="media__title">New order #10428</div>
+            <div class="media__description">Acme Corp placed an order for 12 items.</div>
+            <div class="media__meta">5 minutes ago</div>
+          </div>
+        </a>
+        <a href="#" class="media align-items-start">
+          <div class="media__figure">
+            <span class="icon-box icon-box--danger"><i data-lucide="alert-triangle"></i></span>
+          </div>
+          <div class="media__content">
+            <div class="media__title">Low stock alert</div>
+            <div class="media__description">Headphone Blitz is down to 4 units.</div>
+            <div class="media__meta">1 hour ago</div>
+          </div>
+        </a>
+        <a href="#" class="media align-items-start">
+          <div class="media__figure">
+            <span class="avatar avatar--compact avatar--circle" data-stisla-avatar>
+              <span class="avatar__fallback">PP</span>
+            </span>
+          </div>
+          <div class="media__content">
+            <div class="media__title">Priya Patel</div>
+            <div class="media__description">Started following your store.</div>
+            <div class="media__meta">3 hours ago</div>
+          </div>
+        </a>
+      </div>
+      <div class="popover__footer">
+        <a href="#" class="btn btn--block btn--outline btn--neutral">View all notifications</a>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
     <h2>Imperative</h2>
     <p>Mark a popover with an <code>id</code> and reach it via <code>Stisla.get(document.getElementById('&lt;id&gt;'))</code>. Call <code>Stisla.Popover.getOrCreate(el).open()</code> when you need to drive it from script without a click trigger.</p>
     {% call ui.demo() %}
@@ -231,6 +291,23 @@
         <tr><td><code>--popover-body-color</code></td><td>Default body color. Override it to <code>--st-foreground</code> inside rich-content popovers.</td></tr>
         <tr><td><code>--popover-body-font-size</code></td><td>Body text size.</td></tr>
         <tr><td><code>--popover-body-line-height</code></td><td>Wrapping rhythm.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Panel (header and footer)</h3>
+    <table>
+      <thead>
+        <tr><th>Variable</th><th>Use</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>--popover-header-gap</code></td><td>Space between the title and the trailing header action.</td></tr>
+        <tr><td><code>--popover-header-padding-block</code></td><td>Header top and bottom inset, above the divider.</td></tr>
+        <tr><td><code>--popover-header-padding-inline</code></td><td>Header left and right inset.</td></tr>
+        <tr><td><code>--popover-body-padding-block</code></td><td>Body top and bottom inset in a panel, where the root padding is dropped.</td></tr>
+        <tr><td><code>--popover-body-padding-inline</code></td><td>Body left and right inset in a panel.</td></tr>
+        <tr><td><code>--popover-footer-padding-block</code></td><td>Footer top and bottom inset, below the divider.</td></tr>
+        <tr><td><code>--popover-footer-padding-inline</code></td><td>Footer left and right inset.</td></tr>
+        <tr><td><code>--popover-body-gap</code></td><td>Gap between rows when the body is a list (<code>.popover--menu</code>).</td></tr>
       </tbody>
     </table>
 

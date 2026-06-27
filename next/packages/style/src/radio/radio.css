@@ -1,0 +1,81 @@
+/* @stisla/style — Radio. Ported from src/scss/components/_radio.scss + the form-check-base mixin.
+ * Native <input type="radio"> styled as a small round dot. References the @theme tokens (colors
+ * var(--color-*), spacing --spacing(n)); only no-namespace customs use --st-* (border-width). Knobs
+ * are --radio-* (fallback-default). @layer components.
+ *
+ * The shared check base is DUPLICATED here with the --radio-* namespace (keep in sync with
+ * checkbox.css). Radius is 50% (circle). :indeterminate is intentionally NOT styled — a radio matches
+ * it when no radio in the group is checked, and that "no selection" state keeps the unchecked
+ * affordance (and accepts hover). State is native, no is-*.
+ * Authoring rules: ../../../../PORTING.md */
+
+@layer components {
+  .radio {
+    flex-shrink: 0;
+    width: var(--radio-size, --spacing(4));
+    height: var(--radio-size, --spacing(4));
+    margin: 0;
+    vertical-align: middle;
+    background-color: var(--radio-bg, var(--color-surface));
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    border: var(--radio-border-width, var(--st-border-width)) solid
+      var(--radio-border-color, var(--color-border-strong));
+    border-radius: var(--radio-radius, 50%);
+    appearance: none;
+    cursor: pointer;
+    transition:
+      background-color var(--st-duration-fast) ease,
+      background-position 0.15s ease,
+      border-color var(--st-duration-fast) ease,
+      box-shadow var(--st-duration-fast) ease;
+    print-color-adjust: exact;
+
+    &:focus-visible {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-ring) 25%, transparent);
+    }
+
+    /* Hover — only when idle. Skip focus / invalid / checked / disabled (:indeterminate absent by
+       design — it's the "no selection yet" state and keeps the unchecked affordance). */
+    &:hover:not(
+        :disabled,
+        :focus-visible,
+        :checked,
+        [aria-invalid="true"],
+        :user-invalid
+      ) {
+      border-color: color-mix(in oklch, var(--color-border-strong) 80%, var(--color-foreground));
+    }
+
+    &[aria-invalid="true"],
+    &:user-invalid {
+      border-color: var(--color-danger);
+    }
+    &[aria-invalid="true"]:focus-visible,
+    &:user-invalid:focus-visible {
+      border-color: var(--color-danger);
+      box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-danger) 25%, transparent);
+    }
+
+    &:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    /* Checked — solid primary fill, dot painted via background-image (literal white, same reason as
+       .checkbox: data: URLs can't read CSS vars). */
+    &:checked {
+      --radio-indicator: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='4' fill='white'/%3E%3C/svg%3E");
+      background-color: var(--radio-bg-checked, var(--color-primary));
+      border-color: var(--radio-bg-checked, var(--color-primary));
+      background-image: var(--radio-indicator);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+}

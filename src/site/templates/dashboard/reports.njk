@@ -1,0 +1,116 @@
+{% extends "layouts/app.njk" %}
+{% set nav_active = "reports" %}
+
+{% block title %}Reports · Meridian{% endblock %}
+
+{#
+  Reports — analytics page. A stat grid plus four ApexCharts (revenue area,
+  category + channel donuts, top-products bar) rendered by charts.js, which
+  reads the --st-* tokens and re-themes on stisla:themechange. The period
+  control is static (sample data); a real build would refetch on change.
+#}
+{% macro stat(label, value, delta, dir, icon) %}
+  <div class="col-6 col-lg-3">
+    <div class="card h-100">
+      <div class="card__body flex-column-reverse flex-md-row gap-4">
+        <div class="w-100 d-flex flex-column gap-2">
+          <span class="fs-2 text-muted-foreground">{{ label }}</span>
+          <div class="fs-6 fw-bold">{{ value }}</div>
+          <div class="d-flex align-items-center gap-2">
+            <span class="badge badge--soft badge--{{ 'success' if dir == 'up' else 'danger' }}">
+              {{ ("solar:graph-" + dir + "-linear") | icon }} {{ delta }}
+            </span>
+            <span class="fs-1 text-muted-foreground">vs last period</span>
+          </div>
+        </div>
+        <span class="icon-box icon-box--primary">{{ icon | icon }}</span>
+      </div>
+    </div>
+  </div>
+{% endmacro %}
+
+{% block page %}
+<div class="page content">
+  <div class="content__container">
+    <header class="page__header">
+      <div class="page__headline">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb__item"><a href="/dashboard/">Dashboard</a></li>
+            <li class="breadcrumb__item" aria-current="page">Reports</li>
+          </ol>
+        </nav>
+        <h1 class="page__title">Reports</h1>
+        <p class="page__description">Revenue, orders, and product performance for Meridian.</p>
+      </div>
+      <div class="page__action">
+        <div class="toggle-group" data-stisla-toggle-group role="radiogroup" aria-label="Date range">
+          <button type="button" class="toggle" role="radio" aria-checked="false">7d</button>
+          <button type="button" class="toggle" role="radio" data-state="active" aria-checked="true">30d</button>
+          <button type="button" class="toggle" role="radio" aria-checked="false">90d</button>
+        </div>
+        <button type="button" class="btn btn--neutral">{{ "solar:download-minimalistic-linear" | icon }} Export</button>
+      </div>
+    </header>
+
+    <div class="page__body">
+      {# Stat grid #}
+      <section class="page__section">
+        <div class="row g-3">
+          {{ stat("Revenue", "$48,210", "12%", "up", "solar:dollar-minimalistic-linear") }}
+          {{ stat("Orders", "1,284", "8%", "up", "solar:cart-large-2-linear") }}
+          {{ stat("Avg. order value", "$37.55", "3%", "up", "solar:bill-list-linear") }}
+          {{ stat("Refund rate", "2.4%", "0.6%", "down", "solar:restart-linear") }}
+        </div>
+      </section>
+
+      {# Revenue + category #}
+      <section class="page__section">
+        <div class="row g-3">
+          <div class="col-12 col-xl-8">
+            <div class="card h-100">
+              <div class="card__header">
+                <span class="card__title">Revenue over time</span>
+                <span class="badge badge--soft badge--success ms-auto">{{ "solar:graph-up-linear" | icon }} 12%</span>
+              </div>
+              <div class="card__body">
+                <div id="revenueChart" class="chart"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-xl-4">
+            <div class="card h-100">
+              <div class="card__header"><span class="card__title">Sales by category</span></div>
+              <div class="card__body">
+                <div id="categoryChart" class="chart"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {# Top products + channels #}
+      <section class="page__section">
+        <div class="row g-3">
+          <div class="col-12 col-lg-6">
+            <div class="card h-100">
+              <div class="card__header"><span class="card__title">Top products</span></div>
+              <div class="card__body">
+                <div id="topProductsChart" class="chart"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="card h-100">
+              <div class="card__header"><span class="card__title">Sales by channel</span></div>
+              <div class="card__body">
+                <div id="channelChart" class="chart"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+{% endblock %}

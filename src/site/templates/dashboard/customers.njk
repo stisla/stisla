@@ -1,0 +1,211 @@
+{% extends "layouts/app.njk" %}
+{% set nav_active = "customers" %}
+
+{% block title %}Customers · Meridian{% endblock %}
+
+{#
+  Customers — a plain server-rendered table. Rows come from a for-loop over the
+  sample data; sorting, the status filter, pagination, and search are server
+  concerns expressed as links / a form. Add customer opens a form dialog;
+  per-row + bulk Delete reuse the confirm-dialog pattern (data-fill / count).
+#}
+
+{% set statusMap = {
+  active:  { label: "Active",  tone: "success" },
+  new:     { label: "New",     tone: "info" },
+  vip:     { label: "VIP",     tone: "primary" },
+  churned: { label: "Churned", tone: "" }
+} %}
+{% set customers = [
+  { name: "Acme Corp",         email: "billing@acme.co",      img: 12, initials: "AC", location: "San Diego, US",    orders: 14, spent: "24,910", status: "vip" },
+  { name: "Riverway Ltd",      email: "ap@riverway.io",       img: 32, initials: "RL", location: "Bristol, UK",      orders: 11, spent: "18,200", status: "active" },
+  { name: "Northwind Traders", email: "orders@northwind.com", img: 48, initials: "NT", location: "Seattle, US",      orders: 9,  spent: "12,540", status: "active" },
+  { name: "Globex",            email: "buy@globex.com",       img: 15, initials: "GX", location: "Austin, US",       orders: 7,  spent: "9,180",  status: "active" },
+  { name: "Initech",           email: "po@initech.com",       img: 5,  initials: "IN", location: "Dallas, US",       orders: 5,  spent: "6,420",  status: "churned" },
+  { name: "Soylent Co",        email: "ops@soylent.co",       img: 23, initials: "SC", location: "Portland, US",     orders: 6,  spent: "8,015",  status: "active" },
+  { name: "Hooli",             email: "finance@hooli.xyz",    img: 8,  initials: "HO", location: "Palo Alto, US",    orders: 2,  spent: "1,675",  status: "new" },
+  { name: "Vehement Capital",  email: "desk@vehement.com",    img: 41, initials: "VC", location: "New York, US",     orders: 1,  spent: "95",     status: "new" },
+  { name: "Stark Industries",  email: "ap@stark.com",         img: 51, initials: "SI", location: "Malibu, US",       orders: 12, spent: "43,000", status: "vip" },
+  { name: "Umbrella Corp",     email: "orders@umbrella.com",  img: 18, initials: "UC", location: "Raccoon City, US", orders: 3,  spent: "2,410",  status: "churned" }
+] %}
+{% set statusFilters = [
+  { value: "all",     label: "All" },
+  { value: "active",  label: "Active" },
+  { value: "new",     label: "New" },
+  { value: "vip",     label: "VIP" },
+  { value: "churned", label: "Churned" }
+] %}
+
+{% block page %}
+<div class="page content">
+  <div class="content__container">
+    <header class="page__header">
+      <div class="page__headline">
+        <h1 class="page__title">Customers</h1>
+        <p class="page__description">Everyone who's placed an order with Meridian.</p>
+      </div>
+      <div class="page__action">
+        <button type="button" class="btn btn--neutral">{{ "solar:download-minimalistic-linear" | icon }} Export</button>
+        <button type="button" class="btn btn--primary" data-stisla-dialog-trigger="addCustomer">{{ "solar:add-circle-linear" | icon }} Add customer</button>
+      </div>
+    </header>
+
+    <div class="page__body">
+      <section class="page__section">
+        <div class="card" data-table-select>
+          {# Toolbar — status filter (server links) + search (server form). #}
+          <div class="card__header flex-wrap">
+            <div class="toggle-group mt-4 mt-md-0" data-stisla-toggle-group role="radiogroup" aria-label="Filter by status">
+              {% for f in statusFilters %}
+              <button type="button" class="toggle" role="radio" aria-checked="{{ 'true' if loop.first else 'false' }}"{% if loop.first %} data-state="active"{% endif %}>{{ f.label }}</button>
+              {% endfor %}
+            </div>
+            <form class="input-group ms-auto w-md-auto w-100 mb-4 mb-md-0" role="search" style="width: 15rem; max-width: 100%;">
+              <span class="input-group__text">{{ "solar:magnifer-linear" | icon }}</span>
+              <input type="search" name="q" class="input" placeholder="Search customers…" aria-label="Search customers" />
+            </form>
+          </div>
+
+          {# Bulk bar #}
+          <div class="card__header card__header--alt flex-wrap" data-bulkbar hidden>
+            <span><strong data-select-count>0</strong> selected</span>
+            <div class="d-flex flex-wrap align-items-center gap-2 ms-auto">
+              <button type="button" class="btn btn--compact btn--outline btn--neutral">{{ "solar:letter-linear" | icon }} Email</button>
+              <button type="button" class="btn btn--compact btn--danger" data-stisla-dialog-trigger="deleteConfirm">{{ "solar:trash-bin-trash-linear" | icon }} Delete</button>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table--hover table--align-middle mb-0">
+              <thead class="table__head--alt">
+                <tr>
+                  <th scope="col"><input class="checkbox" type="checkbox" data-select-all aria-label="Select all customers on this page" /></th>
+                  <th scope="col"><a class="table__sort" href="?sort=name">Customer</a></th>
+                  <th scope="col"><a class="table__sort" href="?sort=location">Location</a></th>
+                  <th scope="col" class="text-end"><a class="table__sort" href="?sort=orders">Orders</a></th>
+                  <th scope="col" class="text-end"><a class="table__sort" href="?sort=spent">Spent</a></th>
+                  <th scope="col"><a class="table__sort" href="?sort=status">Status</a></th>
+                  <th scope="col" class="text-end"><span class="visually-hidden">Actions</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for c in customers %}
+                {% set s = statusMap[c.status] %}
+                <tr>
+                  <td><input class="checkbox" type="checkbox" data-select-row aria-label="Select {{ c.name }}" /></td>
+                  <th scope="row">
+                    <div class="d-flex align-items-center gap-3">
+                      <span class="avatar avatar--compact avatar--circle" data-stisla-avatar>
+                        <img class="avatar__image" src="https://i.pravatar.cc/64?img={{ c.img }}" alt="" />
+                        <span class="avatar__fallback">{{ c.initials }}</span>
+                      </span>
+                      <div>
+                        <a href="/dashboard/profile.html" class="fw-medium">{{ c.name }}</a>
+                        <div class="fs-1 text-muted-foreground">{{ c.email }}</div>
+                      </div>
+                    </div>
+                  </th>
+                  <td>{{ c.location }}</td>
+                  <td class="text-end">{{ c.orders }}</td>
+                  <td class="text-end"><span class="fw-semibold">${{ c.spent }}</span></td>
+                  <td><span class="badge badge--soft{% if s.tone %} badge--{{ s.tone }}{% endif %}">{{ s.label }}</span></td>
+                  <td class="text-end">
+                    <div class="d-flex justify-content-end gap-1">
+                      <a href="mailto:{{ c.email }}" class="btn btn--ghost btn--neutral btn--icon-only btn--compact" aria-label="Email {{ c.name }}">{{ "solar:letter-linear" | icon }}</a>
+                      <button type="button" class="btn btn--ghost btn--danger btn--icon-only btn--compact" data-stisla-dialog-trigger="deleteCustomer" data-fill-name="{{ c.name }}" aria-label="Delete {{ c.name }}">{{ "solar:trash-bin-trash-linear" | icon }}</button>
+                    </div>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card__footer">
+            <span class="fs-1 text-muted-foreground">Showing 1–10 of 10</span>
+            <nav class="ms-auto" aria-label="Customers pages">
+              <ul class="pagination">
+                <li><span class="pagination__button" aria-disabled="true" aria-label="Previous">{{ "solar:alt-arrow-left-linear" | icon }}</span></li>
+                <li><a class="pagination__button" href="?page=1" data-state="active" aria-current="page">1</a></li>
+                <li><span class="pagination__button" aria-disabled="true" aria-label="Next">{{ "solar:alt-arrow-right-linear" | icon }}</span></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+{# Add customer — a form dialog. #}
+<div class="dialog" id="addCustomer" data-stisla-dialog data-state="closed"
+     role="dialog" aria-modal="true" aria-labelledby="addCustomerLabel" aria-hidden="true" tabindex="-1">
+  <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+  <div class="dialog__panel">
+    <div class="dialog__content">
+      <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <div class="dialog__header"><h3 class="dialog__title" id="addCustomerLabel">Add customer</h3></div>
+      <div class="dialog__body d-flex flex-column gap-4">
+        <div class="field">
+          <label for="newCustName" class="field__label">Name</label>
+          <input type="text" class="input" id="newCustName" placeholder="Jane Doe" autofocus />
+        </div>
+        <div class="field">
+          <label for="newCustEmail" class="field__label">Email</label>
+          <input type="email" class="input" id="newCustEmail" placeholder="jane@example.com" />
+        </div>
+      </div>
+      <div class="dialog__footer">
+        <button type="button" class="btn btn--ghost btn--neutral" data-stisla-dialog-dismiss>Cancel</button>
+        <button type="button" class="btn btn--primary" data-stisla-dialog-dismiss>Add customer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# Delete one customer — name filled from the row trigger. #}
+<div class="dialog dialog--compact" id="deleteCustomer" data-stisla-dialog data-state="closed"
+     role="alertdialog" aria-modal="true" aria-labelledby="deleteCustomerLabel"
+     aria-describedby="deleteCustomerDesc" aria-hidden="true" tabindex="-1">
+  <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+  <div class="dialog__panel">
+    <div class="dialog__content">
+      <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <div class="dialog__body text-center" style="padding-block-start: 1.5rem;">
+        <span class="icon-box icon-box--danger icon-box--round mb-3" style="--icon-box-size: 3rem; --icon-box-icon-size: 1.25rem;">
+          {{ "solar:trash-bin-trash-linear" | icon }}
+        </span>
+        <h3 class="dialog__title m-0 mb-1" id="deleteCustomerLabel">Delete <span data-slot="name"></span>?</h3>
+        <p class="text-muted-foreground m-0" id="deleteCustomerDesc">This removes the customer and their history. This can't be undone.</p>
+      </div>
+      <div class="dialog__footer justify-content-center">
+        <button type="button" class="btn btn--ghost btn--neutral" data-stisla-dialog-dismiss>Cancel</button>
+        <button type="button" class="btn btn--danger" data-stisla-dialog-dismiss>Delete customer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# Bulk-delete dialog. #}
+<div class="dialog dialog--compact" id="deleteConfirm" data-stisla-dialog data-state="closed"
+     role="alertdialog" aria-modal="true" aria-labelledby="delCustLabel"
+     aria-describedby="delCustDesc" aria-hidden="true" tabindex="-1">
+  <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+  <div class="dialog__panel">
+    <div class="dialog__content">
+      <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <div class="dialog__body text-center" style="padding-block-start: 1.5rem;">
+        <span class="icon-box icon-box--danger icon-box--round mb-3" style="--icon-box-size: 3rem; --icon-box-icon-size: 1.25rem;">
+          {{ "solar:trash-bin-trash-linear" | icon }}
+        </span>
+        <h3 class="dialog__title m-0 mb-1" id="delCustLabel">Delete <span data-select-count>0</span> customers?</h3>
+        <p class="text-muted-foreground m-0" id="delCustDesc">The selected customers are permanently removed. This can't be undone.</p>
+      </div>
+      <div class="dialog__footer justify-content-center">
+        <button type="button" class="btn btn--ghost btn--neutral" data-stisla-dialog-dismiss>Cancel</button>
+        <button type="button" class="btn btn--danger" data-stisla-dialog-dismiss>Delete customers</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

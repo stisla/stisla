@@ -1,0 +1,318 @@
+/* @stisla/style — Drawer. Ported from src/scss/components/_drawer.scss. An edge-anchored sheet: a
+ * frosted backdrop dims the page, the panel slides in from a viewport edge (default --end). Sharp
+ * flush corners are the affordance; only the inner edge carries a border. Shown via
+ * [data-state="open"] on the root. References the @theme tokens: colors var(--color-*),
+ * sizes/spacing --spacing(n), type var(--text-*) / var(--leading-*) / var(--font-weight-*), radius
+ * var(--radius-*), shadow var(--shadow-*); only no-namespace customs use --st-* (border-width,
+ * duration, z-index); z-index routes through the z-index scale (--st-z-modal); the backdrop scrim is a bespoke oklch alpha
+ * (no scrim token) and blur radii stay literal (filter geometry). State + scroll-lock hooks
+ * ([data-shaking], html[data-drawer-open]) are attributes, recast from the legacy is-* classes per
+ * the no-is-* convention. Knobs are --drawer-*. Open/close + focus-trap behavior ships with the JS
+ * layer. @layer components. Authoring rules: ../../../../PORTING.md */
+
+@layer components {
+  .drawer {
+    position: fixed;
+    inset: 0;
+    z-index: var(--drawer-z-index, var(--st-z-modal));
+    display: none;
+    pointer-events: none;
+  }
+
+  .drawer[data-state="open"] {
+    display: block;
+    pointer-events: auto;
+  }
+
+  .drawer__backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: var(--drawer-backdrop-bg, oklch(0 0 0 / 0.55));
+    backdrop-filter: blur(var(--drawer-backdrop-blur, 12px));
+    -webkit-backdrop-filter: blur(var(--drawer-backdrop-blur, 12px));
+    opacity: 0;
+    transition: opacity var(--drawer-transition-duration, var(--st-duration-normal)) ease;
+    cursor: pointer;
+  }
+
+  .drawer[data-state="open"] .drawer__backdrop {
+    opacity: 1;
+  }
+
+  /* Backdrop opt-out — hide the backdrop element entirely; the JS skips the dismiss-on-click path so
+     the page behind stays interactive (filter panels, inspector strips). */
+  .drawer[data-stisla-drawer-backdrop="false"] .drawer__backdrop {
+    display: none;
+  }
+
+  .drawer__content {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--drawer-bg, var(--color-surface));
+    color: var(--drawer-color, var(--color-foreground));
+    box-shadow: var(--drawer-shadow, var(--shadow-lg));
+    overflow: hidden;
+    outline: none;
+    transition: transform var(--drawer-transition-duration, var(--st-duration-normal)) ease;
+  }
+
+  /* === Placement === each pins the panel to a viewport edge and parks the content off-screen by
+     100% at rest. Only the inner edge carries a border. Default (bare .drawer) paints as --end. */
+  .drawer .drawer__content,
+  .drawer--end .drawer__content {
+    top: 0;
+    bottom: 0;
+    inset-inline-end: 0;
+    width: var(--drawer-width, --spacing(88));
+    max-width: 100vw;
+    border-inline-start: var(--drawer-border-width, var(--st-border-width)) solid
+      var(--drawer-border-color, var(--color-border));
+    transform: translateX(100%);
+  }
+
+  .drawer--start .drawer__content {
+    top: 0;
+    bottom: 0;
+    inset-inline-start: 0;
+    inset-inline-end: auto;
+    width: var(--drawer-width, --spacing(88));
+    max-width: 100vw;
+    border-inline-start: 0;
+    border-inline-end: var(--drawer-border-width, var(--st-border-width)) solid
+      var(--drawer-border-color, var(--color-border));
+    transform: translateX(-100%);
+  }
+
+  .drawer--top .drawer__content {
+    top: 0;
+    inset-inline: 0;
+    bottom: auto;
+    width: auto;
+    height: var(--drawer-height, --spacing(64));
+    max-height: 100dvh;
+    border: 0;
+    border-bottom: var(--drawer-border-width, var(--st-border-width)) solid
+      var(--drawer-border-color, var(--color-border));
+    transform: translateY(-100%);
+  }
+
+  .drawer--bottom .drawer__content {
+    top: auto;
+    bottom: 0;
+    inset-inline: 0;
+    width: auto;
+    height: var(--drawer-height, --spacing(64));
+    max-height: 100dvh;
+    border: 0;
+    border-top: var(--drawer-border-width, var(--st-border-width)) solid
+      var(--drawer-border-color, var(--color-border));
+    transform: translateY(100%);
+  }
+
+  /* RTL — inset-inline-* already anchors the panel on the correct physical edge, but translateX is
+     physical and can't be expressed logically, so flip the sign for the two inline-axis placements.
+     --top / --bottom use translateY (block-axis, direction-agnostic) and stay unchanged. */
+  [dir="rtl"] .drawer .drawer__content,
+  [dir="rtl"] .drawer--end .drawer__content {
+    transform: translateX(-100%);
+  }
+  [dir="rtl"] .drawer--start .drawer__content {
+    transform: translateX(100%);
+  }
+
+  /* Open — slide into place. */
+  .drawer[data-state="open"] .drawer__content {
+    transform: none;
+  }
+
+  /* === Floating === detaches the panel from the viewport: a gap on every side, all four corners
+     rounded, a full border, reading as a raised card rather than a flush sheet. Stacks onto any
+     placement (bare = end). The rest transform adds the gap on top of the 100% slide so the panel
+     still parks fully off-screen. */
+  .drawer--floating .drawer__content,
+  .drawer--floating.drawer--start .drawer__content,
+  .drawer--floating.drawer--end .drawer__content,
+  .drawer--floating.drawer--top .drawer__content,
+  .drawer--floating.drawer--bottom .drawer__content {
+    border: var(--drawer-border-width, var(--st-border-width)) solid
+      var(--drawer-border-color, var(--color-border));
+    border-radius: var(--drawer-radius, var(--radius-lg));
+  }
+
+  .drawer--floating .drawer__content,
+  .drawer--floating.drawer--end .drawer__content {
+    top: var(--drawer-gap, --spacing(3));
+    bottom: var(--drawer-gap, --spacing(3));
+    inset-inline-end: var(--drawer-gap, --spacing(3));
+    transform: translateX(calc(100% + var(--drawer-gap, --spacing(3))));
+  }
+
+  .drawer--floating.drawer--start .drawer__content {
+    top: var(--drawer-gap, --spacing(3));
+    bottom: var(--drawer-gap, --spacing(3));
+    inset-inline-start: var(--drawer-gap, --spacing(3));
+    inset-inline-end: auto;
+    transform: translateX(calc(-100% - var(--drawer-gap, --spacing(3))));
+  }
+
+  .drawer--floating.drawer--top .drawer__content {
+    top: var(--drawer-gap, --spacing(3));
+    bottom: auto;
+    inset-inline: var(--drawer-gap, --spacing(3));
+    transform: translateY(calc(-100% - var(--drawer-gap, --spacing(3))));
+  }
+
+  .drawer--floating.drawer--bottom .drawer__content {
+    top: auto;
+    bottom: var(--drawer-gap, --spacing(3));
+    inset-inline: var(--drawer-gap, --spacing(3));
+    transform: translateY(calc(100% + var(--drawer-gap, --spacing(3))));
+  }
+
+  /* RTL — flip the inline-axis floating transforms (mirrors the base block). */
+  [dir="rtl"] .drawer--floating .drawer__content,
+  [dir="rtl"] .drawer--floating.drawer--end .drawer__content {
+    transform: translateX(calc(-100% - var(--drawer-gap, --spacing(3))));
+  }
+  [dir="rtl"] .drawer--floating.drawer--start .drawer__content {
+    transform: translateX(calc(100% + var(--drawer-gap, --spacing(3))));
+  }
+
+  /* Open — slide into place. Last so it overrides every floating rest transform, LTR and RTL alike. */
+  .drawer--floating[data-state="open"] .drawer__content {
+    transform: none;
+  }
+
+  /* === Parts === */
+  .drawer__header {
+    display: flex;
+    align-items: center;
+    gap: --spacing(2);
+    flex: 0 0 auto;
+    padding: var(--drawer-padding-block, --spacing(5)) var(--drawer-padding-inline, --spacing(5));
+    padding-block-end: 0;
+  }
+
+  .drawer__title {
+    margin: 0;
+    font-size: var(--drawer-title-font-size, var(--text-lg));
+    font-weight: var(--drawer-title-font-weight, var(--font-weight-semibold));
+    line-height: var(--leading-tight);
+    color: var(--drawer-color, var(--color-foreground));
+  }
+
+  .drawer__body {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: var(--drawer-padding-block, --spacing(5)) var(--drawer-padding-inline, --spacing(5));
+    color: var(--drawer-color, var(--color-foreground));
+    overflow-y: auto;
+  }
+
+  .drawer__footer {
+    display: flex;
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: --spacing(2);
+    padding: var(--drawer-footer-padding-block, --spacing(3.5))
+      var(--drawer-padding-inline, --spacing(5));
+    background-color: var(--drawer-footer-bg, var(--color-surface-2));
+    border-top: var(--st-border-width) solid var(--drawer-footer-border-color, var(--color-border));
+  }
+
+  /* Inline ghost dismiss chip, pushed to the trailing edge whether the header wraps the title
+     directly or in a centered column. */
+  .drawer__close {
+    margin-inline-start: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--drawer-close-size, --spacing(7));
+    height: var(--drawer-close-size, --spacing(7));
+    padding: 0;
+    color: var(--drawer-close-color, var(--color-muted-foreground));
+    background-color: transparent;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    transition:
+      background-color var(--st-duration-fast) ease,
+      color var(--st-duration-fast) ease;
+  }
+
+  .drawer__close:hover {
+    color: var(--drawer-close-color-hover, var(--color-foreground));
+    background-color: var(--drawer-close-bg-hover, var(--color-accent));
+  }
+
+  .drawer__close:focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+    color: var(--drawer-close-color-hover, var(--color-foreground));
+    background-color: var(--drawer-close-bg-hover, var(--color-accent));
+  }
+
+  .drawer__close > svg,
+  .drawer__close > i {
+    width: --spacing(4);
+    height: --spacing(4);
+  }
+
+  /* === Static backdrop shake === the behavior layer sets [data-shaking] on the panel when a click
+     hits a static backdrop. The shake axis matches the placement axis so the nudge reads as "stuck"
+     along the slide direction. */
+  .drawer__content[data-shaking] {
+    animation: st-drawer-shake-x var(--st-duration-normal) ease-in-out;
+  }
+  .drawer--top .drawer__content[data-shaking],
+  .drawer--bottom .drawer__content[data-shaking] {
+    animation-name: st-drawer-shake-y;
+  }
+}
+
+/* === Scroll lock === applied to <html> while any backdrop-bearing drawer is open; scrollbar-gutter
+   keeps the page width stable. */
+html[data-drawer-open] {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}
+
+@keyframes st-drawer-shake-x {
+  0%,
+  100% {
+    transform: none;
+  }
+  25% {
+    transform: translateX(calc(--spacing(1) * -1));
+  }
+  75% {
+    transform: translateX(--spacing(1));
+  }
+}
+
+@keyframes st-drawer-shake-y {
+  0%,
+  100% {
+    transform: none;
+  }
+  25% {
+    transform: translateY(calc(--spacing(1) * -1));
+  }
+  75% {
+    transform: translateY(--spacing(1));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer__backdrop,
+  .drawer__content {
+    transition: none;
+  }
+  .drawer__content[data-shaking] {
+    animation: none;
+  }
+}

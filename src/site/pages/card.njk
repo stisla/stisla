@@ -20,7 +20,7 @@
       <div class="card__body">
         <h5 class="card__title">Sign in</h5>
         <p class="card__text">Welcome back. Enter your details to continue.</p>
-        <form class="demo-stack" style="margin-top: 1rem;">
+        <form class="demo-stack w-100 mt-4">
           <div class="field">
             <label for="cardLoginEmail" class="field__label">Email</label>
             <input type="email" class="input" id="cardLoginEmail" placeholder="you@example.com" />
@@ -93,13 +93,17 @@
     <p>
       The default header is transparent and inherits the card body
       background. The footer sits on <code>--st-surface-2</code> so the
-      body and footer split reads without a heavy border.
+      body and footer split reads without a heavy border. Wrap trailing
+      controls in a <code>.card__action</code> slot to push them to the end
+      of the header row without a utility.
     </p>
     {% call ui.demo() %}
     <div class="card" style="width: 22rem;">
       <div class="card__header">
         Featured
-        <button type="button" class="btn btn--neutral btn--compact ms-auto">Action</button>
+        <div class="card__action">
+          <button type="button" class="btn btn--neutral btn--compact">Action</button>
+        </div>
       </div>
       <div class="card__body">
         <h5 class="card__title">Special title treatment</h5>
@@ -108,6 +112,30 @@
       </div>
       <div class="card__footer">
         <span class="fs-2 text-muted-foreground">2 days ago</span>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Heading row</h2>
+    <p>
+      <code>.card__heading</code> is a section sub-header for use inside the
+      body: a title with optional trailing controls. Put the controls in a
+      <code>.card__action</code> slot and they sit at the end of the row while
+      the title packs to the start, the same <code>.card__action</code> slot
+      the header row uses.
+    </p>
+    {% call ui.demo() %}
+    <div class="card" style="width: 22rem;">
+      <div class="card__body">
+        <div class="card__heading">
+          <span class="card__title">Recent activity</span>
+          <div class="card__action">
+            <a class="link" href="#">See all</a>
+          </div>
+        </div>
+        <p class="card__text">Three new comments and a deploy since your last visit.</p>
       </div>
     </div>
     {% endcall %}
@@ -131,6 +159,30 @@
         <div class="card__header card__header--alt">Alt header</div>
         <div class="card__body">
           <p class="card__text">Header sits on <code>--st-surface-2</code>.</p>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
+    <h2>Compact header</h2>
+    <p>
+      The header row defaults to a roomy height. Add
+      <code>.card__header--compact</code> to tighten it for dense layouts.
+    </p>
+    {% call ui.demo() %}
+    <div class="demo-row demo-row--top demo-row--gap-md">
+      <div class="card" style="width: 18rem;">
+        <div class="card__header">Default header</div>
+        <div class="card__body">
+          <p class="card__text">The standard header height.</p>
+        </div>
+      </div>
+      <div class="card" style="width: 18rem;">
+        <div class="card__header card__header--compact">Compact header</div>
+        <div class="card__body">
+          <p class="card__text">A tighter header for dense rows.</p>
         </div>
       </div>
     </div>
@@ -208,7 +260,7 @@
         </tr>
         <tr>
           <td><code>--card-header-height</code></td>
-          <td>Minimum height of the header row</td>
+          <td>Minimum height of the header row; <code>.card__header--compact</code> lowers it</td>
         </tr>
       </tbody>
     </table>

@@ -25,6 +25,7 @@
   "exports": {
     ".": "./dist/stisla.css",
     "./full": "./dist/stisla-full.css",
+    "./utilities": "./dist/utilities.css",
     "./components/*": "./dist/components/*.css",
     "./dist/*": "./dist/*",
     "./scss/*": "./scss/*",

@@ -78,6 +78,16 @@
   --font-mono:
     "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
     "Liberation Mono", monospace;
+
+  /* Line-height scale — re-declared with Tailwind's default values (not changed). Tailwind v4 only
+     emits a theme var to :root when a UTILITY uses it; our components reference var(--leading-*) in
+     raw component CSS, and no leading-* utility is used anywhere, so without this they'd be
+     tree-shaken away and every `line-height: var(--leading-*)` would fall back to the inherited 1.5.
+     Declaring them here forces emission so the component line-heights actually apply. */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
 }
 
 /* Dark mode — surfaces + interactional flip; intents stay put. */
@@ -113,6 +123,21 @@
   --st-duration-fast: 120ms;
   --st-duration-normal: 200ms;
   --st-duration-slow: 320ms;
+}
+
+/* Base — default body copy is 14px (Stisla's long-standing default), set on <body> so the
+ * root stays at the browser default and 1rem = 16px: the spacing scale and every rem-based
+ * token remain anchored to 16px. Components set their own font-size (var(--text-sm) etc.);
+ * this governs only bare/inherited text and demo content. (Reboot concern — may move to a
+ * dedicated reboot layer later; theme.css is the one file every consumer imports, so it lives
+ * here for now.) */
+@layer base {
+  body {
+    font-size: var(--text-sm);
+    font-family: var(--font-sans);
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
 }
 
 /* Class-based dark mode for utilities (both hooks Stisla supports). */

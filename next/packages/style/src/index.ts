@@ -8,3 +8,5 @@ export type {
 } from "./composer";
 
 export { button } from "./button/config";
+export { sidebar, sidebarKnobs } from "./sidebar/config";
+export type { SidebarKnob } from "./sidebar/config";

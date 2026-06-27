@@ -220,6 +220,102 @@
   </section>
 
   <section>
+    <h2>Floating</h2>
+    <p>Add <code>.drawer--floating</code> to detach the panel from the viewport. It gains a gap on every side, rounded corners, and a full border so it reads as a raised card instead of a flush sheet. The modifier stacks onto any placement. Tune the breathing room with <code>--drawer-gap</code> and the corners with <code>--drawer-radius</code>.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-wrap align-items-center gap-2">
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-drawer-trigger="drawerFloatStart">Start</button>
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-drawer-trigger="drawerFloatEnd">End</button>
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-drawer-trigger="drawerFloatBottom">Bottom</button>
+    </div>
+
+    <div class="drawer drawer--floating drawer--start" data-stisla-drawer id="drawerFloatStart">
+      <div class="drawer__backdrop" data-stisla-drawer-dismiss></div>
+      <div class="drawer__content">
+        <div class="drawer__header">
+          <h3 class="drawer__title">Invite people</h3>
+          <button type="button" class="drawer__close" data-stisla-drawer-dismiss aria-label="Close"><i data-lucide="x"></i></button>
+        </div>
+        <div class="drawer__body">
+          <p class="text-muted-foreground">Send an invite and they'll join the workspace right away.</p>
+          <div class="field mb-4">
+            <label for="inviteEmail" class="field__label">Email</label>
+            <input type="email" class="input" id="inviteEmail" placeholder="teammate@example.com">
+          </div>
+          <div class="field">
+            <label for="inviteRole" class="field__label">Role</label>
+            <select class="select" id="inviteRole">
+              <option selected>Member</option>
+              <option>Admin</option>
+              <option>Viewer</option>
+            </select>
+          </div>
+        </div>
+        <div class="drawer__footer">
+          <button type="button" class="btn btn--ghost btn--neutral" data-stisla-drawer-dismiss>Cancel</button>
+          <button type="button" class="btn btn--primary" data-stisla-drawer-dismiss>Send invite</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="drawer drawer--floating" data-stisla-drawer id="drawerFloatEnd">
+      <div class="drawer__backdrop" data-stisla-drawer-dismiss></div>
+      <div class="drawer__content">
+        <div class="drawer__header">
+          <h3 class="drawer__title">Help &amp; resources</h3>
+          <button type="button" class="drawer__close" data-stisla-drawer-dismiss aria-label="Close"><i data-lucide="x"></i></button>
+        </div>
+        <div class="drawer__body" style="padding: 0">
+          <ul class="list-group list-group--flush">
+            <li class="d-flex flex-wrap list-group__item align-items-center gap-3">
+              <span class="icon-box icon-box--primary"><i data-lucide="book-open"></i></span>
+              <div class="flex-fill">
+                <div class="fw-medium">Documentation</div>
+                <div class="fs-2 text-muted-foreground">Guides and API reference</div>
+              </div>
+              <i data-lucide="chevron-right" width="18" class="text-muted-foreground"></i>
+            </li>
+            <li class="d-flex flex-wrap list-group__item align-items-center gap-3">
+              <span class="icon-box icon-box--info"><i data-lucide="message-circle"></i></span>
+              <div class="flex-fill">
+                <div class="fw-medium">Contact support</div>
+                <div class="fs-2 text-muted-foreground">Replies within a day</div>
+              </div>
+              <i data-lucide="chevron-right" width="18" class="text-muted-foreground"></i>
+            </li>
+            <li class="d-flex flex-wrap list-group__item align-items-center gap-3">
+              <span class="icon-box icon-box--warning"><i data-lucide="keyboard"></i></span>
+              <div class="flex-fill">
+                <div class="fw-medium">Keyboard shortcuts</div>
+                <div class="fs-2 text-muted-foreground">Work faster with hotkeys</div>
+              </div>
+              <i data-lucide="chevron-right" width="18" class="text-muted-foreground"></i>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="drawer drawer--floating drawer--bottom" data-stisla-drawer id="drawerFloatBottom" style="--drawer-height: 14rem;">
+      <div class="drawer__backdrop" data-stisla-drawer-dismiss></div>
+      <div class="drawer__content">
+        <div class="drawer__header">
+          <h3 class="drawer__title">Cookie preferences</h3>
+          <button type="button" class="drawer__close" data-stisla-drawer-dismiss aria-label="Close"><i data-lucide="x"></i></button>
+        </div>
+        <div class="drawer__body">
+          <p class="text-muted-foreground m-0">We use cookies to keep you signed in, remember your preferences, and understand how the app is used.</p>
+        </div>
+        <div class="drawer__footer">
+          <button type="button" class="btn btn--ghost btn--neutral" data-stisla-drawer-dismiss>Reject all</button>
+          <button type="button" class="btn btn--primary" data-stisla-drawer-dismiss>Accept all</button>
+        </div>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
     <h2>Sized</h2>
     <p>Override <code>--drawer-width</code> (start/end) or <code>--drawer-height</code> (top/bottom) inline on the root to retune a single instance. The default width is <code>22rem</code>; this one widens to <code>28rem</code> for a roomier form layout.</p>
     {% call ui.demo() %}
@@ -457,6 +553,7 @@
         <tr><td><code>--drawer-height</code></td><td>Panel height for <code>--top</code> and <code>--bottom</code>.</td></tr>
         <tr><td><code>--drawer-padding-block</code></td><td>Top and bottom padding of the header and body.</td></tr>
         <tr><td><code>--drawer-padding-inline</code></td><td>Left and right padding of the header and body.</td></tr>
+        <tr><td><code>--drawer-gap</code></td><td>Breathing room around the panel under <code>--floating</code>.</td></tr>
         <tr><td><code>--drawer-z-index</code></td><td>Stack level. One tier below dialog.</td></tr>
       </tbody>
     </table>
@@ -469,6 +566,7 @@
         <tr><td><code>--drawer-color</code></td><td>Panel text color.</td></tr>
         <tr><td><code>--drawer-border-width</code></td><td>Inner-edge border thickness; set <code>0</code> to drop it.</td></tr>
         <tr><td><code>--drawer-border-color</code></td><td>Inner-edge border (only the side facing the viewport).</td></tr>
+        <tr><td><code>--drawer-radius</code></td><td>Corner radius under <code>--floating</code>.</td></tr>
         <tr><td><code>--drawer-shadow</code></td><td>Soft ambient shadow around the panel.</td></tr>
       </tbody>
     </table>

@@ -1,0 +1,15 @@
+{% extends "layouts/error.njk" %}
+
+{% block title %}403 · Meridian{% endblock %}
+
+{% block error %}
+<div class="empty-state empty-state--warning">
+  <span class="empty-state__media">{{ "solar:lock-keyhole-linear" | icon }}</span>
+  <h3 class="empty-state__title">Access denied</h3>
+  <p class="empty-state__text">You don't have permission to view this page. Ask an admin if you think this is a mistake.</p>
+  <div class="empty-state__action flex-column">
+    <a href="/dashboard/" class="btn btn--primary">{{ "solar:widget-linear" | icon }} Back to dashboard</a>
+    <a href="/dashboard/login.html" class="btn btn--ghost btn--neutral">Switch account</a>
+  </div>
+</div>
+{% endblock %}

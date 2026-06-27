@@ -1,0 +1,159 @@
+/* @stisla/style — Slider. Ported from src/scss/components/_slider.scss. A JS-driven range input built
+ * from real DOM (.slider__track > .slider__range + .slider__thumb + hidden .slider__input) so every part
+ * is plain-CSS stylable — no pseudo-element gymnastics. The behavior layer (Stisla.Slider) owns pointer +
+ * keyboard + ARIA and writes --slider-fraction (0..1) on the host; this file owns paint and positions the
+ * thumb + range from that fraction. References the @theme tokens (colors var(--color-*), sizes/spacing
+ * --spacing(n)); only no-namespace customs use --st-* (border-width, duration). Pill radius is the literal
+ * 9999px (carries meaning, not a style choice — override --slider-radius to flatten). Sizes compact/roomy
+ * → sm/lg. Knobs are --slider-*. State is data-attribute (data-disabled / aria-invalid), no is-*.
+ * @layer components. Authoring rules: ../../../../PORTING.md */
+
+@layer components {
+  /* Fallback-default knobs: nothing on the base, so a scope / inline retunes any of them; track / range /
+     thumb read them with the same defaults (thumb-w / -gap / radius / fraction repeat in the position
+     calcs). --slider-fraction is JS-written (0..1) inline; the 0 fallback holds before JS runs. */
+  .slider {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: var(--slider-height, --spacing(9));
+    border-radius: var(--slider-radius, 9999px);
+    user-select: none;
+    cursor: pointer;
+    touch-action: none; /* own pointer; don't scroll on drag */
+
+    &[data-disabled="true"] {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+  }
+
+  /* === Track === fills the shell. overflow:hidden clips the range's slight overflow at fraction=1 (range
+     width is 100% + thumb-gap so the fill stays visible to the thumb's right at every value). */
+  .slider__track {
+    position: absolute;
+    inset: 0;
+    background: var(--slider-track-bg, var(--color-neutral));
+    border-radius: var(--slider-radius, 9999px);
+    overflow: hidden;
+    transition: border-color var(--st-duration-fast) ease;
+  }
+
+  /* === Range === filled segment. Width math (with edge inset = thumb-gap on each side):
+       thumb-right = thumb-w/2 + thumb-gap + fraction * (100% - thumb-w - 2*thumb-gap) + thumb-w/2
+                   = thumb-w + thumb-gap + fraction * (100% - thumb-w - 2*thumb-gap)
+       width       = thumb-right + thumb-gap
+     At fraction=0 the fill extends past the thumb on both sides by thumb-gap, so the thumb visually floats
+     in a small pool of fill before the unfilled segment begins. At fraction=1 the fill reaches 100% exactly.
+     No border-radius — the track's overflow:hidden + outer radius does the pill clipping; the range's right
+     edge stays straight (no rounded blob to the left of the thumb at low values). */
+  .slider__range {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: calc(
+      var(--slider-thumb-width, --spacing(2)) + 2 * var(--slider-thumb-gap, 0.2rem) +
+        var(--slider-fraction, 0) *
+        (100% - var(--slider-thumb-width, --spacing(2)) - 2 * var(--slider-thumb-gap, 0.2rem))
+    );
+    background: var(--slider-fill, var(--color-primary));
+  }
+
+  /* === Thumb === vertical pill, centered on its position. Travel range is inset by (thumb-w/2 + thumb-gap)
+     on each side so the thumb stays fully visible at extremes AND keeps a thumb-gap of breathing room from
+     the track edge — no half-thumbs, no kissing the pill curve. */
+  .slider__thumb {
+    position: absolute;
+    top: 50%;
+    left: calc(
+      var(--slider-thumb-width, --spacing(2)) / 2 + var(--slider-thumb-gap, 0.2rem) +
+        var(--slider-fraction, 0) *
+        (100% - var(--slider-thumb-width, --spacing(2)) - 2 * var(--slider-thumb-gap, 0.2rem))
+    );
+    transform: translate(-50%, -50%);
+    width: var(--slider-thumb-width, --spacing(2));
+    height: var(--slider-thumb-height, --spacing(4));
+    background: var(--slider-thumb-bg, #fff);
+    border: 0;
+    border-radius: var(--slider-radius, 9999px);
+    box-shadow: var(--slider-thumb-shadow, 0 1px 3px oklch(0 0 0 / 0.25));
+    cursor: pointer;
+    touch-action: none;
+    transition:
+      transform var(--st-duration-fast) ease,
+      box-shadow var(--st-duration-fast) ease;
+
+    &:focus {
+      outline: none;
+    }
+
+    /* Focus halo as a second box-shadow layer so it composes with the drop shadow. focus-visible only
+       paints when keyboard-focused. */
+    &:focus-visible {
+      box-shadow:
+        var(--slider-thumb-shadow, 0 1px 3px oklch(0 0 0 / 0.25)),
+        0 0 0 3px color-mix(in oklch, var(--slider-ring, var(--color-ring)) 25%, transparent);
+    }
+
+    /* Pressed feedback — preserve the centering translate. */
+    &:active {
+      transform: translate(-50%, -50%) scaleY(0.92);
+    }
+  }
+
+  /* === Hidden input === form participation only; the visible UI is the divs above. JS writes .value on
+     every change so the form payload reflects the current value. */
+  .slider__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* === Validation === aria-invalid is the canonical hook (server / JS sets it explicitly). Native
+     :user-invalid no longer applies — the visible control is divs, not the hidden input — so we route
+     validity through aria-invalid only. */
+  .slider[aria-invalid="true"] .slider__track {
+    border: var(--st-border-width) solid var(--color-danger);
+  }
+  .slider[aria-invalid="true"] .slider__thumb:focus-visible {
+    box-shadow:
+      var(--slider-thumb-shadow, 0 1px 3px oklch(0 0 0 / 0.25)),
+      0 0 0 3px color-mix(in oklch, var(--color-danger) 25%, transparent);
+  }
+
+  /* === Sizes (base = md) === track height matches .input--sm / --lg so sliders sit cleanly next to inputs
+     in the same row. Dims are --spacing() multiples. */
+  .slider--sm {
+    --slider-height: --spacing(7);
+    --slider-thumb-width: --spacing(1.5);
+    --slider-thumb-height: --spacing(4);
+  }
+  .slider--lg {
+    --slider-height: --spacing(11);
+    --slider-thumb-width: --spacing(2.5);
+    --slider-thumb-height: --spacing(6);
+  }
+
+  /* === Coarse pointer === touchscreens get a slightly larger thumb so it's easier to spot and grab.
+     Desktop (pointer: fine) keeps the compact default. */
+  @media (pointer: coarse) {
+    .slider {
+      --slider-thumb-width: --spacing(3);
+      --slider-thumb-height: --spacing(5);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slider__thumb,
+    .slider__track {
+      transition: none;
+    }
+  }
+}

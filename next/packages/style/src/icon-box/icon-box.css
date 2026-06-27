@@ -1,0 +1,64 @@
+/* @stisla/style — Icon box. Ported from src/scss/components/_icon-box.scss. A square tinted container
+ * for a single icon (Stisla original). Intent modifiers set --icon-box-tone; the bg (a 15% tint, same
+ * as .badge--soft) and color re-resolve from it. References the @theme tokens (colors var(--color-*),
+ * spacing/sizes --spacing(n), radius var(--radius-*)). Knobs are --icon-box-*. Sizes compact/roomy →
+ * sm/lg; pill radius literal 9999px. @layer components. Authoring rules: ../../../../PORTING.md */
+
+@layer components {
+  .icon-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--icon-box-size, --spacing(9));
+    height: var(--icon-box-size, --spacing(9));
+    color: var(--icon-box-color, var(--icon-box-tone, var(--color-muted-foreground)));
+    background: var(
+      --icon-box-bg,
+      color-mix(in oklch, var(--icon-box-tone, var(--color-muted-foreground)) 15%, transparent)
+    );
+    border-radius: var(--icon-box-radius, var(--radius-sm));
+  }
+
+  /* Icon stays a fixed size regardless of surrounding font-size (so not em). */
+  .icon-box :is(svg, i) {
+    width: var(--icon-box-icon-size, --spacing(4.5));
+    height: var(--icon-box-icon-size, --spacing(4.5));
+    flex-shrink: 0;
+  }
+
+  /* === Intent modifiers === override --icon-box-tone; bg + color both re-resolve from the new tone. */
+  .icon-box--primary {
+    --icon-box-tone: var(--color-primary);
+  }
+  .icon-box--success {
+    --icon-box-tone: var(--color-success);
+  }
+  .icon-box--warning {
+    --icon-box-tone: var(--color-warning);
+  }
+  .icon-box--danger {
+    --icon-box-tone: var(--color-danger);
+  }
+  .icon-box--info {
+    --icon-box-tone: var(--color-info);
+  }
+
+  /* === Shape === */
+  .icon-box--round {
+    border-radius: 9999px;
+  }
+  .icon-box--square {
+    border-radius: 0;
+  }
+
+  /* === Sizes (base = md) === */
+  .icon-box--sm {
+    --icon-box-size: --spacing(7);
+    --icon-box-icon-size: --spacing(3.5);
+  }
+  .icon-box--lg {
+    --icon-box-size: --spacing(12);
+    --icon-box-icon-size: --spacing(6);
+  }
+}

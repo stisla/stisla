@@ -52,7 +52,7 @@
     <table>
       <thead><tr><th>Bundle</th><th>Includes</th><th>Use when</th></tr></thead>
       <tbody>
-        <tr><td><code>stisla.css</code> (core)</td><td>Every component except the vanilla-optional ones (carousel today)</td><td>You want the smallest install and pull optionals à la carte</td></tr>
+        <tr><td><code>stisla.css</code> (core)</td><td>Every component except the vanilla-optional ones (carousel today)</td><td>You want the smallest install and pull optionals individually</td></tr>
         <tr><td><code>stisla-full.css</code></td><td>Core plus every vanilla-optional component</td><td>You want one stylesheet that covers everything</td></tr>
       </tbody>
     </table>
@@ -77,7 +77,7 @@ src/scss/
   utilities/       _utilities.scss        (single file, config-driven)
   bundles/         stisla.scss            (core entry)
                    stisla-full.scss       (core + vanilla-optional)
-                   components/<name>.scss (à-la-carte entries)
+                   components/<name>.scss (individual entries)
     {% endcall %}
     <p>The JS source mirrors the same shape:</p>
     {% call ui.code(lang='text', title='src/js/') %}

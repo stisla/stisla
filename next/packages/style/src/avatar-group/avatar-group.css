@@ -1,0 +1,42 @@
+/* @stisla/style — Avatar group. Ported from src/scss/components/_avatar-group.scss. A row of
+ * overlapping .avatar children that reads as a cluster (team row, attendee list). Members keep their
+ * own paint; the group owns the overlap (negative inline margin) and turns the per-avatar ring on so
+ * adjacent shapes read as separate objects. The hovered/focused member lifts so its ring paints over
+ * its neighbor — same z-index ladder as .button-group. References the @theme tokens (colors
+ * var(--color-*), spacing --spacing(n)). Knobs are --avatar-group-*. @layer components.
+ * Authoring rules: ../../../../PORTING.md */
+
+@layer components {
+  .avatar-group {
+    display: inline-flex;
+    vertical-align: middle;
+  }
+
+  /* Turn the ring on for every member (members declare the --avatar-ring-* slots; the group publishes
+     values into them). */
+  .avatar-group > .avatar {
+    --avatar-ring-width: var(--avatar-group-ring-width, 2px);
+    --avatar-ring-color: var(--avatar-group-ring-color, var(--color-background));
+    position: relative;
+  }
+
+  /* Negative inline margin collapses each member onto its left neighbor. */
+  .avatar-group > .avatar + .avatar {
+    margin-inline-start: calc(-1 * var(--avatar-group-overlap, --spacing(2.5)));
+  }
+
+  /* Stacking order — hovered / focused member rises so its ring paints over the following neighbor. */
+  .avatar-group > .avatar:hover {
+    z-index: 1;
+  }
+  .avatar-group > .avatar:focus-visible {
+    z-index: 2;
+  }
+
+  /* === Overflow tail === a plain .avatar member; this modifier just retunes its paint to read as
+   * "more" rather than a missing portrait. */
+  .avatar-group__more {
+    --avatar-bg: var(--color-surface-3);
+    --avatar-color: var(--color-muted-foreground);
+  }
+}

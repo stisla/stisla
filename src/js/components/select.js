@@ -538,7 +538,7 @@ export class Select extends Component {
   }
 
   _onPopupClick(e) {
-    const li = e.target.closest('.select__item');
+    const li = e.target.closest('[role="option"]');
     if (!li) return;
     const idx = this._optionEls.indexOf(li);
     if (idx < 0) return;

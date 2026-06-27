@@ -61,12 +61,12 @@
 
       // Between two named breakpoints, inclusive on both ends.
       @include media-between(sm, lg) {
-        // applies from 576px through 1199.98px
+        // applies from 640px through 1279.98px
       }
 
       // Only the named breakpoint (no overlap above or below).
       @include media-only(md) {
-        // applies from 768px through 991.98px
+        // applies from 768px through 1023.98px
       }
     }
     {% endcall %}
@@ -76,24 +76,24 @@
     <p>The four mixins produce these media queries at each tier. <code>media-down</code> and <code>media-only</code> subtract <code>0.02px</code> from the next breakpoint to avoid overlapping with the matching <code>media-up</code> at the boundary (a one-pixel limitation of <code>min-width</code> + <code>max-width</code>).</p>
     {% call ui.code(lang='css') %}
     /* media-up */
-    @media (min-width: 576px)  { ... }  /* sm */
+    @media (min-width: 640px)  { ... }  /* sm */
     @media (min-width: 768px)  { ... }  /* md */
-    @media (min-width: 992px)  { ... }  /* lg */
-    @media (min-width: 1200px) { ... }  /* xl */
-    @media (min-width: 1400px) { ... }  /* xxl */
+    @media (min-width: 1024px) { ... }  /* lg */
+    @media (min-width: 1280px) { ... }  /* xl */
+    @media (min-width: 1536px) { ... }  /* xxl */
 
     /* media-down */
-    @media (max-width: 575.98px)  { ... }  /* sm */
+    @media (max-width: 639.98px)  { ... }  /* sm */
     @media (max-width: 767.98px)  { ... }  /* md */
-    @media (max-width: 991.98px)  { ... }  /* lg */
-    @media (max-width: 1199.98px) { ... }  /* xl */
-    @media (max-width: 1399.98px) { ... }  /* xxl */
+    @media (max-width: 1023.98px) { ... }  /* lg */
+    @media (max-width: 1279.98px) { ... }  /* xl */
+    @media (max-width: 1535.98px) { ... }  /* xxl */
 
     /* media-only(md) */
-    @media (min-width: 768px) and (max-width: 991.98px) { ... }
+    @media (min-width: 768px) and (max-width: 1023.98px) { ... }
 
     /* media-between(sm, lg) */
-    @media (min-width: 576px) and (max-width: 1199.98px) { ... }
+    @media (min-width: 640px) and (max-width: 1279.98px) { ... }
     {% endcall %}
   </section>
 
@@ -109,11 +109,11 @@
     // _my-overrides.scss
     $breakpoints: (
       xs:  0,
-      sm:  640px,
+      sm:  480px,
       md:  768px,
       lg:  1024px,
-      xl:  1280px,
-      xxl: 1536px,
+      xl:  1440px,
+      xxl: 1920px,
     );
 
     @use 'stisla/scss/bundles/stisla';

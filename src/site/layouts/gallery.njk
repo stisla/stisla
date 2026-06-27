@@ -1,0 +1,12 @@
+{#
+  Gallery layout. Keeps the base head (fonts, theme bootstrap, Stisla CSS,
+  scripts) and the site navbar, but drops the docs sidebar, content-card, and
+  right rail. The page is a full-bleed canvas: pages fill `block gallery`.
+#}
+{% extends "layouts/base.njk" %}
+
+{% block layout %}
+<main class="gallery">
+  {% block gallery %}{% endblock %}
+</main>
+{% endblock %}

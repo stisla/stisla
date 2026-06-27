@@ -150,6 +150,81 @@
   transform: none;
 }
 
+// === Floating modifier ===================================================
+// Detaches the panel from the viewport: a gap on every side, all four
+// corners rounded, and a full border so it reads as a raised card rather
+// than a flush sheet. Stacks onto any placement (bare = end). The rest
+// transform adds the gap on top of the 100% slide so the panel still parks
+// fully off-screen. --drawer-gap sets the breathing room around it;
+// --drawer-radius rounds the corners.
+.drawer--floating,
+.drawer--floating.drawer--start,
+.drawer--floating.drawer--end,
+.drawer--floating.drawer--top,
+.drawer--floating.drawer--bottom {
+  .drawer__content {
+    border: var(--drawer-border-width, var(--st-border-width)) solid var(--drawer-border-color, var(--st-border));
+    border-radius: var(--drawer-radius, #{radius(lg)});
+  }
+}
+
+.drawer--floating,
+.drawer--floating.drawer--end {
+  .drawer__content {
+    top: var(--drawer-gap, #{space(3)});
+    bottom: var(--drawer-gap, #{space(3)});
+    inset-inline-end: var(--drawer-gap, #{space(3)});
+    transform: translateX(calc(100% + var(--drawer-gap, #{space(3)})));
+  }
+}
+
+// Each placement resets the off-axis offsets the bare (end) rule above
+// leaves set, mirroring how the base placement blocks reset each other.
+.drawer--floating.drawer--start {
+  .drawer__content {
+    top: var(--drawer-gap, #{space(3)});
+    bottom: var(--drawer-gap, #{space(3)});
+    inset-inline-start: var(--drawer-gap, #{space(3)});
+    inset-inline-end: auto;
+    transform: translateX(calc(-100% - var(--drawer-gap, #{space(3)})));
+  }
+}
+
+.drawer--floating.drawer--top {
+  .drawer__content {
+    top: var(--drawer-gap, #{space(3)});
+    bottom: auto;
+    inset-inline: var(--drawer-gap, #{space(3)});
+    transform: translateY(calc(-100% - var(--drawer-gap, #{space(3)})));
+  }
+}
+
+.drawer--floating.drawer--bottom {
+  .drawer__content {
+    top: auto;
+    bottom: var(--drawer-gap, #{space(3)});
+    inset-inline: var(--drawer-gap, #{space(3)});
+    transform: translateY(calc(100% + var(--drawer-gap, #{space(3)})));
+  }
+}
+
+// RTL — flip the inline-axis floating transforms (mirrors the base block).
+[dir="rtl"] {
+  .drawer--floating .drawer__content,
+  .drawer--floating.drawer--end .drawer__content {
+    transform: translateX(calc(-100% - var(--drawer-gap, #{space(3)})));
+  }
+  .drawer--floating.drawer--start .drawer__content {
+    transform: translateX(calc(100% + var(--drawer-gap, #{space(3)})));
+  }
+}
+
+// Open — slide into place. Last so it overrides every floating rest
+// transform above, LTR and RTL alike (mirrors the base open rule order).
+.drawer--floating[data-state='open'] .drawer__content {
+  transform: none;
+}
+
 // === Parts ===============================================================
 .drawer__header {
   display: flex;

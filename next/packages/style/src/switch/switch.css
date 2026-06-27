@@ -1,0 +1,91 @@
+/* @stisla/style — Switch. Ported from src/scss/components/_switch.scss. Track + thumb toggle: the
+ * track is the <input> itself (rounded rect); the thumb is a radial-gradient circle that slides via
+ * background-position on :checked. References the @theme tokens (colors var(--color-*), spacing
+ * --spacing(n)); only no-namespace customs use --st-* (border-width). Knobs are --switch-*.
+ *
+ * Authoring (matches .checkbox / .radio — primitive input + separate <label>, composed via .field__item):
+ *   <div class="field__item">
+ *     <input class="switch" type="checkbox" role="switch" id="x">
+ *     <label class="field__label" for="x">Notifications</label>
+ *   </div>
+ * Pair role="switch" so assistive tech announces "switch". State is native (:checked / :disabled /
+ * :focus-visible / [aria-invalid] / :user-invalid), no is-*. NOTE: the pill radius default is a
+ * literal 9999px — the radius scale is sm/md/lg only (no full); same precedent as .button--icon-round.
+ * Authoring rules: ../../../../PORTING.md */
+
+@layer components {
+  .switch {
+    flex-shrink: 0;
+    width: var(--switch-track-width, --spacing(7));
+    height: var(--switch-track-height, --spacing(4));
+    margin: 0;
+    vertical-align: middle;
+    border: var(--st-border-width) solid transparent;
+    /* Pill by default; a preset squares the track by setting --switch-radius. */
+    border-radius: var(--switch-radius, 9999px);
+    /* Off-state track: a semi-transparent foreground tone (not --color-neutral, which sits too light
+       in light mode to contrast a white thumb). Resolves to a mid-gray that adapts per theme. */
+    background-color: var(--switch-off-bg, color-mix(in oklch, var(--color-foreground) 25%, transparent));
+    /* Thumb lives in the paint (<input> is void, no pseudo). Default is a hard-edged radial circle;
+       a preset swaps --switch-thumb-paint to a linear-gradient for a solid square thumb. */
+    background-image: var(
+      --switch-thumb-paint,
+      radial-gradient(circle at center, var(--switch-thumb-color, white) 49%, transparent 51%)
+    );
+    background-size: var(--switch-thumb-size, --spacing(3)) var(--switch-thumb-size, --spacing(3));
+    background-position: var(--switch-inset, --spacing(0.5)) center;
+    background-repeat: no-repeat;
+    appearance: none;
+    cursor: pointer;
+    transition:
+      background-color var(--st-duration-fast) ease,
+      background-position 0.15s ease,
+      border-color var(--st-duration-fast) ease,
+      box-shadow var(--st-duration-fast) ease;
+    print-color-adjust: exact;
+
+    /* Hover (idle only). Skip focus / invalid / checked / disabled. */
+    &:hover:not(:disabled, :focus-visible, :checked, [aria-invalid="true"], :user-invalid) {
+      background-color: color-mix(in oklch, var(--color-foreground) 35%, transparent);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-ring) 25%, transparent);
+    }
+
+    &:checked {
+      background-color: var(--switch-on-bg, var(--color-primary));
+      background-position: calc(100% - var(--switch-inset, --spacing(0.5))) center;
+    }
+
+    /* Validation — touches the border only; the fill follows on/off so both signals compose. */
+    &[aria-invalid="true"],
+    &:user-invalid {
+      border-color: var(--color-danger);
+    }
+    &[aria-invalid="true"]:focus-visible,
+    &:user-invalid:focus-visible {
+      border-color: var(--color-danger);
+      box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-danger) 25%, transparent);
+    }
+
+    &:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  /* === Large (base = md) === a bigger variant for standalone settings rows where the switch is the
+   * row's primary affordance and reads small at the default. */
+  .switch--lg {
+    --switch-track-width: --spacing(11);
+    --switch-track-height: --spacing(6);
+    --switch-thumb-size: --spacing(5);
+    --switch-inset: --spacing(0.5);
+  }
+}

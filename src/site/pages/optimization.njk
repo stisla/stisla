@@ -22,14 +22,19 @@
       </thead>
       <tbody>
         <tr>
-          <td><code>stisla.css</code> (core, 46 components)</td>
-          <td>~227 KB</td>
-          <td>~30 KB</td>
+          <td><code>stisla.css</code> (core, 46 components, no utilities)</td>
+          <td>~163 KB</td>
+          <td>~23 KB</td>
         </tr>
         <tr>
-          <td><code>stisla-full.css</code> (core + 3 optional components)</td>
-          <td>~241 KB</td>
-          <td>~32 KB</td>
+          <td><code>utilities.css</code> (opt-in tweak layer)</td>
+          <td>~49 KB</td>
+          <td>~5 KB</td>
+        </tr>
+        <tr>
+          <td><code>stisla-full.css</code> (core + 3 optional components + utilities)</td>
+          <td>~226 KB</td>
+          <td>~30 KB</td>
         </tr>
         <tr>
           <td><code>stisla.js</code> (core runtime)</td>
@@ -38,7 +43,7 @@
         </tr>
       </tbody>
     </table>
-    <p>30 KB of gzipped CSS is small enough that most apps don&rsquo;t need to optimize at all. If yours does, here are three levers in order of effort.</p>
+    <p>The core stylesheet is components only. Utilities are an opt-in layer you add when you want them, so the default install carries no tweak classes you never reference. 23 KB of gzipped CSS is small enough that most apps don&rsquo;t need to optimize at all. If yours does, here are three levers in order of effort.</p>
   </section>
 
   <section>
@@ -122,11 +127,12 @@ export default defineConfig({
   // ...
 }
 
-@layer utilities {
-  @import '@stisla/css/scss/utilities/utilities';
-}
+// Utilities are opt-in. Uncomment to add the tweak layer to this build.
+// @layer utilities {
+//   @import '@stisla/css/scss/utilities/utilities';
+// }
     {% endcall %}
-    <p>The example above keeps seven components (button, input, form label, card, badge, alert, link), which is the kind of subset you&rsquo;d use on a landing page or marketing site.</p>
+    <p>The example above keeps seven components (button, input, form label, card, badge, alert, link), which is the kind of subset you&rsquo;d use on a landing page or marketing site. Utilities stay commented out, so this build is components only.</p>
     <table>
       <thead>
         <tr>
@@ -137,9 +143,9 @@ export default defineConfig({
       </thead>
       <tbody>
         <tr>
-          <td>Default core (46 components)</td>
-          <td>~227 KB</td>
-          <td>~30 KB</td>
+          <td>Default core (46 components, no utilities)</td>
+          <td>~163 KB</td>
+          <td>~23 KB</td>
         </tr>
         <tr>
           <td>Forked bundle (7 components)</td>
@@ -148,8 +154,8 @@ export default defineConfig({
         </tr>
         <tr>
           <td>Saved</td>
-          <td>~124 KB</td>
-          <td>~17 KB</td>
+          <td>~60 KB</td>
+          <td>~10 KB</td>
         </tr>
       </tbody>
     </table>

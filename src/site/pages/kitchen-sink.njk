@@ -54,7 +54,7 @@
       background: var(--st-surface);
       border: 1px solid var(--st-border);
       border-radius: var(--st-radius);
-      box-shadow: var(--st-shadow-light);
+      box-shadow: var(--st-shadow-sm);
     }
     .ks-bar__title {
       margin: 0;
@@ -444,7 +444,7 @@
       <div class="alert alert--warning"><i data-lucide="triangle-alert"></i><div>Some features may not work.</div></div>
       <div class="alert alert--danger">
         <i data-lucide="x-circle"></i>
-        <div class="alert__heading">Payment failed</div>
+        <div class="alert__title">Payment failed</div>
         <div class="alert__description">We couldn't charge your card. Update billing details and retry.</div>
         <div class="alert__action">
           <button type="button" class="btn btn--ghost btn--neutral btn--compact">Dismiss</button>
@@ -725,8 +725,8 @@
 
     <div class="accordion" data-stisla-accordion>
       <div class="accordion__item" data-state="open">
-        <h3>
-          <button type="button" class="accordion__header" data-stisla-accordion-trigger aria-expanded="true" aria-controls="ks-acc-1" id="ks-acc-1-t">
+        <h3 class="accordion__heading">
+          <button type="button" class="accordion__trigger" data-stisla-accordion-trigger aria-expanded="true" aria-controls="ks-acc-1" id="ks-acc-1-t">
             First panel
             <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <polyline points="6 9 12 15 18 9"></polyline>
@@ -738,8 +738,8 @@
         </div>
       </div>
       <div class="accordion__item" data-state="closed">
-        <h3>
-          <button type="button" class="accordion__header" data-stisla-accordion-trigger aria-expanded="false" aria-controls="ks-acc-2" id="ks-acc-2-t">
+        <h3 class="accordion__heading">
+          <button type="button" class="accordion__trigger" data-stisla-accordion-trigger aria-expanded="false" aria-controls="ks-acc-2" id="ks-acc-2-t">
             Second panel
             <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <polyline points="6 9 12 15 18 9"></polyline>

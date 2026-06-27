@@ -2,7 +2,7 @@
 //
 // Re-exports the vanilla core bundle and adds every vanilla-optional
 // component. Use this entry when you want every component available with
-// one import. À la carte consumers import the core entry + the optional
+// one import. Individual consumers import the core entry + the optional
 // components they need from `components/*`.
 //
 // The microtask-deferred auto-init in `./index.js` walks the DOM after

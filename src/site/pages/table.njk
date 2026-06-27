@@ -355,6 +355,29 @@
   </section>
 
   <section>
+    <h2>Sortable header</h2>
+    <p>Wrap a header label in <code>.table__sort</code> to turn the column into a sort control. Use a <code>&lt;button&gt;</code> when JS reorders the rows, or an <code>&lt;a&gt;</code> pointing at a <code>?sort=</code> query when the server does. A column with no <code>data-state</code> shows a neutral up-down caret to mark it sortable; set <code>data-state</code> to <code>asc</code> or <code>desc</code> on the active column to swap it for a single chevron, and mirror that with <code>aria-sort</code> on the <code>&lt;th&gt;</code>. The caret is a CSS mask in <code>currentColor</code>, so there's no icon to ship.</p>
+    {% call ui.demo() %}
+    <table class="table table--hover">
+      <thead class="table__head--alt">
+        <tr>
+          <th scope="col"><button type="button" class="table__sort">Customer</button></th>
+          <th scope="col"><button type="button" class="table__sort">Plan</button></th>
+          <th scope="col" class="text-end" aria-sort="descending"><button type="button" class="table__sort" data-state="desc">MRR</button></th>
+          <th scope="col" class="text-end"><button type="button" class="table__sort">Renews</button></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Northwind</td><td>Enterprise</td><td class="text-end">$8,200</td><td class="text-end">Oct 22</td></tr>
+        <tr><td>Acme Corp</td><td>Business</td><td class="text-end">$1,490</td><td class="text-end">Aug 12</td></tr>
+        <tr><td>Riverway Ltd</td><td>Team</td><td class="text-end">$580</td><td class="text-end">Sep 04</td></tr>
+        <tr><td>Globex</td><td>Team</td><td class="text-end">$580</td><td class="text-end">Nov 09</td></tr>
+      </tbody>
+    </table>
+    {% endcall %}
+  </section>
+
+  <section>
     <h2>With status badges</h2>
     <p>Drop a <code>.badge</code> into a cell to flag state. Soft <code>.badge--soft</code> variants read cleaner inside a dense row than solid fills.</p>
     {% call ui.demo() %}

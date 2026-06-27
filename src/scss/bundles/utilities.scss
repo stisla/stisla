@@ -1,0 +1,26 @@
+// Stisla v3 — individual utilities bundle.
+//
+// Utilities are an opt-in extra, NOT part of core (stisla.css). Load this on
+// top of stisla.css when you want the tweak layer without the optional
+// components that stisla-full.css also carries:
+//
+//   <link rel="stylesheet" href="stisla.css" />
+//   <link rel="stylesheet" href="utilities.css" />   <!-- after core -->
+//
+// The runtime --st-* tokens come from core's theme layer (already at :root by
+// the time this loads), so this file only needs the compile-time Sass symbols
+// the utilities call into: the breakpoints map (media-up / breakpoint-infix),
+// the mixins, and the scale functions (space()).
+//
+// Layer order is re-declared so the utilities layer wins the cascade over the
+// component rules in the core stylesheet loaded before it.
+
+@layer foundation, theme, components, utilities;
+
+@import '../tokens/breakpoints';
+@import '../foundation/mixins';
+@import '../tokens/scales';
+
+@layer utilities {
+  @import '../utilities/utilities';
+}

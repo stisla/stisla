@@ -6,9 +6,16 @@
 // V3.md §3.1.
 //
 // Optional components (carousel today; date-picker / custom-select / etc.
-// later) ship in `stisla-full.scss` or à la carte from
+// later) ship in `stisla-full.scss` or individually from
 // `scss/bundles/components/<name>.scss`. The vanilla core / optional line is
 // a per-impl bundle decision per SPEC.md §10, not a spec decision.
+//
+// Utilities are NOT in core. They are an opt-in extra — the tweak layer a
+// complete component set never *needs* to render (audited: 0 component-SCSS
+// or JS references to utility classes). Pull them from `stisla-full.scss`
+// (kitchen sink) or individually from `bundles/utilities.scss`. The empty
+// `utilities` layer stays declared below so the individually loaded layer wins the
+// cascade when loaded on top of this file.
 //
 // Layer order (V3.md §3): foundation -> theme -> components -> utilities.
 
@@ -76,6 +83,9 @@
   @import '../components/alert';
   @import '../components/icon-box';
   @import '../components/media';
+  @import '../components/empty-state';
+  @import '../components/illustration';
+  @import '../components/timeline';
   @import '../components/progress';
   @import '../components/meter';
   @import '../components/list-group';
@@ -91,8 +101,7 @@
 }
 
 // === Utilities =========================================================
-// One hand-written file, intentionally small. Per V3.md §3.1 — utilities
-// tweak existing components; they do NOT compose into new components.
-@layer utilities {
-  @import '../utilities/utilities';
-}
+// Intentionally NOT imported here. Core is the proof that components are
+// self-sufficient without an atomic layer. The `utilities` layer is declared
+// (top of file) but left empty; add it via `stisla-full.scss` or individually from
+// `bundles/utilities.scss`, which slot into that reserved layer.

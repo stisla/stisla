@@ -210,6 +210,7 @@
     <h2>External triggers</h2>
     <p>Any element on the page can drive a tabs instance declaratively. Carry <code>aria-controls="&lt;tabsRootId&gt;"</code> + <code>data-stisla-tabs-value="&lt;value&gt;"</code> on the trigger; the click delegate flips the matching panel without imperative JS. The tabs root needs an explicit <code>id</code> for the wire-up.</p>
     <p>Useful for sidebar links, toolbar buttons, command-palette entries, even a <code>.toggle-group</code> member that doubles as a tab switcher. Native click semantics carry, so buttons fire on click + Enter + Space, and anchors fire on click + Enter.</p>
+    <p>The <code>.tabs__list</code> is optional. Drop it entirely and the tabs run on external triggers alone — the instance resolves each value against its panels and reflects the active state back onto the triggers (<code>data-state="active"</code> + <code>aria-current="page"</code>), so a <code>.sidebar</code> used as a section nav lights its own row with no extra script. The active panel still comes from <code>opts.value</code>, an existing active trigger/panel, or the first panel.</p>
     {% call ui.demo() %}
     <div class="d-flex flex-column gap-4 w-100">
       <div class="d-flex flex-wrap align-items-center gap-2">
@@ -226,6 +227,23 @@
         <div class="tabs__panel" data-value="overview"><p>Overview pane. Open me from the external buttons above.</p></div>
         <div class="tabs__panel" data-value="activity"><p>Activity pane.</p></div>
         <div class="tabs__panel" data-value="settings"><p>Settings pane.</p></div>
+      </div>
+    </div>
+    {% endcall %}
+
+    <h3>Without a list</h3>
+    <p>Drop the <code>.tabs__list</code> entirely and the external triggers become the whole trigger set. The instance resolves each value against its panels and writes <code>data-state="active"</code> + <code>aria-current="page"</code> back onto the active trigger, so the triggers light themselves with no extra script. Here a <code>.toggle-group</code> of plain toggles (no toggle-group JS) is the nav; the same wiring lets a <code>.sidebar</code> drive a settings page. The first panel activates on init.</p>
+    {% call ui.demo() %}
+    <div class="d-flex flex-column align-items-start gap-3 w-100">
+      <div class="toggle-group" role="group" aria-label="Workspace section">
+        <button type="button" class="toggle" aria-controls="tabsDemoListless" data-stisla-tabs-value="general">General</button>
+        <button type="button" class="toggle" aria-controls="tabsDemoListless" data-stisla-tabs-value="members">Members</button>
+        <button type="button" class="toggle" aria-controls="tabsDemoListless" data-stisla-tabs-value="billing">Billing</button>
+      </div>
+      <div id="tabsDemoListless" class="tabs" data-stisla-tabs>
+        <div class="tabs__panel" data-value="general"><p>General workspace settings.</p></div>
+        <div class="tabs__panel" data-value="members"><p>People with access to the workspace.</p></div>
+        <div class="tabs__panel" data-value="billing"><p>Plan, payment method, and invoices.</p></div>
       </div>
     </div>
     {% endcall %}

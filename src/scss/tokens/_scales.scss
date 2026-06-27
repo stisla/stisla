@@ -38,12 +38,15 @@ $radius: (
   full: 9999px,
 ) !default;
 
-// Shadow: keep the three tuned tiers defined in _theme.scss. Map t-shirt
-// keys onto their existing var names — no new values, no duplication.
+// Shadow: the three tuned tiers are authored as literals in _theme.scss
+// (theme-independent, kept next to the colors). This map only catalogs the
+// valid steps for shadow() validation — the var names follow the standard
+// --st-shadow-{step} pattern, so no separate name mapping is needed.
 $shadow: (
-  sm: --st-shadow-light,
-  md: --st-shadow,
-  lg: --st-shadow-heavy,
+  sm: --st-shadow-sm,
+  md: --st-shadow-md,
+  lg: --st-shadow-lg,
+  xl: --st-shadow-xl,
 ) !default;
 
 // Type scale (Tailwind values). Each step pairs a size with its default
@@ -127,14 +130,10 @@ $tones:
   @return var(--st-text-#{$s}-lh);
 }
 
-// shadow() returns the existing tier var directly (sm→light, md→base,
-// lg→heavy) so the tuned values in _theme.scss stay untouched.
-@function shadow($s) {
-  @if not map-has-key($shadow, $s) {
-    @error "shadow(#{$s}) is not a valid step. Use one of: #{map-keys($shadow)}.";
-  }
-  @return var(#{map-get($shadow, $s)});
-}
+// shadow() reads the tier var emitted by _theme.scss; the values themselves
+// stay authored there (literals, theme-independent). Same shape as the other
+// scale functions now that the var names match the t-shirt steps.
+@function shadow($s) { @return _scale(shadow, $shadow, $s); }
 
 @function tone($name) {
   @if not index($tones, $name) {

@@ -1,0 +1,170 @@
+/* @stisla/style — Navbar. Ported from src/scss/components/_navbar.scss. A Stisla-original top bar: a
+ * brand mark, a row of nav links, and trailing extras in a flex row; below the lg breakpoint the nav
+ * and extras fold into a column behind a hamburger toggle. Driven by Stisla's own JS (a
+ * [data-navbar-toggle] click flips [data-state] on .navbar__menu), so its classes are Stisla-native
+ * BEM — not lib-coupled. References the @theme tokens: colors var(--color-*), sizes/spacing
+ * --spacing(n), type var(--leading-*), radius var(--radius-*); only no-namespace customs use --st-*
+ * (duration). Knobs are --navbar-*. State via [data-state] / [aria-disabled], never is-*. The mobile
+ * toggle ships with the JS layer. @layer components. Authoring rules: ../../../../PORTING.md */
+
+@layer components {
+  .navbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--navbar-gap, --spacing(3));
+    padding: var(--navbar-padding-block, --spacing(2.5)) var(--navbar-padding-inline, --spacing(4));
+    background-color: var(--navbar-bg, var(--color-background));
+    color: var(--navbar-color, var(--color-foreground));
+  }
+
+  /* Container-inside-navbar — when the inner row is wrapped in a .container, the bar's inline padding
+     zeroes out and the container takes over the clamp; padding-block rides the container so the bar
+     height matches a paddingless bar. */
+  .navbar:has(> .container),
+  .navbar:has(> .container-fluid) {
+    --navbar-padding-inline: 0;
+  }
+
+  .navbar > .container,
+  .navbar > .container-fluid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--navbar-gap, --spacing(3));
+    padding-block: var(--navbar-padding-block, --spacing(2.5));
+  }
+
+  /* Brand — wordmark / logo. Hard height + line-height 1 matches the button chip geometry so the row
+     reads as one band; same inline inset as a button chip so brand text sits on the button x-grid. */
+  .navbar__brand {
+    display: inline-flex;
+    align-items: center;
+    height: var(--navbar-button-height, --spacing(9));
+    padding-block: var(--navbar-brand-padding-block, 0);
+    padding-inline: var(--navbar-brand-padding-inline, var(--navbar-button-padding-inline, --spacing(3)));
+    color: var(--navbar-color, var(--color-foreground));
+    line-height: var(--leading-none);
+    text-decoration: none;
+  }
+
+  /* Toggle — square hamburger; hidden by default, shown below lg. */
+  .navbar__toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: var(--navbar-toggle-size, --spacing(9));
+    height: var(--navbar-toggle-size, --spacing(9));
+    padding: 0;
+    background-color: transparent;
+    color: var(--navbar-color, var(--color-foreground));
+    border: 0;
+    border-radius: var(--navbar-button-radius, calc(var(--radius-md) - --spacing(1)));
+    cursor: pointer;
+    transition: background-color var(--navbar-transition-duration, var(--st-duration-fast)) ease;
+  }
+
+  .navbar__toggle:hover,
+  .navbar__toggle:focus-visible {
+    background-color: var(--navbar-button-bg-hover, var(--color-accent));
+    color: var(--navbar-button-color-hover, var(--color-accent-foreground));
+  }
+
+  /* Menu — collapsing wrapper. Above lg, a transparent flex row beside the brand; below lg it folds. */
+  .navbar__menu {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    gap: var(--navbar-gap, --spacing(3));
+  }
+
+  /* Nav — link list; reboot zeroes the ul margin/padding + list-style, only the flex layout is set. */
+  .navbar__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--navbar-button-gap, --spacing(1));
+  }
+
+  /* Button — ghost chip; soft accent on hover/focus, highlight when it marks the current page. Hard
+     height + line-height 1 keeps the chip a clean band regardless of font metrics. */
+  .navbar__button {
+    display: inline-flex;
+    align-items: center;
+    height: var(--navbar-button-height, --spacing(9));
+    padding-block: var(--navbar-button-padding-block, 0);
+    padding-inline: var(--navbar-button-padding-inline, --spacing(3));
+    border-radius: var(--navbar-button-radius, calc(var(--radius-md) - --spacing(1)));
+    background-color: transparent;
+    color: var(--navbar-button-color, var(--color-foreground));
+    line-height: var(--leading-none);
+    text-decoration: none;
+    transition:
+      background-color var(--navbar-transition-duration, var(--st-duration-fast)) ease,
+      color var(--navbar-transition-duration, var(--st-duration-fast)) ease;
+  }
+
+  .navbar__button:hover,
+  .navbar__button:focus-visible {
+    background-color: var(--navbar-button-bg-hover, var(--color-accent));
+    color: var(--navbar-button-color-hover, var(--color-accent-foreground));
+  }
+
+  .navbar__button[data-state="active"] {
+    background-color: var(--navbar-button-bg-active, var(--color-highlight));
+    color: var(--navbar-button-color-active, var(--color-highlight-foreground));
+  }
+
+  .navbar__button[aria-disabled="true"] {
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  /* === Above the collapse breakpoint (Tailwind `lg`) === nav grabs the leading edge so siblings
+     (search, status, action) fall to the trailing edge. */
+  @variant lg {
+    .navbar__nav {
+      margin-inline-end: auto;
+    }
+  }
+
+  /* === Below the collapse breakpoint (Tailwind `max-lg`) === the menu folds behind the toggle. */
+  @variant max-lg {
+    .navbar__toggle {
+      display: inline-flex;
+      margin-inline-start: auto;
+    }
+
+    .navbar__menu {
+      display: none;
+      flex: 1 0 100%;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .navbar__menu[data-state="open"] {
+      display: flex;
+    }
+
+    .navbar__nav {
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    .navbar__button {
+      width: 100%;
+    }
+  }
+
+  /* Block — fills its container width per the SPEC escape ramp. */
+  .navbar--block {
+    width: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .navbar__button,
+    .navbar__toggle {
+      transition-duration: 0.01ms;
+    }
+  }
+}

@@ -2,7 +2,7 @@
 //
 // Kitchen sink: vanilla core + every vanilla-optional component in one
 // stylesheet. Use this when you want every component available with one
-// install. À la carte consumers import `stisla.css` + the optional
+// install. Individual consumers import `stisla.css` + the optional
 // components they need from `components/*`.
 //
 // Layer order is re-declared so Sass knows the precedence even when the
@@ -20,4 +20,12 @@
   @import '../components/carousel';
   @import '../components/scroll-area';
   @import '../components/combobox';
+}
+
+// === Utilities ========================================================
+// Utilities are an opt-in extra, not part of core (stisla.css). The kitchen
+// sink bundles them so a single full install has the tweak layer available;
+// individual consumers add `bundles/utilities.scss` on top of core instead.
+@layer utilities {
+  @import '../utilities/utilities';
 }

@@ -52,6 +52,44 @@
 }
 .media--vertical > .media__action { margin-inline-start: 0; }
 
+// === Interactive ======================================================
+// When the row's root is itself the interactive surface — an <a> or
+// <button> that navigates or acts — it earns hover + focus paint. The
+// rest of the time .media is a passive layout row and stays inert, so
+// these rules gate on the host element rather than living on the base.
+//
+// Bg-tint only: .media carries three pinned text colours (title /
+// description / meta). Flipping them to accent-foreground the way
+// .menu__item does would flatten the hierarchy, so the row washes to a
+// subtle --st-accent and the type stays as-is.
+//
+// [data-highlighted] is the keyboard-nav hook. A role-based nav surface
+// (e.g. .menu, which selects its items by role and not by class) writes
+// it on the current arrow-key target, so keyboard focus paints the same
+// as mouse hover. :focus-visible draws the ring for a standalone media
+// link living outside any such surface.
+
+a.media,
+button.media {
+  cursor: pointer;
+  transition: background-color #{duration(fast)} ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+a.media:hover,
+button.media:hover,
+.media[data-highlighted] {
+  background: var(--media-bg-hover, var(--st-accent));
+}
+
+.media:focus-visible {
+  outline: 2px solid var(--st-ring);
+  outline-offset: -2px;
+}
+
 // === Parts ============================================================
 
 .media__figure {

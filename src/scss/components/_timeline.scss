@@ -1,0 +1,283 @@
+// Stisla v3 — timeline.
+//
+// Ordered sequence of events along a vertical rail. Each item pairs a
+// marker (dot / icon / number / small avatar) on the rail with a body
+// (time, title, description). Pure layout — no JS, no lifecycle. State
+// (data-state) and intent colour are author-set. Family: .media, .separator.
+//
+// BEM: .timeline root + .timeline__item / __marker / __body / __time /
+// __title / __text. Modifiers stay flat (.timeline--alternate,
+// .timeline__marker--<intent>). Status rides data-state on the item.
+//
+// Layout model: each item is a 2-column grid — a fixed marker lane plus a
+// 1fr body. The rail line is a pseudo-element on the item (no DOM node),
+// drawn from the marker centre down to the item's bottom edge, which abuts
+// the next item, so the line reads continuous and stops on :last-child.
+// The marker sits z-above the line and occludes its top, so the join is
+// clean for both a small dot and a roomy icon circle.
+//
+// Knobs: --timeline-marker-size / --timeline-dot-size / --timeline-marker-color
+// / --timeline-marker-ring + --timeline-marker-ring-size /
+// --timeline-connector-width + --timeline-connector-color + --timeline-connector-style
+// / --timeline-gutter / --timeline-gap. All fallback-default (V3-ARCHITECTURE §2).
+
+.timeline {
+  // Reset list chrome so the root can be an <ol> (the recommended host —
+  // the ordering is meaningful, see spec/components/timeline.md §8).
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+// === Item =============================================================
+// Marker lane + body. align-items: start keeps the marker its own height
+// instead of stretching to a tall body. padding-block-end carries the
+// inter-item gap so the rail (bottom: 0 below) reaches the next marker.
+.timeline__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--timeline-marker-size, #{space(7)}) 1fr;
+  align-items: start;
+  column-gap: var(--timeline-gutter, #{space(4)});      // 1rem
+  padding-block-end: var(--timeline-gap, #{space(6)});  // 1.5rem
+}
+
+.timeline__item:last-child {
+  padding-block-end: 0;
+}
+
+// === Connector ========================================================
+// The rail line. Pseudo-element, not a part. Runs through the gap between
+// one marker lane and the next, inset by --timeline-connector-gap at both
+// ends so it floats clear of both markers with matching breathing room
+// (not flush against the marker above it). It starts below this item's
+// lane and stops short of the next item's top, which is the next lane.
+// Suppressed on the last item so the rail stops at the final marker.
+// Centred on the marker lane via a logical inline offset (no transform)
+// so it tracks RTL. width: 0 + border-inline-start lets the solid / dashed
+// switch ride one property (--timeline-connector-style).
+.timeline__item:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  inset-block-start: calc(var(--timeline-marker-size, #{space(7)}) + var(--timeline-connector-gap, #{space(1.5)}));
+  inset-block-end: var(--timeline-connector-gap, #{space(1.5)});
+  inset-inline-start: calc(
+    var(--timeline-marker-size, #{space(7)}) / 2 - var(--timeline-connector-width, 2px) / 2
+  );
+  width: 0;
+  border-inline-start:
+    var(--timeline-connector-width, 2px)
+    var(--timeline-connector-style, solid)
+    var(--timeline-connector-color, var(--st-border));
+}
+
+// === Marker ===========================================================
+// Centred in its lane. An empty marker shows a small filled dot via
+// ::before; a marker with content (icon / number / avatar) becomes a
+// soft-tinted bordered circle holding it. Either way the centre sits on
+// the rail axis, so the connector lines up at every size. z-index keeps
+// it above the rail line in any edge overlap.
+.timeline__marker {
+  grid-column: 1;
+  justify-self: center;
+  align-self: start;
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  // Fixed lane-sized circle so every marker is the same size and none
+  // overflows the lane into the connector gap. Content conforms: dots and
+  // icons centre, avatars and images fill (below). Bump --timeline-marker-size
+  // to scale every marker in the timeline together.
+  width: var(--timeline-marker-size, #{space(7)});
+  height: var(--timeline-marker-size, #{space(7)});
+  // Number / short-label markers read at a small bold size by default; a
+  // dot or icon marker ignores it.
+  font-size: #{text(xs)};
+  font-weight: #{weight(semibold)};
+  line-height: 1;
+  // Icon / number colour tracks the marker accent. Avatars ignore it.
+  color: var(--timeline-marker-color, var(--st-primary));
+}
+
+// Bare dot — empty marker. Small filled circle centred in the lane.
+.timeline__marker:empty::before {
+  content: "";
+  width: var(--timeline-dot-size, #{space(2.75)});
+  height: var(--timeline-dot-size, #{space(2.75)});
+  border-radius: 50%;
+  background: var(--timeline-marker-color, var(--st-primary));
+}
+
+// Icon / content marker — soft-tinted circle. Borders + fill derive from
+// the marker accent so a single colour knob themes the whole marker.
+.timeline__marker:not(:empty) {
+  // Tint in oklab, not oklch: mixing a saturated hue toward an opaque
+  // near-white in oklch rotates the hue around the wheel (a blue reads
+  // pink). oklab interpolates straight, so the tint stays on-hue. The
+  // border mixes with transparent, where premultiplied alpha keeps the
+  // hue, so it can stay in oklch.
+  background: color-mix(in oklab, var(--timeline-marker-color, var(--st-primary)) 14%, var(--st-surface));
+  border: var(--st-border-width) solid color-mix(in oklch, var(--timeline-marker-color, var(--st-primary)) 32%, transparent);
+  border-radius: 50%;
+}
+
+// Avatar / image markers carry their own circular shape, so shed the tint
+// and ring and let the media sit on the rail directly. Size them to the
+// lane so they match the other markers and never spill past it.
+.timeline__marker:has(> .avatar),
+.timeline__marker:has(> img) {
+  background: none;
+  border: 0;
+}
+.timeline__marker > .avatar {
+  --avatar-size: var(--timeline-marker-size, #{space(7)});
+}
+.timeline__marker > img {
+  width: var(--timeline-marker-size, #{space(7)});
+  height: var(--timeline-marker-size, #{space(7)});
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+// Bare glyphs pin to a sensible size so markers align across icon packs
+// (mirrors .media__figure). :only-child gate leaves multi-element markers
+// (icon + dot, avatar + badge) to size themselves.
+.timeline__marker > :is(svg, i):only-child {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+
+// === Body =============================================================
+.timeline__body {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  gap: #{space(0.5)};
+  min-width: 0;      // let .text-truncate work inside title / text
+}
+
+.timeline__time {
+  font-size: #{text(xs)};
+  line-height: #{text-leading(xs)};
+  color: var(--st-muted-foreground);
+}
+
+.timeline__title {
+  font-weight: #{weight(semibold)};
+  line-height: 1.3;
+  color: var(--st-foreground);
+}
+
+.timeline__text {
+  line-height: 1.5;
+  color: var(--st-muted-foreground);
+}
+
+// === Status (data-state) ==============================================
+// Author-set. Independent of the marker colour — a current step can still
+// carry an intent colour. complete keeps the solid default rail; current
+// rings the marker and dashes the rail leaving it; pending mutes the
+// marker, hollows the dot, and dashes the rail.
+
+// Complete — solid-filled marker so a done step reads as filled rather
+// than tinted. Connector stays solid (the base default).
+.timeline__item[data-state="complete"] .timeline__marker:not(:empty) {
+  background: var(--timeline-marker-color, var(--st-primary));
+  border-color: var(--timeline-marker-color, var(--st-primary));
+  color: var(--timeline-marker-on-color, var(--st-primary-foreground));
+}
+
+// Current — ring halo + dashed rail below. The ring pulses; reduced
+// motion holds it static.
+.timeline__item[data-state="current"] {
+  --timeline-connector-style: dashed;
+}
+// A static halo keeps the current marker reading as active at rest, and
+// the ::after ping radiates a ring outward and fades, like a live locator.
+// The ping is a thin ring (border, no fill) starting at the marker edge,
+// so it never washes over the icon — it only expands past it.
+.timeline__item[data-state="current"] .timeline__marker {
+  box-shadow: 0 0 0 var(--timeline-marker-ring-size, #{space(1)})
+    var(--timeline-marker-ring, color-mix(in oklch, var(--timeline-marker-color, var(--st-primary)) 22%, transparent));
+}
+.timeline__item[data-state="current"] .timeline__marker::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: var(--timeline-connector-width, 2px) solid
+    color-mix(in oklch, var(--timeline-marker-color, var(--st-primary)) 45%, transparent);
+  animation: timeline-ping var(--timeline-ping-duration, 1.8s) cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes timeline-ping {
+  0%        { transform: scale(1);    opacity: 1; }
+  75%, 100% { transform: scale(1.85); opacity: 0; }
+}
+
+// Reduced motion keeps the static halo and drops the ping.
+@media (prefers-reduced-motion: reduce) {
+  .timeline__item[data-state="current"] .timeline__marker::after {
+    display: none;
+  }
+}
+
+// Pending — muted marker, hollow dot, dashed rail. The colour override
+// flows to the dot, the icon, and the soft-circle tint at once.
+.timeline__item[data-state="pending"] {
+  --timeline-marker-color: var(--st-muted-foreground);
+  --timeline-connector-style: dashed;
+}
+.timeline__item[data-state="pending"] .timeline__marker:empty::before {
+  background: transparent;
+  border: var(--timeline-connector-width, 2px) solid var(--timeline-marker-color, var(--st-muted-foreground));
+}
+
+// === Intent modifiers =================================================
+// Shorthand for setting --timeline-marker-color to a palette token (fixed
+// meaning — green for paid, red for failed). Carry no behaviour; for a
+// one-off colour set --timeline-marker-color on the item instead.
+.timeline__marker--primary { --timeline-marker-color: var(--st-primary); }
+.timeline__marker--success { --timeline-marker-color: var(--st-success); }
+.timeline__marker--danger  { --timeline-marker-color: var(--st-danger); }
+.timeline__marker--warning { --timeline-marker-color: var(--st-warning); }
+.timeline__marker--info    { --timeline-marker-color: var(--st-info); }
+
+// === Alternate layout =================================================
+// Centre rail, items alternating sides. Needs width, so it only engages
+// at md and up; below that it falls through to the standard left-rail
+// grid above (required mobile collapse, spec §3). Three columns: body /
+// rail / body. Odd items take the inline-start body and align toward the
+// rail; even items take the inline-end body. The connector re-centres on
+// the middle column.
+@include media-up(md) {
+  .timeline--alternate .timeline__item {
+    grid-template-columns: 1fr var(--timeline-marker-size, #{space(7)}) 1fr;
+  }
+
+  .timeline--alternate .timeline__marker {
+    grid-column: 2;
+  }
+
+  .timeline--alternate .timeline__item:nth-child(odd) .timeline__body {
+    grid-column: 1;
+    text-align: end;
+  }
+
+  .timeline--alternate .timeline__item:nth-child(even) .timeline__body {
+    grid-column: 3;
+    text-align: start;
+  }
+
+  .timeline--alternate .timeline__item:not(:last-child)::before {
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+  }
+}

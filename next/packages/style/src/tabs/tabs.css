@@ -1,0 +1,137 @@
+/* @stisla/style — Tabs. Ported from src/scss/components/_tabs.scss. A content-panel switcher: a muted
+ * rail hosts triggers, the active one rises out as a paper pill (Radix-aligned). References the @theme
+ * tokens (colors var(--color-*), spacing/sizes --spacing(n), type var(--text-*) / var(--font-weight-*)
+ * / var(--leading-*), radius var(--radius-*)); only no-namespace customs use --st-* (border-width).
+ * Knobs are --tabs-*. State via data-state="active|inactive" / data-disabled / data-orientation, no
+ * is-*. Switching behavior (data-stisla-tabs) ships with the JS layer. @layer components.
+ * Authoring rules: ../../../../PORTING.md */
+
+@layer components {
+  .tabs {
+    display: flex;
+    flex-direction: column;
+    gap: var(--tabs-gap, --spacing(3));
+  }
+
+  /* === List (the muted rail) === */
+  .tabs__list {
+    display: inline-flex;
+    align-items: stretch;
+    align-self: flex-start; /* pill hugs content, doesn't stretch */
+    flex-direction: var(--tabs-orientation, row);
+    height: var(--tabs-list-height, --spacing(9));
+    padding: var(--tabs-list-padding-block, --spacing(0.5))
+      var(--tabs-list-padding-inline, --spacing(0.5));
+    gap: var(--tabs-list-gap, --spacing(0.5));
+    background: var(--tabs-list-bg, var(--color-surface-2));
+    border-radius: var(--tabs-list-radius, var(--radius-md));
+    color: var(--tabs-list-color, var(--color-muted-foreground));
+  }
+
+  /* === Trigger === border at 1px transparent at rest so the active painted border doesn't shift it. */
+  .tabs__trigger {
+    appearance: none;
+    background: transparent;
+    border: var(--st-border-width) solid transparent;
+    font: inherit;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--tabs-trigger-gap, --spacing(2));
+    height: 100%; /* fills the rail's inner area via box model */
+    padding-block: 0;
+    padding-inline: var(--tabs-trigger-padding-inline, --spacing(3));
+    color: inherit; /* inherits the rail's muted-foreground */
+    font-size: var(--tabs-trigger-font-size, var(--text-sm));
+    font-weight: var(--tabs-trigger-font-weight, var(--font-weight-medium));
+    line-height: var(--leading-none);
+    border-radius: var(
+      --tabs-trigger-radius,
+      calc(var(--tabs-list-radius, var(--radius-md)) - var(--tabs-list-padding-inline, --spacing(0.5)))
+    );
+    text-decoration: none;
+    transition:
+      background-color var(--tabs-transition-duration, var(--st-duration-fast)) ease,
+      color var(--tabs-transition-duration, var(--st-duration-fast)) ease,
+      border-color var(--tabs-transition-duration, var(--st-duration-fast)) ease;
+
+    &:hover:not([data-state="active"]) {
+      color: var(--tabs-trigger-color-hover, var(--color-foreground));
+    }
+
+    &[data-state="active"] {
+      background: var(--tabs-trigger-bg-active, var(--color-highlight));
+      color: var(--tabs-trigger-color-active, var(--color-highlight-foreground));
+      border-color: var(--tabs-trigger-border-color-active, var(--tabs-trigger-bg-active, var(--color-highlight)));
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--tabs-ring, var(--color-ring));
+      outline-offset: 2px;
+    }
+
+    &[data-disabled],
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.55;
+    }
+  }
+
+  /* Icons scale with the trigger font-size (1em) so a custom font-size retunes glyph + icon together. */
+  .tabs__trigger :is(svg, i) {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+  }
+
+  /* === Panel === */
+  .tabs__panel {
+    &[data-state="inactive"] {
+      display: none;
+    }
+    &:focus-visible {
+      outline: 2px solid var(--tabs-ring, var(--color-ring));
+      outline-offset: 2px;
+      border-radius: var(--radius-sm);
+    }
+  }
+
+  /* === Vertical orientation === root flips to a row (rail inline-start, panels fill the rest); the
+     list becomes a column. */
+  .tabs--vertical {
+    --tabs-orientation: column;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .tabs--vertical .tabs__list {
+    height: auto;
+    flex-direction: column;
+    align-self: stretch;
+  }
+  /* Vertical triggers stretch + read left-aligned like a menu list; concrete row height (the list is
+     height: auto in vertical mode, so the base height: 100% would collapse). */
+  .tabs--vertical .tabs__trigger {
+    width: 100%;
+    height: --spacing(8);
+    justify-content: flex-start;
+    text-align: start;
+  }
+  .tabs--vertical .tabs__panel {
+    flex: 1;
+    min-width: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tabs {
+      --tabs-transition-duration: 0s;
+    }
+  }
+
+  /* Block — fills its container width per SPEC §9 escape ramp. */
+  .tabs--block {
+    width: 100%;
+  }
+}

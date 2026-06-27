@@ -85,7 +85,8 @@
   // column (see the .is-collapsed block).
   padding-block-start: var(--sidebar-padding-block, #{space(4)});
   padding-inline: calc(
-    var(--sidebar-padding-inline, #{space(4)}) + var(--sidebar-button-padding-inline, #{space(2.5)})
+    var(--sidebar-padding-inline, #{space(4)}) +
+      var(--sidebar-button-padding-inline, #{space(2.5)})
   );
   transition: padding var(--sidebar-transition-duration, 0.3s) ease;
 }
@@ -192,7 +193,9 @@
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  padding-inline-end: calc(var(--sidebar-button-padding-inline, #{space(2.5)}) - 0.25rem);
+  padding-inline-end: calc(
+    var(--sidebar-button-padding-inline, #{space(2.5)}) - 0.25rem
+  );
   color: var(--sidebar-group-title-color, var(--st-muted-foreground));
 }
 
@@ -235,7 +238,10 @@
   border: 0;
   border-radius: var(--sidebar-button-radius, #{radius(sm)});
   background-color: transparent;
-  color: var(--sidebar-button-color, var(--sidebar-color, var(--st-foreground)));
+  color: var(
+    --sidebar-button-color,
+    var(--sidebar-color, var(--st-foreground))
+  );
   font-weight: var(--sidebar-button-font-weight, #{weight(normal)});
   line-height: 1;
   white-space: nowrap;
@@ -298,7 +304,9 @@
 // carve-out triggered only when an action is present.
 
 .sidebar__item:has(> .sidebar__item-action) > .sidebar__button {
-  padding-inline-end: calc(var(--sidebar-item-action-size, #{space(9)}) + 0.25rem);
+  padding-inline-end: calc(
+    var(--sidebar-item-action-size, #{space(9)}) + 0.25rem
+  );
 }
 
 .sidebar__item-action {
@@ -316,6 +324,46 @@
 .sidebar__item-action :is(svg, i) {
   width: var(--sidebar-button-icon-size, 1rem);
   height: var(--sidebar-button-icon-size, 1rem);
+}
+
+// Submenu-toggle variant — when a link-parent row needs a disclosure,
+// the action slot becomes the toggle <button> beside the navigable <a>.
+// It's a self-contained square: the caret centers in its own hit area —
+// so the hover tint and focus ring wrap the glyph evenly — tucked near
+// the inline-end edge to mirror the row's leading icon. Whole-row
+// toggling (a single .sidebar__button trigger) stays the default pattern.
+button.sidebar__item-action {
+  width: 1.75rem;
+  height: 1.75rem;
+  inset-inline-end: #{space(1.5)};
+  border: 0;
+  border-radius: var(--sidebar-button-radius, #{radius(sm)});
+  background-color: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+
+button.sidebar__item-action:hover {
+  background-color: var(--sidebar-button-bg-hover, var(--st-accent));
+}
+
+button.sidebar__item-action:focus-visible {
+  outline: 2px solid var(--st-ring);
+  outline-offset: 2px;
+}
+
+// Center the caret in the square — drop the base inline-start auto margin
+// it carries to self-justify when it sits inline in a .sidebar__button.
+button.sidebar__item-action > .sidebar__caret {
+  margin-inline-start: 0;
+}
+
+// On a submenu parent the item is a flex column (button + submenu), so
+// the action's default 50% offset would track the whole open block.
+// Pin it to the button row's center instead.
+.sidebar__item:has(> .sidebar__submenu) > .sidebar__item-action {
+  top: calc(var(--sidebar-button-height, #{space(9)}) / 2);
 }
 
 // Reveal-on-hover modifier — action fades in when the row is hovered or
@@ -356,7 +404,8 @@
 .sidebar__submenu {
   margin-inline-start: var(--sidebar-submenu-margin-inline-start, 1.125rem);
   padding-inline-start: var(--sidebar-submenu-padding-inline-start, 0.8125rem);
-  border-inline-start: 1px solid var(--sidebar-submenu-border-color, var(--st-border));
+  border-inline-start: 1px solid
+    var(--sidebar-submenu-border-color, var(--st-border));
 }
 
 .sidebar__item[data-state="closed"] > .sidebar__submenu {
@@ -383,7 +432,10 @@
   width: var(--sidebar-button-icon-size, 1rem);
   height: var(--sidebar-button-icon-size, 1rem);
   margin-inline-start: auto;
-  background-color: var(--sidebar-button-icon-color, var(--st-muted-foreground));
+  background-color: var(
+    --sidebar-button-icon-color,
+    var(--st-muted-foreground)
+  );
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")
     no-repeat center / contain;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")
@@ -391,7 +443,8 @@
   transition: transform 0.15s ease;
 }
 
-.sidebar__button[aria-expanded="true"] > .sidebar__caret {
+.sidebar__button[aria-expanded="true"] > .sidebar__caret,
+.sidebar__item-action[aria-expanded="true"] > .sidebar__caret {
   transform: rotate(180deg);
 }
 
@@ -401,15 +454,15 @@
 // identical gutters at any size.
 
 .sidebar--compact {
-  --sidebar-button-height: #{space(8)};          // 2rem
-  --sidebar-button-padding-inline: #{space(2)};  // 0.5rem — rail symmetric: 8+16+8 = 32
-  --sidebar-group-gap: #{space(3.5)};            // 0.875rem
+  --sidebar-button-height: #{space(8)}; // 2rem
+  --sidebar-button-padding-inline: #{space(2)}; // 0.5rem — rail symmetric: 8+16+8 = 32
+  --sidebar-group-gap: #{space(3.5)}; // 0.875rem
 }
 
 .sidebar--roomy {
-  --sidebar-button-height: #{space(10)};         // 2.5rem
-  --sidebar-button-padding-inline: #{space(3)};  // 0.75rem — rail symmetric: 12+16+12 = 40
-  --sidebar-group-gap: #{space(4.5)};            // 1.125rem
+  --sidebar-button-height: #{space(10)}; // 2.5rem
+  --sidebar-button-padding-inline: #{space(3)}; // 0.75rem — rail symmetric: 12+16+12 = 40
+  --sidebar-group-gap: #{space(4.5)}; // 1.125rem
 }
 
 // === Rail / mini-collapsed (.is-collapsed) ==============================
@@ -475,13 +528,20 @@
   // labels, partially-visible chrome) without per-leaf display: none.
   overflow: hidden;
 
-  // Collapsed width follows the content by default (fit-content): the rail
-  // hugs the square icon cell + its symmetric padding, so the icon is centered
-  // with no fixed width to compute and no align-items hack. A border is added
-  // outside the content, so the rail stays centered with one too. Set a fixed
-  // --sidebar-width-collapsed (a length) only when you want the collapse to
-  // animate — fit-content can't be transitioned.
-  width: var(--sidebar-width-collapsed, fit-content);
+  // Collapsed width derives from the content: the square icon cell plus its
+  // symmetric padding. It's a real length (not fit-content) so the collapse
+  // animates against the expanded width out of the box, with no rail width to
+  // compute and no align-items hack — the icon lands centered. Tracks the
+  // button size + collapsed gutter automatically, so the size variants stay
+  // correct too. A thin border shifts it a sub-pixel; bump
+  // --sidebar-width-collapsed for a thick one.
+  width: var(
+    --sidebar-width-collapsed,
+    calc(
+      var(--sidebar-button-height, #{space(9)}) + 2 *
+        var(--sidebar-padding-inline, #{space(2.5)}) + 1px
+    )
+  );
 
   // Trim the panel gutter so the rail hugs the square icon cell — the root
   // cause of the "button squeezed by padding" bug. With the roomy expanded
@@ -497,8 +557,15 @@
   // header's transition list already, so this slides smoothly.
   .sidebar__header {
     padding-inline: calc(
-      var(--sidebar-padding-inline, #{space(4)}) + var(--sidebar-button-padding-inline, #{space(2.5)}) -
-        (var(--sidebar-brand-icon-size, 1.5rem) - var(--sidebar-button-icon-size, 1rem)) / 2
+      var(--sidebar-padding-inline, #{space(4)}) +
+        var(--sidebar-button-padding-inline, #{space(2.5)}) -
+        (
+          var(--sidebar-brand-icon-size, 1.5rem) - var(
+              --sidebar-button-icon-size,
+              1rem
+            )
+        ) /
+        2
     );
     overflow: hidden;
   }
@@ -512,6 +579,12 @@
   // interpolate.
   .sidebar__button {
     overflow: hidden;
+    // flex-shrink: 0 so the rail button holds its square width. Without it
+    // the explicit width is only a hint: a 1px panel border (rail divider)
+    // trims the border-box interior a hair under the cell, and the flex
+    // parent shrinks the button to 35px. The panel's overflow: hidden clips
+    // the sub-pixel overhang, so the icon cell stays a true 36×36 square.
+    flex-shrink: 0;
     width: var(--sidebar-button-height, #{space(9)});
   }
 

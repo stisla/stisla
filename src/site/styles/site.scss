@@ -509,6 +509,17 @@ $shell-max: 90rem;
   background: var(--st-surface-2);
 }
 
+// Primary section nav. Hidden on mobile (the hamburger opens the docs nav);
+// shown inline from md up next to the brand.
+.site-navbar__nav {
+  display: none;
+
+  @include bp.media-up(md) {
+    display: block;
+    margin-inline-start: 0.5rem;
+  }
+}
+
 .site-navbar__spacer {
   flex: 1;
 }

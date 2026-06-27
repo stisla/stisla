@@ -1,4 +1,4 @@
-import ShikiHighlighter from "react-shiki";
+import ShikiHighlighter from "react-shiki/web";
 import { DemoFrame } from "./DemoFrame";
 import { useTheme } from "~/theme";
 
@@ -22,7 +22,16 @@ export function Demo({
   return (
     <div className="not-prose demo-block">
       <DemoFrame html={html} theme={theme ?? docsTheme} layout={layout} />
-      <ShikiHighlighter language="html" theme="github-dark" className="demo-code">
+      <ShikiHighlighter
+        language="html"
+        theme={{
+          light: "github-light",
+          dark: "github-dark",
+        }}
+        className="demo-block__code"
+        showLanguage={false}
+        defaultColor="light-dark()"
+      >
         {html.trim()}
       </ShikiHighlighter>
     </div>

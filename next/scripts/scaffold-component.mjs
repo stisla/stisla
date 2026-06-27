@@ -106,31 +106,35 @@ if (existsSync(pageFile)) {
 // 4. nav <Link> in route.tsx (alphabetical) ---------------------------------
 const routeFile = join(NEXT, "docs/src/routes/docs/route.tsx");
 let route = readFileSync(routeFile, "utf8");
+// Scope to the "Vanilla" group only: the region from its <p className="nav-group"> up to (but not
+// including) the next group title or </nav>. Robust to other groups (e.g. a React group) coexisting.
+const vanillaGroupRe =
+  /<p className="nav-group">Vanilla<\/p>[\s\S]*?(?=<p className="nav-group">|<\/nav>)/;
+const region = route.match(vanillaGroupRe);
 if (route.includes(`to="/docs/vanilla/${name}"`)) {
   skipped.push("docs/src/routes/docs/route.tsx (nav link already present)");
-} else if ((route.match(/nav-group/g) || []).length !== 1) {
-  // More than the single Vanilla group exists — don't risk a regex rewrite. Print the snippet.
-  log("\n⚠ Multiple nav groups found; add this <Link> to the Vanilla group manually:");
-  log(`        <Link to="/docs/vanilla/${name}" activeProps={{ className: "active" }}>\n          ${navLabel}\n        </Link>`);
+} else if (!region) {
+  log('\n⚠ No "Vanilla" nav group found; add this <Link> manually:');
+  log(`            <Link to="/docs/vanilla/${name}" activeProps={{ className: "active" }}>\n              ${navLabel}\n            </Link>`);
 } else {
   const linkRe = /<Link\s+to="\/docs\/vanilla\/([a-z0-9-]+)"[\s\S]*?>\s*([\s\S]*?)\s*<\/Link>/g;
   const entries = new Map();
   let m;
-  while ((m = linkRe.exec(route))) entries.set(m[1], m[2].trim());
+  while ((m = linkRe.exec(region[0]))) entries.set(m[1], m[2].trim());
   entries.set(name, navLabel);
   const sorted = [...entries.entries()].sort((a, b) =>
     a[1].toLowerCase().localeCompare(b[1].toLowerCase())
   );
-  const inner =
-    `          <nav>\n            <p className="nav-group">Vanilla</p>\n` +
+  const rebuilt =
+    `<p className="nav-group">Vanilla</p>\n` +
     sorted
       .map(
         ([slug, label]) =>
           `            <Link to="/docs/vanilla/${slug}" activeProps={{ className: "active" }}>\n              ${label}\n            </Link>`
       )
       .join("\n") +
-    `\n          </nav>`;
-  route = route.replace(/ *<nav>[\s\S]*?<\/nav>/, inner);
+    `\n            `;
+  route = route.replace(vanillaGroupRe, rebuilt);
   writeFileSync(routeFile, route);
   created.push(`docs/src/routes/docs/route.tsx (+nav link, alphabetical)`);
 }

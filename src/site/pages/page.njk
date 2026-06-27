@@ -11,11 +11,11 @@
 
   <section>
     <h2>The page wrapper</h2>
-    <p>Drop a <code>.page</code> inside <code>.app-shell__main</code>. The header carries the title and primary actions; the section below holds a card with the actual data. The wrapper supplies the vertical rhythm between them.</p>
+    <p>Drop a <code>.page</code> inside <code>.app-shell__main</code>. <code>.page__header</code> carries the title and primary actions and sits above <code>.page__body</code>, the flow that holds the sections. The header's bottom margin supplies the rhythm between them.</p>
     {% call ui.demo() %}
     <div class="page" style="width: 100%;">
       <header class="page__header">
-        <div class="page__heading">
+        <div class="page__headline">
           <h1 class="page__title">Orders</h1>
           <p class="page__description">42 orders this month.</p>
         </div>
@@ -24,6 +24,7 @@
           <button type="button" class="btn btn--primary"><i data-lucide="plus"></i>New order</button>
         </div>
       </header>
+      <div class="page__body">
       <section class="page__section">
         <div class="card">
           <div class="card__header card__header--alt">
@@ -80,17 +81,18 @@
           </table>
         </div>
       </section>
+      </div>
     </div>
     {% endcall %}
   </section>
 
   <section>
     <h2>Page header</h2>
-    <p><code>.page__header</code> is a flex row with a <code>.page__heading</code> group on the leading edge and a <code>.page__action</code> slot on the trailing edge. The heading group stacks a <code>.page__title</code> with an optional <code>.page__description</code>; the action slot takes any button row.</p>
+    <p><code>.page__header</code> is a flex row with a <code>.page__headline</code> group on the leading edge and a <code>.page__action</code> slot on the trailing edge. The heading group stacks a <code>.page__title</code> with an optional <code>.page__description</code>; the action slot takes any button row.</p>
     {% call ui.demo() %}
     <div class="page" style="width: 100%;">
       <header class="page__header">
-        <div class="page__heading">
+        <div class="page__headline">
           <h1 class="page__title">Customers</h1>
           <p class="page__description">All accounts in this workspace.</p>
         </div>
@@ -107,7 +109,7 @@
     {% call ui.demo() %}
     <div class="page" style="width: 100%;">
       <header class="page__header">
-        <div class="page__heading">
+        <div class="page__headline">
           <h1 class="page__title">Settings</h1>
           <p class="page__description">Manage your account, billing, and integrations.</p>
         </div>
@@ -119,7 +121,7 @@
     <p>The header is <code>flex-wrap: wrap</code>. When the viewport gets too narrow for the title and action slot to share a row, the actions drop below.</p>
     {% call ui.code() %}
     <header class="page__header">
-      <div class="page__heading">
+      <div class="page__headline">
         <h1 class="page__title">Customers</h1>
         <p class="page__description">All accounts in this workspace.</p>
       </div>
@@ -132,20 +134,20 @@
 
   <section>
     <h2>Sections</h2>
-    <p><code>.page__section</code> is a flex-column for each block inside the page. The <code>.page</code> parent supplies the gap between sections; each section supplies its own inner gap via <code>--page-section-inner-gap</code>.</p>
+    <p><code>.page__section</code> is a flex-column for each block inside the page. The <code>.page</code> parent supplies the gap between sections; each section supplies its own inner gap via <code>--page-section-inner-gap</code>. Pair <code>.page__section-title</code> with <code>.page__section-description</code> for muted helper copy beneath it, the section-scale counterpart to <code>.page__description</code>.</p>
     {% call ui.demo() %}
     <div class="page" style="width: 100%;">
       <section class="page__section">
         <h2 class="page__section-title">Overview</h2>
-        <p class="text-muted-foreground">Headline stats and the period selector live here.</p>
+        <p class="page__section-description">Headline stats and the period selector live here.</p>
       </section>
       <section class="page__section">
         <h2 class="page__section-title">Recent activity</h2>
-        <p class="text-muted-foreground">A timeline of the last events on this account.</p>
+        <p class="page__section-description">A timeline of the last events on this account.</p>
       </section>
       <section class="page__section">
         <h2 class="page__section-title">Quick actions</h2>
-        <p class="text-muted-foreground">Shortcuts to the most-used flows.</p>
+        <p class="page__section-description">Shortcuts to the most-used flows.</p>
       </section>
     </div>
     {% endcall %}
@@ -215,7 +217,7 @@
     {% call ui.demo() %}
     <div class="page" style="width: 100%;">
       <header class="page__header">
-        <div class="page__heading">
+        <div class="page__headline">
           <h1 class="page__title">Customers</h1>
           <p class="page__description">All accounts in this workspace.</p>
         </div>
@@ -262,22 +264,22 @@
         </tr>
         <tr>
           <td><code>--page-heading-gap</code></td>
-          <td>Vertical gap between title and description inside <code>.page__heading</code></td>
+          <td>Vertical gap between title and description inside <code>.page__headline</code></td>
         </tr>
         <tr>
-          <td><code>--page-title-size</code></td>
+          <td><code>--page-title-font-size</code></td>
           <td>Font size of <code>.page__title</code></td>
         </tr>
         <tr>
-          <td><code>--page-title-weight</code></td>
+          <td><code>--page-title-font-weight</code></td>
           <td>Font weight of <code>.page__title</code></td>
         </tr>
         <tr>
-          <td><code>--page-description-size</code></td>
+          <td><code>--page-description-font-size</code></td>
           <td>Font size of <code>.page__description</code></td>
         </tr>
         <tr>
-          <td><code>--page-description-weight</code></td>
+          <td><code>--page-description-font-weight</code></td>
           <td>Font weight of <code>.page__description</code></td>
         </tr>
         <tr>
@@ -293,12 +295,24 @@
           <td>Horizontal space between title and action slot in <code>.page__section-header</code></td>
         </tr>
         <tr>
-          <td><code>--page-section-title-size</code></td>
+          <td><code>--page-section-title-font-size</code></td>
           <td>Font size of <code>.page__section-title</code></td>
         </tr>
         <tr>
-          <td><code>--page-section-title-weight</code></td>
+          <td><code>--page-section-title-font-weight</code></td>
           <td>Font weight of <code>.page__section-title</code></td>
+        </tr>
+        <tr>
+          <td><code>--page-section-description-font-size</code></td>
+          <td>Font size of <code>.page__section-description</code></td>
+        </tr>
+        <tr>
+          <td><code>--page-section-description-font-weight</code></td>
+          <td>Font weight of <code>.page__section-description</code></td>
+        </tr>
+        <tr>
+          <td><code>--page-section-description-color</code></td>
+          <td>Text color of <code>.page__section-description</code> (muted by default)</td>
         </tr>
       </tbody>
     </table>

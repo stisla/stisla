@@ -8,7 +8,7 @@
   "packageManager": "pnpm@10.30.3",
   "scripts": {
     "build": "pnpm -r --if-present build",
-    "dev": "pnpm --filter playground dev",
+    "dev": "pnpm --filter docs dev",
     "scaffold": "node scripts/scaffold-component.mjs",
     "check": "node scripts/check-tokens.mjs"
   }

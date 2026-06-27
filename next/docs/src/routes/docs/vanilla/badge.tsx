@@ -62,7 +62,31 @@ function BadgeDocs() {
 <span class="badge badge--success"><i data-lucide="check"></i> Verified</span>
 <span class="badge badge--soft badge--warning"><i data-lucide="clock"></i> Pending</span>
 <span class="badge badge--soft badge--danger"><i data-lucide="circle-x"></i> Failed</span>
+<span class="badge badge--primary"><i data-lucide="star"></i> Featured</span>
 <span class="badge badge--info">12 <i data-lucide="arrow-up"></i></span>`}
+        />
+      </section>
+
+      <section>
+        <h2>Loading</h2>
+        <p>
+          Slot a <code>.spinner.spinner--sm</code> in to signal in-flight work. It inherits the
+          badge's text color and shrinks to the badge's font size.
+        </p>
+        <Demo
+          html={`
+<span class="badge badge--soft badge--primary">
+  <span class="spinner spinner--sm" role="status" aria-hidden="true"></span>
+  Syncing
+</span>
+<span class="badge badge--soft">
+  <span class="spinner spinner--sm" role="status" aria-hidden="true"></span>
+  Loading
+</span>
+<span class="badge badge--info">
+  <span class="spinner spinner--sm" role="status" aria-hidden="true"></span>
+  Uploading
+</span>`}
         />
       </section>
 
@@ -79,6 +103,9 @@ function BadgeDocs() {
 </button>
 <button type="button" class="button button--soft button--primary">
   Notifications <span class="badge badge--soft badge--primary">9</span>
+</button>
+<button type="button" class="button button--outline button--neutral">
+  Alerts <span class="badge badge--danger">12</span>
 </button>`}
         />
       </section>

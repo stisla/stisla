@@ -1,0 +1,55 @@
+/* @stisla/style — Kbd. Ported from src/scss/components/_kbd.scss. A keyboard-shortcut chip. <kbd> is
+ * unstyled at the bare-element level (reboot); .kbd opts in. Sits in the neutral interactional tier;
+ * the rim uses the same color-mix recipe as .button--neutral so the border stays visible in dark mode.
+ * Font-size is rem-based (a deliberate UI element, not tracking surrounding text). References the
+ * @theme tokens (colors var(--color-*), spacing --spacing(n), type var(--text-*) / var(--font-mono) /
+ * var(--font-weight-*) / var(--leading-*), radius var(--radius-*)); only no-namespace customs use
+ * --st-* (border-width). Knobs are --kbd-*. @layer components. Authoring rules: ../../../../PORTING.md */
+
+@layer components {
+  .kbd {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--kbd-gap, --spacing(1));
+    padding-block: var(--kbd-padding-block, --spacing(0.75));
+    padding-inline: var(--kbd-padding-inline, --spacing(2));
+    font-family: var(--font-mono);
+    font-size: var(--kbd-font-size, var(--text-xs));
+    font-weight: var(--kbd-font-weight, var(--font-weight-medium));
+    line-height: var(--leading-none);
+    color: var(--kbd-color, var(--color-neutral-foreground));
+    background: var(--kbd-bg, var(--color-neutral));
+    border: var(--st-border-width) solid
+      var(
+        --kbd-rim,
+        color-mix(
+          in oklch,
+          var(--color-neutral) 85%,
+          var(--color-muted-foreground)
+        )
+      );
+    border-radius: var(--kbd-radius, 0.5rem); /* intentional for 8px */
+    /* Bottom edge in the rim color so the chip reads as a key cap. */
+    box-shadow: 0 1px 0
+      var(
+        --kbd-rim,
+        color-mix(
+          in oklch,
+          var(--color-neutral) 85%,
+          var(--color-muted-foreground)
+        )
+      );
+  }
+
+  /* Combo shortcuts — a .kbd wrapping nested .kbd elements becomes an invisible wrapper so each inner
+     cap reads as its own chip side-by-side. */
+  .kbd:has(> .kbd) {
+    display: inline-flex;
+    gap: --spacing(1);
+    align-items: center;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+}

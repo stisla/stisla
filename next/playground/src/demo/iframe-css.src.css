@@ -1,7 +1,0 @@
-/* Source for the sandboxed-demo stylesheet. Compiled by Tailwind into iframe.css
- * (`pnpm --filter playground demo:css`), then inlined into the demo <iframe>.
- *
- * This IS the vanilla @stisla/css surface for a Button demo: tokens + component CSS,
- * processed by Tailwind to plain CSS. No utilities needed for a component demo. */
-@import "../../../packages/tokens/src/theme.css";
-@import "../../../packages/style/src/button/button.css";

@@ -26,7 +26,7 @@
       </thead>
       <tbody>
         <tr><td><a href="/menu">Dropdown</a></td><td><code>--menu-z-index</code></td><td>1030</td></tr>
-        <tr><td><a href="/app-shell">App-shell sidebar</a></td><td><code>--app-shell-sidebar-z</code></td><td>1030</td></tr>
+        <tr><td><a href="/app-shell">App-shell sidebar</a></td><td><code>--app-shell-sidebar-z-index</code></td><td>1030</td></tr>
         <tr><td><a href="/drawer">Drawer</a></td><td><code>--drawer-z-index</code></td><td>1045</td></tr>
         <tr><td><a href="/tooltip">Tooltip</a></td><td><code>--tooltip-z-index</code></td><td>1050</td></tr>
         <tr><td><a href="/dialog">Dialog</a></td><td><code>--dialog-z-index</code></td><td>1055</td></tr>
@@ -80,7 +80,7 @@
     <p>For the common case of lifting one floating instance, use the inline-style hook shown in <a href="#overriding-per-instance">Overriding per instance</a>. To shift the whole scale at the project level, retarget each component selector and keep the spacing between families.</p>
     {% call ui.code(lang='css') %}
     .menu            { --menu-z-index:     2030; }
-    .app-shell__sidebar  { --app-shell-sidebar-z:  2030; }
+    .app-shell           { --app-shell-sidebar-z-index: 2030; }
     .drawer              { --drawer-z-index:       2045; }
     .tooltip             { --tooltip-z-index:      2050; }
     .dialog              { --dialog-z-index:       2055; }

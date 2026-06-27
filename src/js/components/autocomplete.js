@@ -153,11 +153,9 @@ export class Autocomplete extends Component {
 
   open() {
     if (this._isOpen || this._input.disabled) return;
+    if (this._input.value.trim().length < this.opts.minLength) return;
     const matches = this._filter(this._input.value);
     this._render(matches);
-    if (matches.length === 0 && this._input.value.length < this.opts.minLength) {
-      return;
-    }
     this._isOpen = true;
     this._popup.hidden = false;
     this._input.setAttribute('aria-expanded', 'true');
@@ -187,7 +185,8 @@ export class Autocomplete extends Component {
 
   _filter(query) {
     const q = query.trim().toLowerCase();
-    if (q.length < this.opts.minLength) return this._options.slice();
+    if (q.length < this.opts.minLength) return [];
+    // q === '' (only reachable when minLength is 0) includes() everything.
     return this._options.filter((o) => o.label.toLowerCase().includes(q));
   }
 
@@ -317,13 +316,17 @@ export class Autocomplete extends Component {
   // === Events ============================================================
 
   _onInput() {
-    const matches = this._filter(this._input.value);
-    this._render(matches);
+    // Below min-length: keep the popup shut (and close it if a deletion
+    // dropped us back under the threshold).
+    if (this._input.value.trim().length < this.opts.minLength) {
+      this.close();
+      return;
+    }
     if (!this._isOpen) {
-      // Open if any match (or always when min-length is 0).
-      if (matches.length > 0 || this._input.value.length === 0) this.open();
+      this.open();
     } else {
-      // Already open — just refresh active position.
+      // Already open — re-filter, then refresh active item + position.
+      this._render(this._filter(this._input.value));
       this._setActiveIndex(0);
       this._position();
     }
@@ -366,7 +369,7 @@ export class Autocomplete extends Component {
   }
 
   _onPopupClick(e) {
-    const li = e.target.closest('.autocomplete__item');
+    const li = e.target.closest('[role="option"]');
     if (!li) return;
     const idx = this._optionEls?.indexOf(li) ?? -1;
     if (idx >= 0) this._selectIndex(idx);

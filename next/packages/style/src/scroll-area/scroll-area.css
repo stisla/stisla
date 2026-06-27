@@ -1,0 +1,25 @@
+/* @stisla/style — Scroll area (portable contract). Ported from src/scss/components/_scroll-area.scss.
+ * This file is the design contract any implementation shares: the .scroll-area root (a clipped scroll
+ * container that works with native scrollbars and no JS), the --scroll-area-* token knobs, and the
+ * --bordered modifier.
+ *
+ * The vanilla JS binding (OverlayScrollbars' .os-scrollbar / .os-viewport DOM, with our knobs
+ * forwarded to its --os-* var surface) lives in the sibling scroll-area.overlayscrollbars.css — load
+ * it alongside this file only when you use the OverlayScrollbars-backed scroll area.
+ *
+ * References the @theme tokens: colors var(--color-*), radius var(--radius-*); only no-namespace
+ * customs use --st-* (border-width). Knobs are --scroll-area-*. @layer components.
+ * Authoring rules: ../../../../PORTING.md */
+
+@layer components {
+  .scroll-area {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--scroll-area-radius, var(--radius-md));
+  }
+
+  .scroll-area--bordered {
+    border: var(--scroll-area-border-width, var(--st-border-width)) solid
+      var(--scroll-area-border-color, var(--color-border));
+  }
+}

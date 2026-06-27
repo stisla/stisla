@@ -10,6 +10,12 @@
 //                  [data-highlighted]  [data-state="checked|active"]
 //                  [aria-current]      [aria-disabled]
 //
+// Navigable rows are matched by ROLE, not by the .menu__item class, so a
+// row built from another primitive (e.g. an <a class="media"
+// role="menuitem"> in a notifications menu) participates in arrow-key
+// nav and gets [data-highlighted] like any item. The role is the
+// contract; .menu__item is just the default paint.
+//
 // Events (bubbling, detail: { menu: this }):
 //   stisla:menu:opening   — before open  (cancelable)
 //   stisla:menu:opened    — after open + position
@@ -45,6 +51,12 @@ const OPEN = 'open';
 const CLOSED = 'closed';
 const TYPEAHEAD_WINDOW_MS = 500;
 const SCROLL_LOCK_CLASS = 'is-menu-open';
+
+// Navigable items are matched by role, not class, so any element acting
+// as a menu item — .menu__item or a borrowed primitive like .media —
+// joins keyboard nav and click handling.
+const ITEM_SELECTOR =
+  '[role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]';
 
 // Body scroll is locked while any menu is open. Matches the Dialog +
 // Drawer convention and sidesteps the visible repositioning lag Floating
@@ -236,7 +248,7 @@ export class Menu extends Component {
 
   _items() {
     return Array.from(
-      this.el.querySelectorAll('.menu__item'),
+      this.el.querySelectorAll(ITEM_SELECTOR),
     );
   }
 
@@ -412,7 +424,7 @@ if (
     // Item click — handle menuitemcheckbox / menuitemradio state flip and
     // honor opts.autoClose. Disabled rows are filtered by CSS pointer-events
     // already, but check defensively for the disabled attr path.
-    const item = e.target.closest('.menu__item');
+    const item = e.target.closest(ITEM_SELECTOR);
     if (item) {
       const menuEl = item.closest('.menu__popup');
       const inst = menuEl && getInstance(menuEl);

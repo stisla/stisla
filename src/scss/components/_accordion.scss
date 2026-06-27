@@ -12,8 +12,9 @@
 //
 // === Anatomy =============================================================
 //   .accordion                       root frame
-//   .accordion__item                 one panel (header + body pair)
-//   .accordion__header               the <button> trigger row
+//   .accordion__item                 one disclosure section (heading + body)
+//   .accordion__heading              section sub-header; <h3> wrapping the trigger
+//   .accordion__trigger              the <button> toggle
 //   .accordion__icon                 chevron; rotates 0→180° on open
 //   .accordion__body                 the collapsible content
 //
@@ -24,8 +25,8 @@
 //
 // === State hooks (V3.md §3.6) ============================================
 //   .accordion__item[data-state="open|closed"]   Radix-aligned
-//   .accordion__header[aria-expanded]            native button state
-//   .accordion__header:disabled                  unreachable item
+//   .accordion__trigger[aria-expanded]            native button state
+//   .accordion__trigger:disabled                  unreachable item
 //
 // === Padding model =======================================================
 // Frame padding (4 px) + inner padding (16 px) = 20 px from frame edge to
@@ -75,20 +76,26 @@
   border-color: var(--accordion-item-open-border-color, var(--st-border));
 }
 
-.accordion__header {
+// The <h3> (or h2/h4…) wrapping the trigger — the section sub-header, present
+// for screen-reader navigation. Pure structural wrapper; the trigger inside
+// owns all the visual treatment. margin: 0 resets the bare heading rhythm.
+.accordion__heading {
+  margin: 0;
+}
+
+.accordion__trigger {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: #{space(3)};
   width: 100%;
-  padding-block: var(--accordion-header-padding-block, #{space(3)});
-  padding-inline: var(--accordion-header-padding-inline, #{space(4)});
+  padding-block: var(--accordion-trigger-padding-block, #{space(3)});
+  padding-inline: var(--accordion-trigger-padding-inline, #{space(4)});
   font: inherit;
-  font-size: var(--accordion-header-font-size, inherit);
-  font-weight: var(--accordion-header-font-weight, #{weight(medium)});
+  font-size: var(--accordion-trigger-font-size, inherit);
+  font-weight: var(--accordion-trigger-font-weight, #{weight(medium)});
   text-align: start;
-  color: var(--accordion-header-color, var(--st-foreground));
-  background-color: var(--accordion-header-bg, transparent);
+  color: var(--accordion-trigger-color, var(--st-foreground));
+  background-color: var(--accordion-trigger-bg, transparent);
   border: 0;
   border-bottom: 1px solid transparent;
   // Round the top corners to the item radius so the inset focus ring follows
@@ -116,33 +123,36 @@
 // signals state via surface-2 + rim + divider, so the open header is
 // removed from the hover cascade entirely rather than overridden.
 //
-// `> * >` accounts for the ARIA accordion pattern's heading wrapper
-// (the <button> sits inside an <h2>/<h3>/... element for screen-reader
-// navigation). The intermediate level acts as a scope fence so a nested
-// accordion inside an open item's body doesn't pick up these styles —
-// nested headers are at `> .accordion__body > .accordion > .accordion__item > * > .accordion__header`,
-// not at `> * > .accordion__header`.
+// The `> .accordion__heading >` step matches the ARIA pattern's heading
+// wrapper (the <button> sits inside an <h2>/<h3>/… for screen-reader
+// navigation) and acts as a scope fence: a nested accordion inside an open
+// item's body doesn't pick up these styles, because its triggers sit deeper,
+// under their own .accordion__heading.
 .accordion__item[data-state="closed"]
-  > *
-  > .accordion__header:hover:not(:disabled) {
-  background-color: var(--accordion-header-bg-hover, var(--st-accent));
+  > .accordion__heading
+  > .accordion__trigger:hover:not(:disabled) {
+  background-color: var(--accordion-trigger-bg-hover, var(--st-accent));
 }
 
 // Closed item: the header is the whole chip, so round its bottom corners too
 // (the open header keeps square bottoms where it meets the body) — keeps the
 // focus ring fully rounded on a collapsed item.
-.accordion__item[data-state="closed"] > * > .accordion__header {
+.accordion__item[data-state="closed"] > .accordion__heading > .accordion__trigger {
   border-end-start-radius: calc(var(--accordion-radius, #{radius(lg)}) - var(--accordion-padding-inline, #{space(1)}));
   border-end-end-radius: calc(var(--accordion-radius, #{radius(lg)}) - var(--accordion-padding-inline, #{space(1)}));
 }
 
-// Open item header — divider line between header and body emerges.
-.accordion__item[data-state="open"] > * > .accordion__header {
-  border-bottom-color: var(--accordion-header-divider-color, var(--st-border));
+// Open item: divider line between the trigger and the body emerges.
+.accordion__item[data-state="open"] > .accordion__heading > .accordion__trigger {
+  border-bottom-color: var(--accordion-trigger-divider-color, var(--st-border));
 }
 
 .accordion__icon {
   flex-shrink: 0;
+  // Pushed to the end of the trigger row; the title text packs to the start.
+  // Auto margin rather than justify-content: space-between, so anything else
+  // added to the row groups at the start instead of spreading.
+  margin-inline-start: auto;
   width: var(--accordion-icon-size, 1rem);
   height: var(--accordion-icon-size, 1rem);
   color: var(--accordion-icon-color, currentColor);
@@ -150,8 +160,8 @@
 }
 
 .accordion__item[data-state="open"]
-  > *
-  > .accordion__header
+  > .accordion__heading
+  > .accordion__trigger
   > .accordion__icon {
   transform: rotate(180deg);
 }
@@ -190,7 +200,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .accordion__item,
-  .accordion__header,
+  .accordion__trigger,
   .accordion__icon {
     transition: none;
   }

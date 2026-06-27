@@ -68,6 +68,7 @@ export default defineConfig(({ command }) => {
     'js-full': 'stisla-full.js',
     'css-core.css': 'stisla.css',
     'css-full.css': 'stisla-full.css',
+    'css-utilities.css': 'utilities.css',
     'component-js-carousel': 'components/carousel.js',
     'component-css-carousel.css': 'components/carousel.css',
     'component-js-scroll-area': 'components/scroll-area.js',
@@ -87,6 +88,7 @@ export default defineConfig(({ command }) => {
         input: {
           'css-core': 'src/scss/bundles/stisla.scss',
           'css-full': 'src/scss/bundles/stisla-full.scss',
+          'css-utilities': 'src/scss/bundles/utilities.scss',
           'js-core': 'src/js/index.js',
           'js-full': 'src/js/index-full.js',
           'component-css-carousel': 'src/scss/bundles/components/carousel.scss',

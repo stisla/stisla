@@ -10,7 +10,7 @@
     justify-content: center;
     gap: var(--button-gap, --spacing(2));
     height: var(--button-height, --spacing(9)); /* md */
-    padding-block: 0;
+    padding-block: var(--button-padding-block, 0);
     padding-inline: var(--button-padding-inline, --spacing(3));
     font-family: inherit;
     font-size: var(--button-font-size, var(--text-sm));
@@ -68,8 +68,8 @@
   }
 
   .button :is(svg, i, .button__icon) {
-    width: var(--button-icon-size, 1rem);
-    height: var(--button-icon-size, 1rem);
+    width: var(--button-icon-size, --spacing(4));
+    height: var(--button-icon-size, --spacing(4));
     flex-shrink: 0;
   }
 
@@ -105,7 +105,7 @@
   .button--wrap {
     height: auto;
     min-height: var(--button-height, --spacing(9));
-    padding-block: --spacing(1.5);
+    --button-padding-block: --spacing(1.5);
     white-space: normal;
     overflow: visible;
     text-overflow: clip;
@@ -284,8 +284,8 @@
       content: "";
       display: inline-block;
       flex-shrink: 0;
-      width: var(--button-icon-size, 1em);
-      height: var(--button-icon-size, 1em);
+      width: var(--button-icon-size, --spacing(4));
+      height: var(--button-icon-size, --spacing(4));
       border: 2px solid currentColor;
       border-right-color: transparent;
       border-radius: 50%;

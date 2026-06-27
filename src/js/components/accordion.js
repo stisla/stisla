@@ -13,7 +13,7 @@
 //        data-stisla-accordion-type="single|multiple">
 //     <div class="accordion__item" data-state="closed">
 //       <h3>
-//         <button class="accordion__header"
+//         <button class="accordion__trigger"
 //                 data-stisla-accordion-trigger
 //                 aria-expanded="false" aria-controls="acc-1-body">…</button>
 //       </h3>

@@ -1,0 +1,65 @@
+/* @stisla/style — Spinner. Ported from src/scss/components/_spinner.scss. Default is a border ring;
+ * .spinner--grow is a pulsing dot. Color inherits via currentColor (any parent .text-* recolors it).
+ * References the @theme tokens (spacing/sizes --spacing(n)). Knobs are --spinner-*; sizes compact/roomy
+ * → sm/lg. Stays round. Under prefers-reduced-motion the loop SLOWS rather than stops (a static
+ * spinner reads as "frozen", not "loading"). @layer components. Authoring rules: ../../../../PORTING.md */
+
+@layer components {
+  .spinner {
+    display: inline-block;
+    width: var(--spinner-size, --spacing(5));
+    height: var(--spinner-size, --spacing(5));
+    vertical-align: -0.125em;
+    color: inherit;
+    border: var(--spinner-width, 2px) solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: st-spinner-border var(--spinner-duration, 0.75s) linear infinite;
+  }
+
+  /* Grow — a pulsing solid disc: replace the ring with a filled circle and swap the animation. */
+  .spinner--grow {
+    --spinner-duration: 0.75s;
+    border: 0;
+    background: currentColor;
+    opacity: 0;
+    animation-name: st-spinner-grow;
+  }
+
+  /* === Sizes (base = md) === */
+  .spinner--sm {
+    --spinner-size: --spacing(3.5);
+    --spinner-width: 1.5px;
+  }
+  .spinner--lg {
+    --spinner-size: --spacing(8);
+    --spinner-width: 3px;
+  }
+
+  /* Slow the loop instead of stopping it — a static spinner reads as "stuck", not "loading". */
+  @media (prefers-reduced-motion: reduce) {
+    .spinner {
+      --spinner-duration: 1.5s;
+    }
+  }
+}
+
+@keyframes st-spinner-border {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes st-spinner-grow {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}

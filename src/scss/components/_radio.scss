@@ -22,7 +22,7 @@
   // Hover — only when idle. Skip when focus / invalid / checked / disabled
   // owns the border. :indeterminate is intentionally absent (see above).
   &:hover:not(:disabled, :focus-visible, :checked, [aria-invalid="true"], :user-invalid) {
-    border-color: color-mix(in oklch, var(--st-border) 80%, var(--st-foreground));
+    border-color: color-mix(in oklch, var(--st-border-strong) 80%, var(--st-foreground));
   }
 
   // Checked — solid primary fill, dot painted via background-image. The

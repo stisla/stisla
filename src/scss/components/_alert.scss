@@ -43,7 +43,7 @@
 }
 
 // === Parts ============================================================
-.alert__heading {
+.alert__title {
   margin: 0;
   font-size: 0.875rem;
   font-weight: 600;
@@ -99,7 +99,7 @@
   // Tight heading row (line-height: 1) collapses to the em-box so the
   // icon's center lands on the heading's cap. Description below keeps
   // line-height 1.5, providing the visual gap without row-gap.
-  .alert__heading {
+  .alert__title {
     grid-column: 2;
     grid-row: 1;
     line-height: 1;
@@ -123,7 +123,7 @@
   &:not(:has(> :is(svg, i))) {
     grid-template-columns: 1fr auto;
 
-    .alert__heading,
+    .alert__title,
     .alert__description { grid-column: 1; }
     .alert__action      { grid-column: 2; }
   }

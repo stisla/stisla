@@ -230,6 +230,52 @@
   </section>
 
   <section>
+    <h2>Media rows</h2>
+    <p>Borrow the <code>.media</code> row for notification or message menus that pair an avatar or icon with a title and supporting lines. Give each row <code>role="menuitem"</code> and the menu folds it into keyboard navigation. The menu matches items by role, not by class, so hover and arrow-key highlight paint the same as a plain item and round to the same row corners.</p>
+    {% call ui.demo() %}
+    <div class="menu">
+      <button type="button" class="btn btn--outline btn--neutral" data-stisla-menu-trigger="ddMedia" aria-haspopup="menu" aria-expanded="false" aria-controls="ddMedia">
+        Notifications
+      </button>
+      <div class="menu__popup" id="ddMedia" data-stisla-menu role="menu" data-state="closed" style="width: 20rem;">
+        <a href="#" class="media media--flush align-items-start" role="menuitem">
+          <div class="media__figure mt-1">
+            <span class="icon-box icon-box--primary"><i data-lucide="shopping-bag"></i></span>
+          </div>
+          <div class="media__content">
+            <div class="media__title">New order #10428</div>
+            <div class="media__description">Acme Corp placed an order for 12 items.</div>
+            <div class="media__meta">2 minutes ago</div>
+          </div>
+        </a>
+        <a href="#" class="media media--flush align-items-start" role="menuitem">
+          <div class="media__figure mt-1">
+            <span class="icon-box icon-box--warning"><i data-lucide="triangle-alert"></i></span>
+          </div>
+          <div class="media__content">
+            <div class="media__title">Low stock</div>
+            <div class="media__description">Headphone Blitz is down to 4 units.</div>
+            <div class="media__meta">1 hour ago</div>
+          </div>
+        </a>
+        <a href="#" class="media media--flush align-items-start" role="menuitem">
+          <div class="media__figure mt-1">
+            <span class="icon-box icon-box--success"><i data-lucide="user-plus"></i></span>
+          </div>
+          <div class="media__content">
+            <div class="media__title">12 new customers</div>
+            <div class="media__description">Sign-ups climbed this week.</div>
+            <div class="media__meta">Today</div>
+          </div>
+        </a>
+        <hr class="menu__separator" role="separator">
+        <a href="#" class="menu__item justify-content-center" role="menuitem">View all notifications</a>
+      </div>
+    </div>
+    {% endcall %}
+  </section>
+
+  <section>
     <h2>Form inside</h2>
     <p>Drop a form into the menu and set <code>data-stisla-menu-auto-close="outside"</code> so clicks inside don't dismiss the menu while the user fills out fields. The menu auto-sizes its height to the viewport, so long content scrolls inside.</p>
     {% call ui.demo() %}

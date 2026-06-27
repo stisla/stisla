@@ -1,0 +1,261 @@
+/* @stisla/style — List group. Ported from src/scss/components/_list-group.scss. A vertical stack of
+ * rows on a shared rounded surface (nav lists, settings panels, contact rolls). Interactive rows
+ * (a/button) get hover + focus automatically; static rows stay quiet. References the @theme tokens
+ * (colors var(--color-*), spacing/sizes --spacing(n), radius var(--radius-*)); only no-namespace
+ * customs use --st-* (border-width, duration). Knobs are --list-group-*. State via attributes / native
+ * (data-state / aria-current / aria-disabled / :disabled), no is-*. @layer components.
+ * Authoring rules: ../../../../PORTING.md */
+
+@layer components {
+  .list-group {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--list-group-bg, var(--color-surface));
+    color: var(--list-group-color, var(--color-foreground));
+    border: var(--list-group-border-width, var(--st-border-width)) solid
+      var(--list-group-border-color, var(--color-border));
+    border-radius: var(--list-group-radius, var(--radius-lg));
+    /* Clip square inner-row corners to the rounded outer shape (inset focus halos sit inside). */
+    overflow: hidden;
+  }
+
+  /* === Item === */
+  .list-group__item {
+    display: flex;
+    align-items: center;
+    gap: var(--list-group-item-gap, --spacing(3));
+    padding: var(--list-group-item-padding-block, --spacing(3))
+      var(--list-group-item-padding-inline, --spacing(4));
+    color: var(--list-group-color, var(--color-foreground));
+    /* Transparent base lets variant tints + state paints stack on top. */
+    background-color: transparent;
+    /* Inter-row rule — the root border owns the top/bottom edges; first item stays flush. */
+    border-top: var(--st-border-width) solid var(--list-group-divider-color, var(--color-border));
+    position: relative;
+    transition:
+      background-color var(--list-group-transition-duration, var(--st-duration-fast)) ease,
+      color var(--list-group-transition-duration, var(--st-duration-fast)) ease;
+
+    &:first-child {
+      border-top: 0;
+    }
+  }
+
+  /* === Interactive rows === <a>/<button> stretch + get hover/focus; static rows stay quiet. */
+  a.list-group__item,
+  button.list-group__item {
+    width: 100%;
+    text-align: inherit;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  /* Hover only on a quiet row — an active or disabled row must not flash the accent surface. */
+  a.list-group__item:hover:not(
+      [data-state="active"],
+      [aria-current="page"],
+      [aria-current="true"],
+      [aria-disabled="true"]
+    ),
+  button.list-group__item:hover:not(
+      [data-state="active"],
+      [aria-current="page"],
+      [aria-current="true"],
+      [aria-disabled="true"]
+    ):not(:disabled) {
+    background-color: var(--list-group-item-bg-hover, var(--color-accent));
+    color: var(--list-group-item-color-hover, var(--color-accent-foreground));
+  }
+
+  a.list-group__item:focus-visible,
+  button.list-group__item:focus-visible {
+    /* Inset halo so the root overflow: hidden doesn't clip it; z-index lifts it over the next divider. */
+    outline: 2px solid var(--list-group-ring, var(--color-ring));
+    outline-offset: -2px;
+    z-index: 1;
+  }
+
+  /* === Selection states === carved out of the hover rule via :not() above. */
+  .list-group__item[data-state="active"],
+  .list-group__item[aria-current="page"],
+  .list-group__item[aria-current="true"] {
+    background-color: var(--list-group-item-bg-active, var(--color-highlight));
+    color: var(--list-group-item-color-active, var(--color-foreground));
+  }
+
+  /* === Disabled === */
+  .list-group__item[aria-disabled="true"],
+  .list-group__item:disabled {
+    color: var(--list-group-item-color-disabled, var(--color-muted-foreground));
+    pointer-events: none;
+    cursor: not-allowed;
+    background-color: transparent;
+  }
+
+  /* === Leading icon === first-child <svg>/<i> pins to a fixed size + currentColor. */
+  .list-group__item > :is(svg, i):first-child {
+    width: var(--list-group-item-icon-size, --spacing(4));
+    height: var(--list-group-item-icon-size, --spacing(4));
+    flex-shrink: 0;
+    color: currentColor;
+  }
+
+  /* === Contextual variants === 10% soft fill. The border mix uses `in oklab` (not oklch) because the
+     surface is neutral: oklch would pull every intent toward red; oklab preserves each intent's hue. */
+  .list-group__item--primary {
+    background-color: color-mix(in oklab, var(--color-primary) 10%, var(--list-group-bg, var(--color-surface)));
+    color: var(--color-foreground);
+  }
+  .list-group__item--success {
+    background-color: color-mix(in oklab, var(--color-success) 10%, var(--list-group-bg, var(--color-surface)));
+    color: var(--color-foreground);
+  }
+  .list-group__item--info {
+    background-color: color-mix(in oklab, var(--color-info) 10%, var(--list-group-bg, var(--color-surface)));
+    color: var(--color-foreground);
+  }
+  .list-group__item--warning {
+    background-color: color-mix(in oklab, var(--color-warning) 10%, var(--list-group-bg, var(--color-surface)));
+    color: var(--color-foreground);
+  }
+  .list-group__item--danger {
+    background-color: color-mix(in oklab, var(--color-danger) 10%, var(--list-group-bg, var(--color-surface)));
+    color: var(--color-foreground);
+  }
+  .list-group__item--neutral {
+    background-color: var(--color-neutral);
+    color: var(--color-neutral-foreground);
+  }
+
+  /* === Flush === drop outer border + radius (for parents that already own a frame). */
+  .list-group--flush {
+    --list-group-bg: transparent;
+    border-width: 0;
+    border-radius: 0;
+  }
+
+  /* === Numbered === <ol> auto-counter; Preflight strips list-style, so restore via a counter. */
+  .list-group--numbered {
+    counter-reset: list-group;
+
+    > .list-group__item {
+      counter-increment: list-group;
+
+      &::before {
+        content: counters(list-group, ".") ". ";
+      }
+    }
+  }
+
+  /* === Horizontal === rows side by side; the divider moves from row-top to row-start. */
+  .list-group--horizontal {
+    flex-direction: row;
+
+    > .list-group__item {
+      border-top: 0;
+      border-inline-start: var(--st-border-width) solid var(--list-group-divider-color, var(--color-border));
+
+      &:first-child {
+        border-inline-start: 0;
+      }
+    }
+  }
+
+  /* Responsive horizontal — row layout above the named breakpoint, via Tailwind's `@variant <bp>`
+     (resolves to the theme's breakpoint, not a hardcoded rem). */
+  @variant sm {
+    .list-group--horizontal-sm {
+      flex-direction: row;
+      > .list-group__item {
+        border-top: 0;
+        border-inline-start: var(--st-border-width) solid var(--list-group-divider-color, var(--color-border));
+        &:first-child {
+          border-inline-start: 0;
+        }
+      }
+    }
+  }
+  @variant md {
+    .list-group--horizontal-md {
+      flex-direction: row;
+      > .list-group__item {
+        border-top: 0;
+        border-inline-start: var(--st-border-width) solid var(--list-group-divider-color, var(--color-border));
+        &:first-child {
+          border-inline-start: 0;
+        }
+      }
+    }
+  }
+  @variant lg {
+    .list-group--horizontal-lg {
+      flex-direction: row;
+      > .list-group__item {
+        border-top: 0;
+        border-inline-start: var(--st-border-width) solid var(--list-group-divider-color, var(--color-border));
+        &:first-child {
+          border-inline-start: 0;
+        }
+      }
+    }
+  }
+  @variant xl {
+    .list-group--horizontal-xl {
+      flex-direction: row;
+      > .list-group__item {
+        border-top: 0;
+        border-inline-start: var(--st-border-width) solid var(--list-group-divider-color, var(--color-border));
+        &:first-child {
+          border-inline-start: 0;
+        }
+      }
+    }
+  }
+  @variant 2xl {
+    .list-group--horizontal-2xl {
+      flex-direction: row;
+      > .list-group__item {
+        border-top: 0;
+        border-inline-start: var(--st-border-width) solid var(--list-group-divider-color, var(--color-border));
+        &:first-child {
+          border-inline-start: 0;
+        }
+      }
+    }
+  }
+
+  /* === Card integration === a direct .card > .list-group sheds its own outer chrome so the card owns
+     the frame; edges merge with the card's header bottom / footer top / corner. */
+  .card > .list-group {
+    border-inline-width: 0;
+    border-radius: 0;
+  }
+  .card > .list-group:first-child {
+    border-top-width: 0;
+    border-start-start-radius: calc(var(--card-radius, var(--radius-lg)) - var(--st-border-width));
+    border-start-end-radius: calc(var(--card-radius, var(--radius-lg)) - var(--st-border-width));
+  }
+  .card > .card__header + .list-group {
+    border-top-width: 0;
+  }
+  .card > .list-group:last-child {
+    border-bottom-width: 0;
+    border-end-start-radius: calc(var(--card-radius, var(--radius-lg)) - var(--st-border-width));
+    border-end-end-radius: calc(var(--card-radius, var(--radius-lg)) - var(--st-border-width));
+  }
+  /* A list-group inside a card picks up the card's inline gutter so rows align with header/footer. */
+  .card .list-group {
+    --list-group-item-padding-inline: var(--card-padding-inline, --spacing(5));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .list-group__item {
+      transition: none;
+    }
+  }
+
+  /* Block — fills its container width per SPEC §9 escape ramp. */
+  .list-group--block {
+    width: 100%;
+  }
+}

@@ -1,0 +1,293 @@
+{% extends "layouts/gallery.njk" %}
+{% import "partials/_illustrations.njk" as il %}
+
+{% block title %}Illustration gallery · Stisla{% endblock %}
+
+{% macro card(name, label, svg) %}
+<figure class="gcard" data-name="{{ name }}">
+  <div class="gcard__art">{{ svg }}</div>
+  <figcaption class="gcard__bar">
+    <span class="gcard__name">{{ label }}</span>
+    <span class="gcard__actions">
+      <button type="button" class="btn btn--compact btn--ghost btn--neutral" data-act="copy" title="Copy SVG">Copy</button>
+      <button type="button" class="btn btn--compact btn--ghost btn--neutral" data-act="svg" title="Download SVG">SVG</button>
+      <button type="button" class="btn btn--compact btn--ghost btn--neutral" data-act="png" title="Download PNG">PNG</button>
+    </span>
+  </figcaption>
+</figure>
+{% endmacro %}
+
+{% block gallery %}
+<div class="gallery__inner" id="gallery">
+
+  <header class="gallery__head">
+    <div>
+      <h1 class="gallery__title">Illustrations</h1>
+      <p class="gallery__lead">Recolorable spot illustrations for empty states, dialogs, onboarding, and status moments. Pick a color, then copy the SVG or download.</p>
+    </div>
+
+    <div class="gallery__tools" role="group" aria-label="Gallery controls">
+      <div class="tool">
+        <span class="tool__label">Accent</span>
+        <div class="swatches">
+          <button type="button" class="swatch" data-accent="var(--st-primary)" style="background:var(--st-primary)" title="Primary" aria-label="Primary"></button>
+          <button type="button" class="swatch" data-accent="var(--st-success)" style="background:var(--st-success)" title="Success" aria-label="Success"></button>
+          <button type="button" class="swatch" data-accent="var(--st-danger)" style="background:var(--st-danger)" title="Danger" aria-label="Danger"></button>
+          <button type="button" class="swatch" data-accent="var(--st-warning)" style="background:var(--st-warning)" title="Warning" aria-label="Warning"></button>
+          <button type="button" class="swatch swatch--muted" data-accent="var(--st-muted-foreground)" title="Grayscale" aria-label="Grayscale"></button>
+          <label class="swatch swatch--pick" title="Custom color">
+            <input type="color" id="accentPick" value="#3b82f6" aria-label="Custom accent color" />
+          </label>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn--compact btn--neutral" id="themeToggle" title="Toggle light / dark">
+        <i data-lucide="moon"></i><span>Theme</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="gallery__grid" id="grid">
+    {{ card('folder',    'Folder',         il.folder('folder')) }}
+    {{ card('search',    'No results',     il.search('search')) }}
+    {{ card('envelope',  'No messages',    il.envelope('envelope')) }}
+    {{ card('box',       'Empty',          il.box('box')) }}
+    {{ card('calendar',  'No events',      il.calendar('calendar')) }}
+    {{ card('error404',  '404',            il.error404('error404')) }}
+    {{ card('offline',   'No connection',  il.offline('offline')) }}
+    {{ card('upload',    'Upload',         il.upload('upload')) }}
+    {{ card('trash',     'Trash',          il.trash('trash')) }}
+    {{ card('rocket',    'Get started',    il.rocket('rocket')) }}
+    {{ card('chart',     'No data',        il.chart('chart')) }}
+    {{ card('lock',      'Locked',         il.lock('lock')) }}
+    {{ card('success',   'Success',        il.success('success')) }}
+    {{ card('warning',   'Warning',        il.warning('warning')) }}
+    {{ card('celebrate', 'Celebrate',      il.celebrate('celebrate')) }}
+    {{ card('shield',    'Secure',         il.shield('shield')) }}
+    {{ card('send',      'Sent',           il.send('send')) }}
+    {{ card('bell',      'Notifications',  il.bell('bell')) }}
+    {{ card('settings',  'Settings',       il.settings('settings')) }}
+    {{ card('media',     'Media',          il.media('media')) }}
+    {{ card('chat',      'Chat',           il.chat('chat')) }}
+  </div>
+
+  <p class="gallery__foot">Every illustration is one SVG shaded from a single <code>--illus-accent</code>. Exports bake the current color in.</p>
+</div>
+
+<div class="gallery__toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<style>
+  .gallery{ min-height:100vh; background:var(--st-background); }
+  .gallery__inner{ max-width:1180px; margin-inline:auto; padding:2rem 1.5rem 4rem; }
+
+  .gallery__head{
+    display:flex; flex-wrap:wrap; gap:1.25rem 2rem;
+    align-items:flex-end; justify-content:space-between;
+    padding-bottom:1.5rem; margin-bottom:2rem;
+    border-bottom:1px solid var(--st-border);
+  }
+  .gallery__title{ margin:0; font-size:1.75rem; font-weight:700; letter-spacing:-.02em; color:var(--st-foreground); }
+  .gallery__lead{ margin:.35rem 0 0; color:var(--st-muted-foreground); font-size:.9375rem; }
+
+  .gallery__tools{ display:flex; flex-wrap:wrap; align-items:center; gap:1rem; }
+  .tool{ display:flex; align-items:center; gap:.6rem; }
+  .tool__label{ font-size:.6875rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--st-muted-foreground); }
+  .swatches{ display:flex; align-items:center; gap:.4rem; }
+  .swatch{
+    width:24px; height:24px; border-radius:999px; padding:0; cursor:pointer;
+    border:2px solid var(--st-border);
+    box-shadow:0 1px 2px color-mix(in oklch, var(--st-foreground) 8%, transparent);
+    transition:transform .12s ease;
+  }
+  .swatch:hover{ transform:scale(1.12); }
+  .swatch[aria-pressed="true"]{ outline:2px solid var(--st-foreground); outline-offset:2px; }
+  .swatch--muted{ background:var(--st-muted-foreground); }
+  .swatch--pick{ position:relative; overflow:hidden; display:inline-grid; place-items:center;
+    background:conic-gradient(from 0deg, #f87171, #fbbf24, #34d399, #60a5fa, #a78bfa, #f87171); }
+  .swatch--pick input{ position:absolute; inset:-4px; width:calc(100% + 8px); height:calc(100% + 8px); opacity:0; cursor:pointer; }
+
+  .gallery__grid{
+    display:grid; gap:1rem;
+    grid-template-columns:repeat(auto-fill, minmax(190px, 1fr));
+  }
+
+  .gcard{
+    margin:0; display:flex; flex-direction:column; overflow:hidden;
+    border:1px solid var(--st-border); border-radius:18px;
+    background:var(--st-surface);
+    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .gcard:hover{
+    transform:translateY(-3px); border-color:transparent;
+    box-shadow:0 14px 30px color-mix(in oklch, var(--st-foreground) 12%, transparent);
+  }
+  .gcard__art{ padding:1.25rem 1.25rem .25rem; }
+  .gcard__art .illustration{ max-width:160px; margin-inline:auto; }
+  .gcard__bar{
+    display:flex; align-items:center; justify-content:space-between; gap:.5rem;
+    padding:.5rem .75rem .75rem;
+  }
+  .gcard__name{ font-size:.8125rem; font-weight:600; color:var(--st-foreground); white-space:nowrap; }
+  .gcard__actions{ display:flex; gap:.15rem; }
+  .gcard__actions .btn{ font-size:.6875rem; padding-inline:.45rem; }
+
+  .gallery__foot{ margin-top:2.5rem; text-align:center; font-size:.8125rem; color:var(--st-muted-foreground); }
+
+  .gallery__toast{
+    position:fixed; left:50%; bottom:1.5rem; transform:translateX(-50%) translateY(8px);
+    padding:.55rem 1rem; border-radius:10px;
+    background:var(--st-foreground); color:var(--st-background);
+    font-size:.8125rem; font-weight:500; box-shadow:0 8px 24px rgba(0,0,0,.18);
+    opacity:0; transition:opacity .18s ease, transform .18s ease; pointer-events:none; z-index:50;
+  }
+  .gallery__toast[data-show]{ opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
+
+<script type="module">
+  const gallery = document.getElementById('gallery');
+  const grid = document.getElementById('grid');
+  const toastEl = document.getElementById('toast');
+  const NS = 'http://www.w3.org/2000/svg';
+  let fid = 0;
+
+  // ── Color controls ────────────────────────────────────────────────
+  function setAccent(value, btn){
+    gallery.style.setProperty('--illus-accent', value);
+    // badge follows the accent (its --_b default), so no separate set needed
+    document.querySelectorAll('.swatch').forEach(s => s.setAttribute('aria-pressed', s === btn ? 'true' : 'false'));
+  }
+  document.querySelectorAll('.swatch[data-accent]').forEach(s => {
+    s.addEventListener('click', () => setAccent(s.dataset.accent, s));
+  });
+  const pick = document.getElementById('accentPick');
+  pick.addEventListener('input', () => setAccent(pick.value, pick.closest('.swatch')));
+  // default to primary
+  setAccent('var(--st-primary)', document.querySelector('.swatch[data-accent*="primary"]'));
+
+  // ── Theme toggle ──────────────────────────────────────────────────
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    const root = document.documentElement;
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('stisla-theme', next); } catch (e) {}
+  });
+
+  // ── Toast ─────────────────────────────────────────────────────────
+  let toastTimer;
+  function toast(msg){
+    toastEl.textContent = msg; toastEl.hidden = false;
+    requestAnimationFrame(() => toastEl.setAttribute('data-show', ''));
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      toastEl.removeAttribute('data-show');
+      setTimeout(() => { toastEl.hidden = true; }, 220);
+    }, 1600);
+  }
+
+  // ── Flatten: bake computed CSS colours into a standalone SVG ───────
+  const SHAPE = ['fill','stroke','fill-opacity','stroke-opacity','stroke-width','stroke-linecap','stroke-linejoin','opacity','font-size','font-weight','font-family','text-anchor'];
+  const STOP = ['stop-color','stop-opacity'];
+
+  function buildStandalone(svg){
+    const clone = svg.cloneNode(true);
+    const src = svg.querySelectorAll('*');
+    const dst = clone.querySelectorAll('*');
+    let defs = clone.querySelector('defs');
+
+    for (let i = 0; i < src.length; i++){
+      const cs = getComputedStyle(src[i]);
+      const d = dst[i];
+      const tag = src[i].tagName.toLowerCase();
+      const props = tag === 'stop' ? STOP : SHAPE;
+      for (const p of props){
+        const v = cs.getPropertyValue(p);
+        if (v && v.trim() && v !== 'normal') d.setAttribute(p, v.trim());
+      }
+      // convert the CSS drop-shadow into a portable SVG filter
+      const f = cs.filter;
+      if (f && f.includes('drop-shadow')){
+        const inner = f.slice(f.indexOf('(') + 1, f.lastIndexOf(')'));
+        const lens = inner.match(/-?[\d.]+px/g) || ['0px','4px','6px'];
+        const color = inner.replace(/-?[\d.]+px/g, '').trim() || 'rgba(0,0,0,.2)';
+        if (!defs){ defs = document.createElementNS(NS, 'defs'); clone.insertBefore(defs, clone.firstChild); }
+        const id = 'sh-' + (fid++);
+        const filt = document.createElementNS(NS, 'filter');
+        filt.setAttribute('id', id);
+        filt.setAttribute('x','-40%'); filt.setAttribute('y','-40%');
+        filt.setAttribute('width','180%'); filt.setAttribute('height','180%');
+        const fe = document.createElementNS(NS, 'feDropShadow');
+        fe.setAttribute('dx', parseFloat(lens[0]) || 0);
+        fe.setAttribute('dy', parseFloat(lens[1]) || 0);
+        fe.setAttribute('stdDeviation', (parseFloat(lens[2]) || 0) / 2);
+        fe.setAttribute('flood-color', color);
+        filt.appendChild(fe);
+        defs.appendChild(filt);
+        d.setAttribute('filter', 'url(#' + id + ')');
+      }
+      d.removeAttribute('class');
+      d.removeAttribute('style');
+    }
+
+    clone.removeAttribute('class');
+    clone.removeAttribute('style');
+    clone.setAttribute('xmlns', NS);
+    clone.setAttribute('width', '200');
+    clone.setAttribute('height', '200');
+    return clone;
+  }
+
+  function svgString(svg){
+    return '<?xml version="1.0" encoding="UTF-8"?>\n' + new XMLSerializer().serializeToString(buildStandalone(svg));
+  }
+
+  function download(blob, filename){
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  async function toPng(svg, scale = 3){
+    const str = svgString(svg);
+    const url = URL.createObjectURL(new Blob([str], { type: 'image/svg+xml;charset=utf-8' }));
+    try {
+      const img = new Image();
+      await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = url; });
+      const vb = svg.viewBox.baseVal;
+      const w = (vb.width || 200) * scale, h = (vb.height || 200) * scale;
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      return await new Promise(r => canvas.toBlob(r, 'image/png'));
+    } finally { URL.revokeObjectURL(url); }
+  }
+
+  // ── Actions (event delegation) ────────────────────────────────────
+  grid.addEventListener('click', async (e) => {
+    const btn = e.target.closest('button[data-act]');
+    if (!btn) return;
+    const card = btn.closest('.gcard');
+    const svg = card.querySelector('svg.illustration');
+    const name = 'stisla-' + card.dataset.name;
+    const act = btn.dataset.act;
+
+    try {
+      if (act === 'copy'){
+        await navigator.clipboard.writeText(svgString(svg));
+        toast('SVG copied to clipboard');
+      } else if (act === 'svg'){
+        download(new Blob([svgString(svg)], { type: 'image/svg+xml;charset=utf-8' }), name + '.svg');
+        toast('Downloaded ' + name + '.svg');
+      } else if (act === 'png'){
+        const blob = await toPng(svg, 3);
+        download(blob, name + '.png');
+        toast('Downloaded ' + name + '.png');
+      }
+    } catch (err){
+      console.error(err);
+      toast('Sorry, that failed');
+    }
+  });
+</script>
+{% endblock %}

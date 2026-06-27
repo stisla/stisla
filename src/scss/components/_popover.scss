@@ -3,9 +3,18 @@
 // Anatomy (V3.md §3.6 BEM + §3.7 JS contract):
 //   .popover[role="dialog"][data-state="open|closed"][data-placement="..."]
 //     .popover__arrow                       caret, positioned by FUI arrow()
+//     .popover__header                      panel header row (title + action)
+//     .popover__action                      trailing action in the header
 //     .popover__title                       optional heading
 //     .popover__body                        text or rich content
+//     .popover__footer                      panel footer row (e.g. "view all")
 //     .popover__close                       optional ghost-chip dismiss
+//
+// Two shapes share the block. A plain popover is title + body inside the
+// root's own padding (the simple tooltip-rich case). A *panel* popover (a
+// notification list, an action panel) adds __header / __footer: the presence
+// of a __header drops the root padding so the header / footer dividers span
+// edge-to-edge, and each part owns its own padding instead.
 //
 // Popover element is rendered into the page (not appended by JS) so its content
 // — titles, links, buttons, forms — can be authored as real markup. Stisla.Popover
@@ -41,11 +50,13 @@
   display: none;
   min-width: var(--popover-min-width, 13rem);
   max-width: var(--popover-max-width, 17.25rem);
-  padding: var(--popover-padding-block, #{space(4)}) var(--popover-padding-inline, #{space(4)});
+  padding: var(--popover-padding-block, #{space(4)})
+    var(--popover-padding-inline, #{space(4)});
   margin: 0;
   color: var(--popover-color, var(--st-foreground));
   background-color: var(--popover-bg, var(--st-surface));
-  border: var(--popover-border-width, var(--st-border-width)) solid var(--popover-border-color, var(--st-border));
+  border: var(--popover-border-width, var(--st-border-width)) solid
+    var(--popover-border-color, var(--st-border));
   border-radius: var(--popover-radius, #{radius(lg)});
   box-shadow: var(--popover-shadow, #{shadow(md)});
   opacity: 0;
@@ -105,12 +116,67 @@
   color: var(--popover-body-color, var(--st-muted-foreground));
   font-size: var(--popover-body-font-size, #{text(sm)});
   line-height: var(--popover-body-line-height, 1.5);
+  padding-block: var(--popover-body-padding-block, 0);
+  padding-inline: var(--popover-body-padding-inline, 0);
 }
 
 // Body that holds interactive children (buttons, links, form bits) opts back
 // into --st-foreground via a class or inline override at the consumer. The
 // default muted color keeps simple text-only popovers reading as supporting
 // context.
+
+// === Panel parts (header / footer) =========================================
+// Opt-in structure for panel-shaped popovers (notification list, action
+// panel). A __header present means "this is a panel": the root drops its
+// padding so the dividers run edge-to-edge, and header / body / footer each
+// own their padding. :has() is baseline per V3.md §2 (Safari 16.4+).
+
+.popover:has(.popover__header) {
+  padding: 0;
+}
+
+.popover__header {
+  display: flex;
+  align-items: center;
+  gap: var(--popover-header-gap, #{space(2)});
+  padding: var(--popover-header-padding-block, #{space(3)})
+    var(--popover-header-padding-inline, #{space(4)});
+  border-block-end: var(--popover-border-width, var(--st-border-width)) solid
+    var(--popover-border-color, var(--st-border));
+}
+
+// Title inside a header is the row's leading child — drop its standalone
+// bottom margin; the header padding owns the rhythm now.
+.popover__header .popover__title {
+  margin-block-end: 0;
+}
+
+// Trailing action in the header (e.g. "mark all as read"). The auto margin is
+// on the action itself, so leading content (title, or icon + title) packs to
+// the start and only the action moves to the end — a header with no action
+// stays put. Matches .alert__action / .page__action.
+.popover__action {
+  display: inline-flex;
+  align-items: center;
+  gap: #{space(2)};
+  margin-inline-start: auto;
+}
+
+// In a panel the body sits between the dividers and owns its padding, since
+// the root no longer supplies any. A list component dropped straight in
+// (.menu / .list-group) brings its own padding instead of using __body.
+.popover:not(.popover--menu):has(.popover__header),
+.popover:not(.popover--menu):has(.popover__footer) {
+  --popover-body-padding-block: #{space(2)};
+  --popover-body-padding-inline: #{space(4)};
+}
+
+.popover__footer {
+  padding: var(--popover-footer-padding-block, #{space(3)})
+    var(--popover-footer-padding-inline, #{space(4)});
+  border-block-start: var(--popover-border-width, var(--st-border-width)) solid
+    var(--popover-border-color, var(--st-border));
+}
 
 // === Close chip ============================================================
 // Optional dismiss affordance. Positioned absolutely so it doesn't disturb the
@@ -185,32 +251,56 @@
 // are bottom-right (= original right) + bottom-left (= original bottom).
 .popover[data-placement^="top"] .popover__arrow {
   bottom: calc(var(--popover-arrow-size, 12px) * -0.5);
-  border-right: var(--popover-border-width, var(--st-border-width)) solid var(--popover-border-color, var(--st-border));
-  border-bottom: var(--popover-border-width, var(--st-border-width)) solid var(--popover-border-color, var(--st-border));
+  border-right: var(--popover-border-width, var(--st-border-width)) solid
+    var(--popover-border-color, var(--st-border));
+  border-bottom: var(--popover-border-width, var(--st-border-width)) solid
+    var(--popover-border-color, var(--st-border));
 }
 
 // Bottom placement → arrow at popover's top, pointing up. Visible diagonals
 // are top-left (= original left) + top-right (= original top).
 .popover[data-placement^="bottom"] .popover__arrow {
   top: calc(var(--popover-arrow-size, 12px) * -0.5);
-  border-top: var(--popover-border-width, var(--st-border-width)) solid var(--popover-border-color, var(--st-border));
-  border-left: var(--popover-border-width, var(--st-border-width)) solid var(--popover-border-color, var(--st-border));
+  border-top: var(--popover-border-width, var(--st-border-width)) solid
+    var(--popover-border-color, var(--st-border));
+  border-left: var(--popover-border-width, var(--st-border-width)) solid
+    var(--popover-border-color, var(--st-border));
 }
 
 // Left placement → arrow at popover's right, pointing right. Visible diagonals
 // are top-right (= original top) + bottom-right (= original right).
 .popover[data-placement^="left"] .popover__arrow {
   right: calc(var(--popover-arrow-size, 12px) * -0.5);
-  border-top: var(--popover-border-width, var(--st-border-width)) solid var(--popover-border-color, var(--st-border));
-  border-right: var(--popover-border-width, var(--st-border-width)) solid var(--popover-border-color, var(--st-border));
+  border-top: var(--popover-border-width, var(--st-border-width)) solid
+    var(--popover-border-color, var(--st-border));
+  border-right: var(--popover-border-width, var(--st-border-width)) solid
+    var(--popover-border-color, var(--st-border));
 }
 
 // Right placement → arrow at popover's left, pointing left. Visible diagonals
 // are top-left (= original left) + bottom-left (= original bottom).
 .popover[data-placement^="right"] .popover__arrow {
   left: calc(var(--popover-arrow-size, 12px) * -0.5);
-  border-bottom: var(--popover-border-width, var(--st-border-width)) solid var(--popover-border-color, var(--st-border));
-  border-left: var(--popover-border-width, var(--st-border-width)) solid var(--popover-border-color, var(--st-border));
+  border-bottom: var(--popover-border-width, var(--st-border-width)) solid
+    var(--popover-border-color, var(--st-border));
+  border-left: var(--popover-border-width, var(--st-border-width)) solid
+    var(--popover-border-color, var(--st-border));
+}
+
+// menu style popover
+.popover--menu {
+  --popover-body-padding-block: #{space(1)};
+  --popover-body-padding-inline: #{space(1)};
+
+  --media-padding-inline: #{space(3)};
+  --media-padding-block: #{space(2)};
+  --media-border-color: transparent;
+
+  .popover__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--popover-body-gap, #{space(1)});
+  }
 }
 
 // === Reduced motion ========================================================

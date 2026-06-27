@@ -7,30 +7,31 @@
 // margins. The Preflight reset already zeroes margins on h1–h6 and p; this
 // component relies on that and adds gap.
 //
-// Frame vs flow (notes §Bugs). The rhythm gap only spaces DIRECT children,
-// so wrapping the sections in a max-width .container would make the
-// container the lone flex child and collapse every section gap. To keep a
-// container in the tree, nest the flow inside it via .page__body — the body
-// is the gap-owning flow, the container only constrains width:
-//   <div class="page">                     (frame)
-//     <div class="container">              (optional max-width)
-//       <div class="page__body">           (flow — owns the section rhythm)
-//         <header class="page__header">…
-//         <section class="page__section">…
-// For the common no-container case .page is itself the flow — drop the
-// header/sections straight in and the same gap applies.
+// Header above the flow. .page__header is a sibling BEFORE .page__body, not
+// nested inside it. Spacing comes from the flow's gap (--page-section-gap),
+// owned by whichever flex-column wraps the header + body — .page itself in
+// the common case, so header→body reads at the same step as section→section:
+//   <div class="page">                     (frame + flow: flex-column + gap)
+//     <header class="page__header">…        (title + actions)
+//     <div class="page__body">              (inner flow — owns the section rhythm)
+//       <section class="page__section">…
+//
+// A max-width container between .page and the header/body must itself be the
+// flow (display: flex; flex-direction: column; gap: --page-section-gap) so it
+// keeps the header→body rhythm — see the dashboard's .content__container.
 //
 // === Anatomy =============================================================
 //   .page                  — frame; also the flow when used without a container
 //   .page__body            — gap-owning flow for the container-nested case
 //   .page__header          — top header row (heading group + actions)
-//   .page__heading         — heading group (title + optional description)
+//   .page__headline         — heading group (title + optional description)
 //   .page__title           — opinionated heading (h3-equivalent cadence)
 //   .page__description     — opinionated muted helper copy under the title
 //   .page__action          — actions slot; reused by .page__section-header
 //   .page__section         — content section with its own inner gap
 //   .page__section-header  — mini header row inside a section
 //   .page__section-title   — opinionated heading (h5-equivalent cadence)
+//   .page__section-description — opinionated muted helper copy under the section title
 //
 // Gaps ride the space() scale (space(n) = n × --st-spacing), so retuning
 // --st-spacing rescales page rhythm with the rest of the system. Every knob
@@ -53,7 +54,7 @@
 // Page header — flex row, heading leading, optional actions trailing.
 // flex-wrap drops actions to a new line on narrow viewports instead of
 // overflowing. justify-content: space-between is the fallback for the
-// "two direct children, no .page__heading wrapper" case; when the heading
+// "two direct children, no .page__headline wrapper" case; when the heading
 // group is present, its flex: 1 1 auto pushes actions to the end.
 .page__header {
   display: flex;
@@ -67,7 +68,7 @@
 // small gap (Preflight strips default heading + paragraph margins).
 // flex: 1 1 auto lets the group grow into the row; min-width: 0 keeps a
 // long title wrapping inside its column instead of forcing actions off-screen.
-.page__heading {
+.page__headline {
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
@@ -80,8 +81,8 @@
 // .page__section-title at a larger scale. Override via tokens, or by
 // adding a different heading utility class.
 .page__title {
-  font-size: var(--page-title-size, #{text(xl)});
-  font-weight: var(--page-title-weight, #{weight(semibold)});
+  font-size: var(--page-title-font-size, #{text(xl)});
+  font-weight: var(--page-title-font-weight, #{weight(semibold)});
   line-height: 1.2;
 }
 
@@ -90,8 +91,8 @@
 // color is baked in so consumers don't reach for a utility, and size /
 // weight ride tokens for theme tuning.
 .page__description {
-  font-size: var(--page-description-size, #{text(sm)});
-  font-weight: var(--page-description-weight, #{weight(normal)});
+  font-size: var(--page-description-font-size, #{text(sm)});
+  font-weight: var(--page-description-font-weight, #{weight(normal)});
   line-height: 1.5;
   color: var(--page-description-color, var(--st-muted-foreground));
 }
@@ -128,11 +129,21 @@
 
 // Section title — opinionated cadence (h5-equivalent) so consumers can
 // drop the recurring .h5 utility from every section heading. Override
-// by setting --page-section-title-size / -weight, or by adding a
+// by setting --page-section-title-font-size / -font-weight, or by adding a
 // different heading utility class (the rule below has element-only
 // specificity).
 .page__section-title {
-  font-size: var(--page-section-title-size, #{text(lg)});
-  font-weight: var(--page-section-title-weight, #{weight(semibold)});
+  font-size: var(--page-section-title-font-size, #{text(lg)});
+  font-weight: var(--page-section-title-font-weight, #{weight(semibold)});
   line-height: 1.4;
+}
+
+// Section description — the section-scale counterpart to .page__description:
+// optional muted helper copy under a .page__section-title. Muted color is baked
+// in so consumers don't reach for a utility; size / weight ride tokens.
+.page__section-description {
+  font-size: var(--page-section-description-font-size, #{text(sm)});
+  font-weight: var(--page-section-description-font-weight, #{weight(normal)});
+  line-height: 1.5;
+  color: var(--page-section-description-color, var(--st-muted-foreground));
 }

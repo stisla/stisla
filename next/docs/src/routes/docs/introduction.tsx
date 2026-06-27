@@ -1,0 +1,47 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
+
+export const Route = createFileRoute("/docs/introduction")({
+  component: IntroductionDocs,
+});
+
+function IntroductionDocs() {
+  return (
+    <>
+      <header>
+        <h1>Introduction</h1>
+        <p className="lead">A quick read of what Stisla is and why it&rsquo;s built this way.</p>
+      </header>
+
+      <section>
+        <h2>What Stisla is</h2>
+        <p>Stisla is a design specification for user interfaces.</p>
+        <p>A spec is a written set of decisions you agree on before anyone writes code. HTTP, Markdown, and OpenAPI all work this way. Anyone can build a server, a parser, or a generator, and they all agree because the spec is the contract. The implementation is one valid way to honor it.</p>
+        <p>The Stisla spec is the contract for a UI. It fixes the token names every component reads from. It fixes the anatomy of each component (a card has a header, body, and footer; a dialog has a backdrop and content). It fixes the states every interactive surface answers to (rest, hover, active, focus, disabled, loading). It fixes the radius and spacing scales, the light and dark deltas, and the way a brand override flows through hover and focus. Stable names that you write once and reuse.</p>
+        <p>The spec is framework-agnostic on purpose. The first implementation ships as vanilla CSS plus a small JavaScript runtime built on Floating UI, focus-trap, and Embla. React, Vue, and Base UI ports come later, all against the same spec. A button in any future port will agree with the vanilla one on radius, spacing, hover, and focus.</p>
+        <p>The full surface lives on the <Link to="/docs/specification" className="link">Specification</Link> page.</p>
+      </section>
+
+      <section>
+        <h2>What Stisla isn&rsquo;t</h2>
+        <p>It isn&rsquo;t a utility-class library. Stisla ships real components with BEM classes like <code>.btn</code>, <code>.btn--primary</code>, <code>.card</code>, and <code>.card__header</code>. When you read the HTML, you see what the page does instead of a long list of style classes.</p>
+        <p>It isn&rsquo;t a wrapper around Bootstrap. Stisla v2 was Bootstrap 4. The current release dropped Bootstrap and rebuilt every component from scratch. The only forked code is the grid and breakpoint mixins, both credited under <code>LICENSES/</code>. The rest is hand-written.</p>
+        <p>And it doesn&rsquo;t come in different flavors or themes. Stisla has one spec. Density, radius, and brand are knobs you turn on top of that one spec.</p>
+      </section>
+
+      <section>
+        <h2>Why this approach</h2>
+        <p>Two ideas shape the rest of the system. Stisla is spec-first and runtime-first.</p>
+        <p><strong>Spec-first</strong> means every implementation should feel like the same product. A button in the React port and a button in the vanilla port agree on what they mean. They don&rsquo;t just happen to look alike. The only honest way to keep that true is to write the spec before any of the implementations. The vanilla CSS port is one implementation. Future ports fill the same spec.</p>
+        <p><strong>Runtime-first</strong> means most customization should not need a build step. Pick a primary color, set a radius, adjust spacing, or drop a brand-tinted preset on a wrapper class. Each one is a single CSS variable override that flows through <code>var(--st-*)</code> and <code>color-mix(in oklch, …)</code>. The harder cases (changing breakpoints, dropping unused components, rewriting a component) still need Sass.</p>
+        <p>If you&rsquo;re wondering why we didn&rsquo;t just build on Bootstrap or Tailwind, the <Link to="/docs/why-stisla" className="link">Why Stisla</Link> page walks through both and the reasoning behind a hand-built spec.</p>
+      </section>
+
+      <section>
+        <h2>Status</h2>
+        <p>The current version is 3.0.0-beta.1. The token surface, BEM class names, and component APIs are stable as of this beta unless a bug forces a change. NPM packaging, the Installation page, and bundle-size guidance will land before 3.0.0 stable.</p>
+        <p>v2, the Bootstrap 4 release, is not getting migrated and lives on the <a className="link" href="https://github.com/stisla/stisla/tree/v2" target="_blank" rel="noopener noreferrer">v2 branch on GitHub</a>. The two versions are different enough that there&rsquo;s no automatic migration path.</p>
+      </section>
+    </>
+  );
+}

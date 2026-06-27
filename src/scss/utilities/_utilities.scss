@@ -24,9 +24,20 @@
 // 12 / 16 / 20 / 24 / 32 px at the default --st-spacing (0.25rem).
 //
 // Font-size scale — numeric 1..7, ascending small → large. .fs-1 = 12 px
-// (the Tailwind text-xs equivalent), .fs-7 = 32 px. Numeric over t-shirt
-// because t-shirt names collide with breakpoint names (sm/lg/xl), making
-// .fs-sm-md genuinely ambiguous.
+// (the Tailwind text-xs equivalent), .fs-7 = 32 px.
+//
+// Numeric by design, NOT a workaround. Two layers, two conventions on
+// purpose: the token/authoring layer uses the t-shirt scale (text(lg),
+// alongside radius/shadow/weight) and is where the component library — the
+// product — is written; the class layer here uses Bootstrap-native numeric
+// steps, the tweak surface SPEC.md scopes utilities to. Keeping them
+// separate is what lets responsive variants stay on the single-dash
+// breakpoint infix (.fs-md-4) without the .fs-md-lg double-t-shirt
+// ambiguity a unified t-shirt utility would create. The seam is fine
+// because utilities are secondary: heavy type work lands in SCSS via
+// text(), and a stack worth naming becomes a component class (.text-eyebrow)
+// — at which point you're back in the t-shirt layer anyway. text() ↔ .fs-*
+// mapping documented on the Customization page. Do not "unify" this.
 //
 // Margin + padding use CSS logical properties (block-start / inline-end /
 // ...) so RTL flips automatically — matches v3 component convention.

@@ -91,8 +91,22 @@
 .toggle-group:not(.toggle-group--vertical) {
   height: var(--toggle-group-height, #{space(9)});
 
+  // Overflow → scroll, not squish. When the segments out-measure the track
+  // (a 5-filter group on a phone), cap the rail at its container and let it
+  // scroll horizontally instead of compressing the segments or bleeding off
+  // the page. The scrollbar is hidden — touch/trackpad scroll it, and the
+  // half-clipped trailing segment is the "more this way" cue. Members hold
+  // their intrinsic width via flex-shrink: 0 so the cluster never collapses.
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;            // Firefox
+  &::-webkit-scrollbar {
+    display: none;                  // WebKit / Blink
+  }
+
   > .toggle {
     height: 100%;
+    flex-shrink: 0;
   }
 
   // Icon-only inside group: width follows the stretched cross-axis so

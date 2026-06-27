@@ -1,7 +1,7 @@
 import nunjucks from 'nunjucks';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
-import { dedent, getHighlighter, makeHighlightFilter } from './nunjucks-filters.mjs';
+import { dedent, getHighlighter, makeHighlightFilter, icon } from './nunjucks-filters.mjs';
 import { injectToc } from './toc.mjs';
 import { wrapProseTables } from './wrap-tables.mjs';
 
@@ -15,6 +15,7 @@ export default function nunjucksDevPlugin({ siteRoot }) {
   });
   env.addGlobal('dev', true);
   env.addFilter('dedent', dedent);
+  env.addFilter('icon', icon);
 
   // Shiki init runs in parallel with Vite startup; we await per-request below
   // so the first render waits without blocking server boot.

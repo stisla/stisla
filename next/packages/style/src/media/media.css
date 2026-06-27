@@ -1,0 +1,115 @@
+/* @stisla/style — Media. Ported from src/scss/components/_media.scss. Two-column media-object row:
+ * figure (icon / avatar / image) on the inline-start, text column, action on the inline-end. A
+ * multipurpose row primitive (user lists, settings, notifications, files). The flush modifier strips
+ * the border + bg for stacks (typically inside a .card with separators). References the @theme tokens
+ * (colors var(--color-*), spacing/sizes --spacing(n), type var(--text-*) / var(--leading-*) /
+ * var(--font-weight-*), radius var(--radius-*)); only no-namespace customs use --st-* (border-width,
+ * duration). Knobs are --media-*. State via attributes ([data-highlighted], :hover/:focus-visible on
+ * an interactive host), no is-*. @layer components. Authoring rules: ../../../../PORTING.md */
+
+@layer components {
+  .media {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--media-gap, --spacing(3));
+    padding: var(--media-padding-block, --spacing(4)) var(--media-padding-inline, --spacing(4));
+    color: var(--media-color, var(--color-foreground));
+    background: var(--media-bg, var(--color-surface));
+    border: var(--media-border-width, var(--st-border-width)) solid
+      var(--media-border-color, var(--color-border));
+    border-radius: var(--media-radius, var(--radius-md));
+  }
+
+  /* === Modifiers === */
+
+  /* Strip chrome — the host parent owns the frame, so a stack of rows reads as one surface. */
+  .media--flush {
+    --media-bg: transparent;
+    --media-border-width: 0;
+    --media-radius: 0;
+  }
+
+  /* Lay parts top-to-bottom; the action's inline-end pin makes no sense on a column, so clear it. */
+  .media--vertical {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .media--vertical > .media__action {
+    margin-inline-start: 0;
+  }
+
+  /* === Interactive === when the row's root is itself the interactive surface (<a>/<button>), it
+   * earns hover + focus paint. Bg-tint only — .media carries three pinned text colors, so the row
+   * washes to a subtle accent and the type stays as-is. [data-highlighted] is the keyboard-nav hook. */
+  a.media,
+  button.media {
+    cursor: pointer;
+    transition: background-color var(--st-duration-fast) ease;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  a.media:hover,
+  button.media:hover,
+  .media[data-highlighted] {
+    background: var(--media-bg-hover, var(--color-accent));
+  }
+
+  .media:focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: -2px;
+  }
+
+  /* === Parts === */
+
+  .media__figure {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* A bare <svg>/<i> dropped into the figure (no .icon-box / .avatar wrapper) pins to a sensible
+     size so rows align. :only-child gate so a multi-child figure keeps its own sizing. */
+  .media__figure > :is(svg, i):only-child {
+    width: --spacing(4.5);
+    height: --spacing(4.5);
+    flex-shrink: 0;
+  }
+
+  .media__content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-width: 0;
+    gap: --spacing(0.5);
+  }
+
+  .media__title {
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--leading-tight);
+    color: var(--color-foreground);
+  }
+
+  .media__description {
+    color: var(--color-muted-foreground);
+    line-height: var(--leading-normal);
+  }
+
+  .media__meta {
+    font-size: var(--text-xs);
+    line-height: var(--leading-snug);
+    color: var(--color-muted-foreground);
+  }
+
+  .media__action {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(2);
+    margin-inline-start: auto;
+    flex-shrink: 0;
+  }
+}

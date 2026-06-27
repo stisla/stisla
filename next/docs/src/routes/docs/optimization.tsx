@@ -1,0 +1,202 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { Code } from "~/demo/Code";
+
+export const Route = createFileRoute("/docs/optimization")({
+  component: OptimizationDocs,
+});
+
+function OptimizationDocs() {
+  return (
+    <>
+      <header>
+        <h1>Optimization</h1>
+        <p className="lead">Three ways to shrink the shipped CSS. Purge against rendered HTML, fork the bundle and drop components, or change the Sass knobs at the entry point.</p>
+      </header>
+
+      <section>
+        <h2>Starting point</h2>
+        <p>The pre-compiled core bundle is the right default for most apps. The numbers below are what <code>@stisla/css@beta</code> ships as of beta.2.</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Bundle</th>
+              <th>Raw</th>
+              <th>Gzip</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>stisla.css</code> (core, 46 components, no utilities)</td>
+              <td>~163 KB</td>
+              <td>~23 KB</td>
+            </tr>
+            <tr>
+              <td><code>utilities.css</code> (opt-in tweak layer)</td>
+              <td>~49 KB</td>
+              <td>~5 KB</td>
+            </tr>
+            <tr>
+              <td><code>stisla-full.css</code> (core + 3 optional components + utilities)</td>
+              <td>~226 KB</td>
+              <td>~30 KB</td>
+            </tr>
+            <tr>
+              <td><code>stisla.js</code> (core runtime)</td>
+              <td>~126 KB</td>
+              <td>~32 KB</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>The core stylesheet is components only. Utilities are an opt-in layer you add when you want them, so the default install carries no tweak classes you never reference. 23 KB of gzipped CSS is small enough that most apps don&rsquo;t need to optimize at all. If yours does, here are three levers in order of effort.</p>
+      </section>
+
+      <section>
+        <h2>Lever 1. Purge against rendered HTML</h2>
+        <p>This is the cheapest win. A typical app uses 30 to 40 percent of the BEM classes Stisla ships. PurgeCSS or LightningCSS scans your rendered output, drops the selectors you never reference, and leaves the rest of the cascade intact.</p>
+
+        <h3>PurgeCSS</h3>
+        <Code lang="js" title="purge.config.js" code={`
+import { PurgeCSS } from 'purgecss';
+
+const result = await new PurgeCSS().purge({
+  content: ['dist/**/*.html', 'src/**/*.{js,ts,jsx,tsx,vue}'],
+  css: ['node_modules/@stisla/css/dist/stisla.css'],
+  safelist: {
+    standard: [/^is-/, /^data-state/, /^data-theme/],
+    deep: [/^sidebar__/, /^dialog__/, /^drawer__/],
+  },
+});
+
+await Bun.write('dist/stisla.purged.css', result[0].css);
+    `} />
+        <p>The <code>safelist</code> matters. Stisla relies on state classes (<code>.is-loading</code>, <code>.is-active</code>) and BEM children (<code>.dialog__title</code>, <code>.sidebar__menu</code>) that the JS adds at runtime. PurgeCSS only sees what&rsquo;s in your HTML and templates, so any class the runtime injects needs to be allow-listed by pattern.</p>
+
+        <h3>LightningCSS</h3>
+        <p>If you&rsquo;re already on a Vite or Lightning-based pipeline, the same idea applies with different syntax. LightningCSS does the scanning and minification in one pass.</p>
+        <Code lang="js" title="vite.config.js" code={`
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+  css: {
+    transformer: 'lightningcss',
+    lightningcss: {
+      drafts: { customMedia: true },
+      // LightningCSS doesn't purge on its own; pair with a content
+      // scanner (purgecss-from-html / cssnano / custom plugin).
+    },
+  },
+});
+    `} />
+        <p>Measure before and after. The win depends on how many components your app touches. A dashboard that uses overlays, tables, and forms might purge down to 50 KB raw. A landing page that uses one button and one card might purge down to 20 KB raw.</p>
+      </section>
+
+      <section>
+        <h2>Lever 2. Fork the bundle</h2>
+        <p>If you know up front which components you don&rsquo;t use, dropping them at Sass compile time is faster than scanning rendered HTML and gives reproducible numbers.</p>
+        <p>Copy <code>stisla.scss</code> into your project as <code>stisla.custom.scss</code> and comment out the components you don&rsquo;t need. The bundle file is the manifest, so deleting a line removes that component from the build.</p>
+        <Code lang="scss" title="styles/stisla.custom.scss" code={`
+@layer foundation, theme, components, utilities;
+
+@import '@stisla/css/scss/tokens/breakpoints';
+@import '@stisla/css/scss/foundation/mixins';
+
+@layer foundation {
+  @import '@stisla/css/scss/foundation/normalize';
+  @import '@stisla/css/scss/foundation/reboot';
+  @import '@stisla/css/scss/foundation/typography';
+  @import '@stisla/css/scss/foundation/grid';
+  @import '@stisla/css/scss/foundation/containers';
+}
+
+@layer theme {
+  @import '@stisla/css/scss/tokens/theme';
+}
+
+@layer components {
+  // Forms.
+  @import '@stisla/css/scss/components/input';
+  @import '@stisla/css/scss/components/field';
+  @import '@stisla/css/scss/components/btn';
+
+  // Surfaces.
+  @import '@stisla/css/scss/components/card';
+  @import '@stisla/css/scss/components/badge';
+  @import '@stisla/css/scss/components/alert';
+  @import '@stisla/css/scss/components/link';
+
+  // Drop everything else for this build.
+  // @import '@stisla/css/scss/components/dialog';
+  // @import '@stisla/css/scss/components/drawer';
+  // @import '@stisla/css/scss/components/dropdown';
+  // ...
+}
+
+// Utilities are opt-in. Uncomment to add the tweak layer to this build.
+// @layer utilities {
+//   @import '@stisla/css/scss/utilities/utilities';
+// }
+    `} />
+        <p>The example above keeps seven components (button, input, form label, card, badge, alert, link), which is the kind of subset you&rsquo;d use on a landing page or marketing site. Utilities stay commented out, so this build is components only.</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Bundle</th>
+              <th>Raw</th>
+              <th>Gzip</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Default core (46 components, no utilities)</td>
+              <td>~163 KB</td>
+              <td>~23 KB</td>
+            </tr>
+            <tr>
+              <td>Forked bundle (7 components)</td>
+              <td>~103 KB</td>
+              <td>~13 KB</td>
+            </tr>
+            <tr>
+              <td>Saved</td>
+              <td>~60 KB</td>
+              <td>~10 KB</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Half the gzipped weight gone for a small app. Most of what&rsquo;s left is the foundation (reset, reboot, typography, grid, the theme token block). That stays regardless of which components you keep, and it&rsquo;s what makes the runtime overrides possible.</p>
+        <p>Pair this with Lever 1 if you want both. Fork to remove what you know you don&rsquo;t need, then purge to drop the BEM children you didn&rsquo;t reach inside the components you kept.</p>
+      </section>
+
+      <section>
+        <h2>Lever 3. Change Sass-level knobs</h2>
+        <p>A handful of decisions have to live in Sass. Breakpoints are the main one. Media queries can&rsquo;t read CSS variables, so the breakpoint surface is a Sass map. Forking <code>stisla.scss</code> lets you override that map before the foundation compiles.</p>
+        <Code lang="scss" title="styles/stisla.custom.scss" code={`
+// Override before the breakpoints partial loads.
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+$breakpoint-xxl: 1536px;
+
+@layer foundation, theme, components, utilities;
+
+@import '@stisla/css/scss/tokens/breakpoints';
+@import '@stisla/css/scss/foundation/mixins';
+// ...rest of the bundle as shipped.
+    `} />
+        <p>The grid, container queries, and every <code>@include media-up()</code> in the codebase pick up the new values. The runtime CSS variable surface is untouched.</p>
+        <p>This is also the path for changing token defaults at build time rather than overriding them at runtime. Set <code>--st-radius</code> in <code>tokens/theme</code> and the entire system rebuilds against the new value, baking it into the cascade instead of mixing it from a custom property. It&rsquo;s useful if you&rsquo;re shipping a single locked theme and want the smallest possible token table.</p>
+      </section>
+
+      <section>
+        <h2>Which lever, when</h2>
+        <ul>
+          <li><strong>Lever 1 if you don&rsquo;t know which components you use.</strong> Most teams don&rsquo;t. The scanner figures it out and you ship what&rsquo;s reached.</li>
+          <li><strong>Lever 2 if you do.</strong> Faster than scanning, reproducible across builds, and it lets you delete component code from your dependency tree instead of from the output bundle.</li>
+          <li><strong>Lever 3 if breakpoints or tokens are wrong for you.</strong> The defaults work for most apps. This is the escape hatch for the ones they don&rsquo;t.</li>
+        </ul>
+        <p>Most apps need at most one of these. If you find yourself reaching for all three, you might want a different framework. Stisla is a design specification, and it isn&rsquo;t trying to be a meta-toolkit.</p>
+      </section>
+    </>
+  );
+}

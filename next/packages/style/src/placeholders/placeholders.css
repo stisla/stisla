@@ -1,0 +1,58 @@
+/* @stisla/style — Placeholders. Ported from src/scss/components/_placeholders.scss. A skeleton
+ * stand-in for content that hasn't loaded: apply .placeholder to any inline element and size it with
+ * a width utility or inline style. References the @theme tokens: colors var(--color-*), radius
+ * var(--radius-*). Knobs are --placeholder-* (fallback-default). The 1em height is font-relative on
+ * purpose (the bar scales with its text); the wave mask stops and the 2s ambient loops are bespoke
+ * (no token). Sizes --compact/--roomy → --sm/--lg. @layer components.
+ * Authoring rules: ../../../../PORTING.md */
+
+@layer components {
+  .placeholder {
+    display: inline-block;
+    min-height: var(--placeholder-height, 1em);
+    vertical-align: middle;
+    cursor: wait;
+    background: var(--placeholder-bg, var(--color-muted-foreground));
+    opacity: var(--placeholder-opacity, 0.5);
+    border-radius: var(--placeholder-radius, var(--radius-sm));
+  }
+
+  /* === Sizes (base = md) === */
+  .placeholder--sm {
+    --placeholder-height: 0.75em;
+  }
+  .placeholder--lg {
+    --placeholder-height: 1.5em;
+  }
+
+  /* === Animations === modifiers on the bar itself; reduced motion stops them (a paused bar still
+     reads as "not loaded" from its shape, so the animation is decoration). */
+  .placeholder--glow {
+    animation: st-placeholder-glow 2s ease-in-out infinite;
+  }
+
+  .placeholder--wave {
+    mask-image: linear-gradient(130deg, #000 55%, rgba(0, 0, 0, 0.65) 75%, #000 95%);
+    mask-size: 200% 100%;
+    animation: st-placeholder-wave 2s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .placeholder--glow,
+    .placeholder--wave {
+      animation: none;
+    }
+  }
+}
+
+@keyframes st-placeholder-glow {
+  50% {
+    opacity: 0.2;
+  }
+}
+
+@keyframes st-placeholder-wave {
+  100% {
+    mask-position: -200% 0%;
+  }
+}

@@ -15,11 +15,11 @@
 // Default breakpoint map. Components/utilities can pass a custom map.
 $breakpoints: (
   xs: 0,
-  sm: 576px,
+  sm: 640px,
   md: 768px,
-  lg: 992px,
-  xl: 1200px,
-  xxl: 1400px,
+  lg: 1024px,
+  xl: 1280px,
+  xxl: 1536px,
 ) !default;
 
 // Name of the next breakpoint, or null for the last breakpoint.

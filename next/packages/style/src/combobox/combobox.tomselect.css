@@ -1,0 +1,251 @@
+/* @stisla/style — Combobox / Tom Select adapter (vanilla-JS binding). The combobox's vanilla
+ * implementation is backed by Tom Select; this file maps Tom Select's own DOM vocabulary
+ * (.ts-wrapper / .ts-control / .ts-dropdown / .option / .item / .focus / .has-items / .active /
+ * .selected / .tomselected …) onto the --combobox-* tokens and the menu-surface recipe. It is the ONE
+ * lib-coupled stylesheet in @stisla/style; a different combobox lib (or a React/Vue impl) would
+ * provide its own adapter and reuse the same --combobox-* tokens.
+ *
+ * Load AFTER combobox.css (it depends on the --combobox-* contract defined there) and only when you
+ * use the Tom-Select-backed combobox. The .combobox base rule in combobox.css also paints
+ * .ts-wrapper.combobox (it carries the combobox class), so the field shape/border/chevron come from
+ * there; this file adds the flex trigger layout, chips, and dropdown surface. These classes are a
+ * third-party lib's vocabulary, not Stisla state — the no-is-* convention does not apply to them.
+ *
+ * References the @theme tokens (colors var(--color-*), spacing --spacing(n), type var(--text-*) /
+ * var(--leading-*), radius var(--radius-*), shadow var(--shadow-*)); only no-namespace customs use
+ * --st-* (border-width, duration, z-index). The dropdown z-index routes through the z-index scale
+ * (--st-z-dropdown). @layer components. Authoring rules: ../../../../PORTING.md */
+
+@layer components {
+  /* === Wrapper === .ts-wrapper.combobox is the visible trigger after hydration. Flex so the inner
+     .ts-control stretches; multi grows past the height as chips wrap. */
+  .ts-wrapper.combobox {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    padding: 0;
+    cursor: text;
+  }
+
+  .ts-wrapper.combobox.multi {
+    height: auto;
+    min-height: var(--combobox-height, --spacing(9));
+  }
+
+  /* Inner row — chips + typing input. padding-block lives here (not the wrapper) so the whole padded
+     area stays clickable, since Tom Select binds its click handler to .ts-control only. */
+  .ts-wrapper.combobox .ts-control {
+    flex: 1 1 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: --spacing(1.5);
+    min-width: 0;
+    padding-block: var(--combobox-control-padding-block, --spacing(1));
+    padding-inline-start: var(--combobox-padding-inline, --spacing(2.5));
+    padding-inline-end: 0;
+    background: transparent;
+    border: 0;
+    outline: none;
+    cursor: text;
+  }
+
+  .ts-wrapper.combobox .ts-control > input {
+    flex: 1 1 auto;
+    min-width: 4ch;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    outline: none;
+  }
+
+  .ts-wrapper.combobox .ts-control > input::placeholder {
+    color: var(--combobox-placeholder, var(--color-muted-foreground));
+    opacity: 1;
+  }
+
+  /* Reset Stisla's .item styling that would otherwise leak onto Tom Select's chip divs; multi
+     re-paints below. */
+  .ts-wrapper.combobox .ts-control .item {
+    padding: 0;
+    margin: 0;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+  }
+
+  /* Multi chip — a small inline tag with an X remove handle (remove_button plugin). */
+  .ts-wrapper.combobox.multi .ts-control .item {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(1);
+    padding: --spacing(0.5) --spacing(2);
+    font-size: var(--text-xs);
+    line-height: var(--leading-snug);
+    color: var(--color-accent-foreground);
+    background: var(--color-accent);
+    border-radius: calc(var(--combobox-radius, var(--radius-md)) - --spacing(1));
+  }
+
+  .ts-wrapper.combobox.multi .ts-control .item .remove {
+    margin-inline-start: --spacing(0.5);
+    color: inherit;
+    text-decoration: none;
+    opacity: 0.6;
+    cursor: pointer;
+    transition: opacity var(--st-duration-fast) ease;
+  }
+
+  .ts-wrapper.combobox.multi .ts-control .item .remove:hover {
+    opacity: 1;
+  }
+
+  /* Once any value is selected, suppress the search input's placeholder so it doesn't trail the
+     chosen value. Tom Select toggles .has-items on the wrapper. */
+  .ts-wrapper.combobox.has-items .ts-control > input::placeholder {
+    color: transparent;
+  }
+
+  /* Focus — Tom Select toggles .focus / .input-active on the wrapper (focus lives on the inner
+     input, so :focus-visible doesn't match here); re-emit the field halo. */
+  .ts-wrapper.combobox.focus,
+  .ts-wrapper.combobox.input-active {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-ring) 25%, transparent);
+  }
+
+  /* Invalid — bridge aria-invalid from the hidden <select> to the wrapper, which Tom Select inserts
+     as a following sibling (not a parent), so adjacent-sibling does the job. */
+  select.combobox[aria-invalid="true"] + .ts-wrapper.combobox {
+    border-color: var(--color-danger);
+  }
+  select.combobox[aria-invalid="true"] + .ts-wrapper.combobox.focus,
+  select.combobox[aria-invalid="true"] + .ts-wrapper.combobox.input-active {
+    border-color: var(--color-danger);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-danger) 25%, transparent);
+  }
+
+  /* Disabled — Tom Select adds .disabled to the wrapper; override the field hover (its :disabled
+     guard doesn't match a <div>). */
+  .ts-wrapper.combobox.disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  .ts-wrapper.combobox.disabled .ts-control {
+    cursor: not-allowed;
+  }
+  .ts-wrapper.combobox.disabled:hover {
+    border-color: var(--combobox-border-color, var(--color-border-strong));
+  }
+
+  /* Hide the original <select> once hydrated (display:none, not the inline style, so user CSS can't
+     accidentally unhide it). */
+  select.combobox.tomselected,
+  select.combobox.ts-hidden-accessible {
+    display: none !important;
+  }
+
+  /* === Dropdown === the menu-surface recipe via Tom Select's .ts-dropdown. The trigger anchors the
+     position; this paints the surface. */
+  .ts-wrapper.combobox .ts-dropdown {
+    padding: var(--combobox-popup-padding-block, --spacing(1)) var(--combobox-popup-padding-inline, --spacing(1));
+    font-size: var(--combobox-popup-font-size, var(--text-sm));
+    line-height: var(--leading-normal);
+    color: var(--combobox-color, var(--color-foreground));
+    background-color: var(--combobox-bg, var(--color-surface));
+    border: var(--combobox-border-width, var(--st-border-width)) solid
+      var(--combobox-popup-border-color, var(--color-border));
+    border-radius: var(--combobox-radius, var(--radius-md));
+    box-shadow: var(--combobox-shadow, var(--shadow-md));
+    position: absolute;
+    top: 100%;
+    inset-inline-start: 0;
+    z-index: var(--combobox-z-index, var(--st-z-dropdown));
+    min-width: 100%;
+    margin: --spacing(2) 0 0;
+  }
+
+  .ts-wrapper.combobox .ts-dropdown .ts-dropdown-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--combobox-item-gap, --spacing(0.5));
+    max-height: --spacing(64);
+    overflow-y: auto;
+    padding: 0;
+  }
+
+  .ts-wrapper.combobox .ts-dropdown .optgroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--combobox-item-gap, --spacing(0.5));
+  }
+
+  /* Hide the empty <option value=""> (authors keep it as the "no selection" placeholder anchor). */
+  .ts-wrapper.combobox .ts-dropdown .option[data-value=""] {
+    display: none;
+  }
+
+  /* Option rows — the menu-item recipe; gap reset to 0 because Tom Select's search highlight splits
+     the label into inline nodes that a non-zero flex gap would pad with whitespace. */
+  .ts-wrapper.combobox .ts-dropdown .option,
+  .ts-wrapper.combobox .ts-dropdown .create {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+    min-height: var(--combobox-item-min-height, --spacing(8));
+    padding: var(--combobox-item-padding-block, --spacing(0.5))
+      var(--combobox-item-padding-inline, --spacing(3));
+    font: inherit;
+    color: var(--combobox-color, var(--color-foreground));
+    text-align: start;
+    text-decoration: none;
+    background-color: transparent;
+    border: 0;
+    border-radius: var(
+      --combobox-item-radius,
+      calc(var(--combobox-radius, var(--radius-md)) - var(--combobox-padding-inline, --spacing(1)))
+    );
+    cursor: pointer;
+    user-select: none;
+    transition:
+      background-color var(--st-duration-fast) ease,
+      color var(--st-duration-fast) ease;
+  }
+
+  /* Tom Select uses .active for the keyboard-highlighted row, .selected for the chosen value. */
+  .ts-wrapper.combobox .ts-dropdown .option:hover,
+  .ts-wrapper.combobox .ts-dropdown .option.active,
+  .ts-wrapper.combobox .ts-dropdown .create.active {
+    color: var(--combobox-item-color-hover, var(--color-accent-foreground));
+    background-color: var(--combobox-item-bg-hover, var(--color-accent));
+  }
+
+  .ts-wrapper.combobox .ts-dropdown .option.selected,
+  .ts-wrapper.combobox .ts-dropdown .option.selected.active,
+  .ts-wrapper.combobox .ts-dropdown .option.selected:hover {
+    color: var(--combobox-item-color-active, var(--color-highlight-foreground));
+    background-color: var(--combobox-item-bg-active, var(--color-highlight));
+  }
+
+  .ts-wrapper.combobox .ts-dropdown .option[data-disabled],
+  .ts-wrapper.combobox .ts-dropdown .no-results,
+  .ts-wrapper.combobox .ts-dropdown .spinner {
+    color: var(--combobox-item-color-disabled, var(--color-muted-foreground));
+    background-color: transparent;
+    pointer-events: none;
+    cursor: default;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ts-wrapper.combobox .ts-dropdown .option,
+    .ts-wrapper.combobox .ts-dropdown .create {
+      transition: none;
+    }
+  }
+}

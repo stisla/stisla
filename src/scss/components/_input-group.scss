@@ -37,7 +37,7 @@
   // opt out below so they can grow.
   height: var(--input-group-height, #{space(9)});
   background: var(--input-group-bg, var(--st-surface));
-  border: var(--input-group-border-width, var(--st-border-width)) solid var(--input-group-border-color, var(--st-border));
+  border: var(--input-group-border-width, var(--st-border-width)) solid var(--input-group-border-color, var(--st-border-strong));
   border-radius: var(--input-group-radius, #{radius(md)});
   transition: border-color .12s ease, box-shadow .12s ease;
 

@@ -1,0 +1,125 @@
+/* @stisla/style — Toggle. Ported from src/scss/components/_toggle.scss. A two-state press button:
+ * outline-neutral rest, accent hover, highlight active. Active comes from THREE sources, all paint
+ * identically: [aria-pressed="true"] (JS press button), [data-state="active"] (JS single-select
+ * member), or .toggle-input:checked + .toggle (form-data, native input drives the label). References
+ * the @theme tokens (colors var(--color-*), spacing/sizes --spacing(n), type var(--text-*) /
+ * var(--font-weight-*) / var(--leading-*), radius var(--radius-*)); only no-namespace customs use
+ * --st-* (border-width, duration). Knobs are --toggle-*; sizes compact/roomy → sm/lg; pill radius
+ * literal 9999px. State via attributes / native, no is-*. @layer components. Authoring: ../../../../PORTING.md */
+
+@layer components {
+  .toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--toggle-gap, --spacing(2));
+    height: var(--toggle-height, --spacing(9));
+    padding-block: var(--toggle-padding-block, 0);
+    padding-inline: var(--toggle-padding-inline, --spacing(3));
+    font-family: inherit;
+    font-size: var(--toggle-font-size, var(--text-sm));
+    font-weight: var(--toggle-font-weight, var(--font-weight-medium));
+    line-height: var(--leading-none);
+    color: var(--toggle-color, var(--color-foreground));
+    background: var(--toggle-bg, transparent);
+    border: var(--toggle-border-width, var(--st-border-width)) solid
+      var(--toggle-border-color, var(--color-border));
+    border-radius: var(--toggle-radius, var(--radius-md));
+    cursor: pointer;
+    user-select: none;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition:
+      background-color var(--st-duration-fast) ease,
+      border-color var(--st-duration-fast) ease,
+      color var(--st-duration-fast) ease;
+
+    &:hover {
+      background: var(--toggle-bg-hover, var(--color-accent));
+      color: var(--toggle-color-hover, var(--color-accent-foreground));
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--toggle-ring, var(--color-ring));
+      outline-offset: 2px;
+    }
+
+    &:disabled,
+    &[aria-disabled="true"] {
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: 0.55;
+    }
+  }
+
+  /* Active — three sources, one paint block (after the base so it wins specificity ties). */
+  .toggle[aria-pressed="true"],
+  .toggle[data-state="active"],
+  .toggle-input:checked + .toggle {
+    background: var(--toggle-bg-active, var(--color-highlight));
+    color: var(--toggle-color-active, var(--color-highlight-foreground));
+    border-color: var(--toggle-border-color-active, var(--toggle-bg-active, var(--color-highlight)));
+  }
+
+  /* Icons scale to font-size — 1em so they shrink with --sm / grow with --lg automatically. */
+  .toggle :is(svg, i, .toggle__icon) {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .toggle {
+      transition: none;
+    }
+  }
+
+  /* === Sizes (base = md) === */
+  .toggle--sm {
+    --toggle-radius: var(--radius-sm);
+    --toggle-height: --spacing(7);
+    --toggle-padding-inline: --spacing(2.5);
+    --toggle-font-size: var(--text-xs);
+  }
+  .toggle--lg {
+    --toggle-radius: var(--radius-lg);
+    --toggle-height: --spacing(11);
+    --toggle-padding-inline: --spacing(4);
+    --toggle-font-size: var(--text-base);
+  }
+
+  /* === Icon shapes === square at every size (mirrors .button--icon-only / --icon-round). */
+  .toggle--icon-only {
+    --toggle-padding-inline: 0;
+    width: var(--toggle-height, --spacing(9));
+  }
+  .toggle--icon-round {
+    border-radius: 9999px;
+  }
+
+  /* === Hidden input (form-data path) === visually hidden so SR + keyboard still reach it; the
+     adjacent <label class="toggle"> carries the visible paint via the :checked sibling rule above. */
+  .toggle-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+
+    &:focus-visible + .toggle {
+      outline: 2px solid var(--toggle-ring, var(--color-ring));
+      outline-offset: 2px;
+    }
+    &:disabled + .toggle {
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: 0.55;
+    }
+  }
+}

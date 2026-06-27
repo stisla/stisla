@@ -8,6 +8,7 @@
 // BEM:
 //   .table                          root
 //   .table__head--alt               <thead> on the alt surface
+//   .table__sort                    sortable header control (button or link)
 //   .table__body--divider           <tbody> with the heavier top rule
 //   .table__row--{intent}           per-row tint (primary/success/info/warning/danger)
 //   .table__row--neutral            per-row neutral fill (replaces BS5 .table-secondary)
@@ -117,6 +118,80 @@
 // inherits the surface fill without per-cell specificity.
 .table__head--alt {
   --table-bg: var(--table-head-bg-alt, var(--st-surface-2));
+}
+
+// === Sortable header ===
+// Opt a header label into a sort control: a full-label <button> (JS-driven) or
+// <a> (server-driven, pointing at a ?sort= query) carrying the column label
+// plus a CSS-drawn direction caret — no icon dependency. The caret is dim while
+// the column is sortable-but-inactive and goes solid once the column is the
+// active sort; its direction flips with data-state. Pair with aria-sort on the
+// <th> so assistive tech announces the state.
+//
+//   <th scope="col" aria-sort="descending">
+//     <a class="table__sort" data-state="desc" href="?sort=total&dir=asc">Total</a>
+//   </th>
+//
+// data-state: omitted/none (sortable — up-down caret, dim) | asc (up, solid) |
+// desc (down, solid). In an end-aligned column (.text-end on the <th>) the
+// control follows the cell's text-align, so the label + caret sit at the end
+// with no extra class.
+.table__sort {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--table-sort-gap, #{space(1.5)});
+  // Strip the native button chrome so the control inherits the head cell's
+  // label typography — works identically whether it's a <button> or an <a>.
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  text-decoration: none;
+  cursor: pointer;
+
+  // Direction caret — a CSS mask painted in currentColor, so it themes with
+  // the label and ships no icon font or inline SVG markup. The default state
+  // shows an up-down chevron (the column is sortable either way) at reduced
+  // strength; the active column swaps to a single up / down chevron at full
+  // strength. Override the glyphs by re-pointing the --table-sort-caret* vars.
+  &::after {
+    content: "";
+    inline-size: var(--table-sort-caret-size, 1em);
+    block-size: var(--table-sort-caret-size, 1em);
+    flex-shrink: 0;
+    background-color: currentColor;
+    opacity: var(--table-sort-caret-opacity, 0.4);
+    -webkit-mask: center / contain no-repeat var(--table-sort-caret);
+    mask: center / contain no-repeat var(--table-sort-caret);
+    --table-sort-caret: var(--table-sort-caret-none);
+    --table-sort-caret-none: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 15 5 5 5-5'/%3E%3Cpath d='m7 9 5-5 5 5'/%3E%3C/svg%3E");
+    --table-sort-caret-asc: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m18 15-6-6-6 6'/%3E%3C/svg%3E");
+    --table-sort-caret-desc: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    transition: opacity 120ms ease;
+  }
+
+  // Affordance: brighten the label + caret on hover so the column reads as
+  // actionable.
+  &:hover {
+    color: var(--table-sort-color-hover, var(--st-foreground));
+    --table-sort-caret-opacity: 0.7;
+  }
+
+  // Active column — solid caret, glyph set by data-state.
+  &[data-state="asc"],
+  &[data-state="desc"] {
+    color: var(--table-sort-color-active, var(--st-foreground));
+    --table-sort-caret-opacity: 1;
+  }
+  &[data-state="asc"]::after {
+    --table-sort-caret: var(--table-sort-caret-asc);
+  }
+  &[data-state="desc"]::after {
+    --table-sort-caret: var(--table-sort-caret-desc);
+  }
 }
 
 // === Body divider ===

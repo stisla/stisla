@@ -173,7 +173,7 @@ select.combobox[aria-invalid="true"] + .ts-wrapper.combobox.input-active {
 }
 
 .ts-wrapper.combobox.disabled:hover {
-  border-color: var(--combobox-border-color, var(--st-border));
+  border-color: var(--combobox-border-color, var(--st-border-strong));
 }
 
 // Hide the original <select> once hydrated. Tom Select adds these
@@ -186,9 +186,11 @@ select.combobox.ts-hidden-accessible {
 
 // === Popup =============================================================
 // Shared popup-* surface via ts-popup mapping. The trigger anchors
-// position; ts-popup paints the rest.
+// position; ts-popup paints the rest. font-size is pinned to the base
+// token so --sm/--lg size modifiers don't bleed into the dropdown.
 .ts-wrapper.combobox .ts-dropdown {
   @include ts-popup;
+  font-size: var(--combobox-popup-font-size, #{text(sm)});
 }
 
 // === Sizes =============================================================

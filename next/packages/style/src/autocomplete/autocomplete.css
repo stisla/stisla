@@ -1,0 +1,193 @@
+/* @stisla/style — Autocomplete. Ported from src/scss/components/_autocomplete.scss + the
+ * form-field-base & menu-* mixins. An <input> that suggests options as the user types (no chips, no
+ * tagging); picking a suggestion replaces the typed text. The field reuses the form-field-base shape
+ * (duplicated here with --autocomplete-*, keep in sync with input/select/textarea) and the popup
+ * reuses the shared menu-surface recipe (expanded inline with --autocomplete-*). References the
+ * @theme tokens: colors var(--color-*), sizes/spacing --spacing(n), type var(--text-*) /
+ * var(--leading-*) / var(--font-weight-*), radius var(--radius-*), shadow var(--shadow-*); only
+ * no-namespace customs use --st-* (border-width, duration, z-index). The popup z-index routes through
+ * the z-index scale (--st-z-dropdown). Keyboard focus is [data-highlighted] (recast from the legacy
+ * is-* class per the no-is-* convention). Knobs are --autocomplete-*. The suggest/filter/select
+ * behavior ships with the JS layer. @layer components. Authoring rules: ../../../../PORTING.md */
+
+@layer components {
+  /* === Field === the form-field-base shape. */
+  .autocomplete {
+    display: block;
+    width: 100%;
+    height: var(--autocomplete-height, --spacing(9));
+    padding-block: var(--autocomplete-padding-block, 0);
+    padding-inline: var(--autocomplete-padding-inline, --spacing(2.5));
+    font-family: inherit;
+    font-size: var(--autocomplete-font-size, var(--text-sm));
+    font-weight: var(--font-weight-normal);
+    line-height: var(--leading-tight);
+    color: var(--autocomplete-color, var(--color-foreground));
+    background-color: var(--autocomplete-bg, var(--color-surface));
+    border: var(--autocomplete-border-width, var(--st-border-width)) solid
+      var(--autocomplete-border-color, var(--color-border-strong));
+    border-radius: var(--autocomplete-radius, var(--radius-md));
+    appearance: none;
+    transition:
+      border-color var(--st-duration-fast) ease,
+      box-shadow var(--st-duration-fast) ease,
+      background-color var(--st-duration-fast) ease;
+
+    /* iOS Safari zooms when a focused field's font-size < 16px and never zooms back. */
+    @media (pointer: coarse) {
+      font-size: var(--autocomplete-font-size, var(--text-base));
+    }
+
+    &::placeholder {
+      color: var(--autocomplete-placeholder, var(--color-muted-foreground));
+      opacity: 1;
+    }
+
+    &:hover:not(:disabled, :focus-visible, [aria-invalid="true"], :user-invalid) {
+      border-color: color-mix(in oklch, var(--color-border-strong) 80%, var(--color-foreground));
+    }
+
+    &:focus-visible {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-ring) 25%, transparent);
+    }
+
+    &[aria-invalid="true"],
+    &:user-invalid {
+      border-color: var(--color-danger);
+    }
+    &[aria-invalid="true"]:focus-visible,
+    &:user-invalid:focus-visible {
+      border-color: var(--color-danger);
+      box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-danger) 25%, transparent);
+    }
+
+    &:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    &[readonly]:not(:disabled) {
+      background-color: var(--color-surface-2);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  /* === Popup === the menu-surface recipe, absolutely positioned under the field. */
+  .autocomplete__popup {
+    padding: var(--autocomplete-padding-block, --spacing(1)) var(--autocomplete-padding-inline, --spacing(1));
+    font-size: var(--autocomplete-font-size, var(--text-sm));
+    line-height: var(--leading-normal);
+    color: var(--autocomplete-color, var(--color-foreground));
+    background-color: var(--autocomplete-bg, var(--color-surface));
+    border: var(--autocomplete-border-width, var(--st-border-width)) solid
+      var(--autocomplete-popup-border-color, var(--color-border));
+    border-radius: var(--autocomplete-radius, var(--radius-md));
+    box-shadow: var(--autocomplete-shadow, var(--shadow-md));
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: var(--autocomplete-z-index, var(--st-z-dropdown));
+    display: flex;
+    flex-direction: column;
+    gap: var(--autocomplete-item-gap, --spacing(0.5));
+    margin: 0;
+    list-style: none;
+    overflow-y: auto;
+  }
+
+  .autocomplete__popup[hidden] {
+    display: none;
+  }
+
+  /* === Item === the menu-item recipe; gap reset to 0 because search-highlight <mark> splits the
+     label into inline nodes, and a non-zero flex gap would paint whitespace between them. */
+  .autocomplete__item {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+    min-height: var(--autocomplete-item-min-height, --spacing(8));
+    padding: var(--autocomplete-item-padding-block, --spacing(0.5))
+      var(--autocomplete-item-padding-inline, --spacing(3));
+    font: inherit;
+    color: var(--autocomplete-color, var(--color-foreground));
+    text-align: start;
+    text-decoration: none;
+    background-color: transparent;
+    border: 0;
+    border-radius: var(
+      --autocomplete-item-radius,
+      calc(var(--autocomplete-radius, var(--radius-md)) - var(--autocomplete-padding-inline, --spacing(1)))
+    );
+    cursor: pointer;
+    user-select: none;
+    transition:
+      background-color var(--st-duration-fast) ease,
+      color var(--st-duration-fast) ease;
+  }
+
+  .autocomplete__item:hover,
+  .autocomplete__item[data-highlighted] {
+    color: var(--autocomplete-item-color-hover, var(--color-accent-foreground));
+    background-color: var(--autocomplete-item-bg-hover, var(--color-accent));
+  }
+
+  /* Search match highlight — the JS wraps each matching run in <mark>; just weight, no fill (a box
+     per matched character reads noisy in a list). */
+  .autocomplete__item mark {
+    background: none;
+    color: inherit;
+    font-weight: var(--autocomplete-mark-font-weight, var(--font-weight-semibold));
+  }
+
+  /* Empty / no-results row — a disabled, non-interactive italic item. */
+  .autocomplete__empty {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+    min-height: var(--autocomplete-item-min-height, --spacing(8));
+    padding: var(--autocomplete-item-padding-block, --spacing(0.5))
+      var(--autocomplete-item-padding-inline, --spacing(3));
+    font: inherit;
+    color: var(--autocomplete-item-color-disabled, var(--color-muted-foreground));
+    background-color: transparent;
+    border: 0;
+    border-radius: var(
+      --autocomplete-item-radius,
+      calc(var(--autocomplete-radius, var(--radius-md)) - var(--autocomplete-padding-inline, --spacing(1)))
+    );
+    pointer-events: none;
+    cursor: default;
+    font-style: italic;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .autocomplete__item {
+      transition: none;
+    }
+  }
+
+  /* === Sizes (base = md) === */
+  .autocomplete--sm {
+    --autocomplete-radius: var(--radius-sm);
+    --autocomplete-height: --spacing(7);
+    --autocomplete-padding-inline: --spacing(2);
+    --autocomplete-font-size: var(--text-xs);
+    @media (pointer: coarse) {
+      --autocomplete-font-size: var(--text-base);
+    }
+  }
+
+  .autocomplete--lg {
+    --autocomplete-radius: var(--radius-lg);
+    --autocomplete-height: --spacing(11);
+    --autocomplete-padding-inline: --spacing(3.5);
+    --autocomplete-font-size: var(--text-base);
+  }
+}

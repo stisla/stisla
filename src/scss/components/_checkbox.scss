@@ -26,7 +26,7 @@
   // Without :checked / :indeterminate in the exclusion, hovering a
   // checked box dims its primary border to a hover gray.
   &:hover:not(:disabled, :focus-visible, :checked, :indeterminate, [aria-invalid="true"], :user-invalid) {
-    border-color: color-mix(in oklch, var(--st-border) 80%, var(--st-foreground));
+    border-color: color-mix(in oklch, var(--st-border-strong) 80%, var(--st-foreground));
   }
 
   // Checked / indeterminate — solid primary fill, indicator painted via

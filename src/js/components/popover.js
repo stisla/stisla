@@ -426,7 +426,21 @@ if (
         // Skip click toggling for hover/focus triggers — clicking should not
         // fight the hover state. Manual triggers ignore click delegation too.
         const triggers = String(inst.opts.triggerMode).split(/\s+/).filter(Boolean);
-        if (triggers.includes('click')) inst.toggle();
+        if (triggers.includes('click')) {
+          // One popover open at a time: close any other open popover before
+          // toggling this one (the early return below otherwise skips the
+          // outside-click auto-close pass). Leaves pinned (autoClose:false)
+          // and hover/focus popovers alone — they own their own lifecycle.
+          for (const other of document.querySelectorAll('.popover[data-state="open"]')) {
+            if (other === surface) continue;
+            const otherInst = getInstance(other);
+            if (!otherInst || otherInst.opts.autoClose === false) continue;
+            const otherTriggers = String(otherInst.opts.triggerMode).split(/\s+/).filter(Boolean);
+            if (otherTriggers.includes('hover') || otherTriggers.includes('focus')) continue;
+            otherInst.close({ returnFocus: false });
+          }
+          inst.toggle();
+        }
       }
       return;
     }

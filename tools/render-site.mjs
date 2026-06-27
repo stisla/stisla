@@ -4,7 +4,7 @@ import * as sass from 'sass';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { dedent, getHighlighter, makeHighlightFilter } from './nunjucks-filters.mjs';
+import { dedent, getHighlighter, makeHighlightFilter, icon } from './nunjucks-filters.mjs';
 import { injectToc } from './toc.mjs';
 import { wrapProseTables } from './wrap-tables.mjs';
 
@@ -17,6 +17,7 @@ const env = nunjucks.configure(SITE_ROOT, {
 });
 env.addGlobal('dev', false);
 env.addFilter('dedent', dedent);
+env.addFilter('icon', icon);
 env.addFilter('highlight', makeHighlightFilter(await getHighlighter()));
 
 await fs.mkdir(OUT_DIR, { recursive: true });

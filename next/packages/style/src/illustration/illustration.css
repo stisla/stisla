@@ -1,0 +1,103 @@
+/* @stisla/style — Illustration. Ported from src/scss/components/_illustration.scss. Soft volumetric
+ * spot art (empty states, dialogs, onboarding, success/error screens). Every object is shaded from ONE
+ * hue: the gradient stops, the backing disc, and the long shadow all derive from --illus-accent via
+ * color-mix, so recolouring never touches the SVG markup — set --illus-accent (and --illus-badge for
+ * the corner pip) and the whole piece follows. Default is neutral; intent modifiers recolour; an
+ * ancestor or inline --illus-accent overrides everything. Motion is opt-in via --animate.
+ *
+ * NOTE: the short --illus-* knobs, the .il-* SVG paint hooks, and the il-* keyframes are kept as the
+ * illustration's deliberate, cohesive vocabulary — they're referenced inside the SVG art assets, so
+ * renaming them to --illustration-* / .illustration__* would ripple through every illustration file.
+ * Only the token refs are converted: --st-* colours → var(--color-*). The white mix targets, the
+ * drop-shadow geometry, and the ambient loop durations have no token and stay literal.
+ * @layer components. Authoring rules: ../../../../PORTING.md */
+
+@layer components {
+  .illustration {
+    /* Resolve a PRIVATE accent from the public knob with a fallback. The public --illus-accent is
+       never set on the element itself, so an ancestor (a gallery, an .empty-state) or a modifier can
+       override it — a custom property set on the element would shadow inheritance and freeze it. */
+    --_a: var(--illus-accent, var(--color-muted-foreground));
+    /* Badge follows the accent by default (monochrome); override --illus-badge for a pop colour. */
+    --_b: var(--illus-badge, var(--_a));
+
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Gradient stops: light → mid → deep, all from the one accent. The light stops sit well above the
+     disc tint so faces never melt into the glow. */
+  .illustration .il-g0 {
+    stop-color: color-mix(in oklch, var(--_a) 34%, white);
+  }
+  .illustration .il-g1 {
+    stop-color: color-mix(in oklch, var(--_a) 58%, white);
+  }
+  .illustration .il-g2 {
+    stop-color: color-mix(in oklch, var(--_a) 82%, white);
+  }
+  .illustration .il-g3 {
+    stop-color: var(--_a);
+  }
+
+  /* Soft circular badge behind the object, two layers for depth. */
+  .illustration .il-disc-o {
+    fill: color-mix(in oklch, var(--_a) 6%, transparent);
+  }
+  .illustration .il-disc-i {
+    fill: color-mix(in oklch, var(--_a) 10%, transparent);
+  }
+
+  /* The object lifts off the disc; shadow falls down-right from the locked top-left light. */
+  .illustration .il-obj {
+    filter: drop-shadow(5px 9px 11px color-mix(in oklch, var(--_a) 26%, transparent));
+  }
+
+  .illustration--primary {
+    --illus-accent: var(--color-primary);
+  }
+  .illustration--success {
+    --illus-accent: var(--color-success);
+    --illus-badge: var(--color-success);
+  }
+  .illustration--danger {
+    --illus-accent: var(--color-danger);
+    --illus-badge: var(--color-danger);
+  }
+  .illustration--warning {
+    --illus-accent: var(--color-warning);
+    --illus-badge: var(--color-warning);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .illustration--animate .il-obj {
+      animation: il-float 5.5s ease-in-out infinite;
+    }
+    .illustration--animate .il-badge {
+      animation: il-pop 3.4s ease-in-out infinite;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+  }
+}
+
+@keyframes il-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes il-pop {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+}

@@ -201,6 +201,18 @@
   @include menu-separator('menu');
 }
 
+// === Media integration ===================================================
+// A borrowed .media row (role="menuitem", e.g. a notifications row) is
+// flush, so it zeroed its own radius. Re-round it to the same concentric
+// token .menu__item uses, so its hover / [data-highlighted] wash clips to
+// the matching corner curve instead of squaring off at the popup edges.
+// Same token both read, so a --menu-radius / padding retune flows to both.
+// The host owns this rule (not _media.scss); mirrors .card > .media--flush.
+.menu__popup .media--flush {
+  --media-radius: var(--menu-item-radius,
+    calc(var(--menu-radius, #{radius(md)}) - var(--menu-padding-inline, #{space(1)})));
+}
+
 // === Scroll lock =========================================================
 // Applied to <html> while any menu is open. The menu uses position:
 // fixed so otherwise the page would scroll under it and Floating UI would

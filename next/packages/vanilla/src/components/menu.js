@@ -1,0 +1,440 @@
+// Stisla.Menu — V3.md §3.7 reference implementation.
+//
+// Anatomy:
+//   .menu
+//     <button data-stisla-menu-trigger="menuId" aria-haspopup="menu"
+//             aria-expanded="false" aria-controls="menuId">…</button>
+//     .menu__popup#menuId[data-stisla-menu][role="menu"]
+//                  [data-state="open|closed"]
+//       .menu__item[role="menuitem|menuitemcheckbox|menuitemradio"]
+//                  [data-highlighted]  [data-state="checked|active"]
+//                  [aria-current]      [aria-disabled]
+//
+// Navigable rows are matched by ROLE, not by the .menu__item class, so a row built from another
+// primitive (e.g. an <a class="media" role="menuitem"> in a notifications menu) participates in
+// arrow-key nav and gets [data-highlighted] like any item.
+//
+// Events (bubbling, detail: { menu: this }):
+//   stisla:menu:opening   — before open  (cancelable)
+//   stisla:menu:opened    — after open + position
+//   stisla:menu:closing   — before close (cancelable)
+//   stisla:menu:closed    — after close
+//
+// Opts (defaults below):
+//   placement: 'bottom-start'           — Floating UI placement
+//   offset: 8                           — distance from trigger
+//   autoClose: 'both'                   — 'outside' | 'inside' | 'both' | false
+//   focus: true                         — move focus to first item on open
+//
+// Per-item opt-outs (on the .menu__item):
+//   data-stisla-menu-auto-close="false"  — clicking this item keeps menu open
+
+import {
+  computePosition,
+  autoUpdate,
+  offset,
+  flip,
+  shift,
+  size,
+} from '@floating-ui/dom';
+import { Component, getInstance } from '../core/component.js';
+import { readOpts } from '../core/init.js';
+import { waitForTransition } from '../core/transition.js';
+
+const OPEN = 'open';
+const CLOSED = 'closed';
+const TYPEAHEAD_WINDOW_MS = 500;
+// Scroll-lock hook — CSS reads html[data-menu-open]; recast from the legacy is-* class per the
+// no-is-* convention.
+const SCROLL_LOCK_ATTR = 'data-menu-open';
+
+// Navigable items are matched by role, not class, so any element acting as a menu item — .menu__item
+// or a borrowed primitive like .media — joins keyboard nav and click handling.
+const ITEM_SELECTOR =
+  '[role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]';
+
+// Body scroll is locked while any menu is open. Matches the Dialog + Drawer convention and sidesteps
+// the visible repositioning lag Floating UI would otherwise produce on every scroll frame (the menu
+// is position: fixed; the trigger isn't). Counter tracks stacked menus.
+let openCount = 0;
+
+export class Menu extends Component {
+  static eventNamespace = "menu";
+  static defaults = {
+    placement: 'bottom-start',
+    offset: 8,
+    autoClose: 'both',
+    focus: true,
+  };
+
+  constructor(el, opts) {
+    super(el, opts);
+
+    // Normalize: attribute parser may hand us numeric strings.
+    if (typeof this.opts.offset === 'string') {
+      const n = Number(this.opts.offset);
+      if (!Number.isNaN(n)) this.opts.offset = n;
+    }
+
+    this._menu = el;
+    // Trigger is matched by id — works whether the trigger sits inside or outside the .menu wrapper.
+    if (!el.id) {
+      console.warn(
+        '[stisla] .menu__popup needs an id so its trigger can target it',
+        el,
+      );
+    }
+    this._trigger = el.id
+      ? document.querySelector(`[data-stisla-menu-trigger="${el.id}"]`)
+      : null;
+
+    this._cleanupAutoUpdate = null;
+    this._returnFocusEl = null;
+    this._typeaheadBuffer = '';
+    this._typeaheadTimer = 0;
+
+    this._onDocKeydown = this._onDocKeydown.bind(this);
+    this._onDocPointerDown = this._onDocPointerDown.bind(this);
+
+    // Menu container is focusable via JS (tabindex=-1) so document keydown sees the menu in the focus
+    // chain after open. Roving tabindex on items lands focus inside the menu lazily — only after the
+    // user presses a keyboard nav key. Mouse hover never moves focus or highlight.
+    if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '-1');
+
+    if (!el.dataset.state) el.dataset.state = CLOSED;
+    if (this._trigger && !this._trigger.hasAttribute('aria-expanded')) {
+      this._trigger.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  open() {
+    if (!this.el || this.el.dataset.state === OPEN) return;
+    if (!this._trigger) return;
+    if (!this.emit('opening')) return;
+
+    this._returnFocusEl = document.activeElement;
+
+    if (openCount === 0) document.documentElement.setAttribute(SCROLL_LOCK_ATTR, '');
+    openCount++;
+
+    // Force display: flex before position so getBoundingClientRect runs against a measurable element.
+    this.el.style.display = 'flex';
+    void this.el.offsetWidth;
+
+    this._cleanupAutoUpdate = autoUpdate(this._trigger, this.el, () =>
+      this._position(),
+    );
+
+    requestAnimationFrame(() => {
+      if (!this.el) return;
+      this.el.dataset.state = OPEN;
+      this._trigger.setAttribute('aria-expanded', 'true');
+
+      // No item gets data-highlighted yet — the first keyboard nav keypress seeds it lazily. Focus
+      // the menu container so document keydown sees the menu in the focus chain.
+      if (this.opts.focus) {
+        this.el.focus({ preventScroll: true });
+      }
+
+      document.addEventListener('keydown', this._onDocKeydown, true);
+      document.addEventListener('pointerdown', this._onDocPointerDown, true);
+
+      waitForTransition(this.el).then(() => {
+        if (!this.el) return;
+        this.emit('opened', {}, { cancelable: false });
+      });
+    });
+  }
+
+  close({ returnFocus = true } = {}) {
+    if (!this.el || this.el.dataset.state !== OPEN) return;
+    if (!this.emit('closing')) return;
+
+    if (this._cleanupAutoUpdate) {
+      this._cleanupAutoUpdate();
+      this._cleanupAutoUpdate = null;
+    }
+    document.removeEventListener('keydown', this._onDocKeydown, true);
+    document.removeEventListener('pointerdown', this._onDocPointerDown, true);
+    this._clearTypeahead();
+
+    this.el.dataset.state = CLOSED;
+    if (this._trigger) this._trigger.setAttribute('aria-expanded', 'false');
+    this._clearHighlight();
+
+    waitForTransition(this.el).then(() => {
+      if (!this.el) return;
+      this.el.style.display = '';
+      openCount = Math.max(0, openCount - 1);
+      if (openCount === 0) document.documentElement.removeAttribute(SCROLL_LOCK_ATTR);
+      if (
+        returnFocus &&
+        this._returnFocusEl &&
+        typeof this._returnFocusEl.focus === 'function'
+      ) {
+        this._returnFocusEl.focus({ preventScroll: true });
+      }
+      this._returnFocusEl = null;
+      this.emit('closed', {}, { cancelable: false });
+    });
+  }
+
+  toggle() {
+    if (!this.el) return;
+    this.el.dataset.state === OPEN ? this.close() : this.open();
+  }
+
+  destroy() {
+    if (this.el?.dataset.state === OPEN) {
+      if (this._cleanupAutoUpdate) {
+        this._cleanupAutoUpdate();
+        this._cleanupAutoUpdate = null;
+      }
+      document.removeEventListener('keydown', this._onDocKeydown, true);
+      document.removeEventListener('pointerdown', this._onDocPointerDown, true);
+      this._clearTypeahead();
+      openCount = Math.max(0, openCount - 1);
+      if (openCount === 0) document.documentElement.removeAttribute(SCROLL_LOCK_ATTR);
+    }
+    super.destroy();
+  }
+
+  // === Positioning ========================================================
+
+  async _position() {
+    if (!this.el || !this._trigger) return;
+    const { x, y } = await computePosition(this._trigger, this.el, {
+      // 'fixed' strategy positions the menu in viewport coordinates so any ancestor with
+      // overflow: hidden (or scroll, clip) can't crop it. Matches CSS position: fixed.
+      strategy: 'fixed',
+      placement: this.opts.placement,
+      middleware: [
+        offset(this.opts.offset),
+        flip({ padding: 8 }),
+        shift({ padding: 8 }),
+        size({
+          padding: 8,
+          apply: ({ availableHeight }) => {
+            Object.assign(this.el.style, {
+              maxHeight: `${Math.max(120, availableHeight - 8)}px`,
+              overflowY: 'auto',
+            });
+          },
+        }),
+      ],
+    });
+    Object.assign(this.el.style, {
+      left: `${Math.round(x)}px`,
+      top: `${Math.round(y)}px`,
+    });
+  }
+
+  // === Items ==============================================================
+
+  _items() {
+    return Array.from(
+      this.el.querySelectorAll(ITEM_SELECTOR),
+    );
+  }
+
+  _enabledItems() {
+    return this._items().filter((item) => !this._isDisabled(item));
+  }
+
+  _isDisabled(item) {
+    return item.disabled || item.getAttribute('aria-disabled') === 'true';
+  }
+
+  _firstEnabledItem() {
+    return this._enabledItems()[0] ?? null;
+  }
+
+  _lastEnabledItem() {
+    const list = this._enabledItems();
+    return list[list.length - 1] ?? null;
+  }
+
+  _highlight(item) {
+    if (!item) return;
+    this._clearHighlight();
+    item.setAttribute('data-highlighted', '');
+    item.focus({ preventScroll: false });
+  }
+
+  _clearHighlight() {
+    this.el
+      ?.querySelectorAll('[data-highlighted]')
+      .forEach((item) => item.removeAttribute('data-highlighted'));
+  }
+
+  // Move keyboard highlight by `delta`. If no item is currently highlighted, the first keypress seeds
+  // it: Down/Home/typeahead start at the first enabled item, Up/End start at the last.
+  _moveHighlight(delta) {
+    const enabled = this._enabledItems();
+    if (enabled.length === 0) return;
+    const current = this.el.querySelector('[data-highlighted]');
+    if (!current) {
+      this._highlight(delta > 0 ? enabled[0] : enabled[enabled.length - 1]);
+      return;
+    }
+    const idx = enabled.indexOf(current);
+    const next = enabled[(idx + delta + enabled.length) % enabled.length];
+    this._highlight(next);
+  }
+
+  // === Keyboard + pointer =================================================
+
+  _onDocKeydown(e) {
+    if (!this.el || this.el.dataset.state !== OPEN) return;
+
+    switch (e.key) {
+      case 'Escape':
+        e.preventDefault();
+        e.stopPropagation();
+        this.close();
+        return;
+      case 'Tab':
+        // Let the browser advance focus naturally; close the menu so its roving tabindex doesn't
+        // trap focus after the menu vanishes.
+        this.close({ returnFocus: false });
+        return;
+      case 'ArrowDown':
+        e.preventDefault();
+        this._moveHighlight(1);
+        return;
+      case 'ArrowUp':
+        e.preventDefault();
+        this._moveHighlight(-1);
+        return;
+      case 'Home':
+        e.preventDefault();
+        this._highlight(this._firstEnabledItem());
+        return;
+      case 'End':
+        e.preventDefault();
+        this._highlight(this._lastEnabledItem());
+        return;
+      case 'Enter':
+      case ' ': {
+        const current = this.el.querySelector('[data-highlighted]');
+        if (current) {
+          e.preventDefault();
+          current.click();
+        }
+        return;
+      }
+      default:
+        if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
+          this._typeahead(e.key);
+        }
+    }
+  }
+
+  _onDocPointerDown(e) {
+    if (!this.el || this.el.dataset.state !== OPEN) return;
+    if (this.el.contains(e.target)) return;
+    if (this._trigger && this._trigger.contains(e.target)) return;
+    if (this.opts.autoClose === false || this.opts.autoClose === 'inside') return;
+    this.close({ returnFocus: false });
+  }
+
+  // === Typeahead ==========================================================
+
+  _typeahead(char) {
+    this._typeaheadBuffer += char.toLowerCase();
+    clearTimeout(this._typeaheadTimer);
+    this._typeaheadTimer = setTimeout(
+      () => this._clearTypeahead(),
+      TYPEAHEAD_WINDOW_MS,
+    );
+
+    const enabled = this._enabledItems();
+    if (enabled.length === 0) return;
+
+    const current = this.el.querySelector('[data-highlighted]');
+    const startIdx = current ? enabled.indexOf(current) : -1;
+    const buffer = this._typeaheadBuffer;
+
+    // Scan starting one position after the current highlight, wrapping. When the buffer is a single
+    // char and matches the current item, that's a "next match" cycle — start from startIdx + 1.
+    const offset = buffer.length === 1 ? 1 : 0;
+    for (let i = 0; i < enabled.length; i++) {
+      const idx = (startIdx + offset + i + enabled.length) % enabled.length;
+      const text = (enabled[idx].textContent || '').trim().toLowerCase();
+      if (text.startsWith(buffer)) {
+        this._highlight(enabled[idx]);
+        return;
+      }
+    }
+  }
+
+  _clearTypeahead() {
+    this._typeaheadBuffer = '';
+    clearTimeout(this._typeaheadTimer);
+    this._typeaheadTimer = 0;
+  }
+
+}
+
+// Global delegated handlers — bound once per page load. Sentinel mirrors the dialog pattern.
+if (
+  typeof document !== 'undefined' &&
+  typeof window !== 'undefined' &&
+  !window.__stislaMenuBound
+) {
+  window.__stislaMenuBound = true;
+
+  // Trigger click → toggle the matched menu. Per-attr opts re-read on every toggle.
+  document.addEventListener('click', (e) => {
+    const opener = e.target.closest('[data-stisla-menu-trigger]');
+    if (opener) {
+      const id = opener.getAttribute('data-stisla-menu-trigger');
+      const menuEl = id && document.getElementById(id);
+      if (menuEl && menuEl.classList.contains('menu__popup')) {
+        e.preventDefault();
+        const opts = readOpts(menuEl, 'menu', Menu);
+        const existing = getInstance(menuEl);
+        const inst = existing ?? new Menu(menuEl, opts);
+        if (existing) Object.assign(existing.opts, opts);
+        inst.toggle();
+      }
+      return;
+    }
+
+    // Item click — handle menuitemcheckbox / menuitemradio state flip and honor opts.autoClose.
+    const item = e.target.closest(ITEM_SELECTOR);
+    if (item) {
+      const menuEl = item.closest('.menu__popup');
+      const inst = menuEl && getInstance(menuEl);
+      if (!inst) return;
+      if (item.disabled || item.getAttribute('aria-disabled') === 'true') {
+        e.preventDefault();
+        return;
+      }
+
+      const role = item.getAttribute('role');
+      if (role === 'menuitemcheckbox') {
+        const checked = item.getAttribute('data-state') === 'checked';
+        item.setAttribute('data-state', checked ? 'unchecked' : 'checked');
+        item.setAttribute('aria-checked', checked ? 'false' : 'true');
+      } else if (role === 'menuitemradio') {
+        const group = item.closest('[role="group"]') ?? menuEl;
+        group
+          .querySelectorAll('[role="menuitemradio"]')
+          .forEach((sibling) => {
+            sibling.setAttribute('data-state', 'unchecked');
+            sibling.setAttribute('aria-checked', 'false');
+          });
+        item.setAttribute('data-state', 'checked');
+        item.setAttribute('aria-checked', 'true');
+      }
+
+      const optOut =
+        item.getAttribute('data-stisla-menu-auto-close') === 'false';
+      const close =
+        !optOut &&
+        (inst.opts.autoClose === 'both' || inst.opts.autoClose === 'inside');
+      if (close) inst.close();
+    }
+  });
+}

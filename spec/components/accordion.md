@@ -2,7 +2,7 @@
 
 A stack of collapsible panels inside a framed container. Closed items sit
 transparent on the frame; opening an item raises it as a soft chip with a
-divider between its header and body, and the chevron rotates. Items expand
+divider between its trigger and body, and the chevron rotates. Items expand
 and collapse with a height transition.
 
 This file is the cross-implementation contract. It describes what an
@@ -16,23 +16,24 @@ belongs to each implementation. See `SPEC.md` §2.
 
 ```
 .accordion                               root frame, hosts items
-  .accordion__item                       one panel (header + body pair)
-    .accordion__header                   the trigger row (rendered as a button)
-      .accordion__icon                   chevron; rotates 0 → 180° on open
+  .accordion__item                       one disclosure section (heading + body)
+    .accordion__heading                  section sub-header; wraps the trigger (a heading element)
+      .accordion__trigger                the trigger (rendered as a button)
+        .accordion__icon                 chevron; rotates 0 → 180° on open
     .accordion__body                     the collapsible content region
       .accordion__body-inner             the inner padding container
 ```
 
-**Required parts:** root, item, header, body, body-inner.
+**Required parts:** root, item, heading, trigger, body, body-inner.
 
-**Optional parts:** icon. A header without a chevron is valid; the
-header's text is the open-signal in that case.
+**Optional parts:** icon. A trigger without a chevron is valid; the
+trigger's text is the open-signal in that case.
 
-**Heading wrapper.** Per the WAI-ARIA accordion pattern, each header
+**Heading wrapper.** Per the WAI-ARIA accordion pattern, each trigger
 button is wrapped in a heading element (`<h2>` / `<h3>` / etc. — level
-chosen by the consumer to fit the page outline). The wrapper is a
-required part of the markup but does not carry a Stisla class; it is a
-semantic landmark, not a styled part.
+chosen by the consumer to fit the page outline). Stisla names this
+wrapper `.accordion__heading`: it is the section sub-header and the scope
+fence for nesting, and carries no visual treatment of its own.
 
 **Inner body wrapper.** `.accordion__body` is a clip container; the
 height transition animates this element. `.accordion__body-inner`
@@ -48,17 +49,17 @@ spec's CSS targets them; deviations break visual conformance.
 ```
 .accordion__item[data-state="open"]              expanded, body visible
 .accordion__item[data-state="closed"]            collapsed (default)
-.accordion__header[aria-expanded="true|false"]   native button state
-.accordion__header:disabled                      unreachable item
+.accordion__trigger[aria-expanded="true|false"]   native button state
+.accordion__trigger:disabled                      unreachable item
 ```
 
 **Rules.**
 
 - `data-state` lives on the item (not the body), because the chip fill,
-  border, header divider, and chevron rotation all branch off it. The
+  border, trigger divider, and chevron rotation all branch off it. The
   body inherits open/closed visibility from the item's state.
-- `aria-expanded` mirrors `data-state` on the header button.
-- A disabled header is unreachable by click and keyboard; the chevron
+- `aria-expanded` mirrors `data-state` on the trigger button.
+- A disabled trigger is unreachable by click and keyboard; the chevron
   still renders to keep the row visually consistent.
 
 ## 3. Modifiers
@@ -147,38 +148,38 @@ open items.
 
 ## 7. Keyboard
 
-Keys operate while focus is on a header button. The spec follows the
+Keys operate while focus is on a trigger button. The spec follows the
 WAI-ARIA accordion pattern.
 
 | Key | Action |
 | --- | --- |
 | Enter / Space | Toggle the focused item (subject to the non-collapsible rule in single mode). |
-| Tab | Move focus to the next focusable element. The spec does not require arrow-key navigation between headers; standard Tab order applies. |
+| Tab | Move focus to the next focusable element. The spec does not require arrow-key navigation between triggers; standard Tab order applies. |
 | Shift+Tab | Move focus to the previous focusable element. |
 
-Arrow-key navigation between headers is **not required** by the spec.
+Arrow-key navigation between triggers is **not required** by the spec.
 Implementations may add it; it is not part of the contract.
 
 ## 8. A11y
 
 **Roles + ARIA.**
 
-- Each `.accordion__header` is a native `<button>` element wrapped in a
+- Each `.accordion__trigger` is a native `<button>` element wrapped in a
   heading element. The button carries `aria-expanded` mirroring
   `data-state`, and `aria-controls` pointing at the body's `id`.
 - Each `.accordion__body` carries `role="region"` and `aria-labelledby`
-  pointing at the header button's `id`. The region role lets screen-
+  pointing at the trigger button's `id`. The region role lets screen-
   reader users skim and enter each panel as a landmark.
-- A disabled header carries the native `disabled` attribute on the
+- A disabled trigger carries the native `disabled` attribute on the
   button; `aria-disabled` is not required (and is redundant with
   `disabled`).
 
 **Focus management.**
 
 - The accordion does not move focus on open or close — focus stays on
-  the header button that was activated.
-- Headers participate in the normal Tab order. The spec does not impose
-  a roving tabindex; every enabled header is tabbable.
+  the trigger button that was activated.
+- Triggers participate in the normal Tab order. The spec does not impose
+  a roving tabindex; every enabled trigger is tabbable.
 
 **Reduced motion.** When `prefers-reduced-motion: reduce` is set:
 - The body height transition is suppressed; open/close snaps.
@@ -186,7 +187,7 @@ Implementations may add it; it is not part of the contract.
 - The chevron rotation transition is suppressed (the chevron still
   rotates, but instantly).
 
-**Forced colours.** The frame border, open-item rim, header divider,
+**Forced colours.** The frame border, open-item rim, trigger divider,
 and focus ring remain visible under `forced-colors: active`.
 
 ## 9. Tokens
@@ -206,14 +207,14 @@ globally).**
 | `--accordion-shadow` | Frame drop shadow. |
 | `--accordion-item-open-bg` | Background of an item when open. |
 | `--accordion-item-open-border-color` | Border colour of an item when open. |
-| `--accordion-header-padding-block` | Header vertical padding. |
-| `--accordion-header-padding-inline` | Header horizontal padding. |
-| `--accordion-header-font-size` | Header text size. |
-| `--accordion-header-font-weight` | Header text weight. |
-| `--accordion-header-color` | Header text colour (rest and open). |
-| `--accordion-header-bg` | Header background (rest). |
-| `--accordion-header-bg-hover` | Header background on hover (closed items only). |
-| `--accordion-header-divider-color` | Divider between header and body on open items. |
+| `--accordion-trigger-padding-block` | Trigger vertical padding. |
+| `--accordion-trigger-padding-inline` | Trigger horizontal padding. |
+| `--accordion-trigger-font-size` | Trigger text size. |
+| `--accordion-trigger-font-weight` | Trigger text weight. |
+| `--accordion-trigger-color` | Trigger text colour (rest and open). |
+| `--accordion-trigger-bg` | Trigger background (rest). |
+| `--accordion-trigger-bg-hover` | Trigger background on hover (closed items only). |
+| `--accordion-trigger-divider-color` | Divider between trigger and body on open items. |
 | `--accordion-icon-size` | Chevron size. |
 | `--accordion-icon-color` | Chevron colour. |
 | `--accordion-icon-transition-duration` | Chevron rotation duration. |
@@ -221,12 +222,12 @@ globally).**
 | `--accordion-body-padding-inline` | Body inner horizontal padding. |
 | `--accordion-body-color` | Body text colour. |
 | `--accordion-body-transition-duration` | Body height transition duration. |
-| `--accordion-ring` | Focus ring colour on header. |
+| `--accordion-ring` | Focus ring colour on trigger. |
 
 **Global tokens consumed.**
 
 `--st-surface`, `--st-surface-2`, `--st-border`, `--st-foreground`,
-`--st-muted-foreground` (disabled header), `--st-accent` (header hover),
+`--st-muted-foreground` (disabled trigger), `--st-accent` (trigger hover),
 `--st-ring`. Padding and gaps ride the spacing base `--st-spacing` via
 the `space()` helper.
 

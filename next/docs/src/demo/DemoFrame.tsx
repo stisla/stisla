@@ -1,18 +1,11 @@
-import { useEffect, useRef, useState } from "react";
-// `?inline` runs this through the docs app's own @tailwindcss/vite pipeline and returns the
-// COMPILED css as a string — HMR-tracked, so editing theme.css / a component's css live-reloads
-// the demo. (No separate Tailwind CLI; the iframe just needs the css as text to inline.)
+import { useEffect, useMemo, useRef, useState } from "react";
 import vanillaCss from "./demo.css?inline";
+import vanillaJs from "virtual:stisla-vanilla-iife";
 
-// lucide loaded from a CDN inside the iframe — exactly like a no-build consumer's page
-// (`<i data-lucide="…">` + lucide.createIcons()). Not bundled into the docs. (Needs network;
-// icons won't render offline.)
 const LUCIDE_CDN = "https://unpkg.com/lucide@1.21.0/dist/umd/lucide.min.js";
 
-/* Sandboxed vanilla-demo harness: raw HTML against the compiled vanilla @stisla/css,
- * isolated from the React docs shell, auto-sized. `layout` controls how the demo children
- * lay out — "row" (default, inline controls like buttons) or "stack" (full-width blocks
- * like alerts/cards). */
+const inlineSafe = (js: string) => js.replace(/<\/script>/gi, "<\\/script>");
+
 export function DemoFrame({
   html,
   theme = "light",
@@ -25,32 +18,70 @@ export function DemoFrame({
   const ref = useRef<HTMLIFrameElement>(null);
   const [height, setHeight] = useState(96);
 
-  const demoCss =
-    layout === "stack"
-      ? "display:flex;flex-direction:column;gap:.5rem;align-items:stretch"
-      : "display:flex;flex-wrap:wrap;gap:.75rem;align-items:center";
+  const initialThemeRef = useRef(theme);
 
-  const srcDoc = `<!doctype html>
-<html${theme === "dark" ? ' data-theme="dark"' : ""}>
+  const srcDoc = useMemo(() => {
+    const demoCss =
+      layout === "stack"
+        ? "display:flex;flex-direction:column;gap:.5rem;align-items:center;justify-content:center;"
+        : "display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;justify-content:center;";
+
+    return `<!doctype html>
+<html${initialThemeRef.current === "dark" ? ' data-theme="dark"' : ""}>
 <head>
 <meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <style>${vanillaCss}</style>
 <style>
-  body { margin: 0; padding: 1rem; background: var(--color-background); color: var(--color-foreground); }
-  .demo { ${demoCss}; }
+  body { margin: 0; background: var(--color-background); color: var(--color-foreground); }
+  /* The minimum frame height lives ONLY on the iframe element (.demo-block__frame in the docs
+     shell). Here the .demo fills whatever the frame actually is via 100vh, so short content
+     centers in the frame and scrollHeight can never exceed the viewport — no scrollbar. Padding
+     sits inside the 100vh box (border-box) so it doesn't inflate the measured height. */
+  .demo { box-sizing: border-box; min-height: 100vh; padding: 1rem; ${demoCss} }
 </style>
 </head>
 <body>
-<div class="demo">${html}</div>
+<!-- Behavior layer first: window.Stisla must exist before any inline <script> a demo
+     carries (e.g. tabs/popover/collapsible call Stisla.*.getOrCreate at parse time).
+     Auto-init still defers to DOMContentLoaded, so it runs after the .demo content parses. -->
 <script src="${LUCIDE_CDN}"></script>
+<script>${inlineSafe(vanillaJs)}</script>
+<div class="demo">${html}</div>
 <script>
   if (window.lucide) window.lucide.createIcons();
+  // Demos use href="#" as placeholder links; without this they'd navigate the iframe to
+  // about:srcdoc# and blank the preview. Let real in-page anchors (#id) through.
+  document.addEventListener("click", function(e){
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (a && (a.getAttribute("href") === "#" || a.getAttribute("href") === "")) e.preventDefault();
+  });
   function post(){ parent.postMessage({ type:"stisla-demo-height", height: document.documentElement.scrollHeight }, "*"); }
   new ResizeObserver(post).observe(document.documentElement);
+  // Flip theme in place when the parent docs shell toggles — no reload, just the attribute the
+  // tokens key off of.
+  window.addEventListener("message", function(e){
+    if (e.data && e.data.type === "stisla-demo-theme") {
+      if (e.data.theme === "dark") document.documentElement.setAttribute("data-theme", "dark");
+      else document.documentElement.removeAttribute("data-theme");
+    }
+  });
   window.addEventListener("load", post); post();
 </script>
 </body>
 </html>`;
+  }, [html, layout]);
+
+  // Push theme changes into the live iframe instead of rebuilding it. Runs on every theme change;
+  // the iframe's listener flips data-theme with no document churn.
+  useEffect(() => {
+    ref.current?.contentWindow?.postMessage(
+      { type: "stisla-demo-theme", theme },
+      "*",
+    );
+  }, [theme]);
 
   useEffect(() => {
     function onMessage(e: MessageEvent) {
@@ -58,7 +89,7 @@ export function DemoFrame({
         e.source === ref.current?.contentWindow &&
         e.data?.type === "stisla-demo-height"
       ) {
-        setHeight(e.data.height as number);
+        setHeight(Math.min(e.data.height as number, 2400));
       }
     }
     window.addEventListener("message", onMessage);
@@ -69,16 +100,16 @@ export function DemoFrame({
     <iframe
       ref={ref}
       title="Stisla vanilla demo"
-      sandbox="allow-scripts"
+      sandbox="allow-scripts allow-forms allow-modals"
       srcDoc={srcDoc}
-      className="demo-frame"
-      style={{
-        display: "block",
-        width: "100%",
-        height,
-        border: 0,
-        background: "var(--color-surface)",
-      }}
+      onLoad={() =>
+        ref.current?.contentWindow?.postMessage(
+          { type: "stisla-demo-theme", theme },
+          "*",
+        )
+      }
+      className="demo-block__frame"
+      style={{ height }}
     />
   );
 }

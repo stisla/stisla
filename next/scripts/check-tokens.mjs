@@ -44,8 +44,11 @@ const RULES = [
     msg: "is-* class — dropped. Variants use BEM --modifier, state uses attributes / ARIA.",
   },
   {
+    // Match a COMPLETE scale token only: the name must be followed by hyphen-groups (--text-sm) or
+    // end at the comma — NOT continue into a word, so component knob namespaces that begin with a
+    // scale word (e.g. --textarea-*, --spacing-scale-*) don't false-match.
     id: "scale-literal-fallback",
-    re: /var\(--(?:spacing|text|leading|font-weight|tracking|radius|shadow|ease)[a-z0-9-]*,\s*[-.0-9]/g,
+    re: /var\(--(?:spacing|text|leading|font-weight|tracking|radius|shadow|ease)(?:-[a-z0-9]+)*,\s*[-.0-9]/g,
     msg: "literal fallback on a scale token — the token is always defined; drop the fallback.",
   },
 ];

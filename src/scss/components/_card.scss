@@ -1,8 +1,8 @@
 // Stisla v3 — card.
 //
-// BEM: .card (root) + parts (__header / __body / __footer / __title /
-// __subtitle / __text / __link / __image / __overlay). Variants stay
-// flat on the root (.card--flat).
+// BEM: .card (root) + parts (__header / __action / __heading / __body /
+// __footer / __title / __subtitle / __text / __link / __image / __overlay).
+// Variants stay flat on the root (.card--flat).
 //
 // Knobs (all fallback-default): --card-bg / --card-color / --card-border-width
 // + --card-border-color / --card-radius (radius(lg)) / --card-shadow (shadow(md))
@@ -42,19 +42,34 @@
 .card__body {
   display: flex;
   flex-direction: column;
-  align-items: start;
   gap: #{space(2)};
   padding: var(--card-padding-block, #{space(5)})
     var(--card-padding-inline, #{space(5)});
 }
 
 .card__header {
+  min-height: var(--card-header-height, #{space(15)}); // 3.75rem
+  padding: 0 var(--card-padding-inline, #{space(5)});
+  border-bottom: 1px solid var(--st-border);
+}
+
+.card__header,
+.card__heading {
   display: flex;
   align-items: center;
   gap: #{space(2)};
-  min-height: var(--card-header-height, #{space(11.5)}); // 2.875rem
-  padding: 0 var(--card-padding-inline, #{space(5)});
-  border-bottom: 1px solid var(--st-border);
+}
+
+// Trailing action slot in the header (holds a link, a button, a menu
+// trigger). The auto margin is on the slot itself, so leading content (a
+// label, or an icon + title) packs to the start and only the action moves to
+// the end — a header with no action stays put. Matches .alert__action /
+// .page__action.
+.card__action {
+  display: inline-flex;
+  align-items: center;
+  gap: #{space(2)};
+  margin-inline-start: auto;
 }
 
 // Round the top corners when the header is the card's first child, so a filled
@@ -82,8 +97,8 @@
   background: var(--st-surface-2);
 }
 
-.card__header--tall {
-  --card-header-height: #{space(15)}; // 3.75rem
+.card__header--compact {
+  --card-header-height: #{space(11.5)}; // 2.875rem
 }
 
 .card__footer {
@@ -114,7 +129,7 @@
 
 .card__title {
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.3;
 }
 

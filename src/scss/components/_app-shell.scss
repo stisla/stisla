@@ -12,16 +12,20 @@
 //   • Without it, the shell itself is the flex-row and
 //     .app-shell__body is unused.
 //
-// Sidebar width is owned here, not on .sidebar. The .sidebar component
-// stays width-agnostic; the shell sets --app-shell-sidebar-width and
-// applies it via descendant selector.
+// Sidebar width is owned by the .sidebar component, not the shell. The
+// shell only stops the panel from shrinking in the flex row (flex-shrink:
+// 0) and positions it for the mobile drawer; expanded width, rail width,
+// and the width transition all ride the sidebar's own knobs
+// (--sidebar-width / --sidebar-width-collapsed / --sidebar-transition-
+// duration). To retune the sidebar inside a shell, set those same knobs —
+// the shell never shadows them with --app-shell-sidebar-* duplicates.
 //
 // === State hooks (V3.md §3.6 — .is-* for Stisla-original states) =========
-//   .is-sidebar-collapsed — desktop rail. Swaps the sidebar width to
-//     --app-shell-sidebar-width-collapsed. Stisla.AppShell pairs it
+//   .is-sidebar-collapsed — desktop rail. Stisla.AppShell pairs it
 //     with .is-collapsed on the .sidebar itself by calling the
 //     Stisla.Sidebar instance's collapse()/expand() API, which owns
-//     the rail visuals + submenu close + ARIA sync.
+//     the rail width (--sidebar-width-collapsed) + visuals + submenu
+//     close + ARIA sync. The shell sets no width of its own here.
 //   .is-sidebar-visible — mobile drawer. Below `lg`, the sidebar is
 //     position: fixed and translated off-screen by default; this class
 //     slides it in and shows a backdrop.
@@ -64,39 +68,43 @@
   min-height: 0;
 }
 
-// Sidebar positioning — width owned by the shell, not the panel.
+// Sidebar positioning — the shell only stops the panel from shrinking in
+// the flex row. Width and the width transition are owned by the .sidebar
+// component (--sidebar-width, animated via --sidebar-transition-duration);
+// the shell defers to those knobs instead of shadowing them.
 .app-shell > .sidebar,
 .app-shell__body > .sidebar {
-  width: var(--app-shell-sidebar-width, 16rem);
   flex-shrink: 0;
-  transition: width var(--app-shell-transition-duration, 200ms) ease;
 }
 
 // Main column — flex column so an optional navbar inside main and an
-// optional footer at the bottom stack vertically with content. The
-// min-width: 0 is the canonical flexbox-overflow fix: a wide table or
-// <pre> inside main would otherwise force a page-level horizontal
-// scroll because the flex item's intrinsic min-width is its content.
+// optional footer at the bottom stack vertically with content. Two rules
+// guard against a wide child (a table, a <pre>) forcing a page-level
+// horizontal scroll, and both are needed:
+//   • min-width: 0 stops the flex item itself from growing to its content
+//     width — without it, a bare wide child stretches main past the row.
+//   • overflow-x: clip caps the column's own scrollport. A .table-responsive
+//     child clips its table internally, but that scroll container's layout
+//     overflow still propagates up through overflow: visible ancestors and
+//     resurfaces as a document-level scroll; clip absorbs it here. clip
+//     (not hidden) creates no scroll container, so it leaves overflow-y
+//     visible and never interferes with a sticky sidebar/topbar.
 .app-shell__main {
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
   min-width: 0;
+  overflow-x: clip;
   background-color: var(--app-shell-main-bg, var(--st-background));
   color: var(--app-shell-main-color, var(--st-foreground));
 }
 
 // === Desktop collapsed (rail) state =====================================
-// Swap the sidebar width. The sidebar's own .is-collapsed class handles
-// the internal rail visuals — pair these two classes on the same toggle.
-.app-shell.is-sidebar-collapsed > .sidebar,
-.app-shell.is-sidebar-collapsed > .app-shell__body > .sidebar {
-  // 3.625rem = 56px rail (square 36px cell + 2×10px trimmed gutter) + ~2px
-  // for the panel border. Matches the sidebar's collapsed rail-width recipe
-  // (see _sidebar.scss §Rail), which trims --sidebar-padding-inline so the
-  // icon cell isn't squeezed by the roomy expanded gutter.
-  width: var(--app-shell-sidebar-width-collapsed, 3.625rem);
-}
+// No width rule lives here. Stisla.AppShell pairs .is-sidebar-collapsed on
+// the shell with .is-collapsed on the .sidebar, and the sidebar's own
+// .is-collapsed swaps to --sidebar-width-collapsed (deriving the rail width
+// from its icon cell). The shell stays out of the sidebar's width knobs, so
+// retuning the rail is just --sidebar-width-collapsed on the panel.
 
 // === Mobile drawer state ================================================
 // Below the mobile breakpoint, the sidebar leaves the flex flow, sits
@@ -124,9 +132,9 @@
     // halo at the anchored edge). Fades in with the slide via the
     // transition list.
     transition:
-      transform var(--app-shell-transition-duration, 200ms) ease,
-      box-shadow var(--app-shell-transition-duration, 200ms) ease,
-      width var(--app-shell-transition-duration, 200ms) ease;
+      transform var(--sidebar-transition-duration, 0.3s) ease,
+      box-shadow var(--sidebar-transition-duration, 0.3s) ease,
+      width var(--sidebar-transition-duration, 0.3s) ease;
   }
 
   // RTL flip — the panel anchors at the visual right edge in dir="rtl",
@@ -140,7 +148,10 @@
   .app-shell.is-sidebar-visible > .sidebar,
   .app-shell.is-sidebar-visible > .app-shell__body > .sidebar {
     transform: translateX(0);
-    box-shadow: var(--app-shell-sidebar-mobile-shadow, 2px 0 8px -2px oklch(0 0 0 / 0.15));
+    box-shadow: var(
+      --app-shell-sidebar-mobile-shadow,
+      2px 0 8px -2px oklch(0 0 0 / 0.15)
+    );
   }
 
   // Backdrop — pseudo-element on the shell, one z-index below the
@@ -156,7 +167,7 @@
     background-color: var(--app-shell-backdrop-bg, oklch(0 0 0 / 0.5));
     opacity: 0;
     pointer-events: none;
-    transition: opacity var(--app-shell-transition-duration, 200ms) ease;
+    transition: opacity var(--sidebar-transition-duration, 0.3s) ease;
   }
 
   .app-shell.is-sidebar-visible::before {

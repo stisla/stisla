@@ -68,20 +68,23 @@ Reality corrections to earlier sketches:
   extends to t-shirt keys (`none/xs/sm/md/lg/xl/2xl/3xl/full`), and aliases the
   old `--st-radius` → `--st-radius-md`. `xs/xl/2xl/3xl` are scaled proposals to
   tune.
-- **Shadow** is unchanged: `shadow(sm|md|lg)` returns the existing
-  `--st-shadow-light|--st-shadow|--st-shadow-heavy` (no new vars).
+- **Shadow** follows the standard pattern: `shadow(sm|md|lg|xl)` returns
+  `--st-shadow-sm|--st-shadow-md|--st-shadow-lg|--st-shadow-xl`, and
+  `--st-shadow` aliases `--st-shadow-md` (mirrors `--st-radius`). Values are
+  authored as literals in `_theme.scss` (theme-independent black drop shadows),
+  not emitted from the map — the `$shadow` map only catalogs the valid steps for
+  validation.
 
-  <a id="shadow-scale"></a>**§shadow-scale — the scale is non-monotonic.** The
-  t-shirt keys map mechanically onto the theme's three named shadows:
-  `sm → --st-shadow-light`, `md → --st-shadow`, `lg → --st-shadow-heavy`. But
-  "light" is the *soft floating* shadow (`0 4px 12px`) and "base" is the *tight
-  resting* shadow (`0 1px 3px`), so by visual size **`shadow(sm)` is LARGER than
-  `shadow(md)`** — the scale doesn't grow monotonically from sm→lg. This is why
-  floating popups (`menu-surface`) default to `shadow(sm)` while resting cards
-  default to `shadow(md)`: it reads backwards but matches the intent. Not
-  reordered — swapping the keys would silently over-elevate every card that
-  asks for `shadow(md)`. Anything reaching for elevation should pick by intent
-  (resting vs floating), not by assuming sm<md<lg.
+  <a id="shadow-scale"></a>**§shadow-scale — monotonic ramp.** Blur, spread,
+  and opacity all climb `sm → md → lg → xl`, each tier a soft contact layer plus
+  a wider ambient one, so `sm < md < lg < xl` by visual weight. Assignment by
+  intent: tooltips → `sm` (transient, low lift); cards / menus / popovers /
+  toasts / accordion → `md` (default surfaces, incl. floating `menu-surface`);
+  dialog / drawer → `lg` (modal); `xl` is the highest tier, unassigned by
+  default — reach for it on the most-lifted surfaces. Earlier the scale was non-monotonic (sm was a soft
+  floating shadow *larger* than the tight resting md) and `menu-surface`
+  defaulted to `sm` to look lifted — that workaround is gone; floating menus now
+  sit at `md` alongside popovers.
 - Build it with `node_modules/.bin/sass` (the `@import` deprecation warnings are
   pre-existing).
 

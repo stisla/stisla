@@ -14,8 +14,14 @@
 // ARIA attr (role, aria-selected, aria-controls, aria-labelledby, tabindex)
 // on init so the markup stays minimal. IDs auto-generated when missing.
 //
+// The .tabs__list is optional. Omit it and drive the panels from external
+// triggers (a .sidebar nav, a toolbar) that carry aria-controls="<rootId>" +
+// data-stisla-tabs-value; the instance resolves against its panels and sets
+// data-state / aria-current on those triggers. See the module handler below.
+//
 // Orientation autodetect: .tabs--vertical → 'vertical'; else 'horizontal'.
-// Initial value: opts.value → existing [data-state="active"] → first enabled.
+// Initial value: opts.value → existing active (trigger/panel) → first enabled
+// trigger → first panel.
 //
 // Activation mode:
 //   'automatic' (default) — focus = activate (WAI-ARIA APG auto-mode)
@@ -44,8 +50,12 @@ export class Tabs extends Component {
   constructor(el, opts) {
     super(el, opts);
 
+    // List-optional. Tabs can run with an internal .tabs__list, OR be driven
+    // entirely by external triggers (a sidebar, toolbar, command palette)
+    // carrying aria-controls + data-stisla-tabs-value — the panels plus those
+    // triggers are enough, so there's nothing to bail for when the list is
+    // absent. Keyboard nav + roving tabindex only apply to an internal list.
     this._list = el.querySelector(':scope > .tabs__list');
-    if (!this._list) return;
 
     this.opts.orientation = this._resolveOrientation(this.opts.orientation);
 
@@ -57,13 +67,16 @@ export class Tabs extends Component {
     const initial =
       this._resolveValue(this.opts.value) ??
       this._existingActiveValue() ??
-      this._firstEnabledValue();
+      this._firstEnabledValue() ??
+      this._firstPanelValue();
     if (initial != null) this._activate(initial, true);
 
     this._onClick = this._onClick.bind(this);
     this._onKeydown = this._onKeydown.bind(this);
-    this.on(this._list, 'click', this._onClick);
-    this.on(this._list, 'keydown', this._onKeydown);
+    if (this._list) {
+      this.on(this._list, 'click', this._onClick);
+      this.on(this._list, 'keydown', this._onKeydown);
+    }
   }
 
   // === Public API ========================================================
@@ -75,7 +88,8 @@ export class Tabs extends Component {
   setValue(value) {
     const target = this._resolveValue(value);
     if (target == null || target === this._activeValue) return;
-    if (this._isDisabled(this._triggerFor(target))) return;
+    const trigger = this._triggerFor(target);
+    if (trigger && this._isDisabled(trigger)) return;
     this._activate(target, false);
   }
 
@@ -97,7 +111,31 @@ export class Tabs extends Component {
   }
 
   _triggers() {
-    return Array.from(this._list.querySelectorAll(':scope > .tabs__trigger'));
+    return this._list
+      ? Array.from(this._list.querySelectorAll(':scope > .tabs__trigger'))
+      : [];
+  }
+
+  // External triggers — any element outside the root that carries
+  // aria-controls="<rootId>" + data-stisla-tabs-value. Drives the panels and
+  // receives the active hook (data-state / aria-current). Needs an id on root.
+  _externalTriggers() {
+    if (!this.el.id) return [];
+    return Array.from(
+      document.querySelectorAll(
+        `[data-stisla-tabs-value][aria-controls="${this.el.id}"]`,
+      ),
+    );
+  }
+
+  // Everything that selects a value and gets active state: internal triggers
+  // plus external triggers.
+  _controls() {
+    return this._triggers().concat(this._externalTriggers());
+  }
+
+  _controlValue(el) {
+    return el.dataset.value ?? el.dataset.stislaTabsValue ?? null;
   }
 
   _panels() {
@@ -105,7 +143,7 @@ export class Tabs extends Component {
   }
 
   _triggerFor(value) {
-    return this._triggers().find((t) => t.dataset.value === value) ?? null;
+    return this._controls().find((t) => this._controlValue(t) === value) ?? null;
   }
 
   _panelFor(value) {
@@ -123,14 +161,21 @@ export class Tabs extends Component {
 
   _resolveValue(value) {
     if (value == null) return null;
-    return this._triggerFor(String(value)) ? String(value) : null;
+    const v = String(value);
+    return this._triggerFor(v) || this._panelFor(v) ? v : null;
   }
 
   _existingActiveValue() {
-    const t = this._triggers().find(
-      (t) => t.getAttribute('data-state') === 'active',
+    const active = this._controls().find(
+      (t) =>
+        t.getAttribute('data-state') === 'active' ||
+        t.getAttribute('aria-current') === 'page',
     );
-    return t?.dataset.value ?? null;
+    if (active) return this._controlValue(active);
+    const panel = this._panels().find(
+      (p) => p.getAttribute('data-state') === 'active',
+    );
+    return panel?.dataset.value ?? null;
   }
 
   _firstEnabledValue() {
@@ -138,14 +183,21 @@ export class Tabs extends Component {
     return t?.dataset.value ?? null;
   }
 
+  _firstPanelValue() {
+    return this._panels()[0]?.dataset.value ?? null;
+  }
+
   _wireA11y() {
     const baseId = this.el.id || `stisla-tabs-${this._id}`;
     const orient = this.opts.orientation;
 
     this.el.setAttribute('data-orientation', orient);
-    this._list.setAttribute('role', 'tablist');
-    this._list.setAttribute('aria-orientation', orient);
-    this._list.setAttribute('data-orientation', orient);
+
+    if (this._list) {
+      this._list.setAttribute('role', 'tablist');
+      this._list.setAttribute('aria-orientation', orient);
+      this._list.setAttribute('data-orientation', orient);
+    }
 
     this._triggers().forEach((trigger, i) => {
       const value = trigger.dataset.value || String(i);
@@ -162,11 +214,17 @@ export class Tabs extends Component {
       if (panel) {
         if (!panel.id) panel.id = `${baseId}-panel-${value}`;
         trigger.setAttribute('aria-controls', panel.id);
-        panel.setAttribute('role', 'tabpanel');
         panel.setAttribute('aria-labelledby', trigger.id);
-        panel.setAttribute('data-orientation', orient);
-        if (!panel.hasAttribute('tabindex')) panel.setAttribute('tabindex', '0');
       }
+    });
+
+    // Panels always get their role + a focusable handle, even when no internal
+    // trigger labelled them (the external-trigger / listless case).
+    this._panels().forEach((panel) => {
+      panel.setAttribute('role', 'tabpanel');
+      panel.setAttribute('data-orientation', orient);
+      if (!panel.id) panel.id = `${baseId}-panel-${panel.dataset.value}`;
+      if (!panel.hasAttribute('tabindex')) panel.setAttribute('tabindex', '0');
     });
   }
 
@@ -184,6 +242,16 @@ export class Tabs extends Component {
       t.setAttribute('data-state', isActive ? 'active' : 'inactive');
       t.setAttribute('aria-selected', isActive ? 'true' : 'false');
       t.setAttribute('tabindex', isActive ? '0' : '-1');
+    });
+
+    // External triggers (sidebar / toolbar) get the generic active hook so they
+    // light up: data-state is the paint hook; aria-current marks the current
+    // item for AT without claiming tab semantics they don't have.
+    this._externalTriggers().forEach((t) => {
+      const isActive = this._controlValue(t) === value;
+      t.setAttribute('data-state', isActive ? 'active' : 'inactive');
+      if (isActive) t.setAttribute('aria-current', 'page');
+      else t.removeAttribute('aria-current');
     });
 
     this._panels().forEach((p) => {
@@ -261,6 +329,9 @@ export class Tabs extends Component {
 // The .tabs root needs an explicit `id` so the consumer can reference it
 // via aria-controls. Internal .tabs__trigger elements keep their own
 // click path (inside `_onClick`) — this delegate handles externals only.
+// The root may omit .tabs__list entirely and be driven purely by these
+// external triggers (e.g. a .sidebar nav); the instance resolves values
+// against its panels and reflects the active state back onto the triggers.
 //
 // Sentinel-guards the listener so Vite HMR doesn't double-bind. Gate-
 // guards on `data-stisla-tabs` on the resolved target so unrelated

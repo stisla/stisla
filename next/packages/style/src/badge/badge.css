@@ -15,7 +15,7 @@
     font-family: inherit;
     font-size: var(--badge-font-size, var(--text-xs));
     font-weight: var(--badge-font-weight, var(--font-weight-medium));
-    line-height: 1;
+    line-height: var(--leading-none);
     color: var(--badge-color, var(--color-neutral-foreground));
     background: var(--badge-bg, var(--color-neutral));
     border-radius: var(--badge-radius, 9999px);

@@ -31,6 +31,12 @@ function ButtonDocs() {
         </p>
         <Demo
           html={`
+<button type="button" class="button button--neutral">Neutral</button>
+<button type="button" class="button button--outline button--neutral">Outline</button>`}
+        />
+        <p>The canonical pairing in context.</p>
+        <Demo
+          html={`
 <button type="button" class="button button--primary">Save changes</button>
 <button type="button" class="button button--outline button--neutral">Cancel</button>`}
         />
@@ -159,8 +165,29 @@ function ButtonDocs() {
           html={`
 <button type="button" class="button button--primary button--sm" aria-busy="true">Saving</button>
 <button type="button" class="button button--primary" aria-busy="true">Saving</button>
+<button type="button" class="button button--primary button--lg" aria-busy="true">Saving</button>
 <button type="button" class="button button--outline button--neutral" aria-busy="true">Loading</button>
 <button type="button" class="button button--danger button--icon-only" aria-busy="true" aria-label="Deleting"></button>`}
+        />
+        <p>With icons, the spinner replaces them in place.</p>
+        <Demo
+          html={`
+<button type="button" class="button button--primary" aria-busy="true"><i data-lucide="plus"></i> Adding</button>
+<button type="button" class="button button--primary" aria-busy="true">Continuing <i data-lucide="arrow-right"></i></button>`}
+        />
+      </section>
+
+      <section>
+        <h2>Works on any element</h2>
+        <p>
+          <code>.button</code> renders the same on <code>&lt;button&gt;</code>, <code>&lt;a&gt;</code>,
+          and form inputs.
+        </p>
+        <Demo
+          html={`
+<button type="button" class="button button--primary">&lt;button&gt;</button>
+<a href="#" role="button" class="button button--primary">&lt;a&gt;</a>
+<input type="submit" class="button button--primary" value="<input type=submit>" />`}
         />
       </section>
 
@@ -195,6 +222,10 @@ function ButtonDocs() {
             <tr>
               <td><code>--button-padding-inline</code></td>
               <td>Inline padding (left and right)</td>
+            </tr>
+            <tr>
+              <td><code>--button-padding-block</code></td>
+              <td>Block padding (top and bottom); defaults to <code>0</code> since the height owns the rhythm. <code>--wrap</code> sets it for multi-line buttons</td>
             </tr>
             <tr>
               <td><code>--button-border-width</code></td>

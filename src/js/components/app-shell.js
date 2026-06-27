@@ -38,6 +38,12 @@
 //                       arrive on this.el with .sidebar / toggle
 //                       descendants excluded.
 //   dismissOnEscape   — close the mobile drawer on Escape (default true).
+//   autoCollapse      — drive the rail from the viewport (default false):
+//                       collapsed across the `lg` band (1024–1279px),
+//                       expanded at `xl`+, full panel inside the drawer
+//                       below `lg`. A manual collapse toggle still works
+//                       within a band; the next breakpoint crossing
+//                       re-asserts the responsive default.
 //
 // Events (bubbling):
 //   stisla:app-shell:sidebar-collapse-changing    cancelable  detail: { collapsed }
@@ -53,17 +59,23 @@ const TOGGLE_SELECTOR = '[data-stisla-app-shell-toggle]';
 // (no top navbar), or .sidebar wrapped under .app-shell__body
 // (with top navbar — :has() flips the shell to flex-column).
 const SIDEBAR_SELECTOR = ':scope > .sidebar, :scope > .app-shell__body > .sidebar';
-// Mirrors @include media-down(lg) in _app-shell.scss — 992px breakpoint
+// Mirrors @include media-down(lg) in _app-shell.scss — 1024px breakpoint
 // minus 0.02px (forked BS5 grid convention; see
 // foundation/_breakpoints.scss). Auto-mode triggers and ARIA sync read
 // this to decide which sidebar state they bind to.
-const MOBILE_QUERY = '(max-width: 991.98px)';
+const MOBILE_QUERY = '(max-width: 1023.98px)';
+// Mirrors @include media-only(lg) — the `lg` band from the drawer
+// breakpoint (1024px) up to just below `xl` (1280px). Opt-in autoCollapse
+// drives the rail off this: collapsed inside the band, expanded at `xl`+.
+// Keep in sync with the Sass breakpoints alongside MOBILE_QUERY above.
+const RAIL_QUERY = '(min-width: 1024px) and (max-width: 1279.98px)';
 
 export class AppShell extends Component {
   static eventNamespace = 'app-shell';
   static defaults = {
     dismissOnBackdrop: true,
     dismissOnEscape: true,
+    autoCollapse: false,
   };
 
   constructor(el, opts) {
@@ -86,9 +98,22 @@ export class AppShell extends Component {
         : null;
     this._mql?.addEventListener('change', this._onViewportChange);
 
+    // Opt-in responsive rail. A second MQL tracks the `lg` band; each
+    // crossing re-collapses / re-expands the panel. Only wired when
+    // autoCollapse is on, so default shells pay nothing.
+    this._onRailChange = this._applyAutoCollapse.bind(this);
+    this._railMql =
+      this.opts.autoCollapse && typeof window !== 'undefined' && window.matchMedia
+        ? window.matchMedia(RAIL_QUERY)
+        : null;
+    this._railMql?.addEventListener('change', this._onRailChange);
+
     this._syncCollapseTriggers();
     this._syncVisibilityTriggers();
     this._syncAutoTriggers();
+
+    // Apply the viewport-driven rail state once on mount.
+    this._applyAutoCollapse();
   }
 
   // === public API ========================================================
@@ -142,6 +167,7 @@ export class AppShell extends Component {
   destroy() {
     this._unbindEscape();
     this._mql?.removeEventListener('change', this._onViewportChange);
+    this._railMql?.removeEventListener('change', this._onRailChange);
     super.destroy();
   }
 
@@ -254,6 +280,15 @@ export class AppShell extends Component {
 
   _isMobile() {
     return this._mql ? this._mql.matches : false;
+  }
+
+  // Drive the rail from the viewport when autoCollapse is on: collapsed
+  // while the `lg` band matches, expanded otherwise. _setCollapsed
+  // no-ops when the state already matches, so this is safe to call on
+  // mount and on every band crossing.
+  _applyAutoCollapse() {
+    if (!this._railMql) return;
+    this._setCollapsed(this._railMql.matches);
   }
 
   // Internal triggers (inside the shell) plus any external triggers

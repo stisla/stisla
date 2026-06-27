@@ -6,8 +6,22 @@
 {% block content %}
   <header>
     <h1>Utilities</h1>
-    <p class="lead">Single-property classes for tweaking existing components and laying out their contents.</p>
+    <p class="lead">Single-property classes for tweaking existing components and laying out their contents. An optional layer, not part of the core stylesheet.</p>
   </header>
+
+  <section id="installation">
+    <h2>Installation</h2>
+    <p>Utilities ship outside <code>stisla.css</code>. The core stylesheet is components only, on the principle that a complete component set renders without an atomic layer. Add utilities when you want the tweak helpers.</p>
+    <p>The full bundle already carries them:</p>
+    {% call ui.code() %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@beta/dist/stisla-full.css">
+    {% endcall %}
+    <p>Or load them individually on top of the core bundle. The utilities sheet goes after <code>stisla.css</code> so its layer resolves last in the cascade.</p>
+    {% call ui.code() %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@beta/dist/stisla.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@beta/dist/utilities.css">
+    {% endcall %}
+  </section>
 
   <section id="philosophy">
     <h2>Philosophy</h2>
@@ -64,16 +78,17 @@
 
     <h3>Size</h3>
     <p>Numeric scale, ascending small to large. Same direction as <code>.gap-*</code> and <code>.m*-*</code>. Use <a class="link" href="#responsive"><code>.fs-{breakpoint}-{step}</code></a> for breakpoint-up variants.</p>
+    <p>These are the same sizes as the Sass <code>text()</code> token scale, surfaced under numeric class names. The two layers are deliberate. Components are authored in SCSS with the named token (<code>text(lg)</code>); the numeric class is the markup tweak. Numeric here also keeps the responsive form (<code>.fs-md-4</code>) unambiguous, where a t-shirt class (<code>.fs-md-lg</code>) could not tell breakpoint from size.</p>
     <table>
-      <thead><tr><th>Class</th><th>Value</th><th>Pixels (at 16&nbsp;px root)</th></tr></thead>
+      <thead><tr><th>Class</th><th>Token</th><th>Value</th><th>Pixels (at 16&nbsp;px root)</th></tr></thead>
       <tbody>
-        <tr><td><code>.fs-1</code></td><td>0.75rem</td><td>12</td></tr>
-        <tr><td><code>.fs-2</code></td><td>0.875rem</td><td>14</td></tr>
-        <tr><td><code>.fs-3</code></td><td>1rem</td><td>16</td></tr>
-        <tr><td><code>.fs-4</code></td><td>1.125rem</td><td>18</td></tr>
-        <tr><td><code>.fs-5</code></td><td>1.25rem</td><td>20</td></tr>
-        <tr><td><code>.fs-6</code></td><td>1.5rem</td><td>24</td></tr>
-        <tr><td><code>.fs-7</code></td><td>2rem</td><td>32</td></tr>
+        <tr><td><code>.fs-1</code></td><td><code>text(xs)</code></td><td>0.75rem</td><td>12</td></tr>
+        <tr><td><code>.fs-2</code></td><td><code>text(sm)</code></td><td>0.875rem</td><td>14</td></tr>
+        <tr><td><code>.fs-3</code></td><td><code>text(base)</code></td><td>1rem</td><td>16</td></tr>
+        <tr><td><code>.fs-4</code></td><td><code>text(lg)</code></td><td>1.125rem</td><td>18</td></tr>
+        <tr><td><code>.fs-5</code></td><td><code>text(xl)</code></td><td>1.25rem</td><td>20</td></tr>
+        <tr><td><code>.fs-6</code></td><td><code>text(2xl)</code></td><td>1.5rem</td><td>24</td></tr>
+        <tr><td><code>.fs-7</code></td><td>&mdash;</td><td>2rem</td><td>32</td></tr>
       </tbody>
     </table>
 

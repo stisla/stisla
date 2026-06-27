@@ -1,0 +1,124 @@
+/* @stisla/style — Meter. Ported from src/scss/components/_meter.scss. A bar visualizing a value within
+ * a known range (storage used, score vs target) — static measurement, vs progress's work-in-motion.
+ * Shares progress's anatomy but drops the in-motion modifiers and adds segmented stacking + an optional
+ * legend. References the @theme tokens (colors var(--color-*), spacing/sizes --spacing(n), type
+ * var(--text-*) / var(--font-weight-*) / var(--leading-*)). Knobs are --meter-*; sizes compact/roomy →
+ * sm/lg; pill radius literal 9999px. @layer components. Authoring rules: ../../../../PORTING.md */
+
+@layer components {
+  .meter {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: --spacing(4);
+    row-gap: var(--meter-header-gap, --spacing(1));
+  }
+
+  /* === Caption === */
+  .meter__label {
+    grid-column: 1;
+    font-size: var(--meter-label-font-size, var(--text-sm));
+    font-weight: var(--meter-label-font-weight, var(--font-weight-medium));
+    color: var(--meter-label-color, var(--color-foreground));
+    line-height: var(--leading-snug);
+  }
+  .meter__value {
+    grid-column: 2;
+    font-size: var(--meter-label-font-size, var(--text-sm));
+    color: var(--meter-value-color, var(--color-muted-foreground));
+    line-height: var(--leading-snug);
+  }
+
+  /* === Track === flex row so multiple bars sit side by side; the segment gap doesn't apply at edges. */
+  .meter__track {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: var(--meter-segment-gap, 1px);
+    height: var(--meter-height, --spacing(2));
+    background-color: var(--meter-bg, var(--color-neutral));
+    border-radius: var(--meter-radius, 9999px);
+    overflow: hidden;
+  }
+
+  /* === Bar === sized by inline width %; default 0 so an unsized bar stays out of the way. */
+  .meter__bar {
+    display: block;
+    width: 0;
+    height: 100%;
+    background-color: var(--meter-bar-bg, var(--color-primary));
+    flex-shrink: 0;
+  }
+
+  /* === Intent modifiers === */
+  .meter__bar--primary {
+    --meter-bar-bg: var(--color-primary);
+  }
+  .meter__bar--success {
+    --meter-bar-bg: var(--color-success);
+  }
+  .meter__bar--warning {
+    --meter-bar-bg: var(--color-warning);
+  }
+  .meter__bar--danger {
+    --meter-bar-bg: var(--color-danger);
+  }
+  .meter__bar--info {
+    --meter-bar-bg: var(--color-info);
+  }
+
+  /* === Legend === optional row beneath the track; each dot reuses --meter-bar-bg. */
+  .meter__legend {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: var(--meter-legend-item-gap, --spacing(3.5));
+    row-gap: --spacing(1);
+    margin-block-start: var(--meter-legend-row-gap, --spacing(2));
+    font-size: var(--meter-legend-font-size, var(--text-xs));
+    color: var(--meter-legend-color, var(--color-muted-foreground));
+    line-height: var(--leading-snug);
+  }
+
+  .meter__legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(1.5);
+  }
+
+  .meter__legend-dot {
+    display: inline-block;
+    width: var(--meter-legend-dot-size, --spacing(2));
+    height: var(--meter-legend-dot-size, --spacing(2));
+    background-color: var(--meter-bar-bg, var(--color-primary));
+    border-radius: 9999px;
+    flex-shrink: 0;
+  }
+  .meter__legend-dot--primary {
+    --meter-bar-bg: var(--color-primary);
+  }
+  .meter__legend-dot--success {
+    --meter-bar-bg: var(--color-success);
+  }
+  .meter__legend-dot--warning {
+    --meter-bar-bg: var(--color-warning);
+  }
+  .meter__legend-dot--danger {
+    --meter-bar-bg: var(--color-danger);
+  }
+  .meter__legend-dot--info {
+    --meter-bar-bg: var(--color-info);
+  }
+
+  /* === Size modifiers (base = md) === */
+  .meter--sm {
+    --meter-height: --spacing(1);
+  }
+  .meter--lg {
+    --meter-height: --spacing(4);
+  }
+
+  /* Block — fills its container width per SPEC §9 escape ramp. */
+  .meter--block {
+    width: 100%;
+  }
+}

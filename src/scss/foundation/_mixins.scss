@@ -80,7 +80,7 @@
   line-height: 1.2;
   color: var(--#{$prefix}-color, var(--st-foreground));
   background: var(--#{$prefix}-bg, var(--st-surface));
-  border: var(--#{$prefix}-border-width, var(--st-border-width)) solid var(--#{$prefix}-border-color, var(--st-border));
+  border: var(--#{$prefix}-border-width, var(--st-border-width)) solid var(--#{$prefix}-border-color, var(--st-border-strong));
   border-radius: var(--#{$prefix}-radius, #{radius(md)});
   // Strips UA chrome (search cancel, select chevron, number spinner). Each
   // type that wants an indicator paints it back at the call site.
@@ -96,7 +96,7 @@
   // Hover — only when idle. Focus owns the ring; invalid owns the red rim;
   // disabled rejects the cue.
   &:hover:not(:disabled, :focus-visible, [aria-invalid="true"], :user-invalid) {
-    border-color: color-mix(in oklch, var(--st-border) 80%, var(--st-foreground));
+    border-color: color-mix(in oklch, var(--st-border-strong) 80%, var(--st-foreground));
   }
 
   // Focus — soft halo + primary border. Different vocabulary from .btn's
@@ -165,7 +165,7 @@
 // Fallback-default (§2): nothing declared on the element; --<prefix>-radius +
 // --<prefix>-padding-inline repeat in the item concentric inner-radius calc so
 // a scope override flows to both. Radius / shadow chain straight to the scale
-// (radius(md) / shadow(sm)); theme all surfaces via the scale steps, one via
+// (radius(md) / shadow(md)); theme all surfaces via the scale steps, one via
 // --<prefix>-radius / --<prefix>-shadow.
 
 @mixin menu-surface($prefix) {
@@ -176,12 +176,11 @@
   background-color: var(--#{$prefix}-bg, var(--st-surface));
   border: var(--#{$prefix}-border-width, var(--st-border-width)) solid var(--#{$prefix}-border-color, var(--st-border));
   border-radius: var(--#{$prefix}-radius, #{radius(md)});
-  // Floating popups want the soft lifted shadow (0 4px 12px), not the tight
-  // resting shadow cards use. NB shadow(sm) is currently the *larger* soft one
-  // — the shadow t-shirt scale is non-monotonic (sm=light > md=base); see
-  // V3-ARCHITECTURE §shadow-scale. Override per surface via --<prefix>-shadow,
-  // or all elevations at once via the --st-shadow* scale steps.
-  box-shadow: var(--#{$prefix}-shadow, #{shadow(sm)});
+  // Floating popups sit at the default md elevation, same as cards + popovers
+  // (the scale is monotonic sm<md<lg; see V3-ARCHITECTURE §shadow-scale).
+  // Override per surface via --<prefix>-shadow, or all elevations at once via
+  // the --st-shadow-* scale steps.
+  box-shadow: var(--#{$prefix}-shadow, #{shadow(md)});
 }
 
 @mixin menu-item($prefix) {
@@ -411,7 +410,7 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
-  border: var(--#{$prefix}-border-width, var(--st-border-width)) solid var(--#{$prefix}-border-color, var(--st-border));
+  border: var(--#{$prefix}-border-width, var(--st-border-width)) solid var(--#{$prefix}-border-color, var(--st-border-strong));
   border-radius: var(--#{$prefix}-radius, #{$radius});
   appearance: none;
   cursor: pointer;

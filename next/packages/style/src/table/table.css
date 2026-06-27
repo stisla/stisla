@@ -1,0 +1,284 @@
+/* @stisla/style — Table. Ported from src/scss/components/_table.scss. Dashboard data grid: dense cells,
+ * first/last column bump so it sits flush in a .card. References the @theme tokens (colors var(--color-*),
+ * spacing/sizes --spacing(n), type var(--text-*) / var(--font-weight-*), radius var(--radius-*)); only
+ * no-namespace customs use --st-* (border-width). Knobs are --table-*. State via <tr data-state="active">
+ * / .table__sort[data-state], no is-*. `.table--compact` → `.table--sm`; responsive wrappers `xxl` → `2xl`.
+ *
+ * Layered-bg mechanic: a per-cell inset box-shadow chain. Three layers — rest (--table-bg), variant
+ * (--table-bg-type), runtime state (--table-bg-state) — so hover can light a striped+variant row without
+ * erasing the layers underneath. The huge inset shadow paints the cell box without touching
+ * background-color, so layers stack. @layer components. Authoring rules: ../../../../PORTING.md */
+
+@layer components {
+  .table {
+    /* Layered paint slots: initial here, set by variant/state rules, consumed via the var() chain. */
+    --table-bg-type: initial;
+    --table-color-type: initial;
+    --table-bg-state: initial;
+    --table-color-state: initial;
+
+    width: 100%;
+    color: var(--table-color, var(--color-foreground));
+    vertical-align: top;
+    border-color: var(--table-border-color, var(--color-border));
+  }
+
+  /* Per-cell layered chain. Variants repaint via --table-bg-type; hover/active stomp via --table-bg-state.
+     The inset shadow fills the cell box without touching background-color, so layers stack. */
+  .table > :not(caption) > * > * {
+    padding: var(--table-cell-padding-block, --spacing(3)) var(--table-cell-padding-inline, --spacing(3));
+    /* <th> defaults to center in the UA stylesheet; inherit so headers align with text direction. */
+    text-align: inherit;
+    color: var(--table-color-state, var(--table-color-type, var(--table-color, var(--color-foreground))));
+    background-color: var(--table-bg, transparent);
+    /* Preflight sets border to currentColor; pin all sides to the table palette so a modifier that
+       turns a side on reads the right color. */
+    border-color: var(--table-border-color, var(--color-border));
+    border-bottom-width: var(--st-border-width);
+    box-shadow: inset 0 0 0 9999px var(--table-bg-state, var(--table-bg-type, transparent));
+  }
+
+  /* Rows pick up the table border color too (.table--bordered turns on row borders). */
+  .table > :not(caption) > * {
+    border-color: var(--table-border-color, var(--color-border));
+  }
+
+  /* Edge-cell bump — lines the first/last column up with the card gutter so a table drops in flush. */
+  .table > :not(caption) > * > :first-child {
+    padding-inline-start: var(--table-edge-padding, --spacing(5));
+  }
+  .table > :not(caption) > * > :last-child {
+    padding-inline-end: var(--table-edge-padding, --spacing(5));
+  }
+
+  .table > thead {
+    vertical-align: bottom;
+  }
+  .table > tbody {
+    vertical-align: inherit;
+  }
+
+  /* === Head === smaller, muted, semi-bold so thead reads as a label row. */
+  .table > thead > tr > * {
+    font-size: var(--table-head-font-size, var(--text-xs));
+    font-weight: var(--table-head-font-weight, var(--font-weight-medium));
+    /* Tight label line-height (no exact token; 1.2 sits between leading-none and leading-tight). */
+    line-height: var(--table-head-line-height, 1.2);
+    --table-color: var(--table-head-color, var(--color-muted-foreground));
+  }
+
+  /* Header alt — opts the head onto surface-2 (same two-tone language as .card__header--alt). */
+  .table__head--alt {
+    --table-bg: var(--table-head-bg-alt, var(--color-surface-2));
+  }
+
+  /* === Sortable header === a full-label button/<a> + a CSS-drawn direction caret (no icon dep). The
+     caret is dim while sortable, solid once active; direction flips with data-state. */
+  .table__sort {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--table-sort-gap, --spacing(1.5));
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: inherit;
+    text-decoration: none;
+    cursor: pointer;
+
+    &::after {
+      content: "";
+      inline-size: var(--table-sort-caret-size, 1em);
+      block-size: var(--table-sort-caret-size, 1em);
+      flex-shrink: 0;
+      background-color: currentColor;
+      opacity: var(--table-sort-caret-opacity, 0.4);
+      -webkit-mask: center / contain no-repeat var(--table-sort-caret);
+      mask: center / contain no-repeat var(--table-sort-caret);
+      --table-sort-caret: var(--table-sort-caret-none);
+      --table-sort-caret-none: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 15 5 5 5-5'/%3E%3Cpath d='m7 9 5-5 5 5'/%3E%3C/svg%3E");
+      --table-sort-caret-asc: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m18 15-6-6-6 6'/%3E%3C/svg%3E");
+      --table-sort-caret-desc: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      transition: opacity var(--st-duration-fast) ease;
+    }
+
+    &:hover {
+      color: var(--table-sort-color-hover, var(--color-foreground));
+      --table-sort-caret-opacity: 0.7;
+    }
+
+    &[data-state="asc"],
+    &[data-state="desc"] {
+      color: var(--table-sort-color-active, var(--color-foreground));
+      --table-sort-caret-opacity: 1;
+    }
+    &[data-state="asc"]::after {
+      --table-sort-caret: var(--table-sort-caret-asc);
+    }
+    &[data-state="desc"]::after {
+      --table-sort-caret: var(--table-sort-caret-desc);
+    }
+  }
+
+  /* === Body divider === heavier rule above the tbody. */
+  .table__body--divider {
+    border-top: var(--table-group-divider-width, 2px) solid currentColor;
+  }
+
+  /* === Row variants === 10% bg tint / 25% border mix. Border mix uses `in oklab` (not oklch): the
+     neutral border has chroma 0, and oklch would pull every intent toward red; oklab preserves hue. */
+  .table__row--primary {
+    --table-bg-type: color-mix(in oklab, var(--color-primary) 10%, transparent);
+    --table-color-type: var(--color-foreground);
+    --table-border-color: color-mix(in oklab, var(--color-primary) 25%, var(--color-border));
+  }
+  .table__row--success {
+    --table-bg-type: color-mix(in oklab, var(--color-success) 10%, transparent);
+    --table-color-type: var(--color-foreground);
+    --table-border-color: color-mix(in oklab, var(--color-success) 25%, var(--color-border));
+  }
+  .table__row--info {
+    --table-bg-type: color-mix(in oklab, var(--color-info) 10%, transparent);
+    --table-color-type: var(--color-foreground);
+    --table-border-color: color-mix(in oklab, var(--color-info) 25%, var(--color-border));
+  }
+  .table__row--warning {
+    --table-bg-type: color-mix(in oklab, var(--color-warning) 10%, transparent);
+    --table-color-type: var(--color-foreground);
+    --table-border-color: color-mix(in oklab, var(--color-warning) 25%, var(--color-border));
+  }
+  .table__row--danger {
+    --table-bg-type: color-mix(in oklab, var(--color-danger) 10%, transparent);
+    --table-color-type: var(--color-foreground);
+    --table-border-color: color-mix(in oklab, var(--color-danger) 25%, var(--color-border));
+  }
+  .table__row--neutral {
+    --table-bg-type: var(--color-neutral);
+    --table-color-type: var(--color-neutral-foreground);
+  }
+
+  /* === Runtime states === */
+  .table--striped > tbody > tr:nth-of-type(odd) > * {
+    --table-bg-type: var(--table-striped-bg, color-mix(in oklch, var(--color-foreground) 4%, transparent));
+    --table-color-type: var(--table-striped-color, var(--color-foreground));
+  }
+
+  .table--striped-cols > :not(caption) > tr > :nth-child(2n) {
+    --table-bg-type: var(--table-striped-bg, color-mix(in oklch, var(--color-foreground) 4%, transparent));
+    --table-color-type: var(--table-striped-color, var(--color-foreground));
+  }
+
+  .table--hover > tbody > tr:hover > * {
+    --table-bg-state: var(--table-bg-hover, var(--color-accent));
+    --table-color-state: var(--table-color-hover, var(--color-accent-foreground));
+  }
+
+  /* Active row — persistent selection, highlight tier (matches sidebar / list-group). */
+  .table > tbody > tr[data-state="active"] > * {
+    --table-bg-state: var(--table-bg-active, var(--color-highlight));
+    --table-color-state: var(--table-color-active, var(--color-highlight-foreground));
+  }
+
+  /* === Borders === */
+  .table--bordered > :not(caption) > * {
+    border-width: var(--st-border-width) 0;
+  }
+  .table--bordered > :not(caption) > * > * {
+    border-width: 0 var(--st-border-width);
+  }
+
+  .table--borderless > :not(caption) > * > * {
+    border-bottom-width: 0;
+  }
+  .table--borderless > :not(:first-child) {
+    border-top-width: 0;
+  }
+
+  /* === Small — denser padding === inner cells shrink; edge cells keep the flush-in-card gutter. */
+  .table--sm > :not(caption) > * > * {
+    padding: var(--table-cell-padding-sm, --spacing(1));
+  }
+  .table--sm > :not(caption) > * > :first-child {
+    padding-inline-start: var(--table-edge-padding, --spacing(5));
+  }
+  .table--sm > :not(caption) > * > :last-child {
+    padding-inline-end: var(--table-edge-padding, --spacing(5));
+  }
+
+  /* === Align middle === */
+  .table--align-middle > :not(caption) > * > * {
+    vertical-align: middle;
+  }
+
+  /* === Responsive wrappers === (not .table parts) — wrap the table so it can scroll unchanged. */
+  .table-responsive {
+    overflow-x: auto;
+  }
+  @variant max-sm {
+    .table-responsive-sm {
+      overflow-x: auto;
+    }
+  }
+  @variant max-md {
+    .table-responsive-md {
+      overflow-x: auto;
+    }
+  }
+  @variant max-lg {
+    .table-responsive-lg {
+      overflow-x: auto;
+    }
+  }
+  @variant max-xl {
+    .table-responsive-xl {
+      overflow-x: auto;
+    }
+  }
+  @variant max-2xl {
+    .table-responsive-2xl {
+      overflow-x: auto;
+    }
+  }
+
+  /* === Card integration === a flush table composes with the card frame via its own CSS (no overflow
+     on the card). Corner cells round to the card's inner radius at the edges that meet the card; the
+     last row's bottom border and a bordered table's outer perimeter drop so they don't double the card. */
+  .card > .table:last-child > :last-child > tr:last-child > *,
+  .card > .table-responsive:last-child > .table > :last-child > tr:last-child > * {
+    border-bottom-width: 0;
+  }
+
+  .card > .table:last-child > :last-child > tr:last-child > :first-child,
+  .card > .table-responsive:last-child > .table > :last-child > tr:last-child > :first-child {
+    border-end-start-radius: calc(var(--card-radius, var(--radius-lg)) - var(--st-border-width));
+  }
+  .card > .table:last-child > :last-child > tr:last-child > :last-child,
+  .card > .table-responsive:last-child > .table > :last-child > tr:last-child > :last-child {
+    border-end-end-radius: calc(var(--card-radius, var(--radius-lg)) - var(--st-border-width));
+  }
+
+  .card > .table:first-child > :first-child > tr:first-child > :first-child,
+  .card > .table-responsive:first-child > .table > :first-child > tr:first-child > :first-child {
+    border-start-start-radius: calc(var(--card-radius, var(--radius-lg)) - var(--st-border-width));
+  }
+  .card > .table:first-child > :first-child > tr:first-child > :last-child,
+  .card > .table-responsive:first-child > .table > :first-child > tr:first-child > :last-child {
+    border-start-end-radius: calc(var(--card-radius, var(--radius-lg)) - var(--st-border-width));
+  }
+
+  /* Bordered table: drop the outer perimeter so it doesn't double the card border. */
+  .card > .table--bordered:first-child > :first-child > tr:first-child {
+    border-top-width: 0;
+  }
+  .card > .table--bordered:last-child > :last-child > tr:last-child {
+    border-bottom-width: 0;
+  }
+  .card > .table--bordered > :not(caption) > tr > :first-child {
+    border-inline-start-width: 0;
+  }
+  .card > .table--bordered > :not(caption) > tr > :last-child {
+    border-inline-end-width: 0;
+  }
+}

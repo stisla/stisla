@@ -11,12 +11,12 @@
 
   <section>
     <h2>Basic</h2>
-    <p>Each item carries <code>data-state="open"</code> or <code>"closed"</code>. Multiple items may stay open at once. Click any header to toggle its panel.</p>
+    <p>Each item carries <code>data-state="open"</code> or <code>"closed"</code>. Multiple items may stay open at once. Click any trigger to toggle its panel.</p>
     {% call ui.demo() %}
     <div class="accordion" data-stisla-accordion>
       <div class="accordion__item" data-state="open">
-        <h3>
-          <button type="button" class="accordion__header" data-stisla-accordion-trigger aria-expanded="true" aria-controls="acc-default-1" id="acc-default-1-trigger">
+        <h3 class="accordion__heading">
+          <button type="button" class="accordion__trigger" data-stisla-accordion-trigger aria-expanded="true" aria-controls="acc-default-1" id="acc-default-1-trigger">
             What is a design system?
             <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <polyline points="6 9 12 15 18 9"></polyline>
@@ -30,8 +30,8 @@
         </div>
       </div>
       <div class="accordion__item" data-state="closed">
-        <h3>
-          <button type="button" class="accordion__header" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-default-2" id="acc-default-2-trigger">
+        <h3 class="accordion__heading">
+          <button type="button" class="accordion__trigger" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-default-2" id="acc-default-2-trigger">
             How are corners kept concentric?
             <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <polyline points="6 9 12 15 18 9"></polyline>
@@ -45,8 +45,8 @@
         </div>
       </div>
       <div class="accordion__item" data-state="closed">
-        <h3>
-          <button type="button" class="accordion__header" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-default-3" id="acc-default-3-trigger">
+        <h3 class="accordion__heading">
+          <button type="button" class="accordion__trigger" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-default-3" id="acc-default-3-trigger">
             Does it animate?
             <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <polyline points="6 9 12 15 18 9"></polyline>
@@ -65,9 +65,9 @@
 
   <section>
     <h2>Keyboard</h2>
-    <p>Each <code>.accordion__header</code> is a native <code>&lt;button&gt;</code>, so the browser handles focus and activation.</p>
+    <p>Each <code>.accordion__trigger</code> is a native <code>&lt;button&gt;</code>, so the browser handles focus and activation.</p>
     <ul>
-      <li><kbd>Tab</kbd>: move focus to the next header (or out of the accordion)</li>
+      <li><kbd>Tab</kbd>: move focus to the next trigger (or out of the accordion)</li>
       <li><kbd>Shift</kbd> + <kbd>Tab</kbd>: move focus backward</li>
       <li><kbd>Enter</kbd> / <kbd>Space</kbd>: toggle the focused panel</li>
     </ul>
@@ -75,12 +75,12 @@
 
   <section>
     <h2>Single open</h2>
-    <p>Add <code>data-stisla-accordion-type="single"</code> on the root to enforce one-open-at-a-time. Opening any header closes the others.</p>
+    <p>Add <code>data-stisla-accordion-type="single"</code> on the root to enforce one-open-at-a-time. Opening any trigger closes the others.</p>
     {% call ui.demo() %}
     <div class="accordion" data-stisla-accordion data-stisla-accordion-type="single">
       <div class="accordion__item" data-state="open">
-        <h3>
-          <button type="button" class="accordion__header" data-stisla-accordion-trigger aria-expanded="true" aria-controls="acc-single-1" id="acc-single-1-trigger">
+        <h3 class="accordion__heading">
+          <button type="button" class="accordion__trigger" data-stisla-accordion-trigger aria-expanded="true" aria-controls="acc-single-1" id="acc-single-1-trigger">
             Section one
             <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <polyline points="6 9 12 15 18 9"></polyline>
@@ -94,8 +94,8 @@
         </div>
       </div>
       <div class="accordion__item" data-state="closed">
-        <h3>
-          <button type="button" class="accordion__header" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-single-2" id="acc-single-2-trigger">
+        <h3 class="accordion__heading">
+          <button type="button" class="accordion__trigger" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-single-2" id="acc-single-2-trigger">
             Section two
             <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <polyline points="6 9 12 15 18 9"></polyline>
@@ -104,13 +104,13 @@
         </h3>
         <div class="accordion__body" id="acc-single-2" role="region" aria-labelledby="acc-single-2-trigger">
           <div class="accordion__body-inner">
-            Each header acts like a radio in a group.
+            Each trigger acts like a radio in a group.
           </div>
         </div>
       </div>
       <div class="accordion__item" data-state="closed">
-        <h3>
-          <button type="button" class="accordion__header" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-single-3" id="acc-single-3-trigger">
+        <h3 class="accordion__heading">
+          <button type="button" class="accordion__trigger" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-single-3" id="acc-single-3-trigger">
             Section three
             <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <polyline points="6 9 12 15 18 9"></polyline>
@@ -119,7 +119,7 @@
         </h3>
         <div class="accordion__body" id="acc-single-3" role="region" aria-labelledby="acc-single-3-trigger">
           <div class="accordion__body-inner">
-            Closing the current one without opening another is fine too. Just click an open header again.
+            Closing the current one without opening another is fine too. Just click an open trigger again.
           </div>
         </div>
       </div>
@@ -137,8 +137,8 @@
       </div>
       <div class="accordion accordion--flush" data-stisla-accordion>
         <div class="accordion__item" data-state="open">
-          <h4>
-            <button type="button" class="accordion__header" data-stisla-accordion-trigger aria-expanded="true" aria-controls="acc-flush-1" id="acc-flush-1-trigger">
+          <h4 class="accordion__heading">
+            <button type="button" class="accordion__trigger" data-stisla-accordion-trigger aria-expanded="true" aria-controls="acc-flush-1" id="acc-flush-1-trigger">
               Can I deploy to my own domain?
               <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <polyline points="6 9 12 15 18 9"></polyline>
@@ -152,8 +152,8 @@
           </div>
         </div>
         <div class="accordion__item" data-state="closed">
-          <h4>
-            <button type="button" class="accordion__header" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-flush-2" id="acc-flush-2-trigger">
+          <h4 class="accordion__heading">
+            <button type="button" class="accordion__trigger" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-flush-2" id="acc-flush-2-trigger">
               Do you ship a CLI?
               <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <polyline points="6 9 12 15 18 9"></polyline>
@@ -167,8 +167,8 @@
           </div>
         </div>
         <div class="accordion__item" data-state="closed">
-          <h4>
-            <button type="button" class="accordion__header" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-flush-3" id="acc-flush-3-trigger">
+          <h4 class="accordion__heading">
+            <button type="button" class="accordion__trigger" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-flush-3" id="acc-flush-3-trigger">
               Is there a React wrapper?
               <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <polyline points="6 9 12 15 18 9"></polyline>
@@ -188,12 +188,12 @@
 
   <section>
     <h2>With leading icon</h2>
-    <p>Drop an icon inside the header before the label. The chevron stays pinned to the end.</p>
+    <p>Drop an icon inside the trigger before the label. The chevron stays pinned to the end.</p>
     {% call ui.demo() %}
     <div class="accordion" data-stisla-accordion>
       <div class="accordion__item" data-state="open">
-        <h3>
-          <button type="button" class="accordion__header" data-stisla-accordion-trigger aria-expanded="true" aria-controls="acc-icon-1" id="acc-icon-1-trigger">
+        <h3 class="accordion__heading">
+          <button type="button" class="accordion__trigger" data-stisla-accordion-trigger aria-expanded="true" aria-controls="acc-icon-1" id="acc-icon-1-trigger">
             <span class="d-flex flex-wrap align-items-center gap-2">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M12 2v6m0 0l3-3m-3 3l-3-3M5 12H2m20 0h-3M12 16v6m0-6l3 3m-3-3l-3 3"></path>
@@ -212,8 +212,8 @@
         </div>
       </div>
       <div class="accordion__item" data-state="closed">
-        <h3>
-          <button type="button" class="accordion__header" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-icon-2" id="acc-icon-2-trigger">
+        <h3 class="accordion__heading">
+          <button type="button" class="accordion__trigger" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-icon-2" id="acc-icon-2-trigger">
             <span class="d-flex flex-wrap align-items-center gap-2">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M6 6l1 14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-14"></path>
@@ -232,8 +232,8 @@
         </div>
       </div>
       <div class="accordion__item" data-state="closed">
-        <h3>
-          <button type="button" class="accordion__header" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-icon-3" id="acc-icon-3-trigger">
+        <h3 class="accordion__heading">
+          <button type="button" class="accordion__trigger" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-icon-3" id="acc-icon-3-trigger">
             <span class="d-flex flex-wrap align-items-center gap-2">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <circle cx="12" cy="12" r="10"></circle>
@@ -258,12 +258,12 @@
 
   <section>
     <h2>Disabled item</h2>
-    <p>Mark a header <code>disabled</code> to keep it visible without a toggle target. The chevron stops responding and the row reads in the muted text color.</p>
+    <p>Mark a trigger <code>disabled</code> to keep it visible without a toggle target. The chevron stops responding and the row reads in the muted text color.</p>
     {% call ui.demo() %}
     <div class="accordion" data-stisla-accordion>
       <div class="accordion__item" data-state="closed">
-        <h3>
-          <button type="button" class="accordion__header" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-disabled-1" id="acc-disabled-1-trigger">
+        <h3 class="accordion__heading">
+          <button type="button" class="accordion__trigger" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-disabled-1" id="acc-disabled-1-trigger">
             Active section
             <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <polyline points="6 9 12 15 18 9"></polyline>
@@ -277,8 +277,8 @@
         </div>
       </div>
       <div class="accordion__item" data-state="closed">
-        <h3>
-          <button type="button" class="accordion__header" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-disabled-2" id="acc-disabled-2-trigger" disabled>
+        <h3 class="accordion__heading">
+          <button type="button" class="accordion__trigger" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-disabled-2" id="acc-disabled-2-trigger" disabled>
             Locked section
             <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <polyline points="6 9 12 15 18 9"></polyline>
@@ -287,7 +287,7 @@
         </h3>
         <div class="accordion__body" id="acc-disabled-2" role="region" aria-labelledby="acc-disabled-2-trigger">
           <div class="accordion__body-inner">
-            Body sits hidden; the header refuses interaction.
+            Body sits hidden; the trigger refuses interaction.
           </div>
         </div>
       </div>
@@ -366,7 +366,7 @@
       <tbody>
         <tr>
           <td><code>--accordion-item-open-bg</code></td>
-          <td>Background of the chip wrapping an open item (header + body together).</td>
+          <td>Background of the chip wrapping an open item (trigger + body together).</td>
         </tr>
         <tr>
           <td><code>--accordion-item-open-border-color</code></td>
@@ -375,7 +375,7 @@
       </tbody>
     </table>
 
-    <h3>Header</h3>
+    <h3>Trigger</h3>
     <table>
       <thead>
         <tr>
@@ -385,36 +385,36 @@
       </thead>
       <tbody>
         <tr>
-          <td><code>--accordion-header-padding-block</code></td>
+          <td><code>--accordion-trigger-padding-block</code></td>
           <td>Vertical padding inside the trigger row.</td>
         </tr>
         <tr>
-          <td><code>--accordion-header-padding-inline</code></td>
+          <td><code>--accordion-trigger-padding-inline</code></td>
           <td>Horizontal padding inside the trigger row. Pairs with the frame inset so content aligns with card content padding.</td>
         </tr>
         <tr>
-          <td><code>--accordion-header-font-size</code></td>
+          <td><code>--accordion-trigger-font-size</code></td>
           <td>Trigger label font size.</td>
         </tr>
         <tr>
-          <td><code>--accordion-header-font-weight</code></td>
+          <td><code>--accordion-trigger-font-weight</code></td>
           <td>Trigger label weight.</td>
         </tr>
         <tr>
-          <td><code>--accordion-header-color</code></td>
+          <td><code>--accordion-trigger-color</code></td>
           <td>Trigger label color. Stays the same in both states.</td>
         </tr>
         <tr>
-          <td><code>--accordion-header-bg</code></td>
+          <td><code>--accordion-trigger-bg</code></td>
           <td>Trigger background at rest.</td>
         </tr>
         <tr>
-          <td><code>--accordion-header-bg-hover</code></td>
+          <td><code>--accordion-trigger-bg-hover</code></td>
           <td>Trigger background under hover. Only paints when the item is closed; the open chip stays flat.</td>
         </tr>
         <tr>
-          <td><code>--accordion-header-divider-color</code></td>
-          <td>Hairline between header and body when the item is open.</td>
+          <td><code>--accordion-trigger-divider-color</code></td>
+          <td>Hairline between trigger and body when the item is open.</td>
         </tr>
       </tbody>
     </table>
@@ -434,7 +434,7 @@
         </tr>
         <tr>
           <td><code>--accordion-icon-color</code></td>
-          <td>Chevron stroke. Tracks the header color by default.</td>
+          <td>Chevron stroke. Tracks the trigger color by default.</td>
         </tr>
         <tr>
           <td><code>--accordion-icon-transition-duration</code></td>
@@ -458,7 +458,7 @@
         </tr>
         <tr>
           <td><code>--accordion-body-padding-inline</code></td>
-          <td>Horizontal padding inside the body region. Matches header padding so the body content lines up flush with the trigger label.</td>
+          <td>Horizontal padding inside the body region. Matches trigger padding so the body content lines up flush with the trigger label.</td>
         </tr>
         <tr>
           <td><code>--accordion-body-color</code></td>
@@ -482,7 +482,7 @@
       <tbody>
         <tr>
           <td><code>--accordion-ring</code></td>
-          <td>Keyboard focus outline color on the header.</td>
+          <td>Keyboard focus outline color on the trigger.</td>
         </tr>
       </tbody>
     </table>
