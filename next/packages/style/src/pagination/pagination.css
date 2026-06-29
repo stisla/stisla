@@ -39,8 +39,8 @@
     line-height: var(--leading-none);
     cursor: default;
     transition:
-      background-color var(--pagination-transition-duration, var(--st-duration-fast)) ease,
-      color var(--pagination-transition-duration, var(--st-duration-fast)) ease;
+      background-color var(--pagination-transition-duration, var(--transition-duration-fast)) ease,
+      color var(--pagination-transition-duration, var(--transition-duration-fast)) ease;
 
     /* Icon — 1em scales with font-size so --sm shrinks icons proportionally (no per-size override). */
     > :is(svg, i) {

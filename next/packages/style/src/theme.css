@@ -1,16 +1,18 @@
-/* @stisla/tokens — THE token layer. Tailwind v4 @theme: one definition emits the CSS
- * variables (referenced in our component CSS) AND generates the utilities. There is no
- * parallel token system — components read these theme vars directly:
+/* @stisla/style — THE theme/foundation layer. Tailwind v4 @theme: one definition emits the CSS
+ * variables (referenced in our component CSS) AND generates the utilities. There is no parallel
+ * token system — components read these theme vars directly:
  *   colors → var(--color-*)   type → var(--text-*) / var(--leading-*) / var(--font-weight-*)
  *   radius → var(--radius-*)  shadow → var(--shadow-*)   spacing → --spacing(n)
  *   tint   → --alpha(var(--color-x) / N%)
- * Only tokens with NO Tailwind namespace use --st-* (z-index, duration, border-width).
+ * z-index + duration ride Tailwind's namespaces (--z-index-*, --transition-duration-*) in a
+ * @theme static block: that generates z-* / duration-* utilities AND force-emits the vars so our
+ * raw var() refs resolve. Only border-width has no namespace slot, so it stays --st-*.
  * Dark mode overrides --color-* in a scope.
  *
- *   Consumer: @import "tailwindcss"; @import "@stisla/tokens/theme.css";
- *   (this file imports Tailwind itself, so a bare import of it also works.) */
-
-@import "tailwindcss";
+ * This file is a PURE @theme — it does NOT import Tailwind. Tailwind is pulled in once by the
+ * consumer (or by the @stisla/css build), then this file is imported after it:
+ *   @import "tailwindcss";
+ *   @import "@stisla/style/theme.css"; */
 
 @theme {
   /* Drop Tailwind's default palette; ship only semantic colors. */
@@ -90,9 +92,7 @@
   --leading-normal: 1.5;
 }
 
-/* Dark mode — surfaces + interactional flip; intents stay put. */
-[data-theme="dark"],
-.dark {
+@variant dark {
   --color-background: oklch(0.155 0 0);
   --color-foreground: oklch(0.97 0 0);
   --color-surface: oklch(0.18 0 0);
@@ -107,22 +107,29 @@
   --color-accent-foreground: oklch(0.97 0 0);
 }
 
-/* Tokens with NO Tailwind namespace — plain :root vars, read directly as var(--st-*). */
+/* z-index + duration scales — Tailwind owns these namespaces, so naming them --z-index-* /
+ * --transition-duration-* generates utilities (z-modal, duration-fast, …). `static` forces
+ * unconditional emission: our component CSS references them via raw var(), which Tailwind can't
+ * see, so without `static` a zero-utility-usage var would be tree-shaken (the --leading-* trap). */
+@theme static {
+  --z-index-base: 0;
+  --z-index-dropdown: 1000;
+  --z-index-sticky: 1020;
+  --z-index-overlay: 1030;
+  --z-index-modal: 1040;
+  --z-index-popover: 1050;
+  --z-index-toast: 1060;
+  --z-index-tooltip: 1070;
+
+  --transition-duration-fast: 120ms;
+  --transition-duration-normal: 200ms;
+  --transition-duration-slow: 320ms;
+}
+
+/* Single global default border thickness — NOT a scale, so no Tailwind namespace fits
+ * (--border-width-* needs named steps; a bare --border-width generates nothing). Stays --st-*. */
 :root {
   --st-border-width: 1px;
-
-  --st-z-base: 0;
-  --st-z-dropdown: 1000;
-  --st-z-sticky: 1020;
-  --st-z-overlay: 1030;
-  --st-z-modal: 1040;
-  --st-z-popover: 1050;
-  --st-z-toast: 1060;
-  --st-z-tooltip: 1070;
-
-  --st-duration-fast: 120ms;
-  --st-duration-normal: 200ms;
-  --st-duration-slow: 320ms;
 }
 
 /* Base — default body copy is 14px (Stisla's long-standing default), set on <body> so the

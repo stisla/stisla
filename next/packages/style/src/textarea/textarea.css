@@ -23,9 +23,9 @@
     border-radius: var(--textarea-radius, var(--radius-md));
     appearance: none;
     transition:
-      border-color var(--st-duration-fast) ease,
-      box-shadow var(--st-duration-fast) ease,
-      background-color var(--st-duration-fast) ease;
+      border-color var(--transition-duration-fast) ease,
+      box-shadow var(--transition-duration-fast) ease,
+      background-color var(--transition-duration-fast) ease;
 
     /* === Multi-line overrides === */
     height: auto;

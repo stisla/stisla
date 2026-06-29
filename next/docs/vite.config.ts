@@ -37,14 +37,15 @@ function rawQueryPlugin(): EsbuildPlugin {
   };
 }
 
-// Bundle @stisla/vanilla's IIFE entry to a string, exposed as a virtual module. DemoFrame imports it
-// and inlines it into the demo iframe as a <script> — the same artifact a no-build consumer drops in
-// via <script src>, so the demos run the real behavior layer. Mirrors how demo.css?inline works for
-// CSS: bundled on the fly (dev + build), no separate build step. Watched inputs invalidate it on edit.
+// Bundle @stisla/vanilla's full entry to an IIFE string, exposed as a virtual module. DemoFrame
+// imports it and inlines it into the demo iframe as a <script>, so every demo (optionals included)
+// runs the real behavior layer. esbuild's iife format gives a classic, side-effect-only script:
+// the entry sets window.Stisla and auto-inits. Mirrors how demo.css?inline works for CSS: bundled
+// on the fly (dev + build), no separate build step. Watched inputs invalidate it on edit.
 function stislaVanillaIife(): Plugin {
   const virtualId = "virtual:stisla-vanilla-iife";
   const resolvedId = "\0" + virtualId;
-  const entry = fromHere("../packages/vanilla/src/iife.js");
+  const entry = fromHere("../packages/vanilla/src/index-full.js");
   return {
     name: "stisla-vanilla-iife",
     resolveId(id) {

@@ -61,7 +61,7 @@ export function composer<V extends VariantDefs, K extends string>(
       if (raw == null || raw === false) continue;
       // boolean true → the "true" key (flag variants like iconOnly)
       const key = raw === true ? "true" : String(raw);
-      const cls = variants[name][key];
+      const cls = variants[name]?.[key];
       if (cls) classes.push(cls); // empty string (e.g. size "md") adds nothing
     }
 

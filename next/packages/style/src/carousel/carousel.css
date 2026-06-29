@@ -70,7 +70,7 @@
     box-shadow: var(--carousel-control-shadow, 0 1px 2px color-mix(in oklch, var(--color-overlay) 30%, transparent));
     cursor: pointer;
     transform: translateY(-50%);
-    transition: background-color var(--carousel-transition-duration, var(--st-duration-normal)) ease;
+    transition: background-color var(--carousel-transition-duration, var(--transition-duration-normal)) ease;
   }
 
   .carousel__control:hover {
@@ -128,8 +128,8 @@
     cursor: pointer;
     pointer-events: auto;
     transition:
-      width var(--carousel-transition-duration, var(--st-duration-normal)) ease,
-      background-color var(--carousel-transition-duration, var(--st-duration-normal)) ease;
+      width var(--carousel-transition-duration, var(--transition-duration-normal)) ease,
+      background-color var(--carousel-transition-duration, var(--transition-duration-normal)) ease;
   }
 
   .carousel__indicator:focus-visible {

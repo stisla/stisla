@@ -36,7 +36,7 @@
     background: var(--slider-track-bg, var(--color-neutral));
     border-radius: var(--slider-radius, 9999px);
     overflow: hidden;
-    transition: border-color var(--st-duration-fast) ease;
+    transition: border-color var(--transition-duration-fast) ease;
   }
 
   /* === Range === filled segment. Width math (with edge inset = thumb-gap on each side):
@@ -80,8 +80,8 @@
     cursor: pointer;
     touch-action: none;
     transition:
-      transform var(--st-duration-fast) ease,
-      box-shadow var(--st-duration-fast) ease;
+      transform var(--transition-duration-fast) ease,
+      box-shadow var(--transition-duration-fast) ease;
 
     &:focus {
       outline: none;

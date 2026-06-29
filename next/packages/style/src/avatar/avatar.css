@@ -44,7 +44,7 @@
     object-fit: cover;
     border-radius: inherit;
     opacity: 0;
-    transition: opacity var(--st-duration-fast) ease-out;
+    transition: opacity var(--transition-duration-fast) ease-out;
   }
 
   .avatar[data-status="loaded"] .avatar__image {

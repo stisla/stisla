@@ -1,4 +1,5 @@
-@import "../../packages/tokens/src/theme.css";
+@import "tailwindcss";
+@import "../../packages/style/src/theme.css";
 @import "../../packages/style/src/button/button.css";
 @import "../../packages/style/src/sidebar/sidebar.css";
 
@@ -293,6 +294,10 @@ body:has(.site-sidebar[data-state="open"]) {
   margin-block-end: --spacing(20);
 }
 
+.main-container.prose :where(.lead):not(.not-prose *) {
+  margin-bottom: --spacing(14);
+}
+
 /* ===========================================================================
  * Right rail (ToC) — lg+ only. Bare on the page bg, sticky. Built at runtime
  * from the rendered headings (see toc.tsx).
@@ -460,6 +465,7 @@ body:has(.site-sidebar[data-state="open"]) {
   background-color: transparent !important;
   padding: --spacing(4);
   border-top: 1px solid var(--color-border);
+  font-size: 0.75rem;
 }
 
 /* ===========================================================================
@@ -486,5 +492,5 @@ body:has(.site-sidebar[data-state="open"]) {
   overflow: auto;
   background-color: transparent !important;
   padding: --spacing(4);
-  font-size: var(--text-sm);
+  font-size: 0.75rem;
 }

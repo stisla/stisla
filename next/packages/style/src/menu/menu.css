@@ -4,7 +4,7 @@
  * surface owns its knobs). State lives in [data-state]/[data-highlighted]/[aria-*] attributes.
  * References the @theme tokens: colors var(--color-*), sizes/spacing --spacing(n), type var(--text-*)
  * / var(--leading-*) / var(--font-weight-*), radius var(--radius-*), shadow var(--shadow-*); only
- * no-namespace customs use --st-* (border-width, duration, z-index); z-index routes through the z-index scale (--st-z-dropdown).
+ * no-namespace customs use --st-* (border-width, duration, z-index); z-index routes through the z-index scale (--z-index-dropdown).
  * The scroll-lock hook html[data-menu-open] is an attribute, recast from the legacy is-* class per
  * the no-is-* convention. Positioning + keyboard nav (Floating UI) ship with the JS layer. @layer
  * components. Authoring rules: ../../../../PORTING.md */
@@ -35,7 +35,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: var(--menu-z-index, var(--st-z-dropdown));
+    z-index: var(--menu-z-index, var(--z-index-dropdown));
     display: none;
     flex-direction: column;
     gap: var(--menu-gap, --spacing(0.5));
@@ -46,8 +46,8 @@
     opacity: 0;
     transform: translateY(calc(--spacing(1) * -1));
     transition:
-      opacity var(--menu-transition-duration, var(--st-duration-fast)) ease,
-      transform var(--menu-transition-duration, var(--st-duration-fast)) ease;
+      opacity var(--menu-transition-duration, var(--transition-duration-fast)) ease,
+      transform var(--menu-transition-duration, var(--transition-duration-fast)) ease;
     outline: none;
   }
 
@@ -84,8 +84,8 @@
     cursor: pointer;
     user-select: none;
     transition:
-      background-color var(--st-duration-fast) ease,
-      color var(--st-duration-fast) ease;
+      background-color var(--transition-duration-fast) ease,
+      color var(--transition-duration-fast) ease;
   }
 
   /* Hover (mouse) + [data-highlighted] (keyboard nav) both paint accent; native :focus is excluded

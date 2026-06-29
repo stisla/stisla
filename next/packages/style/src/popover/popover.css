@@ -5,7 +5,7 @@
  * dividers span edge-to-edge, each part owning its padding). References the @theme tokens: colors
  * var(--color-*), sizes/spacing --spacing(n), type var(--text-*) / var(--leading-*) /
  * var(--font-weight-*), radius var(--radius-*), shadow var(--shadow-*); only no-namespace customs
- * use --st-* (border-width, duration, z-index); z-index routes through the z-index scale (--st-z-popover). Knobs are
+ * use --st-* (border-width, duration, z-index); z-index routes through the z-index scale (--z-index-popover). Knobs are
  * --popover-*. Positioning + focus-trap + dismiss ship with the JS layer. @layer components.
  * Authoring rules: ../../../../PORTING.md */
 
@@ -16,7 +16,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: var(--popover-z-index, var(--st-z-popover));
+    z-index: var(--popover-z-index, var(--z-index-popover));
     display: none;
     min-width: var(--popover-min-width, --spacing(52));
     max-width: var(--popover-max-width, --spacing(69));
@@ -34,8 +34,8 @@
        below flip the direction so the entrance always reads as moving away from the anchored edge. */
     transform: translateY(--spacing(1));
     transition:
-      opacity var(--popover-transition-duration, var(--st-duration-normal)) ease,
-      transform var(--popover-transition-duration, var(--st-duration-normal)) ease;
+      opacity var(--popover-transition-duration, var(--transition-duration-normal)) ease,
+      transform var(--popover-transition-duration, var(--transition-duration-normal)) ease;
   }
 
   .popover[data-state="open"] {
@@ -153,8 +153,8 @@
     border-radius: 9999px;
     cursor: pointer;
     transition:
-      color var(--popover-transition-duration, var(--st-duration-normal)) ease,
-      background-color var(--popover-transition-duration, var(--st-duration-normal)) ease;
+      color var(--popover-transition-duration, var(--transition-duration-normal)) ease,
+      background-color var(--popover-transition-duration, var(--transition-duration-normal)) ease;
   }
 
   .popover__close:hover {

@@ -54,9 +54,9 @@
     );
     text-decoration: none;
     transition:
-      background-color var(--tabs-transition-duration, var(--st-duration-fast)) ease,
-      color var(--tabs-transition-duration, var(--st-duration-fast)) ease,
-      border-color var(--tabs-transition-duration, var(--st-duration-fast)) ease;
+      background-color var(--tabs-transition-duration, var(--transition-duration-fast)) ease,
+      color var(--tabs-transition-duration, var(--transition-duration-fast)) ease,
+      border-color var(--tabs-transition-duration, var(--transition-duration-fast)) ease;
 
     &:hover:not([data-state="active"]) {
       color: var(--tabs-trigger-color-hover, var(--color-foreground));

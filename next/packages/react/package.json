@@ -1,6 +1,6 @@
 {
   "name": "@stisla/react",
-  "version": "0.0.0",
+  "version": "3.0.0-beta.8",
   "description": "Stisla React components — thin Base UI wrappers over the @stisla/style composer.",
   "license": "MIT",
   "type": "module",
@@ -20,18 +20,19 @@
     "./package.json": "./package.json"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
   "sideEffects": [
     "**/*.css"
   ],
   "scripts": {
-    "build": "echo 'TODO Phase 3: tsup (ESM, per-component, sideEffects css)' && exit 0"
+    "build": "tsup"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
     "@stisla/style": "workspace:*",
-    "@stisla/tokens": "workspace:*",
     "clsx": "^2.1.0"
   },
   "peerDependencies": {
@@ -39,6 +40,17 @@
     "react-dom": ">=18"
   },
   "devDependencies": {
+    "@types/react": "^19.0.0",
+    "tsup": "^8.0.0",
     "typescript": "^5.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stisla/stisla.git",
+    "directory": "next/packages/react"
+  },
+  "homepage": "https://github.com/stisla/stisla#readme",
+  "publishConfig": {
+    "access": "public"
   }
 }

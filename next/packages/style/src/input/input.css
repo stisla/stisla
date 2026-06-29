@@ -28,9 +28,9 @@
     /* Strip UA chrome (search cancel, number spinner); types that want an indicator paint it back. */
     appearance: none;
     transition:
-      border-color var(--st-duration-fast) ease,
-      box-shadow var(--st-duration-fast) ease,
-      background-color var(--st-duration-fast) ease;
+      border-color var(--transition-duration-fast) ease,
+      box-shadow var(--transition-duration-fast) ease,
+      background-color var(--transition-duration-fast) ease;
 
     /* iOS Safari zooms when a focused field's font-size < 16px and never zooms back. Bump touch to 1rem. */
     @media (pointer: coarse) {
@@ -119,7 +119,7 @@
       );
     border-radius: calc(var(--input-radius, var(--radius-md)) - --spacing(1));
     cursor: pointer;
-    transition: background-color var(--st-duration-fast) ease;
+    transition: background-color var(--transition-duration-fast) ease;
   }
   .input[type="file"]::file-selector-button:hover {
     background: color-mix(in oklch, var(--color-neutral) 88%, black);
@@ -143,7 +143,7 @@
       no-repeat center / contain;
     cursor: pointer;
     opacity: 1;
-    transition: background-color var(--st-duration-fast) ease;
+    transition: background-color var(--transition-duration-fast) ease;
   }
 
   .input[type="time"]::-webkit-calendar-picker-indicator {
@@ -157,7 +157,7 @@
       no-repeat center / contain;
     cursor: pointer;
     opacity: 1;
-    transition: background-color var(--st-duration-fast) ease;
+    transition: background-color var(--transition-duration-fast) ease;
   }
 
   .input::-webkit-calendar-picker-indicator:hover {

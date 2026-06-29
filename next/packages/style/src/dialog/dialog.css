@@ -3,7 +3,7 @@
  * floating close chip). Shown via [data-state="open"] on the root. References the @theme tokens:
  * colors var(--color-*), sizes/spacing --spacing(n), type var(--text-*) / var(--leading-*) /
  * var(--font-weight-*), radius var(--radius-*), shadow var(--shadow-*); only no-namespace customs use
- * --st-* (border-width, duration, z-index); z-index routes through the z-index scale (--st-z-modal). The backdrop scrim and
+ * --st-* (border-width, duration, z-index); z-index routes through the z-index scale (--z-index-modal). The backdrop scrim and
  * the frosted close chip use bespoke oklch alphas (no scrim token), and blur radii stay literal
  * (filter geometry, not spacing). Knobs are --dialog-*. State + scroll-lock hooks ([data-shaking],
  * html[data-dialog-open]) are attributes, recast from the legacy is-* classes per the no-is-*
@@ -14,7 +14,7 @@
   .dialog {
     position: fixed;
     inset: 0;
-    z-index: var(--dialog-z-index, var(--st-z-modal));
+    z-index: var(--dialog-z-index, var(--z-index-modal));
     display: none;
     align-items: center;
     justify-content: center;
@@ -43,7 +43,7 @@
     backdrop-filter: blur(var(--dialog-backdrop-blur, 12px));
     -webkit-backdrop-filter: blur(var(--dialog-backdrop-blur, 12px));
     opacity: 0;
-    transition: opacity var(--dialog-transition-duration, var(--st-duration-normal)) ease;
+    transition: opacity var(--dialog-transition-duration, var(--transition-duration-normal)) ease;
     cursor: pointer;
   }
 
@@ -62,8 +62,8 @@
     opacity: 0;
     transform: scale(0.9);
     transition:
-      opacity var(--dialog-transition-duration, var(--st-duration-normal)) ease,
-      transform var(--dialog-transition-duration, var(--st-duration-normal)) ease;
+      opacity var(--dialog-transition-duration, var(--transition-duration-normal)) ease,
+      transform var(--dialog-transition-duration, var(--transition-duration-normal)) ease;
   }
 
   .dialog[data-state="open"] .dialog__panel {
@@ -145,8 +145,8 @@
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
     transition:
-      background-color var(--st-duration-fast) ease,
-      color var(--st-duration-fast) ease;
+      background-color var(--transition-duration-fast) ease,
+      color var(--transition-duration-fast) ease;
   }
 
   .dialog__close:hover {
@@ -223,7 +223,7 @@
   /* === Static backdrop shake === the behavior layer sets [data-shaking] on the panel when a click
      hits the backdrop while the backdrop is static. */
   .dialog__panel[data-shaking] {
-    animation: st-dialog-shake var(--st-duration-normal) ease-in-out;
+    animation: st-dialog-shake var(--transition-duration-normal) ease-in-out;
   }
 }
 

@@ -61,7 +61,7 @@
     border: 0;
     border-radius: var(--navbar-button-radius, calc(var(--radius-md) - --spacing(1)));
     cursor: pointer;
-    transition: background-color var(--navbar-transition-duration, var(--st-duration-fast)) ease;
+    transition: background-color var(--navbar-transition-duration, var(--transition-duration-fast)) ease;
   }
 
   .navbar__toggle:hover,
@@ -99,8 +99,8 @@
     line-height: var(--leading-none);
     text-decoration: none;
     transition:
-      background-color var(--navbar-transition-duration, var(--st-duration-fast)) ease,
-      color var(--navbar-transition-duration, var(--st-duration-fast)) ease;
+      background-color var(--navbar-transition-duration, var(--transition-duration-fast)) ease,
+      color var(--navbar-transition-duration, var(--transition-duration-fast)) ease;
   }
 
   .navbar__button:hover,

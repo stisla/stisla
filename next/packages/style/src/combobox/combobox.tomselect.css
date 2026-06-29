@@ -14,7 +14,7 @@
  * References the @theme tokens (colors var(--color-*), spacing --spacing(n), type var(--text-*) /
  * var(--leading-*), radius var(--radius-*), shadow var(--shadow-*)); only no-namespace customs use
  * --st-* (border-width, duration, z-index). The dropdown z-index routes through the z-index scale
- * (--st-z-dropdown). @layer components. Authoring rules: ../../../../PORTING.md */
+ * (--z-index-dropdown). @layer components. Authoring rules: ../../../../PORTING.md */
 
 @layer components {
   /* === Wrapper === .ts-wrapper.combobox is the visible trigger after hydration. Flex so the inner
@@ -97,7 +97,7 @@
     text-decoration: none;
     opacity: 0.6;
     cursor: pointer;
-    transition: opacity var(--st-duration-fast) ease;
+    transition: opacity var(--transition-duration-fast) ease;
   }
 
   .ts-wrapper.combobox.multi .ts-control .item .remove:hover {
@@ -165,7 +165,7 @@
     position: absolute;
     top: 100%;
     inset-inline-start: 0;
-    z-index: var(--combobox-z-index, var(--st-z-dropdown));
+    z-index: var(--combobox-z-index, var(--z-index-dropdown));
     min-width: 100%;
     margin: --spacing(2) 0 0;
   }
@@ -214,8 +214,8 @@
     cursor: pointer;
     user-select: none;
     transition:
-      background-color var(--st-duration-fast) ease,
-      color var(--st-duration-fast) ease;
+      background-color var(--transition-duration-fast) ease,
+      color var(--transition-duration-fast) ease;
   }
 
   /* Tom Select uses .active for the keyboard-highlighted row, .selected for the chosen value. */

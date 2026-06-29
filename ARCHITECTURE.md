@@ -50,7 +50,7 @@ the CSS variables our component CSS reads AND generates the utilities. No parall
 | Semantic colors | `--color-*` (in `@theme`) | intents / surfaces / overlay / interactional / ring. Dark mode overrides them in `[data-theme="dark"], .dark`. |
 | Tuned scales | `--radius-*`, `--shadow-*` (in `@theme`) | override Tailwind's defaults with our values. |
 | Borrowed scales | `--spacing`, `--text-*`, `--leading-*`, `--font-weight-*`, `--tracking-*`, `--ease-*` | Tailwind's defaults, kept as-is. |
-| No-namespace customs | `--st-*` (plain `:root`) | `--st-z-*`, `--st-duration-*`, `--st-border-width` — Tailwind has no namespace, read directly. |
+| No-namespace custom | `--st-border-width` (plain `:root`) | the lone global border thickness — not a scale, so no Tailwind namespace fits; read directly. z-index + duration instead ride Tailwind namespaces (`--z-index-*`, `--transition-duration-*`, `@theme static`). |
 | Component knobs | `--<component>-*` | per-component tuning; default to theme tokens. |
 
 `⚠️ CHECK` before adding a token: confirm it isn't already in
@@ -73,8 +73,9 @@ the CSS variables our component CSS reads AND generates the utilities. No parall
 
 Dark mode (`[data-theme="dark"], .dark`) overrides the surface + interactional colors; intents
 stay put. Tuned geometry (also `@theme`): `--radius-sm/md/lg`, `--shadow-sm/md/lg/xl`,
-`--font-sans/mono`. No-namespace customs (plain `:root`): `--st-border-width`, `--st-z-*`,
-`--st-duration-*`. Borrowed scales (`--spacing`, `--text-*`, `--leading-*`, `--font-weight-*`,
+`--font-sans/mono`. z-index + duration ride Tailwind namespaces (`--z-index-*`,
+`--transition-duration-*`, in a `@theme static` block); the only no-namespace custom is
+`--st-border-width`. Borrowed scales (`--spacing`, `--text-*`, `--leading-*`, `--font-weight-*`,
 `--tracking-*`, `--ease-*`) are Tailwind's defaults. `tune` value-typing accepts the `--color-*`
 names (codegen, §10.2).
 
@@ -117,8 +118,9 @@ Mechanics (this is the corrected model — the tokens ARE the `@theme`, one laye
   values → flips with no freeze, no var-indirection). Register
   `@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *, .dark, .dark *))`
   for utilities. Pure CSS class toggling, no JS.
-- **No-namespace customs** (z-index, duration, border-width) → a plain `:root { --st-* }` block
-  (`--st-z-*`, `--st-duration-*`, `--st-border-width`), read directly.
+- **z-index + duration** ride Tailwind namespaces (`--z-index-*`, `--transition-duration-*`) in a
+  `@theme static` block, so each also generates a utility. **Border-width** has no namespace slot, so
+  `--st-border-width` stays a plain `:root` custom. All read directly via `var()`.
 - **Components reference theme vars directly:** `var(--color-*)`, `--spacing(n)`,
   `var(--leading-*)`, `var(--font-weight-*)`, `var(--radius-*)`, `var(--shadow-*)`, and
   `--alpha(var(--color-x) / N%)` for tints. **No magic numbers.**
@@ -135,7 +137,7 @@ name (Tailwind colors doc → "Referencing in your CSS"). Reference impl:
 ## 3. Token distribution — one source, multiple outputs
 
 One source: **`@stisla/tokens/theme.css`** = `@import "tailwindcss"` + `@theme { … }` +
-`[data-theme="dark"], .dark { --color-* overrides }` + `:root { --st-* customs }` +
+`[data-theme="dark"], .dark { --color-* overrides }` + `@theme static { --z-index-* / --transition-duration-* }` + `:root { --st-border-width }` +
 `@custom-variant dark`. Tailwind consumers `@import "@stisla/tokens/theme.css"`.
 
 The vanilla (no-build) bundle is the **compiled output** of this (`@theme static` → a `:root`
@@ -164,9 +166,9 @@ second file. (The old hand-authored `tokens.css` is removed.)
   - **Colors** are defined directly as `--color-*` in `@theme` (emitted to `:root`) → reference
     `var(--color-primary)` / `var(--color-surface)`; the dark block overrides them, so they flip.
     Tints come from `--alpha(var(--color-x) / N%)`. No `@theme inline`, no parallel color layer.
-  - **No-namespace customs** (`--st-border-width`, `--st-duration-*`, `--st-z-*`) → raw `var(--st-*)`.
-    Verified against the v4 docs: Tailwind has **no** theme namespace for transition-duration or
-    z-index, so they are not `@theme` concerns — keep them `--st-*`, do not "promote" them.
+  - **z-index + duration** → `--z-index-*` / `--transition-duration-*`, declared in a `@theme static`
+    block so each force-emits its var (raw `var()` refs resolve) and generates a utility.
+    **border-width** → `--st-border-width` (a single value, not a scale, so no namespace fits).
   - Knobbable properties keep the knob fallback: `background: var(--button-bg, var(--color-x))`.
     Do **not** `@apply` a utility onto a property a knob must win on.
 - **Complex components via inheritance, not prop-threading.** Set knobs on the root; inner
@@ -283,9 +285,9 @@ template. No style or constraint logic is duplicated across ecosystems.
 ## 6. Packages & distribution
 
 ```
-@stisla/tokens   theme.css (@theme --color-* + dark overrides; :root --st-* customs)  ← shared by ALL
+@stisla/tokens   theme.css (@theme --color-* + dark overrides; --z-index-*/--transition-duration-* static; :root --st-border-width)  ← shared by ALL
 @stisla/style    pure-JS composer + per-component configs + compiled component CSS    ← shared by ALL framework impls (zero framework deps)
-@stisla/css      vanilla bundle: tokens + compiled components + utilities             ← zero build
+@stisla/css      vanilla bundle: tokens + compiled components (NO utilities)          ← zero build
 @stisla/react    thin wrappers: Base UI (React) + @stisla/style + re-exports theme    ← depends on tokens + style
 @stisla/vue      thin wrappers: Reka/Radix-Vue + @stisla/style (LATER — see §9)
 
@@ -302,6 +304,13 @@ template. No style or constraint logic is duplicated across ecosystems.
   `styles.css` for the framework package.
 - **JS tree-shaking:** ESM + `exports` map + the `sideEffects` above. Base UI is a
   dependency (bundled), React/react-dom are peers.
+- **`@stisla/css` ships exactly two files** (decided 2026-06-28): `stisla.css` (tokens + all
+  core components) and `stisla-full.css` (core + the 3 optional components — carousel, combobox,
+  scroll-area). **No utilities bundle, no per-component CSS files, no `base` entry.** A consumer
+  who wants a smaller-than-core build compiles from source with Tailwind:
+  `@import "tailwindcss"; @import "@stisla/tokens/theme.css";` then the chosen `@stisla/style`
+  component CSS. Per-component precompiled files are *additive* and can be introduced later
+  without a breaking change if demand appears.
 
 **Why packages, not shadcn-style copy-paste** (for the "why" page, §8): shadcn's pitch is
 "own the code"; ours is the opposite — **"don't think about the code."** A design system
@@ -317,22 +326,16 @@ are secondary footnotes, not the headline.
 |-------|-------------------------|----------------------------------|
 | Component rules (BEM + knobs) | same compiled CSS | same compiled CSS |
 | Tokens | `theme.css` emits `--color-*` + `--st-*` to `:root` | same `theme.css` `@theme` — also drives the consumer's utilities |
-| Utilities | **precompiled bundle**, shipped | consumer's Tailwind **JITs** on demand |
+| Utilities | **not shipped** — consumer's responsibility | consumer's Tailwind **JITs** on demand |
 | Build step (consumer) | none | yes |
 
 - The component CSS is written **once** and shared. Only the token *source* and the
   utility *delivery* differ.
-- **Vanilla utilities** must be force-generated (no consumer build to scan). Use
-  `@theme static` (emit all theme vars) + `@source inline("…")` with brace expansion to
-  emit the full/curated set. Example:
-  ```css
-  @import "tailwindcss" source(none);
-  @import "@stisla/theme";
-  @source inline("{hover:,focus:,}{bg,text,border}-{primary,success,warning,danger,info}");
-  @source inline("{p,px,py,m,mx,my,gap}-{0..12}");
-  ```
-- Framework consumers do **not** receive the utilities bundle — their Tailwind makes only
-  what they use.
+- **Vanilla ships no utilities** (decided 2026-06-28). Layout and utility classes are the
+  consumer's responsibility — bring your own Tailwind, or write plain CSS. `@stisla/css` owns
+  the component layer only. (The earlier plan to force-generate a curated utility set via
+  `@theme static` + `@source inline(...)` is dropped.)
+- Framework consumers' Tailwind makes only the utilities they use, as before.
 
 `⚠️ CHECK` before adopting Tailwind in the **vanilla** build: see §9 — vanilla's existing
 Sass build may stay as-is for the first slice. Do not rip out working vanilla Sass to
@@ -538,7 +541,7 @@ next/
   .npmrc                  node-linker=hoisted — flat node_modules, keeps pnpm store dedup
   tsconfig.base.json
   packages/
-    tokens/   @stisla/tokens   src/theme.css (@theme --color-* + dark overrides; :root --st-* customs)
+    tokens/   @stisla/tokens   src/theme.css (@theme --color-* + dark overrides; :root --st-border-width)
     style/    @stisla/style    composer.ts (pure JS) + <component>/{config.ts, *.css}
     react/    @stisla/react    thin Base UI wrappers (dep: base-ui; peer: react)
     css/      @stisla/css      vanilla bundle (Tailwind CLI: @theme static + @source inline)

@@ -6,7 +6,7 @@
  * @theme tokens: colors var(--color-*), sizes/spacing --spacing(n), type var(--text-*) /
  * var(--leading-*) / var(--font-weight-*), radius var(--radius-*), shadow var(--shadow-*); only
  * no-namespace customs use --st-* (border-width, duration, z-index). The popup z-index routes through
- * the z-index scale (--st-z-dropdown). Keyboard focus is [data-highlighted] (recast from the legacy
+ * the z-index scale (--z-index-dropdown). Keyboard focus is [data-highlighted] (recast from the legacy
  * is-* class per the no-is-* convention). Knobs are --autocomplete-*. The suggest/filter/select
  * behavior ships with the JS layer. @layer components. Authoring rules: ../../../../PORTING.md */
 
@@ -29,9 +29,9 @@
     border-radius: var(--autocomplete-radius, var(--radius-md));
     appearance: none;
     transition:
-      border-color var(--st-duration-fast) ease,
-      box-shadow var(--st-duration-fast) ease,
-      background-color var(--st-duration-fast) ease;
+      border-color var(--transition-duration-fast) ease,
+      box-shadow var(--transition-duration-fast) ease,
+      background-color var(--transition-duration-fast) ease;
 
     /* iOS Safari zooms when a focused field's font-size < 16px and never zooms back. */
     @media (pointer: coarse) {
@@ -91,7 +91,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: var(--autocomplete-z-index, var(--st-z-dropdown));
+    z-index: var(--autocomplete-z-index, var(--z-index-dropdown));
     display: flex;
     flex-direction: column;
     gap: var(--autocomplete-item-gap, --spacing(0.5));
@@ -127,8 +127,8 @@
     cursor: pointer;
     user-select: none;
     transition:
-      background-color var(--st-duration-fast) ease,
-      color var(--st-duration-fast) ease;
+      background-color var(--transition-duration-fast) ease,
+      color var(--transition-duration-fast) ease;
   }
 
   .autocomplete__item:hover,

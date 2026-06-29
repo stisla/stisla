@@ -1,10 +1,12 @@
 {
   "name": "@stisla/vanilla",
-  "version": "0.0.0",
-  "private": true,
-  "description": "Stisla vanilla-JS behavior layer (no-build interactivity for the @stisla/css components). ESM entry for bundler users; an IIFE build (src/iife.js) for <script src> / CDN drop-in (window.Stisla + auto-init).",
+  "version": "3.0.0-beta.8",
+  "description": "Stisla vanilla-JS behavior layer (no-build interactivity for the @stisla/css components). Core entry (index.js) plus a full entry (index-full.js) and three optional add-ons (carousel/combobox/scroll-area). ESM for bundlers; CDN builds emit IIFE stisla.js / stisla-full.js / <optional>.js (window.Stisla + auto-init).",
   "license": "MIT",
   "type": "module",
+  "scripts": {
+    "build": "node scripts/build-vanilla.mjs"
+  },
   "dependencies": {
     "@floating-ui/dom": "^1.7.6",
     "embla-carousel": "^8.6.0",
@@ -14,11 +16,39 @@
   },
   "exports": {
     ".": "./src/index.js",
-    "./iife": "./src/iife.js"
+    "./full": "./src/index-full.js",
+    "./carousel": "./src/carousel.js",
+    "./combobox": "./src/combobox.js",
+    "./scroll-area": "./src/scroll-area.js",
+    "./package.json": "./package.json"
   },
   "sideEffects": [
     "./src/index.js",
-    "./src/iife.js",
+    "./src/index-full.js",
+    "./src/carousel.js",
+    "./src/combobox.js",
+    "./src/scroll-area.js",
     "./src/components/*.js"
-  ]
+  ],
+  "files": [
+    "src",
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stisla/stisla.git",
+    "directory": "next/packages/vanilla"
+  },
+  "homepage": "https://github.com/stisla/stisla#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "@stisla/css": "3.0.0-beta.8"
+  },
+  "devDependencies": {
+    "esbuild": "^0.27.0"
+  }
 }

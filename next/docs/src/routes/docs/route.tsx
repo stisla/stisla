@@ -20,10 +20,14 @@ export const Route = createFileRoute("/docs")({
  * _site-sidebar.njk): a titleless spec bucket, then Get Started, then the
  * component families (Forms / Components / Overlays), buckets alphabetical.
  *
- * `base` is the route prefix the slugs hang off: guide/prose pages live at
- * /docs/<slug>, vanilla component pages at /docs/vanilla/<slug>. Only pages
- * that exist as routes are listed (Foundation, Extras, and native-select
- * aren't ported yet; app-shell was dropped). */
+ * `base` is the route prefix the slugs hang off: the agnostic system pages
+ * (Introduction / Why / Specification / Architecture / Customization /
+ * Contributing) live at /docs/<slug>; every implementation-scoped page lives
+ * under /docs/vanilla/<slug> — Get Started (Installation / JavaScript /
+ * Optimization) and the component families alike — so a future framework
+ * switcher (Vanilla / React / …) can swap the whole /docs/<impl>/ subtree.
+ * Only pages that exist as routes are listed (Foundation, Extras, and
+ * native-select aren't ported yet; app-shell was dropped). */
 type NavItem = { slug: string; title: string };
 type NavGroup = { title?: string; base: string; items: NavItem[] };
 
@@ -34,17 +38,17 @@ const NAV: NavGroup[] = [
       { slug: "introduction", title: "Introduction" },
       { slug: "why-stisla", title: "Why Stisla" },
       { slug: "specification", title: "Specification" },
+      { slug: "architecture", title: "Architecture" },
+      { slug: "customization", title: "Customization" },
       { slug: "contributing", title: "Contributing" },
     ],
   },
   {
     title: "Get Started",
-    base: "/docs",
+    base: "/docs/vanilla",
     items: [
       { slug: "installation", title: "Installation" },
       { slug: "javascript", title: "JavaScript" },
-      { slug: "architecture", title: "Architecture" },
-      { slug: "customization", title: "Customization" },
       { slug: "optimization", title: "Optimization" },
     ],
   },
@@ -302,7 +306,7 @@ function DocsLayout() {
         <main className="site-main">
           <MobileToc entries={entries} activeId={activeId} />
           <article className="content-card">
-            <div className="main-container prose dark:prose-invert max-w-none prose-sm prose-headings:font-medium prose-h2:text-lg">
+            <div className="main-container prose dark:prose-invert max-w-none prose-sm prose-headings:font-medium prose-h2:text-lg prose-h3:text-base">
               <Outlet />
             </div>
           </article>

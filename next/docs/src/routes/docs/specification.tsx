@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
+import { Code } from "~/demo/Code";
 
 export const Route = createFileRoute("/docs/specification")({
   component: SpecificationDocs,
@@ -10,291 +11,893 @@ function SpecificationDocs() {
     <>
       <header>
         <h1>Specification</h1>
-        <p className="lead">The decisions every Stisla implementation agrees on. Names, anatomy, states, and scales that stay stable across ports.</p>
+        <p className="lead">
+          The decisions every Stisla implementation agrees on. Names, anatomy,
+          states, and scales that stay stable across ports.
+        </p>
       </header>
 
       <section>
         <h2>What this page is</h2>
-        <p>Stisla is a design specification. The <Link to="/docs/introduction" className="link">Introduction</Link> covers why this is the shape. This page covers what is in it. The contract every implementation honors for the components it ships. The vanilla bundle is the first implementation, and the React + Base UI and Vue ports come against the same surface. Coverage varies per port; see <a className="link" href="#implementations">Implementations</a> at the bottom for status.</p>
-        <p>The component pages (<Link to="/docs/vanilla/button" className="link">Button</Link>, <Link to="/docs/vanilla/card" className="link">Card</Link>, <Link to="/docs/vanilla/dialog" className="link">Dialog</Link>) document how to use the vanilla implementation. This page documents what is fixed for every implementation. Per-component CSS variables, default values, and Sass internals are implementation detail and live on the component pages.</p>
+        <p>
+          Stisla is a design specification. The{" "}
+          <Link to="/docs/introduction" className="link">
+            Introduction
+          </Link>{" "}
+          covers why this is the shape. This page covers what is in it. The
+          contract every implementation honors for the components it ships. The
+          vanilla bundle is the first implementation, and the React + Base UI
+          and Vue ports come against the same surface. Coverage varies per port;
+          see{" "}
+          <a className="link" href="#implementations">
+            Implementations
+          </a>{" "}
+          at the bottom for status.
+        </p>
+        <p>
+          The component pages (
+          <Link to="/docs/vanilla/button" className="link">
+            Button
+          </Link>
+          ,{" "}
+          <Link to="/docs/vanilla/card" className="link">
+            Card
+          </Link>
+          ,{" "}
+          <Link to="/docs/vanilla/dialog" className="link">
+            Dialog
+          </Link>
+          ) show each component in use, with its markup, parts, variants, and
+          the knobs it exposes. This page documents what is fixed for every
+          implementation. The default values those knobs ship with are
+          implementation detail and live on the component pages.
+        </p>
       </section>
 
       <section>
         <h2>Coverage</h2>
-        <p>The spec describes the full design language, and each implementation ships a subset of it. CSS and HTTP work the same way. The spec catalogs features, and the implementations cover what they cover.</p>
-        <p>One guardrail keeps the spec honest: a component lands here only when at least one implementation has committed to shipping it. The spec is not a wishlist.</p>
-        <p>Token, state, scale, and theming surfaces are foundational and apply equally to every implementation. Only component coverage varies, and that lives on the <a className="link" href="#implementations">Implementations</a> table below.</p>
+        <p>
+          The spec describes the full design language, and each implementation
+          ships a subset of it. CSS and HTTP work the same way. The spec
+          catalogs features, and the implementations cover what they cover.
+        </p>
+        <p>
+          One guardrail keeps the spec honest: a component lands here only when
+          at least one implementation has committed to shipping it. The spec is
+          not a wishlist.
+        </p>
+        <p>
+          Token, state, scale, and theming surfaces are foundational and apply
+          equally to every implementation. Only component coverage varies, and
+          that lives on the{" "}
+          <a className="link" href="#implementations">
+            Implementations
+          </a>{" "}
+          table below.
+        </p>
       </section>
 
       <section>
         <h2>Tokens</h2>
-        <p>The token surface is flat. Every component reads from <code>--st-*</code> via <code>var()</code>, and every override flows through hover, active, and focus because state derivations run at runtime through <code>color-mix(in oklch, …)</code>. The names are the spec. Values are implementation defaults. See <Link to="/docs/customization" className="link">Customization</Link> for the shipped ones and how to override them.</p>
+        <p>
+          The token surface is one Tailwind <code>@theme</code> layer. Every
+          component reads it directly through <code>var()</code>: colors from{" "}
+          <code>--color-*</code>, radius from <code>--radius-*</code>, shadow
+          from <code>--shadow-*</code>, spacing from <code>--spacing</code>, and
+          type from <code>--font-*</code>, <code>--text-*</code>,{" "}
+          <code>--leading-*</code>, and <code>--font-weight-*</code>. A handful
+          of tokens that Tailwind has no namespace for stay on{" "}
+          <code>--st-*</code>. Every override flows through hover, active, and
+          focus because state derivations run at runtime through{" "}
+          <code>color-mix(in oklch, …)</code>. The names below are the spec;
+          the default values are an implementation detail that lives in each
+          impl&rsquo;s theme file.{" "}
+          <Link to="/docs/customization" className="link">
+            Customization
+          </Link>{" "}
+          covers how to override them.
+        </p>
 
         <h3>Intent</h3>
-        <p>Five paired tokens for semantic color. Each pairs a base with a foreground so text contrast survives a base swap.</p>
+        <p>
+          Five paired tokens for semantic color. Each pairs a base with a
+          foreground so text contrast survives a base swap.
+        </p>
         <table>
           <thead>
-            <tr><th>Token</th><th>Pair</th><th>Use</th></tr>
+            <tr>
+              <th>Token</th>
+              <th>Pair</th>
+              <th>Use</th>
+            </tr>
           </thead>
           <tbody>
-            <tr><td><code>--st-primary</code></td><td><code>--st-primary-foreground</code></td><td>Brand color. Drives the default <code>--st-ring</code> and the <code>--st-highlight</code> tint</td></tr>
-            <tr><td><code>--st-success</code></td><td><code>--st-success-foreground</code></td><td>Positive state</td></tr>
-            <tr><td><code>--st-warning</code></td><td><code>--st-warning-foreground</code></td><td>Caution. Foreground stays dark across themes</td></tr>
-            <tr><td><code>--st-danger</code></td><td><code>--st-danger-foreground</code></td><td>Destructive or error</td></tr>
-            <tr><td><code>--st-info</code></td><td><code>--st-info-foreground</code></td><td>Informational</td></tr>
+            <tr>
+              <td>
+                <code>--color-primary</code>
+              </td>
+              <td>
+                <code>--color-primary-foreground</code>
+              </td>
+              <td>
+                Brand color. Drives the default <code>--color-ring</code> and
+                the <code>--color-highlight</code> tint
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>--color-success</code>
+              </td>
+              <td>
+                <code>--color-success-foreground</code>
+              </td>
+              <td>Positive state</td>
+            </tr>
+            <tr>
+              <td>
+                <code>--color-warning</code>
+              </td>
+              <td>
+                <code>--color-warning-foreground</code>
+              </td>
+              <td>Caution. Foreground stays dark across themes</td>
+            </tr>
+            <tr>
+              <td>
+                <code>--color-danger</code>
+              </td>
+              <td>
+                <code>--color-danger-foreground</code>
+              </td>
+              <td>Destructive or error</td>
+            </tr>
+            <tr>
+              <td>
+                <code>--color-info</code>
+              </td>
+              <td>
+                <code>--color-info-foreground</code>
+              </td>
+              <td>Informational</td>
+            </tr>
           </tbody>
         </table>
 
         <h3>Surface tier</h3>
-        <p>Background, foreground, and the three surface levels for stacked panels. <code>--st-muted-foreground</code> is the secondary text color paired with every surface.</p>
+        <p>
+          Background, foreground, and the surface levels for stacked panels.{" "}
+          <code>--color-muted-foreground</code> is the secondary text color
+          paired with every surface.
+        </p>
         <table>
           <thead>
-            <tr><th>Token</th><th>Use</th></tr>
+            <tr>
+              <th>Token</th>
+              <th>Use</th>
+            </tr>
           </thead>
           <tbody>
-            <tr><td><code>--st-background</code></td><td>Page background</td></tr>
-            <tr><td><code>--st-foreground</code></td><td>Primary text color</td></tr>
-            <tr><td><code>--st-surface</code></td><td>Default raised surface (cards, dialogs)</td></tr>
-            <tr><td><code>--st-surface-2</code></td><td>Second-tier surface stacked on <code>--st-surface</code></td></tr>
-            <tr><td><code>--st-surface-3</code></td><td>Third-tier surface for the densest stacks</td></tr>
-            <tr><td><code>--st-border</code></td><td>Hairline borders between surfaces</td></tr>
-            <tr><td><code>--st-muted-foreground</code></td><td>Secondary text on any surface</td></tr>
+            <tr>
+              <td>
+                <code>--color-background</code>
+              </td>
+              <td>Page background</td>
+            </tr>
+            <tr>
+              <td>
+                <code>--color-foreground</code>
+              </td>
+              <td>Primary text color</td>
+            </tr>
+            <tr>
+              <td>
+                <code>--color-surface</code>
+              </td>
+              <td>Default raised surface (cards, dialogs)</td>
+            </tr>
+            <tr>
+              <td>
+                <code>--color-surface-2</code>
+              </td>
+              <td>
+                Second-tier surface stacked on <code>--color-surface</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>--color-surface-3</code>
+              </td>
+              <td>Third-tier surface for the densest stacks</td>
+            </tr>
+            <tr>
+              <td>
+                <code>--color-border</code>
+              </td>
+              <td>Hairline borders between surfaces</td>
+            </tr>
+            <tr>
+              <td>
+                <code>--color-border-strong</code>
+              </td>
+              <td>Higher-contrast border for emphasized edges</td>
+            </tr>
+            <tr>
+              <td>
+                <code>--color-muted-foreground</code>
+              </td>
+              <td>Secondary text on any surface</td>
+            </tr>
           </tbody>
         </table>
+        <p>
+          Two more tokens, <code>--color-overlay</code> and{" "}
+          <code>--color-overlay-foreground</code>, paint theme-independent
+          chrome (dark surfaces that stay dark in both themes, like an image
+          overlay). They do not flip per theme.
+        </p>
 
         <h3>Interactional</h3>
         <p>Tokens that paint interactive states regardless of intent.</p>
         <table>
           <thead>
-            <tr><th>Token</th><th>Use</th></tr>
+            <tr>
+              <th>Token</th>
+              <th>Use</th>
+            </tr>
           </thead>
           <tbody>
-            <tr><td><code>--st-neutral</code></td><td>Rest fill for filled-neutral controls. Paired with <code>--st-neutral-foreground</code></td></tr>
-            <tr><td><code>--st-accent</code></td><td>Hover background over neutral or transparent surfaces. Paired with <code>--st-accent-foreground</code></td></tr>
-            <tr><td><code>--st-highlight</code></td><td>Persistent selected or current background, soft primary tint. Paired with <code>--st-highlight-foreground</code></td></tr>
-            <tr><td><code>--st-ring</code></td><td>Focus ring color. Defaults to <code>--st-primary</code> so brand swaps repaint focus</td></tr>
+            <tr>
+              <td>
+                <code>--color-neutral</code>
+              </td>
+              <td>
+                Rest fill for filled-neutral controls. Paired with{" "}
+                <code>--color-neutral-foreground</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>--color-accent</code>
+              </td>
+              <td>
+                Hover background over neutral or transparent surfaces. Paired
+                with <code>--color-accent-foreground</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>--color-highlight</code>
+              </td>
+              <td>
+                Persistent selected or current background, a soft primary tint.
+                Paired with <code>--color-highlight-foreground</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>--color-ring</code>
+              </td>
+              <td>
+                Focus ring color. Defaults to <code>--color-primary</code> so
+                brand swaps repaint focus
+              </td>
+            </tr>
           </tbody>
         </table>
 
         <h3>Geometry</h3>
         <table>
           <thead>
-            <tr><th>Token</th><th>Use</th></tr>
+            <tr>
+              <th>Token</th>
+              <th>Use</th>
+            </tr>
           </thead>
           <tbody>
-            <tr><td><code>--st-radius-sm</code></td><td>Small radius tier — chips, inline shapes</td></tr>
-            <tr><td><code>--st-radius</code></td><td>Default radius tier — everyday surfaces</td></tr>
-            <tr><td><code>--st-radius-lg</code></td><td>Large radius tier — elevated surfaces</td></tr>
-            <tr><td><code>--st-shadow-sm</code></td><td>Soft floating elevation — tooltip-class surfaces</td></tr>
-            <tr><td><code>--st-shadow-md</code></td><td>Default elevation (aliased as <code>--st-shadow</code>) — cards, dropdowns, popovers, toasts, accordion</td></tr>
-            <tr><td><code>--st-shadow-lg</code></td><td>Modal elevation — dialog, drawer</td></tr>
-            <tr><td><code>--st-shadow-xl</code></td><td>Highest elevation — unassigned by default, for the most-lifted surfaces</td></tr>
-            <tr><td><code>--st-border-width</code></td><td>Width of every bordered shape's outline. Internal dividers stay literal 1&nbsp;px</td></tr>
-            <tr><td><code>--st-spacing</code></td><td>Spacing base (0.25rem). Every component padding, gap, and height is a multiple of it via <code>space()</code>. Raise for roomier, lower for compact</td></tr>
+            <tr>
+              <td>
+                <code>--radius-sm</code>
+              </td>
+              <td>Small radius tier, for chips and inline shapes</td>
+            </tr>
+            <tr>
+              <td>
+                <code>--radius-md</code>
+              </td>
+              <td>Default radius tier for everyday surfaces</td>
+            </tr>
+            <tr>
+              <td>
+                <code>--radius-lg</code>
+              </td>
+              <td>Large radius tier for elevated surfaces</td>
+            </tr>
+            <tr>
+              <td>
+                <code>--shadow-sm</code>
+              </td>
+              <td>Soft floating elevation, for tooltip-class surfaces</td>
+            </tr>
+            <tr>
+              <td>
+                <code>--shadow-md</code>
+              </td>
+              <td>
+                Default elevation, for cards, dropdowns, popovers, toasts,
+                accordion
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>--shadow-lg</code>
+              </td>
+              <td>Modal elevation, for dialog and drawer</td>
+            </tr>
+            <tr>
+              <td>
+                <code>--shadow-xl</code>
+              </td>
+              <td>
+                Highest elevation, unassigned by default, for the most-lifted
+                surfaces
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>--spacing</code>
+              </td>
+              <td>
+                Spacing base. Every padding, gap, and height is a multiple of it
+                via <code>--spacing(n)</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>--st-border-width</code>
+              </td>
+              <td>
+                Width of every bordered shape's outline. Internal dividers stay
+                literal 1&nbsp;px
+              </td>
+            </tr>
           </tbody>
         </table>
-        <p>The three radius tiers and three shadow tiers are independent literals. A theme that needs every corner square or every shadow flat overrides each tier explicitly; a calc-derived chain at <code>:root</code> would substitute <code>var()</code> references at <code>:root</code> time and freeze the result.</p>
+        <p>
+          The radius and shadow tiers are independent values in the theme, not
+          derived from one another. A theme that wants every corner square or
+          every shadow flat overrides each tier on its own.
+        </p>
 
         <h3>Type</h3>
         <table>
           <thead>
-            <tr><th>Token</th><th>Use</th></tr>
+            <tr>
+              <th>Token</th>
+              <th>Use</th>
+            </tr>
           </thead>
           <tbody>
-            <tr><td><code>--st-font-sans</code></td><td>Default UI font stack</td></tr>
-            <tr><td><code>--st-font-mono</code></td><td>Monospace stack for code and kbd</td></tr>
+            <tr>
+              <td>
+                <code>--font-sans</code>
+              </td>
+              <td>Default UI font stack</td>
+            </tr>
+            <tr>
+              <td>
+                <code>--font-mono</code>
+              </td>
+              <td>Monospace stack for code and kbd</td>
+            </tr>
           </tbody>
         </table>
+        <p>
+          Font size (<code>--text-*</code>), line height (
+          <code>--leading-*</code>), weight (<code>--font-weight-*</code>),
+          letter spacing, and easing are Tailwind&rsquo;s default scales. Stisla
+          keeps them as-is and references them directly.
+        </p>
+
+        <h3>Z-index and duration</h3>
+        <p>
+          The z-index scale (<code>--z-index-dropdown</code> through{" "}
+          <code>--z-index-tooltip</code>) and the duration scale (
+          <code>--transition-duration-fast</code>,{" "}
+          <code>--transition-duration-normal</code>,{" "}
+          <code>--transition-duration-slow</code>) ride Tailwind&rsquo;s own
+          namespaces, so each entry also generates a utility (
+          <code>z-modal</code>, <code>duration-fast</code>). Components reference
+          the variables directly; the values are force-emitted so those raw
+          references resolve even where no utility is used.
+        </p>
+
+        <h3>No-namespace tokens</h3>
+        <p>
+          Only <code>--st-border-width</code> has no matching Tailwind
+          namespace. It is a single global default thickness rather than a
+          scale, so it lives on <code>:root</code> and components read it
+          directly.
+        </p>
 
         <h3>Per-component tokens</h3>
-        <p>Every component exposes a <code>--&lt;block&gt;-*</code> surface that falls back to the global tokens above. <code>--btn-radius</code> falls back to <code>--st-radius</code>, <code>--card-bg</code> falls back to <code>--st-surface</code>, and so on. The names of those per-component tokens are part of the spec, but the defaults are set by each implementation. See the Customization section at the bottom of each component page for the catalog.</p>
-        <p>Two of those component tokens also get a <code>:root</code>-level override knob. Every shape component exposes <code>--st-{name}-radius</code>, and every elevated component exposes <code>--st-{name}-shadow</code>. Reading the per-component knob in the component CSS keeps the fallback substitution at the component element, so wrapper overrides flow through correctly. Other properties (padding, bg, font, etc.) don&rsquo;t get the same knob at <code>:root</code>; the global token tiers plus wrapper-class scoping cover their use cases.</p>
-      </section>
-
-      <section>
-        <h2>Preflight</h2>
-        <p>Every HTML element starts visually blank. Headings, paragraphs, lists, <code>&lt;strong&gt;</code>, <code>&lt;small&gt;</code>, <code>&lt;a&gt;</code> flatten to the body font and weight, with no margins, no markers, no underlines. Visual treatment is opt-in via classes (<code>.h1</code>, <code>.fw-semibold</code>) and via <a className="link" href="/typography#prose"><code>.prose</code></a> for long-form regions. The reset is adapted from Tailwind Preflight and ships in every implementation, not only the vanilla bundle.</p>
-        <p>The reason is structural. Anything that styles an HTML tag at the document scope is a global rule by definition, and a global rule reaches into every component that contains the element. Preflight removes those colliders so a component&rsquo;s CSS expresses only what the component contributes. A card footer using <code>&lt;small&gt;</code> does not pick up a surprise font size, and a button containing <code>&lt;strong&gt;</code> does not bold.</p>
-        <p>Element-targeting rules are allowed when scoped under a class. <code>.prose</code> restores reading defaults inside long-form regions (<code>.prose h2</code>, <code>.prose ul</code>, <code>.prose blockquote</code>), and any future component that needs the same does the same. The wrapping class makes the intent explicit and the reach bounded. At document scope, element-targeting rules do not exist.</p>
-        <p>A narrow set of element defaults is kept where no class would ever opt in. <code>&lt;mark&gt;</code> carries the highlight tint, <code>&lt;abbr title&gt;</code> carries the dotted underline, <code>&lt;hr&gt;</code> carries a rule in <code>--st-border</code>, <code>:focus-visible</code> carries the ring in <code>--st-ring</code>.</p>
+        <p>
+          Every component exposes a <code>--&lt;block&gt;-*</code> surface that
+          falls back to the global tokens above. <code>--button-radius</code>{" "}
+          falls back to <code>--radius-md</code>, <code>--card-bg</code> falls
+          back to <code>--color-surface</code>, and so on. The names of those
+          per-component tokens are part of the spec, but the defaults are set by
+          each implementation. See the Customization section at the bottom of
+          each component page for the catalog.
+        </p>
+        <p>
+          Because each knob falls back to a global token, you can retheme one
+          component by setting its <code>--&lt;block&gt;-*</code> variables on a
+          wrapper, or shift the whole system by changing the global token
+          underneath. The fallback resolves at the component element, so wrapper
+          overrides flow through correctly.
+        </p>
       </section>
 
       <section>
         <h2>Component anatomy</h2>
-        <p>Every component is a BEM block with a fixed set of element slots. A port can render those slots with any tag or framework primitive it likes, but the slot names are the contract. A user who learns Card on the vanilla port should find the same parts on the React port.</p>
-        <p>The BEM rule covers <code>scss/components/</code> only. Utilities (<code>.d-flex</code>, <code>.text-end</code>, <code>.gap-3</code>, <code>.mb-md-4</code>) and the <a className="link" href="/grid">grid</a> (<code>.col-md-6</code>, <code>.container-fluid</code>, <code>.offset-md-2</code>, <code>.row-cols-3</code>, <code>.g-md-3</code>) follow flat hyphenated naming with an optional responsive infix. Atomic helpers stay Bootstrap-conventional so the shape matches what consumers already know.</p>
+        <p>
+          Every component is a BEM block with a fixed set of element slots.{" "}
+          <code>.card</code> has <code>__header</code>, <code>__body</code>, and{" "}
+          <code>__footer</code>; <code>.dialog</code> has{" "}
+          <code>__backdrop</code>, <code>__panel</code>, and{" "}
+          <code>__content</code>. A port can render those slots with any tag or
+          framework primitive it likes, but the slot names are the contract. A
+          user who learns Card on one implementation should find the same parts
+          on the next.
+        </p>
 
-        <h3>Forms</h3>
-        <table>
-          <thead>
-            <tr><th>Block</th><th>Slots</th></tr>
-          </thead>
-          <tbody>
-            <tr><td><code>.checkbox</code></td><td>(atomic)</td></tr>
-            <tr><td><code>.input</code></td><td>(atomic)</td></tr>
-            <tr><td><code>.input-group</code></td><td><code>__text</code></td></tr>
-            <tr><td><code>.radio</code></td><td>(atomic)</td></tr>
-            <tr><td><code>.select</code></td><td>(atomic)</td></tr>
-            <tr><td><code>.slider</code></td><td>(atomic, native range)</td></tr>
-            <tr><td><code>.switch</code></td><td><code>__input</code>, <code>__label</code></td></tr>
-            <tr><td><code>.textarea</code></td><td>(atomic)</td></tr>
-          </tbody>
-        </table>
+        <h3>Naming</h3>
+        <p>
+          Block, element, modifier. The block is the component root (
+          <code>.card</code>). Elements are its parts, joined with{" "}
+          <code>__</code> (<code>.card__header</code>). Modifiers are variants,
+          joined with <code>--</code> (<code>.card--flat</code>). The full slot
+          list for each block lives on its{" "}
+          <Link to="/docs/vanilla/card" className="link">
+            component page
+          </Link>
+          , next to the live demos, so it cannot drift from the implementation.
+          Treat the component pages as the source of truth for slot names; this
+          page fixes the rules they all follow.
+        </p>
 
-        <h3>Components</h3>
-        <table>
-          <thead>
-            <tr><th>Block</th><th>Slots</th></tr>
-          </thead>
-          <tbody>
-            <tr><td><code>.accordion</code></td><td><code>__item</code>, <code>__header</code>, <code>__icon</code>, <code>__body</code>, <code>__body-inner</code></td></tr>
-            <tr><td><code>.alert</code></td><td><code>__heading</code>, <code>__description</code>, <code>__action</code>, <code>__link</code></td></tr>
-            <tr><td><code>.badge</code></td><td><code>__icon</code></td></tr>
-            <tr><td><code>.breadcrumb</code></td><td><code>__item</code></td></tr>
-            <tr><td><code>.btn</code></td><td><code>__icon</code></td></tr>
-            <tr><td><code>.button-group</code></td><td>(composes <code>.btn</code> children)</td></tr>
-            <tr><td><code>.card</code></td><td><code>__header</code>, <code>__title</code>, <code>__subtitle</code>, <code>__body</code>, <code>__text</code>, <code>__footer</code>, <code>__image</code>, <code>__overlay</code>, <code>__link</code></td></tr>
-            <tr><td><code>.collapsible</code></td><td>(atomic; pairs with a trigger)</td></tr>
-            <tr><td><code>.icon-box</code></td><td>(atomic)</td></tr>
-            <tr><td><code>.kbd</code></td><td>(atomic)</td></tr>
-            <tr><td><code>.link</code></td><td>(atomic)</td></tr>
-            <tr><td><code>.list-group</code></td><td><code>__item</code></td></tr>
-            <tr><td><code>.pagination</code></td><td><code>__button</code>, <code>__ellipsis</code></td></tr>
-            <tr><td><code>.placeholder</code></td><td>(atomic, paired with sizing utilities)</td></tr>
-            <tr><td><code>.progress</code></td><td><code>__bar</code></td></tr>
-            <tr><td><code>.spinner</code></td><td>(atomic)</td></tr>
-            <tr><td><code>.table</code></td><td><code>__head</code>, <code>__body</code>, <code>__row</code></td></tr>
-            <tr><td><code>.tabs</code></td><td><code>__list</code>, <code>__trigger</code>, <code>__panel</code></td></tr>
-            <tr><td><code>.toggle</code></td><td><code>__icon</code></td></tr>
-            <tr><td><code>.toggle-group</code></td><td>(composes <code>.toggle</code> children)</td></tr>
-          </tbody>
-        </table>
+        <h3>Flat, never nested</h3>
+        <p>
+          Modifiers stay flat on the root and compose. A button can be{" "}
+          <code>.button--primary.button--lg</code> without either rule reaching
+          into the other. Parts stay flat on the root&rsquo;s descendants. No
+          modifier nests inside another, and no rule reaches into a bare HTML
+          tag, so a component&rsquo;s CSS expresses only what the component
+          contributes and nothing leaks in from the surrounding document.
+        </p>
 
-        <h3>Overlays</h3>
-        <table>
-          <thead>
-            <tr><th>Block</th><th>Slots</th></tr>
-          </thead>
-          <tbody>
-            <tr><td><code>.dialog</code></td><td><code>__backdrop</code>, <code>__panel</code>, <code>__content</code>, <code>__header</code>, <code>__title</code>, <code>__body</code>, <code>__footer</code>, <code>__close</code></td></tr>
-            <tr><td><code>.drawer</code></td><td><code>__backdrop</code>, <code>__content</code>, <code>__header</code>, <code>__title</code>, <code>__body</code>, <code>__footer</code>, <code>__close</code></td></tr>
-            <tr><td><code>.menu</code></td><td><code>__group</code>, <code>__header</code>, <code>__item</code>, <code>__icon</code>, <code>__indicator</code>, <code>__shortcut</code>, <code>__divider</code></td></tr>
-            <tr><td><code>.popover</code></td><td><code>__title</code>, <code>__body</code>, <code>__close</code>, <code>__arrow</code></td></tr>
-            <tr><td><code>.toast</code></td><td><code>__icon</code>, <code>__content</code>, <code>__header</code>, <code>__body</code>, <code>__timestamp</code>, <code>__action</code>, <code>__close</code></td></tr>
-            <tr><td><code>.tooltip</code></td><td><code>__inner</code>, <code>__arrow</code></td></tr>
-          </tbody>
-        </table>
+        <h3>Knobs, and what isn&rsquo;t one</h3>
+        <p>
+          Every visual decision a consumer might reasonably tune reads a{" "}
+          <code>--&lt;block&gt;-*</code> custom property whose fallback default
+          chains to a global token. The Per-component tokens note above covers
+          the fallback mechanics; reading each knob through a <code>var()</code>{" "}
+          fallback is what keeps it overridable from an ancestor scope.
+        </p>
+        <Code
+          lang="css"
+          code={`
+.card {
+  background:     var(--card-bg, var(--color-surface));
+  border-radius:  var(--card-radius, var(--radius-lg));
+  box-shadow:     var(--card-shadow, var(--shadow-md));
+}
+.card--flat { --card-shadow: none; }   /* a modifier reassigns one knob */
+`}
+        />
+        <p>
+          Not every declaration is a knob, and the restraint is deliberate. A
+          property becomes a variable when a designer would tune it per project
+          (color, radius, spacing, type), when it is a meaningful per-instance
+          override (a button tone, a dialog width), or when several components
+          share one recipe (the focus ring, an overlay scrim). It stays a
+          literal when it is internal tuning that only reads as part of a recipe
+          (the state-derivation percentages), when it only changes sensibly
+          alongside other internals, or when no one can articulate a reason to
+          change it. A smaller public surface means fewer accidental breakages
+          and less to document. Adding a knob later is cheap; removing one is a
+          breaking change, so each implementation starts conservative.
+        </p>
 
-        <h3>Layout</h3>
-        <table>
-          <thead>
-            <tr><th>Block</th><th>Slots</th></tr>
-          </thead>
-          <tbody>
-            <tr><td><code>.app-shell</code></td><td><code>__body</code>, <code>__main</code></td></tr>
-            <tr><td><code>.navbar</code></td><td><code>__brand</code>, <code>__toggle</code>, <code>__menu</code>, <code>__nav</code>, <code>__button</code></td></tr>
-            <tr><td><code>.page</code></td><td><code>__header</code>, <code>__title</code>, <code>__action</code>, <code>__section</code>, <code>__section-header</code>, <code>__section-title</code></td></tr>
-            <tr><td><code>.sidebar</code></td><td><code>__header</code>, <code>__brand</code>, <code>__content</code>, <code>__footer</code>, <code>__menu</code>, <code>__group</code>, <code>__group-title</code>, <code>__group-action</code>, <code>__list</code>, <code>__item</code>, <code>__item-action</code>, <code>__button</code>, <code>__submenu</code>, <code>__caret</code></td></tr>
-          </tbody>
-        </table>
+        <h3>Paired foregrounds</h3>
+        <p>
+          Every background-providing token ships a paired{" "}
+          <code>-foreground</code>. If a component introduces a new background
+          variable, it introduces the paired foreground at the same time, so a
+          token override never strands a text color against an unreadable
+          backdrop.
+        </p>
+
+        <p>
+          Component classes ship in <code>@layer components</code>. Utility
+          classes ship in <code>@layer utilities</code>, a later cascade layer,
+          so a utility always wins over a component without{" "}
+          <code>!important</code>. Stisla does not ship its own grid; layout is
+          plain CSS and Tailwind utilities.
+        </p>
       </section>
 
       <section>
         <h2>States</h2>
-        <p>Interactive surfaces answer to a fixed vocabulary. Implementations choose how each state paints (the tokens decide that), but the state names and the runtime hooks below are part of the contract.</p>
+        <p>
+          Interactive surfaces answer to a fixed vocabulary. Implementations
+          choose how each state paints (the tokens decide that), but the state
+          names and the runtime hooks below are part of the contract.
+        </p>
 
         <h3>Interactive states</h3>
-        <p>Every interactive component supports the same six states. Pseudo-classes drive the first four, and the rest are explicit.</p>
+        <p>
+          Every interactive component supports the same six states.
+          Pseudo-classes drive the first four, and the rest are explicit.
+        </p>
         <table>
           <thead>
-            <tr><th>State</th><th>Trigger</th><th>Notes</th></tr>
+            <tr>
+              <th>State</th>
+              <th>Trigger</th>
+              <th>Notes</th>
+            </tr>
           </thead>
           <tbody>
-            <tr><td>Rest</td><td>default</td><td>The base painted by the component's tokens</td></tr>
-            <tr><td>Hover</td><td><code>:hover</code></td><td>Derives at runtime via <code>color-mix(in oklch, base 88%, black)</code></td></tr>
-            <tr><td>Active</td><td><code>:active</code></td><td>Derives at runtime, typically 78% over black</td></tr>
-            <tr><td>Focus</td><td><code>:focus-visible</code></td><td>Ring derives from <code>--st-ring</code>. Never <code>:focus</code> for the visible ring</td></tr>
-            <tr><td>Disabled</td><td><code>:disabled</code> on form controls, <code>aria-disabled="true"</code> on link buttons</td><td>Tone reduces; pointer events block</td></tr>
-            <tr><td>Loading</td><td><code>.is-loading</code> + <code>aria-busy="true"</code></td><td>Spinner replaces or augments content. Click is blocked while applied</td></tr>
+            <tr>
+              <td>Rest</td>
+              <td>default</td>
+              <td>The base painted by the component's tokens</td>
+            </tr>
+            <tr>
+              <td>Hover</td>
+              <td>
+                <code>:hover</code>
+              </td>
+              <td>
+                Derives at runtime from the base via{" "}
+                <code>color-mix(in oklch, …)</code>. The exact curve is an
+                implementation default
+              </td>
+            </tr>
+            <tr>
+              <td>Active</td>
+              <td>
+                <code>:active</code>
+              </td>
+              <td>Derives at runtime, a step beyond hover</td>
+            </tr>
+            <tr>
+              <td>Focus</td>
+              <td>
+                <code>:focus-visible</code>
+              </td>
+              <td>
+                Ring derives from <code>--color-ring</code>. Never{" "}
+                <code>:focus</code> for the visible ring
+              </td>
+            </tr>
+            <tr>
+              <td>Disabled</td>
+              <td>
+                <code>:disabled</code> on form controls,{" "}
+                <code>aria-disabled="true"</code> on link buttons
+              </td>
+              <td>Tone reduces; pointer events block</td>
+            </tr>
+            <tr>
+              <td>Loading</td>
+              <td>
+                <code>aria-busy="true"</code>
+              </td>
+              <td>
+                Spinner replaces or augments content. Click is blocked while
+                applied
+              </td>
+            </tr>
           </tbody>
         </table>
 
         <h3>Runtime state hooks</h3>
-        <p>Two prefixes, split by origin. Radix-aligned states use <code>[data-state]</code>, and Stisla-original states use <code>.is-*</code>. Pick one per concept and stick to it.</p>
+        <p>
+          Two prefixes, split by origin. Primitive-library-aligned states use{" "}
+          <code>[data-state]</code>. Stisla-original states use data attributes
+          named for the specific concept.
+        </p>
         <table>
           <thead>
-            <tr><th>Hook</th><th>Components</th><th>Meaning</th></tr>
+            <tr>
+              <th>Hook</th>
+              <th>Components</th>
+              <th>Meaning</th>
+            </tr>
           </thead>
           <tbody>
-            <tr><td><code>data-state="open"</code> / <code>"closed"</code></td><td>Accordion, Collapsible, Dialog, Drawer, Dropdown, Popover, Tooltip</td><td>Disclosure open or closed</td></tr>
-            <tr><td><code>data-state="active"</code> / <code>"inactive"</code></td><td>Tabs, Toggle, Toggle group</td><td>Selected / current vs. not</td></tr>
-            <tr><td><code>data-state="checked"</code></td><td>Checkbox, Radio, Switch</td><td>On state of a binary control</td></tr>
-            <tr><td><code>.is-loading</code></td><td>Button, Input</td><td>Async work in flight</td></tr>
-            <tr><td><code>.is-collapsed</code></td><td>Sidebar, Collapsible</td><td>Persistent collapsed state distinct from open / closed</td></tr>
-            <tr><td><code>.is-valid</code> / <code>.is-invalid</code></td><td>Form controls</td><td>Validation result</td></tr>
-            <tr><td><code>.is-indeterminate</code></td><td>Checkbox, Progress</td><td>Tri-state or unknown</td></tr>
+            <tr>
+              <td>
+                <code>data-state="open"</code> / <code>"closed"</code>
+              </td>
+              <td>
+                Accordion, Collapsible, Dialog, Drawer, Menu, Popover, Tooltip
+              </td>
+              <td>Disclosure open or closed</td>
+            </tr>
+            <tr>
+              <td>
+                <code>data-state="active"</code> / <code>"inactive"</code>
+              </td>
+              <td>Tabs, Toggle, Toggle group</td>
+              <td>Selected / current vs. not</td>
+            </tr>
+            <tr>
+              <td>
+                <code>data-state="checked"</code>
+              </td>
+              <td>Checkbox, Radio, Switch</td>
+              <td>On state of a binary control</td>
+            </tr>
+            <tr>
+              <td>
+                <code>aria-busy="true"</code>
+              </td>
+              <td>Button, Input</td>
+              <td>Async work in flight</td>
+            </tr>
+            <tr>
+              <td>
+                <code>[data-collapsed]</code>
+              </td>
+              <td>Sidebar</td>
+              <td>Persistent rail-collapsed state</td>
+            </tr>
+            <tr>
+              <td>
+                <code>[data-indeterminate]</code>
+              </td>
+              <td>Checkbox, Progress</td>
+              <td>Tri-state or unknown</td>
+            </tr>
+            <tr>
+              <td>
+                <code>[aria-invalid]</code>, <code>:user-invalid</code>
+              </td>
+              <td>Form controls</td>
+              <td>Validation failure</td>
+            </tr>
           </tbody>
         </table>
       </section>
 
       <section>
-        <h2>Scales</h2>
-        <p>Three knobs reshape the system proportionally. Implementations expose them as global tokens, and per-component overrides ride on top.</p>
+        <h2>Interactivity</h2>
+        <p>
+          Components that open, close, select, or toggle expose their state
+          through the runtime hooks above. How that state gets set is the
+          implementation&rsquo;s job. Each implementation drives interactivity
+          through a primitive layer suited to its framework, and the same CSS
+          paints the result, so a <code>data-state="open"</code> dialog looks
+          identical no matter what set the attribute.
+        </p>
         <table>
           <thead>
-            <tr><th>Knob</th><th>Token</th><th>Range</th></tr>
+            <tr>
+              <th>Implementation</th>
+              <th>Interactivity layer</th>
+            </tr>
           </thead>
           <tbody>
-            <tr><td>Radius</td><td><code>--st-radius</code></td><td>0 (brutalist), 0.75rem (default), 1rem (soft). <code>-sm</code> and <code>-lg</code> derive multiplicatively</td></tr>
-            <tr><td>Spacing</td><td><code>--st-spacing</code></td><td>0.25rem base. Every padding, gap, and height is a multiple of it. Raise for roomier, lower for compact</td></tr>
-            <tr><td>Brand</td><td><code>--st-primary</code></td><td>Any OKLCH (or any color), repaints every primary-toned surface, hover, active, focus, and highlight</td></tr>
+            <tr>
+              <td>Vanilla</td>
+              <td>
+                A small runtime drives <code>data-stisla-*</code> markup, backed
+                by a few vendored primitives for positioning and focus
+                containment
+              </td>
+            </tr>
+            <tr>
+              <td>React</td>
+              <td>Base UI headless primitives</td>
+            </tr>
+            <tr>
+              <td>Vue</td>
+              <td>Reka (planned)</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          The contract is the state vocabulary and the behavior, not the library
+          underneath. A port may also ship a different set of interactive
+          components; see{" "}
+          <a className="link" href="#coverage">
+            Coverage
+          </a>
+          . The runtime details for the vanilla implementation live on the{" "}
+          <Link to="/docs/vanilla/javascript" className="link">
+            JavaScript
+          </Link>{" "}
+          page.
+        </p>
+      </section>
+
+      <section>
+        <h2>Scales</h2>
+        <p>
+          Three knobs reshape the system. Implementations expose them as global
+          tokens, and per-component overrides ride on top.
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>Knob</th>
+              <th>Token</th>
+              <th>Range</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Radius</td>
+              <td>
+                <code>--radius-sm</code> / <code>--radius-md</code> /{" "}
+                <code>--radius-lg</code>
+              </td>
+              <td>
+                Three independent tiers, from 0 (square) to roomy. Components
+                pick a tier; override the tier to reshape rounding
+              </td>
+            </tr>
+            <tr>
+              <td>Spacing</td>
+              <td>
+                <code>--spacing</code>
+              </td>
+              <td>
+                0.25rem base. Every padding, gap, and height is a multiple of
+                it. Raise for roomier, lower for compact
+              </td>
+            </tr>
+            <tr>
+              <td>Brand</td>
+              <td>
+                <code>--color-primary</code>
+              </td>
+              <td>
+                Any OKLCH (or any color), repaints every primary-toned surface,
+                hover, active, focus, and highlight
+              </td>
+            </tr>
           </tbody>
         </table>
       </section>
 
       <section>
         <h2>Theming</h2>
-        <p>Light and dark are deltas on the same token surface rather than separate themes. A port honors them by writing two blocks. A base, and a dark override scoped to <code>[data-theme="dark"]</code> or <code>.dark</code>.</p>
+        <p>
+          Light and dark are deltas on the same token surface rather than
+          separate themes. A port honors them by writing two blocks. A base, and
+          a dark override scoped to <code>[data-theme="dark"]</code> or{" "}
+          <code>.dark</code>.
+        </p>
 
         <h3>Flips per theme</h3>
         <ul>
-          <li>Surface tier: <code>--st-background</code>, <code>--st-foreground</code>, <code>--st-surface</code>, <code>--st-surface-2</code>, <code>--st-surface-3</code>, <code>--st-border</code>, <code>--st-muted-foreground</code></li>
-          <li>Interactional pair: <code>--st-neutral</code>, <code>--st-accent</code></li>
+          <li>
+            Surface tier: <code>--color-background</code>,{" "}
+            <code>--color-foreground</code>, <code>--color-surface</code>,{" "}
+            <code>--color-surface-2</code>, <code>--color-surface-3</code>,{" "}
+            <code>--color-border</code>, <code>--color-border-strong</code>,{" "}
+            <code>--color-muted-foreground</code>
+          </li>
+          <li>
+            Interactional pairs: <code>--color-neutral</code>,{" "}
+            <code>--color-neutral-foreground</code>, <code>--color-accent</code>
+            , <code>--color-accent-foreground</code>
+          </li>
         </ul>
 
         <h3>Stays put</h3>
         <ul>
-          <li>Intents and their foregrounds: <code>--st-primary</code>, <code>--st-success</code>, <code>--st-warning</code>, <code>--st-danger</code>, <code>--st-info</code></li>
-          <li>Geometry, spacing, and type: <code>--st-radius</code>, <code>--st-shadow</code>, <code>--st-spacing</code>, <code>--st-font-sans</code>, <code>--st-font-mono</code></li>
+          <li>
+            Intents and their foregrounds: <code>--color-primary</code>,{" "}
+            <code>--color-success</code>, <code>--color-warning</code>,{" "}
+            <code>--color-danger</code>, <code>--color-info</code>
+          </li>
+          <li>
+            Overlay chrome: <code>--color-overlay</code>,{" "}
+            <code>--color-overlay-foreground</code>
+          </li>
+          <li>
+            Geometry, spacing, and type: <code>--radius-*</code>,{" "}
+            <code>--shadow-*</code>, <code>--spacing</code>,{" "}
+            <code>--font-sans</code>, <code>--font-mono</code>
+          </li>
         </ul>
 
-        <p>Per-component <code>-foreground</code> pairings are mandatory. If a component introduces a new background variable, it introduces the paired foreground at the same time, so a token override never strands a text color.</p>
+        <p>
+          Per-component <code>-foreground</code> pairings are mandatory. If a
+          component introduces a new background variable, it introduces the
+          paired foreground at the same time, so a token override never strands
+          a text color.
+        </p>
       </section>
 
       <section>
         <h2>Focus</h2>
-        <p>One ring rule across the system. The visible ring derives from <code>--st-ring</code>, which defaults to <code>--st-primary</code> so a brand swap repaints every focus. The ring is rendered with <code>box-shadow</code> or <code>outline</code>, but not both. Only <code>:focus-visible</code> paints the ring. <code>:focus</code> on its own is invisible because it fires on mouse clicks too.</p>
+        <p>
+          One ring rule across the system. The visible ring derives from{" "}
+          <code>--color-ring</code>, which defaults to{" "}
+          <code>--color-primary</code> so a brand swap repaints every focus. The
+          ring is rendered with <code>box-shadow</code> or <code>outline</code>,
+          but not both. Only <code>:focus-visible</code> paints the ring.{" "}
+          <code>:focus</code> on its own is invisible because it fires on mouse
+          clicks too.
+        </p>
       </section>
 
       <section>
         <h2>Motion</h2>
-        <p>Disclosure components (Accordion, Collapsible, Dialog, Drawer, Dropdown, Popover, Toast, Tooltip) transition between <code>data-state="open"</code> and <code>data-state="closed"</code>. The shape of that transition is up to the implementation. The contract is that both states are settled and addressable. <code>prefers-reduced-motion</code> collapses the transition to zero duration but keeps the start and end states intact.</p>
+        <p>
+          Disclosure components (Accordion, Collapsible, Dialog, Drawer, Menu,
+          Popover, Toast, Tooltip) transition between{" "}
+          <code>data-state="open"</code> and <code>data-state="closed"</code>.
+          The shape of that transition is up to the implementation. The contract
+          is that both states are settled and addressable.{" "}
+          <code>prefers-reduced-motion</code> collapses the transition to zero
+          duration but keeps the start and end states intact.
+        </p>
       </section>
 
       <section>
         <h2>Implementations</h2>
-        <p>One spec, many implementations. Status as of <code>3.0.0-beta.1</code>.</p>
+        <p>
+          One spec, many implementations. Status as of <code>3.0.0-beta.1</code>
+          .
+        </p>
         <table>
           <thead>
-            <tr><th>Implementation</th><th>Status</th><th>Notes</th></tr>
+            <tr>
+              <th>Implementation</th>
+              <th>Status</th>
+              <th>Notes</th>
+            </tr>
           </thead>
           <tbody>
-            <tr><td>Vanilla CSS + JS</td><td>Ships in <code>3.0.0-beta.1</code></td><td>Reference implementation. <Link to="/docs/installation" className="link">Installation</Link></td></tr>
-            <tr><td>React + Base UI</td><td>Planned</td><td>Same tokens, same class names, headless interactions via Base UI</td></tr>
-            <tr><td>Vue</td><td>Planned</td><td>Same tokens, same class names</td></tr>
+            <tr>
+              <td>Vanilla CSS + JS</td>
+              <td>
+                Ships in <code>3.0.0-beta.1</code>
+              </td>
+              <td>
+                Reference implementation.{" "}
+                <Link to="/docs/vanilla/installation" className="link">
+                  Installation
+                </Link>
+              </td>
+            </tr>
+            <tr>
+              <td>React</td>
+              <td>In progress</td>
+              <td>
+                Same tokens, same class names, headless interactions via Base UI
+              </td>
+            </tr>
+            <tr>
+              <td>Vue</td>
+              <td>Planned</td>
+              <td>Same tokens, same class names</td>
+            </tr>
           </tbody>
         </table>
-        <p>Every implementation reads from the same <code>--st-*</code> token surface and ships the same BEM class names. A page authored against one implementation should swap to another without rewriting markup.</p>
+        <p>
+          Every implementation reads from the same Tailwind <code>@theme</code>{" "}
+          token surface and ships the same BEM class names. A page authored
+          against one implementation should swap to another without rewriting
+          markup.
+        </p>
       </section>
     </>
   );

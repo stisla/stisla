@@ -16,89 +16,126 @@ function ContributingDocs() {
 
       <section>
         <h2>Repo layout</h2>
-        <p>Three top-level source trees plus a small tooling folder.</p>
-        <ul>
-          <li><strong><code>src/scss</code>.</strong> Sass source. <code>tokens/</code> holds the <code>--st-*</code> surface and breakpoints. <code>foundation/</code> holds normalize, reboot, grid, and containers. <code>components/</code> is one file per BEM block. <code>utilities/</code> is the utility layer. <code>bundles/</code> contains the entry files that assemble the shipped <code>stisla.css</code> and <code>stisla-full.css</code>.</li>
-          <li><strong><code>src/js</code>.</strong> JavaScript runtime. <code>core/</code> holds the <code>Stisla.init()</code> walker and shared classes. <code>components/</code> is one file per behavior (<code>Dialog</code>, <code>Dropdown</code>, <code>Carousel</code>, etc.). Every component lives here, including the optional ones. <code>index.js</code> registers the vanilla core set; <code>index-full.js</code> adds the vanilla-optional set on top.</li>
-          <li><strong><code>src/site</code>.</strong> This docs site. <code>layouts/</code> and <code>partials/</code> are the Nunjucks chrome. <code>pages/</code> is one file per route, including every component demo page. <code>styles/site.scss</code> and <code>scripts/site.js</code> hold site-only chrome that&rsquo;s never bundled into the framework.</li>
-          <li><strong><code>tools/</code>.</strong> Vite plugin, build-time ToC injector, Shiki highlighter filter, static-site renderer.</li>
-        </ul>
+        <p>Everything lives under <code>next/</code>. The top-level <code>src/</code> tree is the v2 Bootstrap release on the <code>master</code> branch and is not actively maintained.</p>
+        <Code lang="text" code={`
+next/
+  packages/
+    tokens/src/
+      theme.css          Tailwind @theme tokens (--color-* + --st-border-width)
+    style/src/
+      theme.css          Tailwind @theme foundation (light + dark block)
+      <name>/<name>.css  one BEM CSS file per component block (~52 total)
+      <name>/<name>.<lib>.css  lib adapter (e.g. combobox.tomselect.css)
+      composer.ts        pure (variantProps, tune) → { className, style }
+      index.ts           re-exports
+    css/
+      package.json       pre-compiled @stisla/css bundle (built from style/)
+    vanilla/src/
+      core/              component.js, init.js, transition.js, inert.js
+      components/        one .js file per interactive component
+      index.js           core entry (all except optional 3)
+      index-full.js      full entry (core + carousel + combobox + scroll-area)
+      carousel.js        optional add-on entry (also combobox.js, scroll-area.js)
+    react/src/
+      <name>/index.tsx   React wrappers, one per component
+      index.ts           re-exports
+    vue/                 stub (planned)
+  docs/src/              TanStack Start docs site
+    routes/docs/
+      vanilla/           one .tsx per component
+      react/             one .tsx per component (in progress)
+    demo/                Demo, Code, DemoFrame, and demo CSS
+`} />
       </section>
 
       <section>
         <h2>Running locally</h2>
-        <p>Node 20 or newer.</p>
+        <p>Node 20 or newer, pnpm 9 or newer.</p>
         <Code lang="bash" code={`git clone https://github.com/stisla/stisla.git
-cd stisla
-npm install
-npm run dev`} />
-        <p>The dev server runs Vite plus a Nunjucks watcher. SCSS rebuilds on save, HTML re-renders on save. <code>npm run build</code> compiles the bundles into <code>site-dist/assets/</code> and renders every page into <code>site-dist/</code>.</p>
+cd stisla/next/docs
+pnpm install
+pnpm dev`} />
+        <p>The dev server starts Vite at <code>localhost:5173</code>. CSS rebuilds on save via Tailwind v4&rsquo;s HMR. The vanilla IIFE bundle is built inline by a Vite plugin and hot-reloads into demo iframes automatically.</p>
+        <p>To run the token checker across all component files:</p>
+        <Code lang="bash" code={`cd next
+pnpm check`} />
+        <p>This catches undeclared token references, missing <code>--component-*</code> fallbacks, and literal values that should be token refs. Run it before opening a PR.</p>
       </section>
 
       <section>
         <h2>Adding a component</h2>
-        <p>Each component is one Sass file, one BEM block, and one demo page. The same pattern repeats across the 30-plus components already in the repo.</p>
+        <p>Each component is one CSS file, one optional JS file, and one docs page. The scaffold command sets up the files and wires the nav entry.</p>
+        <Code lang="bash" code={`cd next
+pnpm scaffold <name>`} />
 
-        <h3>1. Write the Sass</h3>
-        <p>Add <code>src/scss/components/_my-thing.scss</code> defining <code>.my-thing</code>. BEM names follow <code>.block</code>, <code>.block__element</code>, <code>.block--modifier</code>. Lowercase, hyphen-separated. Multiple modifiers stack flat on the root and never nest.</p>
-        <p>Read tokens via component-scoped fallback like <code>border-radius: var(--my-thing-radius, var(--st-radius))</code>. Users get a per-component knob and a global default for free.</p>
-        <p>Build padding and gap from the spacing base with the <code>space()</code> helper, like <code>space(3)</code>. Without it, your component opts out of the global spacing knob and feels foreign next to the rest.</p>
-        <p>Derive states with <code>color-mix(in oklch, &hellip;)</code>, no per-state tokens. Hover is a runtime mix off the base hue, so if a user overrides the base, the hover follows.</p>
-        <p>Import the partial from <code>src/scss/bundles/stisla.scss</code> (or <code>stisla-full.scss</code> if it&rsquo;s an optional component that ships alongside core). One <code>@import</code> per line, so deleting any line removes that component from the bundle.</p>
+        <h3>1. Write the CSS</h3>
+        <p>The scaffold creates <code>next/packages/style/src/&lt;name&gt;/&lt;name&gt;.css</code>. BEM names follow <code>.block</code>, <code>.block__element</code>, <code>.block--modifier</code>. Lowercase, hyphen-separated. Multiple modifiers stack flat on the root and never nest.</p>
+        <p>Read tokens via fallback-default variables. This keeps the knob overridable from any scope without specificity fights.</p>
+        <Code lang="css" code={`
+.my-thing {
+  border-radius: var(--my-thing-radius, var(--radius-md));
+  padding: var(--my-thing-padding, --spacing(3) --spacing(4));
+  background: var(--my-thing-bg, var(--color-surface));
+}
+`} />
+        <p>Use <code>--spacing(n)</code> for padding, gap, and heights so the component tracks the global density knob. Layout widths and animation anchors can stay as literal <code>rem</code> values.</p>
+        <p>Derive states with <code>color-mix(in oklch, &hellip;)</code> so overriding the base hue automatically repaints hover and active.</p>
+        <Code lang="css" code={`
+.my-thing:hover  { --my-thing-bg: color-mix(in oklch, var(--my-thing-tone) 88%, black); }
+.my-thing:active { --my-thing-bg: color-mix(in oklch, var(--my-thing-tone) 78%, black); }
+`} />
+        <p>Register the component CSS in <code>next/docs/src/demo/demo.css</code> so the demo iframes pick it up. The scaffold adds the import automatically.</p>
 
         <h3>2. Write the behavior (if any)</h3>
-        <p>If the component needs JavaScript, add <code>src/js/components/MyThing.js</code> exporting a class with a constructor that takes a root element, a <code>.destroy()</code> method, and DOM custom events for its lifecycle. Register it in <code>src/js/core/init.js</code> against the matching <code>data-stisla-my-thing</code> attribute so <code>Stisla.init()</code> picks it up.</p>
-        <p>For state hooks, use <code>[data-state="open"]</code> for Radix-aligned concepts (open / closed / active) and <code>.is-loading</code> or <code>.is-*</code> for Stisla-original states. The CSS reads from the attribute or class, and the JS writes it. Don&rsquo;t mutate inline styles.</p>
+        <p>If the component needs JavaScript, add <code>next/packages/vanilla/src/components/my-thing.js</code>. Export a class with a constructor that takes a root element, a <code>.destroy()</code> method, and DOM custom events for its lifecycle (<code>stisla:my-thing:opened</code>, <code>stisla:my-thing:closed</code>).</p>
+        <p>Register it in <code>next/packages/vanilla/src/index.js</code> so <code>Stisla.init()</code> scans for it.</p>
+        <p>For state hooks, use <code>[data-state="open"]</code> for open/closed concepts, <code>[data-state="active"]</code> for selected/current, and <code>data-&lt;concept&gt;</code> for Stisla-original states (<code>[data-collapsed]</code>, <code>[data-shaking]</code>). No <code>.is-*</code> classes. The CSS reads from the attribute; the JS writes it.</p>
 
-        <h3>3. Write the demo page</h3>
-        <p>Every component gets its own page. Add <code>src/site/pages/my-thing.njk</code> extending the base layout. Cover every variant and every state. Rest, hover (a sentence is fine, no animation needed), focus, active, disabled, and invalid where applicable.</p>
-        <p>Use the <code>{`{% call ui.demo() %}`}</code> macro for live previews. It renders the source twice. A live preview on top, and a Shiki-highlighted code block below. Snippets over five lines auto-collapse behind a View Code toggle.</p>
-        <p>The page structure mirrors the rest of the site. A <code>&lt;header&gt;</code> with <code>&lt;h1&gt;</code> and a short lead paragraph, then a <code>&lt;section&gt;</code> per topic with an <code>&lt;h2&gt;</code>. The build-time ToC walks <code>h2</code> and <code>h3</code> automatically. Pages with two or more <code>h2</code>s render a sticky ToC in the right rail.</p>
-        <p>End the page with a Customization section. See the next subsection.</p>
+        <h3>3. Write the docs page</h3>
+        <p>Add <code>next/docs/src/routes/docs/vanilla/my-thing.tsx</code>. Cover every variant and every state. Rest, hover (a sentence is enough), focus, active, disabled, and invalid where applicable.</p>
+        <p>Use <code>&lt;Demo&gt;</code> for live previews and <code>&lt;Code&gt;</code> for copyable snippets. One snippet per demo drives both the live render and the shown code.</p>
+        <Code lang="tsx" code={`
+import { Demo } from '~/demo/Demo';
+import { Code } from '~/demo/Code';
 
-        <h3>4. Add it to the sidebar</h3>
-        <p>Open <code>src/site/partials/_site-sidebar.njk</code> and add an entry under the matching group (Forms, Components, Overlays, Media, &hellip;). Keep groups alphabetical. The active-link highlight is automatic, so there&rsquo;s nothing else to wire.</p>
+<Demo html={\`
+<button type="button" class="my-thing">Hello</button>
+\`} />
+`} />
+        <p>Page structure: a <code>&lt;header&gt;</code> with <code>&lt;h1&gt;</code> and a short lead, then one <code>&lt;section&gt;</code> per topic. End with a Customization section. The <Link to="/docs/vanilla/slider" className="link">Slider</Link> page is the reference shape.</p>
+
+        <h3>4. Verify</h3>
+        <Code lang="bash" code={`cd next
+pnpm check     # token linter
+pnpm build     # confirm the docs site builds clean`} />
+        <p>Check the demo page at 320, 768, and 1280 px under both light and dark.</p>
       </section>
 
       <section>
         <h2>Adding a customization variable</h2>
-        <p>Component-scoped variables open up a knob without forcing users into Sass. Pick a hyphenated name under the block prefix, like <code>--btn-radius</code>, <code>--slider-thumb-width</code>, or <code>--card-padding</code>.</p>
-        <p>Default to a global token via fallback when the knob is a global concept (radius, spacing, ring color, surface tier). Default to a literal when the knob is component-private (slider thumb width, badge font-size).</p>
-        <Code lang="scss" title="src/scss/components/_my-thing.scss" code={`.my-thing {
-  // Component-private default.
+        <p>Component-scoped variables open up a knob without touching the spec. Pick a hyphenated name under the block prefix: <code>--button-radius</code>, <code>--slider-thumb-width</code>, <code>--card-padding</code>.</p>
+        <p>Default to a global token via fallback when the knob is a global concept. Default to a literal when the knob is component-private.</p>
+        <Code lang="css" title="next/packages/style/src/my-thing/my-thing.css" code={`.my-thing {
+  /* Component-private default. */
   --my-thing-thumb-width: 0.5rem;
 
-  // Falls back to a global token, so overriding --st-radius retunes
-  // this component too unless the user sets --my-thing-radius explicitly.
-  --my-thing-radius: var(--st-radius);
+  /* Falls back to the global scale token, so overriding --radius-md
+     retunes this component too unless the user sets --my-thing-radius. */
+  --my-thing-radius: var(--radius-md);
 
   border-radius: var(--my-thing-radius);
 }`} />
-        <p>Document every knob in the page&rsquo;s Customization section. One row per variable, with columns for Variable, Default, and Use. The <Link to="/docs/vanilla/slider" className="link">slider</Link> page is a good reference.</p>
-        <table>
-          <thead>
-            <tr>
-              <th>Variable</th>
-              <th>Use</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>--my-thing-radius</code></td>
-              <td>Corner radius</td>
-            </tr>
-            <tr>
-              <td><code>--my-thing-thumb-width</code></td>
-              <td>Thumb width</td>
-            </tr>
-          </tbody>
-        </table>
-        <p>For components with many knobs, group the table by purpose (sizing, surface, interaction). For components that mostly rely on shared tokens, a short pointer paragraph back to <Link to="/docs/customization" className="link">Customization</Link> is enough. Don&rsquo;t re-list global tokens per component.</p>
+        <p>Document every new knob in the component&rsquo;s Customization section. One row per variable, with columns for Variable, Default, and Use. The <Link to="/docs/vanilla/slider" className="link">Slider</Link> page is the reference shape for how to write that table.</p>
+        <p>For components with many variables, group the table by purpose (sizing, surface, interaction). For components that mostly rely on shared tokens, a short pointer paragraph back to <Link to="/docs/customization" className="link">Customization</Link> is enough.</p>
       </section>
 
       <section>
         <h2>Before opening a PR</h2>
-        <p>Run <code>npm run build</code> once to confirm both the bundles and the static site render clean. Open the demo page for your new component in dev and check it at 320, 768, 1024, and 1440. Walk every state under light and dark.</p>
+        <ul>
+          <li>Run <code>pnpm check</code> from <code>next/</code> and confirm it passes clean.</li>
+          <li>Run <code>pnpm build</code> from <code>next/docs/</code> and confirm the site builds without error.</li>
+          <li>Open the demo page and walk every state under light and dark at 320, 768, and 1280 px.</li>
+        </ul>
         <p>One component per PR keeps reviews scoped. A new customization knob can ride along with the component that introduces it.</p>
       </section>
     </>

@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { Code } from "~/demo/Code";
 
-export const Route = createFileRoute("/docs/javascript")({
+export const Route = createFileRoute("/docs/vanilla/javascript")({
   component: JavaScriptDocs,
 });
 
@@ -16,13 +16,28 @@ function JavaScriptDocs() {
 
       <section>
         <h2>How it boots</h2>
-        <p>Importing <code>@stisla/vanilla</code> (or loading <code>stisla.js</code> from the CDN snippet on the <Link to="/docs/installation" className="link">Installation</Link> page) does three things at startup.</p>
+        <p>Importing <code>@stisla/vanilla</code> (or loading <code>stisla.js</code> from the CDN snippet on the <Link to="/docs/vanilla/installation" className="link">Installation</Link> page) does three things at startup.</p>
         <ul>
           <li>Registers every component class that ships in the bundle.</li>
           <li>Exposes them on <code>window.Stisla</code>, so any of them is reachable as <code>Stisla.Dialog</code>, <code>Stisla.Toast</code>, and so on.</li>
           <li>Walks the document on the next microtask and wires up anything marked with a <code>data-stisla-*</code> attribute.</li>
         </ul>
         <p>There is no <code>init()</code> call to make at startup. If the markup is already in the page when the bundle loads, the runtime finds it.</p>
+      </section>
+
+      <section>
+        <h2>What it&rsquo;s built on</h2>
+        <p>The runtime is around 600 lines of our own code plus a few vendored primitives for the hard parts. No jQuery, no Bootstrap JS, no framework runtime.</p>
+        <table>
+          <thead><tr><th>Library</th><th>Used by</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr><td><a className="link" href="https://floating-ui.com/" target="_blank" rel="noopener noreferrer">Floating UI</a></td><td>menu, popover, tooltip</td><td>Position calculation for floating elements (collision detection, placement flips, arrow rendering)</td></tr>
+            <tr><td><a className="link" href="https://focus-trap.github.io/focus-trap/" target="_blank" rel="noopener noreferrer">focus-trap</a></td><td>dialog, drawer</td><td>Keyboard focus containment inside overlays</td></tr>
+            <tr><td><a className="link" href="https://www.embla-carousel.com/" target="_blank" rel="noopener noreferrer">Embla</a></td><td>carousel (optional)</td><td>Touch-friendly scroll mechanics. Lives in the optional bundle</td></tr>
+            <tr><td><a className="link" href="https://kingsora.github.io/OverlayScrollbars/" target="_blank" rel="noopener noreferrer">OverlayScrollbars</a></td><td>scroll-area (optional)</td><td>Custom-styled scrollbars that overlay the content without taking layout space</td></tr>
+            <tr><td><code>tabbable</code></td><td>focus-trap, sidebar dismiss</td><td>Walks the focusable tree. Tiny shared utility</td></tr>
+          </tbody>
+        </table>
       </section>
 
       <section>
@@ -68,7 +83,7 @@ Stisla.init(document.getElementById('panel'));
 
       <section>
         <h2>React and other SPA frameworks</h2>
-        <p>A dedicated <code>@stisla/react</code> implementation is on the roadmap and will expose components as idiomatic React with props, refs, and controlled state. Until it ships, the vanilla classes work from inside <code>useEffect</code>: construct on mount, destroy on cleanup.</p>
+        <p>For React apps, use <code>@stisla/react</code>. It exposes components as idiomatic React with props, refs, and controlled state. See the React component pages for usage. When you need the vanilla layer directly (mixed apps, quick integrations, or before a React wrapper exists for a component), the vanilla classes work from inside <code>useEffect</code>: construct on mount, destroy on cleanup.</p>
         <Code lang="jsx" code={`
 import { useEffect, useRef } from 'react';
 import { Dialog } from '@stisla/vanilla';
@@ -111,7 +126,7 @@ function HelloDialog() {
           <li>Some components mutate DOM outside their own subtree. Popover and tooltip portal into <code>body</code>; dialog and drawer set <code>inert</code> on siblings. React does not know about those mutations, so keep the component mounted for its full lifetime rather than toggling it through a parent rerender.</li>
           <li>Open and close state lives on the instance, which toggles <code>data-state</code> on the root. To drive it from React state, call <code>instance.open()</code> and <code>instance.close()</code> from a <code>useEffect</code> keyed on your value. Don&rsquo;t conditionally unmount the root, or the instance dies with it.</li>
           <li>The scanner has no <code>destroyAll(root)</code> counterpart. If you used <code>Stisla.init(root)</code> over a subtree, walk that same subtree on cleanup and call <code>Stisla.get(el).destroy()</code> on each one you wired up.</li>
-          <li>This path covers most cases but isn&rsquo;t the long-term story. If a React-first API matters more than shipping today, wait for <code>@stisla/react</code> instead of bridging to vanilla instances.</li>
+          <li>This path works for most cases. For new React projects, <code>@stisla/react</code> is the better fit since it exposes components with proper props, refs, and controlled state without the manual wiring.</li>
         </ul>
       </section>
     </>

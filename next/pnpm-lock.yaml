@@ -59,9 +59,9 @@ importers:
 
   packages/css:
     dependencies:
-      '@stisla/tokens':
+      '@stisla/style':
         specifier: workspace:*
-        version: link:../tokens
+        version: link:../style
     devDependencies:
       tailwindcss:
         specifier: ^4.0.0
@@ -75,9 +75,6 @@ importers:
       '@stisla/style':
         specifier: workspace:*
         version: link:../style
-      '@stisla/tokens':
-        specifier: workspace:*
-        version: link:../tokens
       clsx:
         specifier: ^2.1.0
         version: 2.1.1
@@ -93,10 +90,6 @@ importers:
         version: 5.9.3
 
   packages/style:
-    dependencies:
-      '@stisla/tokens':
-        specifier: workspace:*
-        version: link:../tokens
     devDependencies:
       tailwindcss:
         specifier: ^4.0.0
@@ -107,8 +100,6 @@ importers:
       typescript:
         specifier: ^5.4.0
         version: 5.9.3
-
-  packages/tokens: {}
 
   packages/vanilla:
     dependencies:

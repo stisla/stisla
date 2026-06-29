@@ -1,28 +1,41 @@
 {
   "name": "@stisla/css",
-  "version": "0.0.0",
-  "description": "Stisla vanilla CSS bundle — zero-build distribution (tokens + components + utilities). NOTE: same published name as the legacy packages/css; only one publishes at cutover.",
+  "version": "3.0.0-beta.8",
+  "description": "Stisla CSS bundle — zero-build distribution (tokens + components, NO utilities). stisla.css (core) + stisla-full.css (core + optionals), plus the 3 optional components (carousel/combobox/scroll-area) as individual add-on files. NOTE: same published name as the legacy packages/css; only one publishes at cutover.",
   "license": "MIT",
   "exports": {
     ".": "./dist/stisla.css",
     "./full": "./dist/stisla-full.css",
-    "./utilities": "./dist/utilities.css",
-    "./components/*": "./dist/components/*.css",
+    "./carousel": "./dist/carousel.css",
+    "./combobox": "./dist/combobox.css",
+    "./scroll-area": "./dist/scroll-area.css",
     "./package.json": "./package.json"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
   "sideEffects": [
     "*.css"
   ],
   "scripts": {
-    "build": "echo 'TODO Phase 4: tailwindcss bundle (@theme static + @source inline)' && exit 0"
+    "build": "node scripts/build-css.mjs"
   },
   "peerDependencies": {
-    "@stisla/tokens": "workspace:*"
+    "@stisla/style": "workspace:*"
   },
   "devDependencies": {
+    "@tailwindcss/node": "^4.0.0",
     "tailwindcss": "^4.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stisla/stisla.git",
+    "directory": "next/packages/css"
+  },
+  "homepage": "https://github.com/stisla/stisla#readme",
+  "publishConfig": {
+    "access": "public"
   }
 }

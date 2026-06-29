@@ -57,8 +57,8 @@ function ScrollAreaDocs() {
         </p>
         <Code code={`<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@beta/dist/components/scroll-area.css">
 <script type="module" src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@beta/dist/components/scroll-area.js"></script>`} />
-        <Code lang="js" code={`import '@stisla/css/components/scroll-area';
-import '@stisla/vanilla/components/scroll-area';`} />
+        <Code lang="js" code={`import '@stisla/css/scroll-area';
+import '@stisla/vanilla/scroll-area';`} />
         <p>
           OverlayScrollbars rides along as a transitive dependency of{" "}
           <code>@stisla/vanilla</code>, so no extra install is needed.

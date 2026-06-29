@@ -43,9 +43,9 @@
     appearance: none;
     cursor: pointer;
     transition:
-      border-color var(--st-duration-fast) ease,
-      box-shadow var(--st-duration-fast) ease,
-      background-color var(--st-duration-fast) ease;
+      border-color var(--transition-duration-fast) ease,
+      box-shadow var(--transition-duration-fast) ease,
+      background-color var(--transition-duration-fast) ease;
 
     /* iOS Safari zooms when a focused field's font-size < 16px and never zooms back. */
     @media (pointer: coarse) {
@@ -180,7 +180,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: var(--select-z-index, var(--st-z-dropdown));
+    z-index: var(--select-z-index, var(--z-index-dropdown));
     display: flex;
     flex-direction: column;
     gap: var(--select-item-gap, --spacing(0.5));
@@ -213,8 +213,8 @@
     cursor: pointer;
     user-select: none;
     transition:
-      background-color var(--st-duration-fast) ease,
-      color var(--st-duration-fast) ease;
+      background-color var(--transition-duration-fast) ease,
+      color var(--transition-duration-fast) ease;
   }
 
   /* Hover (mouse) + [data-highlighted] (keyboard nav) paint the same accent chip. */

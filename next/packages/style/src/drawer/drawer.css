@@ -4,7 +4,7 @@
  * [data-state="open"] on the root. References the @theme tokens: colors var(--color-*),
  * sizes/spacing --spacing(n), type var(--text-*) / var(--leading-*) / var(--font-weight-*), radius
  * var(--radius-*), shadow var(--shadow-*); only no-namespace customs use --st-* (border-width,
- * duration, z-index); z-index routes through the z-index scale (--st-z-modal); the backdrop scrim is a bespoke oklch alpha
+ * duration, z-index); z-index routes through the z-index scale (--z-index-modal); the backdrop scrim is a bespoke oklch alpha
  * (no scrim token) and blur radii stay literal (filter geometry). State + scroll-lock hooks
  * ([data-shaking], html[data-drawer-open]) are attributes, recast from the legacy is-* classes per
  * the no-is-* convention. Knobs are --drawer-*. Open/close + focus-trap behavior ships with the JS
@@ -14,7 +14,7 @@
   .drawer {
     position: fixed;
     inset: 0;
-    z-index: var(--drawer-z-index, var(--st-z-modal));
+    z-index: var(--drawer-z-index, var(--z-index-modal));
     display: none;
     pointer-events: none;
   }
@@ -31,7 +31,7 @@
     backdrop-filter: blur(var(--drawer-backdrop-blur, 12px));
     -webkit-backdrop-filter: blur(var(--drawer-backdrop-blur, 12px));
     opacity: 0;
-    transition: opacity var(--drawer-transition-duration, var(--st-duration-normal)) ease;
+    transition: opacity var(--drawer-transition-duration, var(--transition-duration-normal)) ease;
     cursor: pointer;
   }
 
@@ -54,7 +54,7 @@
     box-shadow: var(--drawer-shadow, var(--shadow-lg));
     overflow: hidden;
     outline: none;
-    transition: transform var(--drawer-transition-duration, var(--st-duration-normal)) ease;
+    transition: transform var(--drawer-transition-duration, var(--transition-duration-normal)) ease;
   }
 
   /* === Placement === each pins the panel to a viewport edge and parks the content off-screen by
@@ -240,8 +240,8 @@
     border-radius: 50%;
     cursor: pointer;
     transition:
-      background-color var(--st-duration-fast) ease,
-      color var(--st-duration-fast) ease;
+      background-color var(--transition-duration-fast) ease,
+      color var(--transition-duration-fast) ease;
   }
 
   .drawer__close:hover {
@@ -266,7 +266,7 @@
      hits a static backdrop. The shake axis matches the placement axis so the nudge reads as "stuck"
      along the slide direction. */
   .drawer__content[data-shaking] {
-    animation: st-drawer-shake-x var(--st-duration-normal) ease-in-out;
+    animation: st-drawer-shake-x var(--transition-duration-normal) ease-in-out;
   }
   .drawer--top .drawer__content[data-shaking],
   .drawer--bottom .drawer__content[data-shaking] {

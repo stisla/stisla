@@ -45,7 +45,7 @@
   a.media,
   button.media {
     cursor: pointer;
-    transition: background-color var(--st-duration-fast) ease;
+    transition: background-color var(--transition-duration-fast) ease;
 
     @media (prefers-reduced-motion: reduce) {
       transition: none;

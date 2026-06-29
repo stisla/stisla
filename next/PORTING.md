@@ -40,9 +40,9 @@ These are the mistakes we already made and fixed. `check-tokens.mjs` enforces th
    - Genuinely off-scale values with no token (e.g. an 8px/10px pip font, a `9999px` pill, a `2px`/`3px`
      ring/outline width) stay literal — but map to a token whenever one exists (12px → `var(--text-xs)`,
      1.375 line-height → `var(--leading-snug)`). Note: 12px = `text-xs`, 14px = `text-sm`.
-   - **Overlay z-index routes through the `--st-z-*` scale**, never a literal. Map by SEMANTIC tier
-     (the scale is purpose-ordered): dropdown/menu → `--st-z-dropdown`, dialog/drawer → `--st-z-modal`,
-     popover → `--st-z-popover`, toast → `--st-z-toast`, tooltip → `--st-z-tooltip`. Use the token even
+   - **Overlay z-index routes through the `--z-index-*` scale**, never a literal. Map by SEMANTIC tier
+     (the scale is purpose-ordered): dropdown/menu → `--z-index-dropdown`, dialog/drawer → `--z-index-modal`,
+     popover → `--z-index-popover`, toast → `--z-index-toast`, tooltip → `--z-index-tooltip`. Use the token even
      when the legacy SCSS used an ad-hoc number — the v3 scale fixes the relative ordering. Only LOCAL
      intra-component sibling stacking (`z-index: 1/2/3` for avatar overlap, focus-raise, a close chip
      above content) stays a literal — that's not overlay layering.
@@ -61,8 +61,9 @@ These are the mistakes we already made and fixed. `check-tokens.mjs` enforces th
      Token-level dark (`--color-*`) stays in `theme.css`; `@variant dark` is for per-component tweaks.
    - **No magic numbers**, no `calc(var(--st-spacing) * n)`, no literal fallbacks like
      `var(--text-sm, 0.875rem)`. No `--st-*` colors. No `@theme inline`. No parallel layer.
-2. **`--st-*` is ONLY for no-namespace customs** Tailwind has no theme bucket for:
-   `--st-border-width`, `--st-z-*`, `--st-duration-*`. Read those directly. Nothing else is `--st-`.
+2. **`--st-*` is ONLY for `--st-border-width`** — the single global border thickness, which has no
+   Tailwind namespace slot. z-index + duration ride Tailwind namespaces (`--z-index-*`,
+   `--transition-duration-*`), read directly. Nothing else is `--st-`.
 3. **BEM + knobs.** Block `.<name>`; modifiers `.<name>--variant`; knobs `--<name>-*` with the
    **fallback-default** pattern: `prop: var(--<name>-knob, <theme-token-default>)`. A knob default
    points at a theme token, never a raw literal.

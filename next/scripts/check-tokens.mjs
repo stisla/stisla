@@ -12,10 +12,9 @@ import { dirname, join, relative } from "node:path";
 
 const NEXT = dirname(dirname(fileURLToPath(import.meta.url)));
 
-// Default scan set: component CSS (style + tokens) + docs route pages (where prose drift lives).
+// Default scan set: component CSS (style/src, includes theme.css) + docs route pages (prose drift).
 const SCAN_DIRS = [
   { dir: join(NEXT, "packages/style/src"), ext: ".css" },
-  { dir: join(NEXT, "packages/tokens/src"), ext: ".css" },
   { dir: join(NEXT, "docs/src/routes"), ext: ".tsx" },
 ];
 
@@ -35,8 +34,8 @@ const RULES = [
     // --st-* is ONLY for the no-namespace customs. Anything else (colors, radius, shadow,
     // spacing, type) must use --color-* / a Tailwind facility.
     id: "st-non-custom",
-    re: /--st-(?!(?:border-width|z-[a-z]|duration-[a-z]))[a-z][a-z-]*/g,
-    msg: "non-custom --st-* token — colors use var(--color-*), scales use Tailwind facilities. Only --st-border-width / --st-z-* / --st-duration-* are allowed.",
+    re: /--st-(?!border-width)[a-z][a-z-]*/g,
+    msg: "non-custom --st-* token — colors use var(--color-*); scales, z-index, and duration use Tailwind facilities (--z-index-*, --transition-duration-*). Only --st-border-width is allowed.",
   },
   {
     id: "is-modifier",

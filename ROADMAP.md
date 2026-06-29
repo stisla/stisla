@@ -48,8 +48,8 @@ actual next task always lives under **Next** below.
 > (`[aria-busy]`, `:disabled`/`[aria-disabled]`, `data-*`). **Token model corrected:** ONE Tailwind
 > `@theme` layer — semantic colors are `--color-*` (+ tuned `--radius-*`/`--shadow-*`; spacing/type
 > from Tailwind defaults), components reference theme vars directly (no `--st-*` colors, no magic
-> numbers; `--alpha()` for tints; `--leading-*`/`--font-weight-*`/`--spacing()`); `--st-*` only for
-> no-namespace customs (z/duration/border-width); dark via `.dark` override. `tokens.css` removed.
+> numbers; `--alpha()` for tints; `--leading-*`/`--font-weight-*`/`--spacing()`); z-index + duration
+> ride Tailwind namespaces (`--z-index-*`/`--transition-duration-*`), `--st-border-width` the lone custom; dark via `.dark` override. `tokens.css` removed.
 > All builds clean (client + SSR). **ARCHITECTURE.md** token sections (§1–§7, §9, §11–§12) were
 > rewritten to match this corrected model (no stale `@theme inline` / `tokens.css` text remains).
 >
@@ -111,7 +111,11 @@ Do NOT bulk-convert components before the slice is verified (ARCHITECTURE §9).
   the scale maps; backs `tune` autocomplete + composer/SCSS validation. (Gates Phase 2/3.)
 - [ ] **§10.3 Dark-mode contract** — pure CSS class toggle (`.dark`/`[data-theme]`) vs an
   optional hook. (Gates Phase 3.)
-- [ ] **§10.4 Vanilla utility subset** — which utilities ship in `@stisla/css`. (Gates Phase 4.)
+- [x] **§10.4 Vanilla utility subset** — RESOLVED (2026-06-28): **no utilities shipped** in
+  `@stisla/css`. Layout + utilities are the consumer's job (bring your own Tailwind / plain CSS).
+  `@stisla/css` ships exactly two bundles — `stisla.css` (tokens + all core components) and
+  `stisla-full.css` (core + carousel/combobox/scroll-area). No utilities bundle, no per-component
+  files, no `base` entry; smaller-than-core builds compile from source with Tailwind.
 - [ ] **§10.5 Validation guardrail** — thin Sass authoring layer vs a lint rule. (Gates Phase 2.)
 
 ---

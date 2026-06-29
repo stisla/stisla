@@ -45,8 +45,8 @@ function ComboboxDocs() {
         </p>
         <Code code={`<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@beta/dist/components/combobox.css">
 <script type="module" src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@beta/dist/components/combobox.js"></script>`} />
-        <Code lang="js" code={`import '@stisla/css/components/combobox';
-import '@stisla/vanilla/components/combobox';`} />
+        <Code lang="js" code={`import '@stisla/css/combobox';
+import '@stisla/vanilla/combobox';`} />
         <p>
           Tom Select rides along as a transitive dependency of{" "}
           <code>@stisla/vanilla</code>, so no extra install is needed.

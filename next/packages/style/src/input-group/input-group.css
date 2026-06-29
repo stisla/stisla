@@ -19,8 +19,8 @@
       var(--input-group-border-color, var(--color-border-strong));
     border-radius: var(--input-group-radius, var(--radius-md));
     transition:
-      border-color var(--st-duration-fast) ease,
-      box-shadow var(--st-duration-fast) ease;
+      border-color var(--transition-duration-fast) ease,
+      box-shadow var(--transition-duration-fast) ease;
 
     /* Focus the whole group when an editable child is focused. */
     &:has(> :is(.input, .select, .textarea):focus-visible) {

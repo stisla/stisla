@@ -36,10 +36,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
     transition:
-      background-color var(--st-duration-fast) ease,
-      border-color var(--st-duration-fast) ease,
-      color var(--st-duration-fast) ease,
-      box-shadow var(--st-duration-fast) ease;
+      background-color var(--transition-duration-fast) ease,
+      border-color var(--transition-duration-fast) ease,
+      color var(--transition-duration-fast) ease,
+      box-shadow var(--transition-duration-fast) ease;
 
     &:hover {
       background: var(

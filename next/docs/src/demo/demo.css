@@ -1,8 +1,10 @@
-/* The sandboxed-demo stylesheet — the vanilla @stisla/css surface: tokens + component CSS.
+/* The sandboxed-demo stylesheet — the @stisla/css surface: theme + component CSS.
  * Imported by DemoFrame with `?inline`, so the docs app's own @tailwindcss/vite compiles it
- * and returns the result as a string to inline into the demo <iframe>. No separate build. */
+ * and returns the result as a string to inline into the demo <iframe>. No separate build.
+ * Tailwind is imported here (theme.css is a pure @theme and no longer pulls it in). */
 
-@import "../../../packages/tokens/src/theme.css";
+@import "tailwindcss";
+@import "../../../packages/style/src/theme.css";
 @import "../../../packages/style/src/button/button.css";
 @import "../../../packages/style/src/alert/alert.css";
 @import "../../../packages/style/src/badge/badge.css";

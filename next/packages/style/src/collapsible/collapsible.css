@@ -23,7 +23,7 @@
      purpose — applies to whatever element the JS animates (composers borrow it for their own body). */
   [data-collapsing] {
     transition-property: height;
-    transition-duration: var(--collapsible-transition-duration, var(--st-duration-normal));
+    transition-duration: var(--collapsible-transition-duration, var(--transition-duration-normal));
     transition-timing-function: ease;
     overflow: hidden;
   }

@@ -38,10 +38,10 @@
     appearance: none;
     cursor: pointer;
     transition:
-      background-color var(--st-duration-fast) ease,
+      background-color var(--transition-duration-fast) ease,
       background-position 0.15s ease,
-      border-color var(--st-duration-fast) ease,
-      box-shadow var(--st-duration-fast) ease;
+      border-color var(--transition-duration-fast) ease,
+      box-shadow var(--transition-duration-fast) ease;
     print-color-adjust: exact;
 
     /* Hover (idle only). Skip focus / invalid / checked / disabled. */

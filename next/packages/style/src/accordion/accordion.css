@@ -38,8 +38,8 @@
     );
     overflow: hidden;
     transition:
-      background-color var(--st-duration-fast) ease,
-      border-color var(--st-duration-fast) ease;
+      background-color var(--transition-duration-fast) ease,
+      border-color var(--transition-duration-fast) ease;
   }
 
   .accordion__item[data-state="open"] {
@@ -84,8 +84,8 @@
     );
     cursor: pointer;
     transition:
-      background-color var(--st-duration-fast) ease,
-      border-color var(--st-duration-fast) ease;
+      background-color var(--transition-duration-fast) ease,
+      border-color var(--transition-duration-fast) ease;
   }
 
   .accordion__trigger :is(svg, i) {
@@ -149,7 +149,7 @@
     height: var(--accordion-icon-size, --spacing(4));
     color: var(--accordion-icon-color, currentColor);
     transition: transform
-      var(--accordion-icon-transition-duration, var(--st-duration-fast)) ease;
+      var(--accordion-icon-transition-duration, var(--transition-duration-fast)) ease;
   }
 
   .accordion__item[data-state="open"]

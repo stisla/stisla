@@ -4,7 +4,7 @@
  * static markup-first toasts show without JS). References the @theme tokens: colors var(--color-*),
  * sizes/spacing --spacing(n), type var(--text-*) / var(--leading-*) / var(--font-weight-*), radius
  * var(--radius-*), shadow var(--shadow-*); only no-namespace customs use --st-* (border-width,
- * duration, z-index). z-index routes through the z-index scale (--st-z-toast, above modal so a toast
+ * duration, z-index). z-index routes through the z-index scale (--z-index-toast, above modal so a toast
  * can confirm a dialog action). Knobs are --toast-*. Enqueue/dismiss/timers ship with the JS layer; the entrance
  * fade uses @starting-style + allow-discrete so region-mounted toasts animate with no JS paint.
  * @layer components. Authoring rules: ../../../../PORTING.md */
@@ -14,7 +14,7 @@
      interactive in the gaps, each toast re-enabling events on itself. Default placement is top-end. */
   .toast-region {
     position: fixed;
-    z-index: var(--toast-region-z-index, var(--st-z-toast));
+    z-index: var(--toast-region-z-index, var(--z-index-toast));
     display: flex;
     flex-direction: column;
     gap: var(--toast-region-gap, --spacing(4));
@@ -78,7 +78,7 @@
      allow-discrete on display holds the grid value through the close fade so the transition plays
      before layout collapses. */
   .toast {
-    z-index: var(--toast-z-index, var(--st-z-toast));
+    z-index: var(--toast-z-index, var(--z-index-toast));
     pointer-events: auto;
     display: grid;
     grid-template-columns: auto 1fr auto;
@@ -99,9 +99,9 @@
     opacity: 1;
     transform: none;
     transition:
-      opacity var(--toast-transition-duration, var(--st-duration-normal)) ease,
-      transform var(--toast-transition-duration, var(--st-duration-normal)) ease,
-      display var(--toast-transition-duration, var(--st-duration-normal)) ease
+      opacity var(--toast-transition-duration, var(--transition-duration-normal)) ease,
+      transform var(--toast-transition-duration, var(--transition-duration-normal)) ease,
+      display var(--toast-transition-duration, var(--transition-duration-normal)) ease
         allow-discrete;
   }
 
@@ -219,8 +219,8 @@
     border-radius: 50%;
     cursor: pointer;
     transition:
-      background-color var(--st-duration-fast) ease,
-      color var(--st-duration-fast) ease;
+      background-color var(--transition-duration-fast) ease,
+      color var(--transition-duration-fast) ease;
   }
 
   .toast__close:hover {
