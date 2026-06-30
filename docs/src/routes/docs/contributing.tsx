@@ -69,7 +69,7 @@ pnpm check`} />
 pnpm scaffold <name>`} />
 
         <h3>1. Write the CSS</h3>
-        <p>The scaffold creates <code>next/packages/style/src/&lt;name&gt;/&lt;name&gt;.css</code>. BEM names follow <code>.block</code>, <code>.block__element</code>, <code>.block--modifier</code>. Lowercase, hyphen-separated. Multiple modifiers stack flat on the root and never nest.</p>
+        <p>The scaffold creates <code>packages/style/src/&lt;name&gt;/&lt;name&gt;.css</code>. BEM names follow <code>.block</code>, <code>.block__element</code>, <code>.block--modifier</code>. Lowercase, hyphen-separated. Multiple modifiers stack flat on the root and never nest.</p>
         <p>Read tokens via fallback-default variables. This keeps the knob overridable from any scope without specificity fights.</p>
         <Code lang="css" code={`
 .my-thing {
@@ -84,15 +84,15 @@ pnpm scaffold <name>`} />
 .my-thing:hover  { --my-thing-bg: color-mix(in oklch, var(--my-thing-tone) 88%, black); }
 .my-thing:active { --my-thing-bg: color-mix(in oklch, var(--my-thing-tone) 78%, black); }
 `} />
-        <p>Register the component CSS in <code>next/docs/src/demo/demo.css</code> so the demo iframes pick it up. The scaffold adds the import automatically.</p>
+        <p>Register the component CSS in <code>docs/src/demo/demo.css</code> so the demo iframes pick it up. The scaffold adds the import automatically.</p>
 
         <h3>2. Write the behavior (if any)</h3>
-        <p>If the component needs JavaScript, add <code>next/packages/vanilla/src/components/my-thing.js</code>. Export a class with a constructor that takes a root element, a <code>.destroy()</code> method, and DOM custom events for its lifecycle (<code>stisla:my-thing:opened</code>, <code>stisla:my-thing:closed</code>).</p>
-        <p>Register it in <code>next/packages/vanilla/src/index.js</code> so <code>Stisla.init()</code> scans for it.</p>
+        <p>If the component needs JavaScript, add <code>packages/vanilla/src/components/my-thing.js</code>. Export a class with a constructor that takes a root element, a <code>.destroy()</code> method, and DOM custom events for its lifecycle (<code>stisla:my-thing:opened</code>, <code>stisla:my-thing:closed</code>).</p>
+        <p>Register it in <code>packages/vanilla/src/index.js</code> so <code>Stisla.init()</code> scans for it.</p>
         <p>For state hooks, use <code>[data-state="open"]</code> for open/closed concepts, <code>[data-state="active"]</code> for selected/current, and <code>data-&lt;concept&gt;</code> for Stisla-original states (<code>[data-collapsed]</code>, <code>[data-shaking]</code>). No <code>.is-*</code> classes. The CSS reads from the attribute; the JS writes it.</p>
 
         <h3>3. Write the docs page</h3>
-        <p>Add <code>next/docs/src/routes/docs/vanilla/my-thing.tsx</code>. Cover every variant and every state. Rest, hover (a sentence is enough), focus, active, disabled, and invalid where applicable.</p>
+        <p>Add <code>docs/src/routes/docs/vanilla/my-thing.tsx</code>. Cover every variant and every state. Rest, hover (a sentence is enough), focus, active, disabled, and invalid where applicable.</p>
         <p>Use <code>&lt;Demo&gt;</code> for live previews and <code>&lt;Code&gt;</code> for copyable snippets. One snippet per demo drives both the live render and the shown code.</p>
         <Code lang="tsx" code={`
 import { Demo } from '~/demo/Demo';
@@ -115,7 +115,7 @@ pnpm build     # confirm the docs site builds clean`} />
         <h2>Adding a customization variable</h2>
         <p>Component-scoped variables open up a knob without touching the spec. Pick a hyphenated name under the block prefix: <code>--button-radius</code>, <code>--slider-thumb-width</code>, <code>--card-padding</code>.</p>
         <p>Default to a global token via fallback when the knob is a global concept. Default to a literal when the knob is component-private.</p>
-        <Code lang="css" title="next/packages/style/src/my-thing/my-thing.css" code={`.my-thing {
+        <Code lang="css" title="packages/style/src/my-thing/my-thing.css" code={`.my-thing {
   /* Component-private default. */
   --my-thing-thumb-width: 0.5rem;
 
@@ -133,7 +133,7 @@ pnpm build     # confirm the docs site builds clean`} />
         <h2>Before opening a PR</h2>
         <ul>
           <li>Run <code>pnpm check</code> from <code>next/</code> and confirm it passes clean.</li>
-          <li>Run <code>pnpm build</code> from <code>next/docs/</code> and confirm the site builds without error.</li>
+          <li>Run <code>pnpm build</code> from <code>docs/</code> and confirm the site builds without error.</li>
           <li>Open the demo page and walk every state under light and dark at 320, 768, and 1280 px.</li>
         </ul>
         <p>One component per PR keeps reviews scoped. A new customization knob can ride along with the component that introduces it.</p>

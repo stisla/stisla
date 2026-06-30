@@ -1,4 +1,4 @@
-# Demo / component coverage audit — legacy `src/site/pages/*.njk` vs v3 `next/docs/src/routes/docs/vanilla/*.tsx`
+# Demo / component coverage audit — legacy `src/site/pages/*.njk` vs v3 `docs/src/routes/docs/vanilla/*.tsx`
 
 Status: **RESTORATION COMPLETE, 2026-06-27.** All gaps below have been restored. Tier 0 (slider,
 timeline, avatar JS, custom select) ported as whole components. Tiers 1–3 (36 docs pages) restored via

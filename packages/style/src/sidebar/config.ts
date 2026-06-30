@@ -3,7 +3,7 @@ import { composer } from "../composer";
 // Sidebar style contract — authored ONCE here, consumed by every framework wrapper
 // (@stisla/react, /vue, …). Variant values map to BEM modifier classes; knob keys map to
 // --sidebar-* CSS vars via the tune={} prop. Base (unmodified) = md size.
-// Mirrors src/scss/components/_sidebar.scss → next/packages/style/src/sidebar/sidebar.css.
+// Mirrors src/scss/components/_sidebar.scss → packages/style/src/sidebar/sidebar.css.
 //
 // Compound notes:
 //   • This is the ROOT contract (.sidebar). The sub-parts (.sidebar__header / __brand / __menu /

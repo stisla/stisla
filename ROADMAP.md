@@ -53,7 +53,7 @@ actual next task always lives under **Next** below.
 > All builds clean (client + SSR). **ARCHITECTURE.md** token sections (§1–§7, §9, §11–§12) were
 > rewritten to match this corrected model (no stale `@theme inline` / `tokens.css` text remains).
 >
-> **Porting tooling (new):** `next/PORTING.md` is the repeatable recipe (output files, wire-up
+> **Porting tooling (new):** `PORTING.md` is the repeatable recipe (output files, wire-up
 > points, the lessons: token refs, no `is-*`, attribute/ARIA state, docs shape, verify steps).
 > `pnpm scaffold <name>` generates CSS + docs-page skeletons and wires `demo.css` + the nav link
 > (alphabetical). `pnpm check` (`scripts/check-tokens.mjs`) greps for forbidden patterns (`--bs-*`,
@@ -447,7 +447,7 @@ group); `check-tokens` scale-literal-fallback regex no longer false-matches `--t
 
 ## Phase 8 — now the ACTIVE track (vanilla-JS behavior before Utilities/React)
 - [x] `@stisla/vanilla` — vanilla-JS behavior layer. PORT the legacy `src/js/` (core + 22 components) into
-      `next/packages/vanilla/`, JS+JSDoc, updating the `is-*`→data-attribute hooks changed in the CSS sweep
+      `packages/vanilla/`, JS+JSDoc, updating the `is-*`→data-attribute hooks changed in the CSS sweep
       (`[data-collapsing]`/`[data-dialog-open]`/`[data-menu-open]`/`[data-sidebar-visible]`/`[data-shaking]`/
       `[data-highlighted]`) + size renames. Demos go live: build to an IIFE bundle, DemoFrame injects it
       inline like lucide, flip interactive demos from static `data-state` to trigger-based. Order: slice
@@ -498,7 +498,7 @@ group); `check-tokens` scale-literal-fallback regex no longer false-matches `--t
       `?raw` query (scroll-area inlines overlayscrollbars' stylesheet that way). Demo bundle 403→702kB
       (all three libs bundle), check clean (105), build clean.
       ⇒ Wrapper JS bundles & runs, BUT the port is NOT complete — a full legacy-vs-v3 audit
-      (next/DEMO-GAP-AUDIT.md, 2026-06-27, 8 parallel agents over all 49 shared pages) found the docs
+      (DEMO-GAP-AUDIT.md, 2026-06-27, 8 parallel agents over all 49 shared pages) found the docs
       were heavily CLIPPED and 3 behavior components never ported. NOT DONE:
       • Whole components unported [TIER 0 — DONE 2026-06-27]: slider (CSS+JS+docs), timeline (CSS+docs),
         avatar JS (+ live demos), custom select (deferred popup CSS + Stisla.Select + custom-select docs)

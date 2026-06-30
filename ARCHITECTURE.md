@@ -54,7 +54,7 @@ the CSS variables our component CSS reads AND generates the utilities. No parall
 | Component knobs | `--<component>-*` | per-component tuning; default to theme tokens. |
 
 `⚠️ CHECK` before adding a token: confirm it isn't already in
-`next/packages/tokens/src/theme.css` (or a Tailwind default). That file is the source of truth.
+`packages/style/src/theme.css` (or a Tailwind default). That file is the source of truth.
 
 ### 1.1 Semantic colors (`--color-*`, defined in `@theme`)
 
@@ -130,7 +130,7 @@ from components. The earlier inline bridge was wrong: inline vars aren't emitted
 components couldn't read the theme and reached around it to a redundant `--st-*` layer. Defining
 `--color-*` directly + a `.dark` override gives emitted, themeable, flip-correct vars under one
 name (Tailwind colors doc → "Referencing in your CSS"). Reference impl:
-`next/packages/tokens/src/theme.css`.
+`packages/style/src/theme.css`.
 
 ---
 
@@ -479,7 +479,7 @@ verified. Do not bulk-convert on an unproven pipeline.
   CSS. Rename in both or drift silently breaks styling — prefer generating / validating the
   config against the CSS. The composer is pure JS (no framework deps, no hooks) so it stays
   SSR/RSC-safe and importable from any ecosystem.
-- `⚠️` Before naming a token or knob, check `next/packages/tokens/src/theme.css` / the nearest
+- `⚠️` Before naming a token or knob, check `packages/style/src/theme.css` / the nearest
   finished component — match the existing convention, don't invent.
 - `⚠️` Component CSS must read `var(--color-*)` / a theme facility / `var(--knob)` — never
   hardcode a literal that should be themeable.

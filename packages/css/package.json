@@ -28,7 +28,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/stisla/stisla.git",
-    "directory": "next/packages/css"
+    "directory": "packages/css"
   },
   "homepage": "https://github.com/stisla/stisla#readme",
   "publishConfig": {

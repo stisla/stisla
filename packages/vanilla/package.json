@@ -33,7 +33,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/stisla/stisla.git",
-    "directory": "next/packages/vanilla"
+    "directory": "packages/vanilla"
   },
   "homepage": "https://github.com/stisla/stisla#readme",
   "publishConfig": {

@@ -74,7 +74,7 @@ function ThemingDocs() {
         <p>The override here is scoped to a wrapper so both states sit side by side, but a real <code>:root</code> or <code>@theme</code> override repaints exactly the same way, app-wide. Hover the buttons to confirm the derived hover and active states track the new brand color too.</p>
 
         <h3>Source</h3>
-        <p>The shipped defaults live in <code>next/packages/style/src/theme.css</code>. Read that file when you want a starting copy with the current values to paste and edit.</p>
+        <p>The shipped defaults live in <code>packages/style/src/theme.css</code>. Read that file when you want a starting copy with the current values to paste and edit.</p>
       </section>
 
       <section>

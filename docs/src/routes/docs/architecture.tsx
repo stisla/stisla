@@ -165,7 +165,7 @@ function ArchitectureDocs() {
                 dark-mode delta block
               </td>
               <td>
-                <code>next/packages/style/src/theme.css</code>
+                <code>packages/style/src/theme.css</code>
               </td>
             </tr>
             <tr>
@@ -185,7 +185,7 @@ function ArchitectureDocs() {
               <td>Every BEM component file. One file per block</td>
               <td>
                 <code>
-                  next/packages/style/src/&lt;name&gt;/&lt;name&gt;.css
+                  packages/style/src/&lt;name&gt;/&lt;name&gt;.css
                 </code>
               </td>
             </tr>
@@ -227,9 +227,9 @@ function ArchitectureDocs() {
         </p>
         <Code
           lang="text"
-          title="next/packages/"
+          title="packages/"
           code={`
-next/packages/
+packages/
   style/src/
     theme.css                  (Tailwind @theme foundation, light + dark block)
     <name>/<name>.css          (one CSS file per BEM block, ~53 total)
@@ -305,7 +305,7 @@ next/packages/
                 Token surface is one Tailwind <code>@theme</code> layer
               </td>
               <td>
-                <code>next/packages/style/src/theme.css</code>. Only file with
+                <code>packages/style/src/theme.css</code>. Only file with
                 literal color values.
               </td>
             </tr>
@@ -324,7 +324,7 @@ next/packages/
               <td>
                 <code>.button</code>, <code>.card</code>, <code>.dialog</code>,
                 etc. One <code>&lt;name&gt;.css</code> per block under{" "}
-                <code>next/packages/style/src/</code>
+                <code>packages/style/src/</code>
               </td>
             </tr>
             <tr>
@@ -381,7 +381,7 @@ next/packages/
             Theming
           </Link>{" "}
           for the override model and the worked recipes. Open any component file
-          under <code>next/packages/style/src/</code> for the canonical pattern
+          under <code>packages/style/src/</code> for the canonical pattern
           in practice; <code>button/button.css</code>,{" "}
           <code>card/card.css</code>, and <code>alert/alert.css</code> are the
           cleanest references.
