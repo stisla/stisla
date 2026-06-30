@@ -24,18 +24,18 @@ next/
       theme.css          Tailwind @theme tokens (--color-* + --st-border-width)
     style/src/
       theme.css          Tailwind @theme foundation (light + dark block)
-      <name>/<name>.css  one BEM CSS file per component block (~52 total)
+      <name>/<name>.css  one BEM CSS file per component block (~53 total)
       <name>/<name>.<lib>.css  lib adapter (e.g. combobox.tomselect.css)
+      components.css     barrel; @import of every component CSS
       composer.ts        pure (variantProps, tune) → { className, style }
       index.ts           re-exports
     css/
-      package.json       pre-compiled @stisla/css bundle (built from style/)
+      stisla.css         precompiled-bundle entry (theme + components barrel)
+      package.json       built by the Tailwind CLI into dist/stisla.css
     vanilla/src/
       core/              component.js, init.js, transition.js, inert.js
       components/        one .js file per interactive component
-      index.js           core entry (all except optional 3)
-      index-full.js      full entry (core + carousel + combobox + scroll-area)
-      carousel.js        optional add-on entry (also combobox.js, scroll-area.js)
+      index.js           entry; registers every component, auto-inits
     react/src/
       <name>/index.tsx   React wrappers, one per component
       index.ts           re-exports
@@ -126,7 +126,7 @@ pnpm build     # confirm the docs site builds clean`} />
   border-radius: var(--my-thing-radius);
 }`} />
         <p>Document every new knob in the component&rsquo;s Customization section. One row per variable, with columns for Variable, Default, and Use. The <Link to="/docs/vanilla/slider" className="link">Slider</Link> page is the reference shape for how to write that table.</p>
-        <p>For components with many variables, group the table by purpose (sizing, surface, interaction). For components that mostly rely on shared tokens, a short pointer paragraph back to <Link to="/docs/customization" className="link">Customization</Link> is enough.</p>
+        <p>For components with many variables, group the table by purpose (sizing, surface, interaction). For components that mostly rely on shared tokens, a short pointer paragraph back to <Link to="/docs/styling" hash="per-component-variables" className="link">Styling</Link> is enough.</p>
       </section>
 
       <section>

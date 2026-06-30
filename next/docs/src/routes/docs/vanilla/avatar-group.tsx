@@ -62,7 +62,7 @@ function AvatarGroupDocs() {
         <p>
           Add <code>.avatar-group__more</code> as the final child to summarize the rest. It's a regular
           <code>.avatar</code>, so size and shape modifiers compose; the modifier just retints the
-          paint to read as "more" rather than a missing portrait.
+          paint to read as "more."
         </p>
         <Demo
           html={`

@@ -4,9 +4,9 @@
  *   colors → var(--color-*)   type → var(--text-*) / var(--leading-*) / var(--font-weight-*)
  *   radius → var(--radius-*)  shadow → var(--shadow-*)   spacing → --spacing(n)
  *   tint   → --alpha(var(--color-x) / N%)
- * z-index + duration ride Tailwind's namespaces (--z-index-*, --transition-duration-*) in a
- * @theme static block: that generates z-* / duration-* utilities AND force-emits the vars so our
- * raw var() refs resolve. Only border-width has no namespace slot, so it stays --st-*.
+ * z-index + duration ride Tailwind's namespaces (--z-index-*, --transition-duration-*), declared
+ * inline below with everything else; components reference them via raw var(), which keeps each
+ * referenced token in the output. Only border-width has no namespace slot, so it stays --st-*.
  * Dark mode overrides --color-* in a scope.
  *
  * This file is a PURE @theme — it does NOT import Tailwind. Tailwind is pulled in once by the
@@ -56,9 +56,20 @@
   --color-ring: var(--color-primary);
 
   /* Geometry — our tuned radius + shadow (override Tailwind's defaults; spacing/type stay) */
-  --radius-sm: 0.65rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1rem;
+  /* --radius is the single knob: a theme generator scales the whole ramp by rewriting it.
+     The steps keep our tuned curve as multipliers, so sm/md/lg stay pixel-identical to the
+     old literals (1rem * 0.65 = 0.65rem, etc.). We override Tailwind's full scale — not just
+     sm/md/lg — so the knob governs every tier and the ramp stays monotonic above lg.
+     Pills stay at 50%/9999px, off this knob. */
+  --radius: 1rem;
+  --radius-xs: calc(var(--radius) * 0.4);
+  --radius-sm: calc(var(--radius) * 0.65);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.5);
+  --radius-2xl: calc(var(--radius) * 2);
+  --radius-3xl: calc(var(--radius) * 3);
+  --radius-4xl: calc(var(--radius) * 4);
   --shadow-sm:
     0 1px 2px 0 color-mix(in oklch, black 5%, transparent),
     0 1px 3px 0 color-mix(in oklch, black 4%, transparent);
@@ -81,37 +92,16 @@
     "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
     "Liberation Mono", monospace;
 
-  /* Line-height scale — re-declared with Tailwind's default values (not changed). Tailwind v4 only
-     emits a theme var to :root when a UTILITY uses it; our components reference var(--leading-*) in
-     raw component CSS, and no leading-* utility is used anywhere, so without this they'd be
-     tree-shaken away and every `line-height: var(--leading-*)` would fall back to the inherited 1.5.
-     Declaring them here forces emission so the component line-heights actually apply. */
+  /* Line-height scale (Tailwind's default values, declared so the scale is ours to tune). */
   --leading-none: 1;
   --leading-tight: 1.25;
   --leading-snug: 1.375;
   --leading-normal: 1.5;
-}
 
-@variant dark {
-  --color-background: oklch(0.155 0 0);
-  --color-foreground: oklch(0.97 0 0);
-  --color-surface: oklch(0.18 0 0);
-  --color-surface-2: oklch(0.21 0 0);
-  --color-surface-3: oklch(0.23 0 0);
-  --color-border: oklch(0.25 0 0);
-  --color-border-strong: oklch(0.32 0 0);
-  --color-muted-foreground: oklch(0.72 0 0);
-  --color-neutral: oklch(0.27 0 0);
-  --color-neutral-foreground: oklch(0.97 0 0);
-  --color-accent: oklch(0.26 0 0);
-  --color-accent-foreground: oklch(0.97 0 0);
-}
-
-/* z-index + duration scales — Tailwind owns these namespaces, so naming them --z-index-* /
- * --transition-duration-* generates utilities (z-modal, duration-fast, …). `static` forces
- * unconditional emission: our component CSS references them via raw var(), which Tailwind can't
- * see, so without `static` a zero-utility-usage var would be tree-shaken (the --leading-* trap). */
-@theme static {
+  /* z-index + duration scales — Tailwind owns these namespaces, so naming them --z-index-* /
+     --transition-duration-* generates the matching utilities; components also reference them via
+     raw var(). Unused steps simply don't appear in the precompiled bundle (they stay in source for
+     build-from-source consumers). */
   --z-index-base: 0;
   --z-index-dropdown: 1000;
   --z-index-sticky: 1020;
@@ -124,6 +114,23 @@
   --transition-duration-fast: 120ms;
   --transition-duration-normal: 200ms;
   --transition-duration-slow: 320ms;
+}
+
+:root {
+  @variant dark {
+    --color-background: oklch(0.155 0 0);
+    --color-foreground: oklch(0.97 0 0);
+    --color-surface: oklch(0.18 0 0);
+    --color-surface-2: oklch(0.21 0 0);
+    --color-surface-3: oklch(0.23 0 0);
+    --color-border: oklch(0.25 0 0);
+    --color-border-strong: oklch(0.32 0 0);
+    --color-muted-foreground: oklch(0.72 0 0);
+    --color-neutral: oklch(0.27 0 0);
+    --color-neutral-foreground: oklch(0.97 0 0);
+    --color-accent: oklch(0.26 0 0);
+    --color-accent-foreground: oklch(0.97 0 0);
+  }
 }
 
 /* Single global default border thickness — NOT a scale, so no Tailwind namespace fits

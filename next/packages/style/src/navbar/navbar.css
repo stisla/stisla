@@ -13,7 +13,8 @@
     flex-wrap: wrap;
     align-items: center;
     gap: var(--navbar-gap, --spacing(3));
-    padding: var(--navbar-padding-block, --spacing(2.5)) var(--navbar-padding-inline, --spacing(4));
+    padding: var(--navbar-padding-block, --spacing(2.5))
+      var(--navbar-padding-inline, --spacing(4));
     background-color: var(--navbar-bg, var(--color-background));
     color: var(--navbar-color, var(--color-foreground));
   }
@@ -42,7 +43,10 @@
     align-items: center;
     height: var(--navbar-button-height, --spacing(9));
     padding-block: var(--navbar-brand-padding-block, 0);
-    padding-inline: var(--navbar-brand-padding-inline, var(--navbar-button-padding-inline, --spacing(3)));
+    padding-inline: var(
+      --navbar-brand-padding-inline,
+      var(--navbar-button-padding-inline, --spacing(3))
+    );
     color: var(--navbar-color, var(--color-foreground));
     line-height: var(--leading-none);
     text-decoration: none;
@@ -59,9 +63,19 @@
     background-color: transparent;
     color: var(--navbar-color, var(--color-foreground));
     border: 0;
-    border-radius: var(--navbar-button-radius, calc(var(--radius-md) - --spacing(1)));
+    border-radius: var(
+      --navbar-button-radius,
+      calc(var(--radius-md) - --spacing(1))
+    );
     cursor: pointer;
-    transition: background-color var(--navbar-transition-duration, var(--transition-duration-fast)) ease;
+    transition: background-color
+      var(--navbar-transition-duration, var(--transition-duration-fast)) ease;
+  }
+
+  .navbar__toggle :is(svg, i) {
+    width: var(--navbar-toggle-icon-size, --spacing(5));
+    height: var(--navbar-toggle-icon-size, --spacing(5));
+    flex-shrink: 0;
   }
 
   .navbar__toggle:hover,
@@ -93,14 +107,19 @@
     height: var(--navbar-button-height, --spacing(9));
     padding-block: var(--navbar-button-padding-block, 0);
     padding-inline: var(--navbar-button-padding-inline, --spacing(3));
-    border-radius: var(--navbar-button-radius, calc(var(--radius-md) - --spacing(1)));
+    border-radius: var(
+      --navbar-button-radius,
+      calc(var(--radius-md) - --spacing(1))
+    );
     background-color: transparent;
     color: var(--navbar-button-color, var(--color-foreground));
     line-height: var(--leading-none);
     text-decoration: none;
     transition:
-      background-color var(--navbar-transition-duration, var(--transition-duration-fast)) ease,
-      color var(--navbar-transition-duration, var(--transition-duration-fast)) ease;
+      background-color
+        var(--navbar-transition-duration, var(--transition-duration-fast)) ease,
+      color var(--navbar-transition-duration, var(--transition-duration-fast))
+        ease;
   }
 
   .navbar__button:hover,

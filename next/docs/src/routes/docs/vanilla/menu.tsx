@@ -257,7 +257,7 @@ function MenuDocs() {
           Borrow the <code>.media</code> row for notification or message menus
           that pair an avatar or icon with a title and supporting lines. Give
           each row <code>role="menuitem"</code> and the menu folds it into
-          keyboard navigation. The menu matches items by role, not by class, so
+          keyboard navigation. The menu matches items by their role, so
           hover and arrow-key highlight paint the same as a plain item and round
           to the same row corners.
         </p>
@@ -304,7 +304,7 @@ function MenuDocs() {
           Set <code>data-stisla-menu-placement</code> on the menu to override
           the default <code>bottom-start</code>. Floating UI flips the menu
           automatically when it would overflow the viewport, so the value is a
-          preference. It isn't a hard constraint.
+          preference.
         </p>
         <Demo
           layout="row"

@@ -159,7 +159,7 @@ function WhyStislaDocs() {
           and that is the point of it. If you want a finished product with
           sensible defaults and less customization to manage, Bootstrap is a
           great choice. Stisla starts somewhere else. We treat the system as a
-          starting point you reshape, not an end product you adopt. Bootstrap and
+          starting point you reshape. Bootstrap and
           Stisla just want different things, so we built our own foundation.
         </p>
       </section>
@@ -178,7 +178,7 @@ function WhyStislaDocs() {
           repetition. Tailwind has two layers, components and utilities, and most
           people use only one. We use both: constrained components for the
           repeated stuff, atomic utilities for the one-offs. We are committing to
-          a layer Tailwind leaves optional, not transgressing it.
+          a layer Tailwind leaves optional, exactly as it is meant to be used.
         </p>
 
         <p>
@@ -197,7 +197,7 @@ function WhyStislaDocs() {
           Yes. Utilities sit in a later cascade layer than components.{" "}
           <code>@layer utilities</code> comes after{" "}
           <code>@layer components</code>, so they win deterministically, by layer
-          precedence, not source order.
+          precedence, regardless of source order.
         </p>
 
         <Code
@@ -277,12 +277,11 @@ function WhyStislaDocs() {
           <Link to="/docs/specification" className="link">
             Specification
           </Link>{" "}
-          for the cross-implementation contract. See the{" "}
-          <Link to="/docs/customization" className="link">
-            Customization
+          for the cross-implementation contract. See{" "}
+          <Link to="/docs/theming" className="link">
+            Theming
           </Link>{" "}
-          page for the full token table, worked examples of the override model,
-          and the preset recipes.
+          for the override model and the worked examples.
         </p>
       </section>
     </>

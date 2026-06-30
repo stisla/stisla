@@ -60,9 +60,9 @@ html.is-dialog-open                      page scroll lock while any dialog is op
 ## 3. Modifiers
 
 ```
-.dialog--compact                              width: 20rem
-.dialog--roomy                              width: 40rem
-.dialog--spacious                              width: 60rem
+.dialog--sm                              width: 20rem
+.dialog--lg                              width: 40rem
+.dialog--xl                              width: 60rem
 .dialog--fullscreen                      covers the viewport, no border / radius
 .dialog--almost-fullscreen               2.5rem breathing margin around the dialog
 .dialog__panel--top                      pin to top of viewport

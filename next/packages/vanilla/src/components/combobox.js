@@ -1,4 +1,4 @@
-// Stisla.Combobox — Tom Select adapter (stisla-full bundle).
+// Stisla.Combobox — Tom Select adapter.
 //
 // A searchable trigger backed by Tom Select. Authored as a regular
 // <select class="combobox" data-stisla-combobox>; multi-select via the

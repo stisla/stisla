@@ -166,13 +166,13 @@
   }
 
   /* === Size modifiers === retune the panel width cap only. */
-  .dialog--compact {
+  .dialog--sm {
     --dialog-width: --spacing(80);
   }
-  .dialog--roomy {
+  .dialog--lg {
     --dialog-width: --spacing(160);
   }
-  .dialog--spacious {
+  .dialog--xl {
     --dialog-width: --spacing(240);
   }
 

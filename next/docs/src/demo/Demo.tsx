@@ -1,6 +1,26 @@
+import { Suspense, lazy, useEffect, useState } from "react";
 import ShikiHighlighter from "react-shiki/web";
-import { DemoFrame } from "./DemoFrame";
 import { useTheme } from "~/theme";
+
+/* DemoFrame is loaded LAZILY and CLIENT-ONLY. It pulls in the compiled @stisla/css surface +
+ * the ~700KB vanilla IIFE; rendering it during SSR/hydration is what flashed demo-heavy pages.
+ * Gating it behind mount keeps it out of the server render AND the first client render (so no
+ * hydration mismatch), and `lazy` keeps its weight out of every docs route's initial chunk. */
+const DemoFrame = lazy(() =>
+  import("./DemoFrame").then((m) => ({ default: m.DemoFrame })),
+);
+
+/* Reserves the frame box (height + min-height via .demo-block__frame) and paints the surface
+ * color, so the page doesn't shift and dark mode shows no white gap before the iframe arrives. */
+function FramePlaceholder() {
+  return (
+    <div
+      className="demo-block__frame"
+      style={{ background: "var(--color-background)" }}
+      aria-hidden="true"
+    />
+  );
+}
 
 /* A documentation demo: the live preview (sandboxed vanilla iframe) on top, and its exact
  * source highlighted below — one `html` string drives both (ARCHITECTURE §8). The preview
@@ -19,9 +39,12 @@ export function Demo({
   layout?: "row" | "stack";
 }) {
   const { theme: docsTheme } = useTheme();
+
   return (
     <div className="not-prose demo-block">
-      <DemoFrame html={html} theme={theme ?? docsTheme} layout={layout} />
+      <Suspense fallback={<FramePlaceholder />}>
+        <DemoFrame html={html} theme={theme ?? docsTheme} layout={layout} />
+      </Suspense>
       <ShikiHighlighter
         language="html"
         theme={{

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "@tanstack/react-router";
 
 /* Table of contents — built at runtime from the rendered doc, not at build time.
@@ -24,10 +24,18 @@ function slugify(text: string): string {
     .replace(/-+/g, "-");
 }
 
-export function useToc(): { entries: TocEntry[]; activeId: string | null } {
+export function useToc(): {
+  entries: TocEntry[];
+  activeId: string | null;
+  scanned: boolean;
+} {
   const { pathname } = useLocation();
   const [entries, setEntries] = useState<TocEntry[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
+  /* False until the first client scan runs (SSR + first render). Lets the rail
+   * show a skeleton in that window, then settle to the real ToC — never resets,
+   * so client-side navigation doesn't reflash the skeleton. */
+  const [scanned, setScanned] = useState(false);
 
   useEffect(() => {
     const container = document.querySelector(".main-container");
@@ -147,6 +155,7 @@ export function useToc(): { entries: TocEntry[]; activeId: string | null } {
     };
 
     scan();
+    setScanned(true);
 
     /* Re-scan when the content actually changes. Route components code-split in
      * after this effect first runs, so a one-shot scan on navigation would miss
@@ -184,7 +193,7 @@ export function useToc(): { entries: TocEntry[]; activeId: string | null } {
     };
   }, [pathname]);
 
-  return { entries, activeId };
+  return { entries, activeId, scanned };
 }
 
 /* Presentational TOC tree. Reused by the desktop rail and the mobile strip. */
@@ -199,8 +208,42 @@ export function Toc({
   title?: boolean;
   onNavigate?: () => void;
 }) {
+  const navRef = useRef<HTMLElement>(null);
+
+  /* Keep the active link in view when the rail itself scrolls (long ToCs). Only
+   * the rail is scrolled — never the page — so we adjust this nav's own scrollTop
+   * rather than calling scrollIntoView (which would also scroll ancestors/window).
+   * No-ops on the mobile strip and short ToCs, where the nav doesn't overflow. */
+  useEffect(() => {
+    const nav = navRef.current;
+    if (!nav || !activeId || nav.scrollHeight <= nav.clientHeight) return;
+    const link = nav.querySelector<HTMLElement>('[aria-current="true"]');
+    if (!link) return;
+
+    const navRect = nav.getBoundingClientRect();
+    const linkRect = link.getBoundingClientRect();
+    const margin = 24;
+    const behavior: ScrollBehavior = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches
+      ? "auto"
+      : "smooth";
+
+    if (linkRect.top < navRect.top + margin) {
+      nav.scrollTo({
+        top: nav.scrollTop + (linkRect.top - navRect.top) - margin,
+        behavior,
+      });
+    } else if (linkRect.bottom > navRect.bottom - margin) {
+      nav.scrollTo({
+        top: nav.scrollTop + (linkRect.bottom - navRect.bottom) + margin,
+        behavior,
+      });
+    }
+  }, [activeId]);
+
   return (
-    <nav className="site-toc" aria-label="On this page">
+    <nav ref={navRef} className="site-toc" aria-label="On this page">
       {title && <p className="site-toc__title">On this page</p>}
       <ul className="site-toc__list">
         {entries.map((entry) => (

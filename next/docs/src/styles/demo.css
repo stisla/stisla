@@ -1,0 +1,58 @@
+/* ===========================================================================
+ * Demo block — preview (iframe) on top, highlighted source below, as one card.
+ * Rendered by demo/Demo.tsx. (Distinct from demo/demo.css, the @stisla/css
+ * payload inlined into the iframe — this is the docs-chrome around it.)
+ * ======================================================================== */
+
+.demo-block {
+  margin: 0 0 --spacing(4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.demo-block__frame {
+  width: 100%;
+  transition: height 500ms ease-in-out;
+  min-height: 28rem;
+}
+
+.demo-block__code .shiki {
+  max-height: 200px;
+  overflow: auto;
+  background-color: transparent !important;
+  padding: --spacing(4);
+  border-top: 1px solid var(--color-border);
+  font-size: 0.75rem;
+  border-radius: 0;
+}
+
+/* ===========================================================================
+ * Code block — standalone highlighted source, no preview (the <Code> component).
+ * ======================================================================== */
+
+.code-block {
+  margin: 0 0 --spacing(4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--color-surface-2);
+  padding: --spacing(0.5);
+}
+
+.code-block__title {
+  padding: --spacing(1.5) --spacing(4);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-muted-foreground);
+}
+
+.code-block__code .shiki {
+  max-height: 400px;
+  overflow: auto;
+  background-color: var(--color-surface) !important;
+  border: 1px solid var(--color-border);
+  border-radius: calc(var(--radius-lg) - --spacing(0.5));
+  padding: --spacing(4);
+  font-size: 0.75rem;
+}

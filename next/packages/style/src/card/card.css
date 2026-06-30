@@ -83,7 +83,7 @@
     background: var(--color-surface-2);
   }
 
-  .card__header--compact {
+  .card__header--sm {
     --card-header-height: --spacing(11.5);
   }
 

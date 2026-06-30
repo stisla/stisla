@@ -27,8 +27,15 @@ for (const name of PKGS) {
   const files = JSON.parse(json)[0].files.map((f) => f.path);
   const has = (p) => files.includes(p);
 
+  // A glob subpath target (e.g. "src/components/*") can't match one file — assert at least one
+  // packed file matches the pattern instead. Concrete targets must match exactly.
+  const present = (t) =>
+    t.includes("*")
+      ? files.some((f) => new RegExp("^" + t.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, ".*") + "$").test(f))
+      : has(t);
+
   const want = [...exportTargets(pkg.exports), "README.md", "LICENSE"];
-  const missing = want.filter((t) => !has(t));
+  const missing = want.filter((t) => !present(t));
   if (missing.length) {
     failed++;
     console.log(`✗ ${pkg.name}@${pkg.version} — missing from pack: ${missing.join(", ")}`);

@@ -41,7 +41,7 @@ function MediaDocs() {
         <p>
           Stack a <code>.media__meta</code> below the description for a
           secondary line at a smaller font in muted-foreground. An avatar in the
-          figure reads as an actor rather than a category.
+          figure reads as an actor.
         </p>
         <Demo
           layout="stack"

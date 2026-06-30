@@ -180,9 +180,9 @@ function CardDocs() {
       </section>
 
       <section>
-        <h2>Compact header</h2>
+        <h2>Small header</h2>
         <p>
-          The header row defaults to a roomy height. Add <code>.card__header--compact</code> to
+          The header row defaults to a taller height. Add <code>.card__header--sm</code> to
           tighten it for dense layouts.
         </p>
         <Demo
@@ -195,7 +195,7 @@ function CardDocs() {
   </div>
 </div>
 <div class="card w-72">
-  <div class="card__header card__header--compact">Compact header</div>
+  <div class="card__header card__header--sm">Small header</div>
   <div class="card__body">
     <p class="card__text">A tighter header for dense rows.</p>
   </div>
@@ -277,7 +277,7 @@ function CardDocs() {
             </tr>
             <tr>
               <td><code>--card-header-height</code></td>
-              <td>Minimum height of the header row; <code>.card__header--compact</code> lowers it</td>
+              <td>Minimum height of the header row; <code>.card__header--sm</code> lowers it</td>
             </tr>
           </tbody>
         </table>

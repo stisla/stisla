@@ -17,7 +17,7 @@ function MeterDocs() {
         <h2>Basic</h2>
         <p>
           The scalar-measurement cousin of Progress: reach for meter when the value just sits at a
-          level (storage used, score vs target), not when work is in motion. Wrap a{" "}
+          level (storage used, score vs target) and for Progress when work is in motion. Wrap a{" "}
           <code>.meter__bar</code> in a <code>.meter__track</code> inside <code>.meter</code>. The root
           carries <code>role="meter"</code> + aria value attributes (use <code>aria-valuetext</code>{" "}
           when the unit matters). Add <code>.meter__label</code> / <code>.meter__value</code> to caption

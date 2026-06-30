@@ -250,7 +250,7 @@ function ButtonDocs() {
         <p>
           The four surface variables that paint each state. Each defaults from{" "}
           <code>--button-tone</code>, so retoning is usually a one-line <code>--button-tone</code>{" "}
-          override rather than four writes.
+          override.
         </p>
         <table>
           <thead>

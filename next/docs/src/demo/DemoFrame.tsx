@@ -6,6 +6,9 @@ const LUCIDE_CDN = "https://unpkg.com/lucide@1.21.0/dist/umd/lucide.min.js";
 
 const inlineSafe = (js: string) => js.replace(/<\/script>/gi, "<\\/script>");
 
+/* Rendered CLIENT-ONLY and LAZILY (see Demo.tsx): this module carries the compiled @stisla/css
+ * surface (demo.css) + the ~700KB vanilla IIFE, so it must never load during SSR/hydration —
+ * that eager weight is what flashed demo pages. By the time it renders, the parent DOM exists. */
 export function DemoFrame({
   html,
   theme = "light",
@@ -18,16 +21,21 @@ export function DemoFrame({
   const ref = useRef<HTMLIFrameElement>(null);
   const [height, setHeight] = useState(96);
 
-  const initialThemeRef = useRef(theme);
-
   const srcDoc = useMemo(() => {
+    /* Bake the CURRENT theme into the iframe's first paint, read from the live parent DOM (the
+     * pre-paint head script already applied it) — not the lagging `theme` prop — so the frame
+     * never paints light then flips. Live toggles still arrive via postMessage below. */
+    const initialTheme = document.documentElement.classList.contains("dark")
+      ? "dark"
+      : "light";
+
     const demoCss =
       layout === "stack"
         ? "display:flex;flex-direction:column;gap:.5rem;align-items:center;justify-content:center;"
         : "display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;justify-content:center;";
 
     return `<!doctype html>
-<html${initialThemeRef.current === "dark" ? ' data-theme="dark"' : ""}>
+<html${initialTheme === "dark" ? ' data-theme="dark"' : ""}>
 <head>
 <meta charset="utf-8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -74,8 +82,8 @@ export function DemoFrame({
 </html>`;
   }, [html, layout]);
 
-  // Push theme changes into the live iframe instead of rebuilding it. Runs on every theme change;
-  // the iframe's listener flips data-theme with no document churn.
+  // Push theme changes into the live iframe instead of rebuilding it. The iframe's listener
+  // flips data-theme with no document churn.
   useEffect(() => {
     ref.current?.contentWindow?.postMessage(
       { type: "stisla-demo-theme", theme },
@@ -109,7 +117,9 @@ export function DemoFrame({
         )
       }
       className="demo-block__frame"
-      style={{ height }}
+      /* Surface bg on the element itself covers the sub-frame `about:blank` moment before
+         srcDoc parses, so dark mode never flashes white as the iframe mounts. */
+      style={{ height, background: "var(--color-background)" }}
     />
   );
 }

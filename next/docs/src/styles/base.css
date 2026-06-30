@@ -1,0 +1,13 @@
+/* === Global base ===
+ * Shell-wide tokens + color-scheme. Always loaded, every page. */
+
+:root {
+  --navbar-height: 4rem;
+  --shell-max: 90rem;
+  color-scheme: light;
+}
+
+.dark,
+[data-theme="dark"] {
+  color-scheme: dark;
+}

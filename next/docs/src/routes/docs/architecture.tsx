@@ -27,8 +27,8 @@ function ArchitectureDocs() {
           </Link>
           , including the component anatomy and the token contract. The surface
           you tune lives in{" "}
-          <Link to="/docs/customization" className="link">
-            Customization
+          <Link to="/docs/theming" className="link">
+            Theming
           </Link>
           . The reasoning behind avoiding Bootstrap, Tailwind alone, and
           CSS-in-JS lives in{" "}
@@ -92,10 +92,9 @@ function ArchitectureDocs() {
               </td>
               <td>
                 The vanilla JS runtime. Drives <code>data-stisla-*</code>{" "}
-                behavior on canonical markup. Mirrors the stylesheet&rsquo;s
-                shape, a core entry plus a full entry and the three optional
-                add-ons, and pairs with <code>@stisla/css</code> at the matching
-                version.
+                behavior on canonical markup. Ships one entry that registers
+                every component, and pairs with <code>@stisla/css</code> at the
+                matching version.
               </td>
             </tr>
             <tr>
@@ -111,12 +110,12 @@ function ArchitectureDocs() {
         </table>
         <p>
           The Tailwind <code>@theme</code> foundation lives inside{" "}
-          <code>@stisla/style</code> as <code>theme.css</code> rather than a
-          package of its own. The pre-compiled <code>@stisla/css</code> bakes it
+          <code>@stisla/style</code> as its <code>theme.css</code> file. The
+          pre-compiled <code>@stisla/css</code> bakes it
           in for zero-build consumers; build-from-source consumers import it
           directly.{" "}
           <Link
-            to="/docs/customization"
+            to="/docs/theming"
             hash="setting-up-overrides"
             className="link"
           >
@@ -203,62 +202,18 @@ function ArchitectureDocs() {
           </tbody>
         </table>
 
-        <h3>Bundles and add-ons</h3>
+        <h3>The bundle</h3>
         <p>
-          Three precompiled shapes ship in <code>@stisla/css</code>: a core
-          bundle, a full bundle, and the three 3rd-party-adapter components as
-          individual add-on files. Core and full share every standard component;
-          they differ only on whether the optionals are bundled in.
-        </p>
-        <table>
-          <thead>
-            <tr>
-              <th>Bundle</th>
-              <th>Includes</th>
-              <th>Use when</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <code>stisla.css</code> (core)
-              </td>
-              <td>
-                Every component except the optional ones (carousel, combobox,
-                scroll-area)
-              </td>
-              <td>
-                You want the smallest stylesheet and will add optionals
-                individually or switch to full
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <code>stisla-full.css</code>
-              </td>
-              <td>Core plus every optional component in one file</td>
-              <td>You want one stylesheet that covers everything</td>
-            </tr>
-            <tr>
-              <td>
-                <code>carousel.css</code> / <code>combobox.css</code> /{" "}
-                <code>scroll-area.css</code>
-              </td>
-              <td>One optional component each, dropped on top of core</td>
-              <td>
-                You want core plus a specific optional without the other two
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <p>
-          Optional components are those that depend on a 3rd-party library:
-          carousel (Embla), combobox (Tom Select), scroll-area
-          (OverlayScrollbars). Everything else is core. The{" "}
-          <Link to="/docs/vanilla/installation" className="link">
-            Installation
+          <code>@stisla/css</code> ships one precompiled stylesheet,{" "}
+          <code>stisla.css</code>, with every component, the tokens, and no
+          utilities. To ship a subset instead, compile from source with{" "}
+          <code>@stisla/style</code>, which the{" "}
+          <Link to="/docs/vanilla/optimization" className="link">
+            Optimization
           </Link>{" "}
-          page covers the picking rule from the user side.
+          page covers. Three components depend on a 3rd-party library: carousel
+          (Embla), combobox (Tom Select), scroll-area (OverlayScrollbars). They
+          ship in the bundle like everything else.
         </p>
       </section>
 
@@ -277,18 +232,18 @@ function ArchitectureDocs() {
 next/packages/
   style/src/
     theme.css                  (Tailwind @theme foundation, light + dark block)
-    <name>/<name>.css          (one CSS file per BEM block, ~52 total)
+    <name>/<name>.css          (one CSS file per BEM block, ~53 total)
     <name>/<name>.<lib>.css    (optional lib adapter, e.g. combobox.tomselect.css)
+    components.css             (barrel; @import of every component CSS)
     composer.ts                (pure variant+tune → className+style function)
     index.ts                   (re-exports)
   css/
-    package.json               (pre-compiled bundle; built from style/)
+    stisla.css                 (the precompiled-bundle entry; theme + components barrel)
+    package.json               (built by the Tailwind CLI into dist/stisla.css)
   vanilla/src/
     core/                      (component.js, init.js, transition.js, inert.js)
     components/                (one .js file per interactive component, 20 total)
-    index.js                   (core entry — registers the 17 core components, auto-inits)
-    index-full.js              (full entry — core + carousel + combobox + scroll-area)
-    carousel.js                (optional add-on entry; also combobox.js, scroll-area.js)
+    index.js                   (entry; registers every component, auto-inits)
   react/src/
     <name>/index.tsx           (React wrappers, one per component)
     index.ts                   (re-exports)
@@ -422,8 +377,8 @@ next/packages/
           </Link>{" "}
           for the cross-impl contract that every implementation honors,
           including the component anatomy and token rules. Read{" "}
-          <Link to="/docs/customization" className="link">
-            Customization
+          <Link to="/docs/theming" className="link">
+            Theming
           </Link>{" "}
           for the override model and the worked recipes. Open any component file
           under <code>next/packages/style/src/</code> for the canonical pattern

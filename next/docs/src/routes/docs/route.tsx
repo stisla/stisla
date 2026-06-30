@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
-import { ChevronDown, Menu, Moon, Sun } from "lucide-react";
-import { Button } from "@stisla/react";
-import { ThemeProvider, useTheme } from "~/theme";
+import { ChevronDown } from "lucide-react";
+import { SiteNavbar } from "~/site-navbar";
 import { Toc, useToc } from "~/toc";
 
 /* Layout for every /docs/* page. Ported from the legacy docs shell
@@ -10,8 +9,8 @@ import { Toc, useToc } from "~/toc";
  * sidebar | main grid, with the content sitting in a rounded card.
  *
  * The nav uses the framework `.sidebar` component classes directly (not the
- * React Sidebar wrapper yet) — site chrome (.site-*) is in styles.css.
- * Doc pages author content only (ARCHITECTURE: docs = content, not chrome). */
+ * React Sidebar wrapper yet) — site chrome (.site-*) is in src/styles/.
+ * Doc pages author content only (ARCHITECTURE: docs supply content, layout supplies chrome). */
 export const Route = createFileRoute("/docs")({
   component: DocsLayout,
 });
@@ -39,7 +38,6 @@ const NAV: NavGroup[] = [
       { slug: "why-stisla", title: "Why Stisla" },
       { slug: "specification", title: "Specification" },
       { slug: "architecture", title: "Architecture" },
-      { slug: "customization", title: "Customization" },
       { slug: "contributing", title: "Contributing" },
     ],
   },
@@ -50,6 +48,16 @@ const NAV: NavGroup[] = [
       { slug: "installation", title: "Installation" },
       { slug: "javascript", title: "JavaScript" },
       { slug: "optimization", title: "Optimization" },
+      { slug: "utilities", title: "Utilities" },
+    ],
+  },
+  {
+    title: "Customization",
+    base: "/docs",
+    items: [
+      { slug: "theming", title: "Theming" },
+      { slug: "styling", title: "Styling" },
+      { slug: "composition", title: "Composition" },
     ],
   },
   {
@@ -123,93 +131,6 @@ const NAV: NavGroup[] = [
   },
 ];
 
-function ThemeToggle() {
-  const { theme, toggle } = useTheme();
-  return (
-    <Button
-      tone="neutral"
-      shape="ghost"
-      size="sm"
-      iconOnly
-      aria-label="Toggle color theme"
-      onClick={toggle}
-    >
-      {theme === "dark" ? <Sun /> : <Moon />}
-    </Button>
-  );
-}
-
-function SiteNavbar({ onMenu }: { onMenu: () => void }) {
-  return (
-    <header className="site-navbar">
-      <div className="site-navbar__inner">
-        <Button
-          className="site-navbar__trigger"
-          tone="neutral"
-          shape="ghost"
-          size="sm"
-          iconOnly
-          aria-label="Open menu"
-          aria-controls="site-sidebar"
-          onClick={onMenu}
-        >
-          <Menu />
-        </Button>
-
-        <Link to="/" className="site-navbar__brand">
-          <svg
-            className="site-navbar__brand-mark"
-            viewBox="0 0 512 512"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <rect
-              className="site-navbar__brand-tile"
-              width="512"
-              height="512"
-              rx="112"
-            />
-            <path
-              className="site-navbar__brand-s"
-              d="M 392 144 H 200 A 56 56 0 0 0 200 256 H 312 A 56 56 0 0 1 312 368 H 120"
-              fill="none"
-              strokeWidth="76"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          <span>Stisla</span>
-        </Link>
-
-        <div className="site-navbar__spacer" />
-
-        <div className="site-navbar__action">
-          <a
-            className="button button--ghost button--neutral button--sm button--icon-only"
-            href="https://github.com/stisla/stisla"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub"
-          >
-            <svg
-              role="img"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              width="18"
-              height="18"
-              aria-hidden="true"
-            >
-              <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-            </svg>
-          </a>
-          <ThemeToggle />
-        </div>
-      </div>
-    </header>
-  );
-}
-
 function DocsSidebar({ onNavigate }: { onNavigate: () => void }) {
   return (
     <nav className="sidebar sidebar--sm" aria-label="Docs">
@@ -280,12 +201,28 @@ function MobileToc({
   );
 }
 
+/* Placeholder shown in the right rail before the runtime scan settles (and in the
+ * SSR HTML). Reserving the rail track + filling it with this keeps the main column
+ * width stable — the ToC fades in without the layout jumping. */
+function TocSkeleton() {
+  return (
+    <div className="site-toc-skeleton" aria-hidden="true">
+      <span className="site-toc-skeleton__title" />
+      <span className="site-toc-skeleton__bar" />
+      <span className="site-toc-skeleton__bar" />
+      <span className="site-toc-skeleton__bar site-toc-skeleton__bar--sub" />
+      <span className="site-toc-skeleton__bar" />
+      <span className="site-toc-skeleton__bar site-toc-skeleton__bar--sub" />
+    </div>
+  );
+}
+
 function DocsLayout() {
   const [navOpen, setNavOpen] = useState(false);
-  const { entries, activeId } = useToc();
+  const { entries, activeId, scanned } = useToc();
 
   return (
-    <ThemeProvider>
+    <>
       <SiteNavbar onMenu={() => setNavOpen(true)} />
 
       <div className="site-layout">
@@ -312,12 +249,47 @@ function DocsLayout() {
           </article>
         </main>
 
-        {entries.length > 0 && (
-          <aside className="site-rail">
-            <Toc entries={entries} activeId={activeId} title />
-          </aside>
-        )}
+        {/* Always rendered so the rail track is reserved from SSR on — its
+            contents settle (skeleton → ToC) without shifting the main column. */}
+        <aside className="site-rail">
+          {scanned ? (
+            entries.length > 0 && (
+              <Toc entries={entries} activeId={activeId} title />
+            )
+          ) : (
+            <TocSkeleton />
+          )}
+
+          <Partner />
+        </aside>
       </div>
-    </ThemeProvider>
+    </>
+  );
+}
+
+function Partner() {
+  return (
+    <div aria-label="Partners">
+      <p className="text-xs text-muted-foreground font-semibold mb-2">
+        Partners
+      </p>
+      <a
+        href="https://enterprise.kredibel.com"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          className="rounded-md border border-border mb-3"
+          src="https://enterprise.kredibel.com/synapses-illustration.png"
+          alt=""
+          loading="lazy"
+        />
+        <div className="text-sm font-semibold">Kredibel for Enterprise</div>
+        <span className="text-xs text-muted-foreground">
+          Identity verification, AML screening, and real-time fraud detection in
+          one API.
+        </span>
+      </a>
+    </div>
   );
 }

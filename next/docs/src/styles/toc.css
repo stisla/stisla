@@ -1,0 +1,194 @@
+/* ===========================================================================
+ * Right rail (ToC) — lg+ only. Bare on the page bg, sticky. Built at runtime
+ * from the rendered headings (see toc.tsx). The .site-rail aside + mobile strip
+ * are rendered by routes/docs/route.tsx.
+ * ======================================================================== */
+
+.site-rail {
+  display: none;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem 0;
+}
+
+@variant lg {
+  .site-rail {
+    display: flex;
+    position: sticky;
+    top: var(--navbar-height);
+    align-self: start;
+    height: calc(100vh - var(--navbar-height));
+  }
+
+  /* ToC sits at natural height; shrinks + scrolls internally if it overflows. */
+  .site-rail > .site-toc {
+    min-height: 0;
+    overflow-y: auto;
+  }
+}
+
+/* ToC skeleton — placeholder bars shown in the rail before the runtime scan
+ * settles. Keeps the rail from reading as empty without shifting the layout. */
+.site-toc-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.site-toc-skeleton__title,
+.site-toc-skeleton__bar {
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: var(--color-surface-2);
+  animation: site-toc-skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+.site-toc-skeleton__title {
+  width: 35%;
+  height: 0.625rem;
+  margin-bottom: 0.25rem;
+}
+
+.site-toc-skeleton__bar {
+  width: 80%;
+}
+
+.site-toc-skeleton__bar--sub {
+  width: 60%;
+  margin-left: 1rem;
+}
+
+@keyframes site-toc-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-toc-skeleton__title,
+  .site-toc-skeleton__bar {
+    animation: none;
+  }
+}
+
+/* === ToC === */
+
+.site-toc {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.site-toc__title {
+  margin: 0 0 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-muted-foreground);
+  display: none;
+}
+
+@variant lg {
+  .site-toc__title {
+    display: block;
+  }
+}
+
+.site-toc__list,
+.site-toc__sublist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-toc__sublist {
+  margin: 0.25rem 0 0.5rem 0.0625rem;
+  padding-left: 1rem;
+  border-left: 1px solid var(--color-border);
+}
+
+.site-toc__link {
+  display: block;
+  padding: 0.25rem 0;
+  color: var(--color-muted-foreground);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.site-toc__link:hover {
+  color: var(--color-foreground);
+}
+
+.site-toc__link[aria-current="true"] {
+  color: var(--color-foreground);
+  font-weight: 500;
+}
+
+/* === Mobile ToC ===
+ * Sticky strip between the navbar and the content card on small viewports.
+ * Hidden at lg+ where the right rail takes over. */
+
+.site-toc-mobile {
+  position: sticky;
+  top: var(--navbar-height);
+  left: 0;
+  right: 0;
+  z-index: 1020;
+  background: color-mix(in oklch, var(--color-background), transparent 15%);
+  backdrop-filter: blur(5px);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+
+  margin-inline: -1rem;
+  margin-block-start: -1rem;
+}
+
+@variant md {
+  .site-toc-mobile {
+    margin-inline: 0;
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    position: static;
+  }
+}
+
+@variant lg {
+  .site-toc-mobile {
+    display: none;
+  }
+}
+
+.site-toc-mobile__trigger {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  font-weight: 500;
+  font-size: 0.75rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.site-toc-mobile__trigger svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.site-toc-mobile__chevron {
+  transition: transform 0.2s ease;
+  color: var(--color-muted-foreground);
+}
+
+.site-toc-mobile__trigger[aria-expanded="true"] .site-toc-mobile__chevron {
+  transform: rotate(180deg);
+}
+
+.site-toc-mobile__inner {
+  padding: 0 1rem 1rem;
+}

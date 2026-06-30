@@ -13,8 +13,9 @@
       "types": "./dist/button/index.d.ts",
       "import": "./dist/button/index.js"
     },
-    "./button.css": "./dist/button/button.css",
     "./theme.css": "./src/theme.css",
+    "./components.css": "./dist/components.css",
+    "./*.css": "./dist/*/*.css",
     "./package.json": "./package.json"
   },
   "files": [

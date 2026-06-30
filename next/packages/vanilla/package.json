@@ -1,7 +1,7 @@
 {
   "name": "@stisla/vanilla",
   "version": "3.0.0-beta.8",
-  "description": "Stisla vanilla-JS behavior layer (no-build interactivity for the @stisla/css components). Core entry (index.js) plus a full entry (index-full.js) and three optional add-ons (carousel/combobox/scroll-area). ESM for bundlers; CDN builds emit IIFE stisla.js / stisla-full.js / <optional>.js (window.Stisla + auto-init).",
+  "description": "Stisla vanilla-JS behavior layer (no-build interactivity for the @stisla/css components). One entry registers every component; import individual modules from @stisla/vanilla/components/<name>.js to compose a subset. ESM for bundlers; the CDN build emits IIFE stisla.js (window.Stisla + auto-init).",
   "license": "MIT",
   "type": "module",
   "scripts": {
@@ -16,18 +16,12 @@
   },
   "exports": {
     ".": "./src/index.js",
-    "./full": "./src/index-full.js",
-    "./carousel": "./src/carousel.js",
-    "./combobox": "./src/combobox.js",
-    "./scroll-area": "./src/scroll-area.js",
+    "./components/*": "./src/components/*",
+    "./core/*": "./src/core/*",
     "./package.json": "./package.json"
   },
   "sideEffects": [
     "./src/index.js",
-    "./src/index-full.js",
-    "./src/carousel.js",
-    "./src/combobox.js",
-    "./src/scroll-area.js",
     "./src/components/*.js"
   ],
   "files": [

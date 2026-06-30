@@ -5,7 +5,7 @@ export const Route = createFileRoute("/docs/vanilla/dialog")({
   component: DialogDocs,
 });
 
-// A compact dialog for the variant demos. rootCls goes on .dialog (size/fullscreen modifiers),
+// A small dialog for the variant demos. rootCls goes on .dialog (size/fullscreen modifiers),
 // panelCls on .dialog__panel (position modifiers).
 const dlg = (
   id: string,
@@ -182,23 +182,23 @@ function DialogDocs() {
         <h2>Sizes</h2>
         <p>
           Width modifiers on the root swap the panel size: the default sits
-          mid-scale, with <code>.dialog--compact</code>,{" "}
-          <code>.dialog--roomy</code>, <code>.dialog--spacious</code>, and{" "}
+          mid-scale, with <code>.dialog--sm</code>, <code>.dialog--lg</code>,{" "}
+          <code>.dialog--xl</code>, and{" "}
           <code>.dialog--almost-fullscreen</code> (a breathing strip around an
           otherwise full-viewport panel).
         </p>
         <Demo
           layout="row"
           html={`
-<button class="button button--neutral button--outline" data-stisla-dialog-trigger="dlg-compact">Compact</button>
+<button class="button button--neutral button--outline" data-stisla-dialog-trigger="dlg-sm">Small</button>
 <button class="button button--neutral button--outline" data-stisla-dialog-trigger="dlg-default">Default</button>
-<button class="button button--neutral button--outline" data-stisla-dialog-trigger="dlg-roomy">Roomy</button>
-<button class="button button--neutral button--outline" data-stisla-dialog-trigger="dlg-spacious">Spacious</button>
+<button class="button button--neutral button--outline" data-stisla-dialog-trigger="dlg-lg">Large</button>
+<button class="button button--neutral button--outline" data-stisla-dialog-trigger="dlg-xl">Extra large</button>
 <button class="button button--neutral button--outline" data-stisla-dialog-trigger="dlg-afs">Almost fullscreen</button>
-${dlg("dlg-compact", "dialog--compact", "", "Compact", "A narrow panel for a short prompt.")}
+${dlg("dlg-sm", "dialog--sm", "", "Small", "A narrow panel for a short prompt.")}
 ${dlg("dlg-default", "", "", "Default", "The default width sits in the middle of the scale.")}
-${dlg("dlg-roomy", "dialog--roomy", "", "Roomy", "A wider panel for forms or richer content.")}
-${dlg("dlg-spacious", "dialog--spacious", "", "Spacious", "The widest fixed size, for dense layouts.")}
+${dlg("dlg-lg", "dialog--lg", "", "Large", "A wider panel for forms or richer content.")}
+${dlg("dlg-xl", "dialog--xl", "", "Extra large", "The widest fixed size, for dense layouts.")}
 ${dlg("dlg-afs", "dialog--almost-fullscreen", "", "Almost fullscreen", "Fills the viewport but keeps a strip of page around it.")}`}
         />
       </section>
@@ -258,14 +258,14 @@ ${dlg("dlg-bottom", "", "dialog__panel--bottom", "Anchored to bottom", "This pan
           The alert-dialog pattern for a destructive action:{" "}
           <code>role="alertdialog"</code>, a tinted
           <code>.icon-box</code> for tone, a centered heading and description,
-          and a Cancel / confirm pair. A compact width keeps it focused.
+          and a Cancel / confirm pair. A small width keeps it focused.
         </p>
         <Demo
           layout="row"
           html={`
 <button class="button button--outline button--danger" data-stisla-dialog-trigger="dlg-confirm">Delete workspace</button>
 
-<div class="dialog dialog--compact" id="dlg-confirm" data-stisla-dialog role="alertdialog" aria-labelledby="dlg-confirm-label" aria-describedby="dlg-confirm-desc">
+<div class="dialog dialog--sm" id="dlg-confirm" data-stisla-dialog role="alertdialog" aria-labelledby="dlg-confirm-label" aria-describedby="dlg-confirm-desc">
   <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
   <div class="dialog__panel">
     <div class="dialog__content">
@@ -296,7 +296,7 @@ ${dlg("dlg-bottom", "", "dialog__panel--bottom", "Anchored to bottom", "This pan
           html={`
 <button class="button" style="--button-tone: var(--color-success); --button-color: var(--color-success-foreground)" data-stisla-dialog-trigger="dlg-success">Submit order</button>
 
-<div class="dialog dialog--compact" id="dlg-success" data-stisla-dialog aria-labelledby="dlg-success-label">
+<div class="dialog dialog--sm" id="dlg-success" data-stisla-dialog aria-labelledby="dlg-success-label">
   <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
   <div class="dialog__panel">
     <div class="dialog__content">
@@ -356,7 +356,7 @@ ${dlg("dlg-bottom", "", "dialog__panel--bottom", "Anchored to bottom", "This pan
   <img src="https://picsum.photos/seed/stisla-shot/480/320" alt="Open image" width="240" height="160" class="rounded-md object-cover" />
 </a>
 
-<div class="dialog dialog--spacious" id="dlg-lightbox" data-stisla-dialog style="--dialog-bg: transparent; --dialog-border-color: transparent; --dialog-shadow: none;">
+<div class="dialog dialog--xl" id="dlg-lightbox" data-stisla-dialog style="--dialog-bg: transparent; --dialog-border-color: transparent; --dialog-shadow: none;">
   <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
   <div class="dialog__panel">
     <div class="dialog__content">
@@ -484,8 +484,8 @@ ${dlg("dlg-bottom", "", "dialog__panel--bottom", "Anchored to bottom", "This pan
         </table>
         <p>
           Size modifiers set <code>--dialog-width</code>:{" "}
-          <code>.dialog--compact</code>, <code>.dialog--roomy</code>,{" "}
-          <code>.dialog--spacious</code>, plus{" "}
+          <code>.dialog--sm</code>, <code>.dialog--lg</code>,{" "}
+          <code>.dialog--xl</code>, plus{" "}
           <code>.dialog--almost-fullscreen</code>. Position the panel with{" "}
           <code>.dialog__panel--top</code> or{" "}
           <code>.dialog__panel--bottom</code> instead of the default center.

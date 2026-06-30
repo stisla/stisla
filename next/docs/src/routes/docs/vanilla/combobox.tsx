@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Demo } from "~/demo/Demo";
-import { Code } from "~/demo/Code";
 
 export const Route = createFileRoute("/docs/vanilla/combobox")({
   component: ComboboxDocs,
@@ -35,22 +34,6 @@ function ComboboxDocs() {
   <option value="solid">Solid</option>
 </select>`}
         />
-      </section>
-
-      <section>
-        <h2>Installation</h2>
-        <p>
-          Skip this step if you're on the <code>stisla-full</code> bundle — it
-          already ships with Combobox. On the core bundle, add two extra lines.
-        </p>
-        <Code code={`<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@beta/dist/components/combobox.css">
-<script type="module" src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@beta/dist/components/combobox.js"></script>`} />
-        <Code lang="js" code={`import '@stisla/css/combobox';
-import '@stisla/vanilla/combobox';`} />
-        <p>
-          Tom Select rides along as a transitive dependency of{" "}
-          <code>@stisla/vanilla</code>, so no extra install is needed.
-        </p>
       </section>
 
       <section>

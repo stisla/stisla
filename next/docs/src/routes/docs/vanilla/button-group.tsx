@@ -159,9 +159,9 @@ function ButtonGroupDocs() {
         <h2>Customization</h2>
         <p>
           Two variables retune <code>.button-group</code> + <code>.button-toolbar</code>. Sizes retune
-          the child <code>--button-*</code> vars in modifier scope rather than adding per-size vars on
-          the group. To recolor a cluster, set <code>--button-bg</code> / <code>--button-tone</code> on
-          the members, not the wrapper.
+          the child <code>--button-*</code> vars in modifier scope, keeping the group free of per-size
+          vars. To recolor a cluster, set <code>--button-bg</code> / <code>--button-tone</code> on
+          the members themselves.
         </p>
         <table>
           <thead>

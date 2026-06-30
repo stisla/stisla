@@ -1,7 +1,6 @@
-// @stisla/vanilla build — CDN IIFE bundles (deps inlined, minified). Role-named outputs:
-//   stisla.js (core) · stisla-full.js (core + 3 optionals) · carousel.js / combobox.js /
-//   scroll-area.js (add-ons). ESM consumers import the raw src/ entries (deps resolved from
-//   node_modules); these dist files are the drop-in <script src> artifacts.
+// @stisla/vanilla build — one CDN IIFE bundle (deps inlined, minified): dist/stisla.js, every
+// component. ESM consumers import the raw src/ entry (deps resolved from node_modules); this dist
+// file is the drop-in <script src> artifact (window.Stisla + auto-init).
 import * as esbuild from "esbuild";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -33,18 +32,8 @@ const rawQueryPlugin = {
   },
 };
 
-const entries = {
-  stisla: "index.js",
-  "stisla-full": "index-full.js",
-  carousel: "carousel.js",
-  combobox: "combobox.js",
-  "scroll-area": "scroll-area.js",
-};
-
 await esbuild.build({
-  entryPoints: Object.fromEntries(
-    Object.entries(entries).map(([out, file]) => [out, join(src, file)]),
-  ),
+  entryPoints: { stisla: join(src, "index.js") },
   outdir: dist,
   bundle: true,
   format: "iife",
@@ -61,4 +50,4 @@ await esbuild.build({
   logLevel: "warning",
 });
 
-console.log("build-vanilla: 5 IIFE bundles → dist/ (stisla, stisla-full, carousel, combobox, scroll-area).js");
+console.log("build-vanilla: 1 IIFE bundle → dist/stisla.js");

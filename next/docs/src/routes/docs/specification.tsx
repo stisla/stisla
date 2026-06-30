@@ -92,8 +92,8 @@ function SpecificationDocs() {
           <code>color-mix(in oklch, …)</code>. The names below are the spec;
           the default values are an implementation detail that lives in each
           impl&rsquo;s theme file.{" "}
-          <Link to="/docs/customization" className="link">
-            Customization
+          <Link to="/docs/theming" className="link">
+            Theming
           </Link>{" "}
           covers how to override them.
         </p>
@@ -296,6 +296,15 @@ function SpecificationDocs() {
           <tbody>
             <tr>
               <td>
+                <code>--radius</code>
+              </td>
+              <td>
+                Radius base. The tiers below are multiples of it, so one
+                override scales every corner in the system at once
+              </td>
+            </tr>
+            <tr>
+              <td>
                 <code>--radius-sm</code>
               </td>
               <td>Small radius tier, for chips and inline shapes</td>
@@ -363,9 +372,13 @@ function SpecificationDocs() {
           </tbody>
         </table>
         <p>
-          The radius and shadow tiers are independent values in the theme, not
-          derived from one another. A theme that wants every corner square or
-          every shadow flat overrides each tier on its own.
+          The table lists the tiers the components use. The full Tailwind scale
+          (<code>--radius-xs</code> through <code>--radius-4xl</code>) is
+          overridden too, each a multiple of <code>--radius</code>, so utilities
+          like <code>rounded-xl</code> stay on the same ramp and one override
+          scales every tier together; you can still override a single tier on
+          its own. The shadow tiers stay independent values, so a theme that
+          wants every shadow flat overrides each tier.
         </p>
 
         <h3>Type</h3>
@@ -466,6 +479,39 @@ function SpecificationDocs() {
           page fixes the rules they all follow.
         </p>
 
+        <h3>Intent over appearance</h3>
+        <p>
+          Variants that carry meaning are named for the meaning, never the
+          paint. A control is <code>--primary</code> or <code>--danger</code>,
+          not <code>--blue</code> or <code>--red</code>. The name says what the
+          variant is for, so it survives a brand swap and reads the same on
+          every component that offers it. The intent set is fixed:{" "}
+          <code>primary</code>, <code>success</code>, <code>warning</code>,{" "}
+          <code>danger</code>, <code>info</code>, and the toned-down{" "}
+          <code>neutral</code> and <code>tertiary</code>.
+        </p>
+        <p>
+          Emphasis is a separate axis, and it takes a name for what it renders
+          because rendering is all it is. <code>--soft</code> is a tinted fill,{" "}
+          <code>--outline</code> a bordered transparent one, and{" "}
+          <code>--ghost</code> a fill that surfaces only on interaction, with
+          solid as the unmodified default. No intent hides under these. A fill
+          that appears on hover is only a rendering, so the visual
+          name is the honest one. The two axes are orthogonal and compose on the
+          root. <code>.button--danger.button--outline</code> reads as danger
+          intent in outline emphasis, and neither rule reaches into the other.
+        </p>
+        <p>
+          Everything else a modifier expresses follows the same test. Size,
+          structure, and orientation take descriptive names (<code>--sm</code>,{" "}
+          <code>--vertical</code>, <code>--block</code>) because there is no
+          meaning underneath them to name instead. The size names are a shared
+          vocabulary. <code>--sm</code> means the small step
+          on every component that has one, while the actual width or height each
+          step resolves to is the component&rsquo;s own. A modifier reads as
+          intent only when there is intent to read.
+        </p>
+
         <h3>Flat, never nested</h3>
         <p>
           Modifiers stay flat on the root and compose. A button can be{" "}
@@ -474,6 +520,27 @@ function SpecificationDocs() {
           modifier nests inside another, and no rule reaches into a bare HTML
           tag, so a component&rsquo;s CSS expresses only what the component
           contributes and nothing leaks in from the surrounding document.
+        </p>
+
+        <h3>Flush</h3>
+        <p>
+          A few modifier names carry one fixed meaning across every block they
+          land on, and <code>--flush</code> is the one worth stating outright. It
+          closes the gap between a component and the edge it sits against, so the
+          block reads as part of its container instead of a thing set on top of
+          it. What closes that gap depends on what the component has: a bordered
+          block drops its border, a raised block drops its shadow, a block with
+          its own background drops the background and radius. The intent stays
+          fixed while the mechanics follow the component.
+        </p>
+        <p>
+          Symmetric cases take a plain <code>--flush</code> (
+          <code>.accordion--flush</code>, <code>.list-group--flush</code>,{" "}
+          <code>.media--flush</code>). When only one edge flushes, the modifier
+          takes a side suffix and cancels that side&rsquo;s padding with a
+          negative margin (<code>.button--flush-start</code>,{" "}
+          <code>.button--flush-end</code>). Read the suffix as the same modifier
+          aimed at one edge.
         </p>
 
         <h3>Knobs, and what isn&rsquo;t one</h3>
@@ -710,8 +777,8 @@ function SpecificationDocs() {
           </tbody>
         </table>
         <p>
-          The contract is the state vocabulary and the behavior, not the library
-          underneath. A port may also ship a different set of interactive
+          The contract is the state vocabulary and the behavior, whatever library
+          sits underneath. A port may also ship a different set of interactive
           components; see{" "}
           <a className="link" href="#coverage">
             Coverage
@@ -822,6 +889,90 @@ function SpecificationDocs() {
           component introduces a new background variable, it introduces the
           paired foreground at the same time, so a token override never strands
           a text color.
+        </p>
+      </section>
+
+      <section>
+        <h2>Accessibility</h2>
+        <p>
+          Accessibility is part of the contract. Every
+          implementation operates the same way from the keyboard, exposes the
+          same roles and relationships to assistive technology, and keeps the
+          painted state and the announced state in sync. The mechanics differ by
+          framework; the guarantees do not.
+        </p>
+
+        <h3>Keyboard</h3>
+        <p>
+          Every interactive component is fully operable without a pointer. Enter
+          and Space activate controls, Escape dismisses overlays, and arrow keys
+          move within composites like Menu, Tabs, and Radio group. Tab order
+          follows the document, and a composite is a single tab stop with
+          arrow-key movement inside it rather than one stop per child. The exact
+          keys each component binds live on its{" "}
+          <Link to="/docs/vanilla/button" className="link">
+            component page
+          </Link>
+          , next to the demos, so they cannot drift from the implementation.
+        </p>
+
+        <h3>Roles and relationships</h3>
+        <p>
+          A port may render a slot with any tag, but it lands on the role the
+          spec fixes for that slot. A Dialog is a dialog to assistive technology
+          whether it is built from a <code>div</code> or a framework primitive.
+          Labels and descriptions are wired through the matching aria
+          attributes. A dialog points at its title and description, a field
+          points at its error, and a control that shows only an icon carries an
+          accessible name.
+        </p>
+
+        <h3>State is announced, not just painted</h3>
+        <p>
+          The runtime hooks in{" "}
+          <a className="link" href="#states">
+            States
+          </a>{" "}
+          double as the accessibility surface. The attribute that paints a state
+          is the one that announces it. Open and closed ride{" "}
+          <code>aria-expanded</code>, selection rides <code>aria-selected</code>{" "}
+          or <code>aria-checked</code>, async work rides <code>aria-busy</code>,
+          and a failed field rides <code>aria-invalid</code>. Assistive
+          technology and the stylesheet read one source of truth, so they cannot
+          disagree.
+        </p>
+
+        <h3>Focus management</h3>
+        <p>
+          The visible ring is covered under{" "}
+          <a className="link" href="#focus">
+            Focus
+          </a>
+          . Beyond paint, overlays manage focus. Opening a Dialog or Drawer
+          moves focus inside and contains it there, and closing returns focus to
+          the trigger. This is behavior the interactivity layer owns, and every
+          port honors it however its primitives express it.
+        </p>
+
+        <h3>Contrast and motion</h3>
+        <p>
+          Paired foregrounds are an accessibility mechanism as much as a theming
+          one. Because every background token ships a foreground tuned against
+          it, a token swap repaints text and surface together and never strands
+          one against the other.{" "}
+          <a className="link" href="#motion">
+            Motion
+          </a>{" "}
+          collapses under <code>prefers-reduced-motion</code> while leaving the
+          start and end states intact, so a reduced-motion user still lands on a
+          settled, addressable state.
+        </p>
+
+        <p>
+          System-wide guarantees live here. The specifics each component adds,
+          the exact keys it binds, the roles its slots take, and the labels it
+          requires, live on the component page so they stay next to the markup
+          that has to deliver them.
         </p>
       </section>
 

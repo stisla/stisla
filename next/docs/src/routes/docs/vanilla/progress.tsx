@@ -72,7 +72,7 @@ function ProgressDocs() {
         <h2>Animated</h2>
         <p>
           Add <code>.progress__bar--animated</code> for a soft sheen that sweeps across the fill every
-          few seconds — a quiet "still working" signal, not a treadmill. Dropped under
+          few seconds — a quiet "still working" signal. Dropped under
           reduced-motion.
         </p>
         <Demo

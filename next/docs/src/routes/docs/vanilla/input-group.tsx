@@ -84,8 +84,8 @@ function InputGroupDocs() {
         <h2>With button</h2>
         <p>
           A button slot sits inset inside the wrapper with its own concentric
-          radius, reading as a chip floating in the field rather than chrome
-          welded to its edge. Pair the button size with the wrapper size; retune
+          radius, reading as a chip floating in the field. Pair the button size
+          with the wrapper size; retune
           the inset with <code>--input-group-inset</code>.
         </p>
         <Demo

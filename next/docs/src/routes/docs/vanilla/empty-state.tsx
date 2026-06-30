@@ -20,7 +20,7 @@ function EmptyStateDocs() {
           holding one glyph by default), a <code>.empty-state__title</code>, supporting{" "}
           <code>.empty-state__text</code>, and a trailing <code>.empty-state__action</code>. Tone
           modifiers recolour the media for error or success states; the text stays neutral so the
-          message reads as words, not colour. Drop an <code>.illustration</code>, <code>&lt;img&gt;</code>,{" "}
+          message reads as words. Drop an <code>.illustration</code>, <code>&lt;img&gt;</code>,{" "}
           <code>.icon-box</code>, <code>.avatar</code>, or <code>.spinner</code> into the media slot
           and it sheds its circle so the richer art isn't double-framed. A glyph, a title, a line of
           guidance, and a primary action.

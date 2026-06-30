@@ -1,0 +1,58 @@
+/* @stisla/style — component barrel. Explicit @import of every component's raw CSS (grouping only,
+ * no compilation). This is the single list the precompiled @stisla/css bundle compiles, and what a
+ * build-from-source consumer imports to get everything at once:
+ *   @import "tailwindcss"; @import "@stisla/style/theme.css"; @import "@stisla/style/components.css";
+ * To compose a subset instead, drop this barrel and @import only the components you want. */
+@import "./accordion/accordion.css";
+@import "./alert/alert.css";
+@import "./autocomplete/autocomplete.css";
+@import "./avatar/avatar.css";
+@import "./avatar-group/avatar-group.css";
+@import "./badge/badge.css";
+@import "./breadcrumb/breadcrumb.css";
+@import "./button/button.css";
+@import "./button-group/button-group.css";
+@import "./card/card.css";
+@import "./carousel/carousel.css";
+@import "./checkbox/checkbox.css";
+@import "./collapsible/collapsible.css";
+@import "./combobox/combobox.css";
+@import "./combobox/combobox.tomselect.css";
+@import "./dialog/dialog.css";
+@import "./drawer/drawer.css";
+@import "./empty-state/empty-state.css";
+@import "./field/field.css";
+@import "./icon-box/icon-box.css";
+@import "./illustration/illustration.css";
+@import "./indicator/indicator.css";
+@import "./input/input.css";
+@import "./input-group/input-group.css";
+@import "./kbd/kbd.css";
+@import "./link/link.css";
+@import "./list-group/list-group.css";
+@import "./media/media.css";
+@import "./menu/menu.css";
+@import "./meter/meter.css";
+@import "./navbar/navbar.css";
+@import "./page/page.css";
+@import "./pagination/pagination.css";
+@import "./placeholders/placeholders.css";
+@import "./popover/popover.css";
+@import "./progress/progress.css";
+@import "./radio/radio.css";
+@import "./scroll-area/scroll-area.css";
+@import "./scroll-area/scroll-area.overlayscrollbars.css";
+@import "./select/select.css";
+@import "./separator/separator.css";
+@import "./sidebar/sidebar.css";
+@import "./slider/slider.css";
+@import "./spinner/spinner.css";
+@import "./switch/switch.css";
+@import "./table/table.css";
+@import "./tabs/tabs.css";
+@import "./textarea/textarea.css";
+@import "./timeline/timeline.css";
+@import "./toast/toast.css";
+@import "./toggle/toggle.css";
+@import "./toggle-group/toggle-group.css";
+@import "./tooltip/tooltip.css";

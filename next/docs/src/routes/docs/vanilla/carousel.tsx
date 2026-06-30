@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Demo } from "~/demo/Demo";
-import { Code } from "~/demo/Code";
 
 export const Route = createFileRoute("/docs/vanilla/carousel")({
   component: CarouselDocs,
@@ -56,22 +55,6 @@ function CarouselDocs() {
   </ul>
 </div>`}
         />
-      </section>
-
-      <section>
-        <h2>Installation</h2>
-        <p>
-          Skip this step if you're on the <code>stisla-full</code> bundle — it
-          already ships with Carousel. On the core bundle, add two extra lines.
-        </p>
-        <Code code={`<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@beta/dist/components/carousel.css">
-<script type="module" src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@beta/dist/components/carousel.js"></script>`} />
-        <Code lang="js" code={`import '@stisla/css/carousel';
-import '@stisla/vanilla/carousel';`} />
-        <p>
-          Embla rides along as a transitive dependency of{" "}
-          <code>@stisla/vanilla</code>, so no extra install is needed.
-        </p>
       </section>
 
       <section>

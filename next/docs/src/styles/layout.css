@@ -1,0 +1,93 @@
+/* === Layout grid === sidebar | main | rail (rail at lg+ only).
+ * Rendered by routes/docs/route.tsx. */
+
+.site-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: stretch;
+  min-height: calc(100vh - var(--navbar-height));
+  padding: 0 1rem 3rem;
+  max-width: var(--shell-max);
+  margin-inline: auto;
+}
+
+@variant md {
+  .site-layout {
+    grid-template-columns: 13rem minmax(0, 1fr);
+    column-gap: 1.5rem;
+    padding: 0 1.5rem 4rem;
+  }
+}
+
+@variant lg {
+  .site-layout {
+    /* The rail track is always reserved (the .site-rail aside renders from SSR on,
+       holding a skeleton until the runtime ToC settles), so the main column never
+       reflows when the ToC fills in. */
+    grid-template-columns: 13rem minmax(0, 1fr) 16rem;
+    column-gap: 2rem;
+  }
+}
+
+/* === Main column + content card ===
+ * Main is a transparent track that hosts the rounded content card. The card is
+ * the actual readable surface and the only place that wears the --color-background
+ * tone — the sidebar sits on the page bg. */
+
+.site-main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.content-card {
+  /* Mobile: edge-to-edge content on the page bg — no card chrome. */
+  background: transparent;
+  border: 0;
+}
+
+@variant md {
+  .content-card {
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: 2rem;
+    overflow: hidden;
+  }
+}
+
+/* === Docs content column === */
+
+.main-container {
+  max-width: 44rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.5rem 0;
+}
+
+@variant md {
+  .main-container {
+    padding: 4rem 2.5rem;
+  }
+}
+
+/* === Docs typography (prose) — site-context refinements ===
+ * Tightens the rhythm for the reference-doc feel on top of the Tailwind
+ * Typography base. Demo viewers carry .not-prose, so guard against restyling
+ * their content. */
+
+.main-container.prose :where(h1):not(.not-prose *) {
+  font-size: 1.75rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.5rem;
+  font-weight: var(--font-weight-medium);
+}
+
+.main-container.prose :where(section):not(:last-of-type):not(.not-prose *) {
+  margin-block-end: --spacing(20);
+}
+
+.main-container.prose :where(.lead):not(.not-prose *) {
+  margin-bottom: --spacing(14);
+}

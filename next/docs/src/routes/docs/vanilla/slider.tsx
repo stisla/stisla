@@ -239,7 +239,7 @@ function SliderDocs() {
         </table>
         <p>
           The track and thumb opt out of the global radius by default; the pill shape carries meaning, so
-          it isn't a style choice. Set <code>--slider-radius</code> at the scope you want softened.
+          it stays fixed. Set <code>--slider-radius</code> at the scope you want softened.
         </p>
       </section>
     </>

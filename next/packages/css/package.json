@@ -1,14 +1,10 @@
 {
   "name": "@stisla/css",
   "version": "3.0.0-beta.8",
-  "description": "Stisla CSS bundle — zero-build distribution (tokens + components, NO utilities). stisla.css (core) + stisla-full.css (core + optionals), plus the 3 optional components (carousel/combobox/scroll-area) as individual add-on files. NOTE: same published name as the legacy packages/css; only one publishes at cutover.",
+  "description": "Stisla CSS bundle — zero-build distribution (tokens + every component, NO utilities) compiled to a single stisla.css you can <link> with no build step. Want a subset? Compile from source via @stisla/style. NOTE: same published name as the legacy packages/css; only one publishes at cutover.",
   "license": "MIT",
   "exports": {
     ".": "./dist/stisla.css",
-    "./full": "./dist/stisla-full.css",
-    "./carousel": "./dist/carousel.css",
-    "./combobox": "./dist/combobox.css",
-    "./scroll-area": "./dist/scroll-area.css",
     "./package.json": "./package.json"
   },
   "files": [
@@ -20,13 +16,13 @@
     "*.css"
   ],
   "scripts": {
-    "build": "node scripts/build-css.mjs"
+    "build": "tailwindcss -i stisla.css -o dist/stisla.css --minify"
   },
   "peerDependencies": {
     "@stisla/style": "workspace:*"
   },
   "devDependencies": {
-    "@tailwindcss/node": "^4.0.0",
+    "@tailwindcss/cli": "^4.0.0",
     "tailwindcss": "^4.0.0"
   },
   "repository": {

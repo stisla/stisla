@@ -1,0 +1,144 @@
+/* ===========================================================================
+ * Landing — ported from the legacy home (src/site/styles/site.scss). Drops the
+ * sidebar and right rail: a single full-width column with the hero over a
+ * three-up features grid on the page bg, no content-card chrome.
+ * Rendered by routes/index.tsx.
+ * ======================================================================== */
+
+.site-layout--landing {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@variant md {
+  .site-layout--landing {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@variant lg {
+  .site-layout--landing {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.site-main--landing {
+  gap: 0;
+}
+
+.site-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 3rem 1rem 2.5rem;
+}
+
+@variant md {
+  .site-hero {
+    padding: 6rem 1rem 4rem;
+  }
+}
+
+.site-hero__title {
+  margin: 0 0 1.25rem;
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--color-foreground);
+}
+
+@variant md {
+  .site-hero__title {
+    font-size: 3.25rem;
+  }
+}
+
+@variant lg {
+  .site-hero__title {
+    font-size: 3.75rem;
+  }
+}
+
+.site-hero__lead {
+  margin: 0 0 2rem;
+  max-width: 36rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-muted-foreground);
+}
+
+@variant md {
+  .site-hero__lead {
+    font-size: 1.0625rem;
+  }
+}
+
+.site-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Three equal columns at md+, stacks below. Each card sits on the page bg as a
+   bordered surface: a thin outer mat on --color-surface-2 around an inner panel. */
+.site-features {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  padding: 0 0 3rem;
+  max-width: 64rem;
+  margin-inline: auto;
+}
+
+@variant md {
+  .site-features {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+    padding: 0 0 5rem;
+  }
+}
+
+.site-feature {
+  padding: 4px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-2);
+}
+
+.site-feature__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: calc(var(--radius-lg) - 4px);
+  background: var(--color-surface);
+  height: 100%;
+}
+
+.site-feature__icon {
+  display: inline-flex;
+  margin-bottom: 0.75rem;
+  color: var(--color-muted-foreground);
+}
+
+.site-feature__icon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.site-feature__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-foreground);
+}
+
+.site-feature__body {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--color-muted-foreground);
+}

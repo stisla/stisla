@@ -1,0 +1,38 @@
+@import "tailwindcss";
+@import "../../../packages/style/src/theme.css";
+@import "../../../packages/style/src/button/button.css";
+@import "../../../packages/style/src/navbar/navbar.css";
+@import "../../../packages/style/src/sidebar/sidebar.css";
+@import "../../../packages/style/src/illustration/illustration.css";
+
+@plugin "@tailwindcss/typography";
+
+/* ===========================================================================
+ * Docs shell — site-only chrome for the docs app; never bundled into the
+ * framework CSS. Runtime tokens come from the framework theme (--color-* /
+ * --spacing()). This file is the single compile unit: Tailwind is imported once
+ * here, then every partial below is @imported into it, so `@variant` /
+ * `--spacing()` resolve without per-file `@reference`.
+ *
+ * Visual hierarchy:
+ *   page bg                ← sits behind everything
+ *     navbar               full-width, sticky, sits on page bg
+ *     site-layout grid     sidebar | main
+ *       sidebar            bare nav on page bg (off-canvas below md)
+ *       main               holds the rounded content-card on page bg
+ *         content-card     the actual readable surface
+ *
+ * Breakpoints follow Tailwind's defaults: md = 48rem, lg = 64rem.
+ * --navbar-height = 4rem, --shell-max = 90rem.
+ *
+ * Partials are @imported in source order to preserve the cascade.
+ * ======================================================================== */
+
+@import "./base.css";
+@import "./navbar.css";
+@import "./sidebar.css";
+@import "./layout.css";
+@import "./toc.css";
+@import "./demo.css";
+@import "./landing.css";
+@import "./gallery.css";

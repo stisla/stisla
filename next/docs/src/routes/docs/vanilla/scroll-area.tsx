@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Demo } from "~/demo/Demo";
-import { Code } from "~/demo/Code";
 
 export const Route = createFileRoute("/docs/vanilla/scroll-area")({
   component: ScrollAreaDocs,
@@ -46,23 +45,6 @@ function ScrollAreaDocs() {
   </div>
 </div>`}
         />
-      </section>
-
-      <section>
-        <h2>Installation</h2>
-        <p>
-          Skip this step if you're on the <code>stisla-full</code> bundle — it
-          already ships with Scroll area. On the core bundle, add two extra
-          lines.
-        </p>
-        <Code code={`<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@beta/dist/components/scroll-area.css">
-<script type="module" src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@beta/dist/components/scroll-area.js"></script>`} />
-        <Code lang="js" code={`import '@stisla/css/scroll-area';
-import '@stisla/vanilla/scroll-area';`} />
-        <p>
-          OverlayScrollbars rides along as a transitive dependency of{" "}
-          <code>@stisla/vanilla</code>, so no extra install is needed.
-        </p>
       </section>
 
       <section>

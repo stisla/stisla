@@ -9,8 +9,7 @@ npm install @stisla/css
 ```
 
 ```js
-import "@stisla/css"; // core
-import "@stisla/css/full"; // + carousel, combobox, scroll-area
+import "@stisla/css"; // every component
 ```
 
 Or via CDN:
@@ -19,6 +18,6 @@ Or via CDN:
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@beta/dist/stisla.css" />
 ```
 
-Optional add-ons drop on top of core: `@stisla/css/carousel`, `@stisla/css/combobox`, `@stisla/css/scroll-area`.
+This single bundle ships every component. Want only a subset? Compile from source with [`@stisla/style`](https://www.npmjs.com/package/@stisla/style): pull `@stisla/style/theme.css` plus the `@stisla/style/<name>/<name>.css` you need through your own Tailwind build.
 
 Pairs with [`@stisla/vanilla`](https://www.npmjs.com/package/@stisla/vanilla) for interactivity. Docs and source: https://github.com/stisla/stisla

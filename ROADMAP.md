@@ -99,6 +99,38 @@ actual next task always lives under **Next** below.
 > - Persist theme without flash; shiki grammar chunking is heavy (react-shiki), revisit if build
 >   size matters.
 
+## Next — Ship Vanilla (2026-06-29 direction)
+
+**Maintainer call:** the vanilla track (CSS + behavior) is the v3 release. **Complete vanilla and
+ship.** React wrappers (sweep beyond Button/Sidebar), `@stisla/vue`, and the "why constraint" page
+rewrite are **deferred off the ship path** — not part of this milestone. The Phase 5/3 React
+reference (Button + Sidebar) stays as-is; don't delete, don't extend.
+
+These are **unordered** — pick by what's ready / highest-leverage, not top-to-bottom:
+
+- [ ] **Complete `@stisla/css` + `@stisla/vanilla`, then ship.** Land the real dist + npm publish
+      (currently `3.0.0-beta.8`; `dist/` gitignored; publish gated on maintainer). Verify both
+      bundles (`stisla.css`/`stisla-full.css` + the 3 optional add-ons) and the JS IIFE on a
+      no-build page. See [[project_build_pipeline]] / [[project_distribution_model]].
+- [ ] **Complete the illustration page.** Port the full metaphor set + the recolorable-SVG
+      gallery with color controls and SVG/PNG export from the legacy code (the CSS-only
+      `.illustration` primitive is done; the gallery/export effort is what remains —
+      see [[project_illustration_system]]).
+- [ ] **Port the legacy dashboard template into the new repo.** Need to distinguish an **HTML
+      template** from **framework templates** (structure / packaging TBD — discuss before
+      starting). See [[project_dashboard_template]].
+- [ ] **Complete the index / landing page.**
+- [ ] **Promote `next/` to repo root + delete all legacy.** `src/`, old `packages/css` +
+      `packages/vanilla`, `tools/build-packages.mjs`, legacy Vite config (= the Phase 8 "Cutover"
+      item, §12).
+- [ ] **Polish the docs pages.** TOC sidebar still needs work; dark/light mode persistence
+      (no flash on load); other rough edges.
+
+**Deferred off the ship path (was Phase 8 tail):** React wrapper sweep, `@stisla/vue`, "why
+constraint" page rewrite. Re-open after vanilla ships.
+
+---
+
 ## Guiding rule
 Decide → prove on a **slice** (Button + Sidebar, both vanilla + framework outputs) → sweep.
 Do NOT bulk-convert components before the slice is verified (ARCHITECTURE §9).

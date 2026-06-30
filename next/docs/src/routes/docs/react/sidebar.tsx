@@ -26,7 +26,7 @@ function SidebarReactDocs() {
         <p className="lead">
           The same component as the vanilla page, via the <code>@stisla/react</code> compound API.
           The wrappers are thin: they resolve to the identical BEM classes and CSS vars, so the
-          styling is shared, not reimplemented.
+          styling is shared.
         </p>
       </header>
 
@@ -80,7 +80,7 @@ function SidebarReactDocs() {
         <p>
           A <code>tune</code> on the root sets <code>--sidebar-*</code> vars that the cascade
           distributes to every item. A <code>tune</code> on a single <code>Sidebar.Item</code>{" "}
-          overrides just that subtree, closer in the cascade. This is a CSS feature, not a React one;
+          overrides just that subtree, closer in the cascade. This is a CSS feature;
           the wrapper only writes the vars.
         </p>
         <div className="not-prose" style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>

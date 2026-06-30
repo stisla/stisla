@@ -1,0 +1,95 @@
+/* === Navbar ===
+ * Full-width sticky bar above the layout grid. Carries the brand, the primary
+ * section links (md+), the hamburger (mobile), GitHub link, and theme toggle.
+ * Rendered by site-navbar.tsx. */
+
+.site-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  height: var(--navbar-height);
+  background-color: color-mix(
+    in oklch,
+    var(--color-background),
+    transparent 15%
+  );
+  backdrop-filter: blur(5px);
+}
+.site-navbar__inner {
+  --navbar-bg: transparent;
+  --navbar-padding-block: 0;
+  --navbar-padding-inline: 0;
+  --navbar-brand-padding-inline: 0;
+  --navbar-gap: 0.5rem;
+  height: 100%;
+  padding: 0 calc(1rem - 8px);
+  max-width: var(--shell-max);
+  margin-inline: auto;
+  @variant md {
+    padding: 0 3rem;
+    --navbar-gap: 0.75rem;
+  }
+}
+
+/* Adds the wordmark type/gap on top of the component's `.navbar__brand` geometry. */
+.site-navbar__brand {
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+/* Tile + S invert with the theme by tracking the same tokens as page bg/fg. */
+.site-navbar__brand-mark {
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+}
+
+.site-navbar__brand-tile {
+  fill: var(--color-foreground);
+}
+
+.site-navbar__brand-s {
+  stroke: var(--color-background);
+}
+
+/* Trailing extras (GitHub + theme toggle), sitting after the section nav inside
+   the navbar menu. The nav's trailing auto-margin (set at md+ below) pushes this
+   to the far edge of the bar. */
+.site-navbar__action {
+  display: flex;
+  align-items: center;
+  gap: --spacing(3);
+}
+
+/* === Section-menu collapse ===
+ * The `.navbar` component folds at lg natively; the docs sidebar drawer
+ * breakpoint is md, so the section menu is realigned to fold at md too. Below md
+ * the folded menu is an absolute dropdown under the bar — the bar height is
+ * locked to --navbar-height for the sticky offsets the layout grid depends on,
+ * so the menu can't expand it in-flow. */
+@variant max-md {
+  .site-navbar .navbar__menu[data-state="open"] {
+    position: absolute;
+    top: var(--navbar-height);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.25rem;
+    padding: 0.75rem;
+    background-color: var(--color-background);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .site-navbar .navbar__menu[data-state="open"] .site-navbar__action {
+    margin-top: 0.5rem;
+  }
+}
+
+@variant lg {
+  .site-navbar .navbar__menu {
+    margin-inline-start: 1.25rem;
+  }
+}
