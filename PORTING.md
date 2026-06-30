@@ -1,7 +1,7 @@
-# Porting a component to `next/` — the repeatable recipe
+# Porting a component into the workspace — the repeatable recipe
 
 > This is the **operational playbook** for porting one legacy `src/scss/components/_<name>.scss`
-> (+ its `src/site/pages/<name>.njk`) into the `next/` workspace. It encodes what we learned
+> (+ its `src/site/pages/<name>.njk`) into the workspace. It encodes what we learned
 > porting **Button** and **Alert** so later ports just repeat the pattern instead of re-deriving
 > it. Decisions + rationale live in `../ARCHITECTURE.md` (§4 authoring, §11 guardrails); this file
 > is the **checklist + conventions + verification**.

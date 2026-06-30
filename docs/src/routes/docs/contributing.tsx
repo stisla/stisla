@@ -16,35 +16,32 @@ function ContributingDocs() {
 
       <section>
         <h2>Repo layout</h2>
-        <p>Everything lives under <code>next/</code>. The top-level <code>src/</code> tree is the v2 Bootstrap release on the <code>master</code> branch and is not actively maintained.</p>
+        <p>The packages and docs live at the repo root. The top-level <code>src/</code> tree on the <code>master</code> branch is the v2 Bootstrap release and is not actively maintained.</p>
         <Code lang="text" code={`
-next/
-  packages/
-    tokens/src/
-      theme.css          Tailwind @theme tokens (--color-* + --st-border-width)
-    style/src/
-      theme.css          Tailwind @theme foundation (light + dark block)
-      <name>/<name>.css  one BEM CSS file per component block (~53 total)
-      <name>/<name>.<lib>.css  lib adapter (e.g. combobox.tomselect.css)
-      components.css     barrel; @import of every component CSS
-      composer.ts        pure (variantProps, tune) → { className, style }
-      index.ts           re-exports
-    css/
-      stisla.css         precompiled-bundle entry (theme + components barrel)
-      package.json       built by the Tailwind CLI into dist/stisla.css
-    vanilla/src/
-      core/              component.js, init.js, transition.js, inert.js
-      components/        one .js file per interactive component
-      index.js           entry; registers every component, auto-inits
-    react/src/
-      <name>/index.tsx   React wrappers, one per component
-      index.ts           re-exports
-    vue/                 stub (planned)
-  docs/src/              TanStack Start docs site
-    routes/docs/
-      vanilla/           one .tsx per component
-      react/             one .tsx per component (in progress)
-    demo/                Demo, Code, DemoFrame, and demo CSS
+packages/
+  style/src/
+    theme.css          Tailwind @theme foundation (light + dark block)
+    <name>/<name>.css  one BEM CSS file per component block (~53 total)
+    <name>/<name>.<lib>.css  lib adapter (e.g. combobox.tomselect.css)
+    components.css     barrel; @import of every component CSS
+    composer.ts        pure (variantProps, tune) → { className, style }
+    index.ts           re-exports
+  css/
+    stisla.css         precompiled-bundle entry (theme + components barrel)
+    package.json       built by the Tailwind CLI into dist/stisla.css
+  vanilla/src/
+    core/              component.js, init.js, transition.js, inert.js
+    components/        one .js file per interactive component
+    index.js           entry; registers every component, auto-inits
+  react/src/
+    <name>/index.tsx   React wrappers, one per component
+    index.ts           re-exports
+  vue/                 stub (planned)
+docs/src/              TanStack Start docs site
+  routes/docs/
+    vanilla/           one .tsx per component
+    react/             one .tsx per component (in progress)
+  demo/                Demo, Code, DemoFrame, and demo CSS
 `} />
       </section>
 
@@ -52,7 +49,7 @@ next/
         <h2>Running locally</h2>
         <p>Node 20 or newer, pnpm 9 or newer.</p>
         <Code lang="bash" code={`git clone https://github.com/stisla/stisla.git
-cd stisla/next/docs
+cd stisla
 pnpm install
 pnpm dev`} />
         <p>The dev server starts Vite at <code>localhost:5173</code>. CSS rebuilds on save via Tailwind v4&rsquo;s HMR. The vanilla IIFE bundle is built inline by a Vite plugin and hot-reloads into demo iframes automatically.</p>
@@ -132,7 +129,7 @@ pnpm build     # confirm the docs site builds clean`} />
       <section>
         <h2>Before opening a PR</h2>
         <ul>
-          <li>Run <code>pnpm check</code> from <code>next/</code> and confirm it passes clean.</li>
+          <li>Run <code>pnpm check</code> from the repo root and confirm it passes clean.</li>
           <li>Run <code>pnpm build</code> from <code>docs/</code> and confirm the site builds without error.</li>
           <li>Open the demo page and walk every state under light and dark at 320, 768, and 1280 px.</li>
         </ul>

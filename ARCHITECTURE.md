@@ -529,10 +529,12 @@ verified. Do not bulk-convert on an unproven pipeline.
 - Root `package.json` is *named* `stisla-monorepo` but is **not** a real npm workspace —
   it's one source tree plus scripted staging.
 
-**New tree (the rewrite — real pnpm workspaces, isolated under `next/`):**
+**New tree (the rewrite — real pnpm workspaces). Built under `next/`, promoted to the repo root at cutover (done 2026-06-30):**
 
-Built under `next/` (rename/promote at cutover) so the legacy build keeps working untouched
-until the slice is proven (§9).
+The rewrite was built under `next/` so the legacy build kept working untouched until the
+slice was proven (§9), then promoted to the repo root. `@stisla/tokens` was later folded into
+`@stisla/style` (the theme lives at `packages/style/src/theme.css`). The original layout, as
+designed:
 
 ```
 next/
@@ -559,9 +561,9 @@ next/
 - `@stisla/css` reuses the legacy package name; the two coexist in different dirs during
   transition, only one publishes at cutover.
 
-**Cutover (after slice + sweep, §9):** delete `src/`, legacy `packages/css` +
-`packages/vanilla`, `tools/build-packages.mjs`, the legacy Vite config; promote `next/` to
-the repo root.
+**Cutover (done 2026-06-30):** deleted `src/`, legacy `packages/css` +
+`packages/vanilla`, `tools/build-packages.mjs`, and the legacy Vite config; promoted `next/`
+to the repo root.
 
 **Live progress is tracked in `ROADMAP.md`** — this file holds *decisions*; `ROADMAP.md`
 holds the *ordered task list + status*.

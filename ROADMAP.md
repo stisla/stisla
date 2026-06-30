@@ -120,9 +120,9 @@ These are **unordered** — pick by what's ready / highest-leverage, not top-to-
       template** from **framework templates** (structure / packaging TBD — discuss before
       starting). See [[project_dashboard_template]].
 - [ ] **Complete the index / landing page.**
-- [ ] **Promote `next/` to repo root + delete all legacy.** `src/`, old `packages/css` +
-      `packages/vanilla`, `tools/build-packages.mjs`, legacy Vite config (= the Phase 8 "Cutover"
-      item, §12).
+- [x] **Promote `next/` to repo root + delete all legacy.** Done 2026-06-30: flattened the
+      workspace to the repo root and removed `src/`, old `packages/css` + `packages/vanilla`,
+      `tools/build-packages.mjs`, and the legacy Vite config (= the Phase 8 "Cutover" item, §12).
 - [ ] **Polish the docs pages.** TOC sidebar still needs work; dark/light mode persistence
       (no flash on load); other rough edges.
 
@@ -532,4 +532,4 @@ group); `check-tokens` scale-literal-fallback regex no longer false-matches `--t
   - **Expand** affordance: parent toggles the iframe to `fixed`/`inset:0`/full-viewport so dialog/drawer show at real scale (reuses the same iframe content)
   - Plumbing: `ResizeObserver`→`postMessage` auto-height; parent posts theme, iframe sets its own `[data-theme]`
 - [ ] Rewrite docs "why" page → "why constraint" (ARCHITECTURE §8)
-- [ ] Cutover: delete legacy `src/` + old `packages/` + `build-packages.mjs`; promote `next/`
+- [x] Cutover: delete legacy `src/` + old `packages/` + `build-packages.mjs`; promote `next/` to the repo root (done 2026-06-30)
