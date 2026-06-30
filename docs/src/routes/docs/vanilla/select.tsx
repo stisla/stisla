@@ -57,17 +57,15 @@ function SelectDocs() {
         <Demo
           layout="stack"
           html={`
-<div class="flex flex-col gap-3 max-w-96">
-  <select class="select select--sm" aria-label="Small select">
-    <option>Small</option><option>One</option><option>Two</option>
-  </select>
-  <select class="select" aria-label="Default select">
-    <option>Default</option><option>One</option><option>Two</option>
-  </select>
-  <select class="select select--lg" aria-label="Large select">
-    <option>Large</option><option>One</option><option>Two</option>
-  </select>
-</div>`}
+<select class="select select--sm max-w-96" aria-label="Small select">
+  <option>Small</option><option>One</option><option>Two</option>
+</select>
+<select class="select max-w-96" aria-label="Default select">
+  <option>Default</option><option>One</option><option>Two</option>
+</select>
+<select class="select select--lg max-w-96" aria-label="Large select">
+  <option>Large</option><option>One</option><option>Two</option>
+</select>`}
         />
       </section>
 
