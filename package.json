@@ -1,8 +1,8 @@
 {
-  "name": "stisla-next",
+  "name": "stisla-monorepo",
   "private": true,
-  "version": "3.0.0-beta.8",
-  "description": "Stisla rewrite — constraint + Tailwind-scale era. Real npm workspaces. See ../ARCHITECTURE.md and ../ROADMAP.md.",
+  "version": "3.0.0-beta.9",
+  "description": "Stisla — constraint + Tailwind-scale era. Real pnpm workspaces. See ARCHITECTURE.md and ROADMAP.md.",
   "license": "MIT",
   "type": "module",
   "packageManager": "pnpm@10.30.3",
