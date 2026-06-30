@@ -1,42 +1,25 @@
 # @stisla/vanilla
 
-Vanilla JS implementation of the [Stisla](https://stisla.dev) v3 spec. Pairs
-with [`@stisla/css`](https://www.npmjs.com/package/@stisla/css). Composed
-primitives ([Floating UI](https://floating-ui.com/),
-[focus-trap](https://github.com/focus-trap/focus-trap)) plus Stisla's own
-component classes.
+The vanilla-JS behavior layer for [Stisla](https://github.com/stisla/stisla). Drives interactive components from `data-stisla-*` markup. Pairs with `@stisla/css` at the matching version.
 
-```bash
+## Install
+
+```sh
 npm install @stisla/css @stisla/vanilla
 ```
 
-## Usage
-
 ```js
-import '@stisla/css';
-import '@stisla/vanilla';            // vanilla core
-// import '@stisla/vanilla/full';    // vanilla core + every optional
+import "@stisla/css";
+import "@stisla/vanilla"; // every component
 ```
 
-Importing `@stisla/vanilla` registers every core component and auto-scans the
-DOM. Mark up with the standard Stisla classes + `data-stisla-*` attrs and the
-scanner takes care of the rest.
+Or via CDN (classic script, exposes `window.Stisla`, auto-inits):
 
-### À la carte
-
-```js
-import { Dialog } from '@stisla/vanilla/src/components/dialog.js';
-
-const dialog = new Dialog(document.getElementById('confirm'));
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@beta/dist/stisla.css" />
+<script src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@beta/dist/stisla.js"></script>
 ```
 
-The `src/` tree is raw, side-effect-tagged ESM — bundlers tree-shake unused
-components.
+This single entry registers every component. Want only a subset? Import the individual modules from `@stisla/vanilla/components/<name>.js` and `register()` them yourself.
 
-## Browser support
-
-Safari 16.4+, Chrome 111+, Firefox 121+. No polyfills.
-
-## License
-
-MIT.
+Docs and source: https://github.com/stisla/stisla

@@ -1,56 +1,48 @@
 {
   "name": "@stisla/vanilla",
-  "version": "3.0.0-beta.7",
-  "description": "Stisla v3 — vanilla JS implementation. Pairs with @stisla/css. Composed primitives (Floating UI, focus-trap) plus Stisla's own component classes.",
+  "version": "3.0.0-beta.9",
+  "description": "Stisla vanilla-JS behavior layer (no-build interactivity for the @stisla/css components). One entry registers every component; import individual modules from @stisla/vanilla/components/<name>.js to compose a subset. ESM for bundlers; the CDN build emits IIFE stisla.js (window.Stisla + auto-init).",
   "license": "MIT",
-  "author": "Nauval Azhar <nauvalazhar2@gmail.com> (https://stisla.dev)",
-  "homepage": "https://stisla.dev",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/stisla/stisla.git",
-    "directory": "packages/vanilla"
-  },
-  "bugs": "https://github.com/stisla/stisla/issues",
-  "keywords": [
-    "stisla",
-    "vanilla",
-    "admin",
-    "dashboard",
-    "design-system",
-    "bem"
-  ],
   "type": "module",
-  "main": "./dist/stisla.js",
-  "module": "./dist/stisla.js",
-  "exports": {
-    ".": "./dist/stisla.js",
-    "./full": "./dist/stisla-full.js",
-    "./components/*": "./dist/components/*.js",
-    "./dist/*": "./dist/*",
-    "./src/*": "./src/*",
-    "./package.json": "./package.json"
+  "scripts": {
+    "build": "node scripts/build-vanilla.mjs"
   },
-  "sideEffects": [
-    "./dist/stisla.js",
-    "./dist/stisla-full.js",
-    "./dist/components/*.js",
-    "./src/index.js",
-    "./src/index-full.js"
-  ],
-  "files": [
-    "dist",
-    "src",
-    "README.md",
-    "LICENSE"
-  ],
   "dependencies": {
     "@floating-ui/dom": "^1.7.6",
     "embla-carousel": "^8.6.0",
     "focus-trap": "^8.2.1",
-    "tabbable": "^6.4.0",
+    "overlayscrollbars": "^2.16.0",
     "tom-select": "^2.6.1"
   },
+  "exports": {
+    ".": "./src/index.js",
+    "./components/*": "./src/components/*",
+    "./core/*": "./src/core/*",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": [
+    "./src/index.js",
+    "./src/components/*.js"
+  ],
+  "files": [
+    "src",
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stisla/stisla.git",
+    "directory": "next/packages/vanilla"
+  },
+  "homepage": "https://github.com/stisla/stisla#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "peerDependencies": {
-    "@stisla/css": "3.0.0-beta.7"
+    "@stisla/css": "3.0.0-beta.8"
+  },
+  "devDependencies": {
+    "esbuild": "^0.27.0"
   }
 }

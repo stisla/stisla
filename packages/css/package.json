@@ -1,44 +1,37 @@
 {
   "name": "@stisla/css",
-  "version": "3.0.0-beta.7",
-  "description": "Stisla v3 — CSS for the vanilla implementation. Other Stisla implementations ship their own curated bundle exports from this package; see SPEC.md §10.",
+  "version": "3.0.0-beta.9",
+  "description": "Stisla CSS bundle — zero-build distribution (tokens + every component, NO utilities) compiled to a single stisla.css you can <link> with no build step. Want a subset? Compile from source via @stisla/style. NOTE: same published name as the legacy packages/css; only one publishes at cutover.",
   "license": "MIT",
-  "author": "Nauval Azhar <nauvalazhar2@gmail.com> (https://stisla.dev)",
-  "homepage": "https://stisla.dev",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/stisla/stisla.git",
-    "directory": "packages/css"
-  },
-  "bugs": "https://github.com/stisla/stisla/issues",
-  "keywords": [
-    "stisla",
-    "css",
-    "admin",
-    "dashboard",
-    "design-system",
-    "bem",
-    "oklch"
-  ],
-  "style": "dist/stisla.css",
-  "sass": "scss/bundles/stisla.scss",
   "exports": {
     ".": "./dist/stisla.css",
-    "./full": "./dist/stisla-full.css",
-    "./utilities": "./dist/utilities.css",
-    "./components/*": "./dist/components/*.css",
-    "./dist/*": "./dist/*",
-    "./scss/*": "./scss/*",
     "./package.json": "./package.json"
   },
   "files": [
     "dist",
-    "scss",
     "README.md",
-    "LICENSE",
-    "LICENSES"
+    "LICENSE"
   ],
   "sideEffects": [
     "*.css"
-  ]
+  ],
+  "scripts": {
+    "build": "tailwindcss -i stisla.css -o dist/stisla.css --minify"
+  },
+  "peerDependencies": {
+    "@stisla/style": "workspace:*"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.0.0",
+    "tailwindcss": "^4.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stisla/stisla.git",
+    "directory": "next/packages/css"
+  },
+  "homepage": "https://github.com/stisla/stisla#readme",
+  "publishConfig": {
+    "access": "public"
+  }
 }

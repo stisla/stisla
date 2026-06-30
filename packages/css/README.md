@@ -1,43 +1,23 @@
 # @stisla/css
 
-CSS for the vanilla implementation of [Stisla](https://stisla.dev) v3.
-Other implementations (React + Base UI, Vue + Reka UI, Svelte + bits-ui)
-ship their own curated bundle exports from this package — see SPEC.md §10.
+Precompiled CSS for [Stisla](https://github.com/stisla/stisla) — tokens + components, no utilities. Framework-agnostic; works with any stack.
 
-```bash
+## Install
+
+```sh
 npm install @stisla/css
 ```
 
-## Usage
-
-### Pre-compiled bundle (default)
-
 ```js
-import '@stisla/css';                     // vanilla core
-import '@stisla/css/full';                // vanilla core + every optional
-import '@stisla/css/components/carousel'; // à la carte
+import "@stisla/css"; // every component
 ```
 
-Or as a `<link>` if you're not bundling:
+Or via CDN:
 
 ```html
-<link rel="stylesheet" href="node_modules/@stisla/css/dist/stisla.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@beta/dist/stisla.css" />
 ```
 
-### Sass source (advanced)
+This single bundle ships every component. Want only a subset? Compile from source with [`@stisla/style`](https://www.npmjs.com/package/@stisla/style): pull `@stisla/style/theme.css` plus the `@stisla/style/<name>/<name>.css` you need through your own Tailwind build.
 
-The full SCSS tree ships in this package for users who want to fork
-`stisla.scss`, drop unused components, or rebuild with their own breakpoints.
-
-```scss
-@use '@stisla/css/scss/bundles/stisla';
-```
-
-## Browser support
-
-Safari 16.4+, Chrome 111+, Firefox 121+. No polyfills.
-
-## License
-
-MIT. Includes code adapted from Bootstrap 5.3 and modern-normalize — see
-[`LICENSES/`](./LICENSES/) for full attributions.
+Pairs with [`@stisla/vanilla`](https://www.npmjs.com/package/@stisla/vanilla) for interactivity. Docs and source: https://github.com/stisla/stisla
