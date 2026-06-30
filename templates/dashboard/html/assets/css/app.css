@@ -1,0 +1,46 @@
+@import "tailwindcss";
+@import "@stisla/style/theme.css";
+
+@theme {
+  --color-background: oklch(0.9272 0.0116 257.69);
+}
+
+:root {
+  @variant dark {
+    --color-background: oklch(0.08 0 0);
+  }
+}
+
+@import "@stisla/style/components.css";
+
+/* Meridian template styles — authored in the Tailwind v4 dialect, the same as the framework's own
+ * component CSS. Compiled by the template's Tailwind (this file is the single compile unit), so
+ * --spacing(), @variant dark / @variant md|lg|xl, var(--text-*), and --alpha() all resolve.
+ *
+ * Ported from the original dashboard.scss: SCSS `scales.space/text/radius/shadow/tone` →
+ * --spacing()/var(--text-*)/var(--radius-*)/var(--shadow-*)/var(--color-*); `mixins.color-mode(dark)`
+ * → @variant dark; `breakpoints.media-up(md|lg|xl)` → @variant md|lg|xl; the eyebrow-text mixin →
+ * the shared .text-eyebrow utility. Off-scale one-offs (eyebrow size, tracking, mark, chart px) stay literal. */
+@import "./dashboard/utilities.css";
+@import "./dashboard/content.css";
+@import "./dashboard/shell.css";
+@import "./dashboard/sidebar.css";
+@import "./dashboard/page.css";
+@import "./dashboard/sticky-bar.css";
+@import "./dashboard/input-group.css";
+@import "./dashboard/media.css";
+@import "./dashboard/stat.css";
+@import "./dashboard/order.css";
+@import "./dashboard/charts.css";
+@import "./dashboard/auth.css";
+@import "./dashboard/error.css";
+
+/* @source tells Tailwind which files to scan for class names; it generates only the
+ * utilities those files actually use. The globs below point at THIS template's markup
+ * and are relative to this file (assets/css/app.css). If you lift app.css into your own
+ * project, REPOINT them at wherever your views live — Laravel Blade, Rails ERB, Django,
+ * plain HTML, whatever. Miss this step and your copied markup renders unstyled: the
+ * utility classes it uses (flex, gap-4, grid, ...) are never generated. */
+@source "../../pages/**/*.njk";
+@source "../../_partials/**/*.njk";
+@source "../../layouts/**/*.njk";

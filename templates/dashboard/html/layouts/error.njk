@@ -1,0 +1,54 @@
+{#
+  Layout for the error pages (403 / 404 / 500) — a single centered column on the
+  plain body: brand mark, then the .empty-state the page fills in. No split, no
+  form chrome. Loads Stisla + the template theme.js for the corner theme toggle.
+  Pages fill `block error`.
+#}
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><style>.t{fill:%230a0a0a}.m{stroke:%23fafafa}@media (prefers-color-scheme: dark){.t{fill:%23fafafa}.m{stroke:%230a0a0a}}</style><rect class="t" width="512" height="512" rx="112"/><path class="m" d="M 392 144 H 200 A 56 56 0 0 0 200 256 H 312 A 56 56 0 0 1 312 368 H 120" fill="none" stroke-width="76" stroke-linecap="round" stroke-linejoin="round"/></svg>' />
+  <script>
+    // Apply the saved theme before first paint to avoid a flash.
+    (function () {
+      var t = localStorage.getItem('stisla-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+  <title>{% block title %}Meridian{% endblock %}</title>
+
+  {# Dev compiles app.css live through main.js; the built zip links the compiled style.css. #}
+  {% if not dev %}
+    <link rel="stylesheet" href="assets/css/style.css" />
+  {% endif %}
+
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <main class="error-page">
+    <button type="button" class="button button--ghost button--neutral button--icon-only error-page__toggle" data-theme-toggle aria-label="Toggle theme">
+      {{ "solar:moon-linear" | icon }}
+    </button>
+
+    <a href="/dashboard/" class="error-page__brand">
+      <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5l3.4 7.1 7.1 3.4-7.1 3.4-3.4 7.1-3.4-7.1L1.5 12l7.1-3.4z" opacity=".45"/><path d="M12 1.5l3.4 7.1L12 12 8.6 8.6z"/></svg>
+      <span>Meridian</span>
+    </a>
+
+    {% block error %}{% endblock %}
+  </main>
+
+  {% if dev %}
+    <script type="module" src="/main.js"></script>
+  {% else %}
+    <script src="assets/js/theme.js"></script>
+  {% endif %}
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

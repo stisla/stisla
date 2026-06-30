@@ -1,0 +1,35 @@
+/* ── Page ─────────────────────────────────────────────────────────────────── */
+.page__title span {
+  font-weight: 500;
+}
+.page__hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--page-section-gap);
+  padding: var(--page-padding-block) var(--page-padding-inline);
+  margin-inline: calc(var(--page-padding-inline) * -1);
+  margin-block-start: calc(var(--page-padding-block) * -1);
+  color: var(--color-primary-foreground);
+}
+.page__hero .page__description {
+  color: var(--color-primary-foreground);
+}
+.page__hero::before {
+  content: " ";
+  position: absolute;
+  top: -3.75rem;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: var(--color-primary);
+}
+.page__hero [class^="page__"] {
+  z-index: 1;
+}
+.page__header .breadcrumb {
+  margin-bottom: --spacing(4);
+}
+.page__action .select {
+  width: 11rem;
+}

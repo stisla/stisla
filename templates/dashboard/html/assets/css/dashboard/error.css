@@ -1,0 +1,26 @@
+/* ── Error pages ──────────────────────────────────────────────────────────── */
+.error-page {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: --spacing(6);
+  padding: --spacing(6);
+  background: var(--color-background);
+}
+.error-page__toggle {
+  position: absolute;
+  inset-block-start: --spacing(4);
+  inset-inline-end: --spacing(4);
+}
+.error-page__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: --spacing(2);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-foreground);
+  text-decoration: none;
+}

@@ -1,0 +1,163 @@
+{#
+  Dashboard topbar. Lives inside .app-shell__main so the sidebar keeps the
+  full page height. Holds the responsive sidebar toggle, a search field, and
+  a trailing cluster: notifications, theme toggle, and the user menu.
+#}
+<header class="navbar">
+  <button type="button" class="button button--ghost button--neutral button--icon-only button--flush-start"
+          data-stisla-app-shell-toggle="auto" aria-label="Toggle sidebar">
+    {{ "solar:hamburger-menu-linear" | icon }}
+  </button>
+
+  <div class="input-group input-group--search hidden lg:flex" >
+    <span class="input-group__text">{{ "solar:magnifer-linear" | icon }}</span>
+    <input type="search" class="input" placeholder="Search orders, products, customers…" aria-label="Search" />
+  </div>
+  <div class="ms-auto">
+    <div class="flex gap-1">
+      <div class="relative">
+        <button type="button" class="button button--ghost button--neutral button--icon-only"
+                data-stisla-popover-trigger="messageNotif" aria-haspopup="dialog" aria-expanded="false"
+                aria-controls="messageNotif" aria-label="Messages">
+          {{ "solar:chat-round-dots-linear" | icon }}
+        </button>
+        <span class="indicator indicator--warning indicator--pulse absolute top-0 end-0 translate-x-1/2 -translate-y-1/2"></span>
+      </div>
+      <div class="popover popover--menu w-88 max-w-full shadow-xl" id="messageNotif" data-stisla-popover data-stisla-popover-placement="bottom-end">
+        <div class="popover__header">
+          <h3 class="popover__title">Message</h3>
+          <div class="popover__action">
+            <a class="button button--sm button--ghost button--primary button--flush-end">Mark all as read</a>
+          </div>
+        </div>
+        <div class="popover__body">
+          <a href="#" class="media media--unread items-start">
+            <div class="media__figure mt-1">
+              <span class="avatar avatar--sm avatar--circle" data-stisla-avatar>
+                <img class="avatar__image" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&facepad=2.5&w=80&h=80&q=80" alt="" />
+                <span class="avatar__fallback">JC</span>
+              </span>
+            </div>
+            <div class="media__content">
+              <div class="media__title">Joseph Cooper</div>
+              <div class="media__description">Pushed 3 commits to atlas/main.</div>
+              <div class="media__meta">2 minutes ago</div>
+            </div>
+          </a>
+          <a href="#" class="media items-start">
+            <div class="media__figure mt-1">
+              <span class="avatar avatar--sm avatar--circle" data-stisla-avatar>
+                <img class="avatar__image" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=facearea&facepad=2.5&w=80&h=80&q=80" alt="" />
+                <span class="avatar__fallback">SC</span>
+              </span>
+            </div>
+            <div class="media__content">
+              <div class="media__title">Sarah Chen</div>
+              <div class="media__description">Can you review the Q3 report draft?</div>
+              <div class="media__meta">1 hour ago</div>
+            </div>
+          </a>
+          <a href="#" class="media items-start">
+            <div class="media__figure mt-1">
+              <span class="avatar avatar--sm avatar--circle" data-stisla-avatar>
+                <img class="avatar__image" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2.5&w=80&h=80&q=80" alt="" />
+                <span class="avatar__fallback">ML</span>
+              </span>
+            </div>
+            <div class="media__content">
+              <div class="media__title">Marcus Lee</div>
+              <div class="media__description">Thanks for the quick turnaround.</div>
+              <div class="media__meta">Yesterday</div>
+            </div>
+          </a>
+        </div>
+        <div class="popover__footer">
+          <a href="#" class="button button--block button--outline button--neutral">View all messages
+            {{ "solar:round-arrow-right-outline" | icon }}
+          </a>
+        </div>
+      </div>
+
+      <button type="button" class="button button--ghost button--neutral button--icon-only"
+              data-stisla-popover-trigger="topbarNotif" aria-haspopup="dialog" aria-expanded="false"
+              aria-controls="topbarNotif" aria-label="Notifications">
+        {{ "solar:bell-linear" | icon }}
+      </button>
+      <div class="popover popover--menu w-80 max-w-full shadow-xl" id="topbarNotif" data-stisla-popover data-stisla-popover-placement="bottom-end">
+        <div class="popover__header">
+          <h3 class="popover__title">Notifications</h3>
+          <div class="popover__action">
+            <a class="button button--sm button--ghost button--primary button--flush-end">Mark all as read</a>
+          </div>
+        </div>
+        <div class="popover__body">
+          <a href="#" class="media items-start">
+            <div class="media__figure mt-1">
+              <span class="icon-box icon-box--primary">{{ "solar:cart-large-2-linear" | icon }}</span>
+            </div>
+            <div class="media__content">
+              <div class="media__title">New order #10428</div>
+              <div class="media__description">Acme Corp placed an order for 12 items.</div>
+              <div class="media__meta">5 minutes ago</div>
+            </div>
+          </a>
+          <a href="#" class="media items-start">
+            <div class="media__figure mt-1">
+              <span class="icon-box icon-box--danger">{{ "solar:danger-triangle-linear" | icon }}</span>
+            </div>
+            <div class="media__content">
+              <div class="media__title">Low stock alert</div>
+              <div class="media__description">Headphone Blitz is down to 4 units.</div>
+              <div class="media__meta">1 hour ago</div>
+            </div>
+          </a>
+          <a href="#" class="media items-start">
+            <div class="media__figure mt-1">
+              <span class="avatar avatar--sm avatar--circle" data-stisla-avatar>
+                <img class="avatar__image" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=facearea&facepad=2.5&w=80&h=80&q=80" alt="" />
+                <span class="avatar__fallback">PP</span>
+              </span>
+            </div>
+            <div class="media__content">
+              <div class="media__title">Priya Patel</div>
+              <div class="media__description">Started following your store.</div>
+              <div class="media__meta">3 hours ago</div>
+            </div>
+          </a>
+        </div>
+        <div class="popover__footer">
+          <a href="#" class="button button--block button--outline button--neutral">View all notifications
+            {{ "solar:round-arrow-right-outline" | icon }}
+          </a>
+        </div>
+      </div>
+
+      {# Theme toggle #}
+      <button type="button" class="button button--ghost button--neutral button--icon-only" data-theme-toggle aria-label="Toggle theme">
+        {{ "solar:moon-linear" | icon }}
+      </button>
+
+      {# User menu #}
+      <div class="menu">
+        <button type="button" class="button button--ghost button--neutral flex items-center gap-2"
+                data-stisla-menu-trigger="topbarUser" aria-haspopup="menu" aria-expanded="false" aria-controls="topbarUser">
+          <span class="hidden sm:inline font-medium">Steven Gerrard</span>
+          <span class="avatar avatar--sm avatar--circle" data-stisla-avatar>
+            <img class="avatar__image" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=facearea&facepad=2.5&w=80&h=80&q=80" alt="" />
+            <span class="avatar__fallback">SG</span>
+          </span>
+          {{ "solar:alt-arrow-down-linear" | icon }}
+        </button>
+        <div class="menu__popup w-48" id="topbarUser" data-stisla-menu role="menu" data-state="closed">
+          <div class="menu__group" role="group" aria-labelledby="topbarUserHead">
+            <h3 class="menu__group-label" id="topbarUserHead">Mateo Alvarez</h3>
+            <a href="/dashboard/settings.html" class="menu__item" role="menuitem">{{ "solar:user-linear" | icon }}Profile</a>
+            <a href="/dashboard/settings.html" class="menu__item" role="menuitem">{{ "solar:settings-linear" | icon }}Settings</a>
+          </div>
+          <hr class="menu__separator" role="separator" />
+          <a href="/dashboard/login.html" class="menu__item" role="menuitem">{{ "solar:logout-2-linear" | icon }}Log out</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

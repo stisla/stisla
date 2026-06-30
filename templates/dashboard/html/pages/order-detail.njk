@@ -1,0 +1,251 @@
+{% extends "layouts/app.njk" %}
+{% set nav_active = "orders" %}
+
+{% block title %}Order #10428 · Meridian{% endblock %}
+
+{#
+  Order detail — a read-only single-order view. Reuses the status pill mapping
+  from the orders list so badges stay consistent across pages.
+#}
+{% macro status_badge(key) %}
+  {% set map = {
+    pending:    { label: "Pending",    tone: "warning", icon: "solar:clock-circle-linear" },
+    processing: { label: "Processing", tone: "primary", icon: "solar:refresh-linear" },
+    shipped:    { label: "Shipped",    tone: "info",    icon: "solar:delivery-linear" },
+    completed:  { label: "Completed",  tone: "success", icon: "solar:check-circle-linear" },
+    refunded:   { label: "Refunded",   tone: "danger",  icon: "solar:restart-linear" },
+    cancelled:  { label: "Cancelled",  tone: "",        icon: "solar:close-circle-linear" }
+  } %}
+  {% set m = map[key] %}
+  <span class="badge badge--soft{% if m.tone %} badge--{{ m.tone }}{% endif %}">
+    {{ m.icon | icon }} {{ m.label }}
+  </span>
+{% endmacro %}
+
+{% block page %}
+<div class="page content">
+  <div class="content__container">
+    <header class="page__header">
+      <div class="page__headline">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb__item"><a href="/dashboard/">Dashboard</a></li>
+            <li class="breadcrumb__item"><a href="/dashboard/orders.html">Orders</a></li>
+            <li class="breadcrumb__item" aria-current="page">#10428</li>
+          </ol>
+        </nav>
+        <div class="flex items-center flex-wrap gap-3">
+          <h1 class="page__title">Order #10428</h1>
+          {{ status_badge("pending") }}
+          <span class="badge badge--soft">Unpaid</span>
+        </div>
+        <p class="page__description">Placed Jun 18, 2026 at 09:24 by Acme Corp.</p>
+      </div>
+      <div class="page__action">
+        <a href="/dashboard/order-new.html" class="button button--outline button--neutral">
+          {{ "solar:pen-linear" | icon }} Edit
+        </a>
+        <div class="menu">
+          <button type="button" class="button button--outline button--neutral button--icon-only"
+                  data-stisla-menu-trigger="ddDetail" aria-haspopup="menu" aria-expanded="false"
+                  aria-controls="ddDetail" aria-label="More actions">
+            {{ "solar:menu-dots-linear" | icon }}
+          </button>
+          <div class="menu__popup" id="ddDetail" data-stisla-menu role="menu" data-state="closed" data-stisla-menu-placement="bottom-end">
+            <button type="button" class="menu__item" role="menuitem">{{ "solar:printer-linear" | icon }}<span>Print invoice</span></button>
+            <button type="button" class="menu__item" role="menuitem">{{ "solar:copy-linear" | icon }}<span>Duplicate</span></button>
+            <hr class="menu__separator" role="separator" />
+            <button type="button" class="menu__item menu__item--danger" role="menuitem">{{ "solar:restart-linear" | icon }}<span>Refund</span></button>
+          </div>
+        </div>
+        <button type="button" class="button button--primary">
+          {{ "solar:delivery-linear" | icon }} Mark as shipped
+        </button>
+      </div>
+    </header>
+
+    <div class="page__body">
+      <section class="page__section">
+        <div class="grid grid-cols-12 gap-4">
+          {# ---- Main column ---- #}
+          <div class="col-span-12 lg:col-span-8">
+            <div class="flex flex-col gap-3">
+              {# Line items #}
+              <div class="card">
+                <div class="card__header"><span class="card__title">Items</span></div>
+                <table class="table table--align-middle">
+                  <thead>
+                    <tr>
+                      <th scope="col">Product</th>
+                      <th scope="col" class="text-end">Qty</th>
+                      <th scope="col" class="text-end">Unit price</th>
+                      <th scope="col" class="text-end">Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% set items = [
+                      { name: "Espresso Beans 2kg",   sku: "ESP-2000", qty: 4,  price: "$32.00", total: "$128.00" },
+                      { name: "Ceramic Pour-Over",    sku: "POU-014",  qty: 6,  price: "$45.00", total: "$270.00" },
+                      { name: "Paper Filters (100pk)",sku: "FIL-100",  qty: 10, price: "$8.50",  total: "$85.00" },
+                      { name: "Gift Box",             sku: "GFT-001",  qty: 2,  price: "$20.00", total: "$40.00" }
+                    ] %}
+                    {% for it in items %}
+                    <tr>
+                      <th scope="row">
+                        <div class="font-medium">{{ it.name }}</div>
+                        <div class="text-xs text-muted-foreground">SKU {{ it.sku }}</div>
+                      </th>
+                      <td class="text-end">{{ it.qty }}</td>
+                      <td class="text-end">{{ it.price }}</td>
+                      <td class="text-end font-medium">{{ it.total }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                <div class="card__footer">
+                  <dl class="order-form__totals">
+                    <div class="order-form__total-row">
+                      <dt>Subtotal</dt>
+                      <dd>$523.00</dd>
+                    </div>
+                    <div class="order-form__total-row">
+                      <dt>Tax (10%)</dt>
+                      <dd>$52.30</dd>
+                    </div>
+                    <div class="order-form__total-row">
+                      <dt>Shipping</dt>
+                      <dd>$15.00</dd>
+                    </div>
+                    <div class="order-form__total-row order-form__total-row--grand">
+                      <dt>Total</dt>
+                      <dd>$590.30</dd>
+                    </div>
+                  </dl>
+                </div>
+              </div>
+
+              {# Timeline + shipping, side by side #}
+              <div class="grid grid-cols-12 gap-4">
+                <div class="col-span-12 md:col-span-6">
+                  <div class="card h-full">
+                    <div class="card__header"><span class="card__title">Timeline</span></div>
+                    <div class="card__body">
+                      <ol class="timeline">
+                        <li class="timeline__item">
+                          <span class="timeline__marker">{{ "solar:cart-large-2-linear" | icon }}</span>
+                          <div class="timeline__body">
+                            <div class="timeline__title">Order placed</div>
+                            <div class="timeline__time">Jun 18, 2026 · 09:24</div>
+                          </div>
+                        </li>
+                        <li class="timeline__item">
+                          <span class="timeline__marker">{{ "solar:card-linear" | icon }}</span>
+                          <div class="timeline__body">
+                            <div class="timeline__title">Awaiting payment</div>
+                            <div class="timeline__time">Invoice sent to billing@acme.co</div>
+                          </div>
+                        </li>
+                        <li class="timeline__item" data-state="pending">
+                          <span class="timeline__marker">{{ "solar:box-linear" | icon }}</span>
+                          <div class="timeline__body">
+                            <div class="timeline__title">Fulfilment</div>
+                            <div class="timeline__time">Not yet fulfilled</div>
+                          </div>
+                        </li>
+                        <li class="timeline__item" data-state="pending">
+                          <span class="timeline__marker">{{ "solar:check-circle-linear" | icon }}</span>
+                          <div class="timeline__body">
+                            <div class="timeline__title">Completed</div>
+                            <div class="timeline__time">Pending</div>
+                          </div>
+                        </li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-span-12 md:col-span-6">
+                  <div class="card h-full">
+                    <div class="card__header"><span class="card__title">Shipping address</span></div>
+                    <div class="card__body">
+                      <address class="">
+                        Acme Corp<br />
+                        482 Harbor Boulevard<br />
+                        Suite 300<br />
+                        San Diego, CA 92101<br />
+                        United States
+                      </address>
+                      <hr class="separator my-2" />
+                      <div class="flex items-center gap-2">
+                        {{ "solar:delivery-linear" | icon({ class: "text-muted-foreground" }) }}
+                        <span>Standard (3–5 days)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {# ---- Side column ---- #}
+          <div class="col-span-12 lg:col-span-4">
+            <div class="flex flex-col gap-3">
+              {# Customer #}
+              <div class="card">
+                <div class="card__header">
+                  <span class="card__title">Customer</span>
+                  <a href="/dashboard/customers.html" class="link ms-auto text-sm">View</a>
+                </div>
+                <div class="card__body">
+                  <div class="media media--flush" style="--media-padding-inline: 0; --media-padding-block: 0;">
+                    <div class="media__figure">
+                      <span class="avatar avatar--circle" data-stisla-avatar>
+                        <img class="avatar__image" src="https://i.pravatar.cc/96?img=12" alt="" />
+                        <span class="avatar__fallback">AC</span>
+                      </span>
+                    </div>
+                    <div class="media__content">
+                      <div class="media__title">Acme Corp</div>
+                      <div class="text-xs text-muted-foreground">14 orders</div>
+                    </div>
+                  </div>
+                </div>
+                <hr class="separator">
+                <div class="list-group list-group--flush">
+                  <div class="list-group__item">
+                    {{ "solar:letter-linear" | icon({ class: "text-muted-foreground" }) }}
+                    <a href="mailto:billing@acme.co" class="link">billing@acme.co</a>
+                  </div>
+                  <div class="list-group__item">
+                    {{ "solar:phone-linear" | icon({ class: "text-muted-foreground" }) }}
+                    <span>+1 555 0123</span>
+                  </div>
+                </div>
+              </div>
+
+              {# Payment #}
+              <div class="card">
+                <div class="card__header"><span class="card__title">Payment</span></div>
+                <div class="card__body">
+                  <div class="flex items-center justify-between">
+                    <span class="text-muted-foreground">Status</span>
+                    <span class="badge badge--soft badge--warning">{{ "solar:clock-circle-linear" | icon }} Unpaid</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-muted-foreground">Method</span>
+                    <span class="flex items-center gap-2">{{ "solar:card-linear" | icon }} Visa ···· 4242</span>
+                  </div>
+                  <div class="flex items-center justify-between font-semibold">
+                    <span>Amount due</span>
+                    <span>$590.30</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+{% endblock %}

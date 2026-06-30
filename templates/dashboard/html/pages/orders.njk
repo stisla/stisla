@@ -1,0 +1,191 @@
+{% extends "layouts/app.njk" %}
+{% set nav_active = "orders" %}
+
+{% block title %}Orders · Meridian{% endblock %}
+
+{#
+  Orders — a plain server-rendered table. Rows come from a for-loop over the
+  sample data (swap it for your backend's collection); sorting, filtering,
+  pagination, and search are server concerns expressed as links / a form
+  (?sort=, ?status=, ?page=, ?q=). The only client JS is row selection → the
+  bulk bar (table-select.js) and the confirm-dialog fill helper.
+#}
+
+{% set statusMap = {
+  pending:    { label: "Pending",    tone: "warning", icon: "solar:clock-circle-linear" },
+  processing: { label: "Processing", tone: "primary", icon: "solar:refresh-linear" },
+  shipped:    { label: "Shipped",    tone: "info",    icon: "solar:delivery-linear" },
+  completed:  { label: "Completed",  tone: "success", icon: "solar:check-circle-linear" },
+  refunded:   { label: "Refunded",   tone: "danger",  icon: "solar:restart-linear" },
+  cancelled:  { label: "Cancelled",  tone: "",        icon: "solar:close-circle-linear" }
+} %}
+{% set orders = [
+  { id: "10428", name: "Acme Corp",         email: "billing@acme.co",      img: 12, initials: "AC", date: "Jun 18, 2026", items: 6,  total: "1,490.00", status: "pending" },
+  { id: "10427", name: "Riverway Ltd",      email: "ap@riverway.io",       img: 32, initials: "RL", date: "Jun 17, 2026", items: 2,  total: "580.00",   status: "shipped" },
+  { id: "10426", name: "Northwind Traders", email: "orders@northwind.com", img: 48, initials: "NT", date: "Jun 17, 2026", items: 18, total: "8,200.00", status: "completed" },
+  { id: "10425", name: "Globex",            email: "buy@globex.com",       img: 15, initials: "GX", date: "Jun 16, 2026", items: 1,  total: "240.00",   status: "refunded" },
+  { id: "10424", name: "Initech",           email: "po@initech.com",       img: 5,  initials: "IN", date: "Jun 15, 2026", items: 4,  total: "1,120.00", status: "completed" },
+  { id: "10423", name: "Soylent Co",        email: "ops@soylent.co",       img: 23, initials: "SC", date: "Jun 15, 2026", items: 9,  total: "3,015.00", status: "processing" },
+  { id: "10422", name: "Hooli",             email: "finance@hooli.xyz",    img: 8,  initials: "HO", date: "Jun 14, 2026", items: 3,  total: "675.00",   status: "shipped" },
+  { id: "10421", name: "Vehement Capital",  email: "desk@vehement.com",    img: 41, initials: "VC", date: "Jun 13, 2026", items: 1,  total: "95.00",    status: "cancelled" },
+  { id: "10420", name: "Stark Industries",  email: "ap@stark.com",         img: 51, initials: "SI", date: "Jun 12, 2026", items: 12, total: "4,300.00", status: "completed" },
+  { id: "10419", name: "Wayne Enterprises", email: "buy@wayne.co",         img: 60, initials: "WE", date: "Jun 11, 2026", items: 7,  total: "2,150.00", status: "pending" }
+] %}
+{% set statusFilters = [
+  { value: "all",       label: "All" },
+  { value: "pending",   label: "Pending" },
+  { value: "shipped",   label: "Shipped" },
+  { value: "completed", label: "Completed" },
+  { value: "refunded",  label: "Refunded" }
+] %}
+
+{% block page %}
+<div class="page content">
+  <div class="content__container">
+    <header class="page__header">
+      <div class="page__headline">
+        <h1 class="page__title">Orders</h1>
+        <p class="page__description">Track, fulfil, and refund customer orders.</p>
+      </div>
+      <div class="page__action">
+        <button type="button" class="button button--neutral">{{ "solar:download-minimalistic-linear" | icon }} Export</button>
+        <a href="/dashboard/order-new.html" class="button button--primary">{{ "solar:add-circle-linear" | icon }} New order</a>
+      </div>
+    </header>
+
+    <div class="page__body">
+      <section class="page__section">
+        <div class="card" data-table-select>
+          {# Toolbar — status filter (server links) + search (server form). #}
+          <div class="card__header flex-wrap">
+            <div class="toggle-group mt-4 md:mt-0" data-stisla-toggle-group role="radiogroup" aria-label="Filter by status">
+              {% for f in statusFilters %}
+              <button type="button" class="toggle" role="radio" aria-checked="{{ 'true' if loop.first else 'false' }}"{% if loop.first %} data-state="active"{% endif %}>{{ f.label }}</button>
+              {% endfor %}
+            </div>
+            <form class="input-group ms-auto w-full md:w-60 mb-4 md:mb-0" role="search">
+              <span class="input-group__text">{{ "solar:magnifer-linear" | icon }}</span>
+              <input type="search" name="q" class="input" placeholder="Search orders…" aria-label="Search orders" />
+            </form>
+          </div>
+
+          {# Bulk bar — revealed by table-select.js while a row is selected. #}
+          <div class="card__header card__header--alt flex-wrap" data-bulkbar hidden>
+            <span><strong data-select-count>0</strong> selected</span>
+            <div class="flex flex-wrap items-center gap-2 ms-auto">
+              <button type="button" class="button button--sm button--outline button--neutral">{{ "solar:delivery-linear" | icon }} Mark shipped</button>
+              <button type="button" class="button button--sm button--danger" data-stisla-dialog-trigger="deleteConfirm">{{ "solar:trash-bin-trash-linear" | icon }} Delete</button>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table--hover table--align-middle">
+              <thead class="table__head--alt">
+                <tr>
+                  <th scope="col"><input class="checkbox" type="checkbox" data-select-all aria-label="Select all orders on this page" /></th>
+                  <th scope="col"><a class="table__sort" href="?sort=id">Order</a></th>
+                  <th scope="col"><a class="table__sort" href="?sort=name">Customer</a></th>
+                  <th scope="col" aria-sort="descending"><a class="table__sort" data-state="desc" href="?sort=date&dir=asc">Date</a></th>
+                  <th scope="col" class="text-end"><a class="table__sort" href="?sort=items">Items</a></th>
+                  <th scope="col" class="text-end"><a class="table__sort" href="?sort=total">Total</a></th>
+                  <th scope="col"><a class="table__sort" href="?sort=status">Status</a></th>
+                  <th scope="col" class="text-end"><span class="sr-only">Actions</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for o in orders %}
+                {% set s = statusMap[o.status] %}
+                <tr>
+                  <td><input class="checkbox" type="checkbox" data-select-row aria-label="Select order #{{ o.id }}" /></td>
+                  <th scope="row"><a href="/dashboard/order-detail.html" class="link"><code>#{{ o.id }}</code></a></th>
+                  <td>
+                    <div class="flex items-center gap-3">
+                      <span class="avatar avatar--sm avatar--circle" data-stisla-avatar>
+                        <img class="avatar__image" src="https://i.pravatar.cc/64?img={{ o.img }}" alt="" />
+                        <span class="avatar__fallback">{{ o.initials }}</span>
+                      </span>
+                      <div>
+                        <div class="font-medium">{{ o.name }}</div>
+                        <div class="text-xs text-muted-foreground">{{ o.email }}</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>{{ o.date }}</td>
+                  <td class="text-end">{{ o.items }}</td>
+                  <td class="text-end"><span class="font-semibold">${{ o.total }}</span></td>
+                  <td><span class="badge badge--soft{% if s.tone %} badge--{{ s.tone }}{% endif %}">{{ s.icon | icon }} {{ s.label }}</span></td>
+                  <td class="text-end">
+                    <div class="flex justify-end gap-1">
+                      <a href="/dashboard/order-new.html" class="button button--ghost button--neutral button--icon-only button--sm" aria-label="Edit order #{{ o.id }}">{{ "solar:pen-linear" | icon }}</a>
+                      <button type="button" class="button button--ghost button--danger button--icon-only button--sm" data-stisla-dialog-trigger="refundConfirm" data-fill-order="#{{ o.id }}" aria-label="Refund order #{{ o.id }}">{{ "solar:restart-linear" | icon }}</button>
+                    </div>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card__footer">
+            <span class="text-xs text-muted-foreground">Showing 1–10 of 12</span>
+            <nav class="ms-auto" aria-label="Orders pages">
+              <ul class="pagination">
+                <li><span class="pagination__button" aria-disabled="true" aria-label="Previous">{{ "solar:alt-arrow-left-linear" | icon }}</span></li>
+                <li><a class="pagination__button" href="?page=1" data-state="active" aria-current="page">1</a></li>
+                <li><a class="pagination__button" href="?page=2">2</a></li>
+                <li><a class="pagination__button" href="?page=2" aria-label="Next">{{ "solar:alt-arrow-right-linear" | icon }}</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+{# Refund dialog (per row) — table-select.js fills [data-slot="order"] from the trigger. #}
+<div class="dialog dialog--sm" id="refundConfirm" data-stisla-dialog data-state="closed"
+     role="alertdialog" aria-modal="true" aria-labelledby="refundConfirmLabel"
+     aria-describedby="refundConfirmDesc" aria-hidden="true" tabindex="-1">
+  <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+  <div class="dialog__panel">
+    <div class="dialog__content">
+      <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <div class="dialog__body text-center pt-6">
+        <span class="icon-box icon-box--danger icon-box--round icon-box--lg mb-3">
+          {{ "solar:restart-linear" | icon }}
+        </span>
+        <h3 class="dialog__title mb-1" id="refundConfirmLabel">Refund order <span data-slot="order"></span>?</h3>
+        <p class="text-muted-foreground" id="refundConfirmDesc">The customer is refunded the full amount. This can't be undone.</p>
+      </div>
+      <div class="dialog__footer justify-center">
+        <button type="button" class="button button--ghost button--neutral" data-stisla-dialog-dismiss>Cancel</button>
+        <button type="button" class="button button--danger" data-stisla-dialog-dismiss>Refund order</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# Bulk-delete dialog — [data-select-count] kept in sync by table-select.js. #}
+<div class="dialog dialog--sm" id="deleteConfirm" data-stisla-dialog data-state="closed"
+     role="alertdialog" aria-modal="true" aria-labelledby="deleteConfirmLabel"
+     aria-describedby="deleteConfirmDesc" aria-hidden="true" tabindex="-1">
+  <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+  <div class="dialog__panel">
+    <div class="dialog__content">
+      <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <div class="dialog__body text-center pt-6">
+        <span class="icon-box icon-box--danger icon-box--round icon-box--lg mb-3">
+          {{ "solar:trash-bin-trash-linear" | icon }}
+        </span>
+        <h3 class="dialog__title mb-1" id="deleteConfirmLabel">Delete <span data-select-count>0</span> orders?</h3>
+        <p class="text-muted-foreground" id="deleteConfirmDesc">The selected orders are permanently removed. This can't be undone.</p>
+      </div>
+      <div class="dialog__footer justify-center">
+        <button type="button" class="button button--ghost button--neutral" data-stisla-dialog-dismiss>Cancel</button>
+        <button type="button" class="button button--danger" data-stisla-dialog-dismiss>Delete orders</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

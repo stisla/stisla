@@ -1,0 +1,99 @@
+/* ── Heatmap + chart legends ──────────────────────────────────────────────── */
+.heatmap-legend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: --spacing(0.5);
+  margin-block-start: --spacing(2);
+}
+.heatmap-legend__caption {
+  font-size: var(--text-xs);
+  margin-inline: --spacing(1);
+  color: var(--color-muted-foreground);
+}
+.heatmap-legend__swatch {
+  width: --spacing(2.5);
+  height: --spacing(2.5);
+  border-radius: var(--radius-xs);
+  background: var(--color-primary);
+}
+
+.chart-legend {
+  display: flex;
+  align-items: center;
+  gap: --spacing(4);
+  margin-inline-start: auto;
+  font-size: var(--text-sm);
+  color: var(--color-muted-foreground);
+}
+.chart-legend__item {
+  display: flex;
+  align-items: center;
+  gap: --spacing(2);
+}
+
+/* ── Charts ───────────────────────────────────────────────────────────────── */
+/* ApexCharts render at height:100% (see charts.js), so the box owns the height (px, off-scale). */
+.chart {
+  height: var(--chart-height, 300px);
+}
+.chart-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+#salesChart {
+  --chart-height: 300px;
+  min-width: var(--chart-min-width, 520px);
+}
+#revenueChart {
+  --chart-height: 280px;
+}
+#topProductsChart {
+  --chart-height: 300px;
+}
+#categoryChart,
+#channelChart {
+  --chart-height: 260px;
+}
+#fulfillmentChart {
+  --chart-height: 220px;
+}
+#heatmapChart {
+  --chart-height: 280px;
+}
+@media (min-width: 48rem) {
+  #heatmapChart {
+    --chart-height: 240px;
+  }
+  #salesChart {
+    --chart-height: 425px;
+  }
+  #revenueChart,
+  #topProductsChart {
+    --chart-height: 320px;
+  }
+  #categoryChart,
+  #channelChart {
+    --chart-height: 300px;
+  }
+  #fulfillmentChart {
+    --chart-height: 230px;
+  }
+}
+
+.sparkline {
+  display: block;
+  width: 100%;
+  height: 2.5rem;
+}
+.sparkline--hero {
+  height: 5.5rem;
+}
+
+.apexcharts-text tspan,
+.apexcharts-legend-text {
+  fill: var(--color-muted-foreground) !important;
+  color: var(--color-muted-foreground) !important;
+}
