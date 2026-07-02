@@ -1,6 +1,6 @@
 {
   "name": "@stisla/style",
-  "version": "3.0.0-beta.9",
+  "version": "3.0.0-beta.10",
   "description": "Stisla framework-agnostic style layer — the Tailwind @theme foundation (theme.css) + pure-JS composer + per-component configs + compiled component CSS. Zero framework deps.",
   "license": "MIT",
   "type": "module",

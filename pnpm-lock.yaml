@@ -115,9 +115,6 @@ importers:
       '@floating-ui/dom':
         specifier: ^1.7.6
         version: 1.7.6
-      '@stisla/css':
-        specifier: 3.0.0-beta.8
-        version: 3.0.0-beta.8(@stisla/style@3.0.0-beta.8)
       embla-carousel:
         specifier: ^8.6.0
         version: 8.6.0
@@ -868,14 +865,6 @@ packages:
 
   '@shikijs/vscode-textmate@10.0.2':
     resolution: {integrity: sha512-83yeghZ2xxin3Nj8z1NMd/NCuca+gsYXswywDy5bHvwlWL8tpTQmzGeUuHd9FC3E/SBEMvzJRwWEOz5gGes9Qg==}
-
-  '@stisla/css@3.0.0-beta.8':
-    resolution: {integrity: sha512-2z1yml3qtadFW/ifSBd9tivjT20TEM4G/kC3udlheGW+x4uix5SOdxxF126gm5LcBOGJpDmPBp/kPN/kctRRHg==}
-    peerDependencies:
-      '@stisla/style': 3.0.0-beta.8
-
-  '@stisla/style@3.0.0-beta.8':
-    resolution: {integrity: sha512-ep6RiudFP+DvFG0bygKf2HtsLH19PfS8dwxhbhXkQEc4qPjkUoG+aBjcKQYTK3akXZCIhHDRGsMDH9rjrxlMSA==}
 
   '@tailwindcss/cli@4.3.2':
     resolution: {integrity: sha512-Fzt+HrIZHDlkRYKdLMBeufaroaPvwCBG70sMLdmurdeadNMO/LxbmT8Sbb+P83ep0iAlAImettb7Y+rO+37rXw==}
@@ -2726,12 +2715,6 @@ snapshots:
       '@types/hast': 3.0.4
 
   '@shikijs/vscode-textmate@10.0.2': {}
-
-  '@stisla/css@3.0.0-beta.8(@stisla/style@3.0.0-beta.8)':
-    dependencies:
-      '@stisla/style': 3.0.0-beta.8
-
-  '@stisla/style@3.0.0-beta.8': {}
 
   '@tailwindcss/cli@4.3.2':
     dependencies:
