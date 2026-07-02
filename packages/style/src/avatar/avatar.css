@@ -7,7 +7,7 @@
  * Image loading: the optional avatar.js preloader writes data-status on the root and CSS reveals the
  * image only on "loaded". DEFERRED (vanilla-JS pass) — for a known-good static <img>, set
  * data-status="loaded" inline to reveal it without JS. The pill radius is a literal 9999px (the radius
- * scale is sm/md/lg only; same precedent as .button--icon-round). @layer components.
+ * scale is sm/md/lg only; same precedent as .button--pill). @layer components.
  * Authoring rules: ../../../../PORTING.md */
 
 @layer components {

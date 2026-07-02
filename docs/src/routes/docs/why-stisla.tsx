@@ -60,12 +60,12 @@ function WhyStislaDocs() {
           lang="css"
           title="button.css"
           code={`
-.btn {
-  --btn-bg: var(--btn-tone);
-  background: var(--btn-bg);
+.button {
+  --button-bg: var(--button-tone);
+  background: var(--button-bg);
 }
-.btn:hover  { --btn-bg: color-mix(in oklch, var(--btn-tone) 88%, black); }
-.btn:active { --btn-bg: color-mix(in oklch, var(--btn-tone) 78%, black); }
+.button:hover  { --button-bg: color-mix(in oklch, var(--button-tone) 88%, black); }
+.button:active { --button-bg: color-mix(in oklch, var(--button-tone) 78%, black); }
 `}
         />
 
@@ -78,7 +78,7 @@ function WhyStislaDocs() {
         <Code
           lang="html"
           code={`
-<button class="btn" style="--btn-tone: oklch(0.6 0.2 30)">
+<button class="button" style="--button-tone: oklch(0.6 0.2 30)">
   Custom brand
 </button>
 `}
@@ -88,6 +88,64 @@ function WhyStislaDocs() {
           That is the payoff of constraint. The decision lives in one place, so
           you cannot end up with a hover that disagrees with its own base color.
         </p>
+
+        <p>
+          You might ask why this needs a knob when a utility could set the same
+          background. The difference is what happens after. A utility paints one
+          property and leaves the rest to you, so matching a button&rsquo;s
+          states means writing each shade by hand:
+        </p>
+
+        <Code
+          lang="html"
+          code={`
+<button class="bg-sky-600 hover:bg-sky-700 active:bg-sky-800">
+  Save
+</button>
+`}
+        />
+
+        <p>
+          Those are three separate literals with nothing holding them together.
+          Change the base and the hover and active keep their old values until
+          you remember to repick them. The knob version above starts from one
+          value and derives the rest, so its states cannot drift away from it.
+        </p>
+
+        <p>
+          A knob is also a boundary. A component exposes only the knobs it was
+          built to take, so tuning moves it within the range it was meant to
+          have. You can retint a button or round its corners and it stays a
+          button. Utilities have no such edge, so nothing stops you reaching past
+          what the component offers, until it is a button in name only:
+        </p>
+
+        <Code
+          lang="html"
+          code={`
+<!-- within the knobs: still a button -->
+<button class="button" style="--button-tone: oklch(0.6 0.2 30)">Save</button>
+
+<!-- past the knobs: a button in name only -->
+<button class="button grid grid-cols-[auto_1fr] rounded-none p-6 text-left">Save</button>
+`}
+        />
+
+        <p>
+          When you find yourself reaching that far, the missing knob is the
+          signal. The change is really a new modifier or a new component, so give
+          it a name and define it once, the way the rest of Stisla is built:
+        </p>
+
+        <Code
+          lang="css"
+          title="button.css"
+          code={`
+@layer components {
+  .button--block { display: flex; width: 100%; }
+}
+`}
+        />
       </section>
 
       <section>
@@ -203,10 +261,10 @@ function WhyStislaDocs() {
         <Code
           lang="css"
           code={`
-@layer components { .btn { border-radius: var(--btn-radius); } }
+@layer components { .button { border-radius: var(--button-radius); } }
 @layer utilities  { .rounded-none { border-radius: 0; } }
 
-/* <button class="btn rounded-none"> wins, no !important, nothing to merge */
+/* <button class="button rounded-none"> wins, no !important, nothing to merge */
 `}
         />
 

@@ -55,13 +55,12 @@ runtime state.
 ## 3. Modifiers
 
 ```
-.empty-state--primary                     tone the media (and bordered edge)
+.empty-state--primary                     tone the media
 .empty-state--success
 .empty-state--warning
 .empty-state--danger
 .empty-state--info
 .empty-state--compact                     smaller media + tighter padding
-.empty-state--bordered                    dashed region box
 ```
 
 **Tone.** A tone modifier sets the media accent — its fill, tint, and glyph
@@ -74,10 +73,6 @@ one-off hue, set the tone token directly instead of adding a class.
 inside a card, a panel, or an empty table body, where a full-size empty state
 would dominate. The default (non-compact) size suits a full page or a large
 empty region.
-
-**Bordered.** Draws a dashed box around the region, the common look for a
-droppable or fillable empty area such as an empty board column or an upload
-target. The border colour follows the tone when one is set.
 
 ## 4. Behaviour
 
@@ -93,7 +88,6 @@ The knobs every implementation must expose. Default values are normative.
 | --- | --- | --- | --- |
 | Tone | `'primary' \| 'success' \| 'warning' \| 'danger' \| 'info' \| none` | `none` | Picks a tone modifier, or sets the tone token for a custom value. `none` leaves the media neutral (muted). |
 | Density | `'default' \| 'compact'` | `'default'` | Picks the compact modifier. `compact` shrinks the media and padding for a confined region. |
-| Bordered | `boolean` | `false` | Adds the dashed region box. |
 
 ## 6. Lifecycle events
 
@@ -131,7 +125,7 @@ Any control inside the actions slot paints its own `:focus-visible` ring from
 animates a paired illustration, it suppresses that under
 `prefers-reduced-motion: reduce`.
 
-**Forced colours.** The media circle, the bordered edge, and the text stay
+**Forced colours.** The media circle and the text stay
 visible under `forced-colors: active` because they paint their own colours,
 which the OS maps into the high-contrast palette.
 
@@ -160,20 +154,11 @@ partial.
 | `--empty-state-art-size` | Maximum width of a paired illustration or `<img>`. |
 | `--empty-state-tone` | Media fill, tint, and glyph colour. The tone modifiers set this; an inline value wins for a one-off colour. |
 
-**Bordered — set on `.empty-state`.**
-
-| Variable | Affects |
-| --- | --- |
-| `--empty-state-border-color` | Dashed edge colour. Follows the tone by default. |
-| `--empty-state-radius` | Corner radius of the bordered box. |
-| `--empty-state-bg` | Fill of the bordered box. Transparent by default. |
-
 **Global tokens consumed.**
 
 `--st-foreground` (title), `--st-muted-foreground` (text and the neutral
-media tone), `--st-surface` (the media tint base), `--st-border` +
-`--st-border-width` (the bordered edge), `--st-spacing` (the padding and gap
-rhythm), `--st-primary` / `--st-success` / `--st-warning` / `--st-danger` /
+media tone), `--st-surface` (the media tint base), `--st-spacing` (the padding
+and gap rhythm), `--st-primary` / `--st-success` / `--st-warning` / `--st-danger` /
 `--st-info` (the tone modifiers).
 
 **Dark-mode flips.** None per-component. Every default rides the root token

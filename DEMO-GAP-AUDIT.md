@@ -77,7 +77,7 @@ Events (5 events). Intents 5→4 (dropped primary) + bodies trimmed + dropped th
 
 ### menu — 8 of 13 dropped
 MISSING: Keyboard, With icons (standalone), Destructive items (dedicated), Item shortcuts (`.menu__shortcut`
-+ `<kbd>`), Media rows (`.media.media--flush` as `role="menuitem"` — the borrow-by-role recipe), Form inside
++ `<kbd>`), Media rows (`.media.media--seamless` as `role="menuitem"` — the borrow-by-role recipe), Form inside
 (`-auto-close="outside"`), Placement (`-placement` 4 variants), Events. Checkbox+Radio merged & trimmed;
 group `role="group"`+`aria-labelledby` a11y pairing weakened.
 

@@ -29,20 +29,25 @@ function IllustrationDocs() {
     <>
       <header>
         <h1>Illustration</h1>
-        <p className="lead">Soft volumetric spot art shaded from a single accent hue.</p>
+        <p className="lead">
+          Soft volumetric spot art shaded from a single accent hue.
+        </p>
       </header>
 
       <section>
         <h2>Intents</h2>
         <p>
-          An <code>.illustration</code> is an inline SVG whose gradient stops, backing disc, and long
-          shadow all derive from one accent via <code>color-mix</code>, so recolouring never touches
-          the markup: set <code>--illus-accent</code> (and <code>--illus-badge</code> for the corner
-          pip) and the whole piece follows. An ancestor or inline accent overrides everything. The art
-          below is one demonstrative piece — the full metaphor set and gallery are a separate effort.
-          The default is a neutral gray. <code>.illustration--primary</code>,{" "}
-          <code>--success</code>, <code>--danger</code>, and <code>--warning</code> reshade the whole
-          piece from the matching token.
+          An <code>.illustration</code> is an inline SVG whose gradient stops,
+          backing disc, and long shadow all derive from one accent via{" "}
+          <code>color-mix</code>, so recolouring never touches the markup: set{" "}
+          <code>--illus-accent</code> (and <code>--illus-badge</code> for the
+          corner pip) and the whole piece follows. An ancestor or inline accent
+          overrides everything. The art below is one demonstrative piece — the
+          full metaphor set and gallery are a separate effort. The default is a
+          neutral gray. <code>.illustration--primary</code>,{" "}
+          <code>--success</code>, <code>--danger</code>, and{" "}
+          <code>--warning</code> reshade the whole piece from the matching
+          token.
         </p>
         <Demo
           layout="stack"
@@ -60,8 +65,9 @@ function IllustrationDocs() {
       <section>
         <h2>Custom accent</h2>
         <p>
-          Set <code>--illus-accent</code> on the SVG or any ancestor for an arbitrary hue, and{" "}
-          <code>--illus-badge</code> to give the corner pip its own colour.
+          Set <code>--illus-accent</code> on the SVG or any ancestor for an
+          arbitrary hue, and <code>--illus-badge</code> to give the corner pip
+          its own colour.
         </p>
         <Demo
           layout="stack"
@@ -76,27 +82,28 @@ function IllustrationDocs() {
       <section>
         <h2>Animated</h2>
         <p>
-          Add <code>.illustration--animate</code> for a gentle float on the object and a pop on the
-          badge. It is suppressed under reduced motion.
+          Add <code>.illustration--animated</code> for a gentle float on the
+          object and a pop on the badge. It is suppressed under reduced motion.
         </p>
         <Demo
           layout="stack"
           html={`
-<div class="w-32">${art("illustration--animate illustration--primary", "illo-animate")}</div>`}
+<div class="w-32">${art("illustration--animated illustration--primary", "illo-animate")}</div>`}
         />
       </section>
 
       <section>
         <h2>In an empty state</h2>
         <p>
-          Drop an illustration into an <code>.empty-state__media</code> slot; the slot sheds its circle
-          so the art isn't double-framed and caps the width.
+          Drop an illustration into an <code>.empty-state__media</code> slot;
+          the slot sheds its circle so the art isn't double-framed and caps the
+          width.
         </p>
         <Demo
           layout="stack"
           html={`
 <div class="empty-state">
-  <span class="empty-state__media">${art("illustration--primary", "illo-empty")}</span>
+  <span class="empty-state__media">${art("illustration--primary size-20", "illo-empty")}</span>
   <h3 class="empty-state__title">Nothing here yet</h3>
   <p class="empty-state__text">Create your first project to get started.</p>
   <div class="empty-state__action">
@@ -108,20 +115,39 @@ function IllustrationDocs() {
 
       <section>
         <h2>Customization</h2>
-        <p>These variables retune the art. Set them on the SVG or any ancestor.</p>
+        <p>
+          These variables retune the art. Set them on the SVG or any ancestor.
+        </p>
         <table>
           <thead>
-            <tr><th>Variable</th><th>Use</th></tr>
+            <tr>
+              <th>Variable</th>
+              <th>Use</th>
+            </tr>
           </thead>
           <tbody>
-            <tr><td><code>--illus-accent</code></td><td>The single hue the whole piece shades from (the intent modifiers set this)</td></tr>
-            <tr><td><code>--illus-badge</code></td><td>Corner pip colour (follows the accent by default)</td></tr>
+            <tr>
+              <td>
+                <code>--illus-accent</code>
+              </td>
+              <td>
+                The single hue the whole piece shades from (the intent modifiers
+                set this)
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>--illus-badge</code>
+              </td>
+              <td>Corner pip colour (follows the accent by default)</td>
+            </tr>
           </tbody>
         </table>
         <p>
-          The SVG markup carries the paint hooks: <code>.il-g0</code>–<code>.il-g3</code> (gradient
-          stops), <code>.il-disc-o</code> / <code>.il-disc-i</code> (backing disc),{" "}
-          <code>.il-obj</code> (the shadowed object), and <code>.il-badge</code> (the pip).
+          The SVG markup carries the paint hooks: <code>.il-g0</code>–
+          <code>.il-g3</code> (gradient stops), <code>.il-disc-o</code> /{" "}
+          <code>.il-disc-i</code> (backing disc), <code>.il-obj</code> (the
+          shadowed object), and <code>.il-badge</code> (the pip).
         </p>
       </section>
     </>

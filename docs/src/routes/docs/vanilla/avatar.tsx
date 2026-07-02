@@ -82,7 +82,7 @@ function AvatarDocs() {
       <section>
         <h2>Circle</h2>
         <p>
-          Add <code>.avatar--circle</code> for the pill shape. Default is rounded square to match the
+          Add <code>.avatar--circle</code> for a circle. Default is rounded square to match the
           Stisla surface vocabulary.
         </p>
         <Demo
@@ -186,7 +186,7 @@ function AvatarDocs() {
           </thead>
           <tbody>
             <tr><td><code>--avatar-size</code></td><td>Square side length; size modifiers retune this</td></tr>
-            <tr><td><code>--avatar-radius</code></td><td>Corner radius; <code>.avatar--circle</code> flips it to a full pill</td></tr>
+            <tr><td><code>--avatar-radius</code></td><td>Corner radius; <code>.avatar--circle</code> flips it to a full circle</td></tr>
             <tr><td><code>--avatar-bg</code></td><td>Tile background, the canvas the fallback paints over</td></tr>
             <tr><td><code>--avatar-color</code></td><td>Fallback text color</td></tr>
             <tr><td><code>--avatar-font-size</code></td><td>Fallback font size (icons scale to 1em)</td></tr>

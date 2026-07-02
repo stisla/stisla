@@ -76,7 +76,7 @@ spec's CSS targets them; deviations break visual conformance.
 .toggle--compact                              compact height — 28px at the default spacing base
 .toggle--roomy                              comfortable height — 44px at the default spacing base
 .toggle--icon-only                       square — width matches height, no horizontal padding
-.toggle--icon-round                      pill — opts out of --st-radius for a circular silhouette
+.toggle--circle                      circle — opts out of --st-radius for a circular silhouette
 ```
 
 Default (no size modifier) is 36px at the default spacing base — matches the
@@ -84,7 +84,7 @@ button baseline so a toggle and a button sit on the same rhythm side by
 side.
 
 Size modifiers retune height, padding, font size, and radius. Shape
-modifiers (`--icon-only`, `--icon-round`) compose with size modifiers.
+modifiers (`--icon-only`, `--circle`) compose with size modifiers.
 
 ## 4. Behaviour
 

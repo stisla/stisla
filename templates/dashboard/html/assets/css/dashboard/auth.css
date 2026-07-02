@@ -1,17 +1,7 @@
-/* ── Auth (split-screen) ──────────────────────────────────────────────────── */
 .auth {
   display: flex;
   min-height: 100dvh;
-  background: var(--color-background);
-}
-.auth .input-group {
-  --input-group-border-color: transparent;
-  --input-group-height: --spacing(10);
-  box-shadow: var(--shadow-sm);
-
-  @variant dark {
-    --input-group-border-color: var(--color-border);
-  }
+  background: var(--color-surface);
 }
 .auth__panel {
   position: relative;
@@ -47,7 +37,7 @@
     color-mix(in oklch, var(--color-primary) 30%, oklch(0.16 0.03 265)) 0%,
     oklch(0.13 0.025 265) 55%
   );
-  color: #fff;
+  color: oklch(1 0 0);
 
   @variant lg {
     display: flex;

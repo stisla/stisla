@@ -132,17 +132,19 @@
                     <h2 class="page__section-title">Appearance</h2>
                   </div>
                   <div class="card">
-                    <ul class="list-group list-group--flush">
-                      <li class="list-group__item gap-3">
-                        <div class="flex-auto">
-                          <label class="field__label font-medium" for="setTheme">Theme</label>
-                          <small class="text-muted-foreground block">Override your browser's preferred theme setting.</small>
+                    <ul class="list-group list-group--seamless">
+                      <li class="media">
+                        <div class="media__content">
+                          <label class="media__title" for="setTheme">Theme</label>
+                          <small class="media__description">Override your browser's preferred theme setting.</small>
                         </div>
-                        <select class="select select--sm shrink-0 max-w-36" id="setTheme" aria-label="Theme">
-                          <option selected>System</option>
-                          <option>Light</option>
-                          <option>Dark</option>
-                        </select>
+                        <div class="media__action">
+                          <select class="select select--sm max-w-36" id="setTheme" aria-label="Theme">
+                            <option selected>System</option>
+                            <option>Light</option>
+                            <option>Dark</option>
+                          </select>
+                        </div>
                       </li>
                     </ul>
                   </div>
@@ -158,7 +160,7 @@
                   <p class="page__section-description">Choose which emails Meridian sends you.</p>
                 </div>
                 <div class="card">
-                  <ul class="list-group list-group--flush">
+                  <ul class="list-group list-group--seamless">
                     {% set notifs = [
                       { id: "notifOrders",   title: "Order updates",    desc: "When an order is placed or changes status.",   on: true },
                       { id: "notifCustomer", title: "New customers",    desc: "When someone creates their first order.",      on: true },
@@ -166,12 +168,14 @@
                       { id: "notifReport",   title: "Weekly summary",   desc: "A digest of sales and traffic every Monday.",  on: true }
                     ] %}
                     {% for n in notifs %}
-                    <li class="list-group__item gap-3">
-                      <div class="flex-auto">
-                        <label class="field__label font-medium" for="{{ n.id }}">{{ n.title }}</label>
-                        <small class="text-muted-foreground block">{{ n.desc }}</small>
+                    <li class="media">
+                      <div class="media__content">
+                        <label class="media__title" for="{{ n.id }}">{{ n.title }}</label>
+                        <small class="media__description">{{ n.desc }}</small>
                       </div>
-                      <input class="switch switch--lg shrink-0" type="checkbox" role="switch" id="{{ n.id }}" {% if n.on %}checked{% endif %} />
+                      <div class="media__action">
+                        <input class="switch switch--lg" type="checkbox" role="switch" id="{{ n.id }}" {% if n.on %}checked{% endif %} />
+                      </div>
                     </li>
                     {% endfor %}
                   </ul>
@@ -188,30 +192,36 @@
                     <p class="page__section-description">Ways you can sign in to your account.</p>
                   </div>
                   <div class="card">
-                    <ul class="list-group list-group--flush">
-                      <li class="list-group__item gap-3">
-                        {{ "solar:letter-linear" | icon }}
-                        <div class="flex-auto">
-                          <div class="font-medium">steven@meridian.com</div>
-                          <small class="text-muted-foreground block">Sign in with one-time codes sent to your email.</small>
+                    <ul class="list-group list-group--seamless">
+                      <li class="media">
+                        <span class="media__figure">{{ "solar:letter-linear" | icon }}</span>
+                        <div class="media__content">
+                          <div class="media__title">steven@meridian.com</div>
+                          <small class="media__description">Sign in with one-time codes sent to your email.</small>
                         </div>
-                        <button type="button" class="button button--outline button--neutral button--sm shrink-0">Change email</button>
+                        <div class="media__action">
+                          <button type="button" class="button button--outline button--neutral button--sm">Change email</button>
+                        </div>
                       </li>
-                      <li class="list-group__item gap-3">
-                        {{ "solar:lock-keyhole-linear" | icon }}
-                        <div class="flex-auto">
-                          <div class="font-medium">Password</div>
-                          <small class="text-muted-foreground block">Last changed 3 months ago.</small>
+                      <li class="media">
+                        <span class="media__figure">{{ "solar:lock-keyhole-linear" | icon }}</span>
+                        <div class="media__content">
+                          <div class="media__title">Password</div>
+                          <small class="media__description">Last changed 3 months ago.</small>
                         </div>
-                        <button type="button" class="button button--outline button--neutral button--sm shrink-0">Change</button>
+                        <div class="media__action">
+                          <button type="button" class="button button--outline button--neutral button--sm">Change</button>
+                        </div>
                       </li>
-                      <li class="list-group__item gap-3">
-                        {{ "solar:key-minimalistic-linear" | icon }}
-                        <div class="flex-auto">
-                          <div class="font-medium">Passkey</div>
-                          <small class="text-muted-foreground block">Use Face ID, Touch ID, or a security key.</small>
+                      <li class="media">
+                        <span class="media__figure">{{ "solar:key-minimalistic-linear" | icon }}</span>
+                        <div class="media__content">
+                          <div class="media__title">Passkey</div>
+                          <small class="media__description">Use Face ID, Touch ID, or a security key.</small>
                         </div>
-                        <button type="button" class="button button--outline button--neutral button--sm shrink-0">Add passkey</button>
+                        <div class="media__action">
+                          <button type="button" class="button button--outline button--neutral button--sm">Add passkey</button>
+                        </div>
                       </li>
                     </ul>
                   </div>
@@ -223,14 +233,16 @@
                     <p class="page__section-description">Add an extra layer of security when you sign in.</p>
                   </div>
                   <div class="card">
-                    <ul class="list-group list-group--flush">
-                      <li class="list-group__item gap-3">
-                        {{ "solar:smartphone-linear" | icon }}
-                        <div class="flex-auto">
-                          <div class="font-medium">Authenticator app</div>
-                          <small class="text-muted-foreground block">Use an app like 1Password or Authy to generate codes.</small>
+                    <ul class="list-group list-group--seamless">
+                      <li class="media">
+                        <span class="media__figure">{{ "solar:smartphone-linear" | icon }}</span>
+                        <div class="media__content">
+                          <div class="media__title">Authenticator app</div>
+                          <small class="media__description">Use an app like 1Password or Authy to generate codes.</small>
                         </div>
-                        <button type="button" class="button button--primary button--sm shrink-0">Set up</button>
+                        <div class="media__action">
+                          <button type="button" class="button button--primary button--sm">Set up</button>
+                        </div>
                       </li>
                     </ul>
                   </div>
@@ -246,15 +258,17 @@
                   <p class="page__section-description">Irreversible actions for your account. Proceed with care.</p>
                 </div>
                 <div class="card">
-                  <ul class="list-group list-group--flush">
-                    <li class="list-group__item gap-3">
-                      <div class="flex-auto">
-                        <span class="font-medium block">Delete account</span>
-                        <small class="text-muted-foreground block">Permanently remove your account and all of its data.</small>
+                  <ul class="list-group list-group--seamless">
+                    <li class="media">
+                      <div class="media__content">
+                        <div class="media__title">Delete account</div>
+                        <small class="media__description">Permanently remove your account and all of its data.</small>
                       </div>
-                      <button type="button" class="button button--outline button--danger button--sm shrink-0" data-stisla-dialog-trigger="deleteAccount">
-                        Delete account
-                      </button>
+                      <div class="media__action">
+                        <button type="button" class="button button--outline button--danger button--sm" data-stisla-dialog-trigger="deleteAccount">
+                          Delete account
+                        </button>
+                      </div>
                     </li>
                   </ul>
                 </div>
@@ -276,7 +290,7 @@
     <div class="dialog__content">
       <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
       <div class="dialog__body text-center pt-6">
-        <span class="icon-box icon-box--danger icon-box--round icon-box--lg mb-3">
+        <span class="icon-box icon-box--danger icon-box--circle icon-box--lg mb-3">
           {{ "solar:trash-bin-trash-linear" | icon }}
         </span>
         <h3 class="dialog__title mb-1" id="deleteAccountLabel">Delete your account?</h3>

@@ -40,10 +40,20 @@ export function Demo({
 }) {
   const { theme: docsTheme } = useTheme();
 
+  // Keep DemoFrame out of the server render AND the first client render: `lazy` alone still
+  // resolves and renders on the server (where DemoFrame's useMemo touches `document`), and
+  // rendering on the first client pass would mismatch hydration. Mount-gate covers both.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   return (
     <div className="not-prose demo-block">
       <Suspense fallback={<FramePlaceholder />}>
-        <DemoFrame html={html} theme={theme ?? docsTheme} layout={layout} />
+        {mounted ? (
+          <DemoFrame html={html} theme={theme ?? docsTheme} layout={layout} />
+        ) : (
+          <FramePlaceholder />
+        )}
       </Suspense>
       <ShikiHighlighter
         language="html"

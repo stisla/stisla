@@ -4,6 +4,7 @@ import { createIsomorphicFn } from "@tanstack/react-start";
 import { getCookie } from "@tanstack/react-start/server";
 import appCss from "../styles/index.css?url";
 import { ThemeProvider, THEME_COOKIE } from "~/theme";
+import { SiteFooter } from "~/site-footer";
 
 /* Resolve the persisted theme on BOTH sides: on the server from the request cookie (so SSR
  * renders the right [data-theme] before anything paints — no flash), on the client from
@@ -45,7 +46,13 @@ export const Route = createRootRoute({
       },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap",
+      },
+      /* Landing-page face: JetBrains Mono sets the section eyebrows, clause numbers,
+         and all code. The display voice is Inter itself, set heavy and tight. */
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap",
       },
     ],
   }),
@@ -64,7 +71,10 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         <HeadContent />
       </head>
       <body suppressHydrationWarning>
-        <ThemeProvider initialTheme={theme}>{children}</ThemeProvider>
+        <ThemeProvider initialTheme={theme}>
+          {children}
+          <SiteFooter />
+        </ThemeProvider>
         <Scripts />
       </body>
     </html>

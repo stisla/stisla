@@ -92,12 +92,13 @@
     --button-radius: var(--radius-lg);
   }
 
-  /* === Icon shapes === */
+  /* === Shape === */
   .button--icon-only {
     --button-padding-inline: 0;
     width: var(--button-height, --spacing(9));
   }
-  .button--icon-round {
+  /* Full radius: a pill on text buttons, a circle when paired with --icon-only. */
+  .button--pill {
     border-radius: 9999px;
   }
 

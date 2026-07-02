@@ -164,6 +164,60 @@
     background-color: var(--color-foreground);
   }
 
+  /* === iOS Safari date/time fields ===
+   * iOS (detected via -webkit-touch-callout — WebKit-on-iOS only) top-aligns the value inside the
+   * field instead of centering it, and never paints ::-webkit-calendar-picker-indicator (the whole
+   * field is tappable and opens a native wheel). So the rules above are a no-op there. Flex the
+   * field + left-align the value to restore the single-line look, and paint the glyph as a
+   * background image (an <input> can't take ::before/::after, so a mask that tracks the token isn't
+   * possible — the stroke is baked, with a dark-scope variant swapping to the lighter muted tone). */
+  @supports (-webkit-touch-callout: none) {
+    .input[type="date"],
+    .input[type="datetime-local"],
+    .input[type="month"],
+    .input[type="week"],
+    .input[type="time"] {
+      display: flex;
+      align-items: center;
+      background-repeat: no-repeat;
+      background-position: right var(--input-padding-inline, --spacing(2.5)) center;
+      background-size: --spacing(4);
+      padding-inline-end: calc(
+        var(--input-padding-inline, --spacing(2.5)) + --spacing(6)
+      );
+    }
+    .input::-webkit-date-and-time-value {
+      text-align: left;
+    }
+
+    /* Light glyphs — stroke ≈ --color-muted-foreground (light). */
+    .input[type="date"],
+    .input[type="datetime-local"],
+    .input[type="month"],
+    .input[type="week"] {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23757575' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 2v4'/%3E%3Cpath d='M16 2v4'/%3E%3Crect width='18' height='18' x='3' y='4' rx='2'/%3E%3Cpath d='M3 10h18'/%3E%3C/svg%3E");
+    }
+    .input[type="time"] {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23757575' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolyline points='12 6 12 12 16 14'/%3E%3C/svg%3E");
+    }
+
+    /* Dark glyphs — real selectors (not :where) so they outweigh the light defaults above. */
+    [data-theme="dark"] .input[type="date"],
+    [data-theme="dark"] .input[type="datetime-local"],
+    [data-theme="dark"] .input[type="month"],
+    [data-theme="dark"] .input[type="week"],
+    .dark .input[type="date"],
+    .dark .input[type="datetime-local"],
+    .dark .input[type="month"],
+    .dark .input[type="week"] {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a3a3a3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 2v4'/%3E%3Cpath d='M16 2v4'/%3E%3Crect width='18' height='18' x='3' y='4' rx='2'/%3E%3Cpath d='M3 10h18'/%3E%3C/svg%3E");
+    }
+    [data-theme="dark"] .input[type="time"],
+    .dark .input[type="time"] {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a3a3a3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolyline points='12 6 12 12 16 14'/%3E%3C/svg%3E");
+    }
+  }
+
   /* === <input type="color"> ===
    * Native swatch inside our field shape. Width collapses to a small fixed swatch; inner padding lets
    * the swatch wear the field radius via the inner-radius rule (outer − outer-padding). */
@@ -202,7 +256,7 @@
   /* === Plaintext ===
    * Readonly bare-text variant. Strips the field affordance but keeps the height so it aligns with
    * sibling .input fields in a form row. Pair with `readonly` on the input. */
-  .input--plaintext {
+  .input--seamless {
     display: inline-flex;
     align-items: center;
     width: 100%;

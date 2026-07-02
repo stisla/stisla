@@ -126,13 +126,4 @@
     --empty-state-action-gap: --spacing(3);
     --empty-state-padding-block: --spacing(6);
   }
-
-  /* === Bordered === a dashed region box (a droppable / fillable empty area); the border colour rides
-     the tone so an error region can read red. */
-  .empty-state--bordered {
-    border: var(--st-border-width) dashed
-      var(--empty-state-border-color, color-mix(in oklch, var(--empty-state-tone, var(--color-border)) 60%, var(--color-border)));
-    border-radius: var(--empty-state-radius, var(--radius-lg));
-    background: var(--empty-state-bg, transparent);
-  }
 }

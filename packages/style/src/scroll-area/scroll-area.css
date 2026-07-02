@@ -17,9 +17,4 @@
     overflow: hidden;
     border-radius: var(--scroll-area-radius, var(--radius-md));
   }
-
-  .scroll-area--bordered {
-    border: var(--scroll-area-border-width, var(--st-border-width)) solid
-      var(--scroll-area-border-color, var(--color-border));
-  }
 }

@@ -4,6 +4,24 @@
 @import "../../../packages/style/src/navbar/navbar.css";
 @import "../../../packages/style/src/sidebar/sidebar.css";
 @import "../../../packages/style/src/illustration/illustration.css";
+/* Live components used by the landing showcase (routes/index.tsx). */
+@import "../../../packages/style/src/badge/badge.css";
+@import "../../../packages/style/src/field/field.css";
+@import "../../../packages/style/src/input/input.css";
+@import "../../../packages/style/src/checkbox/checkbox.css";
+@import "../../../packages/style/src/switch/switch.css";
+@import "../../../packages/style/src/progress/progress.css";
+@import "../../../packages/style/src/meter/meter.css";
+@import "../../../packages/style/src/tabs/tabs.css";
+@import "../../../packages/style/src/alert/alert.css";
+@import "../../../packages/style/src/avatar/avatar.css";
+@import "../../../packages/style/src/avatar-group/avatar-group.css";
+@import "../../../packages/style/src/slider/slider.css";
+@import "../../../packages/style/src/card/card.css";
+@import "../../../packages/style/src/media/media.css";
+@import "../../../packages/style/src/menu/menu.css";
+@import "../../../packages/style/src/table/table.css";
+@import "../../../packages/style/src/link/link.css";
 
 @plugin "@tailwindcss/typography";
 
@@ -30,9 +48,10 @@
 
 @import "./base.css";
 @import "./navbar.css";
+@import "./footer.css";
 @import "./sidebar.css";
 @import "./layout.css";
 @import "./toc.css";
 @import "./demo.css";
-@import "./landing.css";
 @import "./gallery.css";
+@import "./landing.css";

@@ -65,7 +65,7 @@ spec's CSS targets them; deviations break visual conformance.
 ## 3. Modifiers
 
 ```
-.accordion--flush                        drop frame border and shadow
+.accordion--seamless                        drop frame border and shadow
 ```
 
 The flush modifier strips the outer frame so the accordion fades into

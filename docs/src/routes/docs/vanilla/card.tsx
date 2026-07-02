@@ -15,19 +15,22 @@ function CardDocs() {
     <>
       <header>
         <h1>Card</h1>
-        <p className="lead">A content container with body, optional header and footer, and image regions.</p>
+        <p className="lead">
+          A content container with body, optional header and footer, and image
+          regions.
+        </p>
       </header>
 
       <section>
         <h2>Basic</h2>
         <p>
-          A card with just <code>.card__body</code>. Drop in a form, a stack of fields, or any
-          block of content.
+          A card with just <code>.card__body</code>. Drop in a form, a stack of
+          fields, or any block of content.
         </p>
         <Demo
           layout="stack"
           html={`
-<div class="card w-88">
+<div class="card w-full max-w-sm">
   <div class="card__body">
     <h5 class="card__title">Sign in</h5>
     <p class="card__text">Welcome back. Enter your details to continue.</p>
@@ -54,9 +57,10 @@ function CardDocs() {
       <section>
         <h2>Title, subtitle, text, links</h2>
         <p>
-          <code>.card__title</code> sits at a fixed font size regardless of the heading tag you
-          pick. <code>.card__subtitle</code> reads <code>--color-muted-foreground</code> so the
-          muted treatment is baked in and no utility is needed.
+          <code>.card__title</code> sits at a fixed font size regardless of the
+          heading tag you pick. <code>.card__subtitle</code> reads{" "}
+          <code>--color-muted-foreground</code> so the muted treatment is baked
+          in and no utility is needed.
         </p>
         <Demo
           layout="stack"
@@ -75,9 +79,9 @@ function CardDocs() {
       <section>
         <h2>Images</h2>
         <p>
-          <code>.card__image</code> is position-aware. As the first child it rounds its top
-          corners; as the last child it rounds the bottom. Wrap content in{" "}
-          <code>.card__overlay</code> to sit it over the image.
+          <code>.card__image</code> is position-aware. As the first child it
+          rounds its top corners; as the last child it rounds the bottom. Wrap
+          content in <code>.card__overlay</code> to sit it over the image.
         </p>
         <Demo
           layout="stack"
@@ -102,10 +106,11 @@ function CardDocs() {
       <section>
         <h2>Header, body, footer</h2>
         <p>
-          The default header is transparent and inherits the card body background. The footer
-          sits on <code>--color-surface-2</code> so the body and footer split reads without a
-          heavy border. Wrap trailing controls in a <code>.card__action</code> slot to push them
-          to the end of the header row.
+          The default header is transparent and inherits the card body
+          background. The footer sits on <code>--color-surface-2</code> so the
+          body and footer split reads without a heavy border. Wrap trailing
+          controls in a <code>.card__action</code> slot to push them to the end
+          of the header row.
         </p>
         <Demo
           layout="stack"
@@ -132,15 +137,15 @@ function CardDocs() {
       <section>
         <h2>Heading row</h2>
         <p>
-          <code>.card__heading</code> is a section sub-header for use inside the body: a title
-          with optional trailing controls. Put the controls in a <code>.card__action</code> slot
-          and they sit at the end of the row while the title packs to the start, the same slot the
-          header row uses.
+          <code>.card__heading</code> is a section sub-header for use inside the
+          body: a title with optional trailing controls. Put the controls in a{" "}
+          <code>.card__action</code> slot and they sit at the end of the row
+          while the title packs to the start, the same slot the header row uses.
         </p>
         <Demo
           layout="stack"
           html={`
-<div class="card w-88">
+<div class="card w-full max-w-sm">
   <div class="card__body">
     <div class="card__heading">
       <span class="card__title">Recent activity</span>
@@ -158,19 +163,19 @@ function CardDocs() {
         <h2>Alternate header</h2>
         <p>
           Opt the header onto <code>--color-surface-2</code> with{" "}
-          <code>.card__header--alt</code> to mirror the footer's contrast. Composes with{" "}
-          <code>.card__header</code>.
+          <code>.card__header--alt</code> to mirror the footer's contrast.
+          Composes with <code>.card__header</code>.
         </p>
         <Demo
           layout="stack"
           html={`
-<div class="card w-72">
+<div class="card w-full max-w-sm">
   <div class="card__header">Default header</div>
   <div class="card__body">
     <p class="card__text">Header inherits the card body background.</p>
   </div>
 </div>
-<div class="card w-72">
+<div class="card w-full max-w-sm">
   <div class="card__header card__header--alt">Alt header</div>
   <div class="card__body">
     <p class="card__text">Header sits on the alt surface.</p>
@@ -182,8 +187,8 @@ function CardDocs() {
       <section>
         <h2>Small header</h2>
         <p>
-          The header row defaults to a taller height. Add <code>.card__header--sm</code> to
-          tighten it for dense layouts.
+          The header row defaults to a taller height. Add{" "}
+          <code>.card__header--sm</code> to tighten it for dense layouts.
         </p>
         <Demo
           layout="stack"
@@ -204,36 +209,11 @@ function CardDocs() {
       </section>
 
       <section>
-        <h2>Flat</h2>
-        <p>
-          Cards carry a border by default so they read as cards with or without elevation.{" "}
-          <code>.card--flat</code> drops the shadow when the card should read as a frame rather
-          than a raised surface.
-        </p>
-        <Demo
-          layout="stack"
-          html={`
-<div class="card w-72">
-  <div class="card__body">
-    <h5 class="card__title">Default</h5>
-    <p class="card__text">Border and shadow elevation.</p>
-  </div>
-</div>
-<div class="card card--flat w-72">
-  <div class="card__body">
-    <h5 class="card__title">Flat</h5>
-    <p class="card__text">Border, no shadow.</p>
-  </div>
-</div>`}
-        />
-      </section>
-
-      <section>
         <h2>Customization</h2>
         <p>
-          These variables retune <code>.card</code> without touching component CSS. Override on{" "}
-          <code>.card</code> itself, on a parent scope, or on <code>:root</code>. The cascade
-          scopes the change.
+          These variables retune <code>.card</code> without touching component
+          CSS. Override on <code>.card</code> itself, on a parent scope, or on{" "}
+          <code>:root</code>. The cascade scopes the change.
         </p>
         <table>
           <thead>
@@ -244,40 +224,69 @@ function CardDocs() {
           </thead>
           <tbody>
             <tr>
-              <td><code>--card-radius</code></td>
+              <td>
+                <code>--card-radius</code>
+              </td>
               <td>Corner radius</td>
             </tr>
             <tr>
-              <td><code>--card-padding-inline</code></td>
-              <td>Left and right padding, shared by header, body, and footer so their edges align</td>
+              <td>
+                <code>--card-padding-inline</code>
+              </td>
+              <td>
+                Left and right padding, shared by header, body, and footer so
+                their edges align
+              </td>
             </tr>
             <tr>
-              <td><code>--card-padding-block</code></td>
+              <td>
+                <code>--card-padding-block</code>
+              </td>
               <td>Top and bottom padding of the body</td>
             </tr>
             <tr>
-              <td><code>--card-bg</code></td>
+              <td>
+                <code>--card-bg</code>
+              </td>
               <td>Background</td>
             </tr>
             <tr>
-              <td><code>--card-color</code></td>
+              <td>
+                <code>--card-color</code>
+              </td>
               <td>Text color</td>
             </tr>
             <tr>
-              <td><code>--card-border-width</code></td>
-              <td>Border thickness; set <code>0</code> to drop the border</td>
+              <td>
+                <code>--card-border-width</code>
+              </td>
+              <td>
+                Border thickness; set <code>0</code> to drop the border
+              </td>
             </tr>
             <tr>
-              <td><code>--card-border-color</code></td>
+              <td>
+                <code>--card-border-color</code>
+              </td>
               <td>Border color</td>
             </tr>
             <tr>
-              <td><code>--card-shadow</code></td>
-              <td>Drop shadow; <code>.card--flat</code> sets it to <code>none</code></td>
+              <td>
+                <code>--card-shadow</code>
+              </td>
+              <td>
+                Drop shadow; set to <code>none</code> for a flat, frame-only
+                card
+              </td>
             </tr>
             <tr>
-              <td><code>--card-header-height</code></td>
-              <td>Minimum height of the header row; <code>.card__header--sm</code> lowers it</td>
+              <td>
+                <code>--card-header-height</code>
+              </td>
+              <td>
+                Minimum height of the header row; <code>.card__header--sm</code>{" "}
+                lowers it
+              </td>
             </tr>
           </tbody>
         </table>

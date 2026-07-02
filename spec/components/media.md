@@ -48,8 +48,8 @@ spec's CSS targets them; deviations break visual conformance.
 
 ## 2. States
 
-The media itself has no opt-in state classes. Interactive rows derive
-their hover and focus paint from the host element:
+A plain media has no opt-in state classes. Interactive rows (a link or
+button root) derive their hover and focus paint from the host element:
 
 ```
 a.media:hover                            hover — when the root is an anchor
@@ -57,21 +57,39 @@ button.media:hover                       hover — when the root is a button
 .media:focus-visible                      keyboard focus
 ```
 
-Implementations may add `[data-state="active"]` for selection patterns
-(matched rows in a list, current step in a wizard) once the use case
-lands. The class is reserved by the spec; do not bind other meanings
-to it.
+A `.media--selectable` row (see Modifiers) adds selection states, read
+from the row's own truth rather than a state class:
+
+```
+.media--selectable:has(:checked)          native radio / checkbox inside a label
+.media--selectable[aria-pressed="true"]   toggle button
+.media--selectable[aria-checked="true"]   custom radio / checkbox role
+.media--selectable[aria-selected="true"]  listbox option
+```
+
+A selected row fills with `--media-bg-selected` and draws an outline in
+`--media-border-color-selected`. The outline rides an inset `box-shadow`,
+not the border box, so it does not depend on `--media-border-width` and
+survives inside a container that has flattened the row border (a
+list-group). A list-group additionally collapses the divider next to a
+selected row so adjacent selected rows share one border rather than
+stacking two.
+
+Implementations may add `[data-state="active"]` for nav selection
+patterns (matched rows in a list, current step in a wizard). The class
+is reserved by the spec; do not bind other meanings to it.
 
 ## 3. Modifiers
 
 ```
-.media--flush                             strip border, background, radius
+.media--seamless                             strip border, background, radius
 .media--vertical                          stack media / content / action top-to-bottom
+.media--selectable                        turn the row into a form control (radio / checkbox / chip / option)
 ```
 
-**Flush.** Drops `--media-bg`, `--media-border-width`, and
+**Seamless.** Drops `--media-bg`, `--media-border-width`, and
 `--media-radius`. Designed for stacks where a parent owns the frame (a
-card body, a sidebar panel, a popover). When a flush row sits as a
+card body, a sidebar panel, a popover). When a seamless row sits as a
 direct child of a `.card`, the host implementation retunes
 `--media-padding-inline` / `--media-padding-block` to the card's
 paddings so the row's inline edges align with the card's header and
@@ -80,6 +98,15 @@ footer paddings.
 **Vertical.** Sets `flex-direction: column` on the root and clears the
 action's `margin-inline-start: auto` (the inline pin makes no sense on
 a column). Stack reads top to bottom: media, content, action.
+
+**Selectable.** Opts the row into being a form control: card-style radio
+or checkbox (a `<label>` wrapping a native input), a toggle chip, or a
+listbox option. The modifier turns on the affordances (pointer, hover
+wash, focus ring on the row or on a control nested in it, selected and
+disabled paint); the selected state itself stays on the row's own truth
+(`:checked` or an `aria-*` attribute — see States). The modifier gate is
+deliberate: a plain media that merely hosts a switch in its action slot
+(a setting toggle) never opts in, so it is not mistaken for a selection.
 
 ## 4. Behaviour
 
@@ -134,7 +161,7 @@ partial.
 
 | Variable | Affects |
 | --- | --- |
-| `--media-radius` | Corner radius. Cleared to `0` by `--flush`. |
+| `--media-radius` | Corner radius. Cleared to `0` by `--seamless`. |
 | `--media-padding-inline` | Inline padding for the row. Retuned to the card's inline padding when a flush row lives inside a card. |
 | `--media-padding-block` | Block padding for the row. Retuned to the card's block padding when a flush row lives inside a card. |
 | `--media-gap` | Spacing between figure, content, and action. |
@@ -143,10 +170,14 @@ partial.
 
 | Variable | Affects |
 | --- | --- |
-| `--media-bg` | Background fill. Cleared to `transparent` by `--flush`. |
+| `--media-bg` | Background fill. Cleared to `transparent` by `--seamless`. |
 | `--media-color` | Text colour. |
-| `--media-border-width` | Border width. Cleared to `0` by `--flush`. |
+| `--media-border-width` | Border width. Cleared to `0` by `--seamless`. |
 | `--media-border-color` | Border colour. |
+| `--media-bg-hover` | Background on hover / keyboard highlight of an interactive or selectable row. |
+| `--media-bg-selected` | Fill of a selected `--selectable` row. |
+| `--media-border-color-selected` | Outline colour of a selected row (drawn as an inset ring). |
+| `--media-disabled-opacity` | Dimming of a disabled selectable row. |
 
 **Global tokens consumed.**
 
@@ -163,9 +194,10 @@ token swap automatically.
 - Intent-coloured variants (`--primary`, `--success`, `--danger`,
   `--info`, `--warning`) — use `.alert` for notification banners or
   `.badge` for inline tags
-- Checkable row pattern (`role="option"`, `aria-selected`) — list
-  patterns belong to `.list-group` or to a future combobox / select
-  primitive
+- Multi-row list container chrome (shared frame, dividers between rows) —
+  that belongs to `.list-group`, which stacks `.media` rows. A single
+  selectable row is in scope (see `--selectable`); the container that
+  groups them is not
 - Drag-handle slot for sortable lists — host implementations may add
   one; the spec stays focused on the static row
 - Skeleton / loading paint — wrap with `.placeholders` if needed

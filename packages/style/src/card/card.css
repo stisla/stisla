@@ -21,12 +21,6 @@
     box-shadow: var(--card-shadow, var(--shadow-md));
   }
 
-  /* Drop the shadow so the card reads as a frame rather than a raised surface. The border
-     stays on by default. */
-  .card--flat {
-    --card-shadow: none;
-  }
-
   /* === Parts ============================================================
    * Body is flex column + gap so .card__title / __subtitle / __text don't need
    * component-level margins. Parent owns the rhythm; children stay margin-zero (same model
@@ -211,7 +205,7 @@
   /* A flushed .media row inside a card reads as a continuous row of the card's surface: pick up the
      card gutter so the row's inline edges align with the header/footer, and drop the radius (the card
      already owns rounded corners). */
-  .card > .media--flush {
+  .card > .media--seamless {
     --media-padding-inline: var(--card-padding-inline, --spacing(5));
     --media-padding-block: var(--card-padding-block, --spacing(5));
     border-radius: 0;

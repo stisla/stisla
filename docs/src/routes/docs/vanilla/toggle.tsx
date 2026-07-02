@@ -86,16 +86,16 @@ function ToggleDocs() {
       </section>
 
       <section>
-        <h2>Icon-round</h2>
+        <h2>Circle</h2>
         <p>
-          Add <code>.toggle--icon-round</code> alongside <code>.toggle--icon-only</code> for a circular
-          silhouette. The radius forces a fully pilled corner.
+          Add <code>.toggle--circle</code> alongside <code>.toggle--icon-only</code> for a circular
+          silhouette.
         </p>
         <Demo
           html={`
-<button type="button" data-stisla-toggle class="toggle toggle--icon-only toggle--icon-round" aria-pressed="false" aria-label="Like"><i data-lucide="thumbs-up"></i></button>
-<button type="button" data-stisla-toggle class="toggle toggle--icon-only toggle--icon-round" aria-pressed="true" aria-label="Love"><i data-lucide="heart"></i></button>
-<button type="button" data-stisla-toggle class="toggle toggle--icon-only toggle--icon-round" aria-pressed="false" aria-label="Star"><i data-lucide="star"></i></button>`}
+<button type="button" data-stisla-toggle class="toggle toggle--icon-only toggle--circle" aria-pressed="false" aria-label="Like"><i data-lucide="thumbs-up"></i></button>
+<button type="button" data-stisla-toggle class="toggle toggle--icon-only toggle--circle" aria-pressed="true" aria-label="Love"><i data-lucide="heart"></i></button>
+<button type="button" data-stisla-toggle class="toggle toggle--icon-only toggle--circle" aria-pressed="false" aria-label="Star"><i data-lucide="star"></i></button>`}
         />
       </section>
 

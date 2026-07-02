@@ -214,7 +214,7 @@
   /* === Media integration === a borrowed .media row (role="menuitem") is flush, so it zeroed its own
      radius; re-round it to the same concentric token .menu__item uses so its hover wash clips to the
      matching curve. Both read the same token, so a --menu-radius / padding retune flows to both. */
-  .menu__popup .media--flush {
+  .menu__popup .media--seamless {
     --media-radius: var(
       --menu-item-radius,
       calc(var(--menu-radius, var(--radius-md)) - var(--menu-padding-inline, --spacing(1)))

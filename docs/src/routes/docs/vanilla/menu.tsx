@@ -267,7 +267,7 @@ function MenuDocs() {
 <div class="menu">
   <button class="button button--outline button--neutral" data-stisla-menu-trigger="menu-media" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-media">Notifications</button>
   <div class="menu__popup w-80" id="menu-media" data-stisla-menu role="menu" data-state="closed">
-    <a href="#" class="media media--flush items-start" role="menuitem">
+    <a href="#" class="media media--seamless items-start" role="menuitem">
       <div class="media__figure mt-1"><span class="icon-box icon-box--primary"><i data-lucide="shopping-bag"></i></span></div>
       <div class="media__content">
         <div class="media__title">New order #10428</div>
@@ -275,7 +275,7 @@ function MenuDocs() {
         <div class="media__meta">2 minutes ago</div>
       </div>
     </a>
-    <a href="#" class="media media--flush items-start" role="menuitem">
+    <a href="#" class="media media--seamless items-start" role="menuitem">
       <div class="media__figure mt-1"><span class="icon-box icon-box--warning"><i data-lucide="triangle-alert"></i></span></div>
       <div class="media__content">
         <div class="media__title">Low stock</div>
@@ -283,7 +283,7 @@ function MenuDocs() {
         <div class="media__meta">1 hour ago</div>
       </div>
     </a>
-    <a href="#" class="media media--flush items-start" role="menuitem">
+    <a href="#" class="media media--seamless items-start" role="menuitem">
       <div class="media__figure mt-1"><span class="icon-box icon-box--success"><i data-lucide="user-plus"></i></span></div>
       <div class="media__content">
         <div class="media__title">12 new customers</div>

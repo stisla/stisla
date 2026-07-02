@@ -90,12 +90,12 @@
     --toggle-font-size: var(--text-base);
   }
 
-  /* === Icon shapes === square at every size (mirrors .button--icon-only / --icon-round). */
+  /* === Icon shapes === square at every size (mirrors .button--icon-only / --round). */
   .toggle--icon-only {
     --toggle-padding-inline: 0;
     width: var(--toggle-height, --spacing(9));
   }
-  .toggle--icon-round {
+  .toggle--circle {
     border-radius: 9999px;
   }
 

@@ -41,14 +41,13 @@ function IconBoxDocs() {
       <section>
         <h2>Shape</h2>
         <p>
-          Add <code>.icon-box--round</code> for a circle, or <code>.icon-box--square</code> for hard
-          corners that ignore the radius token.
+          The box is a rounded square by default. Add{" "}
+          <code>.icon-box--circle</code> for a circle.
         </p>
         <Demo
           html={`
 <span class="icon-box icon-box--primary"><i data-lucide="bell"></i></span>
-<span class="icon-box icon-box--primary icon-box--round"><i data-lucide="bell"></i></span>
-<span class="icon-box icon-box--primary icon-box--square"><i data-lucide="bell"></i></span>`}
+<span class="icon-box icon-box--primary icon-box--circle"><i data-lucide="bell"></i></span>`}
         />
       </section>
 
@@ -92,7 +91,7 @@ function IconBoxDocs() {
           <tbody>
             <tr><td><code>--icon-box-size</code></td><td>Outer square dimension; size modifiers reassign this</td></tr>
             <tr><td><code>--icon-box-icon-size</code></td><td>Inner icon size</td></tr>
-            <tr><td><code>--icon-box-radius</code></td><td>Corner radius; <code>--round</code> forces a circle, <code>--square</code> hard corners</td></tr>
+            <tr><td><code>--icon-box-radius</code></td><td>Corner radius; <code>.icon-box--circle</code> overrides it to a full circle</td></tr>
             <tr><td><code>--icon-box-tone</code></td><td>Color source the bg and icon derive from; intents reassign this</td></tr>
             <tr><td><code>--icon-box-bg</code></td><td>Background tint</td></tr>
             <tr><td><code>--icon-box-color</code></td><td>Icon color</td></tr>

@@ -126,7 +126,8 @@ function ButtonDocs() {
         <p>
           Add <code>.button--icon-only</code> for a square button at any size. Pair with{" "}
           <code>aria-label</code> so the action stays announced. Add{" "}
-          <code>.button--icon-round</code> for a circular silhouette.
+          <code>.button--pill</code> to round the ends fully; on an icon-only
+          button that reads as a circle.
         </p>
         <Demo
           html={`
@@ -135,7 +136,7 @@ function ButtonDocs() {
 <button type="button" class="button button--primary button--icon-only button--lg" aria-label="Add"><i data-lucide="plus"></i></button>
 <button type="button" class="button button--outline button--danger button--icon-only" aria-label="Delete"><i data-lucide="trash-2"></i></button>
 <button type="button" class="button button--outline button--neutral button--icon-only" aria-label="Edit"><i data-lucide="pencil"></i></button>
-<button type="button" class="button button--ghost button--neutral button--icon-only button--icon-round" aria-label="Edit"><i data-lucide="pencil"></i></button>`}
+<button type="button" class="button button--ghost button--neutral button--icon-only button--pill" aria-label="Edit"><i data-lucide="pencil"></i></button>`}
         />
       </section>
 

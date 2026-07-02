@@ -18,25 +18,22 @@ function IntroductionDocs() {
       <section>
         <h2>What Stisla is</h2>
         <p>
-          Stisla is a themeable component library for building user interfaces.
+          Stisla is a component library built on constraint. One set of design
+          tokens defines its color, spacing, radius, and type, and every
+          component draws from that set.
         </p>
         <p>
-          You get a set of ready-made components, buttons, cards, dialogs,
-          forms, and the rest, that already agree on spacing, color, radius, and
-          behavior. Drop them into your markup and the page reads as one product
-          instead of a pile of mismatched parts.
+          On top of that shared set, each component exposes its own knobs: the
+          variables behind a button&rsquo;s color and size, a card&rsquo;s
+          padding, an input&rsquo;s radius. Each defaults to a global token, so a
+          component you leave alone already fits the page around it, and setting
+          one changes just that component.
         </p>
         <p>
-          Themeable means you can make it yours without restyling each
-          component. Color, spacing, radius, and type all read from a small set
-          of design tokens. Change a token and every component that uses it
-          updates, so matching your brand is a handful of values.
-        </p>
-        <p>
-          Stisla is also framework-agnostic. The first version ships as vanilla
-          CSS with a small JavaScript runtime for the interactive components,
-          and React and Vue versions follow. Every version behaves the same, so
-          a button is the same button wherever you use it.
+          Stisla is also framework-agnostic. The first implementation ships as
+          vanilla CSS with a small JavaScript runtime for the interactive
+          components, with React and Vue to follow. Each is built from the same
+          constraint, so a button is the same button wherever you use it.
         </p>
         <p>
           If you want the exact token names, the anatomy of each component, and

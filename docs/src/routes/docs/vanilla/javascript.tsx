@@ -44,7 +44,7 @@ function JavaScriptDocs() {
         <h2>Declarative usage</h2>
         <p>The runtime is driven mostly from HTML. Mark a component root with <code>data-stisla-&lt;name&gt;</code>, give its triggers and dismissers their matching attributes, and the scanner wires the behavior on first paint.</p>
         <Code code={`
-<button type="button" class="btn btn--primary" data-stisla-dialog-trigger="hello">
+<button type="button" class="button button--primary" data-stisla-dialog-trigger="hello">
   Open
 </button>
 

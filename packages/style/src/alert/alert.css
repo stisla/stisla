@@ -12,7 +12,7 @@
     min-height: --spacing(11);
     padding-block: var(--alert-padding-block, --spacing(2.5));
     padding-inline: var(--alert-padding-inline, --spacing(4));
-    line-height: var(--leading-none);
+    line-height: var(--leading-tight);
     color: var(--alert-color, var(--color-foreground));
     background: var(--alert-bg, transparent);
     border: var(--alert-border-width, var(--st-border-width)) solid

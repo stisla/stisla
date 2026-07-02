@@ -142,7 +142,7 @@ function InputDocs() {
       <section>
         <h2>Plain text</h2>
         <p>
-          Swap <code>.input</code> for <code>.input--plaintext</code> to render
+          Swap <code>.input</code> for <code>.input--seamless</code> to render
           a readonly value as bare text: no border, no background, but still
           aligned with neighboring inputs. Pair with <code>readonly</code>.
         </p>
@@ -151,7 +151,7 @@ function InputDocs() {
           html={`
 <div class="field max-w-96">
   <label for="plainEmail" class="field__label">Email</label>
-  <input type="email" readonly class="input--plaintext" id="plainEmail" value="you@example.com" />
+  <input type="email" readonly class="input--seamless" id="plainEmail" value="you@example.com" />
 </div>`}
         />
       </section>

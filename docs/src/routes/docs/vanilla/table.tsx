@@ -130,15 +130,15 @@ function TableDocs() {
       </section>
 
       <section>
-        <h2>Bordered</h2>
+        <h2>Grid</h2>
         <p>
-          <code>.table--bordered</code> draws a border on every side of every
+          <code>.table--grid</code> draws a border on every side of every
           cell.
         </p>
         <Demo
           layout="stack"
           html={`
-<table class="table table--bordered">
+<table class="table table--grid">
   <thead><tr><th scope="col">Cluster</th><th scope="col">Nodes</th><th scope="col">CPU</th><th scope="col">Memory</th></tr></thead>
   <tbody>
     <tr><td>prod-edge</td><td>24</td><td>62%</td><td>71%</td></tr>
@@ -150,15 +150,15 @@ function TableDocs() {
       </section>
 
       <section>
-        <h2>Borderless</h2>
+        <h2>Seamless</h2>
         <p>
-          <code>.table--borderless</code> strips every row and cell border for a
+          <code>.table--seamless</code> strips every row and cell border for a
           soft list look.
         </p>
         <Demo
           layout="stack"
           html={`
-<table class="table table--borderless">
+<table class="table table--seamless">
   <thead><tr><th scope="col">Project</th><th scope="col">Owner</th><th scope="col" class="text-end">Open issues</th></tr></thead>
   <tbody>
     <tr><td>billing-service</td><td>Maya Singh</td><td class="text-end">12</td></tr>
@@ -287,18 +287,20 @@ function TableDocs() {
         <Demo
           layout="stack"
           html={`
-<table class="table table--hover table--align-middle">
-  <thead class="table__head--alt">
-    <tr><th scope="col">Invoice</th><th scope="col">Client</th><th scope="col">Amount</th><th scope="col">Due</th><th scope="col">Status</th></tr>
-  </thead>
-  <tbody>
-    <tr><td><code>INV-1042</code></td><td>Acme Corp</td><td>$4,800.00</td><td>Jun 15</td><td><span class="badge badge--soft badge--info"><i data-lucide="send"></i> Sent</span></td></tr>
-    <tr><td><code>INV-1041</code></td><td>Riverway Ltd</td><td>$1,250.00</td><td>Jun 10</td><td><span class="badge badge--soft badge--success"><i data-lucide="check"></i> Paid</span></td></tr>
-    <tr><td><code>INV-1040</code></td><td>Northwind</td><td>$9,310.00</td><td>May 28</td><td><span class="badge badge--soft badge--danger"><i data-lucide="triangle-alert"></i> Overdue</span></td></tr>
-    <tr><td><code>INV-1039</code></td><td>Globex</td><td>$2,140.00</td><td>Jun 22</td><td><span class="badge badge--soft badge--warning"><i data-lucide="clock"></i> Draft</span></td></tr>
-    <tr><td><code>INV-1038</code></td><td>Initech</td><td>$680.00</td><td>Jun 30</td><td><span class="badge badge--soft">Scheduled</span></td></tr>
-  </tbody>
-</table>`}
+<div class="table-responsive">
+  <table class="table table--hover table--align-middle">
+    <thead class="table__head--alt">
+      <tr><th scope="col">Invoice</th><th scope="col">Client</th><th scope="col">Amount</th><th scope="col">Due</th><th scope="col">Status</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>INV-1042</code></td><td>Acme Corp</td><td>$4,800.00</td><td>Jun 15</td><td><span class="badge badge--soft badge--info"><i data-lucide="send"></i> Sent</span></td></tr>
+      <tr><td><code>INV-1041</code></td><td>Riverway Ltd</td><td>$1,250.00</td><td>Jun 10</td><td><span class="badge badge--soft badge--success"><i data-lucide="check"></i> Paid</span></td></tr>
+      <tr><td><code>INV-1040</code></td><td>Northwind</td><td>$9,310.00</td><td>May 28</td><td><span class="badge badge--soft badge--danger"><i data-lucide="triangle-alert"></i> Overdue</span></td></tr>
+      <tr><td><code>INV-1039</code></td><td>Globex</td><td>$2,140.00</td><td>Jun 22</td><td><span class="badge badge--soft badge--warning"><i data-lucide="clock"></i> Draft</span></td></tr>
+      <tr><td><code>INV-1038</code></td><td>Initech</td><td>$680.00</td><td>Jun 30</td><td><span class="badge badge--soft">Scheduled</span></td></tr>
+    </tbody>
+  </table>
+</div>`}
         />
       </section>
 
@@ -313,57 +315,59 @@ function TableDocs() {
         <Demo
           layout="stack"
           html={`
-<table class="table table--align-middle">
-  <thead class="table__head--alt">
-    <tr><th scope="col">Member</th><th scope="col">Role</th><th scope="col">Joined</th><th scope="col">Status</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <div class="flex flex-wrap items-center gap-2">
-          <img src="${AV}12" alt="" width="32" height="32" class="rounded-full" />
-          <div><div>Maya Singh</div><div class="text-muted-foreground">maya@acme.co</div></div>
-        </div>
-      </td>
-      <td>Admin</td>
-      <td>Jan 2024</td>
-      <td><span class="badge badge--soft badge--success">Active</span></td>
-    </tr>
-    <tr>
-      <td>
-        <div class="flex flex-wrap items-center gap-2">
-          <img src="${AV}13" alt="" width="32" height="32" class="rounded-full" />
-          <div><div>Mateo Reyes</div><div class="text-muted-foreground">mateo@acme.co</div></div>
-        </div>
-      </td>
-      <td>Editor</td>
-      <td>Mar 2024</td>
-      <td><span class="badge badge--soft badge--success">Active</span></td>
-    </tr>
-    <tr>
-      <td>
-        <div class="flex flex-wrap items-center gap-2">
-          <img src="${AV}5" alt="" width="32" height="32" class="rounded-full" />
-          <div><div>Sara Lin</div><div class="text-muted-foreground">sara@acme.co</div></div>
-        </div>
-      </td>
-      <td>Viewer</td>
-      <td>May 2024</td>
-      <td><span class="badge badge--soft badge--warning">Invite pending</span></td>
-    </tr>
-    <tr>
-      <td>
-        <div class="flex flex-wrap items-center gap-2">
-          <img src="${AV}33" alt="" width="32" height="32" class="rounded-full" />
-          <div><div>Theo Wright</div><div class="text-muted-foreground">theo@acme.co</div></div>
-        </div>
-      </td>
-      <td>Editor</td>
-      <td>Jun 2023</td>
-      <td><span class="badge badge--soft badge--danger">Suspended</span></td>
-    </tr>
-  </tbody>
-</table>`}
+<div class="table-responsive">
+  <table class="table table--align-middle">
+    <thead class="table__head--alt">
+      <tr><th scope="col">Member</th><th scope="col">Role</th><th scope="col">Joined</th><th scope="col">Status</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="flex flex-wrap items-center gap-2">
+            <img src="${AV}12" alt="" width="32" height="32" class="rounded-full" />
+            <div><div>Maya Singh</div><div class="text-muted-foreground">maya@acme.co</div></div>
+          </div>
+        </td>
+        <td>Admin</td>
+        <td>Jan 2024</td>
+        <td><span class="badge badge--soft badge--success">Active</span></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="flex flex-wrap items-center gap-2">
+            <img src="${AV}13" alt="" width="32" height="32" class="rounded-full" />
+            <div><div>Mateo Reyes</div><div class="text-muted-foreground">mateo@acme.co</div></div>
+          </div>
+        </td>
+        <td>Editor</td>
+        <td>Mar 2024</td>
+        <td><span class="badge badge--soft badge--success">Active</span></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="flex flex-wrap items-center gap-2">
+            <img src="${AV}5" alt="" width="32" height="32" class="rounded-full" />
+            <div><div>Sara Lin</div><div class="text-muted-foreground">sara@acme.co</div></div>
+          </div>
+        </td>
+        <td>Viewer</td>
+        <td>May 2024</td>
+        <td><span class="badge badge--soft badge--warning">Invite pending</span></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="flex flex-wrap items-center gap-2">
+            <img src="${AV}33" alt="" width="32" height="32" class="rounded-full" />
+            <div><div>Theo Wright</div><div class="text-muted-foreground">theo@acme.co</div></div>
+          </div>
+        </td>
+        <td>Editor</td>
+        <td>Jun 2023</td>
+        <td><span class="badge badge--soft badge--danger">Suspended</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>`}
         />
       </section>
 
@@ -442,9 +446,7 @@ function TableDocs() {
 <div class="card w-full">
   <div class="card__header card__header--alt">
     <span><strong>2</strong> of 4 selected</span>
-    <div class="flex flex-wrap items-center gap-2 ms-auto">
-      <button type="button" class="button button--sm button--outline button--neutral"><i data-lucide="tag"></i> Add tag</button>
-      <button type="button" class="button button--sm button--outline button--neutral"><i data-lucide="archive"></i> Archive</button>
+    <div class="card__action">
       <button type="button" class="button button--sm button--danger"><i data-lucide="trash-2"></i> Delete</button>
     </div>
   </div>
@@ -481,24 +483,26 @@ function TableDocs() {
     Deployments
     <button type="button" class="button button--sm button--primary ms-auto">Deploy</button>
   </div>
-  <table class="table table--hover table--align-middle">
-    <thead>
-      <tr><th scope="col">Service</th><th scope="col">Environment</th><th scope="col">Version</th><th scope="col">Status</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>api</td><td><span class="badge badge--soft">production</span></td><td><code>v2.14.0</code></td><td><span class="badge badge--soft badge--success"><i data-lucide="circle-check"></i> Healthy</span></td></tr>
-      <tr><td>web</td><td><span class="badge badge--soft">production</span></td><td><code>v3.41.2</code></td><td><span class="badge badge--soft badge--warning"><i data-lucide="triangle-alert"></i> Degraded</span></td></tr>
-      <tr><td>api</td><td><span class="badge badge--soft">staging</span></td><td><code>v2.15.0-rc1</code></td><td><span class="badge badge--soft badge--info"><span class="spinner spinner--sm" role="status" aria-hidden="true"></span> Deploying</span></td></tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table table--hover table--align-middle">
+      <thead>
+        <tr><th scope="col">Service</th><th scope="col">Environment</th><th scope="col">Version</th><th scope="col">Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>api</td><td><span class="badge badge--soft">production</span></td><td><code>v2.14.0</code></td><td><span class="badge badge--soft badge--success"><i data-lucide="circle-check"></i> Healthy</span></td></tr>
+        <tr><td>web</td><td><span class="badge badge--soft">production</span></td><td><code>v3.41.2</code></td><td><span class="badge badge--soft badge--warning"><i data-lucide="triangle-alert"></i> Degraded</span></td></tr>
+        <tr><td>api</td><td><span class="badge badge--soft">staging</span></td><td><code>v2.15.0-rc1</code></td><td><span class="badge badge--soft badge--info"><span class="spinner spinner--sm" role="status" aria-hidden="true"></span> Deploying</span></td></tr>
+      </tbody>
+    </table>
+  </div>
 </div>`}
         />
       </section>
 
       <section>
-        <h2>Bordered, inside a card</h2>
+        <h2>Grid, inside a card</h2>
         <p>
-          A <code>.table--bordered</code> dropped straight into a{" "}
+          A <code>.table--grid</code> dropped straight into a{" "}
           <code>.card</code> drops its outer perimeter so it doesn't double the
           card border, and rounds the corner cells to the card. With no card
           header above, the top corners round too.
@@ -507,7 +511,7 @@ function TableDocs() {
           layout="stack"
           html={`
 <div class="card w-full">
-  <table class="table table--bordered">
+  <table class="table table--grid">
     <thead>
       <tr><th scope="col">Region</th><th scope="col">Orders</th><th scope="col">Revenue</th></tr>
     </thead>
@@ -530,54 +534,56 @@ function TableDocs() {
         <Demo
           layout="stack"
           html={`
-<div class="card">
+<div class="card w-full">
   <div class="card__header card__header--alt">
     Team members
     <span class="badge badge--soft ms-2">5 of 15 seats</span>
     <button type="button" class="button button--sm button--primary ms-auto"><i data-lucide="user-plus"></i> Invite</button>
   </div>
-  <table class="table table--hover table--align-middle">
-    <thead>
-      <tr><th scope="col">Member</th><th scope="col">Role</th><th scope="col">Last active</th><th scope="col">Status</th><th scope="col" class="text-end">Actions</th></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><div class="flex flex-wrap items-center gap-2"><img src="${AV}68" alt="" width="32" height="32" class="rounded-full" /><div><div>Alex Park</div><div class="text-muted-foreground">alex@acme.co</div></div></div></td>
-        <td><span class="badge badge--soft badge--primary">Owner</span></td>
-        <td>just now</td>
-        <td><span class="badge badge--soft badge--success">Active</span></td>
-        <td class="text-end"><button type="button" class="button button--sm button--ghost button--neutral button--icon-only" aria-label="More"><i data-lucide="more-horizontal"></i></button></td>
-      </tr>
-      <tr>
-        <td><div class="flex flex-wrap items-center gap-2"><img src="${AV}12" alt="" width="32" height="32" class="rounded-full" /><div><div>Maya Singh</div><div class="text-muted-foreground">maya@acme.co</div></div></div></td>
-        <td><span class="badge badge--soft badge--info">Admin</span></td>
-        <td>12 min ago</td>
-        <td><span class="badge badge--soft badge--success">Active</span></td>
-        <td class="text-end"><button type="button" class="button button--sm button--ghost button--neutral button--icon-only" aria-label="More"><i data-lucide="more-horizontal"></i></button></td>
-      </tr>
-      <tr>
-        <td><div class="flex flex-wrap items-center gap-2"><img src="${AV}13" alt="" width="32" height="32" class="rounded-full" /><div><div>Mateo Reyes</div><div class="text-muted-foreground">mateo@acme.co</div></div></div></td>
-        <td><span class="badge badge--soft">Editor</span></td>
-        <td>2 hours ago</td>
-        <td><span class="badge badge--soft badge--success">Active</span></td>
-        <td class="text-end"><button type="button" class="button button--sm button--ghost button--neutral button--icon-only" aria-label="More"><i data-lucide="more-horizontal"></i></button></td>
-      </tr>
-      <tr>
-        <td><div class="flex flex-wrap items-center gap-2"><img src="${AV}5" alt="" width="32" height="32" class="rounded-full" /><div><div>Sara Lin</div><div class="text-muted-foreground">sara@acme.co</div></div></div></td>
-        <td><span class="badge badge--soft">Viewer</span></td>
-        <td>never</td>
-        <td><span class="badge badge--soft badge--warning">Invite pending</span></td>
-        <td class="text-end"><button type="button" class="button button--sm button--ghost button--neutral button--icon-only" aria-label="More"><i data-lucide="more-horizontal"></i></button></td>
-      </tr>
-      <tr>
-        <td><div class="flex flex-wrap items-center gap-2"><img src="${AV}33" alt="" width="32" height="32" class="rounded-full" /><div><div>Theo Wright</div><div class="text-muted-foreground">theo@acme.co</div></div></div></td>
-        <td><span class="badge badge--soft">Editor</span></td>
-        <td>1 week ago</td>
-        <td><span class="badge badge--soft badge--danger">Suspended</span></td>
-        <td class="text-end"><button type="button" class="button button--sm button--ghost button--neutral button--icon-only" aria-label="More"><i data-lucide="more-horizontal"></i></button></td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table table--hover table--align-middle">
+      <thead>
+        <tr><th scope="col">Member</th><th scope="col">Role</th><th scope="col">Last active</th><th scope="col">Status</th><th scope="col" class="text-end">Actions</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="flex flex-wrap items-center gap-2"><img src="${AV}68" alt="" width="32" height="32" class="rounded-full" /><div><div>Alex Park</div><div class="text-muted-foreground">alex@acme.co</div></div></div></td>
+          <td><span class="badge badge--soft badge--primary">Owner</span></td>
+          <td>just now</td>
+          <td><span class="badge badge--soft badge--success">Active</span></td>
+          <td class="text-end"><button type="button" class="button button--sm button--ghost button--neutral button--icon-only" aria-label="More"><i data-lucide="more-horizontal"></i></button></td>
+        </tr>
+        <tr>
+          <td><div class="flex flex-wrap items-center gap-2"><img src="${AV}12" alt="" width="32" height="32" class="rounded-full" /><div><div>Maya Singh</div><div class="text-muted-foreground">maya@acme.co</div></div></div></td>
+          <td><span class="badge badge--soft badge--info">Admin</span></td>
+          <td>12 min ago</td>
+          <td><span class="badge badge--soft badge--success">Active</span></td>
+          <td class="text-end"><button type="button" class="button button--sm button--ghost button--neutral button--icon-only" aria-label="More"><i data-lucide="more-horizontal"></i></button></td>
+        </tr>
+        <tr>
+          <td><div class="flex flex-wrap items-center gap-2"><img src="${AV}13" alt="" width="32" height="32" class="rounded-full" /><div><div>Mateo Reyes</div><div class="text-muted-foreground">mateo@acme.co</div></div></div></td>
+          <td><span class="badge badge--soft">Editor</span></td>
+          <td>2 hours ago</td>
+          <td><span class="badge badge--soft badge--success">Active</span></td>
+          <td class="text-end"><button type="button" class="button button--sm button--ghost button--neutral button--icon-only" aria-label="More"><i data-lucide="more-horizontal"></i></button></td>
+        </tr>
+        <tr>
+          <td><div class="flex flex-wrap items-center gap-2"><img src="${AV}5" alt="" width="32" height="32" class="rounded-full" /><div><div>Sara Lin</div><div class="text-muted-foreground">sara@acme.co</div></div></div></td>
+          <td><span class="badge badge--soft">Viewer</span></td>
+          <td>never</td>
+          <td><span class="badge badge--soft badge--warning">Invite pending</span></td>
+          <td class="text-end"><button type="button" class="button button--sm button--ghost button--neutral button--icon-only" aria-label="More"><i data-lucide="more-horizontal"></i></button></td>
+        </tr>
+        <tr>
+          <td><div class="flex flex-wrap items-center gap-2"><img src="${AV}33" alt="" width="32" height="32" class="rounded-full" /><div><div>Theo Wright</div><div class="text-muted-foreground">theo@acme.co</div></div></div></td>
+          <td><span class="badge badge--soft">Editor</span></td>
+          <td>1 week ago</td>
+          <td><span class="badge badge--soft badge--danger">Suspended</span></td>
+          <td class="text-end"><button type="button" class="button button--sm button--ghost button--neutral button--icon-only" aria-label="More"><i data-lucide="more-horizontal"></i></button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>`}
         />
       </section>

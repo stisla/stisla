@@ -179,7 +179,7 @@
   /* === Flush === drop the frame border + shadow so the accordion fades into its parent surface
      (a card or page section). Root padding stays — items still chip out concentrically when opened;
      the parent owns inter-block spacing in flush contexts. */
-  .accordion--flush {
+  .accordion--seamless {
     border: 0;
     box-shadow: none;
   }

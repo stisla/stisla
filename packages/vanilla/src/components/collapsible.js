@@ -131,15 +131,19 @@ export class Collapsible extends Component {
       return this;
     }
 
-    // 1. Pin inline height to 0 as the transition start. Add [data-collapsing]
+    // Mirror close() exactly so both directions tween identically:
+    // 1. Measure the target at the element's NATURAL height (it's now
+    //    displayed via data-state="open") — accurate, unlike reading
+    //    scrollHeight while the box is already clamped to 0.
+    // 2. Pin inline height to 0 as the transition start; add [data-collapsing]
     //    so the CSS transition rule applies.
-    // 2. Read scrollHeight — accessing it forces layout, committing
-    //    the 0 start state to the CSSOM.
-    // 3. Set inline height to the measured target. The transition rule is in
-    //    effect; the browser interpolates.
+    // 3. Force a dedicated reflow to commit the 0 start state to the CSSOM
+    //    with the transition armed.
+    // 4. Set inline height to the target — the browser interpolates 0 → target.
+    const target = this._measureHeight();
     this.el.style.height = '0px';
     this.el.setAttribute(COLLAPSING_ATTR, '');
-    const target = this._measureHeight();
+    void this.el.offsetHeight;
     this.el.style.height = `${target}px`;
 
     this._awaitTransition(this._duration(), () => {

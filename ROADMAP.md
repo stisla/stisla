@@ -125,6 +125,17 @@ These are **unordered** — pick by what's ready / highest-leverage, not top-to-
       `tools/build-packages.mjs`, and the legacy Vite config (= the Phase 8 "Cutover" item, §12).
 - [ ] **Polish the docs pages.** TOC sidebar still needs work; dark/light mode persistence
       (no flash on load); other rough edges.
+- [x] **Intent-based modifier vocabulary.** Done 2026-07-02: retired appearance-named chrome
+      modifiers for one intent per axis (HeroUI "semantic intent over visual style"). Chrome/embed
+      `borderless`/`flush`/`plaintext` → **`--seamless`** (list-group, media, accordion, table, input);
+      table full borders `--bordered` → **`--grid`**; illustration `--animate` → **`--animated`**.
+      Deleted `.card--flat` (use `--card-shadow: none`), `.icon-box--square` (default is a rounded
+      square), and `.empty-state--bordered` / `.scroll-area--bordered` (compose a border with
+      utilities). `button--flush-start/-end` kept — it's edge-align (negative margin), now unambiguous.
+      Buttons' tone × fill matrix stays composable via `--button-tone`. **Shape axis** unified too:
+      `--circle` for square components (avatar, icon-box, toggle), `--pill` for buttons (was
+      `icon-box--round` / `toggle--icon-round` / `button--round`); React Button prop `round` → `pill`.
+      Swept CSS + all docs + templates + `spec/` + composer config; `pnpm build:packages` clean.
 
 **Deferred off the ship path (was Phase 8 tail):** React wrapper sweep, `@stisla/vue`, "why
 constraint" page rewrite. Re-open after vanilla ships.
@@ -260,7 +271,7 @@ group); `check-tokens` scale-literal-fallback regex no longer false-matches `--t
       (`--checkbox-*`/`--radio-*`; switch standalone). Native state only (`:checked`/`:indeterminate`/
       `:disabled`/`:focus-visible`/`[aria-invalid]`/`:user-invalid`), no is-*. switch `--roomy`→`--lg`.
       Two off-scale radii kept as literals (no token in the sm/md/lg scale): checkbox box `0.25rem`,
-      switch pill `9999px` (same precedent as `.button--icon-round`); both overridable via their knob.
+      switch pill `9999px` (same precedent as `.button--round`); both overridable via their knob.
       Indicator glyphs are literal-white `data:` SVGs (URLs can't read CSS vars). Demos use utility-class
       scaffolding. `pnpm check` clean (27 files), docs build clean.
 - [x] Forms — Batch 3: select (NATIVE only), input-group, button-group. **select**: native field base

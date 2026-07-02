@@ -88,10 +88,10 @@ function MediaDocs() {
       </section>
 
       <section>
-        <h2>Flush rows in a card</h2>
+        <h2>Seamless rows in a card</h2>
         <p>
-          Stack <code>.media--flush</code> rows inside a <code>.card</code>. The
-          flush items shed their own border and background and pick up the card
+          Stack <code>.media--seamless</code> rows inside a <code>.card</code>. The
+          seamless items shed their own border and background and pick up the card
           padding, so the row edges line up with the card header. Each row stays
           its own row; the card stays one frame; a <code>.separator</code>
           between rows adds the dividing line.
@@ -101,7 +101,7 @@ function MediaDocs() {
           html={`
 <div class="card max-w-md w-full">
   <div class="card__header">Team members</div>
-  <div class="media media--flush">
+  <div class="media media--seamless">
     <div class="media__figure">
       <span class="avatar avatar--circle" data-stisla-avatar><img class="avatar__image" src="https://i.pravatar.cc/96?img=47" alt=""><span class="avatar__fallback">MT</span></span>
     </div>
@@ -114,7 +114,7 @@ function MediaDocs() {
     </div>
   </div>
   <hr class="separator" />
-  <div class="media media--flush">
+  <div class="media media--seamless">
     <div class="media__figure">
       <span class="avatar avatar--circle" data-stisla-avatar><img class="avatar__image" src="https://i.pravatar.cc/96?img=32" alt=""><span class="avatar__fallback">PR</span></span>
     </div>
@@ -127,7 +127,7 @@ function MediaDocs() {
     </div>
   </div>
   <hr class="separator" />
-  <div class="media media--flush">
+  <div class="media media--seamless">
     <div class="media__figure">
       <span class="avatar avatar--circle" data-stisla-avatar><img class="avatar__image" src="https://i.pravatar.cc/96?img=15" alt=""><span class="avatar__fallback">DR</span></span>
     </div>
@@ -140,7 +140,7 @@ function MediaDocs() {
     </div>
   </div>
   <hr class="separator" />
-  <div class="media media--flush">
+  <div class="media media--seamless">
     <div class="media__figure">
       <span class="avatar avatar--circle" data-stisla-avatar><img class="avatar__image" src="https://i.pravatar.cc/96?img=44" alt=""><span class="avatar__fallback">LW</span></span>
     </div>
@@ -168,7 +168,7 @@ function MediaDocs() {
           html={`
 <div class="card max-w-lg">
   <div class="card__header">Notification preferences</div>
-  <div class="media media--flush">
+  <div class="media media--seamless">
     <div class="media__figure">
       <span class="icon-box icon-box--primary"><i data-lucide="bell"></i></span>
     </div>
@@ -180,7 +180,7 @@ function MediaDocs() {
       <input class="switch switch--lg" type="checkbox" role="switch" aria-label="Push notifications" checked>
     </div>
   </div>
-  <div class="media media--flush">
+  <div class="media media--seamless">
     <div class="media__figure">
       <span class="icon-box icon-box--info"><i data-lucide="mail"></i></span>
     </div>
@@ -192,7 +192,7 @@ function MediaDocs() {
       <input class="switch switch--lg" type="checkbox" role="switch" aria-label="Email digest" checked>
     </div>
   </div>
-  <div class="media media--flush">
+  <div class="media media--seamless">
     <div class="media__figure">
       <span class="icon-box icon-box--warning"><i data-lucide="message-square"></i></span>
     </div>
@@ -220,7 +220,7 @@ function MediaDocs() {
           html={`
 <div class="card max-w-lg w-full">
   <div class="card__header">Payment methods</div>
-  <div class="media media--flush">
+  <div class="media media--seamless">
     <div class="media__figure">
       <span class="icon-box"><i data-lucide="credit-card"></i></span>
     </div>
@@ -232,7 +232,7 @@ function MediaDocs() {
       <span class="badge badge--success">Default</span>
     </div>
   </div>
-  <div class="media media--flush">
+  <div class="media media--seamless">
     <div class="media__figure">
       <span class="icon-box"><i data-lucide="credit-card"></i></span>
     </div>
@@ -241,7 +241,7 @@ function MediaDocs() {
       <div class="media__meta">Expires 04 / 2026</div>
     </div>
   </div>
-  <div class="media media--flush">
+  <div class="media media--seamless">
     <div class="media__figure">
       <span class="icon-box"><i data-lucide="building-2"></i></span>
     </div>
@@ -266,7 +266,7 @@ function MediaDocs() {
           html={`
 <div class="card max-w-lg">
   <div class="card__header">Recent files</div>
-  <div class="media media--flush">
+  <div class="media media--seamless">
     <div class="media__figure">
       <span class="icon-box icon-box--primary"><i data-lucide="file-text"></i></span>
     </div>
@@ -280,7 +280,7 @@ function MediaDocs() {
     </div>
   </div>
   <hr class="separator">
-  <div class="media media--flush">
+  <div class="media media--seamless">
     <div class="media__figure">
       <span class="icon-box icon-box--success"><i data-lucide="file-spreadsheet"></i></span>
     </div>
@@ -294,7 +294,7 @@ function MediaDocs() {
     </div>
   </div>
   <hr class="separator">
-  <div class="media media--flush">
+  <div class="media media--seamless">
     <div class="media__figure">
       <span class="icon-box icon-box--info"><i data-lucide="image"></i></span>
     </div>
@@ -332,7 +332,7 @@ function MediaDocs() {
       <div class="media__meta">$179.00</div>
     </div>
     <div class="media__action">
-      <button type="button" class="button button--primary button--sm">Add to cart</button>
+      <button type="button" class="button button--primary button--icon-only"><i data-lucide="plus"></i></button>
     </div>
   </div>
   <div class="media">
@@ -345,7 +345,7 @@ function MediaDocs() {
       <div class="media__meta">$399.00</div>
     </div>
     <div class="media__action">
-      <button type="button" class="button button--primary button--sm">Add to cart</button>
+      <button type="button" class="button button--primary button--icon-only"><i data-lucide="plus"></i></button>
     </div>
   </div>
   <div class="media">
@@ -358,10 +358,144 @@ function MediaDocs() {
       <div class="media__meta">$245.00</div>
     </div>
     <div class="media__action">
-      <button type="button" class="button button--primary button--sm">Add to cart</button>
+      <button type="button" class="button button--primary button--icon-only"><i data-lucide="plus"></i></button>
     </div>
   </div>
 </div>`}
+        />
+      </section>
+
+      <section>
+        <h2>Card-style radio</h2>
+        <p>
+          Add <code>.media--selectable</code> and wrap the row in a{" "}
+          <code>&lt;label&gt;</code> around a native <code>.radio</code> so the
+          whole row becomes one option. The modifier turns on the hover, focus,
+          and selected paint; the state itself rides the native{" "}
+          <code>:checked</code>, so keyboard, grouping, and screen-reader
+          semantics come for free. The border carries the selected signal and the
+          fill washes to the highlight tint.
+        </p>
+        <Demo
+          layout="stack"
+          html={`
+<div role="radiogroup" aria-label="Delivery speed" class="flex flex-col gap-3 max-w-lg">
+  <label class="media media--selectable">
+    <span class="media__figure"><span class="icon-box icon-box--primary"><i data-lucide="zap"></i></span></span>
+    <span class="media__content">
+      <span class="media__title">Express delivery</span>
+      <span class="media__description">Arrives next business day. Order before 2 PM to ship today.</span>
+      <span class="media__meta">$24.00</span>
+    </span>
+    <span class="media__action"><input class="radio" type="radio" name="delivery" checked></span>
+  </label>
+  <label class="media media--selectable">
+    <span class="media__figure"><span class="icon-box"><i data-lucide="truck"></i></span></span>
+    <span class="media__content">
+      <span class="media__title">Standard delivery</span>
+      <span class="media__description">Three to five business days with tracking.</span>
+      <span class="media__meta">$6.00</span>
+    </span>
+    <span class="media__action"><input class="radio" type="radio" name="delivery"></span>
+  </label>
+  <label class="media media--selectable">
+    <span class="media__figure"><span class="icon-box"><i data-lucide="store"></i></span></span>
+    <span class="media__content">
+      <span class="media__title">Pick up in store</span>
+      <span class="media__description">Ready within two hours at the Kemang branch.</span>
+      <span class="media__meta">Free</span>
+    </span>
+    <span class="media__action"><input class="radio" type="radio" name="delivery"></span>
+  </label>
+</div>`}
+        />
+      </section>
+
+      <section>
+        <h2>Card-style checkbox</h2>
+        <p>
+          Same shape with a <code>.checkbox</code> selects many. A row whose
+          control is <code>disabled</code> dims and drops its hover wash while the
+          rest of the group stays live.
+        </p>
+        <Demo
+          layout="stack"
+          html={`
+<fieldset class="flex flex-col gap-3 max-w-lg border-0 p-0 m-0">
+  <label class="media media--selectable">
+    <span class="media__figure"><span class="icon-box icon-box--info"><i data-lucide="shield-check"></i></span></span>
+    <span class="media__content">
+      <span class="media__title">Daily backups</span>
+      <span class="media__description">Snapshot every database at 02:00 and keep 30 days.</span>
+      <span class="media__meta">+$9 / month</span>
+    </span>
+    <span class="media__action"><input class="checkbox" type="checkbox" checked></span>
+  </label>
+  <label class="media media--selectable">
+    <span class="media__figure"><span class="icon-box icon-box--success"><i data-lucide="gauge"></i></span></span>
+    <span class="media__content">
+      <span class="media__title">Priority compute</span>
+      <span class="media__description">Reserved CPU so deploys never wait in the shared queue.</span>
+      <span class="media__meta">+$29 / month</span>
+    </span>
+    <span class="media__action"><input class="checkbox" type="checkbox"></span>
+  </label>
+  <label class="media media--selectable">
+    <span class="media__figure"><span class="icon-box"><i data-lucide="globe"></i></span></span>
+    <span class="media__content">
+      <span class="media__title">Edge CDN</span>
+      <span class="media__description">Included on the Enterprise plan. Upgrade to enable.</span>
+      <span class="media__meta">Enterprise only</span>
+    </span>
+    <span class="media__action"><input class="checkbox" type="checkbox" disabled></span>
+  </label>
+</fieldset>`}
+        />
+      </section>
+
+      <section>
+        <h2>Listbox option</h2>
+        <p>
+          When a framework owns the state, keep{" "}
+          <code>.media--selectable</code> and drive selection from{" "}
+          <code>aria-selected</code> (or <code>aria-checked</code> /{" "}
+          <code>aria-pressed</code>) on the row instead of a native control. The
+          same selected paint applies. Here a check glyph marks the chosen row in
+          an assignee list.
+        </p>
+        <Demo
+          layout="stack"
+          html={`
+<ul role="listbox" aria-label="Assignee" class="flex flex-col gap-2 max-w-md list-none p-0 m-0">
+  <li role="option" tabindex="0" aria-selected="true" class="media media--selectable">
+    <div class="media__figure">
+      <span class="avatar avatar--circle" data-stisla-avatar><img class="avatar__image" src="https://i.pravatar.cc/96?img=32" alt=""><span class="avatar__fallback">PR</span></span>
+    </div>
+    <div class="media__content">
+      <div class="media__title">Priya Reddy</div>
+      <div class="media__meta">Reviewer · 4 open</div>
+    </div>
+    <div class="media__action"><i data-lucide="check" class="text-primary"></i></div>
+  </li>
+  <li role="option" tabindex="-1" aria-selected="false" class="media media--selectable">
+    <div class="media__figure">
+      <span class="avatar avatar--circle" data-stisla-avatar><img class="avatar__image" src="https://i.pravatar.cc/96?img=47" alt=""><span class="avatar__fallback">MT</span></span>
+    </div>
+    <div class="media__content">
+      <div class="media__title">Maya Tanaka</div>
+      <div class="media__meta">Reviewer · 1 open</div>
+    </div>
+  </li>
+  <li role="option" tabindex="-1" aria-selected="false" class="media media--selectable">
+    <div class="media__figure">
+      <span class="avatar avatar--circle" data-stisla-avatar><img class="avatar__image" src="https://i.pravatar.cc/96?img=15" alt=""><span class="avatar__fallback">DR</span></span>
+    </div>
+    <div class="media__content">
+      <div class="media__title">Diego Romero</div>
+      <div class="media__meta">Reviewer · 7 open</div>
+    </div>
+  </li>
+</ul>`}
         />
       </section>
 
@@ -387,7 +521,7 @@ function MediaDocs() {
                 <code>--media-radius</code>
               </td>
               <td>
-                Corner radius; cleared to <code>0</code> by <code>--flush</code>
+                Corner radius; cleared to <code>0</code> by <code>--seamless</code>
               </td>
             </tr>
             <tr>
@@ -417,7 +551,7 @@ function MediaDocs() {
               </td>
               <td>
                 Background; cleared to <code>transparent</code> by{" "}
-                <code>--flush</code>
+                <code>--seamless</code>
               </td>
             </tr>
             <tr>
@@ -432,7 +566,7 @@ function MediaDocs() {
               </td>
               <td>
                 Border thickness; cleared to <code>0</code> by{" "}
-                <code>--flush</code>
+                <code>--seamless</code>
               </td>
             </tr>
             <tr>
@@ -440,6 +574,36 @@ function MediaDocs() {
                 <code>--media-border-color</code>
               </td>
               <td>Border color</td>
+            </tr>
+            <tr>
+              <td>
+                <code>--media-bg-hover</code>
+              </td>
+              <td>
+                Background on hover or keyboard highlight of an interactive or
+                selectable row
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>--media-bg-selected</code>
+              </td>
+              <td>Fill of a selected row (checked, pressed, or aria-selected)</td>
+            </tr>
+            <tr>
+              <td>
+                <code>--media-border-color-selected</code>
+              </td>
+              <td>
+                Outline color of a selected row; drawn as an inset ring so it
+                shows even where a container has flattened the border
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>--media-disabled-opacity</code>
+              </td>
+              <td>Dimming applied to a disabled selectable row</td>
             </tr>
           </tbody>
         </table>

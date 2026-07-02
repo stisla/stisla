@@ -4,8 +4,10 @@
  * the border + bg for stacks (typically inside a .card with separators). References the @theme tokens
  * (colors var(--color-*), spacing/sizes --spacing(n), type var(--text-*) / var(--leading-*) /
  * var(--font-weight-*), radius var(--radius-*)); only no-namespace customs use --st-* (border-width,
- * duration). Knobs are --media-*. State via attributes ([data-highlighted], :hover/:focus-visible on
- * an interactive host), no is-*. @layer components. Authoring rules: ../../../../PORTING.md */
+ * duration). Knobs are --media-*. State via attributes / native: [data-highlighted] (keyboard nav),
+ * :hover/:focus-visible on a link/button host (a/button). The --selectable modifier turns a row into a
+ * form control; its selected state is read from native :has(:checked) or aria-pressed/checked/selected,
+ * never an invented flag. No is-*. @layer components. Authoring rules: ../../../../PORTING.md */
 
 @layer components {
   .media {
@@ -24,7 +26,7 @@
   /* === Modifiers === */
 
   /* Strip chrome — the host parent owns the frame, so a stack of rows reads as one surface. */
-  .media--flush {
+  .media--seamless {
     --media-bg: transparent;
     --media-border-width: 0;
     --media-radius: 0;
@@ -39,9 +41,9 @@
     margin-inline-start: 0;
   }
 
-  /* === Interactive === when the row's root is itself the interactive surface (<a>/<button>), it
-   * earns hover + focus paint. Bg-tint only — .media carries three pinned text colors, so the row
-   * washes to a subtle accent and the type stays as-is. [data-highlighted] is the keyboard-nav hook. */
+  /* === Interactive === when the row's root is itself a link/button surface (<a>/<button>), it earns
+   * hover + focus paint. Bg-tint only — .media carries three pinned text colors, so the row washes to
+   * a subtle accent and the type stays as-is. [data-highlighted] is the keyboard-nav hook. */
   a.media,
   button.media {
     cursor: pointer;
@@ -61,6 +63,67 @@
   .media:focus-visible {
     outline: 2px solid var(--color-ring);
     outline-offset: -2px;
+  }
+
+  /* === Selectable === opt a row into being a form control (card-style radio/checkbox, toggle chip,
+   * listbox option) with --selectable. The modifier turns on the affordances — pointer, hover wash,
+   * focus ring (on the row or the control nested in it), selected + disabled paint. The selected STATE
+   * stays on the row's own truth: native :has(:checked) for a <label> wrapping an input (zero JS, a11y
+   * free), or aria-pressed / aria-checked / aria-selected for framework-driven rows. The modifier gate
+   * is the point — a plain .media hosting a switch in its action (a setting toggle) never opts in, so it
+   * can't be mistaken for a selection. Border carries the signal, fill the wash. */
+  .media--selectable {
+    cursor: pointer;
+    transition:
+      background-color var(--transition-duration-fast) ease,
+      border-color var(--transition-duration-fast) ease;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  .media--selectable:hover {
+    background: var(--media-bg-hover, var(--color-accent));
+  }
+
+  /* Focus rings the row whether it lands on the row itself (tabbable option) or on the native control
+     inside a <label>; mouse clicks stay quiet. */
+  .media--selectable:focus-visible,
+  .media--selectable:has(:focus-visible) {
+    outline: 2px solid var(--color-ring);
+    outline-offset: -2px;
+  }
+
+  .media--selectable:has(:checked),
+  .media--selectable[aria-pressed="true"],
+  .media--selectable[aria-checked="true"],
+  .media--selectable[aria-selected="true"] {
+    /* Route hover through --media-bg-hover too so hovering a selected row keeps the selected fill. */
+    --media-bg: var(--media-bg-selected, var(--color-highlight));
+    --media-bg-hover: var(--media-bg-selected, var(--color-highlight));
+    /* The outline rides an inset box-shadow, NOT the border box — a container (list-group) may have
+       flattened --media-border-width to 0, and a shadow ring is independent of it, so selection shows
+       both standalone and flush in a stack. Setting --media-border-color too makes a standalone row's
+       own border join the ring into one crisp edge; where the border is flattened, the ring stands in. */
+    --media-border-color: var(--media-border-color-selected, var(--color-primary));
+    box-shadow: inset 0 0 0 var(--st-border-width)
+      var(--media-border-color-selected, var(--color-primary));
+  }
+
+  .media--selectable:has(:disabled),
+  .media--selectable[aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+  /* Dim the row's contents, not the row box — a divider this row lends to a selected neighbour (as
+     that row's bottom edge inside a list-group) must keep full opacity, or it reads lighter. */
+  .media--selectable:has(:disabled) > *,
+  .media--selectable[aria-disabled="true"] > * {
+    opacity: var(--media-disabled-opacity, 0.55);
+  }
+  .media--selectable:has(:disabled):hover,
+  .media--selectable[aria-disabled="true"]:hover {
+    background: var(--media-bg, var(--color-surface));
   }
 
   /* === Parts === */

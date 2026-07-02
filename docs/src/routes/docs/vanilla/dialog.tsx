@@ -271,7 +271,7 @@ ${dlg("dlg-bottom", "", "dialog__panel--bottom", "Anchored to bottom", "This pan
     <div class="dialog__content">
       <button class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
       <div class="dialog__body text-center pt-6">
-        <span class="icon-box icon-box--danger icon-box--round mb-3" style="--icon-box-size: 3rem; --icon-box-icon-size: 1.25rem;"><i data-lucide="trash-2"></i></span>
+        <span class="icon-box icon-box--danger icon-box--circle mb-3" style="--icon-box-size: 3rem; --icon-box-icon-size: 1.25rem;"><i data-lucide="trash-2"></i></span>
         <h3 class="dialog__title m-0 mb-1" id="dlg-confirm-label">Delete this workspace?</h3>
         <p class="text-muted-foreground m-0" id="dlg-confirm-desc">This removes every project, file, and member. The action can't be undone.</p>
       </div>
@@ -302,7 +302,7 @@ ${dlg("dlg-bottom", "", "dialog__panel--bottom", "Anchored to bottom", "This pan
     <div class="dialog__content">
       <button class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><i data-lucide="x"></i></button>
       <div class="dialog__body text-center pt-6">
-        <span class="icon-box icon-box--success icon-box--round mb-3" style="--icon-box-size: 3.5rem; --icon-box-icon-size: 1.5rem;"><i data-lucide="check"></i></span>
+        <span class="icon-box icon-box--success icon-box--circle mb-3" style="--icon-box-size: 3.5rem; --icon-box-icon-size: 1.5rem;"><i data-lucide="check"></i></span>
         <h3 class="dialog__title m-0 mb-1" id="dlg-success-label">Order placed</h3>
         <p class="text-muted-foreground m-0">We've emailed the receipt and a tracking link. Delivery lands in two to three business days.</p>
       </div>

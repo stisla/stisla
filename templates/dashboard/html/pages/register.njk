@@ -11,7 +11,7 @@
 <form class="flex flex-col gap-4">
   <div class="field">
     <label for="regName" class="field__label">Full name</label>
-    <div class="input-group">
+    <div class="input-group input-group--lg">
       <span class="input-group__text">{{ "solar:user-linear" | icon }}</span>
       <input type="text" class="input" id="regName" placeholder="Jane Doe" autocomplete="name" />
     </div>
@@ -19,7 +19,7 @@
 
   <div class="field">
     <label for="regEmail" class="field__label">Email</label>
-    <div class="input-group">
+    <div class="input-group input-group--lg">
       <span class="input-group__text">{{ "solar:letter-linear" | icon }}</span>
       <input type="email" class="input" id="regEmail" placeholder="you@meridian.com" autocomplete="email" />
     </div>
@@ -27,7 +27,7 @@
 
   <div class="field">
     <label for="regPassword" class="field__label">Password</label>
-    <div class="input-group">
+    <div class="input-group input-group--lg">
       <span class="input-group__text">{{ "solar:lock-keyhole-linear" | icon }}</span>
       <input type="password" class="input" id="regPassword" placeholder="••••••••••" autocomplete="new-password" />
       <button type="button" class="input-group__text" data-password-toggle aria-controls="regPassword" aria-label="Show password" aria-pressed="false">{{ "solar:eye-linear" | icon }}</button>

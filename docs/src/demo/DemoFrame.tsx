@@ -32,7 +32,7 @@ export function DemoFrame({
     const demoCss =
       layout === "stack"
         ? "display:flex;flex-direction:column;gap:.5rem;align-items:center;justify-content:center;"
-        : "display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;justify-content:center;";
+        : "display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;align-content:center;justify-content:center;";
 
     return `<!doctype html>
 <html${initialTheme === "dark" ? ' data-theme="dark"' : ""}>

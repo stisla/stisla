@@ -26,19 +26,24 @@
   /* Per-cell layered chain. Variants repaint via --table-bg-type; hover/active stomp via --table-bg-state.
      The inset shadow fills the cell box without touching background-color, so layers stack. */
   .table > :not(caption) > * > * {
-    padding: var(--table-cell-padding-block, --spacing(3)) var(--table-cell-padding-inline, --spacing(3));
+    padding: var(--table-cell-padding-block, --spacing(3))
+      var(--table-cell-padding-inline, --spacing(3));
     /* <th> defaults to center in the UA stylesheet; inherit so headers align with text direction. */
     text-align: inherit;
-    color: var(--table-color-state, var(--table-color-type, var(--table-color, var(--color-foreground))));
+    color: var(
+      --table-color-state,
+      var(--table-color-type, var(--table-color, var(--color-foreground)))
+    );
     background-color: var(--table-bg, transparent);
     /* Preflight sets border to currentColor; pin all sides to the table palette so a modifier that
        turns a side on reads the right color. */
     border-color: var(--table-border-color, var(--color-border));
     border-bottom-width: var(--st-border-width);
-    box-shadow: inset 0 0 0 9999px var(--table-bg-state, var(--table-bg-type, transparent));
+    box-shadow: inset 0 0 0 9999px
+      var(--table-bg-state, var(--table-bg-type, transparent));
   }
 
-  /* Rows pick up the table border color too (.table--bordered turns on row borders). */
+  /* Rows pick up the table border color too (.table--grid turns on row borders). */
   .table > :not(caption) > * {
     border-color: var(--table-border-color, var(--color-border));
   }
@@ -132,27 +137,47 @@
   .table__row--primary {
     --table-bg-type: color-mix(in oklab, var(--color-primary) 10%, transparent);
     --table-color-type: var(--color-foreground);
-    --table-border-color: color-mix(in oklab, var(--color-primary) 25%, var(--color-border));
+    --table-border-color: color-mix(
+      in oklab,
+      var(--color-primary) 25%,
+      var(--color-border)
+    );
   }
   .table__row--success {
     --table-bg-type: color-mix(in oklab, var(--color-success) 10%, transparent);
     --table-color-type: var(--color-foreground);
-    --table-border-color: color-mix(in oklab, var(--color-success) 25%, var(--color-border));
+    --table-border-color: color-mix(
+      in oklab,
+      var(--color-success) 25%,
+      var(--color-border)
+    );
   }
   .table__row--info {
     --table-bg-type: color-mix(in oklab, var(--color-info) 10%, transparent);
     --table-color-type: var(--color-foreground);
-    --table-border-color: color-mix(in oklab, var(--color-info) 25%, var(--color-border));
+    --table-border-color: color-mix(
+      in oklab,
+      var(--color-info) 25%,
+      var(--color-border)
+    );
   }
   .table__row--warning {
     --table-bg-type: color-mix(in oklab, var(--color-warning) 10%, transparent);
     --table-color-type: var(--color-foreground);
-    --table-border-color: color-mix(in oklab, var(--color-warning) 25%, var(--color-border));
+    --table-border-color: color-mix(
+      in oklab,
+      var(--color-warning) 25%,
+      var(--color-border)
+    );
   }
   .table__row--danger {
     --table-bg-type: color-mix(in oklab, var(--color-danger) 10%, transparent);
     --table-color-type: var(--color-foreground);
-    --table-border-color: color-mix(in oklab, var(--color-danger) 25%, var(--color-border));
+    --table-border-color: color-mix(
+      in oklab,
+      var(--color-danger) 25%,
+      var(--color-border)
+    );
   }
   .table__row--neutral {
     --table-bg-type: var(--color-neutral);
@@ -161,38 +186,50 @@
 
   /* === Runtime states === */
   .table--striped > tbody > tr:nth-of-type(odd) > * {
-    --table-bg-type: var(--table-striped-bg, color-mix(in oklch, var(--color-foreground) 4%, transparent));
+    --table-bg-type: var(
+      --table-striped-bg,
+      color-mix(in oklch, var(--color-foreground) 4%, transparent)
+    );
     --table-color-type: var(--table-striped-color, var(--color-foreground));
   }
 
   .table--striped-cols > :not(caption) > tr > :nth-child(2n) {
-    --table-bg-type: var(--table-striped-bg, color-mix(in oklch, var(--color-foreground) 4%, transparent));
+    --table-bg-type: var(
+      --table-striped-bg,
+      color-mix(in oklch, var(--color-foreground) 4%, transparent)
+    );
     --table-color-type: var(--table-striped-color, var(--color-foreground));
   }
 
   .table--hover > tbody > tr:hover > * {
     --table-bg-state: var(--table-bg-hover, var(--color-accent));
-    --table-color-state: var(--table-color-hover, var(--color-accent-foreground));
+    --table-color-state: var(
+      --table-color-hover,
+      var(--color-accent-foreground)
+    );
   }
 
   /* Active row — persistent selection, highlight tier (matches sidebar / list-group). */
   .table > tbody > tr[data-state="active"] > * {
     --table-bg-state: var(--table-bg-active, var(--color-highlight));
-    --table-color-state: var(--table-color-active, var(--color-highlight-foreground));
+    --table-color-state: var(
+      --table-color-active,
+      var(--color-highlight-foreground)
+    );
   }
 
   /* === Borders === */
-  .table--bordered > :not(caption) > * {
+  .table--grid > :not(caption) > * {
     border-width: var(--st-border-width) 0;
   }
-  .table--bordered > :not(caption) > * > * {
+  .table--grid > :not(caption) > * > * {
     border-width: 0 var(--st-border-width);
   }
 
-  .table--borderless > :not(caption) > * > * {
+  .table--seamless > :not(caption) > * > * {
     border-bottom-width: 0;
   }
-  .table--borderless > :not(:first-child) {
+  .table--seamless > :not(:first-child) {
     border-top-width: 0;
   }
 
@@ -215,6 +252,7 @@
   /* === Responsive wrappers === (not .table parts) — wrap the table so it can scroll unchanged. */
   .table-responsive {
     overflow-x: auto;
+    width: 100%;
   }
   @variant max-sm {
     .table-responsive-sm {
@@ -246,39 +284,72 @@
      on the card). Corner cells round to the card's inner radius at the edges that meet the card; the
      last row's bottom border and a bordered table's outer perimeter drop so they don't double the card. */
   .card > .table:last-child > :last-child > tr:last-child > *,
-  .card > .table-responsive:last-child > .table > :last-child > tr:last-child > * {
+  .card
+    > .table-responsive:last-child
+    > .table
+    > :last-child
+    > tr:last-child
+    > * {
     border-bottom-width: 0;
   }
 
   .card > .table:last-child > :last-child > tr:last-child > :first-child,
-  .card > .table-responsive:last-child > .table > :last-child > tr:last-child > :first-child {
-    border-end-start-radius: calc(var(--card-radius, var(--radius-lg)) - var(--st-border-width));
+  .card
+    > .table-responsive:last-child
+    > .table
+    > :last-child
+    > tr:last-child
+    > :first-child {
+    border-end-start-radius: calc(
+      var(--card-radius, var(--radius-lg)) - var(--st-border-width)
+    );
   }
   .card > .table:last-child > :last-child > tr:last-child > :last-child,
-  .card > .table-responsive:last-child > .table > :last-child > tr:last-child > :last-child {
-    border-end-end-radius: calc(var(--card-radius, var(--radius-lg)) - var(--st-border-width));
+  .card
+    > .table-responsive:last-child
+    > .table
+    > :last-child
+    > tr:last-child
+    > :last-child {
+    border-end-end-radius: calc(
+      var(--card-radius, var(--radius-lg)) - var(--st-border-width)
+    );
   }
 
   .card > .table:first-child > :first-child > tr:first-child > :first-child,
-  .card > .table-responsive:first-child > .table > :first-child > tr:first-child > :first-child {
-    border-start-start-radius: calc(var(--card-radius, var(--radius-lg)) - var(--st-border-width));
+  .card
+    > .table-responsive:first-child
+    > .table
+    > :first-child
+    > tr:first-child
+    > :first-child {
+    border-start-start-radius: calc(
+      var(--card-radius, var(--radius-lg)) - var(--st-border-width)
+    );
   }
   .card > .table:first-child > :first-child > tr:first-child > :last-child,
-  .card > .table-responsive:first-child > .table > :first-child > tr:first-child > :last-child {
-    border-start-end-radius: calc(var(--card-radius, var(--radius-lg)) - var(--st-border-width));
+  .card
+    > .table-responsive:first-child
+    > .table
+    > :first-child
+    > tr:first-child
+    > :last-child {
+    border-start-end-radius: calc(
+      var(--card-radius, var(--radius-lg)) - var(--st-border-width)
+    );
   }
 
   /* Bordered table: drop the outer perimeter so it doesn't double the card border. */
-  .card > .table--bordered:first-child > :first-child > tr:first-child {
+  .card > .table--grid:first-child > :first-child > tr:first-child {
     border-top-width: 0;
   }
-  .card > .table--bordered:last-child > :last-child > tr:last-child {
+  .card > .table--grid:last-child > :last-child > tr:last-child {
     border-bottom-width: 0;
   }
-  .card > .table--bordered > :not(caption) > tr > :first-child {
+  .card > .table--grid > :not(caption) > tr > :first-child {
     border-inline-start-width: 0;
   }
-  .card > .table--bordered > :not(caption) > tr > :last-child {
+  .card > .table--grid > :not(caption) > tr > :last-child {
     border-inline-end-width: 0;
   }
 }

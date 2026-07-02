@@ -23,13 +23,14 @@ function ScrollAreaDocs() {
           <code>data-stisla-scroll-area</code>), which replaces the native bars
           with thin overlay handles painted from the{" "}
           <code>--scroll-area-*</code> knobs; that binding ships with the JS
-          layer. A bordered area with a fixed height; content beyond it scrolls,
-          and with the plugin active the handles fade in on interaction.
+          layer. Give it a fixed height and content beyond it scrolls; with the
+          plugin active the handles fade in on interaction. These examples add a
+          rim with border utilities.
         </p>
         <Demo
           layout="stack"
           html={`
-<div class="scroll-area scroll-area--bordered h-48 w-full max-w-md p-4" data-stisla-scroll-area>
+<div class="scroll-area border border-border h-48 w-full max-w-md p-4" data-stisla-scroll-area>
   <div class="flex flex-col gap-3">
     <div class="font-semibold">Release notes</div>
     <div class="text-muted-foreground">3.0.0 — the framework-agnostic rewrite lands: every component reads design tokens, no Bootstrap underneath.</div>
@@ -57,7 +58,7 @@ function ScrollAreaDocs() {
         <Demo
           layout="stack"
           html={`
-<div class="scroll-area scroll-area--bordered w-full max-w-lg" data-stisla-scroll-area data-stisla-scroll-area-overflow-y="hidden">
+<div class="scroll-area border border-border w-full max-w-lg" data-stisla-scroll-area data-stisla-scroll-area-overflow-y="hidden">
   <div class="flex gap-3 p-4 min-w-max">
     <div class="card m-0 min-w-56"><div class="card__body"><strong>Acme Inc</strong><div class="text-muted-foreground text-sm">Active project</div></div></div>
     <div class="card m-0 min-w-56"><div class="card__body"><strong>Helix Health</strong><div class="text-muted-foreground text-sm">Active project</div></div></div>
@@ -80,7 +81,7 @@ function ScrollAreaDocs() {
         <Demo
           layout="stack"
           html={`
-<div class="scroll-area scroll-area--bordered h-72 w-full max-w-lg" data-stisla-scroll-area>
+<div class="scroll-area border border-border h-72 w-full max-w-lg" data-stisla-scroll-area>
   <table class="table m-0 min-w-3xl">
     <thead>
       <tr><th>Project</th><th>Owner</th><th>Stage</th><th>Region</th><th>Updated</th><th>Status</th></tr>
@@ -110,7 +111,7 @@ function ScrollAreaDocs() {
         <Demo
           layout="stack"
           html={`
-<div class="scroll-area scroll-area--bordered h-56 w-full max-w-md p-4" data-stisla-scroll-area data-stisla-scroll-area-auto-hide="never">
+<div class="scroll-area border border-border h-56 w-full max-w-md p-4" data-stisla-scroll-area data-stisla-scroll-area-auto-hide="never">
   <div class="flex flex-col gap-3">
     <div>A persistent scrollbar reads more like a native desktop pattern, and pairs well with long content that benefits from a visible position indicator at rest.</div>
     <div>The trade-off is a permanent chrome stripe along the edge, even when the content has nothing to scroll past the fold. Pick based on the surface.</div>
@@ -132,7 +133,7 @@ function ScrollAreaDocs() {
         <Demo
           layout="stack"
           html={`
-<div class="scroll-area scroll-area--bordered h-56 w-full max-w-md p-4" data-stisla-scroll-area data-stisla-scroll-area-auto-hide="never" style="--scroll-area-bar-size: 0.875rem; --scroll-area-handle-bg: color-mix(in oklch, var(--color-primary) 35%, transparent); --scroll-area-handle-bg-hover: color-mix(in oklch, var(--color-primary) 55%, transparent); --scroll-area-handle-bg-active: var(--color-primary);">
+<div class="scroll-area border border-border h-56 w-full max-w-md p-4" data-stisla-scroll-area data-stisla-scroll-area-auto-hide="never" style="--scroll-area-bar-size: 0.875rem; --scroll-area-handle-bg: color-mix(in oklch, var(--color-primary) 35%, transparent); --scroll-area-handle-bg-hover: color-mix(in oklch, var(--color-primary) 55%, transparent); --scroll-area-handle-bg-active: var(--color-primary);">
   <div class="flex flex-col gap-3">
     <div>The handle paints from a primary mix at rest, deepens on hover, and lands on the solid intent on active. The track sits transparent so the parent surface reads through.</div>
     <div>The same pattern works for success, danger, info, or any custom token a parent scope publishes. Set the three handle vars once and every scroll-area inside the scope picks the new tone up.</div>
@@ -172,15 +173,6 @@ function ScrollAreaDocs() {
                 <code>--scroll-area-radius</code>
               </td>
               <td>Corner radius of the clipped box</td>
-            </tr>
-            <tr>
-              <td>
-                <code>--scroll-area-border-color</code> /{" "}
-                <code>-border-width</code>
-              </td>
-              <td>
-                Rim under the <code>--bordered</code> modifier
-              </td>
             </tr>
             <tr>
               <td>

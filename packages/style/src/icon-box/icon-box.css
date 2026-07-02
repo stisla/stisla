@@ -45,11 +45,8 @@
   }
 
   /* === Shape === */
-  .icon-box--round {
+  .icon-box--circle {
     border-radius: 9999px;
-  }
-  .icon-box--square {
-    border-radius: 0;
   }
 
   /* === Sizes (base = md) === */

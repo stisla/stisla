@@ -138,39 +138,169 @@
     pointer-events: none;
   }
 
-  /* === Above the collapse breakpoint (Tailwind `lg`) === nav grabs the leading edge so siblings
-     (search, status, action) fall to the trailing edge. */
+  /* === Responsive fold === Mobile-first, keyed to Tailwind's min-width breakpoints so the modifier
+     reads like a `md:` utility: `--expand-md` means "horizontal at md and up", folding into a column
+     behind the toggle below it. Plain .navbar expands at lg; `--expand` keeps it horizontal at every
+     width (no fold, no toggle); `--expand-{sm,md,lg,xl}` move the expand point. Above the point the
+     nav grabs the leading edge (margin-inline-end) so trailing extras fall to the far side; below it
+     the menu folds. The fold ruleset repeats per tier because a media-query threshold can't read a
+     custom property — the same shape Bootstrap's navbar-expand-* family ships. */
+
+  /* Always horizontal — the base row is already horizontal, so this only pushes trailing extras out;
+     the toggle stays hidden (base) and the menu never collapses. */
+  .navbar--expand {
+    flex-wrap: nowrap;
+  }
+  .navbar--expand .navbar__nav {
+    margin-inline-end: auto;
+  }
+
+  /* --- Default: expand at lg (any navbar without an --expand modifier) --- */
   @variant lg {
-    .navbar__nav {
+    .navbar:not([class*="--expand"]) .navbar__nav {
       margin-inline-end: auto;
     }
   }
-
-  /* === Below the collapse breakpoint (Tailwind `max-lg`) === the menu folds behind the toggle. */
   @variant max-lg {
-    .navbar__toggle {
+    .navbar:not([class*="--expand"]) .navbar__toggle {
       display: inline-flex;
       margin-inline-start: auto;
     }
-
-    .navbar__menu {
+    .navbar:not([class*="--expand"]) .navbar__menu {
       display: none;
       flex: 1 0 100%;
       flex-direction: column;
       align-items: stretch;
     }
-
-    .navbar__menu[data-state="open"] {
+    .navbar:not([class*="--expand"]) .navbar__menu[data-state="open"] {
       display: flex;
     }
-
-    .navbar__nav {
+    .navbar:not([class*="--expand"]) .navbar__nav {
       flex-direction: column;
       align-items: stretch;
       width: 100%;
     }
+    .navbar:not([class*="--expand"]) .navbar__button {
+      width: 100%;
+    }
+  }
 
-    .navbar__button {
+  /* --- expand-sm --- */
+  @variant sm {
+    .navbar--expand-sm .navbar__nav {
+      margin-inline-end: auto;
+    }
+  }
+  @variant max-sm {
+    .navbar--expand-sm .navbar__toggle {
+      display: inline-flex;
+      margin-inline-start: auto;
+    }
+    .navbar--expand-sm .navbar__menu {
+      display: none;
+      flex: 1 0 100%;
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .navbar--expand-sm .navbar__menu[data-state="open"] {
+      display: flex;
+    }
+    .navbar--expand-sm .navbar__nav {
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+    }
+    .navbar--expand-sm .navbar__button {
+      width: 100%;
+    }
+  }
+
+  /* --- expand-md --- */
+  @variant md {
+    .navbar--expand-md .navbar__nav {
+      margin-inline-end: auto;
+    }
+  }
+  @variant max-md {
+    .navbar--expand-md .navbar__toggle {
+      display: inline-flex;
+      margin-inline-start: auto;
+    }
+    .navbar--expand-md .navbar__menu {
+      display: none;
+      flex: 1 0 100%;
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .navbar--expand-md .navbar__menu[data-state="open"] {
+      display: flex;
+    }
+    .navbar--expand-md .navbar__nav {
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+    }
+    .navbar--expand-md .navbar__button {
+      width: 100%;
+    }
+  }
+
+  /* --- expand-lg (explicit twin of the default) --- */
+  @variant lg {
+    .navbar--expand-lg .navbar__nav {
+      margin-inline-end: auto;
+    }
+  }
+  @variant max-lg {
+    .navbar--expand-lg .navbar__toggle {
+      display: inline-flex;
+      margin-inline-start: auto;
+    }
+    .navbar--expand-lg .navbar__menu {
+      display: none;
+      flex: 1 0 100%;
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .navbar--expand-lg .navbar__menu[data-state="open"] {
+      display: flex;
+    }
+    .navbar--expand-lg .navbar__nav {
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+    }
+    .navbar--expand-lg .navbar__button {
+      width: 100%;
+    }
+  }
+
+  /* --- expand-xl --- */
+  @variant xl {
+    .navbar--expand-xl .navbar__nav {
+      margin-inline-end: auto;
+    }
+  }
+  @variant max-xl {
+    .navbar--expand-xl .navbar__toggle {
+      display: inline-flex;
+      margin-inline-start: auto;
+    }
+    .navbar--expand-xl .navbar__menu {
+      display: none;
+      flex: 1 0 100%;
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .navbar--expand-xl .navbar__menu[data-state="open"] {
+      display: flex;
+    }
+    .navbar--expand-xl .navbar__nav {
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+    }
+    .navbar--expand-xl .navbar__button {
       width: 100%;
     }
   }

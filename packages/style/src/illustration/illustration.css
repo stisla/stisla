@@ -3,7 +3,7 @@
  * hue: the gradient stops, the backing disc, and the long shadow all derive from --illus-accent via
  * color-mix, so recolouring never touches the SVG markup — set --illus-accent (and --illus-badge for
  * the corner pip) and the whole piece follows. Default is neutral; intent modifiers recolour; an
- * ancestor or inline --illus-accent overrides everything. Motion is opt-in via --animate.
+ * ancestor or inline --illus-accent overrides everything. Motion is opt-in via --animated.
  *
  * NOTE: the short --illus-* knobs, the .il-* SVG paint hooks, and the il-* keyframes are kept as the
  * illustration's deliberate, cohesive vocabulary — they're referenced inside the SVG art assets, so
@@ -71,10 +71,10 @@
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .illustration--animate .il-obj {
+    .illustration--animated .il-obj {
       animation: il-float 5.5s ease-in-out infinite;
     }
-    .illustration--animate .il-badge {
+    .illustration--animated .il-badge {
       animation: il-pop 3.4s ease-in-out infinite;
       transform-box: fill-box;
       transform-origin: center;

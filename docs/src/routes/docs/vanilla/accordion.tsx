@@ -167,9 +167,9 @@ function AccordionDocs() {
       </section>
 
       <section>
-        <h2>Flush in a card</h2>
+        <h2>Seamless in a card</h2>
         <p>
-          Add <code>.accordion--flush</code> to drop the outer frame so the
+          Add <code>.accordion--seamless</code> to drop the outer frame so the
           accordion sits edge-to-edge inside a card or page. Items lose their
           chip inset and a single divider sits between rows.
         </p>
@@ -180,7 +180,7 @@ function AccordionDocs() {
   <div class="card__header">
     <h4 class="card__title">Frequently asked</h4>
   </div>
-  <div class="accordion accordion--flush" data-stisla-accordion>
+  <div class="accordion accordion--seamless" data-stisla-accordion>
     <div class="accordion__item" data-state="open">
       <h4 class="accordion__heading">
         <button class="accordion__trigger" data-stisla-accordion-trigger aria-expanded="true" aria-controls="acc-flush-1" id="acc-flush-1-trigger">

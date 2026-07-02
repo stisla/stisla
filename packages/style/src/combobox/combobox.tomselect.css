@@ -185,6 +185,22 @@
     gap: var(--combobox-item-gap, --spacing(0.5));
   }
 
+  /* Group header — the menu__group-label recipe mapped onto Tom Select's .optgroup-header, so grouped
+     comboboxes read like a grouped menu instead of bare unstyled text. */
+  .ts-wrapper.combobox .ts-dropdown .optgroup-header {
+    display: flex;
+    align-items: center;
+    padding: var(--combobox-group-label-padding-block, --spacing(1))
+      var(--combobox-group-label-padding-inline, --spacing(3));
+    margin: 0;
+    font-size: var(--combobox-group-label-font-size, var(--text-xs));
+    font-weight: var(--combobox-group-label-font-weight, var(--font-weight-semibold));
+    color: var(--combobox-group-label-color, var(--color-muted-foreground));
+    white-space: nowrap;
+    background-color: transparent;
+    cursor: default;
+  }
+
   /* Hide the empty <option value=""> (authors keep it as the "no selection" placeholder anchor). */
   .ts-wrapper.combobox .ts-dropdown .option[data-value=""] {
     display: none;

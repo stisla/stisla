@@ -1,7 +1,7 @@
-/* ── Unread media row ─────────────────────────────────────────────────────── */
 .media--unread {
   background: --alpha(var(--color-primary) / 6%);
 }
+
 .media--unread::after {
   content: "";
   position: absolute;
@@ -14,7 +14,6 @@
   transform: translateY(-50%);
 }
 
-/* ── Media list ───────────────────────────────────────────────────────────── */
 .media-list {
   --media-padding-block: --spacing(2.5);
 }

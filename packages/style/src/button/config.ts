@@ -22,7 +22,7 @@ export const button = composer({
     },
     size: { sm: "button--sm", md: "", lg: "button--lg", xl: "button--xl" },
     iconOnly: { true: "button--icon-only" },
-    iconRound: { true: "button--icon-round" },
+    pill: { true: "button--pill" },
     block: { true: "button--block" },
     wrap: { true: "button--wrap" },
   },

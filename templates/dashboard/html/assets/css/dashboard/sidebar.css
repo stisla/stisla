@@ -1,16 +1,24 @@
-/* ── Sidebars ─────────────────────────────────────────────────────────────── */
-/* Below lg the .sidebar--app becomes a mobile drawer; that positioning lives in shell.css
- * alongside the .app-shell overlay it depends on. */
 .sidebar--app {
   --sidebar-padding-block: --spacing(7);
   --sidebar-button-bg-active: var(--color-surface);
   --sidebar-submenu-border-color: --alpha(var(--color-foreground) / 10%);
-  --app-shell-sidebar-mobile-bg: var(--color-background);
+  --sidebar-bg: var(--color-background);
 
   @variant lg {
+    --sidebar-bg: transparent;
     position: sticky;
     top: 0;
     height: 100dvh;
+  }
+
+  @media (max-width: 63.99rem) {
+    position: fixed;
+    inset-block: 0;
+    inset-inline-start: 0;
+    z-index: 1001;
+    height: 100dvh;
+    transform: translateX(-100%);
+    transition: transform var(--sidebar-transition-duration, 0.3s) ease;
   }
 }
 .sidebar--app .sidebar__content {

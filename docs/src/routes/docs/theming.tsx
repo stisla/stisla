@@ -144,7 +144,7 @@ function ThemingDocs() {
         </div>
       </div>
       <div class="card__footer">
-        <span class="fs-2 text-muted-foreground">Footer note</span>
+        <span class="text-sm text-muted-foreground">Footer note</span>
       </div>
     </div>
     <div class="flex flex-col gap-4">
@@ -213,7 +213,7 @@ function ThemingDocs() {
         </div>
       </div>
       <div class="card__footer">
-        <span class="fs-2 text-muted-foreground">Footer note</span>
+        <span class="text-sm text-muted-foreground">Footer note</span>
       </div>
     </div>
     <div class="flex flex-col gap-4">

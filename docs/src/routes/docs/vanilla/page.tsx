@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Code } from "~/demo/Code";
 import { Demo } from "~/demo/Demo";
 
 export const Route = createFileRoute("/docs/vanilla/page")({
@@ -92,47 +93,49 @@ function PageDocs() {
           <span>Recent</span>
           <a href="#" class="link ml-auto">View all</a>
         </div>
-        <table class="table table--hover table--align-middle mb-0">
-          <thead>
-            <tr>
-              <th scope="col">Order</th>
-              <th scope="col">Customer</th>
-              <th scope="col">Date</th>
-              <th scope="col" class="text-right">Total</th>
-              <th scope="col">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row"><code>#10428</code></th>
-              <td>Acme Corp</td>
-              <td>Jun 18</td>
-              <td class="text-right">$1,490.00</td>
-              <td><span class="badge badge--soft badge--success"><i data-lucide="check"></i> Paid</span></td>
-            </tr>
-            <tr>
-              <th scope="row"><code>#10427</code></th>
-              <td>Riverway Ltd</td>
-              <td>Jun 17</td>
-              <td class="text-right">$580.00</td>
-              <td><span class="badge badge--soft badge--info"><i data-lucide="truck"></i> Shipped</span></td>
-            </tr>
-            <tr>
-              <th scope="row"><code>#10426</code></th>
-              <td>Northwind</td>
-              <td>Jun 17</td>
-              <td class="text-right">$8,200.00</td>
-              <td><span class="badge badge--soft badge--warning"><i data-lucide="clock"></i> Pending</span></td>
-            </tr>
-            <tr>
-              <th scope="row"><code>#10425</code></th>
-              <td>Globex</td>
-              <td>Jun 16</td>
-              <td class="text-right">$240.00</td>
-              <td><span class="badge badge--soft badge--danger"><i data-lucide="alert-triangle"></i> Refunded</span></td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="table table--hover table--align-middle mb-0">
+            <thead>
+              <tr>
+                <th scope="col">Order</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Date</th>
+                <th scope="col" class="text-right">Total</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row"><code>#10428</code></th>
+                <td>Acme Corp</td>
+                <td>Jun 18</td>
+                <td class="text-right">$1,490.00</td>
+                <td><span class="badge badge--soft badge--success"><i data-lucide="check"></i> Paid</span></td>
+              </tr>
+              <tr>
+                <th scope="row"><code>#10427</code></th>
+                <td>Riverway Ltd</td>
+                <td>Jun 17</td>
+                <td class="text-right">$580.00</td>
+                <td><span class="badge badge--soft badge--info"><i data-lucide="truck"></i> Shipped</span></td>
+              </tr>
+              <tr>
+                <th scope="row"><code>#10426</code></th>
+                <td>Northwind</td>
+                <td>Jun 17</td>
+                <td class="text-right">$8,200.00</td>
+                <td><span class="badge badge--soft badge--warning"><i data-lucide="clock"></i> Pending</span></td>
+              </tr>
+              <tr>
+                <th scope="row"><code>#10425</code></th>
+                <td>Globex</td>
+                <td>Jun 16</td>
+                <td class="text-right">$240.00</td>
+                <td><span class="badge badge--soft badge--danger"><i data-lucide="alert-triangle"></i> Refunded</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
   </div>
@@ -257,9 +260,10 @@ function PageDocs() {
             anything text-heavy where long lines hurt readability.
           </li>
         </ul>
-        <Demo
-          layout="stack"
-          html={`
+        <Code
+          title="Container"
+          lang="html"
+          code={`
 <!-- Full width -->
 <main>
   <div class="page container-fluid">...</div>
@@ -287,9 +291,10 @@ function PageDocs() {
           container can sit between the frame and the content without flattening
           the spacing.
         </p>
-        <Demo
-          layout="stack"
-          html={`
+        <Code
+          title="Nesting Container"
+          lang="HTML"
+          code={`
 <div class="page w-full">
   <div class="container">
     <div class="page__body">

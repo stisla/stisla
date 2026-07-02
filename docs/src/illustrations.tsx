@@ -60,7 +60,7 @@ function Dot({ cx, cy }: Pip) {
 /* Outer SVG frame shared by every illustration. */
 function Frame({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <svg viewBox="0 0 200 200" className="illustration illustration--animate" role="img" aria-label={label}>
+    <svg viewBox="0 0 200 200" className="illustration illustration--animated" role="img" aria-label={label}>
       {children}
     </svg>
   );

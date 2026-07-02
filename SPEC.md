@@ -303,7 +303,7 @@ loses authority over what its surfaces look like.
 Component-shape work belongs to:
 
 - A component (write the SCSS for the visual identity)
-- A component variant (`.btn--block`, `.card--flush`)
+- A component variant (`.button--primary`, `.accordion--seamless`)
 - The `customize` surface (per-component CSS-variable override, §10)
 - An honest inline `style` for a deliberate one-off
 
@@ -421,7 +421,7 @@ corner sits inside the outer corner and reads off-centre.
 Components that opt out of `--st-radius` (shape is semantic, not stylistic):
 `.badge` (pill), `.avatar` (circle), `.spinner` (must stay round), form
 check (square / circle), `.slider` track + thumb, `.progress` track,
-`.btn--icon-round`.
+`.button--pill`.
 
 **Spacing base.** `--st-spacing` (0.25rem) is the unit every component
 padding, gap, and hard `height` is built from, through the `space(n)` helper.

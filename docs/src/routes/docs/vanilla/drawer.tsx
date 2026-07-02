@@ -123,26 +123,26 @@ function DrawerDocs() {
       <button type="button" class="drawer__close" data-stisla-drawer-dismiss aria-label="Close"><i data-lucide="x"></i></button>
     </div>
     <div class="drawer__body p-0">
-      <ul class="list-group list-group--flush">
-        <li class="flex flex-wrap list-group__item items-center gap-3">
-          <span class="icon-box icon-box--primary"><i data-lucide="user"></i></span>
-          <div class="flex-1"><div class="font-medium">Profile</div><div class="text-sm text-muted-foreground">Name, avatar, bio</div></div>
-          <i data-lucide="chevron-right" width="18" class="text-muted-foreground"></i>
+      <ul class="list-group list-group--seamless">
+        <li class="media">
+          <span class="media__figure"><span class="icon-box icon-box--primary"><i data-lucide="user"></i></span></span>
+          <div class="media__content"><div class="media__title">Profile</div><div class="media__description">Name, avatar, bio</div></div>
+          <div class="media__action"><i data-lucide="chevron-right" width="18" class="text-muted-foreground"></i></div>
         </li>
-        <li class="flex flex-wrap list-group__item items-center gap-3">
-          <span class="icon-box icon-box--info"><i data-lucide="bell"></i></span>
-          <div class="flex-1"><div class="font-medium">Notifications</div><div class="text-sm text-muted-foreground">Email, push, digest</div></div>
-          <i data-lucide="chevron-right" width="18" class="text-muted-foreground"></i>
+        <li class="media">
+          <span class="media__figure"><span class="icon-box icon-box--info"><i data-lucide="bell"></i></span></span>
+          <div class="media__content"><div class="media__title">Notifications</div><div class="media__description">Email, push, digest</div></div>
+          <div class="media__action"><i data-lucide="chevron-right" width="18" class="text-muted-foreground"></i></div>
         </li>
-        <li class="flex flex-wrap list-group__item items-center gap-3">
-          <span class="icon-box icon-box--warning"><i data-lucide="credit-card"></i></span>
-          <div class="flex-1"><div class="font-medium">Billing</div><div class="text-sm text-muted-foreground">Plan, invoices, payment method</div></div>
-          <i data-lucide="chevron-right" width="18" class="text-muted-foreground"></i>
+        <li class="media">
+          <span class="media__figure"><span class="icon-box icon-box--warning"><i data-lucide="credit-card"></i></span></span>
+          <div class="media__content"><div class="media__title">Billing</div><div class="media__description">Plan, invoices, payment method</div></div>
+          <div class="media__action"><i data-lucide="chevron-right" width="18" class="text-muted-foreground"></i></div>
         </li>
-        <li class="flex flex-wrap list-group__item items-center gap-3">
-          <span class="icon-box"><i data-lucide="shield"></i></span>
-          <div class="flex-1"><div class="font-medium">Security</div><div class="text-sm text-muted-foreground">Password, 2FA, sessions</div></div>
-          <i data-lucide="chevron-right" width="18" class="text-muted-foreground"></i>
+        <li class="media">
+          <span class="media__figure"><span class="icon-box"><i data-lucide="shield"></i></span></span>
+          <div class="media__content"><div class="media__title">Security</div><div class="media__description">Password, 2FA, sessions</div></div>
+          <div class="media__action"><i data-lucide="chevron-right" width="18" class="text-muted-foreground"></i></div>
         </li>
       </ul>
     </div>
@@ -157,7 +157,7 @@ function DrawerDocs() {
     </div>
     <div class="drawer__body">
       <div class="flex flex-wrap md:flex-nowrap gap-3 mb-4 pb-4 border-b border-[var(--color-border)]">
-        <span class="icon-box icon-box--success icon-box--round shrink-0"><i data-lucide="check"></i></span>
+        <span class="media__figure"><span class="icon-box icon-box--success icon-box--circle shrink-0"><i data-lucide="check"></i></span></span>
         <div>
           <div class="font-medium">Deploy finished</div>
           <p class="text-muted-foreground m-0 mb-1 text-sm">Build #2147 shipped to production in 4m 12s.</p>
@@ -165,7 +165,7 @@ function DrawerDocs() {
         </div>
       </div>
       <div class="flex flex-wrap md:flex-nowrap gap-3 mb-4 pb-4 border-b border-[var(--color-border)]">
-        <span class="icon-box icon-box--info icon-box--round shrink-0"><i data-lucide="message-square"></i></span>
+        <span class="media__figure"><span class="icon-box icon-box--info icon-box--circle shrink-0"><i data-lucide="message-square"></i></span></span>
         <div>
           <div class="font-medium">Amelia replied</div>
           <p class="text-muted-foreground m-0 mb-1 text-sm">Let's pair on the cart bug tomorrow morning.</p>
@@ -173,7 +173,7 @@ function DrawerDocs() {
         </div>
       </div>
       <div class="flex flex-wrap md:flex-nowrap gap-3">
-        <span class="icon-box icon-box--warning icon-box--round shrink-0"><i data-lucide="triangle-alert"></i></span>
+        <span class="media__figure"><span class="icon-box icon-box--warning icon-box--circle shrink-0"><i data-lucide="triangle-alert"></i></span></span>
         <div>
           <div class="font-medium">Disk above 80%</div>
           <p class="text-muted-foreground m-0 mb-1 text-sm">db-primary-2 is at 84% used. Consider expanding the volume.</p>
@@ -292,21 +292,21 @@ function DrawerDocs() {
       <button type="button" class="drawer__close" data-stisla-drawer-dismiss aria-label="Close"><i data-lucide="x"></i></button>
     </div>
     <div class="drawer__body p-0">
-      <ul class="list-group list-group--flush">
-        <li class="flex flex-wrap list-group__item items-center gap-3">
-          <span class="icon-box icon-box--primary"><i data-lucide="book-open"></i></span>
-          <div class="flex-1"><div class="font-medium">Documentation</div><div class="text-sm text-muted-foreground">Guides and API reference</div></div>
-          <i data-lucide="chevron-right" width="18" class="text-muted-foreground"></i>
+      <ul class="list-group list-group--seamless">
+        <li class="media">
+          <span class="media__figure"><span class="icon-box icon-box--primary"><i data-lucide="book-open"></i></span></span>
+          <div class="media__content"><div class="media__title">Documentation</div><div class="media__description">Guides and API reference</div></div>
+          <div class="media__action"><i data-lucide="chevron-right" width="18" class="text-muted-foreground"></i></div>
         </li>
-        <li class="flex flex-wrap list-group__item items-center gap-3">
-          <span class="icon-box icon-box--info"><i data-lucide="message-circle"></i></span>
-          <div class="flex-1"><div class="font-medium">Contact support</div><div class="text-sm text-muted-foreground">Replies within a day</div></div>
-          <i data-lucide="chevron-right" width="18" class="text-muted-foreground"></i>
+        <li class="media">
+          <span class="media__figure"><span class="icon-box icon-box--info"><i data-lucide="message-circle"></i></span></span>
+          <div class="media__content"><div class="media__title">Contact support</div><div class="media__description">Replies within a day</div></div>
+          <div class="media__action"><i data-lucide="chevron-right" width="18" class="text-muted-foreground"></i></div>
         </li>
-        <li class="flex flex-wrap list-group__item items-center gap-3">
-          <span class="icon-box icon-box--warning"><i data-lucide="keyboard"></i></span>
-          <div class="flex-1"><div class="font-medium">Keyboard shortcuts</div><div class="text-sm text-muted-foreground">Work faster with hotkeys</div></div>
-          <i data-lucide="chevron-right" width="18" class="text-muted-foreground"></i>
+        <li class="media">
+          <span class="media__figure"><span class="icon-box icon-box--warning"><i data-lucide="keyboard"></i></span></span>
+          <div class="media__content"><div class="media__title">Keyboard shortcuts</div><div class="media__description">Work faster with hotkeys</div></div>
+          <div class="media__action"><i data-lucide="chevron-right" width="18" class="text-muted-foreground"></i></div>
         </li>
       </ul>
     </div>
@@ -403,19 +403,19 @@ function DrawerDocs() {
     <div class="drawer__body">
       <ol class="m-0 p-0 list-none">
         <li class="flex flex-wrap items-center gap-3 mb-4">
-          <div class="icon-box icon-box--primary icon-box--round shrink-0" style="--icon-box-size: 2rem"><i data-lucide="git-commit"></i></div>
+          <div class="icon-box icon-box--primary icon-box--circle shrink-0" style="--icon-box-size: 2rem"><i data-lucide="git-commit"></i></div>
           <div><div><span class="font-medium">Amelia</span> pushed 3 commits to <code>main</code></div><span class="text-sm text-muted-foreground">9:42 AM</span></div>
         </li>
         <li class="flex flex-wrap items-center gap-3 mb-4">
-          <div class="icon-box icon-box--success icon-box--round shrink-0" style="--icon-box-size: 2rem"><i data-lucide="check"></i></div>
+          <div class="icon-box icon-box--success icon-box--circle shrink-0" style="--icon-box-size: 2rem"><i data-lucide="check"></i></div>
           <div><div><span class="font-medium">Jonas</span> completed Audit checkout copy</div><span class="text-sm text-muted-foreground">9:31 AM</span></div>
         </li>
         <li class="flex flex-wrap items-center gap-3 mb-4">
-          <div class="icon-box icon-box--warning icon-box--round shrink-0" style="--icon-box-size: 2rem"><i data-lucide="user-plus"></i></div>
+          <div class="icon-box icon-box--warning icon-box--circle shrink-0" style="--icon-box-size: 2rem"><i data-lucide="user-plus"></i></div>
           <div><div><span class="font-medium">Lena</span> joined the workspace</div><span class="text-sm text-muted-foreground">Yesterday</span></div>
         </li>
         <li class="flex flex-wrap items-center gap-3">
-          <div class="icon-box icon-box--danger icon-box--round shrink-0" style="--icon-box-size: 2rem"><i data-lucide="circle-alert"></i></div>
+          <div class="icon-box icon-box--danger icon-box--circle shrink-0" style="--icon-box-size: 2rem"><i data-lucide="circle-alert"></i></div>
           <div><div>Build #2143 failed on <code>release/v2</code></div><span class="text-sm text-muted-foreground">Yesterday</span></div>
         </li>
       </ol>

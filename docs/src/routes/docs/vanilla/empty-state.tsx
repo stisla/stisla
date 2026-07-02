@@ -107,26 +107,6 @@ function EmptyStateDocs() {
       </section>
 
       <section>
-        <h2>Bordered</h2>
-        <p>
-          <code>.empty-state--bordered</code> draws a dashed region box — the common look for a
-          droppable or fillable area. The border rides the tone.
-        </p>
-        <Demo
-          layout="stack"
-          html={`
-<div class="empty-state empty-state--bordered">
-  <span class="empty-state__media"><i data-lucide="upload"></i></span>
-  <h3 class="empty-state__title">Drop files to upload</h3>
-  <p class="empty-state__text">Or click to browse from your computer.</p>
-  <div class="empty-state__action">
-    <button class="button button--neutral button--outline">Choose files</button>
-  </div>
-</div>`}
-        />
-      </section>
-
-      <section>
         <h2>Media</h2>
         <p>
           The media slot hosts more than a bare icon. Drop in an <code>.icon-box</code>, an{" "}
@@ -139,7 +119,7 @@ function EmptyStateDocs() {
 <div class="flex flex-wrap gap-4">
   <div class="empty-state empty-state--sm">
     <span class="empty-state__media">
-      <span class="icon-box icon-box--primary icon-box--round icon-box--lg"><i data-lucide="users"></i></span>
+      <span class="icon-box icon-box--primary icon-box--circle icon-box--lg"><i data-lucide="users"></i></span>
     </span>
     <h3 class="empty-state__title">No team members</h3>
     <p class="empty-state__text">Invite people to collaborate.</p>
@@ -178,7 +158,6 @@ function EmptyStateDocs() {
             <tr><td><code>--empty-state-media-gap</code></td><td>Gap below the media</td></tr>
             <tr><td><code>--empty-state-gap</code></td><td>Gap between the title and the text</td></tr>
             <tr><td><code>--empty-state-action-gap</code></td><td>Gap above the actions</td></tr>
-            <tr><td><code>--empty-state-border-color</code> / <code>-radius</code> / <code>-bg</code></td><td>Dashed box under <code>--bordered</code></td></tr>
           </tbody>
         </table>
       </section>

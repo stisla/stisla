@@ -49,16 +49,6 @@
 /* Mobile drawer: below lg the sidebar leaves the flow and slides in over a backdrop, toggled by the
  * topbar hamburger (app-shell.js flips .is-sidebar-visible). At lg+ it is the sticky rail/panel above. */
 @media (max-width: 63.99rem) {
-  .sidebar--app {
-    position: fixed;
-    inset-block: 0;
-    inset-inline-start: 0;
-    z-index: 1001;
-    height: 100dvh;
-    background: var(--app-shell-sidebar-mobile-bg);
-    transform: translateX(-100%);
-    transition: transform var(--sidebar-transition-duration, 0.3s) ease;
-  }
   .app-shell.is-sidebar-visible .sidebar--app {
     transform: none;
     box-shadow: var(--shadow-xl);

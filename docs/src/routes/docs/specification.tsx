@@ -469,7 +469,7 @@ function SpecificationDocs() {
           Block, element, modifier. The block is the component root (
           <code>.card</code>). Elements are its parts, joined with{" "}
           <code>__</code> (<code>.card__header</code>). Modifiers are variants,
-          joined with <code>--</code> (<code>.card--flat</code>). The full slot
+          joined with <code>--</code> (<code>.button--primary</code>). The full slot
           list for each block lives on its{" "}
           <Link to="/docs/vanilla/card" className="link">
             component page
@@ -522,25 +522,28 @@ function SpecificationDocs() {
           contributes and nothing leaks in from the surrounding document.
         </p>
 
-        <h3>Flush</h3>
+        <h3>Seamless</h3>
         <p>
           A few modifier names carry one fixed meaning across every block they
-          land on, and <code>--flush</code> is the one worth stating outright. It
-          closes the gap between a component and the edge it sits against, so the
-          block reads as part of its container instead of a thing set on top of
-          it. What closes that gap depends on what the component has: a bordered
-          block drops its border, a raised block drops its shadow, a block with
-          its own background drops the background and radius. The intent stays
-          fixed while the mechanics follow the component.
+          land on, and <code>--seamless</code> is the one worth stating outright.
+          It removes a block&rsquo;s own frame so the block reads as part of its
+          container instead of a thing set on top of it. What the frame is
+          depends on the component: a bordered block drops its border, a block
+          with its own background drops the background and radius, a raised block
+          drops its shadow. The intent stays fixed while the mechanics follow the
+          component.
         </p>
         <p>
-          Symmetric cases take a plain <code>--flush</code> (
-          <code>.accordion--flush</code>, <code>.list-group--flush</code>,{" "}
-          <code>.media--flush</code>). When only one edge flushes, the modifier
-          takes a side suffix and cancels that side&rsquo;s padding with a
-          negative margin (<code>.button--flush-start</code>,{" "}
-          <code>.button--flush-end</code>). Read the suffix as the same modifier
-          aimed at one edge.
+          It shows up wherever one component sits inside another:{" "}
+          <code>.list-group--seamless</code> inside a card,{" "}
+          <code>.media--seamless</code> as a menu row,{" "}
+          <code>.accordion--seamless</code>, <code>.table--seamless</code>, and{" "}
+          <code>.input--seamless</code> for a field that reads as text. A separate
+          modifier, <code>--flush-start</code> and <code>--flush-end</code>,
+          handles a different job: it cancels one side&rsquo;s padding with a
+          negative margin so a control aligns hard to its container edge (
+          <code>.button--flush-start</code>). Same instinct, different mechanic,
+          so it keeps its own name.
         </p>
 
         <h3>Knobs, and what isn&rsquo;t one</h3>
@@ -559,7 +562,7 @@ function SpecificationDocs() {
   border-radius:  var(--card-radius, var(--radius-lg));
   box-shadow:     var(--card-shadow, var(--shadow-md));
 }
-.card--flat { --card-shadow: none; }   /* a modifier reassigns one knob */
+.avatar--circle { --avatar-radius: 9999px; }   /* a modifier reassigns one knob */
 `}
         />
         <p>

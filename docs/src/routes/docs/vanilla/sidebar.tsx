@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Code } from "~/demo/Code";
 import { Demo } from "~/demo/Demo";
 
 export const Route = createFileRoute("/docs/vanilla/sidebar")({
@@ -647,13 +648,17 @@ function SidebarDocs() {
           Expanding back doesn't reopen them; the user clicks back into
           whichever menu they want. To drive the toggle from outside the sidebar
           (a topbar button, a keyboard shortcut), point at it with{" "}
-          <code>aria-controls</code>.
+          <code>aria-controls</code> set to the sidebar's <code>id</code>.
         </p>
-        <pre>
-          <code>{`<button data-stisla-sidebar-toggle="collapse"
+        <Code
+          title="Sidebar Toggle"
+          code={`<button data-stisla-sidebar-toggle="collapse"
         aria-controls="my-sidebar"
-        aria-expanded="true">Toggle sidebar</button>`}</code>
-        </pre>
+        aria-expanded="true">Toggle sidebar</button>
+
+<aside id="my-sidebar" class="sidebar" data-stisla-sidebar>...</aside>`}
+          lang="html"
+        />
         <p>
           Or call the API directly with{" "}
           <code>Stisla.get(sidebarEl).toggleCollapsed()</code>,{" "}

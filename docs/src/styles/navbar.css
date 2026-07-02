@@ -87,9 +87,3 @@
     margin-top: 0.5rem;
   }
 }
-
-@variant lg {
-  .site-navbar .navbar__menu {
-    margin-inline-start: 1.25rem;
-  }
-}
