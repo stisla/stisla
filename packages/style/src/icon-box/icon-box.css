@@ -12,7 +12,7 @@
     flex-shrink: 0;
     width: var(--icon-box-size, --spacing(9));
     height: var(--icon-box-size, --spacing(9));
-    color: var(--icon-box-color, var(--icon-box-tone, var(--color-muted-foreground)));
+    color: var(--icon-box-color, var(--icon-box-tone-emphasis, var(--color-muted-foreground)));
     background: var(
       --icon-box-bg,
       color-mix(in oklch, var(--icon-box-tone, var(--color-muted-foreground)) 15%, transparent)
@@ -27,21 +27,27 @@
     flex-shrink: 0;
   }
 
-  /* === Intent modifiers === override --icon-box-tone; bg + color both re-resolve from the new tone. */
+  /* === Intent modifiers === --icon-box-tone tints the bg (15%); --icon-box-tone-emphasis is the darker
+   * accessible glyph color on that tint (readable in both themes, unlike the raw fill). */
   .icon-box--primary {
     --icon-box-tone: var(--color-primary);
+    --icon-box-tone-emphasis: var(--color-primary-emphasis);
   }
   .icon-box--success {
     --icon-box-tone: var(--color-success);
+    --icon-box-tone-emphasis: var(--color-success-emphasis);
   }
   .icon-box--warning {
     --icon-box-tone: var(--color-warning);
+    --icon-box-tone-emphasis: var(--color-warning-emphasis);
   }
   .icon-box--danger {
     --icon-box-tone: var(--color-danger);
+    --icon-box-tone-emphasis: var(--color-danger-emphasis);
   }
   .icon-box--info {
     --icon-box-tone: var(--color-info);
+    --icon-box-tone-emphasis: var(--color-info-emphasis);
   }
 
   /* === Shape === */

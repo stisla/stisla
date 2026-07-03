@@ -124,12 +124,12 @@
   /* Destructive — color flips to danger; hover uses a soft danger tint so it never matches the
      standard accent fill. */
   .menu__item--danger {
-    color: var(--menu-item-color-danger, var(--color-danger));
+    color: var(--menu-item-color-danger, var(--color-danger-emphasis));
   }
 
   .menu__item--danger:hover,
   .menu__item--danger[data-highlighted] {
-    color: var(--menu-item-color-danger, var(--color-danger));
+    color: var(--menu-item-color-danger, var(--color-danger-emphasis));
     background-color: var(
       --menu-item-bg-danger-hover,
       color-mix(in oklch, var(--color-danger) 12%, transparent)

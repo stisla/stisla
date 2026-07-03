@@ -118,7 +118,7 @@
      .card__overlay's color: inherit (below) still applies. */
 
   .card__link {
-    color: var(--color-primary);
+    color: var(--color-primary-emphasis);
     text-decoration: none;
 
     & + .card__link {

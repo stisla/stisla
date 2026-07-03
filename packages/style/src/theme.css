@@ -18,17 +18,25 @@
   /* Drop Tailwind's default palette; ship only semantic colors. */
   --color-*: initial;
 
-  /* Intent (5 pairs) */
-  --color-primary: oklch(0.639 0.1844 257.69);
+  /* Intent — each is a FILL (solid bg, worn with its -foreground text) PLUS a darker -text for the
+   * color used AS text: links, soft chips, alert links, menu-danger, field errors. One color can't be
+   * both a vivid fill and readable text on a tint, so the two jobs get two tokens (WCAG AA 4.5:1; see
+   * RELEASE-READINESS.md §6.5). Fills are theme-independent; -text flips lighter in dark (below). */
+  --color-primary: oklch(0.573 0.1844 257.69);
   --color-primary-foreground: oklch(1 0 0);
-  --color-success: oklch(0.6966 0.1853 149.54);
+  --color-primary-emphasis: oklch(0.521 0.1844 257.69);
+  --color-success: oklch(0.536 0.1853 149.54);
   --color-success-foreground: oklch(1 0 0);
+  --color-success-emphasis: oklch(0.484 0.1853 149.54);
   --color-warning: oklch(0.7697 0.1645 70.61);
   --color-warning-foreground: oklch(0.27 0 0);
-  --color-danger: oklch(0.6155 0.2229 26.82);
+  --color-warning-emphasis: oklch(0.543 0.1645 70.61);
+  --color-danger: oklch(0.594 0.2229 26.82);
   --color-danger-foreground: oklch(1 0 0);
-  --color-info: oklch(0.677589 0.148143 238.1044);
+  --color-danger-emphasis: oklch(0.529 0.2229 26.82);
+  --color-info: oklch(0.55 0.148143 238.1044);
   --color-info-foreground: oklch(1 0 0);
+  --color-info-emphasis: oklch(0.501 0.148143 238.1044);
 
   /* Surface (8) */
   --color-background: oklch(1 0 0);
@@ -50,7 +58,7 @@
   --color-accent: oklch(0.96 0 0);
   --color-accent-foreground: oklch(0.27 0 0);
   --color-highlight: color-mix(in oklch, var(--color-primary) 12%, transparent);
-  --color-highlight-foreground: var(--color-primary);
+  --color-highlight-foreground: var(--color-primary-emphasis);
 
   /* Focus */
   --color-ring: var(--color-primary);
@@ -130,6 +138,13 @@
     --color-neutral-foreground: oklch(0.97 0 0);
     --color-accent: oklch(0.26 0 0);
     --color-accent-foreground: oklch(0.97 0 0);
+    /* Intent FILLS stay theme-independent (solid + white/dark text works on any bg). Only -text
+     * flips: on dark surfaces the readable text shade is LIGHTER, not darker. */
+    --color-primary-emphasis: oklch(0.625 0.1844 257.69);
+    --color-success-emphasis: oklch(0.594 0.1853 149.54);
+    --color-warning-emphasis: oklch(0.663 0.1645 70.61);
+    --color-danger-emphasis: oklch(0.641 0.2229 26.82);
+    --color-info-emphasis: oklch(0.609 0.148143 238.1044);
   }
 }
 

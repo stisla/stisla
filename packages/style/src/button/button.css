@@ -118,12 +118,16 @@
   }
 
   /* === Tones — filled === */
+  /* --button-tone drives the fill; --button-tone-emphasis is the accessible text the outline/ghost/soft
+   * variants wear on their transparent/tinted bg (the fill color itself is too light as text). */
   .button--primary {
     --button-tone: var(--color-primary);
+    --button-tone-emphasis: var(--color-primary-emphasis);
     --button-color: var(--color-primary-foreground);
   }
   .button--danger {
     --button-tone: var(--color-danger);
+    --button-tone-emphasis: var(--color-danger-emphasis);
     --button-color: var(--color-danger-foreground);
   }
   .button--neutral {
@@ -182,7 +186,7 @@
   /* === Shapes === */
   .button--outline {
     --button-bg: transparent;
-    --button-color: var(--button-tone);
+    --button-color: var(--button-tone-emphasis, var(--button-tone));
     --button-border-color: var(--button-tone);
     --button-bevel: none;
 
@@ -203,7 +207,7 @@
   }
   .button--ghost {
     --button-bg: transparent;
-    --button-color: var(--button-tone);
+    --button-color: var(--button-tone-emphasis, var(--button-tone));
     --button-border-color: transparent;
     --button-bevel: none;
 
@@ -224,7 +228,7 @@
   }
   .button--soft {
     --button-bg: color-mix(in oklch, var(--button-tone) 12%, transparent);
-    --button-color: var(--button-tone);
+    --button-color: var(--button-tone-emphasis, var(--button-tone));
     --button-border-color: transparent;
     --button-bevel: none;
 

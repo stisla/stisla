@@ -30,30 +30,36 @@
   }
 
   /* === Intent modifiers — filled defaults ===
-   * Each intent publishes --badge-tone (consumed by .badge--soft below) and sets the filled
-   * --badge-bg / --badge-color. */
+   * Each intent publishes --badge-tone (the fill, which .badge--soft tints for its bg) and
+   * --badge-tone-emphasis (the darker accessible text .badge--soft wears on that tint), and sets the
+   * filled --badge-bg / --badge-color (-foreground) for the solid default. */
   .badge--primary {
     --badge-tone: var(--color-primary);
+    --badge-tone-emphasis: var(--color-primary-emphasis);
     --badge-bg: var(--color-primary);
     --badge-color: var(--color-primary-foreground);
   }
   .badge--success {
     --badge-tone: var(--color-success);
+    --badge-tone-emphasis: var(--color-success-emphasis);
     --badge-bg: var(--color-success);
     --badge-color: var(--color-success-foreground);
   }
   .badge--warning {
     --badge-tone: var(--color-warning);
+    --badge-tone-emphasis: var(--color-warning-emphasis);
     --badge-bg: var(--color-warning);
     --badge-color: var(--color-warning-foreground);
   }
   .badge--danger {
     --badge-tone: var(--color-danger);
+    --badge-tone-emphasis: var(--color-danger-emphasis);
     --badge-bg: var(--color-danger);
     --badge-color: var(--color-danger-foreground);
   }
   .badge--info {
     --badge-tone: var(--color-info);
+    --badge-tone-emphasis: var(--color-info-emphasis);
     --badge-bg: var(--color-info);
     --badge-color: var(--color-info-foreground);
   }
@@ -69,6 +75,6 @@
       var(--badge-tone, var(--color-muted-foreground)) 15%,
       transparent
     );
-    --badge-color: var(--badge-tone, var(--color-muted-foreground));
+    --badge-color: var(--badge-tone-emphasis, var(--color-muted-foreground));
   }
 }

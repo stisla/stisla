@@ -37,7 +37,7 @@
   /* Error-tone helper; pair with [aria-invalid="true"] on the control via aria-describedby. */
   .field__error {
     font-size: var(--field-helper-font-size, var(--text-sm));
-    color: var(--field-error-color, var(--color-danger));
+    color: var(--field-error-color, var(--color-danger-emphasis));
   }
 
   /* Inline input + label row (checkbox, radio, settings row). Lives inside .field. */

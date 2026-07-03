@@ -244,19 +244,19 @@
   /* === Intent modifiers === each shifts ONLY the icon color; the surface stays neutral so stacked
      toasts of mixed intent still read as one family. */
   .toast--primary {
-    --toast-icon-color: var(--color-primary);
+    --toast-icon-color: var(--color-primary-emphasis);
   }
   .toast--success {
-    --toast-icon-color: var(--color-success);
+    --toast-icon-color: var(--color-success-emphasis);
   }
   .toast--warning {
-    --toast-icon-color: var(--color-warning);
+    --toast-icon-color: var(--color-warning-emphasis);
   }
   .toast--danger {
-    --toast-icon-color: var(--color-danger);
+    --toast-icon-color: var(--color-danger-emphasis);
   }
   .toast--info {
-    --toast-icon-color: var(--color-info);
+    --toast-icon-color: var(--color-info-emphasis);
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -35,7 +35,7 @@
     width: var(--empty-state-media-size, --spacing(16));
     height: var(--empty-state-media-size, --spacing(16));
     margin-block-end: var(--empty-state-media-gap, --spacing(5));
-    color: var(--empty-state-tone, var(--color-muted-foreground));
+    color: var(--empty-state-tone-emphasis, var(--color-muted-foreground));
     background: color-mix(in oklab, var(--empty-state-tone, var(--color-muted-foreground)) 12%, var(--color-surface));
     border-radius: 9999px;
   }
@@ -99,22 +99,27 @@
     margin-block-start: var(--empty-state-action-gap, --spacing(5));
   }
 
-  /* === Tone modifiers === set --empty-state-tone; the media fill, tint, and glyph colour re-resolve.
-     Title and text stay foreground / muted so the message reads as text, not colour. */
+  /* === Tone modifiers === --empty-state-tone tints the media fill (12%); --empty-state-tone-emphasis is
+     the darker accessible glyph colour on that tint. Title and text stay foreground / muted. */
   .empty-state--primary {
     --empty-state-tone: var(--color-primary);
+    --empty-state-tone-emphasis: var(--color-primary-emphasis);
   }
   .empty-state--success {
     --empty-state-tone: var(--color-success);
+    --empty-state-tone-emphasis: var(--color-success-emphasis);
   }
   .empty-state--warning {
     --empty-state-tone: var(--color-warning);
+    --empty-state-tone-emphasis: var(--color-warning-emphasis);
   }
   .empty-state--danger {
     --empty-state-tone: var(--color-danger);
+    --empty-state-tone-emphasis: var(--color-danger-emphasis);
   }
   .empty-state--info {
     --empty-state-tone: var(--color-info);
+    --empty-state-tone-emphasis: var(--color-info-emphasis);
   }
 
   /* === Small === for an empty region inside a card, a panel, or an empty table body: smaller media
