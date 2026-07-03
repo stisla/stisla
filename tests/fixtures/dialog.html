@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — dialog</title>
+  <!-- BUILT bundles, same-origin (see scripts/serve-fixtures.mjs). Prereq: pnpm build:packages. -->
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- A neutral control before the trigger, so focus-return has a distinct wrong answer to fail on. -->
+  <a href="#" class="fixture-before" id="before">a link before the dialog</a>
+
+  <!-- Component under test: the basic dialog. Markup mirrors the documented recommended usage
+       (docs/src/routes/docs/vanilla/dialog.tsx). The behavior comes from stisla.js auto-init. -->
+  <button class="button button--primary" data-stisla-dialog-trigger="dlg-basic">Invite a teammate</button>
+
+  <div class="dialog" id="dlg-basic" data-stisla-dialog aria-labelledby="dlg-basic-label">
+    <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+    <div class="dialog__panel">
+      <div class="dialog__content">
+        <button class="dialog__close" data-stisla-dialog-dismiss aria-label="Close">×</button>
+        <div class="dialog__header">
+          <h2 class="dialog__title" id="dlg-basic-label">Invite a teammate</h2>
+        </div>
+        <div class="dialog__body">
+          <p class="mt-0 text-muted-foreground">Send a link by email.</p>
+          <div class="field">
+            <label for="dlg-basic-email" class="field__label">Email</label>
+            <input type="email" class="input" id="dlg-basic-email" placeholder="name@example.com" autocomplete="email" autofocus />
+          </div>
+        </div>
+        <div class="dialog__footer">
+          <button class="button button--ghost button--neutral" data-stisla-dialog-dismiss>Cancel</button>
+          <button class="button button--primary" data-stisla-dialog-dismiss>Send invite</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Auto-initing IIFE: attaches window.Stisla and wires [data-stisla-*] on DOMContentLoaded. -->
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

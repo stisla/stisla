@@ -20,6 +20,11 @@ docs/.tanstack
 *.log
 npm-debug.log*
 
+# Playwright (release-readiness test harness — see RELEASE-READINESS.md)
+playwright-report/
+test-results/
+blob-report/
+
 # OS / editor
 .DS_Store
 ._*

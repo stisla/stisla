@@ -13,9 +13,18 @@
     "scaffold": "node scripts/scaffold-component.mjs",
     "check": "node scripts/check-tokens.mjs",
     "smoke": "node scripts/smoke-packages.mjs",
+    "test": "playwright test",
+    "test:rc": "playwright test --project=chromium",
+    "test:kbd": "playwright test --grep keyboard --project=chromium",
+    "test:a11y": "playwright test --grep a11y --project=chromium",
+    "test:ui": "playwright test --ui",
+    "test:stable": "playwright test",
+    "pretest": "pnpm build:packages",
     "release": "pnpm build:packages && pnpm smoke && pnpm -r --filter \"./packages/*\" publish --access public --tag beta --no-git-checks"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
+    "@playwright/test": "^1.61.1",
     "playwright": "^1.61.1"
   }
 }
