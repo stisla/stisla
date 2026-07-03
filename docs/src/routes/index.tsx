@@ -18,7 +18,6 @@ import {
   Trash2,
   Users,
 } from "lucide-react";
-import { SiteNavbar } from "~/site-navbar";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -432,8 +431,6 @@ function Feature({
 function Home() {
   return (
     <>
-      <SiteNavbar />
-
       <main className="overflow-x-clip max-w-(--shell-max) mx-auto px-6 pb-28 sm:px-10 lg:px-20">
         <section className="pt-14 md:pt-20">
           <div className="grid items-center gap-14 lg:grid-cols-[1fr_1.05fr] lg:gap-20">
@@ -639,7 +636,10 @@ function Home() {
                     time: "Yesterday",
                   },
                 ].map((r) => (
-                  <div key={r.name} className="media media--seamless items-start">
+                  <div
+                    key={r.name}
+                    className="media media--seamless items-start"
+                  >
                     <div className="media__figure mt-0.5">
                       <span className="avatar avatar--sm avatar--circle">
                         <span

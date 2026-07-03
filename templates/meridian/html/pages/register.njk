@@ -1,0 +1,47 @@
+{% extends "layouts/auth.njk" %}
+
+{% block title %}Create account · Meridian{% endblock %}
+
+{% block auth %}
+<div>
+  <h1 class="text-2xl">Create your account</h1>
+  <p class="text-muted-foreground mt-1">Start selling on Meridian in minutes.</p>
+</div>
+
+<form class="flex flex-col gap-4">
+  <div class="field">
+    <label for="regName" class="field__label">Full name</label>
+    <div class="input-group input-group--lg">
+      <span class="input-group__text">{{ "solar:user-linear" | icon }}</span>
+      <input type="text" class="input" id="regName" placeholder="Jane Doe" autocomplete="name" />
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="regEmail" class="field__label">Email</label>
+    <div class="input-group input-group--lg">
+      <span class="input-group__text">{{ "solar:letter-linear" | icon }}</span>
+      <input type="email" class="input" id="regEmail" placeholder="you@meridian.com" autocomplete="email" />
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="regPassword" class="field__label">Password</label>
+    <div class="input-group input-group--lg">
+      <span class="input-group__text">{{ "solar:lock-keyhole-linear" | icon }}</span>
+      <input type="password" class="input" id="regPassword" placeholder="••••••••••" autocomplete="new-password" />
+      <button type="button" class="input-group__text" data-password-toggle aria-controls="regPassword" aria-label="Show password" aria-pressed="false">{{ "solar:eye-linear" | icon }}</button>
+    </div>
+    <p class="field__description">At least 8 characters.</p>
+  </div>
+
+  <div class="field__item">
+    <input class="checkbox" type="checkbox" id="regTerms" />
+    <label class="field__label" for="regTerms">I agree to the Terms and Privacy Policy</label>
+  </div>
+
+  <a href="/meridian/" class="button button--primary button--block button--lg">Create account {{ "solar:arrow-right-linear" | icon }}</a>
+</form>
+
+<p class="text-center text-sm text-muted-foreground">Already have an account? <a href="/meridian/login.html" class="link">Sign in</a></p>
+{% endblock %}

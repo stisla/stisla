@@ -1,0 +1,15 @@
+{% extends "layouts/error.njk" %}
+
+{% block title %}404 · Meridian{% endblock %}
+
+{% block error %}
+<div class="empty-state empty-state--primary">
+  <span class="empty-state__media">{{ "solar:magnifer-zoom-in-linear" | icon }}</span>
+  <h3 class="empty-state__title">Page not found</h3>
+  <p class="empty-state__text">The page you're looking for doesn't exist or may have moved.</p>
+  <div class="empty-state__action flex-col">
+    <a href="/meridian/" class="button button--primary">{{ "solar:widget-linear" | icon }} Back to dashboard</a>
+    <a href="#" class="button button--ghost button--neutral">Contact support</a>
+  </div>
+</div>
+{% endblock %}

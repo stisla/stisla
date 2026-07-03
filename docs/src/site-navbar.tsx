@@ -40,11 +40,11 @@ type NavLink = { label: string; to?: string; match?: string; soon?: boolean };
 const LINKS: NavLink[] = [
   { label: "Docs", to: "/docs/introduction", match: "/docs" },
   { label: "Illustrations", to: "/illustrations", match: "/illustrations" },
+  { label: "Templates", to: "/templates/meridian" },
   { label: "Blocks", soon: true },
-  { label: "Templates", soon: true },
 ];
 
-export function SiteNavbar({ onMenu }: { onMenu?: () => void }) {
+export function SiteNavbar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -54,21 +54,6 @@ export function SiteNavbar({ onMenu }: { onMenu?: () => void }) {
         className="navbar site-navbar__inner flex-nowrap"
         aria-label="Primary"
       >
-        {onMenu && (
-          <Button
-            className="md:hidden"
-            tone="neutral"
-            shape="ghost"
-            size="sm"
-            iconOnly
-            aria-label="Open docs menu"
-            aria-controls="site-sidebar"
-            onClick={onMenu}
-          >
-            <Menu />
-          </Button>
-        )}
-
         <div className="w-4/12">
           <Link to="/" className="navbar__brand site-navbar__brand">
             <svg

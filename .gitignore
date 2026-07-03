@@ -3,6 +3,7 @@ node_modules/
 
 # Build output
 dist/
+templates/dist-site/
 *.tgz
 .vite/
 .tmp/

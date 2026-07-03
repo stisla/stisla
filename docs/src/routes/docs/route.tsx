@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
-import { ChevronDown } from "lucide-react";
-import { SiteNavbar } from "~/site-navbar";
+import { ChevronDown, SidebarCloseIcon, SidebarOpenIcon } from "lucide-react";
 import { Toc, useToc } from "~/toc";
 
 /* Layout for every /docs/* page. Ported from the legacy docs shell
@@ -223,8 +222,13 @@ function DocsLayout() {
 
   return (
     <>
-      <SiteNavbar onMenu={() => setNavOpen(true)} />
-
+      <button
+        className="button button--sm button--round button--neutral fixed bottom-4 right-4 z-9999 lg:hidden"
+        onClick={() => setNavOpen(!navOpen)}
+      >
+        {navOpen ? <SidebarCloseIcon /> : <SidebarOpenIcon />}
+        Sidebar
+      </button>
       <div className="site-layout">
         <aside
           id="site-sidebar"

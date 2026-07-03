@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { SiteNavbar } from "~/site-navbar";
 import { ILLUSTRATIONS, type Illustration } from "~/illustrations";
 
 /* Illustration gallery. Ported from the legacy gallery page (src/site/pages/illustration.njk):
@@ -230,8 +229,6 @@ function Gallery() {
 
   return (
     <>
-      <SiteNavbar />
-
       <main
         className="gallery"
         style={{ ["--illus-accent" as string]: accent }}
@@ -239,7 +236,7 @@ function Gallery() {
         <div className="gallery__inner">
           <header className="gallery__head">
             <div>
-              <h1 className="gallery__title">Illustrations</h1>
+              <h1 className="gallery__title">Illustrations (Beta)</h1>
               <p className="gallery__lead">
                 Recolorable spot illustrations for empty states, dialogs,
                 onboarding, and status moments. Pick a color, then copy the SVG

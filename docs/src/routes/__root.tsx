@@ -4,6 +4,7 @@ import { createIsomorphicFn } from "@tanstack/react-start";
 import { getCookie } from "@tanstack/react-start/server";
 import appCss from "../styles/index.css?url";
 import { ThemeProvider, THEME_COOKIE } from "~/theme";
+import { SiteNavbar } from "~/site-navbar";
 import { SiteFooter } from "~/site-footer";
 
 /* Resolve the persisted theme on BOTH sides: on the server from the request cookie (so SSR
@@ -72,6 +73,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
       </head>
       <body suppressHydrationWarning>
         <ThemeProvider initialTheme={theme}>
+          <SiteNavbar />
           {children}
           <SiteFooter />
         </ThemeProvider>

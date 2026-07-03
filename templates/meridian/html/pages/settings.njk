@@ -1,0 +1,306 @@
+{% extends "layouts/app.njk" %}
+{% set nav_active = "settings" %}
+
+{% block title %}Settings · Meridian{% endblock %}
+
+{#
+  Settings — the .sidebar (left) is the section nav; its rows are external
+  triggers for the #settingsTabs panels (tabs' aria-controls + data-stisla-tabs-value
+  contract). The .tabs runs list-optional: no internal .tabs__list, so the
+  sidebar is the only trigger list — the component switches the panels and
+  lights the active row itself (no extra script). Panels group the sections:
+  Profile (profile + appearance), Notifications, Security (login + 2FA), Danger.
+#}
+
+{% set sections = [
+  { value: "profile",       label: "Profile",       icon: "solar:user-circle-linear" },
+  { value: "notifications", label: "Notifications", icon: "solar:bell-linear" },
+  { value: "security",      label: "Security",      icon: "solar:shield-keyhole-linear" },
+  { value: "danger",        label: "Danger zone",   icon: "solar:danger-triangle-linear" }
+] %}
+
+{% block page %}
+<div class="page content">
+  <div class="content__container">
+    <header class="page__header">
+      <div class="page__headline">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb__item"><a href="/meridian/">Dashboard</a></li>
+            <li class="breadcrumb__item" aria-current="page">Settings</li>
+          </ol>
+        </nav>
+        <h1 class="page__title">Settings</h1>
+        <p class="page__description">Manage your profile, store, and account preferences.</p>
+      </div>
+    </header>
+
+    <div class="page__body">
+      <div class="grid grid-cols-12 gap-6">
+        {# Section nav — the .sidebar as external triggers for #settingsTabs. #}
+        <div class="col-span-12 lg:col-span-3">
+          <aside class="sidebar sidebar--setting" aria-label="Settings sections">
+            <div class="sidebar__content">
+              <nav class="sidebar__menu">
+                <div class="sidebar__group">
+                  <ul class="sidebar__list">
+                    {% for s in sections %}
+                    <li class="sidebar__item">
+                      <button type="button" class="sidebar__button" aria-controls="settingsTabs" data-stisla-tabs-value="{{ s.value }}"{% if loop.first %} aria-current="page"{% endif %}>
+                        {{ s.icon | icon }}<span>{{ s.label }}</span>
+                      </button>
+                    </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </nav>
+            </div>
+            <footer class="sidebar__footer">
+              <hr class="separator mb-2" />
+              <ul class="sidebar__list">
+                <li class="sidebar__item">
+                  <a class="sidebar__button" href="/meridian/login.html" style="--sidebar-button-color: var(--color-danger);">
+                    {{ "solar:logout-2-linear" | icon }}<span>Sign out</span>
+                  </a>
+                </li>
+              </ul>
+            </footer>
+          </aside>
+        </div>
+
+        {# Panels — the sidebar rows (external triggers) drive these; the .tabs
+           runs list-optional, with no internal .tabs__list of its own. #}
+        <div class="col-span-12 lg:col-span-9">
+          <div class="tabs" id="settingsTabs" data-stisla-tabs>
+            {# Profile — profile + appearance #}
+            <div class="tabs__panel" data-value="profile" data-state="active">
+              <div class="flex flex-col gap-6">
+                <section class="flex flex-col gap-3">
+                  <div class="flex flex-col gap-1">
+                    <h2 class="page__section-title">Profile</h2>
+                    <p class="page__section-description">Update your photo and personal details.</p>
+                  </div>
+                  <div class="card">
+                    <div class="card__body">
+                      <div class="flex items-center gap-3">
+                        <span class="avatar avatar--circle avatar--xl" data-stisla-avatar>
+                          <img class="avatar__image" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=facearea&facepad=2.5&w=160&h=160&q=80" alt="" />
+                          <span class="avatar__fallback">SG</span>
+                        </span>
+                        <div class="flex gap-2">
+                          <button type="button" class="button button--outline button--neutral button--sm">{{ "solar:upload-minimalistic-linear" | icon }} Upload</button>
+                          <button type="button" class="button button--ghost button--danger button--sm">Remove</button>
+                        </div>
+                      </div>
+                      <div class="grid grid-cols-12 gap-4">
+                        <div class="col-span-12 sm:col-span-6">
+                          <div class="field">
+                            <label for="setFirst" class="field__label">First name</label>
+                            <input type="text" class="input" id="setFirst" value="Steven" />
+                          </div>
+                        </div>
+                        <div class="col-span-12 sm:col-span-6">
+                          <div class="field">
+                            <label for="setLast" class="field__label">Last name</label>
+                            <input type="text" class="input" id="setLast" value="Gerrard" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="field">
+                        <label for="setEmail" class="field__label">Email</label>
+                        <input type="email" class="input" id="setEmail" value="steven@meridian.com" />
+                      </div>
+                      <div class="field">
+                        <label for="setCountry" class="field__label">Country of residence</label>
+                        <select class="select" id="setCountry" data-stisla-select data-placeholder="Select country">
+                          <option value=""></option>
+                          <option value="us" selected>United States</option>
+                          <option value="gb">United Kingdom</option>
+                          <option value="id">Indonesia</option>
+                          <option value="sg">Singapore</option>
+                        </select>
+                      </div>
+                      <div class="flex justify-end mt-2">
+                        <button type="button" class="button button--primary">Save Changes</button>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="flex flex-col gap-3">
+                  <div class="flex flex-col gap-1">
+                    <h2 class="page__section-title">Appearance</h2>
+                  </div>
+                  <div class="card">
+                    <ul class="list-group list-group--seamless">
+                      <li class="media">
+                        <div class="media__content">
+                          <label class="media__title" for="setTheme">Theme</label>
+                          <small class="media__description">Override your browser's preferred theme setting.</small>
+                        </div>
+                        <div class="media__action">
+                          <select class="select select--sm max-w-36" id="setTheme" aria-label="Theme">
+                            <option selected>System</option>
+                            <option>Light</option>
+                            <option>Dark</option>
+                          </select>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </section>
+              </div>
+            </div>
+
+            {# Notifications #}
+            <div class="tabs__panel" data-value="notifications" data-state="inactive">
+              <section class="flex flex-col gap-3">
+                <div class="flex flex-col gap-1">
+                  <h2 class="page__section-title">Notifications</h2>
+                  <p class="page__section-description">Choose which emails Meridian sends you.</p>
+                </div>
+                <div class="card">
+                  <ul class="list-group list-group--seamless">
+                    {% set notifs = [
+                      { id: "notifOrders",   title: "Order updates",    desc: "When an order is placed or changes status.",   on: true },
+                      { id: "notifCustomer", title: "New customers",    desc: "When someone creates their first order.",      on: true },
+                      { id: "notifStock",    title: "Low stock alerts", desc: "When a product drops below its threshold.",    on: false },
+                      { id: "notifReport",   title: "Weekly summary",   desc: "A digest of sales and traffic every Monday.",  on: true }
+                    ] %}
+                    {% for n in notifs %}
+                    <li class="media">
+                      <div class="media__content">
+                        <label class="media__title" for="{{ n.id }}">{{ n.title }}</label>
+                        <small class="media__description">{{ n.desc }}</small>
+                      </div>
+                      <div class="media__action">
+                        <input class="switch switch--lg" type="checkbox" role="switch" id="{{ n.id }}" {% if n.on %}checked{% endif %} />
+                      </div>
+                    </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </section>
+            </div>
+
+            {# Security — login methods + two-factor #}
+            <div class="tabs__panel" data-value="security" data-state="inactive">
+              <div class="flex flex-col gap-6">
+                <section class="flex flex-col gap-3">
+                  <div class="flex flex-col gap-1">
+                    <h2 class="page__section-title">Login methods</h2>
+                    <p class="page__section-description">Ways you can sign in to your account.</p>
+                  </div>
+                  <div class="card">
+                    <ul class="list-group list-group--seamless">
+                      <li class="media">
+                        <span class="media__figure">{{ "solar:letter-linear" | icon }}</span>
+                        <div class="media__content">
+                          <div class="media__title">steven@meridian.com</div>
+                          <small class="media__description">Sign in with one-time codes sent to your email.</small>
+                        </div>
+                        <div class="media__action">
+                          <button type="button" class="button button--outline button--neutral button--sm">Change email</button>
+                        </div>
+                      </li>
+                      <li class="media">
+                        <span class="media__figure">{{ "solar:lock-keyhole-linear" | icon }}</span>
+                        <div class="media__content">
+                          <div class="media__title">Password</div>
+                          <small class="media__description">Last changed 3 months ago.</small>
+                        </div>
+                        <div class="media__action">
+                          <button type="button" class="button button--outline button--neutral button--sm">Change</button>
+                        </div>
+                      </li>
+                      <li class="media">
+                        <span class="media__figure">{{ "solar:key-minimalistic-linear" | icon }}</span>
+                        <div class="media__content">
+                          <div class="media__title">Passkey</div>
+                          <small class="media__description">Use Face ID, Touch ID, or a security key.</small>
+                        </div>
+                        <div class="media__action">
+                          <button type="button" class="button button--outline button--neutral button--sm">Add passkey</button>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </section>
+
+                <section class="flex flex-col gap-3">
+                  <div class="flex flex-col gap-1">
+                    <h2 class="page__section-title">Two-factor authentication</h2>
+                    <p class="page__section-description">Add an extra layer of security when you sign in.</p>
+                  </div>
+                  <div class="card">
+                    <ul class="list-group list-group--seamless">
+                      <li class="media">
+                        <span class="media__figure">{{ "solar:smartphone-linear" | icon }}</span>
+                        <div class="media__content">
+                          <div class="media__title">Authenticator app</div>
+                          <small class="media__description">Use an app like 1Password or Authy to generate codes.</small>
+                        </div>
+                        <div class="media__action">
+                          <button type="button" class="button button--primary button--sm">Set up</button>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </section>
+              </div>
+            </div>
+
+            {# Danger zone #}
+            <div class="tabs__panel" data-value="danger" data-state="inactive">
+              <section class="flex flex-col gap-3">
+                <div class="flex flex-col gap-1">
+                  <h2 class="page__section-title">Danger zone</h2>
+                  <p class="page__section-description">Irreversible actions for your account. Proceed with care.</p>
+                </div>
+                <div class="card">
+                  <ul class="list-group list-group--seamless">
+                    <li class="media">
+                      <div class="media__content">
+                        <div class="media__title">Delete account</div>
+                        <small class="media__description">Permanently remove your account and all of its data.</small>
+                      </div>
+                      <div class="media__action">
+                        <button type="button" class="button button--outline button--danger button--sm" data-stisla-dialog-trigger="deleteAccount">
+                          Delete account
+                        </button>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# Confirm dialog for the destructive row — same alert-dialog pattern as orders. #}
+<div class="dialog dialog--sm" id="deleteAccount" data-stisla-dialog data-state="closed"
+     role="alertdialog" aria-modal="true" aria-labelledby="deleteAccountLabel"
+     aria-describedby="deleteAccountDesc" aria-hidden="true" tabindex="-1">
+  <div class="dialog__backdrop" data-stisla-dialog-dismiss></div>
+  <div class="dialog__panel">
+    <div class="dialog__content">
+      <button type="button" class="dialog__close" data-stisla-dialog-dismiss aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <div class="dialog__body text-center pt-6">
+        <span class="icon-box icon-box--danger icon-box--circle icon-box--lg mb-3">
+          {{ "solar:trash-bin-trash-linear" | icon }}
+        </span>
+        <h3 class="dialog__title mb-1" id="deleteAccountLabel">Delete your account?</h3>
+        <p class="text-muted-foreground" id="deleteAccountDesc">This permanently removes your account, store, and all data. This can't be undone.</p>
+      </div>
+      <div class="dialog__footer justify-center">
+        <button type="button" class="button button--ghost button--neutral" data-stisla-dialog-dismiss>Cancel</button>
+        <button type="button" class="button button--danger" data-stisla-dialog-dismiss>Delete account</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

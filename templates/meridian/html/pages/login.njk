@@ -1,0 +1,41 @@
+{% extends "layouts/auth.njk" %}
+
+{% block title %}Sign in · Meridian{% endblock %}
+
+{% block auth %}
+<div>
+  <h1 class="text-2xl">Welcome back</h1>
+  <p class="text-muted-foreground mt-1">Sign in to your Meridian dashboard.</p>
+</div>
+
+<form class="flex flex-col gap-4">
+  <div class="field">
+    <label for="loginEmail" class="field__label">Email</label>
+    <div class="input-group input-group--lg">
+      <span class="input-group__text">{{ "solar:letter-linear" | icon }}</span>
+      <input type="email" class="input" id="loginEmail" placeholder="you@meridian.com" autocomplete="email" />
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="flex items-center justify-between gap-2">
+      <label for="loginPassword" class="field__label">Password</label>
+      <a href="/meridian/forgot.html" class="link text-xs">Forgot?</a>
+    </div>
+    <div class="input-group input-group--lg">
+      <span class="input-group__text">{{ "solar:lock-keyhole-linear" | icon }}</span>
+      <input type="password" class="input" id="loginPassword" placeholder="••••••••••" autocomplete="current-password" />
+      <button type="button" class="input-group__text" data-password-toggle aria-controls="loginPassword" aria-label="Show password" aria-pressed="false">{{ "solar:eye-linear" | icon }}</button>
+    </div>
+  </div>
+
+  <div class="field__item">
+    <input class="checkbox" type="checkbox" id="loginRemember" />
+    <label class="field__label" for="loginRemember">Keep me signed in</label>
+  </div>
+
+  <a href="/meridian/" class="button button--primary button--block button--lg">Sign in {{ "solar:arrow-right-linear" | icon }}</a>
+</form>
+
+<p class="text-center text-sm text-muted-foreground">New to Meridian? <a href="/meridian/register.html" class="link">Create an account</a></p>
+{% endblock %}

@@ -1,0 +1,147 @@
+{#
+  Shared dashboard sidebar. Pages set `nav_active` before including this to
+  light the matching row, e.g. {% set nav_active = "orders" %}. Falls back to
+  the dashboard. The panel is framed against the surface-2 body via
+  --sidebar-bg + a right border.
+
+  Labels are wrapped in <span> so the rail (collapsed) state can fade them out
+  — the sidebar's soft-hide targets `.sidebar__button > span`.
+#}
+{% set nav_active = nav_active or "dashboard" %}
+<aside class="sidebar sidebar--lg sidebar--app" data-stisla-sidebar>
+  <header class="sidebar__header">
+    <a class="sidebar__brand" href="/meridian/">
+      <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5l3.4 7.1 7.1 3.4-7.1 3.4-3.4 7.1-3.4-7.1L1.5 12l7.1-3.4z" opacity=".45"/><path d="M12 1.5l3.4 7.1L12 12 8.6 8.6z"/></svg>
+      <span>Meridian</span>
+    </a>
+  </header>
+
+  <div class="sidebar__search">
+    <div class="input-group input-group--search">
+      <span class="input-group__text">{{ "solar:magnifer-linear" | icon }}</span>
+      <input type="search" class="input" placeholder="Search orders, products, customers…" aria-label="Search" />
+    </div>
+  </div>
+
+  <div class="sidebar__content">
+    <nav class="sidebar__menu">
+      <div class="sidebar__group">
+        <span class="sidebar__group-title">Store</span>
+        <ul class="sidebar__list">
+          <li class="sidebar__item">
+            <a class="sidebar__button" href="/meridian/" {% if nav_active == "dashboard" %}aria-current="page"{% endif %}>
+              {{ "solar:widget-bold-duotone" | icon }}<span>Dashboard</span>
+            </a>
+          </li>
+          <li class="sidebar__item">
+            <a class="sidebar__button" href="/meridian/orders.html" {% if nav_active == "orders" %}aria-current="page"{% endif %}>
+              {{ "solar:cart-large-2-bold-duotone" | icon }}<span>Orders</span>
+            </a>
+            <span class="sidebar__item-action">
+              <span class="badge badge--primary">8</span>
+            </span>
+          </li>
+          <li class="sidebar__item">
+            <a class="sidebar__button" href="/meridian/products.html" {% if nav_active == "products" %}aria-current="page"{% endif %}>
+              {{ "solar:box-bold-duotone" | icon }}<span>Products</span>
+            </a>
+          </li>
+          <li class="sidebar__item">
+            <a class="sidebar__button" href="/meridian/customers.html" {% if nav_active == "customers" %}aria-current="page"{% endif %}>
+              {{ "solar:users-group-rounded-bold-duotone" | icon }}<span>Customers</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar__group">
+        <span class="sidebar__group-title">Insights</span>
+        <ul class="sidebar__list">
+          <li class="sidebar__item" data-state="{% if nav_active == 'reports' %}open{% else %}closed{% endif %}">
+            <a class="sidebar__button" href="/meridian/reports.html" {% if nav_active == "reports" %}aria-current="page"{% endif %}>
+              {{ "solar:chart-2-bold-duotone" | icon }}<span>Reports</span>
+            </a>
+            <button type="button" class="sidebar__item-action" data-stisla-sidebar-submenu-toggle
+                    aria-expanded="{% if nav_active == 'reports' %}true{% else %}false{% endif %}" aria-controls="nav-reports" aria-label="Toggle Reports submenu">
+              <span class="sidebar__caret"></span>
+            </button>
+            <div class="sidebar__submenu" id="nav-reports">
+              <ul class="sidebar__list">
+                <li class="sidebar__item"><a class="sidebar__button" href="/meridian/reports.html"><span>Sales</span></a></li>
+                <li class="sidebar__item"><a class="sidebar__button" href="/meridian/reports.html"><span>Traffic</span></a></li>
+                <li class="sidebar__item"><a class="sidebar__button" href="/meridian/reports.html"><span>Inventory</span></a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar__group">
+        <span class="sidebar__group-title">Pages</span>
+        <ul class="sidebar__list">
+          <li class="sidebar__item" data-state="{% if nav_active == 'auth' %}open{% else %}closed{% endif %}">
+            <a class="sidebar__button" href="/meridian/login.html" {% if nav_active == "auth" %}aria-current="page"{% endif %}>
+              {{ "solar:lock-keyhole-bold-duotone" | icon }}<span>Authentication</span>
+            </a>
+            <button type="button" class="sidebar__item-action" data-stisla-sidebar-submenu-toggle
+                    aria-expanded="{% if nav_active == 'auth' %}true{% else %}false{% endif %}" aria-controls="nav-auth" aria-label="Toggle Authentication submenu">
+              <span class="sidebar__caret"></span>
+            </button>
+            <div class="sidebar__submenu" id="nav-auth">
+              <ul class="sidebar__list">
+                <li class="sidebar__item"><a class="sidebar__button" href="/meridian/login.html"><span>Login</span></a></li>
+                <li class="sidebar__item"><a class="sidebar__button" href="/meridian/register.html"><span>Register</span></a></li>
+                <li class="sidebar__item"><a class="sidebar__button" href="/meridian/forgot.html"><span>Forgot password</span></a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="sidebar__item" data-state="{% if nav_active == 'errors' %}open{% else %}closed{% endif %}">
+            <a class="sidebar__button" href="/meridian/403.html" {% if nav_active == "errors" %}aria-current="page"{% endif %}>
+              {{ "solar:danger-triangle-bold-duotone" | icon }}<span>Errors</span>
+            </a>
+            <button type="button" class="sidebar__item-action" data-stisla-sidebar-submenu-toggle
+                    aria-expanded="{% if nav_active == 'errors' %}true{% else %}false{% endif %}" aria-controls="nav-errors" aria-label="Toggle Errors submenu">
+              <span class="sidebar__caret"></span>
+            </button>
+            <div class="sidebar__submenu" id="nav-errors">
+              <ul class="sidebar__list">
+                <li class="sidebar__item"><a class="sidebar__button" href="/meridian/403.html"><span>403 Forbidden</span></a></li>
+                <li class="sidebar__item"><a class="sidebar__button" href="/meridian/404.html"><span>404 Not found</span></a></li>
+                <li class="sidebar__item"><a class="sidebar__button" href="/meridian/500.html"><span>500 Server error</span></a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="sidebar__item">
+            <a class="sidebar__button" href="/meridian/profile.html" {% if nav_active == "profile" %}aria-current="page"{% endif %}>
+              {{ "solar:user-circle-bold-duotone" | icon }}<span>Profile</span>
+            </a>
+          </li>
+          <li class="sidebar__item">
+            <a class="sidebar__button" href="/meridian/blank.html" {% if nav_active == "blank" %}aria-current="page"{% endif %}>
+              {{ "solar:file-bold-duotone" | icon }}<span>Blank</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <footer class="sidebar__footer">
+    <ul class="sidebar__list">
+      <li class="sidebar__item">
+        <a class="sidebar__button" href="/meridian/settings.html" {% if nav_active == "settings" %}aria-current="page"{% endif %}>
+          {{ "solar:settings-bold-duotone" | icon }}<span>Settings</span>
+        </a>
+      </li>
+      <li class="sidebar__item">
+        <a class="sidebar__button" href="/meridian/login.html">
+          {{ "solar:logout-2-bold-duotone" | icon }}<span>Log out</span>
+        </a>
+      </li>
+    </ul>
+    <div class="copyright">
+      <hr class="separator my-3" style="--separator-color: var(--sidebar-submenu-border-color)" />
+      <p class="text-xs text-muted-foreground" style="--link-color: var(--color-foreground);">Designed by <a href="https://nauv.al" class="link" target="_blank">Nauval</a> at <a href="https://enterprise.kredibel.com" class="link" target="_blank">Kredibel</a></p>
+    </div>
+  </footer>
+</aside>
