@@ -341,7 +341,8 @@ function TimelineDocs() {
             <tr><th>Variable</th><th>Use</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>--timeline-marker-color</code></td><td>Marker fill, dot, icon, and tint; the intent modifiers set this and an item-level override wins for one row</td></tr>
+            <tr><td><code>--timeline-marker-color</code></td><td>Marker fill, dot, and tint; the intent modifiers set this and an item-level override wins for one row</td></tr>
+            <tr><td><code>--timeline-marker-color-emphasis</code></td><td>Glyph colour inside a tinted marker; intents set it from <code>--color-&lt;intent&gt;-emphasis</code> for AA contrast</td></tr>
             <tr><td><code>--timeline-marker-ring</code></td><td>Ring color around a current marker</td></tr>
             <tr><td><code>--timeline-marker-ring-size</code></td><td>Static halo thickness on a current marker</td></tr>
             <tr><td><code>--timeline-ping-duration</code></td><td>How long one ping of a current marker takes; dropped under reduced motion</td></tr>

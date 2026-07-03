@@ -270,6 +270,10 @@ function ButtonDocs() {
               <td>Label color. Pairs with <code>--button-tone</code> for legibility across overrides</td>
             </tr>
             <tr>
+              <td><code>--button-tone-emphasis</code></td>
+              <td>Label color for <code>--outline</code>/<code>--ghost</code>/<code>--soft</code>, where the tone is text on a transparent or tinted bg. Intents set it from <code>--color-&lt;intent&gt;-emphasis</code> so it clears AA contrast; falls back to <code>--button-tone</code></td>
+            </tr>
+            <tr>
               <td><code>--button-border-color</code></td>
               <td>Rim border — recessed in light, rim-lit in dark</td>
             </tr>

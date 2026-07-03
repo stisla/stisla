@@ -125,6 +125,7 @@ function ThemingDocs() {
       <section id="brand-color">
         <h2>Brand color</h2>
         <p>The most common change. A single <code>--color-primary</code> override repaints every primary-toned surface. Hover, active, focus ring, and the <code>--color-highlight</code> tint all derive from it via <code>color-mix</code> at runtime, so one value carries the whole brand. No rebuild, no second pass.</p>
+        <p>Each intent also ships a paired <code>--color-&lt;intent&gt;-emphasis</code>, a darker, hand-tuned shade for the intent used as foreground marks (text, icons, links, soft chips) on a plain or tinted surface, rather than as a fill. It clears AA contrast where a runtime mix could not. Because it is a separate token, a strong retone of <code>--color-primary</code> should set <code>--color-primary-emphasis</code> too, otherwise those marks on tinted backgrounds can fall below AA contrast.</p>
         <Demo html={`
 <style>
   .brand-violet {

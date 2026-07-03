@@ -152,7 +152,8 @@ function EmptyStateDocs() {
           <tbody>
             <tr><td><code>--empty-state-max-width</code></td><td>Measure the block centres within</td></tr>
             <tr><td><code>--empty-state-padding-block</code> / <code>-padding-inline</code></td><td>Block padding</td></tr>
-            <tr><td><code>--empty-state-tone</code></td><td>Media fill, tint, and glyph colour (the tone modifiers set this)</td></tr>
+            <tr><td><code>--empty-state-tone</code></td><td>Media fill and tint (the tone modifiers set this)</td></tr>
+            <tr><td><code>--empty-state-tone-emphasis</code></td><td>Glyph colour on the media tint; intents set it from <code>--color-&lt;intent&gt;-emphasis</code> for AA contrast</td></tr>
             <tr><td><code>--empty-state-media-size</code> / <code>-icon-size</code></td><td>Media circle and glyph size</td></tr>
             <tr><td><code>--empty-state-art-size</code></td><td>Width cap for a richer illustration or image</td></tr>
             <tr><td><code>--empty-state-media-gap</code></td><td>Gap below the media</td></tr>

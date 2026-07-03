@@ -92,9 +92,10 @@ function IconBoxDocs() {
             <tr><td><code>--icon-box-size</code></td><td>Outer square dimension; size modifiers reassign this</td></tr>
             <tr><td><code>--icon-box-icon-size</code></td><td>Inner icon size</td></tr>
             <tr><td><code>--icon-box-radius</code></td><td>Corner radius; <code>.icon-box--circle</code> overrides it to a full circle</td></tr>
-            <tr><td><code>--icon-box-tone</code></td><td>Color source the bg and icon derive from; intents reassign this</td></tr>
+            <tr><td><code>--icon-box-tone</code></td><td>Color the bg tint derives from; intents reassign this</td></tr>
+            <tr><td><code>--icon-box-tone-emphasis</code></td><td>Icon glyph color on the tint; intents set it from <code>--color-&lt;intent&gt;-emphasis</code> for AA contrast</td></tr>
             <tr><td><code>--icon-box-bg</code></td><td>Background tint</td></tr>
-            <tr><td><code>--icon-box-color</code></td><td>Icon color</td></tr>
+            <tr><td><code>--icon-box-color</code></td><td>Icon color (direct override; wins over the tone-derived default)</td></tr>
           </tbody>
         </table>
       </section>

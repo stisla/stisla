@@ -205,8 +205,17 @@ function BadgeDocs() {
                 <code>--badge-tone</code>
               </td>
               <td>
-                The intent color an intent modifier publishes;{" "}
-                <code>--soft</code> reads it for its tint and text
+                The intent fill an intent modifier publishes;{" "}
+                <code>--soft</code> reads it for its 15% tint
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>--badge-tone-emphasis</code>
+              </td>
+              <td>
+                The accessible text <code>--soft</code> wears on that tint;
+                intents set it from <code>--color-&lt;intent&gt;-emphasis</code>
               </td>
             </tr>
           </tbody>
