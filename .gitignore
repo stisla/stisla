@@ -4,6 +4,7 @@ node_modules/
 # Build output
 dist/
 templates/dist-site/
+templates/screenshots/
 *.tgz
 .vite/
 .tmp/

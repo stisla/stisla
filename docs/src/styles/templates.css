@@ -12,6 +12,10 @@
   padding-inline: 1.5rem;
   padding-bottom: 7rem;
   overflow-x: clip;
+  /* Aspect ratio of the captured screenshots (see templates/screenshot.mjs
+     defaults, 1440×1030). The filmstrip and lightbox frame to this so nothing is
+     cropped; update it if the capture viewport changes. */
+  --shot-ratio: 1440 / 1030;
 }
 @media (min-width: 640px) {
   .tpl {
@@ -240,21 +244,31 @@
 /* ── Filmstrip ─────────────────────────────────────────────────────────── */
 .tpl-strip {
   margin-top: 2.5rem;
+}
+.tpl-strip__inner {
+  /* The gutter mirrors .tpl's padding-inline at each breakpoint. The track bleeds
+     out by it, then pads back by the same amount, so it scrolls edge to edge while
+     the first and last cards always keep their inset — never flush on mobile. */
+  --strip-gutter: 1.5rem;
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: 17rem;
   gap: 1rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding-bottom: 1rem;
-  /* let the strip bleed to the viewport edge on small screens */
-  margin-inline: -1.5rem;
-  padding-inline: 1.5rem;
+  scroll-padding-inline: var(--strip-gutter);
+  padding-block-end: 1rem;
+  margin-inline: calc(-1 * var(--strip-gutter));
+  padding-inline: var(--strip-gutter);
 }
 @media (min-width: 640px) {
-  .tpl-strip {
-    margin-inline: 0;
-    padding-inline: 0;
+  .tpl-strip__inner {
+    --strip-gutter: 2.5rem;
+  }
+}
+@media (min-width: 1024px) {
+  .tpl-strip__inner {
+    --strip-gutter: 5rem;
   }
 }
 .tpl-shot {
@@ -278,7 +292,7 @@
   position: relative;
   display: grid;
   place-items: center;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: var(--shot-ratio);
   overflow: hidden;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
@@ -313,7 +327,7 @@
 .tpl-lightbox {
   position: fixed;
   inset: 0;
-  z-index: 60;
+  z-index: 2000;
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
@@ -358,8 +372,13 @@
 .tpl-lightbox__stage .tpl-shot__art {
   width: min(100%, 72rem);
   max-height: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: var(--shot-ratio);
   background: var(--color-surface);
+}
+/* Show the whole screen in the lightbox — never crop, even if the capture ratio
+   drifts from --shot-ratio. */
+.tpl-lightbox__stage .tpl-shot__art img {
+  object-fit: contain;
 }
 .tpl-lightbox__stage .tpl-shot__ph {
   font-size: 4rem;

@@ -14,5 +14,8 @@
     "check": "node scripts/check-tokens.mjs",
     "smoke": "node scripts/smoke-packages.mjs",
     "release": "pnpm build:packages && pnpm smoke && pnpm -r --filter \"./packages/*\" publish --access public --tag beta --no-git-checks"
+  },
+  "devDependencies": {
+    "playwright": "^1.61.1"
   }
 }

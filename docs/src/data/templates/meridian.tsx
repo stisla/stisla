@@ -53,9 +53,11 @@ export const meridian: TemplateMeta = {
   repoUrl: "https://github.com/stisla/stisla",
 
   poster: "/templates/meridian/preview.png",
+  posterDark: "/templates/meridian/preview-dark.png",
 
   shots: SHOTS.map(([name, label]) => ({
-    src: `/templates/meridian/shots/${name}.png`,
+    src: `/templates/meridian/shots/${name}-light.png`,
+    srcDark: `/templates/meridian/shots/${name}-dark.png`,
     alt: `Meridian ${label} screen`,
     page: label,
   })),

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { ArrowUpRight, Download, X } from "lucide-react";
 import type { Shot, TemplateMeta } from "./data/templates";
+import { useTheme } from "./theme";
 
 /* The presentational shell for a template detail page. Driven entirely by one
  * `TemplateMeta` — it never names a template — so every template renders through
@@ -13,6 +14,10 @@ import type { Shot, TemplateMeta } from "./data/templates";
  * links to the live template on its own origin — no iframe, so nothing here is
  * coupled to where the template is hosted. */
 function Preview({ meta }: { meta: TemplateMeta }) {
+  // The poster follows the docs theme, like the filmstrip; falls back to light.
+  const { theme } = useTheme();
+  const poster =
+    theme === "dark" && meta.posterDark ? meta.posterDark : meta.poster;
   return (
     <div className="tpl-preview">
       <div className="tpl-preview__frame">
@@ -41,8 +46,9 @@ function Preview({ meta }: { meta: TemplateMeta }) {
           aria-label={`Open the ${meta.name} live preview`}
         >
           <img
+            key={poster}
             className="tpl-preview__shot"
-            src={meta.poster}
+            src={poster}
             alt={`${meta.name} preview`}
             loading="lazy"
           />
@@ -55,14 +61,31 @@ function Preview({ meta }: { meta: TemplateMeta }) {
 /* ── Filmstrip ─────────────────────────────────────────────────────────────
  * A numbered contact sheet of every screen. Placeholder-friendly: each cell
  * falls back to its number + label until a real image lands at `shot.src`. */
-function ShotImage({ shot, index }: { shot: Shot; index: number }) {
+type Theme = "light" | "dark";
+
+/* The image for a screen in the chosen theme, falling back to light. */
+function shotSrc(shot: Shot, theme: Theme): string {
+  return theme === "dark" && shot.srcDark ? shot.srcDark : shot.src;
+}
+
+function ShotImage({
+  src,
+  alt,
+  index,
+}: {
+  src: string;
+  alt: string;
+  index: number;
+}) {
   const [broken, setBroken] = useState(false);
   return (
     <span className="tpl-shot__art" data-empty={broken || undefined}>
       {!broken && (
+        // Keyed by src so a theme swap remounts and re-attempts the load.
         <img
-          src={shot.src}
-          alt={shot.alt}
+          key={src}
+          src={src}
+          alt={alt}
           loading="lazy"
           onError={() => setBroken(true)}
         />
@@ -78,6 +101,9 @@ function ShotImage({ shot, index }: { shot: Shot; index: number }) {
 
 function Filmstrip({ meta }: { meta: TemplateMeta }) {
   const [open, setOpen] = useState<number | null>(null);
+  // The screenshots follow the docs site's own theme — flip the page to dark and
+  // every shot (strip + lightbox) swaps to its dark capture, no separate control.
+  const { theme } = useTheme();
   const count = meta.shots.length;
 
   const move = useCallback(
@@ -111,20 +137,22 @@ function Filmstrip({ meta }: { meta: TemplateMeta }) {
       </header>
 
       <div className="tpl-strip">
-        {meta.shots.map((shot, i) => (
-          <button
-            key={shot.src}
-            type="button"
-            className="tpl-shot"
-            onClick={() => setOpen(i)}
-          >
-            <span className="tpl-shot__num">
-              {String(i + 1).padStart(2, "0")}
-            </span>
-            <ShotImage shot={shot} index={i} />
-            <span className="tpl-shot__label">{shot.page}</span>
-          </button>
-        ))}
+        <div className="tpl-strip__inner">
+          {meta.shots.map((shot, i) => (
+            <button
+              key={shot.src}
+              type="button"
+              className="tpl-shot"
+              onClick={() => setOpen(i)}
+            >
+              <span className="tpl-shot__num">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <ShotImage src={shotSrc(shot, theme)} alt={shot.alt} index={i} />
+              <span className="tpl-shot__label">{shot.page}</span>
+            </button>
+          ))}
+        </div>
       </div>
 
       {active && (
@@ -151,9 +179,18 @@ function Filmstrip({ meta }: { meta: TemplateMeta }) {
           </div>
           <figure
             className="tpl-lightbox__stage"
-            onClick={(e) => e.stopPropagation()}
+            // Clicking the empty area around the image closes; clicking the image
+            // itself doesn't (stopPropagation keeps it from reaching the overlay).
+            onClick={(e) => {
+              e.stopPropagation();
+              if (e.target === e.currentTarget) setOpen(null);
+            }}
           >
-            <ShotImage shot={active} index={open ?? 0} />
+            <ShotImage
+              src={shotSrc(active, theme)}
+              alt={active.alt}
+              index={open ?? 0}
+            />
           </figure>
         </div>
       )}

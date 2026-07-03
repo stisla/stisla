@@ -15,7 +15,11 @@ type Icon = ComponentType<SVGProps<SVGSVGElement>>;
  * the screenshots do. `page` is the enumerated screen name (drives the mono 01/02
  * numbering in the filmstrip). */
 export type Shot = {
+  /* The light-scheme image (the default the filmstrip shows). */
   src: string;
+  /* The dark-scheme image, if captured. The filmstrip's theme toggle swaps to it;
+   * screens without one fall back to `src`. */
+  srcDark?: string;
   alt: string;
   page: string;
   /* Optional: some screens are wide (full page), some are focused (a card, a form).
@@ -57,6 +61,9 @@ export type TemplateMeta = {
 
   /* Static hero poster (a screenshot of the live template), served from docs. */
   poster: string;
+  /* Dark-scheme hero poster. The preview swaps to it with the docs theme; falls
+   * back to `poster` when absent. */
+  posterDark?: string;
 
   /* Screens for the filmstrip. */
   shots: Shot[];
