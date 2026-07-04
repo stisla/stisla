@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — input-group</title>
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- Component under test: the basic input group with a leading text addon.
+       Markup mirrors the documented recommended usage (docs/src/routes/docs/vanilla/input-group.tsx),
+       wrapped in a field so the input carries a visible, associated label. -->
+  <div class="field max-w-sm">
+    <label for="igWebsite" class="field__label">Website</label>
+    <div class="input-group">
+      <span class="input-group__text">https://</span>
+      <input type="text" class="input" id="igWebsite" placeholder="example.com" />
+    </div>
+  </div>
+
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

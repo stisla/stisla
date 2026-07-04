@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — pagination</title>
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- Component under test: the basic pagination. Markup mirrors the documented basic example
+       (docs/src/routes/docs/vanilla/pagination.tsx). Text-labelled chips; current page marked
+       with data-state + aria-current. -->
+  <nav aria-label="Pagination">
+    <ul class="pagination">
+      <li><a class="pagination__button" href="#">Previous</a></li>
+      <li><a class="pagination__button" href="#">1</a></li>
+      <li><a class="pagination__button" href="#" data-state="active" aria-current="page">2</a></li>
+      <li><a class="pagination__button" href="#">3</a></li>
+      <li><a class="pagination__button" href="#">Next</a></li>
+    </ul>
+  </nav>
+
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

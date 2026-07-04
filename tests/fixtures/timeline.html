@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — timeline</title>
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- Component under test: the basic timeline. Markup mirrors the documented basic example
+       (docs/src/routes/docs/vanilla/timeline.tsx). An <ol> carries order to screen readers;
+       empty markers paint decorative dots, the body text carries the content. -->
+  <ol class="timeline max-w-lg">
+    <li class="timeline__item">
+      <span class="timeline__marker"></span>
+      <div class="timeline__body">
+        <div class="timeline__time">Today, 09:24</div>
+        <div class="timeline__title">Signed in</div>
+        <div class="timeline__text">Chrome on macOS from Jakarta, Indonesia.</div>
+      </div>
+    </li>
+    <li class="timeline__item">
+      <span class="timeline__marker"></span>
+      <div class="timeline__body">
+        <div class="timeline__time">Yesterday, 18:02</div>
+        <div class="timeline__title">Password changed</div>
+        <div class="timeline__text">Updated from the security settings page.</div>
+      </div>
+    </li>
+    <li class="timeline__item">
+      <span class="timeline__marker"></span>
+      <div class="timeline__body">
+        <div class="timeline__time">Jun 19, 2026</div>
+        <div class="timeline__title">New device authorized</div>
+        <div class="timeline__text">iPhone 15 added to your trusted devices.</div>
+      </div>
+    </li>
+  </ol>
+
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

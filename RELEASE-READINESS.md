@@ -31,9 +31,12 @@ This doc closes (c) and sequences (a)/(b).
   a **real select a11y bug** — the generated trigger had no accessible name and used
   `aria-activedescendant` on a plain button role; fixed in `select.js` (role="combobox" + label/listbox
   naming). RC-blocking Tier-1 keyboard gate is met.
-- **DEFERRED → safe to resume in a FRESH session:** the **Tier-2** keyboard/a11y sweep (slider, toggle,
+- **DONE (2026-07-04): static-only axe gate.** 31 faithful fixtures (§3) + one data-driven
+  `tests/a11y/static.spec.ts` — axe-green on all three browsers (93/93). Full suite now **172 passed,
+  0 failed, 2 skipped** (the 2 = WebKit focus-trap, §6.5). This completes the RC axe gate.
+- **DEFERRED → safe to resume in a FRESH session:** the **Tier-2** keyboard sweep (slider, toggle,
   toggle-group, accordion, collapsible, tooltip, combobox, autocomplete, carousel, toast, sidebar,
-  navbar, scroll-area) — §3/§5. Also the optional Meridian axe supplement (§4.5). Copy the Tier-1
+  navbar, scroll-area) — §5. Also the optional Meridian axe supplement (§4.5). Copy the Tier-1
   fixtures/specs shape. Tier 2 gates Stable, not RC.
 
 ---
@@ -371,7 +374,10 @@ it's "confirm the behavior, fix the code if wrong."
   fixture's `.popover__body` — the documented pattern for a body holding interactive children (the
   default `.popover__body` colour is intentionally `--color-muted-foreground` for text-only context;
   popover.css:87-88). No component change. General lesson for other fade-in surfaces: gate the open-state
-  axe scan on settled opacity, not just the state attribute.
+  axe scan on settled opacity, not just the state attribute. **Applied the same opacity-settle gate to
+  menu and dialog** (both fade `.menu__popup` / `.dialog__panel` opacity 0→1) — menu was intermittently
+  failing this way in the full parallel run (item text read `#a0a0a0`, 2.61:1, mid-fade); dialog carried
+  the same latent flake. Drawer is exempt (its content slides via transform; opacity stays 1).
 
 - **[RESOLVED 2026-07-03 · option (a) implemented + verified] Intent colors failed WCAG AA.**
   Fixed via the fill/emphasis token split: darkened the 4 failing solid fills + added
@@ -443,9 +449,10 @@ it's "confirm the behavior, fix the code if wrong."
       added, `pnpm test` runs. (Done 2026-07-03; fixture model proven — dialog spec green on Chromium.)
 - [x] Fixture model decided + proven (§4.3): isolated same-origin fixtures, real browser.
       `tests/fixtures/dialog.html` + `tests/keyboard/dialog.spec.ts` (3 keyboard tests green).
-- [~] A fixture + axe spec for every component; axe green **or triaged-with-comment**. **Tier-1 done**
-      (dialog, drawer, popover, menu, select, tabs — all axe-green on Chromium). Static-only components
-      (§3) still need fixture + axe. The `.button--primary`/intent contrast item is resolved (§6.5).
+- [x] A fixture + axe spec for every component; axe green. **Tier-1** (dialog, drawer, popover, menu,
+      select, tabs — axe inside each keyboard spec) **and all 31 static-only** components
+      (`tests/a11y/static.spec.ts`) are axe-green on Chromium + Firefox + WebKit. The intent-contrast
+      item is resolved (§6.5).
 - [ ] Optional: axe pass over the built Meridian pages (realism supplement, §4.5).
 - [x] Tier-1 keyboard specs (dialog, drawer, popover, menu, select, tabs) pass on **Chromium**
       (`pnpm test:rc` → 27 passed, 2026-07-04).
@@ -478,9 +485,9 @@ Steps 1–2 are **DONE** (2026-07-03): infra built, fixture model decided + prov
    (3 keyboard tests green; axe test parked on the contrast finding — §6.5).
 3. ✅ (2026-07-04) The remaining five Tier-1 fixtures + keyboard specs (drawer, popover, menu, select,
    tabs), copying the dialog shape (§4.4/§4.6/§5). Green on Chromium; the select real bug fixed in JS.
-4. ✅ (2026-07-04) Axe spec per Tier-1 fixture (folded into each keyboard spec as a "static a11y" test).
-   Findings triaged/fixed (§6.5). Still TODO for RC: fixtures + axe for the **static-only** components
-   (§3) — no keyboard spec needed, just `expectNoA11yViolations` over a faithful fixture.
+4. ✅ (2026-07-04) Axe per fixture. Tier-1: folded into each keyboard spec as a "static a11y" test.
+   Static-only: 31 fixtures + data-driven `tests/a11y/static.spec.ts`, all axe-green on all three
+   browsers. Findings triaged/fixed (§6.5). **RC axe gate met.**
 5. (Optional) `tests/a11y/axe-template.spec.ts` over the built Meridian pages for realism (§4.5).
 6. Fold in the peer-dep fix; re-run `build:packages`/`smoke`/`check`. Bump to `rc.1`.
    **→ hand to maintainer to publish. RC gate met.**

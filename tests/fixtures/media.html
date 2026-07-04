@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — media</title>
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- Component under test: the basic media row. Markup mirrors the documented basic example
+       (docs/src/routes/docs/vanilla/media.tsx). Figure glyph is decorative; title/description
+       carry the text; the action is a labelled button. -->
+  <div class="media max-w-md">
+    <div class="media__figure"><span class="icon-box icon-box--primary"><i data-lucide="package"></i></span></div>
+    <div class="media__content">
+      <div class="media__title">Order #ATL-2918</div>
+      <div class="media__description">Out for delivery, arrives today by 6 PM.</div>
+    </div>
+    <div class="media__action">
+      <button type="button" class="button button--primary button--sm">Track</button>
+    </div>
+  </div>
+
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

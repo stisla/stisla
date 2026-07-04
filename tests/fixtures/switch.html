@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — switch</title>
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- Component under test: the basic switch (checkbox + role="switch"), each in a field item.
+       Markup mirrors the documented recommended usage (docs/src/routes/docs/vanilla/switch.tsx). -->
+  <div class="field w-auto max-w-96">
+    <div class="field__item">
+      <input class="switch" type="checkbox" role="switch" id="defaultSwitch" />
+      <label class="field__label" for="defaultSwitch">Notifications</label>
+    </div>
+    <div class="field__item">
+      <input class="switch" type="checkbox" role="switch" id="checkedSwitch" checked />
+      <label class="field__label" for="checkedSwitch">Auto-update</label>
+    </div>
+  </div>
+
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

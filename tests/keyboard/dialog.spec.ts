@@ -66,6 +66,9 @@ test.describe("dialog — keyboard", () => {
     await page.getByRole("button", { name: "Invite a teammate" }).focus();
     await page.keyboard.press("Enter");
     await expect(page.locator("#dlg-basic")).toHaveAttribute("data-state", "open");
+    // The panel fades opacity 0→1 on open; wait for it to settle so axe doesn't measure mid-fade
+    // (washed-out) contrast. Same guard as popover/menu.
+    await expect(page.locator("#dlg-basic .dialog__panel")).toHaveCSS("opacity", "1");
     await expectNoA11yViolations(page);
   });
 });

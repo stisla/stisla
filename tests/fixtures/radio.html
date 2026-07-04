@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — radio</title>
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- Component under test: the basic radio group; each input + label pair in a field item,
+       all sharing one name for single-selection.
+       Markup mirrors the documented recommended usage (docs/src/routes/docs/vanilla/radio.tsx). -->
+  <div class="field w-auto max-w-96">
+    <div class="field__item">
+      <input class="radio" type="radio" name="defaultRadio" id="defaultRadio1" checked />
+      <label class="field__label" for="defaultRadio1">First option</label>
+    </div>
+    <div class="field__item">
+      <input class="radio" type="radio" name="defaultRadio" id="defaultRadio2" />
+      <label class="field__label" for="defaultRadio2">Second option</label>
+    </div>
+    <div class="field__item">
+      <input class="radio" type="radio" name="defaultRadio" id="defaultRadio3" />
+      <label class="field__label" for="defaultRadio3">Third option</label>
+    </div>
+  </div>
+
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

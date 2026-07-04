@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — progress</title>
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- Basic progress (docs "Basic"). The wrapper carries role="progressbar",
+       an accessible name (aria-label), and the aria value attributes. -->
+  <div class="progress progress--block" role="progressbar" aria-label="Upload" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100">
+    <span class="progress__label">Uploading</span>
+    <span class="progress__value">72%</span>
+    <div class="progress__track"><div class="progress__bar" style="width: 72%"></div></div>
+  </div>
+
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

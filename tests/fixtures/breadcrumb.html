@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — breadcrumb</title>
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- Component under test: the basic breadcrumb. Markup mirrors the documented basic example
+       (docs/src/routes/docs/vanilla/breadcrumb.tsx). Ordered list in a nav; last crumb aria-current. -->
+  <nav aria-label="Breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb__item"><a href="#">Home</a></li>
+      <li class="breadcrumb__item" aria-current="page">Library</li>
+    </ol>
+  </nav>
+
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

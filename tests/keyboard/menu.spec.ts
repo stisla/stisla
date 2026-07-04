@@ -67,6 +67,9 @@ test.describe("menu — keyboard", () => {
     await page.getByRole("button", { name: "Actions" }).focus();
     await page.keyboard.press("Enter");
     await expect(page.locator("#menu-basic")).toHaveAttribute("data-state", "open");
+    // data-state="open" is set at the START of the popup fade-in; wait for full opacity before axe
+    // measures pixels, or it reads mid-transition (washed-out) item-text contrast.
+    await expect(page.locator("#menu-basic")).toHaveCSS("opacity", "1");
     await expectNoA11yViolations(page);
   });
 });

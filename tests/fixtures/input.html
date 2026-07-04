@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — input</title>
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- Component under test: the basic input, labelled via for/id.
+       Markup mirrors the documented recommended usage (docs/src/routes/docs/vanilla/input.tsx). -->
+  <div class="field max-w-96">
+    <label for="basicInput" class="field__label">Email</label>
+    <input type="email" class="input" id="basicInput" placeholder="you@example.com" />
+  </div>
+
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

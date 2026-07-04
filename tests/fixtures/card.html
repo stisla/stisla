@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — card</title>
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- Component under test: a card with title, subtitle, text, and a link action. Markup mirrors
+       the documented "Title, subtitle, text, links" usage (docs/src/routes/docs/vanilla/card.tsx).
+       The subtitle bakes in muted foreground; the action link carries its own text. -->
+  <div class="card w-72">
+    <div class="card__body">
+      <h5 class="card__title">Card title</h5>
+      <h6 class="card__subtitle">Card subtitle</h6>
+      <p class="card__text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <a href="#" class="card__link">Card link</a>
+    </div>
+  </div>
+
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

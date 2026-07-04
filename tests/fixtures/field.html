@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — field</title>
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- Component under test: field wrapper grouping label + control + description.
+       Markup mirrors the documented recommended usage (docs/src/routes/docs/vanilla/field.tsx). -->
+  <div class="field max-w-96">
+    <label for="fieldDescPwd" class="field__label">Password</label>
+    <input type="password" class="input" id="fieldDescPwd" aria-describedby="fieldDescPwdHelp" />
+    <p id="fieldDescPwdHelp" class="field__description">At least 12 characters. Mix letters, numbers, and a symbol.</p>
+  </div>
+
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — illustration</title>
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- Volumetric spot illustration lifted from the docs. Marked role="img" with an
+       aria-label per the docs recommendation so the meaningful graphic has a name. -->
+  <svg class="illustration illustration--primary" viewBox="0 0 200 200" role="img" aria-label="Spot illustration">
+    <defs>
+      <linearGradient id="illo-fixture" x1="0.15" y1="0.1" x2="0.85" y2="0.95">
+        <stop class="il-g0" offset="0"></stop>
+        <stop class="il-g1" offset="0.4"></stop>
+        <stop class="il-g2" offset="0.78"></stop>
+        <stop class="il-g3" offset="1"></stop>
+      </linearGradient>
+    </defs>
+    <circle class="il-disc-o" cx="100" cy="100" r="86"></circle>
+    <circle class="il-disc-i" cx="100" cy="100" r="66"></circle>
+    <rect class="il-obj" x="58" y="56" width="84" height="84" rx="19" fill="url(#illo-fixture)"></rect>
+    <circle class="il-badge" cx="150" cy="52" r="15" fill="var(--_b)"></circle>
+  </svg>
+
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>
