@@ -160,14 +160,14 @@
 
 .tpl-preview__stage {
   display: block;
-  aspect-ratio: 1440 / 900;
+  aspect-ratio: var(--shot-ratio);
   overflow: hidden;
   background: var(--color-surface-2);
 }
 .tpl-preview__shot {
   display: block;
   width: 100%;
-  height: 100%;
+  aspect-ratio: var(--shot-ratio);
   object-fit: cover;
   object-position: top;
 }

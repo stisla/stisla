@@ -435,7 +435,14 @@ function Home() {
         <section className="pt-14 md:pt-20">
           <div className="grid items-center gap-14 lg:grid-cols-[1fr_1.05fr] lg:gap-20">
             <div>
-              <Eyebrow>Design system</Eyebrow>
+              <Link
+                to="/templates/$name"
+                params={{ name: "meridian" }}
+                className="badge badge--primary badge--soft py-1 pl-1 pr-4"
+              >
+                <span className="badge badge--primary mr-1">New</span>
+                Meridian dashbaord template is live!
+              </Link>
               <h1 className="lp-h1 mt-6">
                 Interfaces Built on Constraint,{" "}
                 <span className="text-muted-foreground">Meant to Compose</span>
