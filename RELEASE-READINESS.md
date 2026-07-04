@@ -21,14 +21,20 @@ The blocker to RC is **not** unfinished code. The behaviors exist. The blocker i
 surface only just stopped moving, (b) a queued packaging fix, and (c) **zero verification infra**.
 This doc closes (c) and sequences (a)/(b).
 
-### ▶ Where we are / where to resume (2026-07-03)
+### ▶ Where we are / where to resume (2026-07-04)
 - **DONE:** test harness + fixture model proven (dialog: 3 keyboard tests green). See §4.
-- **IN PROGRESS (this session):** contrast **option (a)** — split intent tokens into a *fill* token
-  and a new darker `--color-<intent>-emphasis` token, rewire the text/icon-usage components, fix the 4
-  failing solid fills. Tracked in §6.5. This is a token-architecture change, done deliberately here.
-- **DEFERRED → safe to resume in a FRESH session:** the per-component keyboard/a11y sweep
-  (drawer, popover, menu, select, tabs, then Tier 2). Resume at **§8 step 3**; copy `tests/*/dialog.*`
-  per the §5 contracts. Nothing about it depends on this session — the doc is the handoff.
+- **DONE (2026-07-03):** contrast **option (a)** — split intent tokens into a *fill* token and a new
+  darker `--color-<intent>-emphasis` token, rewire the text/icon-usage components. Tracked in §6.5.
+- **DONE (2026-07-04): all six Tier-1 components have fixture + keyboard + axe specs, green on
+  Chromium** (`pnpm test:rc` → **27 passed, 0 failed**). dialog, drawer, popover, menu, select, tabs.
+  Two findings caught + resolved this session (see §6.5): a popover axe timing artifact (test-side) and
+  a **real select a11y bug** — the generated trigger had no accessible name and used
+  `aria-activedescendant` on a plain button role; fixed in `select.js` (role="combobox" + label/listbox
+  naming). RC-blocking Tier-1 keyboard gate is met.
+- **DEFERRED → safe to resume in a FRESH session:** the **Tier-2** keyboard/a11y sweep (slider, toggle,
+  toggle-group, accordion, collapsible, tooltip, combobox, autocomplete, carousel, toast, sidebar,
+  navbar, scroll-area) — §3/§5. Also the optional Meridian axe supplement (§4.5). Copy the Tier-1
+  fixtures/specs shape. Tier 2 gates Stable, not RC.
 
 ---
 
@@ -333,6 +339,40 @@ it's "confirm the behavior, fix the code if wrong."
 
 ## 6.5 Findings (things the harness has caught — triage each)
 
+- **[RESOLVED 2026-07-04 · fixed in select.js] Custom select had no accessible name + illegal ARIA.**
+  The Tier-1 select axe spec caught two real, shipped bugs (both only visible while open): (1) the
+  JS-generated `.select__trigger` button had an empty `.select__value` span (the placeholder is
+  CSS-only via `data-placeholder`) and the visible `<label for>` targets the now-hidden native
+  `<select>`, so the trigger had **no accessible name** (`button-name`, critical) until a value was
+  picked; (2) the trigger carried `aria-activedescendant` (the roving marker) on an implicit
+  `role=button`, which forbids it (`aria-allowed-attr`), and the `role="listbox"` popup was nameless
+  (`aria-input-field-name`). Fixed by adopting the ARIA 1.2 **select-only combobox** pattern in
+  `select.js`: `role="combobox"` on the trigger (legalizes aria-controls/expanded/activedescendant),
+  and both trigger and listbox now borrow the source's associated `<label>` (via `el.labels`) — trigger
+  name = label + live value span, listbox name = label; falls through to the source's `aria-label`/
+  `aria-labelledby` if set, else the placeholder as a last resort. Rebuilt `@stisla/vanilla`; select
+  spec green (4/4). No API/class/token change — pure a11y-attribute wiring, safe for RC.
+
+- **[KNOWN 2026-07-04 · WebKit test-env only] Focus-trap Tab test skipped on WebKit.**
+  The dialog + drawer "focus is trapped (Tab never escapes)" tests are `test.skip`'d on WebKit. Cause:
+  Playwright's WebKit honors the macOS **Full Keyboard Access** setting, which is OFF by default, so
+  Tab visits only form fields (never buttons/links) and transiently lands on `<body>` between stops —
+  the native tab order isn't representative, so the strict per-Tab assertion false-fails. Manually
+  verified the trap still contains focus (input → body → close → input, i.e. it wraps back). The other
+  trap-adjacent contracts (open, Escape, focus-return, axe) DO run and pass on WebKit. Real-Safari
+  focus containment is the human §6.3 pass. Full cross-browser result after the skip: **79 passed, 0
+  failed, 2 skipped** (Chromium + Firefox + WebKit). Not a component bug; no code change.
+
+- **[RESOLVED 2026-07-04 · test-side] Popover axe read washed-out contrast (mid-transition).**
+  The popover axe spec failed with every element (title, input, both buttons) at ~2.4:1 — a false
+  positive: `data-state="open"` is set at the *start* of the surface's opacity fade-in, so axe measured
+  pixels mid-transition (partial opacity composites all colors toward the white backdrop). Fixed in the
+  spec by waiting `toHaveCSS("opacity", "1")` before scanning. Also added `text-foreground` to the
+  fixture's `.popover__body` — the documented pattern for a body holding interactive children (the
+  default `.popover__body` colour is intentionally `--color-muted-foreground` for text-only context;
+  popover.css:87-88). No component change. General lesson for other fade-in surfaces: gate the open-state
+  axe scan on settled opacity, not just the state attribute.
+
 - **[RESOLVED 2026-07-03 · option (a) implemented + verified] Intent colors failed WCAG AA.**
   Fixed via the fill/emphasis token split: darkened the 4 failing solid fills + added
   `--color-<intent>-emphasis` (light + dark) in `theme.css`, rewired link/alert/badge-soft/card/menu/field
@@ -403,19 +443,23 @@ it's "confirm the behavior, fix the code if wrong."
       added, `pnpm test` runs. (Done 2026-07-03; fixture model proven — dialog spec green on Chromium.)
 - [x] Fixture model decided + proven (§4.3): isolated same-origin fixtures, real browser.
       `tests/fixtures/dialog.html` + `tests/keyboard/dialog.spec.ts` (3 keyboard tests green).
-- [ ] A fixture + axe spec for every component; axe green **or triaged-with-comment** (see Findings —
-      the `.button--primary` contrast item must be resolved for a fully-green axe gate).
+- [~] A fixture + axe spec for every component; axe green **or triaged-with-comment**. **Tier-1 done**
+      (dialog, drawer, popover, menu, select, tabs — all axe-green on Chromium). Static-only components
+      (§3) still need fixture + axe. The `.button--primary`/intent contrast item is resolved (§6.5).
 - [ ] Optional: axe pass over the built Meridian pages (realism supplement, §4.5).
-- [ ] Tier-1 keyboard specs (dialog ✅, drawer, popover, menu, select, tabs) pass on **Chromium**.
-- [ ] Every real bug the specs surfaced is fixed in `packages/vanilla/src/components/*` (not
-      papered over in the test).
+- [x] Tier-1 keyboard specs (dialog, drawer, popover, menu, select, tabs) pass on **Chromium**
+      (`pnpm test:rc` → 27 passed, 2026-07-04).
+- [x] Every real bug the **Tier-1** specs surfaced is fixed in `packages/vanilla/src/components/*` (the
+      select accessible-name/combobox fix, §6.5 — not papered over in the test).
 - [ ] `beta.11` peer-dep fix folded in; `notes` entry deleted.
 - [ ] `pnpm build:packages` + `pnpm smoke` + `pnpm check` still green.
 - [ ] Version bumped to `3.0.0-rc.1`; maintainer publishes.
 - [ ] API declared frozen (this doc + CHANGELOG note).
 
 ### Stable gate — `3.0.0` (all must be ✅, on top of RC)
-- [ ] Tier-1 **and** Tier-2 keyboard specs pass on **Chromium + Firefox + WebKit**.
+- [~] Tier-1 **and** Tier-2 keyboard specs pass on **Chromium + Firefox + WebKit**. **Tier-1 done**
+      (79 passed / 2 skipped, 2026-07-04 — the skips are the WebKit focus-trap Full-Keyboard-Access
+      artifact, §6.5). Tier-2 not yet written.
 - [ ] Human VoiceOver pass done, issues fixed (§6.2).
 - [ ] Real-Safari spot check done (§6.3).
 - [ ] Reduced-motion + 200% zoom sanity done (§6.4).
@@ -432,10 +476,11 @@ Steps 1–2 are **DONE** (2026-07-03): infra built, fixture model decided + prov
 1. ✅ Deps + `playwright.config.ts` + `scripts/serve-fixtures.mjs` + `test` scripts. `pnpm test` runs.
 2. ✅ Fixture model proven: `tests/fixtures/dialog.html` + `tests/keyboard/dialog.spec.ts`
    (3 keyboard tests green; axe test parked on the contrast finding — §6.5).
-3. Write the remaining five Tier-1 fixtures + keyboard specs (drawer, popover, menu, select, tabs),
-   copying the dialog shape (§4.4/§4.6/§5). Run on Chromium. Fix every real bug in the vanilla JS.
-4. Add an axe spec per fixture (reuse `expectNoA11yViolations`). Triage violations — fix or
-   comment-and-narrow. Resolve the `.button--primary` contrast finding (§6.5) for a green axe gate.
+3. ✅ (2026-07-04) The remaining five Tier-1 fixtures + keyboard specs (drawer, popover, menu, select,
+   tabs), copying the dialog shape (§4.4/§4.6/§5). Green on Chromium; the select real bug fixed in JS.
+4. ✅ (2026-07-04) Axe spec per Tier-1 fixture (folded into each keyboard spec as a "static a11y" test).
+   Findings triaged/fixed (§6.5). Still TODO for RC: fixtures + axe for the **static-only** components
+   (§3) — no keyboard spec needed, just `expectNoA11yViolations` over a faithful fixture.
 5. (Optional) `tests/a11y/axe-template.spec.ts` over the built Meridian pages for realism (§4.5).
 6. Fold in the peer-dep fix; re-run `build:packages`/`smoke`/`check`. Bump to `rc.1`.
    **→ hand to maintainer to publish. RC gate met.**

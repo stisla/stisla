@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — tabs</title>
+  <!-- BUILT bundles, same-origin (see scripts/serve-fixtures.mjs). Prereq: pnpm build:packages. -->
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- A neutral control before the component, so focus has a distinct wrong answer to fail on. -->
+  <a href="#" class="fixture-before" id="before">a link before the tabs</a>
+
+  <!-- Component under test: tabs. Markup mirrors the documented recommended usage
+       (docs/src/routes/docs/vanilla/tabs.tsx). Trigger↔panel linkage is by matching data-value;
+       the JS generates roles + aria-controls/labelledby + roving tabindex on init. An explicit
+       root id makes the generated ids deterministic. Default activation mode = automatic (activation
+       follows focus). Behavior comes from stisla.js auto-init. -->
+  <div id="tabs-fixture" class="tabs tabs--block" data-stisla-tabs>
+    <div class="tabs__list" role="tablist">
+      <button class="tabs__trigger" data-state="active" data-value="overview">Overview</button>
+      <button class="tabs__trigger" data-state="inactive" data-value="activity">Activity</button>
+      <button class="tabs__trigger" data-state="inactive" data-value="settings">Settings</button>
+    </div>
+    <div class="tabs__panel" data-state="active" data-value="overview"><p>Overview content.</p></div>
+    <div class="tabs__panel" data-state="inactive" data-value="activity"><p>Activity content.</p></div>
+    <div class="tabs__panel" data-state="inactive" data-value="settings"><p>Settings content.</p></div>
+  </div>
+
+  <!-- Auto-initing IIFE: attaches window.Stisla and wires [data-stisla-*] on DOMContentLoaded. -->
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

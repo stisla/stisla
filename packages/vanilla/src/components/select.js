@@ -139,6 +139,45 @@ export class Select extends Component {
     this._popup.hidden = true;
     if (this._isMulti) this._popup.setAttribute('aria-multiselectable', 'true');
 
+    // role="combobox" lets the trigger legally carry aria-controls / aria-expanded /
+    // aria-activedescendant (the roving marker) — a plain button role forbids
+    // aria-activedescendant. This is the ARIA 1.2 select-only combobox pattern.
+    this._trigger.setAttribute('role', 'combobox');
+
+    // Accessible name for BOTH the trigger and the listbox. A visible <label for=…>
+    // targets the hidden source, not the generated widgets, so mirror the name onto
+    // them: the trigger reads its label plus the live value span, the listbox reads
+    // the label. Without this the button has no name until a value is picked (the
+    // placeholder is CSS-only) and the listbox is nameless (aria-input-field-name).
+    if (this._trigger.hasAttribute('aria-label')) {
+      this._popup.setAttribute(
+        'aria-label',
+        this._trigger.getAttribute('aria-label'),
+      );
+    } else {
+      let labelIds = this._trigger.getAttribute('aria-labelledby');
+      if (!labelIds && this._source.labels && this._source.labels.length) {
+        labelIds = Array.from(this._source.labels)
+          .map((label, i) => {
+            if (!label.id) label.id = `stisla-select-${id}-label-${i}`;
+            return label.id;
+          })
+          .join(' ');
+      }
+      if (labelIds) {
+        this._popup.setAttribute('aria-labelledby', labelIds);
+        this._value.id = this._value.id || `stisla-select-${id}-value`;
+        this._trigger.setAttribute(
+          'aria-labelledby',
+          `${labelIds} ${this._value.id}`,
+        );
+      } else if (placeholder) {
+        // Last resort so neither widget is nameless.
+        this._trigger.setAttribute('aria-label', placeholder);
+        this._popup.setAttribute('aria-label', placeholder);
+      }
+    }
+
     this._renderOptions(id);
 
     // Mount: hide the source, drop trigger + popup right after it. The
