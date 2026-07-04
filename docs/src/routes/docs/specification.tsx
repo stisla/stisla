@@ -236,8 +236,11 @@ function SpecificationDocs() {
           overlay). They do not flip per theme.
         </p>
 
-        <h3>Interactional</h3>
-        <p>Tokens that paint interactive states regardless of intent.</p>
+        <h3>Neutral fill</h3>
+        <p>
+          A neutral rest fill for component chips: kbd, badge, avatar, progress
+          and slider tracks, table striping, and the neutral button.
+        </p>
         <table>
           <thead>
             <tr>
@@ -251,10 +254,23 @@ function SpecificationDocs() {
                 <code>--color-neutral</code>
               </td>
               <td>
-                Rest fill for filled-neutral controls. Paired with{" "}
+                Neutral rest fill for filled controls and chips. Paired with{" "}
                 <code>--color-neutral-foreground</code>
               </td>
             </tr>
+          </tbody>
+        </table>
+
+        <h3>Interactional</h3>
+        <p>Tokens that paint interactive states regardless of intent.</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Use</th>
+            </tr>
+          </thead>
+          <tbody>
             <tr>
               <td>
                 <code>--color-accent</code>
@@ -863,9 +879,12 @@ function SpecificationDocs() {
             <code>--color-muted-foreground</code>
           </li>
           <li>
-            Interactional pairs: <code>--color-neutral</code>,{" "}
-            <code>--color-neutral-foreground</code>, <code>--color-accent</code>
-            , <code>--color-accent-foreground</code>
+            Neutral fill: <code>--color-neutral</code>,{" "}
+            <code>--color-neutral-foreground</code>
+          </li>
+          <li>
+            Interactional pairs: <code>--color-accent</code>,{" "}
+            <code>--color-accent-foreground</code>
           </li>
         </ul>
 

@@ -341,7 +341,7 @@ function ThemingDocs() {
 
       <section id="dark-mode">
         <h2>Dark mode</h2>
-        <p>Light and dark are deltas on the same token surface. Stisla ships a dark block that flips every surface and interactional token; intents stay (a green button is the same green in dark mode). The dark block keys off <code>[data-theme="dark"]</code> or the <code>.dark</code> class on <code>&lt;html&gt;</code>, so React or Vue apps with localStorage-based toggling work out of the box.</p>
+        <p>Light and dark are deltas on the same token surface. Stisla ships a dark block that flips every surface, neutral, and interactional token; intents stay (a green button is the same green in dark mode). The dark block keys off <code>[data-theme="dark"]</code> or the <code>.dark</code> class on <code>&lt;html&gt;</code>, so React or Vue apps with localStorage-based toggling work out of the box.</p>
         <p>To roll your own dark theme, override the same tokens. You only need to redeclare what you&rsquo;re changing. Pick the way that matches your setup.</p>
         <p><strong className="text-foreground">Without a build step.</strong> Write the override under the dark selectors directly.</p>
         <Code lang="css" code={`
@@ -350,7 +350,7 @@ function ThemingDocs() {
   --color-background:    /* your dark background */;
   --color-foreground:    /* your dark foreground */;
   --color-surface:       /* ... */;
-  /* override any surface or interactional token here;
+  /* override any surface, neutral, or interactional token here;
      intents (--color-primary, --color-success, ...) stay across themes */
 }
 `} />

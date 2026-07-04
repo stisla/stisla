@@ -1,5 +1,5 @@
 /* @stisla/style — Kbd. Ported from src/scss/components/_kbd.scss. A keyboard-shortcut chip. <kbd> is
- * unstyled at the bare-element level (reboot); .kbd opts in. Sits in the neutral interactional tier;
+ * unstyled at the bare-element level (reboot); .kbd opts in. Sits on the neutral fill tier;
  * the rim uses the same color-mix recipe as .button--neutral so the border stays visible in dark mode.
  * Font-size is rem-based (a deliberate UI element, not tracking surrounding text). References the
  * @theme tokens (colors var(--color-*), spacing --spacing(n), type var(--text-*) / var(--font-mono) /

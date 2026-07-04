@@ -52,9 +52,12 @@
   --color-overlay: oklch(0.155 0 0);
   --color-overlay-foreground: oklch(0.98 0 0);
 
-  /* Interactional */
+  /* Neutral fill — a rest fill for neutral component chips (kbd, badge, avatar, progress/slider/meter
+   * tracks, table striping, neutral button). A surface, not an interaction state. */
   --color-neutral: oklch(0.91 0 0);
   --color-neutral-foreground: oklch(0.27 0 0); /* = foreground (light) */
+
+  /* Interactional — states, not fills: accent paints hover, highlight paints active/selected. */
   --color-accent: oklch(0.96 0 0);
   --color-accent-foreground: oklch(0.27 0 0);
   --color-highlight: color-mix(in oklch, var(--color-primary) 12%, transparent);

@@ -5,6 +5,8 @@
 
 @layer components {
   .button {
+    position: relative;
+    isolation: isolate; /* contains the ::after wash below the label */
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -17,18 +19,28 @@
     font-weight: var(--button-font-weight, var(--font-weight-medium));
     line-height: var(--leading-none);
     color: var(--button-color);
-    background: var(--button-bg, var(--button-tone));
+    /* Solid fill runs as a light-to-tone gradient off --button-tone; override --button-bg for a flat fill. */
+    background: var(
+      --button-bg,
+      linear-gradient(
+        to bottom,
+        color-mix(in oklch, var(--button-tone) 84%, white),
+        var(--button-tone)
+      )
+    );
     border: var(--button-border-width, var(--st-border-width)) solid
       var(
         --button-border-color,
         color-mix(
           in oklch,
-          var(--button-tone) var(--button-rim-mix, 85%),
+          var(--button-tone) var(--button-rim-mix, 90%),
           black
         )
       );
     border-radius: var(--button-radius, var(--radius-md));
-    box-shadow: var(--button-bevel, inset 0 1px 0 rgba(255, 255, 255, 0.15));
+    /* All-around inset edge (was --button-bevel). Only the color/opacity varies per tone; set
+     * transparent to drop it. */
+    box-shadow: inset 0 0 0 1px var(--button-inset-shadow-color, oklch(1 0 0 / 0.2));
     cursor: pointer;
     user-select: none;
     text-decoration: none;
@@ -41,19 +53,26 @@
       color var(--transition-duration-fast) ease,
       box-shadow var(--transition-duration-fast) ease;
 
-    &:hover {
-      background: var(
-        --button-bg-hover,
-        color-mix(in oklch, var(--button-tone) 88%, black)
-      );
+    /* Hover/active wash: a fixed overlay that fades in over the static fill (not a gradient swap, so it
+     * animates). --button-overlay is the wash color; --button-overlay-strength is its peak (active)
+     * opacity — bump it for a stronger wash, set 0 to disable. Hover shows 0.6 of the peak. */
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: var(--button-overlay, oklch(1 0 0));
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-duration-fast) ease;
     }
-    &:active,
-    &[aria-pressed="true"],
-    &[data-state="active"] {
-      background: var(
-        --button-bg-active,
-        color-mix(in oklch, var(--button-tone) 78%, black)
-      );
+    &:hover::after {
+      opacity: calc(var(--button-overlay-strength, 0.22) * 0.6);
+    }
+    &:active::after,
+    &[aria-pressed="true"]::after,
+    &[data-state="active"]::after {
+      opacity: var(--button-overlay-strength, 0.22);
     }
     &:focus-visible {
       outline: 2px solid var(--color-ring);
@@ -130,57 +149,29 @@
     --button-tone-emphasis: var(--color-danger-emphasis);
     --button-color: var(--color-danger-foreground);
   }
+  /* Neutral is a surface, not an intent: --button-tone is the gray fill, --button-tone-emphasis is the
+   * foreground ink the outline/ghost variants wear (there is no --color-neutral-emphasis; foreground is it). */
   .button--neutral {
-    --button-tone: var(--color-foreground);
-    --button-bg: var(--color-neutral);
+    --button-tone: var(--color-neutral);
+    --button-tone-emphasis: var(--color-foreground);
     --button-color: var(--color-neutral-foreground);
+    /* White wash is invisible on the light fill, so wash with foreground — always the opposite of
+     * --color-neutral, so it darkens in light mode and lightens in dark. */
+    --button-overlay: var(--color-foreground);
+    --button-overlay-strength: 0.12;
     --button-border-color: color-mix(
       in oklch,
-      var(--color-neutral) var(--button-rim-mix, 85%),
+      var(--color-neutral) var(--button-rim-mix, 90%),
       var(--color-muted-foreground)
     );
-
-    &:hover {
-      background: var(
-        --button-bg-hover,
-        color-mix(in oklch, var(--color-neutral) 88%, black)
-      );
-    }
-    &:active,
-    &[aria-pressed="true"],
-    &[data-state="active"] {
-      background: var(
-        --button-bg-active,
-        color-mix(in oklch, var(--color-neutral) 78%, black)
-      );
-    }
   }
   .button--tertiary {
     --button-tone: var(--color-foreground);
     --button-color: var(--color-background);
-
-    &:hover {
-      background: var(
-        --button-bg-hover,
-        color-mix(
-          in oklch,
-          var(--color-foreground) 88%,
-          var(--color-background)
-        )
-      );
-    }
-    &:active,
-    &[aria-pressed="true"],
-    &[data-state="active"] {
-      background: var(
-        --button-bg-active,
-        color-mix(
-          in oklch,
-          var(--color-foreground) 78%,
-          var(--color-background)
-        )
-      );
-    }
+    /* Fill flips with theme (dark in light mode, white in dark), so the wash tracks the background —
+     * always the opposite of the fill — instead of a fixed white. */
+    --button-overlay: var(--color-background);
+    --button-overlay-strength: 0.16;
   }
 
   /* === Shapes === */
@@ -188,7 +179,8 @@
     --button-bg: transparent;
     --button-color: var(--button-tone-emphasis, var(--button-tone));
     --button-border-color: var(--button-tone);
-    --button-bevel: none;
+    --button-inset-shadow-color: transparent;
+    --button-overlay-strength: 0;
 
     &:hover {
       background: var(
@@ -209,7 +201,8 @@
     --button-bg: transparent;
     --button-color: var(--button-tone-emphasis, var(--button-tone));
     --button-border-color: transparent;
-    --button-bevel: none;
+    --button-inset-shadow-color: transparent;
+    --button-overlay-strength: 0;
 
     &:hover {
       background: var(
@@ -230,7 +223,8 @@
     --button-bg: color-mix(in oklch, var(--button-tone) 12%, transparent);
     --button-color: var(--button-tone-emphasis, var(--button-tone));
     --button-border-color: transparent;
-    --button-bevel: none;
+    --button-inset-shadow-color: transparent;
+    --button-overlay-strength: 0;
 
     &:hover {
       background: var(
@@ -308,7 +302,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .button {
+  .button,
+  .button::after {
     transition: none;
   }
   .button[aria-busy="true"]::before {

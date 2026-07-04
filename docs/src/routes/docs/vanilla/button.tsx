@@ -83,9 +83,10 @@ function ButtonDocs() {
         <h2>Custom color</h2>
         <p>
           For one-off colors outside the shipped tones, set <code>--button-tone</code> and{" "}
-          <code>--button-color</code> inline. The bg, hover, active, rim, and bevel all derive
-          from <code>--button-tone</code>, so a one-line override carries every state. If the
-          same color appears in three or more places, promote it to a project class.
+          <code>--button-color</code> inline. The fill gradient, rim, and inset edge all derive
+          from <code>--button-tone</code>, and hover/active fade a white{" "}
+          <code>--button-overlay</code> wash over it, so a one-line override carries every state.
+          If the same color appears in three or more places, promote it to a project class.
         </p>
         <Demo
           html={`
@@ -249,7 +250,7 @@ function ButtonDocs() {
 
         <h3>Color knobs</h3>
         <p>
-          The four surface variables that paint each state. Each defaults from{" "}
+          The surface variables that paint each state. Most default from{" "}
           <code>--button-tone</code>, so retoning is usually a one-line <code>--button-tone</code>{" "}
           override.
         </p>
@@ -263,7 +264,7 @@ function ButtonDocs() {
           <tbody>
             <tr>
               <td><code>--button-bg</code></td>
-              <td>Background. <code>:hover</code> mixes 88% over black; <code>:active</code> 78%</td>
+              <td>Background fill. Defaults to a lighter-tone → tone gradient; set a flat color to override. Stays fixed across states — <code>--button-overlay</code> paints hover/active</td>
             </tr>
             <tr>
               <td><code>--button-color</code></td>
@@ -274,12 +275,20 @@ function ButtonDocs() {
               <td>Label color for <code>--outline</code>/<code>--ghost</code>/<code>--soft</code>, where the tone is text on a transparent or tinted bg. Intents set it from <code>--color-&lt;intent&gt;-emphasis</code> so it clears AA contrast; falls back to <code>--button-tone</code></td>
             </tr>
             <tr>
+              <td><code>--button-overlay</code></td>
+              <td>Color of the hover/active wash faded over the fill. White by default; neutral washes with foreground and tertiary with background so the wash stays visible on any fill</td>
+            </tr>
+            <tr>
+              <td><code>--button-overlay-strength</code></td>
+              <td>Peak (active) opacity of the wash; hover shows 0.6 of it. Raise for a stronger wash, set <code>0</code> to disable (outline/ghost/soft do this)</td>
+            </tr>
+            <tr>
               <td><code>--button-border-color</code></td>
               <td>Rim border — recessed in light, rim-lit in dark</td>
             </tr>
             <tr>
-              <td><code>--button-bevel</code></td>
-              <td>Inset top highlight. Set <code>none</code> for flat (outline/ghost/soft do this automatically)</td>
+              <td><code>--button-inset-shadow-color</code></td>
+              <td>Color of the all-around inset edge. Set <code>transparent</code> to drop it (outline/ghost/soft do this automatically)</td>
             </tr>
           </tbody>
         </table>
@@ -307,7 +316,7 @@ function ButtonDocs() {
             </tr>
             <tr>
               <td><code>.button--neutral</code></td>
-              <td><code>var(--color-foreground)</code>; <code>--button-bg</code> forced to <code>--color-neutral</code></td>
+              <td><code>var(--color-neutral)</code> + <code>--button-tone-emphasis: var(--color-foreground)</code>, <code>--button-color: var(--color-neutral-foreground)</code></td>
             </tr>
             <tr>
               <td><code>.button--tertiary</code></td>
@@ -319,8 +328,9 @@ function ButtonDocs() {
         <h3>Shape variants</h3>
         <p>
           Outline, ghost, and soft override the color knobs while leaving{" "}
-          <code>--button-tone</code> intact, so a single tone reads three ways. Each sets{" "}
-          <code>--button-bevel: none</code>.
+          <code>--button-tone</code> intact, so a single tone reads three ways. Each drops the
+          inset edge and wash (<code>--button-inset-shadow-color: transparent</code> and{" "}
+          <code>--button-overlay-strength: 0</code>).
         </p>
         <table>
           <thead>
