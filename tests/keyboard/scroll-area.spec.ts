@@ -29,10 +29,13 @@ test.describe("scroll-area — keyboard", () => {
     await expect(vp).toHaveAttribute("tabindex", "0");
     await vp.focus();
     await expect(vp).toBeFocused();
-    // ArrowDown scrolls the focused viewport (PageDown is unreliable in headless; the smooth-scroll
-    // needs a few keystrokes to register). Poll so we don't race the scroll animation.
-    for (let i = 0; i < 6; i++) await page.keyboard.press("ArrowDown");
-    await expect.poll(() => vp.evaluate((el) => el.scrollTop)).toBeGreaterThan(0);
+    // ArrowDown scrolls the focused viewport. Press-and-check in a retry loop rather than firing a
+    // burst up front: WebKit coalesces/drops rapid keystrokes, and the smooth-scroll needs a beat to
+    // apply, so a spaced retry is the engine-agnostic way to prove keyboard scrolling works.
+    await expect(async () => {
+      await page.keyboard.press("ArrowDown");
+      expect(await vp.evaluate((el) => el.scrollTop)).toBeGreaterThan(0);
+    }).toPass({ timeout: 5000 });
   });
 
   test("static a11y: no axe violations", async ({ page }) => {
