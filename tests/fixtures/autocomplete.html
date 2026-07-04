@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — autocomplete</title>
+  <!-- BUILT bundles, same-origin (see scripts/serve-fixtures.mjs). Prereq: pnpm build:packages.
+       @floating-ui/dom (popup positioning) is bundled INTO stisla.js — no external global needed. -->
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- A neutral control before the input, so Tab focus-order has a distinct wrong answer to fail on. -->
+  <a href="#" class="fixture-before" id="before">a link before the autocomplete</a>
+
+  <!-- Component under test: the basic (datalist-sourced) autocomplete. Markup mirrors the documented
+       recommended usage (docs/src/routes/docs/vanilla/autocomplete.tsx, "Basic"). On hydration
+       stisla.js strips list="…", suppresses the native datalist UI, and renders a custom popup.
+       The <datalist> stays in the DOM as the option source and a no-JS fallback. -->
+  <div class="field max-w-sm pb-20">
+    <label for="basicAuto" class="field__label">Country</label>
+    <input type="text" class="autocomplete" id="basicAuto" name="country" list="countries" data-stisla-autocomplete placeholder="Search countries">
+    <datalist id="countries">
+      <option value="Indonesia"></option>
+      <option value="Malaysia"></option>
+      <option value="Singapore"></option>
+      <option value="Philippines"></option>
+      <option value="Thailand"></option>
+      <option value="Vietnam"></option>
+      <option value="Brunei"></option>
+      <option value="Cambodia"></option>
+      <option value="Laos"></option>
+      <option value="Myanmar"></option>
+    </datalist>
+  </div>
+
+  <!-- A neutral control after the input, so Tab-out (close + advance focus) has a target. -->
+  <a href="#" class="fixture-after" id="after">a link after the autocomplete</a>
+
+  <!-- Auto-initing IIFE: attaches window.Stisla and wires [data-stisla-*] on DOMContentLoaded. -->
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

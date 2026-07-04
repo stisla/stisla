@@ -34,10 +34,15 @@ This doc closes (c) and sequences (a)/(b).
 - **DONE (2026-07-04): static-only axe gate.** 31 faithful fixtures (§3) + one data-driven
   `tests/a11y/static.spec.ts` — axe-green on all three browsers (93/93). Full suite now **172 passed,
   0 failed, 2 skipped** (the 2 = WebKit focus-trap, §6.5). This completes the RC axe gate.
-- **DEFERRED → safe to resume in a FRESH session:** the **Tier-2** keyboard sweep (slider, toggle,
+- **DONE (2026-07-04): Tier-2 keyboard + axe specs, green cross-browser.** All 13 (slider, toggle,
   toggle-group, accordion, collapsible, tooltip, combobox, autocomplete, carousel, toast, sidebar,
-  navbar, scroll-area) — §5. Also the optional Meridian axe supplement (§4.5). Copy the Tier-1
-  fixtures/specs shape. Tier 2 gates Stable, not RC.
+  navbar, scroll-area) have fixture + keyboard + axe specs. **Full suite: 292 passed, 0 failed, 2
+  skipped** on Chromium + Firefox + WebKit. Four real bugs the gate caught + fixed (see §6.5): slider
+  (nameless thumb), autocomplete (nameless listbox + aria-selected), carousel (tablist misuse, docs
+  fix), scroll-area (viewport not keyboard-focusable, WCAG 2.1.1). tooltip's suspected gap was a false
+  alarm (focus-show/Escape/aria-describedby all wired).
+- **DEFERRED:** the optional Meridian axe supplement (§4.5). Everything else on the automated side is
+  done; the remaining Stable items are the human passes (§6).
 
 ---
 
@@ -342,6 +347,36 @@ it's "confirm the behavior, fix the code if wrong."
 
 ## 6.5 Findings (things the harness has caught — triage each)
 
+- **[RESOLVED 2026-07-04 · Tier-2 sweep] Four real a11y bugs caught by the Tier-2 keyboard/axe specs.**
+  All fixed at the source; full suite green cross-browser (292 passed / 2 skipped).
+  1. **slider — nameless thumb.** The `role="slider"` thumb is a `<div>`; the documented
+     `<label for>` targets the host div (can't associate to a non-labelable element), so the thumb
+     shipped with no accessible name (axe: aria-input-field-name). Fixed in `slider.js`: mirror the
+     host's `<label>` (or aria-label/labelledby) onto the thumb via aria-labelledby. Same class as the
+     select fix.
+  2. **autocomplete — nameless listbox + missing aria-selected.** The generated `role="listbox"` had
+     no accessible name (aria-input-field-name when open), and the active option was marked only with
+     `data-highlighted`/`aria-activedescendant`, never `aria-selected="true"` (APG combobox requires
+     it so the active descendant is announced). Fixed in `autocomplete.js`: name the listbox from the
+     input's label, and set `aria-selected` on the active option.
+  3. **carousel — tablist misuse.** `.carousel__indicators` was `role="tablist"` with plain `<button>`
+     children (not `role="tab"`) → axe aria-required-children (critical). The APG carousel pattern uses
+     a labelled group of "go to slide" buttons, not a tablist. Fixed in the DOCS markup
+     (`docs/.../carousel.tsx`, 4 places) + fixture: `role="tablist"` → `role="group"` (keeps the
+     aria-label). No JS change (the role was author-supplied).
+  4. **scroll-area — viewport not keyboard-focusable.** OverlayScrollbars ships the generated viewport
+     with `tabindex="-1"`, so once content overflows, keyboard-only users can't scroll it (axe:
+     scrollable-region-focusable, WCAG 2.1.1 A). Fixed in `scroll-area.js`: set the viewport
+     `tabindex="0"` (and expose it as a named `role="region"` when the host carries
+     aria-label/labelledby). NOTE for the fixture: the box height had to be set inline — the component
+     bundle ships component CSS, not Tailwind sizing utilities like `h-48`, so a utility-only height
+     doesn't constrain the box (nothing overflows → the bug hides). Any fixture that needs real
+     overflow/layout must use inline styles, not utilities.
+  Non-bug: **tooltip** (grep once flagged `focus:0`) is correctly wired — shows on `focusin`, Escape
+  dismisses, `aria-describedby` links the chip. Advisory-only (not fixed, not axe-failing): carousel
+  end-of-track controls use `aria-disabled` while staying focusable; carousel slides aren't
+  `aria-hidden` off-screen; no live region announces slide changes.
+
 - **[RESOLVED 2026-07-04 · fixed in select.js] Custom select had no accessible name + illegal ARIA.**
   The Tier-1 select axe spec caught two real, shipped bugs (both only visible while open): (1) the
   JS-generated `.select__trigger` button had an empty `.select__value` span (the placeholder is
@@ -464,9 +499,10 @@ it's "confirm the behavior, fix the code if wrong."
 - [ ] API declared frozen (this doc + CHANGELOG note).
 
 ### Stable gate — `3.0.0` (all must be ✅, on top of RC)
-- [~] Tier-1 **and** Tier-2 keyboard specs pass on **Chromium + Firefox + WebKit**. **Tier-1 done**
-      (79 passed / 2 skipped, 2026-07-04 — the skips are the WebKit focus-trap Full-Keyboard-Access
-      artifact, §6.5). Tier-2 not yet written.
+- [x] Tier-1 **and** Tier-2 keyboard specs pass on **Chromium + Firefox + WebKit** (2026-07-04). Full
+      suite **292 passed / 0 failed / 2 skipped** — the 2 skips are the WebKit focus-trap
+      Full-Keyboard-Access artifact (§6.5). Four real bugs the Tier-2 gate surfaced are fixed at the
+      source (§6.5).
 - [ ] Human VoiceOver pass done, issues fixed (§6.2).
 - [ ] Real-Safari spot check done (§6.3).
 - [ ] Reduced-motion + 200% zoom sanity done (§6.4).
@@ -491,8 +527,9 @@ Steps 1–2 are **DONE** (2026-07-03): infra built, fixture model decided + prov
 5. (Optional) `tests/a11y/axe-template.spec.ts` over the built Meridian pages for realism (§4.5).
 6. Fold in the peer-dep fix; re-run `build:packages`/`smoke`/`check`. Bump to `rc.1`.
    **→ hand to maintainer to publish. RC gate met.**
-7. Add Tier-2 fixtures + specs. Run the full suite across all three browser projects; fix Firefox/
-   WebKit-only failures.
+7. ✅ (2026-07-04) Tier-2 fixtures + specs added; full suite run across all three browser projects.
+   292 passed / 0 failed / 2 skipped. Four real bugs fixed at source (§6.5). No Firefox/WebKit-only
+   failures remained.
 8. Hand to maintainer for the VoiceOver + Safari + reduced-motion passes (§6).
 9. Fix what the human passes surface. Hold the API. When §7 Stable is all ✅ →
    **maintainer promotes `3.0.0` + merges `v3` → `master`.**

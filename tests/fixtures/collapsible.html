@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — collapsible</title>
+  <!-- BUILT bundles, same-origin (see scripts/serve-fixtures.mjs). Prereq: pnpm build:packages. -->
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- A neutral control before the trigger, so focus assertions have a distinct wrong answer to fail on. -->
+  <a href="#" class="fixture-before" id="before">a link before the collapsible</a>
+
+  <!-- Component under test: the basic collapsible. Markup mirrors the documented recommended usage
+       (docs/src/routes/docs/vanilla/collapsible.tsx). The behavior comes from stisla.js auto-init. -->
+  <div class="flex flex-col items-center">
+    <button type="button" class="button button--neutral" id="collapsible-basic-trigger" data-stisla-collapsible-trigger="collapsible-basic" aria-controls="collapsible-basic" aria-expanded="false">Toggle details</button>
+    <div id="collapsible-basic" class="collapsible" data-stisla-collapsible data-state="closed" role="region">
+      <div class="rounded-md border border-border bg-(--color-surface) p-4 mt-2">A collapsible is a region whose visibility flips between open and closed. The state lives on the element itself; the height transition runs around the flip so the panel does not jump.</div>
+    </div>
+  </div>
+
+  <!-- Auto-initing IIFE: attaches window.Stisla and wires [data-stisla-*] on DOMContentLoaded. -->
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

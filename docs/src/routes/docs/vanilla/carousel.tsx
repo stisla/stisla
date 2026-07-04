@@ -176,7 +176,7 @@ function CarouselDocs() {
   </div>
   <button type="button" class="carousel__control carousel__control--prev" aria-label="Previous slide"><i data-lucide="chevron-left"></i></button>
   <button type="button" class="carousel__control carousel__control--next" aria-label="Next slide"><i data-lucide="chevron-right"></i></button>
-  <div class="carousel__indicators" role="tablist" aria-label="Slides">
+  <div class="carousel__indicators" role="group" aria-label="Slides">
     <button type="button" class="carousel__indicator" data-state="active" aria-current="true" aria-label="Go to slide 1"></button>
     <button type="button" class="carousel__indicator" aria-label="Go to slide 2"></button>
     <button type="button" class="carousel__indicator" aria-label="Go to slide 3"></button>
@@ -223,7 +223,7 @@ function CarouselDocs() {
   </div>
   <button type="button" class="carousel__control carousel__control--prev" aria-label="Previous slide"><i data-lucide="chevron-left"></i></button>
   <button type="button" class="carousel__control carousel__control--next" aria-label="Next slide"><i data-lucide="chevron-right"></i></button>
-  <div class="carousel__indicators" role="tablist" aria-label="Slides">
+  <div class="carousel__indicators" role="group" aria-label="Slides">
     <button type="button" class="carousel__indicator" data-state="active" aria-current="true" aria-label="Go to slide 1"></button>
     <button type="button" class="carousel__indicator" aria-label="Go to slide 2"></button>
     <button type="button" class="carousel__indicator" aria-label="Go to slide 3"></button>
@@ -284,7 +284,7 @@ function CarouselDocs() {
   </div>
   <button type="button" class="carousel__control carousel__control--prev" aria-label="Previous testimonial"><i data-lucide="chevron-left"></i></button>
   <button type="button" class="carousel__control carousel__control--next" aria-label="Next testimonial"><i data-lucide="chevron-right"></i></button>
-  <div class="carousel__indicators" role="tablist" aria-label="Testimonials">
+  <div class="carousel__indicators" role="group" aria-label="Testimonials">
     <button type="button" class="carousel__indicator" data-state="active" aria-current="true" aria-label="Testimonial 1"></button>
     <button type="button" class="carousel__indicator" aria-label="Testimonial 2"></button>
     <button type="button" class="carousel__indicator" aria-label="Testimonial 3"></button>
@@ -317,7 +317,7 @@ function CarouselDocs() {
       </div>
     </div>
   </div>
-  <div class="carousel__indicators" role="tablist" aria-label="Slides">
+  <div class="carousel__indicators" role="group" aria-label="Slides">
     <button type="button" class="carousel__indicator" data-state="active" aria-current="true" aria-label="Go to slide 1"></button>
     <button type="button" class="carousel__indicator" aria-label="Go to slide 2"></button>
     <button type="button" class="carousel__indicator" aria-label="Go to slide 3"></button>

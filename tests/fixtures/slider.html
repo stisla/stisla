@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — slider</title>
+  <!-- BUILT bundles, same-origin (see scripts/serve-fixtures.mjs). Prereq: pnpm build:packages. -->
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- A neutral control before the slider, so focus-return / tab-order has a distinct wrong answer to fail on. -->
+  <a href="#" class="fixture-before" id="before">a link before the slider</a>
+
+  <!-- Component under test: the basic slider. Markup mirrors the documented recommended usage
+       (docs/src/routes/docs/vanilla/slider.tsx). The behavior + ARIA come from stisla.js auto-init.
+       The <label for="basicSlider"> targets the host div; stisla.js mirrors that name onto the
+       role=slider thumb (a <label for> can't associate to a non-labelable div). -->
+  <div class="field max-w-xl">
+    <label for="basicSlider" class="field__label" id="basicSliderLabel">Brightness</label>
+    <div class="slider" id="basicSlider" data-stisla-slider data-min="0" data-max="100" data-step="1" data-value="40">
+      <div class="slider__track"><div class="slider__range"></div></div>
+      <div class="slider__thumb" id="basicSliderThumb"></div>
+      <input type="hidden" class="slider__input" id="basicSliderInput" name="brightness">
+    </div>
+  </div>
+
+  <!-- Auto-initing IIFE: attaches window.Stisla and wires [data-stisla-*] on DOMContentLoaded. -->
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

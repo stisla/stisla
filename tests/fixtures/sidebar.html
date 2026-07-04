@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — sidebar</title>
+  <!-- BUILT bundles, same-origin (see scripts/serve-fixtures.mjs). Prereq: pnpm build:packages. -->
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- A neutral control before the sidebar, so focus assertions have a distinct wrong answer to fail on. -->
+  <a href="#" class="fixture-before" id="before">a link before the sidebar</a>
+
+  <!-- Component under test: a sidebar with a rail collapse/expand toggle. Markup mirrors the documented
+       "Collapse toggle" usage (docs/src/routes/docs/vanilla/sidebar.tsx). The behavior comes from
+       stisla.js auto-init: a delegated click handler flips [data-collapsed] on the [data-stisla-sidebar]
+       panel and keeps the toggle's aria-expanded in sync. -->
+  <aside class="sidebar border border-border rounded-lg" id="sidebar-root" data-stisla-sidebar style="--sidebar-bg: var(--color-surface);">
+    <header class="sidebar__header">
+      <a class="sidebar__brand" href="#" aria-label="Stisla"><i data-lucide="hexagon"></i><span>Stisla</span></a>
+    </header>
+    <div class="sidebar__content">
+      <nav class="sidebar__menu" aria-label="Main">
+        <div class="sidebar__group">
+          <ul class="sidebar__list">
+            <li class="sidebar__item"><a class="sidebar__button" href="#" aria-current="page"><i data-lucide="home"></i><span>Dashboard</span></a></li>
+            <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="inbox"></i><span>Inbox</span></a></li>
+            <li class="sidebar__item"><a class="sidebar__button" href="#"><i data-lucide="users"></i><span>Customers</span></a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <footer class="sidebar__footer">
+      <button type="button" class="sidebar__button" id="collapse-toggle" data-stisla-sidebar-toggle="collapse" aria-expanded="true">
+        <i data-lucide="panel-left-close"></i><span>Collapse</span>
+      </button>
+    </footer>
+  </aside>
+
+  <!-- Auto-initing IIFE: attaches window.Stisla and wires [data-stisla-*] on DOMContentLoaded. -->
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

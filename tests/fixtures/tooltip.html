@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — tooltip</title>
+  <!-- BUILT bundles, same-origin (see scripts/serve-fixtures.mjs). Prereq: pnpm build:packages. -->
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- A neutral control before the trigger, so Tab lands on the trigger from a known start. -->
+  <a href="#" class="fixture-before" id="before">a link before the tooltip</a>
+
+  <!-- Component under test: the basic tooltip. Markup mirrors the documented recommended usage
+       (docs/src/routes/docs/vanilla/tooltip.tsx). The chip (role=tooltip) is created by stisla.js
+       and appended to <body> on first show; the trigger gets aria-describedby while open.
+       delay=0 keeps keyboard/hover activation instant for test stability. -->
+  <button
+    class="button button--neutral"
+    id="trigger"
+    data-stisla-tooltip
+    data-stisla-tooltip-title="Saved to your library"
+    data-stisla-tooltip-delay="0"
+  >Hover me</button>
+
+  <!-- Auto-initing IIFE: attaches window.Stisla and wires [data-stisla-*] on DOMContentLoaded. -->
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

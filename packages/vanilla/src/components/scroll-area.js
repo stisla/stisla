@@ -85,6 +85,22 @@ export class ScrollArea extends Component {
       },
     );
 
+    // WCAG 2.1.1: a scrollable region must be keyboard operable. OverlayScrollbars sets
+    // tabindex="-1" on the generated viewport, so keyboard-only users (no pointer/wheel) can't
+    // scroll it (axe: scrollable-region-focusable). Make the viewport focusable, and — when the
+    // host names the region — expose it as a named landmark for screen readers.
+    const viewport = this._os?.elements?.().viewport;
+    if (viewport) {
+      viewport.setAttribute("tabindex", "0");
+      if (el.getAttribute("aria-label")) {
+        viewport.setAttribute("role", "region");
+        viewport.setAttribute("aria-label", el.getAttribute("aria-label"));
+      } else if (el.getAttribute("aria-labelledby")) {
+        viewport.setAttribute("role", "region");
+        viewport.setAttribute("aria-labelledby", el.getAttribute("aria-labelledby"));
+      }
+    }
+
     el.dataset.state = READY;
     this.emit("ready", {}, { cancelable: false });
   }

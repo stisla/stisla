@@ -90,6 +90,33 @@ export class Slider extends Component {
       this._thumb.setAttribute('aria-valuemin', String(this.min));
       this._thumb.setAttribute('aria-valuemax', String(this.max));
       if (this._disabled) this._thumb.setAttribute('aria-disabled', 'true');
+
+      // Name the thumb. role="slider" is an ARIA input field that needs an
+      // accessible name, but the documented <label for="…"> targets the
+      // .slider host <div> (a label can't associate to a non-labelable
+      // element), so the thumb would ship nameless (axe: aria-input-field-name).
+      // Mirror the host's name onto the thumb: an explicit aria-label /
+      // aria-labelledby on the host wins, else the associated <label for=hostId>.
+      if (
+        !this._thumb.hasAttribute('aria-label') &&
+        !this._thumb.hasAttribute('aria-labelledby')
+      ) {
+        if (el.getAttribute('aria-label')) {
+          this._thumb.setAttribute('aria-label', el.getAttribute('aria-label'));
+        } else {
+          let labelledBy = el.getAttribute('aria-labelledby');
+          if (!labelledBy && el.id) {
+            const label = document.querySelector(`label[for="${el.id}"]`);
+            if (label) {
+              if (!label.id) label.id = `${el.id}-label`;
+              labelledBy = label.id;
+            }
+          }
+          if (labelledBy) {
+            this._thumb.setAttribute('aria-labelledby', labelledBy);
+          }
+        }
+      }
     }
 
     if (this._disabled) el.setAttribute('data-disabled', 'true');

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — accordion</title>
+  <!-- BUILT bundles, same-origin (see scripts/serve-fixtures.mjs). Prereq: pnpm build:packages. -->
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- A neutral control before the accordion, so focus-order has a distinct wrong answer to fail on. -->
+  <a href="#" class="fixture-before" id="before">a link before the accordion</a>
+
+  <!-- Component under test: the basic (multiple-open) accordion. Markup mirrors the documented
+       recommended usage (docs/src/routes/docs/vanilla/accordion.tsx, "Basic" demo). Each trigger
+       is a native <button>; behavior comes from stisla.js auto-init via data-stisla-accordion. -->
+  <div class="accordion" data-stisla-accordion>
+    <div class="accordion__item" data-state="open">
+      <h3 class="accordion__heading">
+        <button class="accordion__trigger" data-stisla-accordion-trigger aria-expanded="true" aria-controls="acc-1" id="acc-1-trigger">
+          What is a design system?
+          <i data-lucide="chevron-down" class="accordion__icon"></i>
+        </button>
+      </h3>
+      <div class="accordion__body" id="acc-1" role="region" aria-labelledby="acc-1-trigger">
+        <div class="accordion__body-inner">
+          A shared vocabulary of tokens, primitives, and patterns.
+        </div>
+      </div>
+    </div>
+    <div class="accordion__item" data-state="closed">
+      <h3 class="accordion__heading">
+        <button class="accordion__trigger" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-2" id="acc-2-trigger">
+          How are corners kept concentric?
+          <i data-lucide="chevron-down" class="accordion__icon"></i>
+        </button>
+      </h3>
+      <div class="accordion__body" id="acc-2" role="region" aria-labelledby="acc-2-trigger">
+        <div class="accordion__body-inner">
+          The frame owns a single radius and each item subtracts the wrapper padding.
+        </div>
+      </div>
+    </div>
+    <div class="accordion__item" data-state="closed">
+      <h3 class="accordion__heading">
+        <button class="accordion__trigger" data-stisla-accordion-trigger aria-expanded="false" aria-controls="acc-3" id="acc-3-trigger">
+          Does it animate?
+          <i data-lucide="chevron-down" class="accordion__icon"></i>
+        </button>
+      </h3>
+      <div class="accordion__body" id="acc-3" role="region" aria-labelledby="acc-3-trigger">
+        <div class="accordion__body-inner">
+          The chevron rotates and the panel slides open and closed.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Auto-initing IIFE: attaches window.Stisla and wires [data-stisla-*] on DOMContentLoaded. -->
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

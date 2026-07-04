@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — toast</title>
+  <!-- BUILT bundles, same-origin (see scripts/serve-fixtures.mjs). Prereq: pnpm build:packages. -->
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- A neutral control before the trigger, so focus-return has a distinct wrong answer to fail on. -->
+  <a href="#" class="fixture-before" id="before">a link before the toast</a>
+
+  <!-- Component under test: the markup-first toast. A trigger with
+       [data-stisla-toast-trigger="<id>"] opens the .toast that carries that id, and the
+       [data-stisla-toast-dismiss] chip closes it. Both are wired by stisla.js's delegated
+       click handler (packages/vanilla/src/components/toast.js). The toast starts closed
+       (data-state="closed") so showing it is a deterministic act, not a page-load side effect. -->
+  <button class="button button--primary" data-stisla-toast-trigger="toast-basic" id="show-toast">Show toast</button>
+
+  <!-- Fixed live region the docs use for placement (docs/src/routes/docs/vanilla/toast.tsx). -->
+  <div class="toast-region toast-region--top-end" role="region" aria-label="Notifications" data-stisla-toast-region="default">
+    <div class="toast" id="toast-basic" data-stisla-toast data-state="closed" role="status" aria-live="polite" aria-atomic="true">
+      <span class="toast__icon"><i data-lucide="bell"></i></span>
+      <div class="toast__content">
+        <div class="toast__header">Report ready</div>
+        <div class="toast__body">Your weekly export finished and is ready to download.</div>
+      </div>
+      <button class="toast__close" id="toast-close" data-stisla-toast-dismiss aria-label="Dismiss"><i data-lucide="x"></i></button>
+    </div>
+  </div>
+
+  <!-- Auto-initing IIFE: attaches window.Stisla and wires [data-stisla-*] on DOMContentLoaded. -->
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

@@ -83,6 +83,28 @@ export class Autocomplete extends Component {
     this._popup.setAttribute('role', 'listbox');
     this._popup.hidden = true;
 
+    // Name the listbox — role="listbox" is an ARIA input field and needs an
+    // accessible name (axe: aria-input-field-name). Mirror the input's name:
+    // its associated <label>, else aria-labelledby / aria-label, else the
+    // placeholder as a last resort.
+    if (el.labels && el.labels.length) {
+      this._popup.setAttribute(
+        'aria-labelledby',
+        Array.from(el.labels)
+          .map((l, i) => {
+            if (!l.id) l.id = `${this._popupId}-label-${i}`;
+            return l.id;
+          })
+          .join(' '),
+      );
+    } else if (el.getAttribute('aria-labelledby')) {
+      this._popup.setAttribute('aria-labelledby', el.getAttribute('aria-labelledby'));
+    } else if (el.getAttribute('aria-label')) {
+      this._popup.setAttribute('aria-label', el.getAttribute('aria-label'));
+    } else if (el.getAttribute('placeholder')) {
+      this._popup.setAttribute('aria-label', el.getAttribute('placeholder'));
+    }
+
     el.insertAdjacentElement('afterend', this._popup);
 
     this._onInput = this._onInput.bind(this);
@@ -285,10 +307,14 @@ export class Autocomplete extends Component {
     if (idx < 0 || idx >= this._optionEls.length) return;
     if (this._activeIndex >= 0) {
       this._optionEls[this._activeIndex]?.removeAttribute('data-highlighted');
+      this._optionEls[this._activeIndex]?.setAttribute('aria-selected', 'false');
     }
     this._activeIndex = idx;
     const li = this._optionEls[idx];
     li.setAttribute('data-highlighted', '');
+    // The active option must be aria-selected in the APG combobox pattern so
+    // screen readers announce the highlighted row as the aria-activedescendant.
+    li.setAttribute('aria-selected', 'true');
     li.scrollIntoView({ block: 'nearest' });
     this._input.setAttribute('aria-activedescendant', li.id);
   }
