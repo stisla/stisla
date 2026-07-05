@@ -2,6 +2,10 @@
 
 For Stisla 2.x changes, see [getstisla.com](https://getstisla.com).
 
+## [3.0.0] — 2026-07-05
+
+The first stable release of the Stisla 3.0 line: a framework-agnostic design system rebuilt on Tailwind v4 `@theme` tokens, replacing the Bootstrap 4 codebase. This release promotes `3.0.0-rc.2` unchanged — no token, class, or modifier changes since the `rc.1` API freeze. Published under the npm `latest` tag; install with `npm install @stisla/css @stisla/vanilla` or pin `@3` on a CDN.
+
 ## [3.0.0-rc.2] — 2026-07-05
 
 Additive accessibility refinements only. No token, class, or modifier changes, so the `rc.1` API freeze holds and the RC soak window is not reset.

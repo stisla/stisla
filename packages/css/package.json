@@ -1,6 +1,6 @@
 {
   "name": "@stisla/css",
-  "version": "3.0.0-rc.2",
+  "version": "3.0.0",
   "description": "Stisla CSS bundle — zero-build distribution (tokens + every component, NO utilities) compiled to a single stisla.css you can <link> with no build step. Want a subset? Compile from source via @stisla/style. NOTE: same published name as the legacy packages/css; only one publishes at cutover.",
   "license": "MIT",
   "exports": {
