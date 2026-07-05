@@ -5,7 +5,7 @@
  * utility. References the @theme tokens: colors var(--color-*), spacing --spacing(n), type
  * var(--text-*) / var(--leading-*) / var(--font-weight-*). Knobs are --page-* (fallback-default, so a
  * scope retunes any gap and it cascades — custom props inherit). @layer components.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   /* The frame is the flow when used without a container; .page__body re-establishes the section

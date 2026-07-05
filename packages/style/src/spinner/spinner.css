@@ -2,7 +2,7 @@
  * .spinner--grow is a pulsing dot. Color inherits via currentColor (any parent .text-* recolors it).
  * References the @theme tokens (spacing/sizes --spacing(n)). Knobs are --spinner-*; sizes compact/roomy
  * → sm/lg. Stays round. Under prefers-reduced-motion the loop SLOWS rather than stops (a static
- * spinner reads as "frozen", not "loading"). @layer components. Authoring rules: ../../../../PORTING.md */
+ * spinner reads as "frozen", not "loading"). @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .spinner {

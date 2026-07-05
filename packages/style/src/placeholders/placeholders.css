@@ -4,7 +4,7 @@
  * var(--radius-*). Knobs are --placeholder-* (fallback-default). The 1em height is font-relative on
  * purpose (the bar scales with its text); the wave mask stops and the 2s ambient loops are bespoke
  * (no token). Sizes --compact/--roomy → --sm/--lg. @layer components.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .placeholder {

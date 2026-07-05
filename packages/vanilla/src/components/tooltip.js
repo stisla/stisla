@@ -1,4 +1,4 @@
-// Stisla.Tooltip — V3.md §3.7. A Floating UI consumer; positions a JS-created chip near the trigger.
+// Stisla.Tooltip — a Floating UI consumer; positions a JS-created chip near the trigger.
 //
 // Anatomy:
 //   <button data-stisla-tooltip data-stisla-tooltip-title="hint">…</button>

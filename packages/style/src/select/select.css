@@ -11,7 +11,7 @@
  * The field base is DUPLICATED here with --select-* (plain CSS has no parameterized mixin); keep in
  * sync with input.css + textarea.css. Uses background-color (not the `background` shorthand) so the
  * chevron background-image survives. State is native, no is-*. @layer components.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .select {

@@ -7,7 +7,7 @@
  * double-framed. References the @theme tokens: colors var(--color-*), sizes/spacing --spacing(n), type
  * var(--text-*) / var(--leading-*) / var(--font-weight-*), radius var(--radius-*); only no-namespace
  * customs use --st-* (border-width). Knobs are --empty-state-*. @layer components.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .empty-state {

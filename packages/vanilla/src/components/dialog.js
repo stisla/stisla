@@ -1,4 +1,4 @@
-// Stisla.Dialog — V3.md §3.7 reference implementation.
+// Stisla.Dialog — reference implementation.
 //
 // Anatomy:
 //   .dialog[data-stisla-dialog][data-state="open|closed"]

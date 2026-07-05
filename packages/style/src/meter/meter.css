@@ -3,7 +3,7 @@
  * Shares progress's anatomy but drops the in-motion modifiers and adds segmented stacking + an optional
  * legend. References the @theme tokens (colors var(--color-*), spacing/sizes --spacing(n), type
  * var(--text-*) / var(--font-weight-*) / var(--leading-*)). Knobs are --meter-*; sizes compact/roomy →
- * sm/lg; pill radius literal 9999px. @layer components. Authoring rules: ../../../../PORTING.md */
+ * sm/lg; pill radius literal 9999px. @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .meter {

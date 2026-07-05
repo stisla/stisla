@@ -1,4 +1,4 @@
-// Stisla.Sidebar — submenu + rail-collapse coordinator (V3.md §3.7).
+// Stisla.Sidebar — submenu + rail-collapse coordinator.
 //
 // Composes one Stisla.Collapsible per [data-stisla-sidebar-submenu-toggle] trigger found inside the
 // sidebar. The state hook lives on the .sidebar__item (where the chevron rotation and active-route

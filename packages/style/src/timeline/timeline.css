@@ -5,7 +5,7 @@
  * pseudo-element on the item (no DOM node). References the @theme tokens (colors var(--color-*),
  * sizes/spacing --spacing(n), type var(--text-*) / var(--font-weight-*) / var(--leading-*)); only
  * no-namespace customs use --st-* (border-width). Knobs are --timeline-*. @layer components.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   /* Reset list chrome so the root can be an <ol> (the order is meaningful). */

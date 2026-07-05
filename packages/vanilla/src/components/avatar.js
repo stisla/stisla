@@ -1,4 +1,4 @@
-// Stisla.Avatar — V3.md §3.7 image-with-fallback root.
+// Stisla.Avatar — image-with-fallback root.
 //
 // Anatomy:
 //   <span class="avatar" data-stisla-avatar>

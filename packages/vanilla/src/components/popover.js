@@ -1,4 +1,4 @@
-// Stisla.Popover — V3.md §3.7. A Floating UI + focus-trap consumer; positions a markup-first panel.
+// Stisla.Popover — a Floating UI + focus-trap consumer; positions a markup-first panel.
 //
 // Anatomy:
 //   <button data-stisla-popover-trigger="my-popover" aria-haspopup="dialog"

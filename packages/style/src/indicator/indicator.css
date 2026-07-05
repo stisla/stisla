@@ -3,7 +3,7 @@
  * the ::after; an opt-in pulse halo is the ::before. Pin it over an avatar/icon corner with absolute
  * positioning on a relative host. References the @theme tokens (colors var(--color-*), spacing/sizes
  * --spacing(n)). Knobs are --indicator-*. Sizes compact/roomy → sm/lg. @layer components.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .indicator {

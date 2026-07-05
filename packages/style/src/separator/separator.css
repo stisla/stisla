@@ -2,7 +2,7 @@
  * horizontal sits in flow as a full-width rule (<hr class="separator">); vertical works inside a flex
  * row, where align-self: stretch sizes it to the cross axis. References the @theme tokens (colors
  * var(--color-*), spacing --spacing(n)); the hairline thickness defaults to the --st-border-width
- * custom. Knobs are --separator-*. @layer components. Authoring rules: ../../../../PORTING.md */
+ * custom. Knobs are --separator-*. @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .separator {

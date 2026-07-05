@@ -8,7 +8,7 @@
  * (filter geometry, not spacing). Knobs are --dialog-*. State + scroll-lock hooks ([data-shaking],
  * html[data-dialog-open]) are attributes, recast from the legacy is-* classes per the no-is-*
  * convention. Open/close + focus-trap behavior ships with the JS layer. @layer components.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .dialog {

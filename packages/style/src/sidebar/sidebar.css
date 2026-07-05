@@ -2,7 +2,7 @@
  * app-shell navigation panel. References the @theme tokens: colors var(--color-*), spacing
  * --spacing(n), type var(--text-*) / var(--font-weight-*), radius var(--radius-*). Only
  * no-namespace customs use --st-* (border-width). Knobs are --sidebar-* (fallback-default).
- * @layer components. Authoring rules: ../../../../PORTING.md
+ * @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11
  *
  * State hooks (attributes, never is-*):
  *   .sidebar[data-collapsed]                       rail / mini mode (root)

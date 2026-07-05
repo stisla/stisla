@@ -7,7 +7,7 @@
  * region — a standalone .collapsible, but also a borrowed body like .accordion__body / a sidebar
  * submenu. Composers own their own closed-hide rule; the .collapsible closed rule below is for
  * standalone use. Only no-namespace customs use --st-* (duration). Knob: --collapsible-transition-duration.
- * @layer components. Authoring rules: ../../../../PORTING.md */
+ * @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   /* Closed and not mid-animation → fully removed from flow. The :not([data-collapsing]) guard keeps

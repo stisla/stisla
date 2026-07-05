@@ -12,7 +12,7 @@
  * third-party lib's vocabulary, not Stisla state.
  *
  * References the @theme tokens (colors var(--color-*), sizes/spacing --spacing(n), radius
- * var(--radius-*)). Knobs are --scroll-area-*. @layer components. Authoring rules: ../../../../PORTING.md */
+ * var(--radius-*)). Knobs are --scroll-area-*. @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .scroll-area .os-scrollbar {

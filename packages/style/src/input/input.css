@@ -6,7 +6,7 @@
  * The shared field base (border, height, padding, focus halo, validation, hover, disabled, readonly)
  * is DUPLICATED here with the --input-* namespace — plain CSS has no parameterized mixin. Keep the
  * base in sync with textarea.css + select.css (the other two consumers of the former form-field-base).
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   /* === Shared field base (= former form-field-base, --input-* namespace) === */

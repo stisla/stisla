@@ -10,7 +10,7 @@
  * renaming them to --illustration-* / .illustration__* would ripple through every illustration file.
  * Only the token refs are converted: --st-* colours → var(--color-*). The white mix targets, the
  * drop-shadow geometry, and the ambient loop durations have no token and stay literal.
- * @layer components. Authoring rules: ../../../../PORTING.md */
+ * @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .illustration {

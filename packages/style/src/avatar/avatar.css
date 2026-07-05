@@ -8,7 +8,7 @@
  * image only on "loaded". DEFERRED (vanilla-JS pass) — for a known-good static <img>, set
  * data-status="loaded" inline to reveal it without JS. The pill radius is a literal 9999px (the radius
  * scale is sm/md/lg only; same precedent as .button--pill). @layer components.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .avatar {

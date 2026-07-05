@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Guardrail linter for ported components. Greps component CSS + docs pages for the patterns we
-// learned to forbid while porting Button/Alert (see ../PORTING.md + ARCHITECTURE.md §11). Fast
+// learned to forbid while porting Button/Alert (see ARCHITECTURE.md §11). Fast
 // mechanical pass — run before `pnpm --filter docs build`. Exits 1 on any violation.
 //
 //   node scripts/check-tokens.mjs            # scan the default set
@@ -97,7 +97,7 @@ for (const file of files) {
 }
 
 if (violations) {
-  console.log(`\n✗ ${violations} violation(s). Fix before building. (rules + rationale: PORTING.md)`);
+  console.log(`\n✗ ${violations} violation(s). Fix before building. (rules + rationale: ARCHITECTURE.md §11)`);
   process.exit(1);
 }
 console.log(`✓ token guardrails clean (${files.length} file(s) scanned).`);

@@ -6,7 +6,7 @@
  * --spacing(n)); only no-namespace customs use --st-* (border-width, duration). Pill radius is the literal
  * 9999px (carries meaning, not a style choice — override --slider-radius to flatten). Sizes compact/roomy
  * → sm/lg. Knobs are --slider-*. State is data-attribute (data-disabled / aria-invalid), no is-*.
- * @layer components. Authoring rules: ../../../../PORTING.md */
+ * @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   /* Fallback-default knobs: nothing on the base, so a scope / inline retunes any of them; track / range /

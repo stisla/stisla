@@ -10,7 +10,7 @@
  * References the @theme tokens: colors var(--color-*), sizes/spacing --spacing(n), type var(--text-*)
  * / var(--leading-*), radius var(--radius-*); only no-namespace customs use --st-* (border-width,
  * duration). The field reuses form-field-base (duplicated here with --combobox-*, keep in sync with
- * input/select/textarea). Knobs are --combobox-*. @layer components. Authoring rules: ../../../../PORTING.md */
+ * input/select/textarea). Knobs are --combobox-*. @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   /* === Field === the form-field-base shape + a chevron well. Uses background-color (not the

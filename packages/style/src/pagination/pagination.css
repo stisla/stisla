@@ -4,7 +4,7 @@
  * tokens (colors var(--color-*), spacing/sizes --spacing(n), type var(--text-*) / var(--leading-*),
  * radius var(--radius-*)); only no-namespace customs use --st-* (border-width, duration). Knobs are
  * --pagination-*; sizes compact/roomy → sm/lg. State via attributes / native :disabled, no is-*.
- * @layer components. Authoring rules: ../../../../PORTING.md */
+ * @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .pagination {

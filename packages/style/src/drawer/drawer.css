@@ -8,7 +8,7 @@
  * (no scrim token) and blur radii stay literal (filter geometry). State + scroll-lock hooks
  * ([data-shaking], html[data-drawer-open]) are attributes, recast from the legacy is-* classes per
  * the no-is-* convention. Knobs are --drawer-*. Open/close + focus-trap behavior ships with the JS
- * layer. @layer components. Authoring rules: ../../../../PORTING.md */
+ * layer. @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .drawer {

@@ -7,7 +7,7 @@
  * checkbox.css). Radius is 50% (circle). :indeterminate is intentionally NOT styled — a radio matches
  * it when no radio in the group is checked, and that "no selection" state keeps the unchecked
  * affordance (and accepts hover). State is native, no is-*.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .radio {

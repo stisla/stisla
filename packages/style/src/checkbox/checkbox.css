@@ -8,7 +8,7 @@
  * NOTE: the box radius default is --spacing(1) (4px) — the radius scale is sm/md/lg only (no xs tier),
  * and the box is intentionally tighter than --radius-sm. Override via --checkbox-radius. State is native
  * (:checked / :indeterminate / :disabled / :focus-visible / [aria-invalid] / :user-invalid), no is-*.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .checkbox {

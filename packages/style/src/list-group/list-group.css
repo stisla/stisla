@@ -7,7 +7,7 @@
  * @theme tokens (colors var(--color-*), spacing/sizes --spacing(n), radius var(--radius-*)); only
  * no-namespace customs use --st-* (border-width). Knobs are --list-group-*. State via attributes /
  * native (data-state / aria-current / aria-disabled), no is-*. @layer components.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .list-group {

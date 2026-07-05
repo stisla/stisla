@@ -1,4 +1,4 @@
-// Stisla.Toast — V3.md §3.7 reference implementation.
+// Stisla.Toast — reference implementation.
 //
 // Anatomy:
 //   .toast-region[data-stisla-toast-region][--placement modifier]

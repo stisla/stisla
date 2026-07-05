@@ -5,7 +5,7 @@
  * BEM — not lib-coupled. References the @theme tokens: colors var(--color-*), sizes/spacing
  * --spacing(n), type var(--leading-*), radius var(--radius-*); only no-namespace customs use --st-*
  * (duration). Knobs are --navbar-*. State via [data-state] / [aria-disabled], never is-*. The mobile
- * toggle ships with the JS layer. @layer components. Authoring rules: ../../../../PORTING.md */
+ * toggle ships with the JS layer. @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .navbar {

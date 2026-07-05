@@ -4,7 +4,7 @@
  * / var(--leading-*), radius var(--radius-*)); only no-namespace customs use --st-* (border-width).
  * Knobs are --tabs-*. State via data-state="active|inactive" / data-disabled / data-orientation, no
  * is-*. Switching behavior (data-stisla-tabs) ships with the JS layer. @layer components.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .tabs {

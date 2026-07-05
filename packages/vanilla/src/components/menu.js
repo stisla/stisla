@@ -1,4 +1,4 @@
-// Stisla.Menu — V3.md §3.7 reference implementation.
+// Stisla.Menu — reference implementation.
 //
 // Anatomy:
 //   .menu

@@ -1,4 +1,4 @@
-// Stisla.ScrollArea — vanilla-optional per SPEC.md §10 / V3.md §3.12.
+// Stisla.ScrollArea — vanilla-optional per SPEC.md §10.
 //
 // Anatomy:
 //   .scroll-area[data-stisla-scroll-area][data-state="ready"]

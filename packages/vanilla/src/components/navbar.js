@@ -1,4 +1,4 @@
-// Stisla.Navbar — mobile menu collapse (V3.md §3.7).
+// Stisla.Navbar — mobile menu collapse.
 //
 // A thin wrapper around a single Stisla.Collapsible mounted on .navbar__menu, triggered by
 // .navbar__toggle. Above the navbar's collapse breakpoint the toggle is display: none in CSS, so

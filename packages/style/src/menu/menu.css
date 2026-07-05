@@ -7,7 +7,7 @@
  * no-namespace customs use --st-* (border-width, duration, z-index); z-index routes through the z-index scale (--z-index-dropdown).
  * The scroll-lock hook html[data-menu-open] is an attribute, recast from the legacy is-* class per
  * the no-is-* convention. Positioning + keyboard nav (Floating UI) ship with the JS layer. @layer
- * components. Authoring rules: ../../../../PORTING.md */
+ * components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .menu {

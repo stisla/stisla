@@ -5,7 +5,7 @@
  * the @theme tokens (colors var(--color-*), spacing/sizes --spacing(n), type var(--text-*) /
  * var(--font-weight-*) / var(--leading-*), radius var(--radius-*)); only no-namespace customs use
  * --st-* (border-width, duration). Knobs are --toggle-*; sizes compact/roomy → sm/lg; pill radius
- * literal 9999px. State via attributes / native, no is-*. @layer components. Authoring: ../../../../PORTING.md */
+ * literal 9999px. State via attributes / native, no is-*. @layer components. Authoring: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .toggle {

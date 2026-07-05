@@ -1,4 +1,4 @@
-// Stisla.Tabs — V3.md §3.7 content-panel switcher.
+// Stisla.Tabs — content-panel switcher.
 //
 // Anatomy:
 //   <div class="tabs" data-stisla-tabs>

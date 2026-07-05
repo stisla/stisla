@@ -1,4 +1,4 @@
-// Stisla.Slider — V3.md §3.7 JS-driven range input.
+// Stisla.Slider — JS-driven range input.
 //
 // Anatomy:
 //   .slider[data-stisla-slider]

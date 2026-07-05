@@ -2,7 +2,7 @@
  * underline globally; .link is the opt-back-in for inline links in app UI (helper text, explainers,
  * cross-references) — the visual twin of .prose a. References the @theme tokens (colors var(--color-*),
  * spacing/sizes --spacing(n)). Knobs are --link-*; --link-color-hover derives from --link-color so
- * moving the color moves the hover. @layer components. Authoring rules: ../../../../PORTING.md */
+ * moving the color moves the hover. @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .link {

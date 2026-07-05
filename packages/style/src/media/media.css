@@ -7,7 +7,7 @@
  * duration). Knobs are --media-*. State via attributes / native: [data-highlighted] (keyboard nav),
  * :hover/:focus-visible on a link/button host (a/button). The --selectable modifier turns a row into a
  * form control; its selected state is read from native :has(:checked) or aria-pressed/checked/selected,
- * never an invented flag. No is-*. @layer components. Authoring rules: ../../../../PORTING.md */
+ * never an invented flag. No is-*. @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .media {

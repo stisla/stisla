@@ -9,7 +9,7 @@
  *
  * References the @theme tokens: colors var(--color-*), radius var(--radius-*); only no-namespace
  * customs use --st-* (border-width). Knobs are --scroll-area-*. @layer components.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .scroll-area {

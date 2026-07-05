@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Scaffold a vanilla component port: creates the CSS + docs-page skeletons and wires the shared
 // files (demo.css @import, nav <Link>). Removes the mechanical/boilerplate steps so the port is
-// just: fill in the real CSS, write the demos, verify. See ../PORTING.md.
+// just: fill in the real CSS, write the demos, verify. See ARCHITECTURE.md §11.
 //
 //   node scripts/scaffold-component.mjs <name>      # name is kebab-case, e.g. badge, input-group
 //
@@ -39,7 +39,7 @@ if (existsSync(cssFile)) {
  * tokens: colors var(--color-*), spacing --spacing(n), type var(--text-*) / var(--leading-*) /
  * var(--font-weight-*), radius var(--radius-*). Only no-namespace customs use --st-*
  * (border-width, duration, z). Knobs are --${name}-* (fallback-default). @layer components.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .${name} {
@@ -92,7 +92,7 @@ if (existsSync(pageFile)) {
     `      </section>`,
     ``,
     `      {/* TODO: one <section> per variant/state from src/site/pages/${name}.njk.`,
-    `          State = attributes / ARIA, never is-* (PORTING.md).`,
+    `          State = attributes / ARIA, never is-* (ARCHITECTURE.md §11).`,
     `          End with <h2>Customization</h2> tabling the --${name}-* knobs (see button.tsx). */}`,
     `    </>`,
     `  );`,

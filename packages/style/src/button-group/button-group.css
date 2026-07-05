@@ -7,7 +7,7 @@
  * Renamed from the legacy .btn-group → .button-group, members .btn → .button, and child knobs
  * --btn-* → --button-* (full-word BEM, ARCHITECTURE §11). References the @theme tokens; only
  * no-namespace customs use --st-* (border-width). @layer components.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .button-group,

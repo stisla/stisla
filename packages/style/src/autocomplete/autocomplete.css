@@ -8,7 +8,7 @@
  * no-namespace customs use --st-* (border-width, duration, z-index). The popup z-index routes through
  * the z-index scale (--z-index-dropdown). Keyboard focus is [data-highlighted] (recast from the legacy
  * is-* class per the no-is-* convention). Knobs are --autocomplete-*. The suggest/filter/select
- * behavior ships with the JS layer. @layer components. Authoring rules: ../../../../PORTING.md */
+ * behavior ships with the JS layer. @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   /* === Field === the form-field-base shape. */

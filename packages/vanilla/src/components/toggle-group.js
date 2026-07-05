@@ -1,4 +1,4 @@
-// Stisla.ToggleGroup — V3.md §3.7 segmented + multi-select container.
+// Stisla.ToggleGroup — segmented + multi-select container.
 //
 // Anatomy:
 //   <div class="toggle-group" data-stisla-toggle-group role="radiogroup|group" aria-label="…">

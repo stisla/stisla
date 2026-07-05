@@ -1,4 +1,4 @@
-// Stisla declarative scanner (V3.md §3.7).
+// Stisla declarative scanner.
 //
 // Components register with a kebab-case name (`register('dialog', Dialog)`),
 // and `init(root)` walks `[data-stisla-<name>]` to instantiate matching

@@ -7,7 +7,7 @@
  * duration, z-index). z-index routes through the z-index scale (--z-index-toast, above modal so a toast
  * can confirm a dialog action). Knobs are --toast-*. Enqueue/dismiss/timers ship with the JS layer; the entrance
  * fade uses @starting-style + allow-discrete so region-mounted toasts animate with no JS paint.
- * @layer components. Authoring rules: ../../../../PORTING.md */
+ * @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   /* === Region === fixed stack at a viewport corner; pointer-events: none so the page stays

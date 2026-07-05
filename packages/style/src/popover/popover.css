@@ -7,7 +7,7 @@
  * var(--font-weight-*), radius var(--radius-*), shadow var(--shadow-*); only no-namespace customs
  * use --st-* (border-width, duration, z-index); z-index routes through the z-index scale (--z-index-popover). Knobs are
  * --popover-*. Positioning + focus-trap + dismiss ship with the JS layer. @layer components.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   /* position: absolute (not fixed) so the popover scrolls with the page alongside its trigger; the

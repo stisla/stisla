@@ -53,8 +53,8 @@ actual next task always lives under **Next** below.
 > All builds clean (client + SSR). **ARCHITECTURE.md** token sections (§1–§7, §9, §11–§12) were
 > rewritten to match this corrected model (no stale `@theme inline` / `tokens.css` text remains).
 >
-> **Porting tooling (new):** `PORTING.md` is the repeatable recipe (output files, wire-up
-> points, the lessons: token refs, no `is-*`, attribute/ARIA state, docs shape, verify steps).
+> **Porting tooling:** the repeatable recipe (output files, wire-up points, the lessons: token
+> refs, no `is-*`, attribute/ARIA state, docs shape, verify steps) lives in ARCHITECTURE.md §11.
 > `pnpm scaffold <name>` generates CSS + docs-page skeletons and wires `demo.css` + the nav link
 > (alphabetical). `pnpm check` (`scripts/check-tokens.mjs`) greps for forbidden patterns (`--bs-*`,
 > `@theme inline`, non-custom `--st-*`, `is-*`, scale-literal fallbacks) — it already caught + we
@@ -283,7 +283,7 @@ group); `check-tokens` scale-literal-fallback regex no longer false-matches `--t
       (full-word BEM); seam `-1px`→`calc(-1 * var(--st-border-width))`; `--button-toolbar`. All sizes
       compact/roomy→sm/lg, 13px→`var(--text-xs)`. `pnpm check` clean (33 files), docs build clean.
       ✶ Forms set complete (input, textarea, field, checkbox, radio, switch, select-native, input-group, button-group).
-- Conventions tightened (applied + in PORTING.md): (a) icon/control SIZES use `--spacing(n)` not literal
+- Conventions tightened (applied + in ARCHITECTURE.md §11): (a) icon/control SIZES use `--spacing(n)` not literal
   rem (Tailwind sizes off the spacing scale; normalized button/sidebar/input/input-group/select to match
   alert/switch); (b) component-local dark overrides use `@variant dark {}` (select chevron), not a
   hand-written `[data-theme]` selector. Layout widths (sidebar 16rem) + anim anchors (3rem) stay literal.
@@ -318,7 +318,7 @@ group); `check-tokens` scale-literal-fallback regex no longer false-matches `--t
     kbd, link, spinner, progress, meter, breadcrumb, pagination).
 - Token-emission fix (this session): `--leading-*` re-declared in theme.css (Tailwind tree-shook them
   → all component line-heights were silently falling back to 1.5). Inter now loaded (CDN) in docs shell
-  + demo iframe (was rendering in the system fallback font). See PORTING.md "Borrowed-scale GOTCHA".
+  + demo iframe (was rendering in the system fallback font).
 - [~] Composite:
   - [x] toggle, toggle-group. toggle: two-state press button; active from 3 sources (aria-pressed /
         data-state="active" / .toggle-input:checked + .toggle) paint identically; icon 1em (scales w/
@@ -509,7 +509,7 @@ group); `check-tokens` scale-literal-fallback regex no longer false-matches `--t
       `?raw` query (scroll-area inlines overlayscrollbars' stylesheet that way). Demo bundle 403→702kB
       (all three libs bundle), check clean (105), build clean.
       ⇒ Wrapper JS bundles & runs, BUT the port is NOT complete — a full legacy-vs-v3 audit
-      (DEMO-GAP-AUDIT.md, 2026-06-27, 8 parallel agents over all 49 shared pages) found the docs
+      (2026-06-27, 8 parallel agents over all 49 shared pages) found the docs
       were heavily CLIPPED and 3 behavior components never ported. NOT DONE:
       • Whole components unported [TIER 0 — DONE 2026-06-27]: slider (CSS+JS+docs), timeline (CSS+docs),
         avatar JS (+ live demos), custom select (deferred popup CSS + Stisla.Select + custom-select docs)
@@ -521,8 +521,8 @@ group); `check-tokens` scale-literal-fallback regex no longer false-matches `--t
       RESTORATION COMPLETE (2026-06-27): Tier 0 whole components ported; Tiers 1–3 (36 docs pages)
       restored via 8 parallel agents — every dropped section/variant re-added from the authoritative
       .njk, interactive demos re-wired live (data-stisla-*), intentional renames kept. check-tokens
-      clean (109), docs build clean, 15-page semantic spot-check passed. See DEMO-GAP-AUDIT.md (now
-      marked COMPLETE) for the per-component record. ⇒ @stisla/vanilla behavior layer + its docs DONE.
+      clean (109), docs build clean, 15-page semantic spot-check passed.
+      ⇒ @stisla/vanilla behavior layer + its docs DONE.
       NEXT: React wrappers / docs site (TanStack Start). Utilities dropped — see Phase 7 note.
 - [ ] `@stisla/vue` (Reka/Radix-Vue + the shared composer)
 - [ ] **Docs site — TanStack Start** (dogfoods `@stisla/react`)

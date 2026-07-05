@@ -2,7 +2,7 @@
  * tokens: colors var(--color-*), spacing --spacing(n), type var(--text-*) / var(--leading-*) /
  * var(--font-weight-*), radius var(--radius-*), shadow var(--shadow-*). Only no-namespace customs
  * use --st-* (border-width). Knobs are --card-* (fallback-default). @layer components.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   /* Fallback-default knobs: nothing set on the base, so a scope / inline retunes any of them.

@@ -2,7 +2,7 @@
  * for a single icon (Stisla original). Intent modifiers set --icon-box-tone; the bg (a 15% tint, same
  * as .badge--soft) and color re-resolve from it. References the @theme tokens (colors var(--color-*),
  * spacing/sizes --spacing(n), radius var(--radius-*)). Knobs are --icon-box-*. Sizes compact/roomy →
- * sm/lg; pill radius literal 9999px. @layer components. Authoring rules: ../../../../PORTING.md */
+ * sm/lg; pill radius literal 9999px. @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .icon-box {

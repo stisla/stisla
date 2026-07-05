@@ -6,7 +6,7 @@
  * var(--leading-*), radius var(--radius-*), shadow var(--shadow-*); only no-namespace customs use
  * --st-* (border-width, duration). Knobs are --accordion-*. The height-transition on open ships with
  * the JS layer; CSS here shows the resting open/closed states. @layer components.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   /* Geometry — large frame, so radius-lg. With the --spacing(1) wrapper inset the inner item lands

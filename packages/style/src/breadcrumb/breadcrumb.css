@@ -4,7 +4,7 @@
  * ::before (inherits the crumb color, so it themes/retints for free). References the @theme tokens
  * (colors var(--color-*), spacing/sizes --spacing(n), radius var(--radius-*)); only no-namespace
  * customs use --st-* (border-width). Knobs are --breadcrumb-*. State via aria-current, no is-*.
- * @layer components. Authoring rules: ../../../../PORTING.md */
+ * @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .breadcrumb {

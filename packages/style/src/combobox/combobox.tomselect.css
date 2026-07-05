@@ -14,7 +14,7 @@
  * References the @theme tokens (colors var(--color-*), spacing --spacing(n), type var(--text-*) /
  * var(--leading-*), radius var(--radius-*), shadow var(--shadow-*)); only no-namespace customs use
  * --st-* (border-width, duration, z-index). The dropdown z-index routes through the z-index scale
- * (--z-index-dropdown). @layer components. Authoring rules: ../../../../PORTING.md */
+ * (--z-index-dropdown). @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   /* === Wrapper === .ts-wrapper.combobox is the visible trigger after hydration. Flex so the inner

@@ -6,7 +6,7 @@
  * stays consistent over arbitrary slide imagery in light + dark. References the @theme tokens: colors
  * var(--color-*), sizes/spacing --spacing(n), radius var(--radius-*); only no-namespace customs use
  * --st-* (duration). Knobs are --carousel-*. State via [data-state] / [aria-disabled], never is-*.
- * Slide motion ships with the JS layer. @layer components. Authoring rules: ../../../../PORTING.md */
+ * Slide motion ships with the JS layer. @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .carousel {

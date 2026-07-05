@@ -4,7 +4,7 @@
  * --spacing(n), type var(--text-*) / var(--font-weight-*) / var(--leading-*)). Knobs are --progress-*.
  * Sizes compact/roomy → sm/lg; pill radius literal 9999px. Indeterminate state via the
  * [data-indeterminate] attribute (the legacy used a state class; dropped per §11). @layer components.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .progress {

@@ -11,7 +11,7 @@
  * Pair role="switch" so assistive tech announces "switch". State is native (:checked / :disabled /
  * :focus-visible / [aria-invalid] / :user-invalid), no is-*. NOTE: the pill radius default is a
  * literal 9999px — the radius scale is sm/md/lg only (no full); same precedent as .button--pill.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .switch {

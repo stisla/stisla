@@ -4,7 +4,7 @@
  * Font-size is rem-based (a deliberate UI element, not tracking surrounding text). References the
  * @theme tokens (colors var(--color-*), spacing --spacing(n), type var(--text-*) / var(--font-mono) /
  * var(--font-weight-*) / var(--leading-*), radius var(--radius-*)); only no-namespace customs use
- * --st-* (border-width). Knobs are --kbd-*. @layer components. Authoring rules: ../../../../PORTING.md */
+ * --st-* (border-width). Knobs are --kbd-*. @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .kbd {

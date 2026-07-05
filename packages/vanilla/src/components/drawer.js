@@ -1,4 +1,4 @@
-// Stisla.Drawer — V3.md §3.7 reference implementation.
+// Stisla.Drawer — reference implementation.
 //
 // Anatomy:
 //   .drawer[data-stisla-drawer][data-state="open|closed"]

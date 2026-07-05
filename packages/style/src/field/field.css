@@ -3,7 +3,7 @@
  * control (.input, .select, .textarea, .checkbox, .radio, .switch, .slider) and owns the layout
  * contract. References the @theme tokens: colors var(--color-*), spacing --spacing(n), type
  * var(--text-*) / var(--font-weight-*). Knobs are --field-* (fallback-default). @layer components.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   /* Root — vertical stack (label / control / helper). Fills its column by default: the controls

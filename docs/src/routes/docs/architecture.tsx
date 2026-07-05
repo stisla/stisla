@@ -254,8 +254,7 @@ packages/
           root. <code>SPEC.md</code> holds the shared contract.{" "}
           <code>spec/components/&lt;name&gt;.md</code> holds the per-component
           contract (anatomy, states, behavior, a11y, tokens) that every
-          implementation honors. <code>V3.md</code> is the build journal for the
-          vanilla impl.
+          implementation honors.
         </p>
       </section>
 

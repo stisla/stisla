@@ -1,4 +1,4 @@
-// Stisla.Toggle — V3.md §3.7 two-state press button.
+// Stisla.Toggle — two-state press button.
 //
 // Anatomy:
 //   <button class="toggle" data-stisla-toggle aria-pressed="false">…</button>

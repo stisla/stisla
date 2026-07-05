@@ -4,7 +4,7 @@
  * get a concentric inner radius (outer − padding). References the @theme tokens (colors var(--color-*),
  * spacing/sizes --spacing(n), radius var(--radius-*)); only no-namespace customs use --st-*
  * (border-width). Knobs are --toggle-group-*; sizes compact/roomy → sm/lg. @layer components.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   /* === Shared base === container chrome + member overrides (horizontal + vertical). */

@@ -4,7 +4,7 @@
  * adjacent shapes read as separate objects. The hovered/focused member lifts so its ring paints over
  * its neighbor — same z-index ladder as .button-group. References the @theme tokens (colors
  * var(--color-*), spacing --spacing(n)). Knobs are --avatar-group-*. @layer components.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .avatar-group {

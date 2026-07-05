@@ -5,7 +5,7 @@
  * shadow var(--shadow-*). Only no-namespace customs use --st-* (duration, z-index); z-index routes
  * through the z-index scale (--z-index-tooltip, the top tier). Knobs are --tooltip-*. State via
  * data-* attributes, never is-*. Positioning behavior ships with the JS layer. @layer components.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .tooltip {

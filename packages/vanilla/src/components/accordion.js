@@ -1,4 +1,4 @@
-// Stisla.Accordion — a stack of collapsible panels (V3.md §3.7).
+// Stisla.Accordion — a stack of collapsible panels.
 //
 // Composes one Stisla.Collapsible per .accordion__item. The state hook
 // lives on the item (where the chip / chevron / divider styles read it);

@@ -1,4 +1,4 @@
-// Stisla.Component — base class for vanilla JS components (V3.md §3.7).
+// Stisla.Component — base class for vanilla JS components.
 //
 // Contract for every Stisla.X:
 //   1. Class-based: new Stisla.X(el, opts).

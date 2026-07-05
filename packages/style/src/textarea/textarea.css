@@ -6,7 +6,7 @@
  *
  * The shared field base is DUPLICATED here with the --textarea-* namespace (plain CSS has no
  * parameterized mixin). Keep in sync with input.css + select.css. @layer components.
- * Authoring rules: ../../../../PORTING.md */
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   /* === Shared field base (= former form-field-base, --textarea-* namespace) === */

@@ -1,4 +1,4 @@
-// Stisla.Carousel — V3.md §3.7. Vanilla-optional per SPEC.md §10.
+// Stisla.Carousel — vanilla-optional per SPEC.md §10.
 //
 // Anatomy:
 //   .carousel[data-stisla-carousel][data-state="ready"]

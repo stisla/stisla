@@ -5,9 +5,9 @@
 > Implementations conform to this document; this document does not describe
 > any one of them.
 
-V3.md is the build journal for the current reference implementation. SPEC.md
-is the contract every implementation must satisfy. Update this file when the
-contract changes; update V3.md when an implementation milestone changes.
+SPEC.md is the contract every implementation must satisfy. Update this file
+when the contract changes; ARCHITECTURE.md and ROADMAP.md track the reference
+implementation's design decisions and progress.
 
 ---
 
@@ -651,7 +651,7 @@ independent of writing direction.
 
 - **`spec/components/<name>.md`** — the per-component contract. Anatomy,
   parts, states, keyboard interactions, a11y, tokens.
-- **`V3.md`** — build journal for the vanilla reference implementation.
-  History, decisions, phase tracking.
+- **`ARCHITECTURE.md`** / **`ROADMAP.md`** — the reference implementation's
+  design decisions, guardrails, and progress.
 - **Each implementation's package README** — install + recommended bundle
   + per-impl optional / core classification.

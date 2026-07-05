@@ -7,7 +7,7 @@
  * Layered-bg mechanic: a per-cell inset box-shadow chain. Three layers — rest (--table-bg), variant
  * (--table-bg-type), runtime state (--table-bg-state) — so hover can light a striped+variant row without
  * erasing the layers underneath. The huge inset shadow paints the cell box without touching
- * background-color, so layers stack. @layer components. Authoring rules: ../../../../PORTING.md */
+ * background-color, so layers stack. @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .table {

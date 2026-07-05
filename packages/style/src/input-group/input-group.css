@@ -4,7 +4,7 @@
  * tokens (colors var(--color-*), spacing --spacing(n), radius var(--radius-*)); only no-namespace
  * customs use --st-* (border-width, duration). Knobs are --input-group-*. State via attributes
  * (:focus-visible / [aria-invalid] / :user-invalid / :disabled forwarded through :has()), no is-*.
- * @layer components. Authoring rules: ../../../../PORTING.md */
+ * @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
 
 @layer components {
   .input-group {
