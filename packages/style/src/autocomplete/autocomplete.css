@@ -137,9 +137,10 @@
     background-color: var(--autocomplete-item-bg-hover, var(--color-accent));
   }
 
-  /* Search match highlight — the JS wraps each matching run in <mark>; just weight, no fill (a box
-     per matched character reads noisy in a list). */
-  .autocomplete__item mark {
+  /* Search match highlight — the JS wraps each matching run in a non-semantic
+     span (a real <mark> is spoken aloud by VoiceOver as "highlight"); just
+     weight, no fill (a box per matched character reads noisy in a list). */
+  .autocomplete__item .autocomplete__mark {
     background: none;
     color: inherit;
     font-weight: var(--autocomplete-mark-font-weight, var(--font-weight-semibold));

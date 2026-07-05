@@ -28,7 +28,7 @@ function SliderDocs() {
           html={`
 <div class="field max-w-xl">
   <label for="basicSlider" class="field__label">Brightness</label>
-  <div class="slider" id="basicSlider" data-stisla-slider data-value="40">
+  <div class="slider" id="basicSlider" data-stisla-slider data-value="40" data-value-text="{value}%">
     <div class="slider__track"><div class="slider__range"></div></div>
     <div class="slider__thumb"></div>
     <input type="hidden" class="slider__input" name="brightness">
@@ -50,6 +50,18 @@ function SliderDocs() {
           <li><kbd>PageDown</kbd> / <kbd>PageUp</kbd>: also jump by ten steps</li>
           <li><kbd>Home</kbd> / <kbd>End</kbd>: jump to <code>data-min</code> / <code>data-max</code></li>
         </ul>
+      </section>
+
+      <section>
+        <h2>Announced value</h2>
+        <p>
+          On each change a screen reader re-reads the raw number. Add{" "}
+          <code>data-value-text</code> to have it announce a value with context instead. The{" "}
+          <code>{"{value}"}</code>, <code>{"{min}"}</code>, and <code>{"{max}"}</code> placeholders
+          fill in on every step, so <code>{`data-value-text="{value}%"`}</code> reads "56%" and{" "}
+          <code>{`data-value-text="{value} of {max}"`}</code> reads "56 of 100". The Brightness
+          slider above uses the percent form.
+        </p>
       </section>
 
       <section>

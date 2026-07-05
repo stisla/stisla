@@ -322,7 +322,8 @@ export class Select extends Component {
         'stroke-linecap="round" stroke-linejoin="round"/></svg>';
       li.appendChild(ind);
       li.appendChild(document.createTextNode(opt.textContent));
-      li.setAttribute('aria-selected', 'false');
+      // Initial aria-selected is written by _syncFromSource (runs right after
+      // render) so single- and multi-select follow the same rule there.
       if (opt.disabled) li.setAttribute('aria-disabled', 'true');
       return li;
     };
@@ -354,7 +355,17 @@ export class Select extends Component {
     const values = this._currentValues();
     for (const li of this._optionEls) {
       const sel = values.includes(li.dataset.value);
-      li.setAttribute('aria-selected', String(sel));
+      // Multi-select carries an explicit aria-selected on every option so a
+      // screen reader can announce what's toggled off. Single-select marks
+      // only the chosen row and leaves the rest bare — otherwise every option
+      // the user arrows past reads "not selected".
+      if (this._isMulti) {
+        li.setAttribute('aria-selected', String(sel));
+      } else if (sel) {
+        li.setAttribute('aria-selected', 'true');
+      } else {
+        li.removeAttribute('aria-selected');
+      }
     }
     this._renderValue(values);
   }

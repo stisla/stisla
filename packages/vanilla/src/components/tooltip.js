@@ -114,7 +114,13 @@ export class Tooltip extends Component {
       this.on(el, 'mouseleave', () => this._scheduleHide());
     }
     if (triggers.includes('focus')) {
-      this.on(el, 'focusin', () => this._scheduleShow());
+      // Show synchronously on focus, without the open delay. The delay exists
+      // to avoid a flash on incidental hover; keyboard focus is deliberate.
+      // Showing now sets aria-describedby on the trigger within the focus turn,
+      // so the screen reader has the description when it announces the focused
+      // element — a describedby added later (after the delay, once focus has
+      // already landed) is not re-announced, leaving the tooltip silent to VO.
+      this.on(el, 'focusin', () => this._showOnFocus());
       this.on(el, 'focusout', () => this._scheduleHide());
     }
 
@@ -225,6 +231,14 @@ export class Tooltip extends Component {
     } else {
       this._innerEl.textContent = this._title;
     }
+  }
+
+  _showOnFocus() {
+    clearTimeout(this._closeTimer);
+    this._closeTimer = 0;
+    clearTimeout(this._openTimer);
+    this._openTimer = 0;
+    this.show();
   }
 
   _scheduleShow() {

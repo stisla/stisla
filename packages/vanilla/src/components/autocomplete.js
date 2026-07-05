@@ -231,6 +231,8 @@ export class Autocomplete extends Component {
       li.setAttribute('role', 'option');
       li.setAttribute('aria-selected', 'false');
       li.dataset.value = o.value;
+      // The match run is wrapped in a non-semantic span (see _highlight) rather
+      // than a real <mark>, which VoiceOver speaks aloud as the word "highlight".
       li.innerHTML = this._highlight(o.label, q);
       this._popup.appendChild(li);
       this._optionEls.push(li);
@@ -264,9 +266,9 @@ export class Autocomplete extends Component {
     if (i < 0) return escaped;
     return (
       escaped.slice(0, i) +
-      '<mark>' +
+      '<span class="autocomplete__mark">' +
       escaped.slice(i, i + escQuery.length) +
-      '</mark>' +
+      '</span>' +
       escaped.slice(i + escQuery.length)
     );
   }

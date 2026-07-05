@@ -100,6 +100,7 @@ export class Toast extends Component {
       if (!this.el) return;
       this.el.dataset.state = STATE_OPEN;
       this.el.setAttribute("aria-hidden", "false");
+      this._announce();
 
       if (this.opts.autohide) this._startTimer(this.opts.delay);
 
@@ -166,6 +167,13 @@ export class Toast extends Component {
 
     refreshLucideIcons();
 
+    if (
+      (patch.title !== undefined || patch.description !== undefined) &&
+      this.el.dataset.state === STATE_OPEN
+    ) {
+      this._announce();
+    }
+
     this.emit("updated", { patch }, { cancelable: false });
     return this;
   }
@@ -228,6 +236,22 @@ export class Toast extends Component {
       this.el.prepend(slot);
     }
     slot.replaceChildren(icon);
+  }
+
+  // Route the toast's text through a persistent polite live region so it is
+  // announced on open. Each toast is inserted into its region already fully
+  // populated, and a polite live region added to the DOM pre-populated is not
+  // reliably announced by screen readers — which is why previously only the
+  // danger toast (role="alert") spoke. Danger toasts keep announcing via their
+  // own role="alert" node and are skipped here to avoid a double read.
+  _announce() {
+    if (!this.el || this.el.classList.contains("toast--danger")) return;
+    const header = this.el.querySelector(".toast__header");
+    const body = this.el.querySelector(".toast__body");
+    const parts = [header, body]
+      .map((n) => (n ? n.textContent.trim() : ""))
+      .filter(Boolean);
+    if (parts.length) announcePolite(parts.join(". "));
   }
 
   // All content parts (header/body/action) live inside .toast__content — the middle grid column.
@@ -459,6 +483,30 @@ function resolveRegion(target) {
   region.dataset.stislaToastRegion = DEFAULT_REGION_NAME;
   document.body.appendChild(region);
   return region;
+}
+
+// Persistent, initially-empty polite live region shared by every toast. Unlike
+// a toast node (inserted already-populated, so the polite announcement is
+// dropped), this region lives empty in <body>; appending a line to it fires a
+// fresh announcement each time. One node per message so several toasts opening
+// in the same frame each announce instead of overwriting one another.
+let politeAnnouncer = null;
+
+function announcePolite(message) {
+  if (typeof document === "undefined" || !message) return;
+  if (!politeAnnouncer || !politeAnnouncer.isConnected) {
+    politeAnnouncer = document.createElement("div");
+    politeAnnouncer.dataset.stislaToastAnnouncer = "";
+    politeAnnouncer.setAttribute("aria-live", "polite");
+    // Visually hidden, but present in the accessibility tree.
+    politeAnnouncer.style.cssText =
+      "position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;";
+    document.body.appendChild(politeAnnouncer);
+  }
+  const line = document.createElement("div");
+  line.textContent = message;
+  politeAnnouncer.appendChild(line);
+  setTimeout(() => line.remove(), 1000);
 }
 
 function refreshLucideIcons() {

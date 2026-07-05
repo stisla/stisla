@@ -47,6 +47,7 @@ export class Slider extends Component {
     max: null,
     step: null,
     value: null,
+    valueText: null,
   };
 
   constructor(el, opts) {
@@ -120,6 +121,15 @@ export class Slider extends Component {
     }
 
     if (this._disabled) el.setAttribute('data-disabled', 'true');
+
+    // Optional aria-valuetext template. On a value change a screen reader
+    // re-reads only aria-valuenow (the bare number), not the label — so a
+    // brightness slider announces "56", not "56 brightness". A template such
+    // as data-value-text="{value}%" or "{value} of {max}" gives every change a
+    // spoken form with context. {value}/{min}/{max} are substituted on render;
+    // when unset, aria-valuenow alone is used (native slider behaviour).
+    this._valueTextTemplate =
+      this.opts.valueText ?? el.getAttribute('data-value-text') ?? null;
 
     this._activePointerId = null;
     this._dragStartValue = this._value;
@@ -303,8 +313,18 @@ export class Slider extends Component {
     this.el.style.setProperty('--slider-fraction', String(fraction));
     if (this._thumb) {
       this._thumb.setAttribute('aria-valuenow', this._fmt(this._value));
+      if (this._valueTextTemplate) {
+        this._thumb.setAttribute('aria-valuetext', this._valueText());
+      }
     }
     if (this._input) this._input.value = this._fmt(this._value);
+  }
+
+  _valueText() {
+    return String(this._valueTextTemplate)
+      .replace(/\{value\}/g, this._fmt(this._value))
+      .replace(/\{min\}/g, this._fmt(this.min))
+      .replace(/\{max\}/g, this._fmt(this.max));
   }
 
   _snap(v) {

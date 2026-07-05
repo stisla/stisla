@@ -1,9 +1,58 @@
 # notes
 
 ## Pending for next release (beta.11)
+
 - @stisla/vanilla peer removal ships with beta.11. Live beta.10 on npm still carries
   `peerDependencies: { "@stisla/css": "3.0.0-beta.10" }`; the source tree (committed in
   932f713) has it removed. npm forbids republishing over beta.10, so git is intentionally
   one step ahead of npm for vanilla until the next bump reconciles them.
   Why removed: vanilla has no code dependency on @stisla/css (just toggles classes/aria);
   the hard peer fired spurious warnings for CDN and @stisla/style-subset consumers.
+
+## VO issues
+
+Verified against the real WebKit accessibility tree (Playwright ariaSnapshot),
+not just assumed. Vanilla src rebuilt; full Playwright suite green 98/0.
+
+Key finding (VERIFIED in the maintainer's own browser via devtools + Playwright
+ariaSnapshot on WebKit): for combobox + autocomplete the accessible NAME is
+already correct in the tree (option "React" / option "Malaysia", aria-label
+present on the live Tom Select options). The failure is VoiceOver-specific and
+NOT fixable via markup: VO does not reliably announce aria-activedescendant
+moves while focus stays in the text input — it speaks only "N of M". NVDA/JAWS
+read it correctly. Tried a shared assertive live region to mirror the active
+option's label; it fires (proven) but VO swallows it during navigation AND it
+double-announces on NVDA/JAWS, so it was net-negative and REVERTED. This is an
+accepted VoiceOver platform limitation (matches the spec's stance that Tom
+Select's a11y is an accepted third-party constraint). Left the components as
+they were apart from the autocomplete <mark> swap noted below.
+
+Fixed:
+
+- autocomplete — the search-match highlight now uses a non-semantic span, not
+  a real <mark> (VoiceOver speaks a <mark> boundary aloud as the word
+  "highlight" — that was the "highlight" in "sing a, highlight pore"). No other
+  change; see the combobox/autocomplete note below.
+- tooltip — shows synchronously on focusin (no open delay for keyboard), so
+  aria-describedby is on the trigger when VO announces the focused element.
+- toast — persistent initially-empty polite live region in <body>; non-danger
+  toasts announce through it on open + promise settle. Pre-populated polite
+  regions aren't announced (why only the danger role="alert" toast spoke).
+- slider — optional aria-valuetext via data-value-text template
+  ({value}/{min}/{max}); Brightness demo uses "{value}%". CONFIRMED in the
+  WebKit tree (aria-valuetext="48% brightness"); VO reads valuetext for a
+  slider. If it still speaks only the number, it's a stale bundle — hard reload.
+  NOTE: the docs "value is not defined" crash was a JSX bug ({value} read as an
+  expression) — fixed; it was breaking the whole slider demo render.
+
+Left as-is (platform behaviour / by design):
+
+- dialog + drawer — role="dialog" + aria-modal + aria-labelledby now on
+  .dialog__content / .drawer__content, so VO announces the dialog + name on
+  entry (there was no dialog role before). Focus deliberately stays on the
+  input/first control per maintainer call; the "dialog, N items" heard around
+  it is VO's normal container-entry announcement.
+- accordion — correct wiring; Tab only stops on interactive elements, so a
+  text-only panel is read with VO reading commands, not Tab.
+- menu — aria-checked kept in sync; VO not re-announcing an in-place change on
+  the focused item is standard AT behaviour (APG doesn't require it).
