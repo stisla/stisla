@@ -373,9 +373,13 @@ it's "confirm the behavior, fix the code if wrong."
      doesn't constrain the box (nothing overflows → the bug hides). Any fixture that needs real
      overflow/layout must use inline styles, not utilities.
   Non-bug: **tooltip** (grep once flagged `focus:0`) is correctly wired — shows on `focusin`, Escape
-  dismisses, `aria-describedby` links the chip. Advisory-only (not fixed, not axe-failing): carousel
-  end-of-track controls use `aria-disabled` while staying focusable; carousel slides aren't
-  `aria-hidden` off-screen; no live region announces slide changes.
+  dismisses, `aria-describedby` links the chip. Advisory carousel items (were not axe-failing):
+  two of three now fixed in `carousel.js` (2026-07-05, additive a11y — no API change, freeze-safe;
+  covered by `carousel.spec.ts` "screen reader"): (a) off-screen slides now carry `aria-hidden` +
+  `inert` so a reader reaches only the active snap and can't Tab into hidden content; (b) a
+  visually-hidden polite live region names the active slide ("Slide N of M") on change, held silent
+  during autoplay per APG. Still open (advisory, low value): carousel end-of-track controls use
+  `aria-disabled` while staying focusable.
 
 - **[RESOLVED 2026-07-04 · fixed in select.js] Custom select had no accessible name + illegal ARIA.**
   The Tier-1 select axe spec caught two real, shipped bugs (both only visible while open): (1) the

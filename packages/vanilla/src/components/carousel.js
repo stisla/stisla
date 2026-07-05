@@ -111,8 +111,20 @@ export class Carousel extends Component {
       this.on(el, 'keydown', this._onKeydown);
     }
 
+    // Polite live region (visually hidden) that names the current slide on
+    // change. Scoped to the root so it's torn down with the component. Held
+    // silent during autoplay — auto-rotation shouldn't narrate (APG carousel).
+    this._liveRegion = document.createElement('div');
+    this._liveRegion.dataset.stislaCarouselLive = '';
+    this._liveRegion.setAttribute('aria-live', 'polite');
+    this._liveRegion.setAttribute('aria-atomic', 'true');
+    this._liveRegion.style.cssText =
+      'position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;';
+    el.appendChild(this._liveRegion);
+
     this._updateIndicators();
     this._updateControls();
+    this._updateSlideVisibility();
 
     // Wire pause/resume whenever autoplay is configured; _startAutoplay()
     // self-guards on reduced motion, so the timer stays off while it's on but
@@ -178,11 +190,17 @@ export class Carousel extends Component {
     this._embla.reInit(this._normalizeEmblaOpts());
     this._updateIndicators();
     this._updateControls();
+    this._updateSlideVisibility();
   }
 
   destroy() {
     this._stopAutoplay();
     if (this._embla) {
+      // Drop the a11y state we layered on before Embla forgets its slide nodes.
+      for (const slide of this._embla.slideNodes()) {
+        slide.removeAttribute('aria-hidden');
+        slide.inert = false;
+      }
       this._embla.off('select', this._onSelect);
       this._embla.off('settle', this._onSettle);
       this._embla.off('pointerDown', this._onPointerDown);
@@ -190,6 +208,8 @@ export class Carousel extends Component {
       this._embla.destroy();
       this._embla = null;
     }
+    this._liveRegion?.remove();
+    this._liveRegion = null;
     super.destroy();
   }
 
@@ -201,6 +221,8 @@ export class Carousel extends Component {
     this._previousIndex = i;
     this._updateIndicators(i);
     this._updateControls();
+    this._updateSlideVisibility();
+    this._announceSlide(i);
     this.emit('selected', { index: i, previousIndex: prev }, { cancelable: false });
   }
 
@@ -282,6 +304,38 @@ export class Carousel extends Component {
     if (this._next) {
       this._next.toggleAttribute('aria-disabled', !this._embla.canScrollNext());
     }
+  }
+
+  // Hide the slides that aren't on the active snap from AT and the tab order.
+  // `inert` does both, so pairing it with aria-hidden keeps them in sync without
+  // tripping the aria-hidden-focus rule (an aria-hidden subtree must hold no
+  // focusable node). Uses the snap grouping, not pixel in-view — an edge-touching
+  // neighbor counts as "in view" to Embla but shouldn't be exposed as current.
+  _updateSlideVisibility() {
+    if (!this._embla) return;
+    const slides = this._embla.slideNodes();
+    // slideRegistry groups slide indices per scroll snap (honours loop /
+    // slidesToScroll / align); index it by the selected snap for the current set.
+    const registry = this._embla.internalEngine().slideRegistry;
+    const active = new Set(registry[this._embla.selectedScrollSnap()] ?? []);
+    for (let k = 0; k < slides.length; k++) {
+      const hidden = !active.has(k);
+      // Explicit "true"/removed — aria-hidden="" (what toggleAttribute emits) is
+      // read as false, so it would leave the slide exposed.
+      if (hidden) slides[k].setAttribute('aria-hidden', 'true');
+      else slides[k].removeAttribute('aria-hidden');
+      slides[k].inert = hidden;
+    }
+  }
+
+  // Name the current slide through the polite live region — but only when the
+  // change is user-driven. While autoplay is actively rotating (timer live) we
+  // stay silent so the screen reader isn't narrated at every tick.
+  _announceSlide(index) {
+    if (!this._liveRegion || this._autoplayTimer != null) return;
+    const total = this._embla?.scrollSnapList().length ?? 0;
+    if (!total) return;
+    this._liveRegion.textContent = `Slide ${index + 1} of ${total}`;
   }
 
   // === Autoplay =======================================================

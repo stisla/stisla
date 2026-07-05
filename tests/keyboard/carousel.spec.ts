@@ -39,6 +39,47 @@ test.describe("carousel — keyboard", () => {
   });
 });
 
+// Screen-reader affordances (RELEASE-READINESS.md §6.5, advisory items now fixed):
+//   1. Off-screen slides are removed from the a11y tree (aria-hidden) AND the tab order (inert),
+//      so a reader only reaches the visible slide and can't Tab into hidden content.
+//   2. A visually-hidden polite live region names the active slide on change — but stays silent
+//      during autoplay (this fixture has autoplay off, so every change announces).
+test.describe("carousel — screen reader", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto("/tests/fixtures/carousel.html");
+  });
+
+  test("off-screen slides are aria-hidden + inert; the visible one is exposed", async ({ page }) => {
+    const s1 = page.locator("#carousel-slide-1");
+    const s2 = page.locator("#carousel-slide-2");
+
+    // On load slide 1 is in view; 2 and 3 are hidden from AT and out of the tab order.
+    await expect(s1).not.toHaveAttribute("aria-hidden", "true");
+    await expect(s1).not.toHaveAttribute("inert", "");
+    await expect(s2).toHaveAttribute("aria-hidden", "true");
+    await expect(s2).toHaveAttribute("inert", "");
+
+    // Visibility tracks the active slide after advancing.
+    await page.locator("#carousel-next").click();
+    await expect(s2).not.toHaveAttribute("aria-hidden", "true");
+    await expect(s2).not.toHaveAttribute("inert", "");
+    await expect(s1).toHaveAttribute("aria-hidden", "true");
+    await expect(s1).toHaveAttribute("inert", "");
+  });
+
+  test("polite live region names the current slide on change, silent on load", async ({ page }) => {
+    const live = page.locator("[data-stisla-carousel-live]");
+    await expect(live).toHaveAttribute("aria-live", "polite");
+    await expect(live).toBeEmpty(); // no announcement on initial render
+
+    await page.locator("#carousel-next").click();
+    await expect(live).toHaveText("Slide 2 of 3");
+
+    await page.locator("#carousel-prev").click();
+    await expect(live).toHaveText("Slide 1 of 3");
+  });
+});
+
 // Embla animates the track transform in JS, so a CSS `prefers-reduced-motion` query can't flatten
 // the slide the way it does for the pure-CSS components. carousel.js reads the query and, on change,
 // re-inits Embla with duration 0 (instant jump) and stops the autoplay timer. These specs lock in

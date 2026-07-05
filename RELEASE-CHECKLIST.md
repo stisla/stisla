@@ -108,8 +108,10 @@ Agents can't publish; `dist/` is gitignored and `pnpm release` is manual and gat
 
 - [ ] Meridian-template axe supplement (RELEASE-READINESS §4.5): an axe pass over the built dashboard
       pages for real-composition coverage. An agent can do this — just ask.
-- [ ] Fix the advisory (non-blocking) carousel notes in RELEASE-READINESS §6.5 (aria-disabled controls
-      stay focusable; off-screen slides not aria-hidden; no live region on slide change).
+- [~] Fix the advisory (non-blocking) carousel notes in RELEASE-READINESS §6.5. Done 2026-07-05:
+      off-screen slides now `aria-hidden` + `inert`; polite live region announces slide changes
+      (silent during autoplay). Still open (low value): aria-disabled end-of-track controls stay
+      focusable.
 
 ---
 

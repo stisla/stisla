@@ -2,6 +2,14 @@
 
 For Stisla 2.x changes, see [getstisla.com](https://getstisla.com).
 
+## [Unreleased]
+
+Additive accessibility refinements only. No token, class, or modifier changes, so the `rc.1` API freeze holds.
+
+### Fixed
+
+- **carousel** — off-screen slides now carry `aria-hidden` + `inert`, so a screen reader reaches only the active slide and keyboard users can't Tab into hidden content. A visually-hidden polite live region announces the active slide ("Slide N of M") on change, and stays silent during autoplay (per the APG carousel pattern). Covered by `tests/keyboard/carousel.spec.ts`.
+
 ## [3.0.0-rc.1] — 2026-07-05
 
 The first release candidate. **The public API is now frozen.** `--color-*` tokens, the lone `--st-border-width` custom, component class names, and the intent-based modifiers (`--seamless`, `--grid`, `--animated`, `--pill`, `--circle`, `--soft`, etc.) are locked for the 3.0 line. Any rename after this point resets the RC clock. The 2026-07-02 modifier sweep was the last allowed breaking rename.
