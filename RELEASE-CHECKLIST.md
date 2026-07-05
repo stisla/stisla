@@ -71,9 +71,12 @@ WebKit ≈ Safari but not identical. In **actual Safari**, Tab through the Tier-
       why those 2 tests are skipped in automation.
 
 ### A3 — Reduced-motion + zoom sanity — REQUIRED for Stable
-- [ ] **System Settings → Accessibility → Display → Reduce Motion = on:** carousel and animated bits
-      should calm down (no autoplay / instant transitions).
-- [ ] **Browser zoom to 200%:** layouts shouldn't break or clip; text stays readable.
+- [x] **System Settings → Accessibility → Display → Reduce Motion = on:** carousel and animated bits
+      should calm down (no autoplay / instant transitions). Verified in Chrome + Safari. Found + fixed a
+      carousel gap (Embla slide still eased / cached the setting once); now jumps instantly and reacts to
+      live OS toggles, covered by `tests/keyboard/carousel.spec.ts` (`carousel — reduced motion`).
+- [x] **Browser zoom to 200%:** layouts shouldn't break or clip; text stays readable. Verified — content
+      scales uniformly, no clipping / overflow / overlap; all controls stay reachable and behave the same.
 
 ---
 

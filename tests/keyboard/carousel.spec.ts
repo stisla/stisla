@@ -38,3 +38,77 @@ test.describe("carousel — keyboard", () => {
     await expectNoA11yViolations(page);
   });
 });
+
+// Embla animates the track transform in JS, so a CSS `prefers-reduced-motion` query can't flatten
+// the slide the way it does for the pure-CSS components. carousel.js reads the query and, on change,
+// re-inits Embla with duration 0 (instant jump) and stops the autoplay timer. These specs lock in
+// both the initial read (constructed under reduced motion) and the live OS toggle (the reported bug:
+// the carousel used to cache the value once and needed a reload). We read the effective Embla
+// `duration` and the cached `_reducedMotion` flag via the instance exposed on window.Stisla.get().
+test.describe("carousel — reduced motion", () => {
+  const duration = (page) =>
+    page.evaluate(
+      () =>
+        (window as any).Stisla.get(document.getElementById("carousel-basic"))._normalizeEmblaOpts()
+          .duration,
+    );
+  const isReduced = (page) =>
+    page.evaluate(
+      () => (window as any).Stisla.get(document.getElementById("carousel-basic"))._reducedMotion,
+    );
+
+  test("constructed under reduced motion: slides jump instantly", async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/tests/fixtures/carousel.html");
+
+    expect(await isReduced(page)).toBe(true);
+    expect(await duration(page)).toBe(0);
+
+    // Behavioural proof: the track reaches its settled transform within a frame — no easing between
+    // the early sample and the fully-settled one (they'd differ while an animation is in flight).
+    const { early, late } = await page.evaluate(async () => {
+      const el = document.getElementById("carousel-basic");
+      const track = el.querySelector(".carousel__track") as HTMLElement;
+      (window as any).Stisla.get(el)._embla.scrollNext();
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      const early = getComputedStyle(track).transform;
+      await new Promise((r) => setTimeout(r, 300));
+      const late = getComputedStyle(track).transform;
+      return { early, late };
+    });
+    expect(early).toBe(late);
+    await expect(page.locator("#carousel-dot-2")).toHaveAttribute("aria-current", "true");
+  });
+
+  // Playwright's emulateMedia updates matchMedia().matches but only Firefox emits the MQL 'change'
+  // event (chromium/webkit don't — a documented CDP limitation; a real OS toggle does fire it). So we
+  // pair emulateMedia (the setting changed) with an explicit MediaQueryListEvent on the carousel's OWN
+  // query object — which also proves the listener is bound to it — to drive the change path everywhere.
+  const toggleReducedMotion = (page, reduce) =>
+    page.evaluate((matches) => {
+      const inst = (window as any).Stisla.get(document.getElementById("carousel-basic"));
+      inst._reducedMotionMql.dispatchEvent(
+        new MediaQueryListEvent("change", { matches, media: "(prefers-reduced-motion: reduce)" }),
+      );
+    }, reduce);
+
+  test("reacts to a live reduced-motion toggle without reload", async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "no-preference" });
+    await page.goto("/tests/fixtures/carousel.html");
+
+    expect(await isReduced(page)).toBe(false);
+    expect(await duration(page)).toBe(25);
+
+    // Toggle ON — the change listener flips the cached flag and re-inits Embla to the instant jump.
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await toggleReducedMotion(page, true);
+    expect(await isReduced(page)).toBe(true);
+    expect(await duration(page)).toBe(0);
+
+    // Toggle back OFF — easing returns, no reload.
+    await page.emulateMedia({ reducedMotion: "no-preference" });
+    await toggleReducedMotion(page, false);
+    expect(await isReduced(page)).toBe(false);
+    expect(await duration(page)).toBe(25);
+  });
+});

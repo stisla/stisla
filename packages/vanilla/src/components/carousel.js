@@ -66,9 +66,11 @@ export class Carousel extends Component {
     this._autoplayPaused = false;
     this._autoplayKilled = false;
     this._reducedMotion = false;
-    if (typeof window !== 'undefined' && window.matchMedia) {
-      this._reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    }
+    this._reducedMotionMql =
+      typeof window !== 'undefined' && window.matchMedia
+        ? window.matchMedia('(prefers-reduced-motion: reduce)')
+        : null;
+    if (this._reducedMotionMql) this._reducedMotion = this._reducedMotionMql.matches;
     this._previousIndex = 0;
 
     this._embla = EmblaCarousel(this._viewport, this._normalizeEmblaOpts());
@@ -79,11 +81,18 @@ export class Carousel extends Component {
     this._onPointerUp = this._onPointerUp.bind(this);
     this._onKeydown = this._onKeydown.bind(this);
     this._onVisibility = this._onVisibility.bind(this);
+    this._onReducedMotionChange = this._onReducedMotionChange.bind(this);
 
     this._embla.on('select', this._onSelect);
     this._embla.on('settle', this._onSettle);
     this._embla.on('pointerDown', this._onPointerDown);
     this._embla.on('pointerUp', this._onPointerUp);
+
+    // Track live OS toggles instead of caching once — keeps the carousel in
+    // step with the CSS-only components, which react to the media query live.
+    if (this._reducedMotionMql) {
+      this.on(this._reducedMotionMql, 'change', this._onReducedMotionChange);
+    }
 
     if (this._prev) this.on(this._prev, 'click', () => this._userScroll('prev'));
     if (this._next) this.on(this._next, 'click', () => this._userScroll('next'));
@@ -105,7 +114,10 @@ export class Carousel extends Component {
     this._updateIndicators();
     this._updateControls();
 
-    if (this._normalizeAutoplay() && !this._reducedMotion) {
+    // Wire pause/resume whenever autoplay is configured; _startAutoplay()
+    // self-guards on reduced motion, so the timer stays off while it's on but
+    // the listeners are ready if the user toggles it off mid-session.
+    if (this._normalizeAutoplay()) {
       this.on(el, 'mouseenter', () => this._pauseAutoplay('hover'));
       this.on(el, 'mouseleave', () => this._resumeAutoplay('hover'));
       this.on(el, 'focusin', () => this._pauseAutoplay('focus'));
@@ -316,13 +328,24 @@ export class Carousel extends Component {
     this.emit('autoplay-resumed', { reason }, { cancelable: false });
   }
 
+  _onReducedMotionChange(e) {
+    this._reducedMotion = e.matches;
+    // Embla owns the transform in JS, so re-init to pick up the new slide
+    // duration (0 vs 25); autoplay is a JS timer, so flip it to match.
+    this._embla?.reInit(this._normalizeEmblaOpts());
+    if (this._reducedMotion) this._stopAutoplay();
+    else this._startAutoplay();
+  }
+
   // === Opts → Embla mapping ===========================================
   _normalizeEmblaOpts() {
     return {
       loop: this._coerceBool(this.opts.loop),
       align: this.opts.align,
       slidesToScroll: Number(this.opts.slidesToScroll) || 1,
-      duration: Number(this.opts.duration) || 25,
+      // Embla animates the track transform in JS, so CSS can't flatten it —
+      // jump instantly under reduced motion instead of easing over `duration`.
+      duration: this._reducedMotion ? 0 : Number(this.opts.duration) || 25,
       dragFree: this._coerceBool(this.opts.dragFree),
     };
   }
