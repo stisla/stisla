@@ -10,5 +10,5 @@
   "access": "public",
   "baseBranch": "master",
   "updateInternalDependencies": "patch",
-  "ignore": ["@stisla/react", "@stisla/vue"]
+  "ignore": ["@stisla/react", "@stisla/vue", "@stisla-template/meridian-html"]
 }
