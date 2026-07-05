@@ -66,52 +66,63 @@ Testing is covered in depth in [`TESTING.md`](TESTING.md): what is tested, every
 
 | Command          | What it does / when you need it                                                                          |
 | ---------------- | ------------------------------------------------------------------------------------------------------- |
-| `pnpm changeset` | Records a version-bump intent for a change (see [Changesets](#changesets)). Contributors run this too.   |
+| `pnpm changeset` | Records a version-bump intent for a change (see [Writing a changeset](#writing-a-changeset)). Contributors run this too. |
 | `pnpm smoke`     | Dry-run `npm pack` for each package; asserts every `exports` target is actually in the tarball.          |
 | `pnpm brand`     | Regenerates the logo assets in `brand/` from the logomark. Run only when the mark changes.               |
 | `pnpm release`   | Local publish fallback: `build:packages && smoke && changeset publish`. Normally CI publishes, not you.  |
 
-## Making a change
+## Shipping a change
 
-1. Branch off `master`.
-2. Make your change. Keep it to one component per PR where you can.
-3. Run `pnpm check`, and `pnpm build` from `docs/`, and confirm both are clean.
-4. If you changed a component's CSS or behavior, run `pnpm test` (or `pnpm test:rc`
-   for a fast Chromium-only loop). See [`TESTING.md`](TESTING.md).
-5. Add a changeset if you touched a published package (see below).
-6. Open a PR into `master`. CI builds the docs as a required check.
+A worked example: nudging the button's padding.
 
-## Changesets
+1. **Branch** off `master`.
+2. **Edit** the component. A padding or color tweak lives in the CSS, here
+   `packages/style/src/button/button.css`. Keep a PR to one component where you can.
+3. **Build and test**: `pnpm build:packages`, then `pnpm test:rc` (fast Chromium loop;
+   `pnpm test` covers all browsers). Run `pnpm check` too. See [`TESTING.md`](TESTING.md).
+4. **Record it with a changeset**: `pnpm changeset` (details below). Commit the file it
+   writes together with your code.
+5. **Open a PR** into `master` and merge it. CI builds the docs as a required check.
 
-Versioning and publishing run on [Changesets](https://github.com/changesets/changesets).
-If your change affects any published package (`@stisla/style`, `@stisla/css`,
-`@stisla/vanilla`), record it:
+Your edit-and-test loop is the same as always. The one new habit is step 4: a changeset
+replaces hand-editing version numbers. You never touch a `version` field yourself, and
+you never publish from your laptop — that all happens in [Releasing](#releasing).
 
-```bash
-pnpm changeset
-```
+### Writing a changeset
 
-Pick the affected packages, choose a bump (patch / minor / major), and write a
-one-line summary. This writes a file under `.changeset/` — commit it alongside your
-change. Docs-only, template-only, and internal changes do not need one.
+`pnpm changeset` is interactive and asks two things:
 
-Each package is versioned independently. Changesets computes dependent bumps for
-you: a change to `@stisla/style`, for example, also patches `@stisla/css` because it
-depends on it.
+**Which packages?** Pick by the folder you edited:
 
-## Releases (maintainers)
+- component CSS (`packages/style/src/…`) → `@stisla/style` **and** `@stisla/css`
+- component JS behavior (`packages/vanilla/src/…`) → `@stisla/vanilla`
+- both → all three
 
-Releases are automated by `.github/workflows/release.yml`; `RELEASE-CHECKLIST.md`
-tracks the human steps for a stable cut.
+**How big a bump?** Semver, and with the API frozen it's almost always patch:
 
-- Merging changesets into `master` opens a **Version Packages** PR that applies the
-  bumps and updates the changelogs.
-- Merging that PR publishes to npm and creates the matching git tags and GitHub
-  Releases automatically.
-- Publishing uses **npm Trusted Publishing (OIDC)**, so no npm token is stored in
-  the repo. Each package needs a one-time Trusted Publisher configured on npmjs.com
-  (organization `stisla`, repository `stisla/stisla`, workflow `release.yml`) under
-  the package's **Settings → Trusted Publisher**.
+- **patch** — visual tweak, bug fix (`3.0.0` → `3.0.1`)
+- **minor** — new component, variant, or option (`3.0.0` → `3.1.0`)
+- **major** — a breaking rename or removal (`3.0.0` → `4.0.0`)
+
+Then type a one-line summary; it becomes the changelog and GitHub Release note. This
+writes a small file under `.changeset/` — commit it with your change. Docs-only,
+template-only, and internal changes need no changeset.
+
+## Releasing
+
+Publishing is automated. You never run `npm publish` or edit version numbers; a change
+reaches npm after **two merges**:
+
+1. When a PR carrying changesets lands on `master`, the release workflow opens a
+   **Version Packages** PR that turns those notes into real version bumps and changelog
+   entries. (Nothing is published yet.)
+2. Merge that PR when you're ready to ship. It publishes to npm and creates the git tags
+   and GitHub Releases.
+
+Publishing uses **npm Trusted Publishing (OIDC)**, so no npm token is stored in the repo:
+each published package has a one-time Trusted Publisher on npmjs.com pointing at repo
+`stisla/stisla`, workflow `release.yml`. Full mechanics and one-time setup are in
+[`RELEASE-CHECKLIST.md`](RELEASE-CHECKLIST.md).
 
 ## Code of conduct
 
