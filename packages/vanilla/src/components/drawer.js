@@ -37,6 +37,7 @@ const OPEN = 'open';
 const CLOSED = 'closed';
 
 let openCount = 0;
+let drawerTitleSeq = 0;
 
 export class Drawer extends Component {
   static eventNamespace = 'drawer';
@@ -65,6 +66,18 @@ export class Drawer extends Component {
     if (this._content && !this._content.hasAttribute('tabindex')) {
       this._content.setAttribute('tabindex', '-1');
     }
+    // Modal semantics live on the focus container. On open, focus lands inside
+    // .drawer__content (the trap target), so a screen reader walks up to this
+    // element and announces "dialog, <title>" before reading the focused
+    // control. Without role/aria-modal here VoiceOver reads only the focused
+    // element (the close button) and never the drawer name.
+    if (this._content) {
+      if (!this._content.hasAttribute('role')) {
+        this._content.setAttribute('role', 'dialog');
+      }
+      this._content.setAttribute('aria-modal', 'true');
+      this._nameContent();
+    }
     this._returnFocusEl = null;
     this._trap = null;
     this._releaseInert = null;
@@ -74,11 +87,16 @@ export class Drawer extends Component {
     el.setAttribute('aria-hidden', el.dataset.state === OPEN ? 'false' : 'true');
   }
 
-  open() {
+  // returnFocusEl: element to restore focus to on close. Pass the trigger
+  // explicitly (the delegated handler does) — Safari/Firefox don't focus a
+  // <button> on click, so document.activeElement would be <body> on a
+  // mouse-open and focus would never return to the opener. Falls back to
+  // activeElement for programmatic opens.
+  open(returnFocusEl) {
     if (!this.el || this.el.dataset.state === OPEN) return;
     if (!this.emit('opening')) return;
 
-    this._returnFocusEl = document.activeElement;
+    this._returnFocusEl = returnFocusEl || document.activeElement;
     this._releaseInert = inertSiblings(this.el);
 
     if (!this.opts.scroll) {
@@ -199,6 +217,33 @@ export class Drawer extends Component {
     );
   }
 
+  // Mirror an accessible name onto .drawer__content so the drawer is announced
+  // on open. Prefer a name the author already set (on the content or the root),
+  // else the .drawer__title heading.
+  _nameContent() {
+    const c = this._content;
+    if (c.hasAttribute('aria-labelledby') || c.hasAttribute('aria-label')) return;
+    const rootLabelledby = this.el.getAttribute('aria-labelledby');
+    if (rootLabelledby) {
+      c.setAttribute('aria-labelledby', rootLabelledby);
+      return;
+    }
+    const rootLabel = this.el.getAttribute('aria-label');
+    if (rootLabel) {
+      c.setAttribute('aria-label', rootLabel);
+      return;
+    }
+    const title = c.querySelector('.drawer__title');
+    if (title) {
+      if (!title.id) {
+        title.id = this.el.id
+          ? `${this.el.id}-title`
+          : `stisla-drawer-title-${++drawerTitleSeq}`;
+      }
+      c.setAttribute('aria-labelledby', title.id);
+    }
+  }
+
 }
 
 // Global delegated click handler — bound once per page load. Sentinel mirrors the dialog pattern.
@@ -216,7 +261,7 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined' && !window.
         const existing = getInstance(drawerEl);
         const inst = existing ?? new Drawer(drawerEl, opts);
         if (existing) Object.assign(existing.opts, opts);
-        inst.open();
+        inst.open(opener);
       }
       return;
     }
