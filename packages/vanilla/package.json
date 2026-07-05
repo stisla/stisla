@@ -1,6 +1,6 @@
 {
   "name": "@stisla/vanilla",
-  "version": "3.0.0-rc.1",
+  "version": "3.0.0-rc.2",
   "description": "Stisla vanilla-JS behavior layer (no-build interactivity for the @stisla/css components). One entry registers every component; import individual modules from @stisla/vanilla/components/<name>.js to compose a subset. ESM for bundlers; the CDN build emits IIFE stisla.js (window.Stisla + auto-init).",
   "license": "MIT",
   "type": "module",

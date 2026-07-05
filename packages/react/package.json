@@ -1,6 +1,6 @@
 {
   "name": "@stisla/react",
-  "version": "3.0.0-rc.1",
+  "version": "3.0.0-rc.2",
   "private": true,
   "description": "Stisla React components — thin Base UI wrappers over the @stisla/style composer. NOT published: example-only (button + sidebar) until the real React sweep lands (ROADMAP Phase 8). Kept in the workspace so docs build; excluded from `pnpm release` via private, mirroring @stisla/vue.",
   "license": "MIT",

@@ -1,7 +1,7 @@
 {
   "name": "stisla-monorepo",
   "private": true,
-  "version": "3.0.0-rc.1",
+  "version": "3.0.0-rc.2",
   "description": "Stisla — constraint + Tailwind-scale era. Real pnpm workspaces. See ARCHITECTURE.md and ROADMAP.md.",
   "license": "MIT",
   "type": "module",

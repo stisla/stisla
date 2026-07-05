@@ -2,9 +2,9 @@
 
 For Stisla 2.x changes, see [getstisla.com](https://getstisla.com).
 
-## [Unreleased]
+## [3.0.0-rc.2] — 2026-07-05
 
-Additive accessibility refinements only. No token, class, or modifier changes, so the `rc.1` API freeze holds.
+Additive accessibility refinements only. No token, class, or modifier changes, so the `rc.1` API freeze holds and the RC soak window is not reset.
 
 ### Fixed
 
