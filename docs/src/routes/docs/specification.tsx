@@ -1027,8 +1027,7 @@ function SpecificationDocs() {
       <section>
         <h2>Implementations</h2>
         <p>
-          One spec, many implementations. Status as of <code>3.0.0-beta.1</code>
-          .
+          One spec, many implementations. Status as of <code>3.0</code>.
         </p>
         <table>
           <thead>
@@ -1042,7 +1041,7 @@ function SpecificationDocs() {
             <tr>
               <td>Vanilla CSS + JS</td>
               <td>
-                Ships in <code>3.0.0-beta.1</code>
+                Ships in <code>3.0</code>
               </td>
               <td>
                 Reference implementation.{" "}

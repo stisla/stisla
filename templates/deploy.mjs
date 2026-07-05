@@ -26,7 +26,7 @@ const here = path.dirname(fileURLToPath(import.meta.url));
  * DOCS_URL    where `/` redirects to (your docs templates page). Set the real
  *             docs production origin here. */
 const PROJECT = "stisla-templates";
-const DOCS_URL = "https://stisla.pages.dev/templates";
+const DOCS_URL = "https://stisla.dev/templates";
 
 /* Each template: its build dir, and `mount` = the folder name its markup links
  * to absolutely (Meridian's nav is /meridian/*.html, so it MUST serve at

@@ -109,7 +109,7 @@ reference (Button + Sidebar) stays as-is; don't delete, don't extend.
 These are **unordered** — pick by what's ready / highest-leverage, not top-to-bottom:
 
 - [ ] **Complete `@stisla/css` + `@stisla/vanilla`, then ship.** Land the real dist + npm publish
-      (currently `3.0.0-beta.8`; `dist/` gitignored; publish gated on maintainer). Verify both
+      (currently `3.0.1`; `dist/` gitignored; publish gated on maintainer). Verify both
       bundles (`stisla.css`/`stisla-full.css` + the 3 optional add-ons) and the JS IIFE on a
       no-build page. See [[project_build_pipeline]] / [[project_distribution_model]].
 - [ ] **Complete the illustration page.** Port the full metaphor set + the recolorable-SVG
