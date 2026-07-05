@@ -142,22 +142,10 @@ importers:
         version: 2.6.1
     devDependencies:
       esbuild:
-        specifier: ^0.27.0
-        version: 0.27.7
+        specifier: ^0.28.1
+        version: 0.28.1
 
   packages/vue: {}
-
-  templates/dist-site/meridian:
-    devDependencies:
-      '@stisla/style':
-        specifier: beta
-        version: 3.0.0-beta.10
-      '@tailwindcss/cli':
-        specifier: ^4.0.0
-        version: 4.3.2
-      tailwindcss:
-        specifier: ^4.0.0
-        version: 4.3.2
 
   templates/meridian/html:
     dependencies:
@@ -1278,9 +1266,6 @@ packages:
 
   '@speed-highlight/core@1.2.17':
     resolution: {integrity: sha512-Z92FwKpCtfaW1V0jTU/fh3QzYEZN8wDwrzRIBoADCJfn4mJCNcJN/XegifX7BDrQ8/h9Xh/JnbyMchL0FqXrkg==}
-
-  '@stisla/style@3.0.0-beta.10':
-    resolution: {integrity: sha512-nmuP3Uclz37aIeQypJ1k1ve63JtQ5Wn6rKQFGZRsygeInvhveokpQTXc7dIEVA9xkFp2Ez8bFPX7K6q8QtLXfA==}
 
   '@tailwindcss/cli@4.3.2':
     resolution: {integrity: sha512-Fzt+HrIZHDlkRYKdLMBeufaroaPvwCBG70sMLdmurdeadNMO/LxbmT8Sbb+P83ep0iAlAImettb7Y+rO+37rXw==}
@@ -2410,6 +2395,11 @@ packages:
     engines: {node: '>=20.16.0'}
     hasBin: true
 
+  srvx@0.11.21:
+    resolution: {integrity: sha512-GWTHjKMeekX8CwJf4VU9Oo6mJpSGaflGMddbCvR+Cmmh9sslRMiGbAoqqZacE0r1ncARh6buCEETr2W52F8b1w==}
+    engines: {node: '>=20.16.0'}
+    hasBin: true
+
   stringify-entities@4.0.4:
     resolution: {integrity: sha512-IwfBptatlO+QCJUo19AqvrPNqlVMpW9YEL2LIVY+Rpv2qsjCGxaDLNRgeGsQWJhfItebuJhsGSLjaBbNSQ+ieg==}
 
@@ -3462,8 +3452,6 @@ snapshots:
 
   '@speed-highlight/core@1.2.17': {}
 
-  '@stisla/style@3.0.0-beta.10': {}
-
   '@tailwindcss/cli@4.3.2':
     dependencies:
       '@parcel/watcher': 2.5.1
@@ -4092,7 +4080,7 @@ snapshots:
   h3@2.0.1-rc.20:
     dependencies:
       rou3: 0.8.1
-      srvx: 0.11.17
+      srvx: 0.11.21
 
   hast-util-to-html@9.0.5:
     dependencies:
@@ -4753,6 +4741,8 @@ snapshots:
   space-separated-tokens@2.0.2: {}
 
   srvx@0.11.17: {}
+
+  srvx@0.11.21: {}
 
   stringify-entities@4.0.4:
     dependencies:
