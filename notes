@@ -1,14 +1,5 @@
 # notes
 
-## Pending for next release (beta.11)
-
-- @stisla/vanilla peer removal ships with beta.11. Live beta.10 on npm still carries
-  `peerDependencies: { "@stisla/css": "3.0.0-beta.10" }`; the source tree (committed in
-  932f713) has it removed. npm forbids republishing over beta.10, so git is intentionally
-  one step ahead of npm for vanilla until the next bump reconciles them.
-  Why removed: vanilla has no code dependency on @stisla/css (just toggles classes/aria);
-  the hard peer fired spurious warnings for CDN and @stisla/style-subset consumers.
-
 ## VO issues
 
 Verified against the real WebKit accessibility tree (Playwright ariaSnapshot),

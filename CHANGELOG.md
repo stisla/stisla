@@ -2,6 +2,21 @@
 
 For Stisla 2.x changes, see [getstisla.com](https://getstisla.com).
 
+## [3.0.0-rc.1] — 2026-07-05
+
+The first release candidate. **The public API is now frozen.** `--color-*` tokens, the lone `--st-border-width` custom, component class names, and the intent-based modifiers (`--seamless`, `--grid`, `--animated`, `--pill`, `--circle`, `--soft`, etc.) are locked for the 3.0 line. Any rename after this point resets the RC clock. The 2026-07-02 modifier sweep was the last allowed breaking rename.
+
+Published packages: `@stisla/css`, `@stisla/style`, `@stisla/vanilla`, under the npm `rc` dist-tag.
+
+### Changed
+
+- Version bumped to `3.0.0-rc.1` across the shipping packages.
+- `@stisla/vanilla` no longer declares a hard peer on `@stisla/css`. Vanilla only toggles classes and aria, so the peer fired spurious warnings for CDN and `@stisla/style`-subset consumers. This reconciles npm with the source tree (the removal was committed back at `932f713`; npm forbade republishing over `beta.10`, so this bump carries it).
+
+### Not published
+
+- `@stisla/react` is marked private. It is example-only (`button` + `sidebar`) until the real React sweep (ROADMAP Phase 8). It stays in the workspace so docs build, but is excluded from `pnpm release`, mirroring `@stisla/vue`.
+
 ## [3.0.0-beta.7] — 2026-06-18
 
 Drops the `.stack` and `.inline` layout primitives from the vanilla implementation. The modifier surface (`--gap-*`, `--align-*`, `--justify-*`) only reskinned utilities the consumer was already composing directly; in vanilla the abstraction added a layer without adding power. Layout primitives are now a per-implementation choice — the React port will ship `<Stack>` / `<Inline>` because typed props and JSX make them worthwhile.

@@ -493,20 +493,23 @@ it's "confirm the behavior, fix the code if wrong."
       (`pnpm test:rc` → 27 passed, 2026-07-04).
 - [x] Every real bug the **Tier-1** specs surfaced is fixed in `packages/vanilla/src/components/*` (the
       select accessible-name/combobox fix, §6.5 — not papered over in the test).
-- [ ] `beta.11` peer-dep fix folded in; `notes` entry deleted.
-- [ ] `pnpm build:packages` + `pnpm smoke` + `pnpm check` still green.
-- [ ] Version bumped to `3.0.0-rc.1`; maintainer publishes.
-- [ ] API declared frozen (this doc + CHANGELOG note).
+- [x] `beta.11` peer-dep fix folded in; `notes` entry deleted. (Peer removal reconciled with npm by the
+      `rc.1` bump; stale `notes` block deleted 2026-07-05.)
+- [x] `pnpm build:packages` + `pnpm smoke` + `pnpm check` still green.
+- [x] Version bumped to `3.0.0-rc.1`; maintainer published 2026-07-05 (npm `rc` dist-tag →
+      `@stisla/css`/`@stisla/style`/`@stisla/vanilla@3.0.0-rc.1`).
+- [x] API declared frozen (this doc §2.1 + CHANGELOG `3.0.0-rc.1` note). **Frozen as of 2026-07-05.**
 
 ### Stable gate — `3.0.0` (all must be ✅, on top of RC)
 - [x] Tier-1 **and** Tier-2 keyboard specs pass on **Chromium + Firefox + WebKit** (2026-07-04). Full
       suite **292 passed / 0 failed / 2 skipped** — the 2 skips are the WebKit focus-trap
       Full-Keyboard-Access artifact (§6.5). Four real bugs the Tier-2 gate surfaced are fixed at the
       source (§6.5).
-- [ ] Human VoiceOver pass done, issues fixed (§6.2).
-- [ ] Real-Safari spot check done (§6.3).
-- [ ] Reduced-motion + 200% zoom sanity done (§6.4).
+- [x] Human VoiceOver pass done, issues fixed (§6.2).
+- [x] Real-Safari spot check done (§6.3).
+- [x] Reduced-motion + 200% zoom sanity done (§6.4).
 - [ ] API held unchanged for the entire RC window — no token/class/modifier rename since `rc.1`.
+      (Clock started 2026-07-05.)
 - [ ] No open Tier-1 a11y bug.
 - [ ] Maintainer promotes `3.0.0`; `v3` merged to `master`.
 

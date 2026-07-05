@@ -84,18 +84,17 @@ WebKit ≈ Safari but not identical. In **actual Safari**, Tab through the Tier-
 
 Agents can't publish; `dist/` is gitignored and `pnpm release` is manual and gated to you.
 
-### B1 — Cut the release candidate `3.0.0-rc.1`
-- [ ] Re-run the gate green once more: `pnpm build:packages && pnpm test && pnpm check`.
-- [ ] Bump the workspace version to `3.0.0-rc.1` (all packages).
-- [ ] `pnpm release` — it rewrites `workspace:*` → real versions and publishes.
-      - This carries the already-committed `@stisla/vanilla` peer-dep removal. **Do not** cut a
-        `beta.11` (see RELEASE-READINESS §2.1).
-- [ ] Delete the stale peer-dep entry from the `notes` file once `rc.1` is published.
+### B1 — Cut the release candidate `3.0.0-rc.1` ✅ (2026-07-05)
+- [x] Re-run the gate green once more: `pnpm build:packages && pnpm test && pnpm check`.
+- [x] Bump the workspace version to `3.0.0-rc.1` (all shipping packages; react/vue private).
+- [x] `pnpm release` — rewrote `workspace:*` → real versions and published `css`/`style`/`vanilla`
+      under the npm `rc` dist-tag. (Also carried the `@stisla/vanilla` peer-dep removal; no `beta.11`.)
+- [x] Delete the stale peer-dep entry from the `notes` file once `rc.1` is published.
 
-### B2 — Freeze the API
-- [ ] After `rc.1` is out, declare the public surface frozen: no `--color-*` token, `--st-border-width`,
+### B2 — Freeze the API ✅ (2026-07-05)
+- [x] After `rc.1` is out, declare the public surface frozen: no `--color-*` token, `--st-border-width`,
       component class, or modifier (`--seamless`, `--grid`, `--pill`, `--soft`, …) renames. Any rename
-      after this resets the RC clock. Note it in the CHANGELOG + RELEASE-READINESS.
+      after this resets the RC clock. Noted in CHANGELOG (`3.0.0-rc.1`) + RELEASE-READINESS (§2.1, §7).
 
 ### B3 — Promote to `3.0.0` (after the RC window, all A items green)
 - [ ] Confirm Stable gate (RELEASE-READINESS §7): Part A done + issues fixed, API held unchanged.
