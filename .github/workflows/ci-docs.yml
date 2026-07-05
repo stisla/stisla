@@ -1,0 +1,36 @@
+name: CI docs
+
+# Build-only check for pull requests into master. Catches a broken docs build
+# BEFORE merge, so the deploy job (deploy-docs.yml, runs on push to master) never
+# fires on a build that was already known to fail. No deploy, no secrets needed.
+on:
+  pull_request:
+    branches: [master]
+    paths:
+      - "docs/**"
+      - "packages/**"
+      - "pnpm-lock.yaml"
+      - ".github/workflows/ci-docs.yml"
+
+concurrency:
+  group: ci-docs-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.30.3
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm --filter docs build
