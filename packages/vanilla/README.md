@@ -16,8 +16,8 @@ import "@stisla/vanilla"; // every component
 Or via CDN (classic script, exposes `window.Stisla`, auto-inits):
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@beta/dist/stisla.css" />
-<script src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@beta/dist/stisla.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@rc/dist/stisla.css" />
+<script src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@rc/dist/stisla.js"></script>
 ```
 
 This single entry registers every component. Want only a subset? Import the individual modules from `@stisla/vanilla/components/<name>.js` and `register()` them yourself.

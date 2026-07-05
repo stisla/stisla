@@ -15,7 +15,7 @@ import "@stisla/css"; // every component
 Or via CDN:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@beta/dist/stisla.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@rc/dist/stisla.css" />
 ```
 
 This single bundle ships every component. Want only a subset? Compile from source with [`@stisla/style`](https://www.npmjs.com/package/@stisla/style): pull `@stisla/style/theme.css` plus the `@stisla/style/<name>/<name>.css` you need through your own Tailwind build.
