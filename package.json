@@ -1,7 +1,7 @@
 {
   "name": "stisla-monorepo",
   "private": true,
-  "version": "3.0.0-beta.10",
+  "version": "3.0.0-rc.1",
   "description": "Stisla — constraint + Tailwind-scale era. Real pnpm workspaces. See ARCHITECTURE.md and ROADMAP.md.",
   "license": "MIT",
   "type": "module",
@@ -20,7 +20,7 @@
     "test:ui": "playwright test --ui",
     "test:stable": "playwright test",
     "pretest": "pnpm build:packages",
-    "release": "pnpm build:packages && pnpm smoke && pnpm -r --filter \"./packages/*\" publish --access public --tag beta --no-git-checks"
+    "release": "pnpm build:packages && pnpm smoke && pnpm -r --filter \"./packages/*\" publish --access public --tag rc --no-git-checks"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
