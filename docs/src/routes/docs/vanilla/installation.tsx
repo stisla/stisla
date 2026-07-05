@@ -58,12 +58,12 @@ function InstallationDocs() {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Stisla starter</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@rc/dist/stisla.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@stisla/css@3/dist/stisla.css">
   </head>
   <body>
     <button type="button" class="button button--primary">Hello</button>
 
-    <script src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@rc/dist/stisla.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@stisla/vanilla@3/dist/stisla.js"></script>
   </body>
 </html>
 `}
@@ -76,9 +76,8 @@ function InstallationDocs() {
         </p>
 
         <p>
-          The <code>@rc</code> tag follows the latest release candidate. Once
-          3.0 is stable, switch to <code>@3</code> for the latest 3.x, or pin an exact
-          version for reproducible builds.
+          The <code>@3</code> tag tracks the latest 3.x release. Pin an exact
+          version instead for fully reproducible builds.
         </p>
       </section>
 
