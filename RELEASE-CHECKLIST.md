@@ -4,7 +4,7 @@
 > to-do list of things **tools can't do** — the human a11y passes and the release mechanics.
 > Everything on the automated side is done and green. Work top to bottom.
 >
-> Last updated: 2026-07-04 · Branch: `v3`
+> Last updated: 2026-07-05 · Branch: `master`
 
 ---
 
@@ -82,25 +82,38 @@ WebKit ≈ Safari but not identical. In **actual Safari**, Tab through the Tier-
 
 ## Part B — Release mechanics (maintainer-only)
 
-Agents can't publish; `dist/` is gitignored and `pnpm release` is manual and gated to you.
+Releases are automated with **Changesets + npm Trusted Publishing (OIDC)** via
+`.github/workflows/release.yml`. There is no manual `pnpm publish` and no npm token in
+the repo.
 
-### B1 — Cut the release candidate `3.0.0-rc.1` ✅ (2026-07-05)
-- [x] Re-run the gate green once more: `pnpm build:packages && pnpm test && pnpm check`.
-- [x] Bump the workspace version to `3.0.0-rc.1` (all shipping packages; react/vue private).
-- [x] `pnpm release` — rewrote `workspace:*` → real versions and published `css`/`style`/`vanilla`
-      under the npm `rc` dist-tag. (Also carried the `@stisla/vanilla` peer-dep removal; no `beta.11`.)
-- [x] Delete the stale peer-dep entry from the `notes` file once `rc.1` is published.
+### Status (done)
+- [x] `3.0.0-rc.1` / `rc.2` cut and published under the npm `rc` dist-tag (2026-07-05).
+- [x] API frozen at rc.1 (no `--color-*` token, `--st-border-width`, class, or modifier renames after).
+- [x] `3.0.0` published to npm as `latest` (`@stisla/css`, `@stisla/style`, `@stisla/vanilla`).
+- [x] `3.0.0` baseline tagged + GitHub Release cut, so git / npm / GitHub agree on the baseline.
 
-### B2 — Freeze the API ✅ (2026-07-05)
-- [x] After `rc.1` is out, declare the public surface frozen: no `--color-*` token, `--st-border-width`,
-      component class, or modifier (`--seamless`, `--grid`, `--pill`, `--soft`, …) renames. Any rename
-      after this resets the RC clock. Noted in CHANGELOG (`3.0.0-rc.1`) + RELEASE-READINESS (§2.1, §7).
+### One-time setup — required before the NEXT publish
+- [ ] On npmjs.com, enable a **Trusted Publisher** for each published package
+      (`@stisla/style`, `@stisla/css`, `@stisla/vanilla`): package **Settings → Trusted
+      Publisher → GitHub Actions**, org `stisla`, repository `stisla/stisla`, workflow
+      filename `release.yml`. A package must have been published once first (all three
+      have), so this can be done now. Until it is set, the publish step will fail auth.
+- [ ] In the GitHub repo, **Settings → Actions → General → Workflow permissions**: enable
+      **"Allow GitHub Actions to create and approve pull requests"**, otherwise the
+      workflow can't open the Version Packages PR. (Read/write token is already granted
+      per-job in `release.yml`.)
 
-### B3 — Promote to `3.0.0` (after the RC window, all A items green)
-- [ ] Confirm Stable gate (RELEASE-READINESS §7): Part A done + issues fixed, API held unchanged.
-- [ ] Bump to `3.0.0`, `pnpm release`.
-- [ ] Merge `v3` → `master` (independent of publishing; branch is merge-safe today — confirm before
-      merging).
+### Every release from now on
+1. Land changes on `master`; each change to a published package ships a changeset
+   (`pnpm changeset`) in its PR.
+2. The release workflow opens a **Version Packages** PR that applies the bumps and
+   updates each package's `CHANGELOG.md`.
+3. Merge that PR. The workflow publishes to npm (OIDC, with provenance) and creates the
+   per-package git tags and GitHub Releases automatically.
+
+No step publishes from a laptop. Fallback only: `pnpm release`
+(`build:packages && smoke && changeset publish`) publishes locally, but that path needs
+`npm login` and does not use OIDC.
 
 ---
 

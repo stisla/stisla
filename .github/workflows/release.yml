@@ -1,0 +1,61 @@
+name: Release
+
+# Changesets-driven release. On every push to master this either:
+#   1. opens/updates a "Version Packages" PR (when unreleased changesets exist), or
+#   2. publishes to npm + creates git tags and GitHub Releases (when that PR is merged
+#      and package versions are ahead of the registry).
+#
+# Publishing uses npm Trusted Publishing (OIDC) — there is NO NPM_TOKEN. Auth is the
+# `id-token: write` permission below, which npm trusts via a per-package Trusted
+# Publisher pointing at this repo + this workflow file. Provenance is attached
+# automatically. See CONTRIBUTING.md → Releases for the one-time npm setup.
+#
+# NOTE: setup-node deliberately omits `registry-url` so no placeholder auth-token
+# .npmrc is written — that would shadow the OIDC exchange. pnpm publishes to the
+# default registry (registry.npmjs.org) for these public @stisla/* packages.
+on:
+  push:
+    branches: [master]
+
+# Never run two releases at once; let an in-flight one finish (don't cancel a publish).
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+# Deny by default; grant only what the release job needs.
+permissions: {}
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # push the Version Packages PR branch + git tags, create Releases
+      pull-requests: write # open/update the Version Packages PR
+      id-token: write # OIDC token for npm Trusted Publishing
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.30.3
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # npm >= 11.5.1 performs the OIDC token exchange when pnpm delegates to it.
+      - name: Ensure OIDC-capable npm
+        run: npm install -g npm@latest
+
+      - name: Create Release PR or publish
+        uses: changesets/action@v1
+        with:
+          version: pnpm changeset version
+          publish: pnpm release
+          commit: "chore(release): version packages"
+          title: "chore(release): version packages"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
