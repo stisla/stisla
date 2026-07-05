@@ -453,14 +453,14 @@ function Home() {
               </p>
               <div className="mt-10 flex flex-wrap items-center gap-3">
                 <Link
-                  to="/docs/introduction"
+                  to="/docs/vanilla/installation"
                   className="button button--primary button--lg rounded-full"
                 >
                   Get started
                   <ArrowRight aria-hidden="true" />
                 </Link>
                 <Link
-                  to="/docs/theming"
+                  to="/docs/introduction"
                   className="button button--ghost button--neutral button--lg rounded-full"
                 >
                   Read the docs
@@ -713,7 +713,7 @@ function Home() {
 
             <Feature flush title="Sidebar">
               <div className="card w-full lg:w-8/12 mx-auto">
-                <aside className="sidebar">
+                <aside className="sidebar w-full">
                   <header className="sidebar__header">
                     <a className="sidebar__brand" href="#">
                       <span>Meridian</span>

@@ -12,35 +12,10 @@ function InstallationDocs() {
       <header>
         <h1>Installation</h1>
         <p className="lead">
-          Stisla ships in two pieces. A stylesheet and a small JS runtime. Drop
-          them in from a CDN, or install from a package manager. Each is one file
-          with every component; for a smaller subset, the{" "}
-          <Link to="/docs/vanilla/optimization" className="link">
-            Optimization
-          </Link>{" "}
-          page compiles from source.
+          Stisla ships as a stylesheet and a small JS runtime. Drop them in from
+          a CDN, or install from a package manager.
         </p>
       </header>
-
-      <section>
-        <h2>The two pieces</h2>
-        <p>
-          The stylesheet, <code>@stisla/css</code>, is precompiled and
-          framework-agnostic. The runtime, <code>@stisla/vanilla</code>, drives
-          the interactive components from <code>data-stisla-*</code> markup. Each
-          is a single file that ships every component, <code>stisla.css</code>{" "}
-          and <code>stisla.js</code>. Install both pieces at the same version.
-        </p>
-        <p>
-          Three components (carousel, combobox, scroll-area) carry a third-party
-          library. They ship in the bundle like everything else, so nothing extra
-          is needed to use them. If you want their libraries left out, the{" "}
-          <Link to="/docs/vanilla/optimization" className="link">
-            Optimization
-          </Link>{" "}
-          page compiles a subset from source.
-        </p>
-      </section>
 
       <section>
         <h2>Using CDN</h2>
@@ -69,10 +44,9 @@ function InstallationDocs() {
 `}
         />
         <p>
-          The runtime is a classic script. It exposes{" "}
-          <code>window.Stisla</code> and auto-initializes any{" "}
-          <code>data-stisla-*</code> markup already in the page, so it carries
-          no <code>type="module"</code>.
+          The runtime is a classic script. It exposes <code>window.Stisla</code>{" "}
+          and auto-initializes any <code>data-stisla-*</code> markup already in
+          the page, so it carries no <code>type="module"</code>.
         </p>
 
         <p>
@@ -110,15 +84,24 @@ import '@stisla/vanilla';
           </Link>{" "}
           page covers driving components from markup or from JS.
         </p>
+        <p>
+          To ship only the components you use, install{" "}
+          <code>@stisla/style</code> instead of the precompiled bundle and
+          compile a subset from source. The{" "}
+          <Link to="/docs/vanilla/optimization" className="link">
+            Optimization
+          </Link>{" "}
+          page walks through it.
+        </p>
       </section>
 
       <section>
         <h2>Components that carry a library</h2>
         <p>
           Three components pull in a third-party library, which is most of the
-          runtime&rsquo;s weight. They ship in the bundle like everything else, so
-          nothing extra is needed to use them. If you don&rsquo;t use them and want
-          their libraries left out, compile a subset from the{" "}
+          runtime&rsquo;s weight. They ship in the bundle like everything else,
+          so nothing extra is needed to use them. If you don&rsquo;t use them
+          and want their libraries left out, compile a subset from the{" "}
           <Link to="/docs/vanilla/optimization" className="link">
             style source
           </Link>
