@@ -95,10 +95,10 @@ function IntroductionDocs() {
       <section>
         <h2>Status</h2>
         <p>
-          The current version is 3.0.0-beta.1. The token surface, BEM class
-          names, component APIs, and vanilla JS behavior are stable as of this
-          beta unless a bug forces a change. The React implementation and the
-          full docs site are the remaining work before stable.
+          Stisla 3 is stable. The token surface, BEM class names, component
+          APIs, and vanilla JS behavior are settled and will only change if a
+          bug forces it. The React implementation and the full docs site are the
+          remaining work.
         </p>
         <p>
           v2, the Bootstrap 4 release, is not getting migrated and lives on the{" "}

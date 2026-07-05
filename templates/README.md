@@ -141,7 +141,7 @@ redirects `/` to the docs templates gallery), then runs
 
 ```
 stisla-templates.pages.dev/
-  index.html                     → redirects to stisla.pages.dev/templates
+  index.html                     → redirects to stisla.dev/templates
   meridian/                      → the template pages + assets
   meridian/meridian.zip          → the download
 ```
@@ -171,7 +171,7 @@ pnpm dlx wrangler pages project create stisla-templates \
 ### Config to know (top of `deploy.mjs`)
 
 - `PROJECT` — the Cloudflare Pages project name (`stisla-templates`).
-- `DOCS_URL` — where `/` redirects (`https://stisla.pages.dev/templates`).
+- `DOCS_URL` — where `/` redirects (`https://stisla.dev/templates`).
 
 ---
 

@@ -66,7 +66,7 @@ if (typeof document !== 'undefined') {
 }
 
 export const Stisla = {
-  version: '3.0.0-beta.8',
+  version: '3.0.2',
   Component,
   Collapsible,
   Accordion,
