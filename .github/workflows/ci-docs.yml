@@ -3,14 +3,13 @@ name: CI docs
 # Build-only check for pull requests into master. Catches a broken docs build
 # BEFORE merge, so the deploy job (deploy-docs.yml, runs on push to master) never
 # fires on a build that was already known to fail. No deploy, no secrets needed.
+#
+# No path filter on purpose: this check is REQUIRED in branch protection, and a
+# required check that gets skipped (path miss) leaves the PR stuck waiting forever.
+# Running on every PR keeps it always-reporting. The build is fast and cached.
 on:
   pull_request:
     branches: [master]
-    paths:
-      - "docs/**"
-      - "packages/**"
-      - "pnpm-lock.yaml"
-      - ".github/workflows/ci-docs.yml"
 
 concurrency:
   group: ci-docs-${{ github.ref }}
