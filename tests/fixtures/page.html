@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — page</title>
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- Component under test: the page flow primitive. Markup mirrors the documented "Basic" usage
+       (docs/src/routes/docs/vanilla/page.tsx): a header (title + description + actions) followed by
+       sections, each with its own header. All actions carry text labels. -->
+  <div class="page w-full">
+    <header class="page__header">
+      <div class="page__headline">
+        <h1 class="page__title">Reports</h1>
+        <p class="page__description">Everything your team shipped this week.</p>
+      </div>
+      <div class="page__action">
+        <button class="button button--neutral button--outline">Export</button>
+        <button class="button button--primary">New report</button>
+      </div>
+    </header>
+    <section class="page__section">
+      <div class="page__section-header">
+        <h2 class="page__section-title">Overview</h2>
+        <div class="page__action">
+          <button class="button button--neutral button--ghost button--sm">Filter</button>
+        </div>
+      </div>
+      <div class="card"><div class="card__body">Section content sits here.</div></div>
+    </section>
+    <section class="page__section">
+      <div class="page__section-header">
+        <h2 class="page__section-title">Activity</h2>
+        <p class="page__section-description">Recent changes across your reports.</p>
+      </div>
+      <div class="card"><div class="card__body">Another block of content.</div></div>
+    </section>
+  </div>
+
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

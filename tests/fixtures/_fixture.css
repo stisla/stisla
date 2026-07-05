@@ -1,0 +1,14 @@
+/* Shared chrome for isolated component fixtures — NOT part of the component under test.
+   Just enough to give focus somewhere neutral to start from and keep the page readable. */
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  padding: 2rem;
+  background: var(--color-background, #fff);
+  color: var(--color-foreground, #111);
+}
+.fixture-before,
+.fixture-after {
+  display: block;
+  margin: 1rem 0;
+}

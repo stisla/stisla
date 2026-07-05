@@ -1,0 +1,36 @@
+/* @stisla/style — Collapsible. Ported from src/scss/components/_collapsible.scss. The CSS half of the
+ * height-animation primitive: a closed region drops out of flow, and while the JS behavior layer is
+ * mid-transition it keeps the region displayed so the height tween is visible. State lives in
+ * [data-state="open|closed"]; the transient mid-animation flag is [data-collapsing] (recast from
+ * the legacy transient class to an attribute per the no-is-* convention). The [data-collapsing]
+ * transition rule is GLOBAL (not scoped to .collapsible) so the JS layer can set it on ANY animated
+ * region — a standalone .collapsible, but also a borrowed body like .accordion__body / a sidebar
+ * submenu. Composers own their own closed-hide rule; the .collapsible closed rule below is for
+ * standalone use. Only no-namespace customs use --st-* (duration). Knob: --collapsible-transition-duration.
+ * @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  /* Closed and not mid-animation → fully removed from flow. The :not([data-collapsing]) guard keeps
+     the region visible while the behavior layer runs the close transition; display:none only takes
+     over once the flag clears. */
+  .collapsible[data-state="closed"]:not([data-collapsing]) {
+    display: none;
+  }
+
+  /* The behavior layer adds [data-collapsing] for the duration of an open/close, sets an explicit
+     height before and after a reflow, and the transition spec lives here (not inline) so a same-task
+     property + transition change can't fall through to the previous (none) computation. GLOBAL on
+     purpose — applies to whatever element the JS animates (composers borrow it for their own body). */
+  [data-collapsing] {
+    transition-property: height;
+    transition-duration: var(--collapsible-transition-duration, var(--transition-duration-normal));
+    transition-timing-function: ease;
+    overflow: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-collapsing] {
+      transition-duration: 0s;
+    }
+  }
+}

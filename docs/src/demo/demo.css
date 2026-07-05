@@ -1,0 +1,66 @@
+/* The sandboxed-demo stylesheet — the @stisla/css surface: theme + component CSS.
+ * Imported by DemoFrame with `?inline`, so the docs app's own @tailwindcss/vite compiles it
+ * and returns the result as a string to inline into the demo <iframe>. No separate build.
+ * Tailwind is imported here (theme.css is a pure @theme and no longer pulls it in). */
+
+@import "tailwindcss";
+@import "../../../packages/style/src/theme.css";
+@import "../../../packages/style/src/button/button.css";
+@import "../../../packages/style/src/alert/alert.css";
+@import "../../../packages/style/src/badge/badge.css";
+@import "../../../packages/style/src/card/card.css";
+@import "../../../packages/style/src/sidebar/sidebar.css";
+@import "../../../packages/style/src/input/input.css";
+@import "../../../packages/style/src/textarea/textarea.css";
+@import "../../../packages/style/src/field/field.css";
+@import "../../../packages/style/src/checkbox/checkbox.css";
+@import "../../../packages/style/src/radio/radio.css";
+@import "../../../packages/style/src/switch/switch.css";
+@import "../../../packages/style/src/select/select.css";
+@import "../../../packages/style/src/slider/slider.css";
+@import "../../../packages/style/src/input-group/input-group.css";
+@import "../../../packages/style/src/button-group/button-group.css";
+@import "../../../packages/style/src/media/media.css";
+@import "../../../packages/style/src/avatar/avatar.css";
+@import "../../../packages/style/src/avatar-group/avatar-group.css";
+@import "../../../packages/style/src/separator/separator.css";
+@import "../../../packages/style/src/icon-box/icon-box.css";
+@import "../../../packages/style/src/indicator/indicator.css";
+@import "../../../packages/style/src/kbd/kbd.css";
+@import "../../../packages/style/src/link/link.css";
+@import "../../../packages/style/src/spinner/spinner.css";
+@import "../../../packages/style/src/progress/progress.css";
+@import "../../../packages/style/src/meter/meter.css";
+@import "../../../packages/style/src/breadcrumb/breadcrumb.css";
+@import "../../../packages/style/src/pagination/pagination.css";
+@import "../../../packages/style/src/toggle/toggle.css";
+@import "../../../packages/style/src/toggle-group/toggle-group.css";
+@import "../../../packages/style/src/list-group/list-group.css";
+@import "../../../packages/style/src/tabs/tabs.css";
+@import "../../../packages/style/src/table/table.css";
+@import "../../../packages/style/src/tooltip/tooltip.css";
+@import "../../../packages/style/src/popover/popover.css";
+@import "../../../packages/style/src/accordion/accordion.css";
+@import "../../../packages/style/src/collapsible/collapsible.css";
+@import "../../../packages/style/src/dialog/dialog.css";
+@import "../../../packages/style/src/drawer/drawer.css";
+@import "../../../packages/style/src/toast/toast.css";
+@import "../../../packages/style/src/menu/menu.css";
+@import "../../../packages/style/src/combobox/combobox.css";
+@import "../../../packages/style/src/combobox/combobox.tomselect.css";
+@import "../../../packages/style/src/autocomplete/autocomplete.css";
+@import "../../../packages/style/src/carousel/carousel.css";
+@import "../../../packages/style/src/scroll-area/scroll-area.css";
+@import "../../../packages/style/src/scroll-area/scroll-area.overlayscrollbars.css";
+@import "../../../packages/style/src/navbar/navbar.css";
+@import "../../../packages/style/src/page/page.css";
+@import "../../../packages/style/src/placeholders/placeholders.css";
+@import "../../../packages/style/src/empty-state/empty-state.css";
+@import "../../../packages/style/src/illustration/illustration.css";
+@import "../../../packages/style/src/timeline/timeline.css";
+
+/* Generate utilities for the demo HTML. Tailwind's auto source-scan roots at the tokens package
+ * (where @import "tailwindcss" lives), so it never sees the demo strings in the route files.
+ * Point it here so demos can use utility classes (flex, gap-3, max-w-96, …) for layout scaffolding
+ * instead of inline styles — compiled into THIS stylesheet, inlined into the iframe. No CDN. */
+@source "../routes/docs";

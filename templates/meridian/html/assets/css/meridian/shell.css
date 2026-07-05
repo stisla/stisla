@@ -1,0 +1,79 @@
+/* ── App shell (layout) ───────────────────────────────────────────────────── */
+/* The shell (.app-shell / .app-shell__main) is owned here, not by the framework: the dropped
+ * app-shell primitive is replaced by a plain flex composition — the .sidebar component owns its
+ * own width, so the shell only lays out sidebar | main and makes main a fill column. The collapse
+ * and mobile-drawer interaction (the topbar hamburger's data-stisla-app-shell-toggle) is a
+ * separate JS layer, not yet ported.
+ *
+ * sidebar | main, full viewport height. The gap lets the content card float off the body edge. */
+.app-shell {
+  display: flex;
+  min-height: 100dvh;
+  gap: --spacing(2);
+}
+/* The .sidebar owns its width; hold it so a wide or overflowing main column (data
+ * tables, charts) squeezes itself, not the rail. Only a flex child at lg+ — below
+ * lg the sidebar is a fixed drawer, so this is a no-op there. */
+.app-shell > .sidebar {
+  flex-shrink: 0;
+}
+.app-shell__main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.app-shell__main > .navbar {
+  height: --spacing(14);
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+
+  --navbar-gap: 1rem;
+  --navbar-padding-inline: 1.25rem;
+  --navbar-padding-block: 0;
+  --menu-shadow: var(--shadow-xl);
+
+  @variant lg {
+    height: --spacing(20);
+  }
+}
+.app-shell__main > .navbar .avatar {
+  --avatar-size: 1.75rem;
+}
+.app-shell__main > .navbar .navbar__menu {
+  @variant lg {
+    flex: initial;
+    margin-inline-start: auto;
+  }
+}
+.app-shell.is-sidebar-collapsed .copyright {
+  display: none;
+}
+
+/* Mobile drawer: below lg the sidebar leaves the flow and slides in over a backdrop, toggled by the
+ * topbar hamburger (app-shell.js flips .is-sidebar-visible). At lg+ it is the sticky rail/panel above. */
+@media (max-width: 63.99rem) {
+  .app-shell.is-sidebar-visible .sidebar--app {
+    transform: none;
+    box-shadow: var(--shadow-xl);
+  }
+  .app-shell::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: --alpha(var(--color-background) / 40%);
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.3s ease,
+      visibility 0.3s ease;
+  }
+  .app-shell.is-sidebar-visible::before {
+    opacity: 1;
+    visibility: visible;
+  }
+}

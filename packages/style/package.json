@@ -1,0 +1,47 @@
+{
+  "name": "@stisla/style",
+  "version": "3.0.0-rc.2",
+  "description": "Stisla framework-agnostic style layer — the Tailwind @theme foundation (theme.css) + pure-JS composer + per-component configs + compiled component CSS. Zero framework deps.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./button": {
+      "types": "./dist/button/index.d.ts",
+      "import": "./dist/button/index.js"
+    },
+    "./theme.css": "./src/theme.css",
+    "./components.css": "./dist/components.css",
+    "./*.css": "./dist/*/*.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src/theme.css",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "build": "tsup && node scripts/copy-css.mjs"
+  },
+  "devDependencies": {
+    "tailwindcss": "^4.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stisla/stisla.git",
+    "directory": "packages/style"
+  },
+  "homepage": "https://github.com/stisla/stisla#readme",
+  "publishConfig": {
+    "access": "public"
+  }
+}

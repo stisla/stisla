@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — meter</title>
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- Basic meter (docs "Basic"). The root carries role="meter", an accessible
+       name (aria-label), the aria value attributes, and aria-valuetext for the unit. -->
+  <div class="meter meter--block" role="meter" aria-label="Memory" aria-valuenow="14.2" aria-valuemin="0" aria-valuemax="16" aria-valuetext="14.2 GB of 16 GB used">
+    <span class="meter__label">Memory</span>
+    <span class="meter__value">14.2 GB of 16 GB</span>
+    <div class="meter__track"><div class="meter__bar meter__bar--warning" style="width: 89%"></div></div>
+  </div>
+
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

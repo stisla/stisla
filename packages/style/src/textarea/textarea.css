@@ -1,0 +1,99 @@
+/* @stisla/style — Textarea. Ported from src/scss/components/_textarea.scss + the form-field-base
+ * mixin. Multi-line opt-out from the input's hard-height contract: restores padding-block, lets rows
+ * drive height, and turns --textarea-height into a min-height floor. References the @theme tokens
+ * (colors var(--color-*), spacing --spacing(n), type var(--text-*) / var(--font-weight-*), radius
+ * var(--radius-*)); only no-namespace customs use --st-* (border-width, duration). Knobs --textarea-*.
+ *
+ * The shared field base is DUPLICATED here with the --textarea-* namespace (plain CSS has no
+ * parameterized mixin). Keep in sync with input.css + select.css. @layer components.
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  /* === Shared field base (= former form-field-base, --textarea-* namespace) === */
+  .textarea {
+    display: block;
+    width: 100%;
+    font-family: inherit;
+    font-size: var(--textarea-font-size, var(--text-sm));
+    font-weight: var(--font-weight-normal);
+    color: var(--textarea-color, var(--color-foreground));
+    background: var(--textarea-bg, var(--color-surface));
+    border: var(--textarea-border-width, var(--st-border-width)) solid
+      var(--textarea-border-color, var(--color-border-strong));
+    border-radius: var(--textarea-radius, var(--radius-md));
+    appearance: none;
+    transition:
+      border-color var(--transition-duration-fast) ease,
+      box-shadow var(--transition-duration-fast) ease,
+      background-color var(--transition-duration-fast) ease;
+
+    /* === Multi-line overrides === */
+    height: auto;
+    min-height: var(--textarea-height, --spacing(9));
+    padding-block: var(--textarea-padding-block, --spacing(1.5)); /* restore vertical padding */
+    padding-inline: var(--textarea-padding-inline, --spacing(2.5));
+    line-height: var(--textarea-line-height, var(--leading-normal));
+    resize: vertical;
+
+    /* iOS Safari zooms when a focused field's font-size < 16px and never zooms back. */
+    @media (pointer: coarse) {
+      font-size: var(--textarea-font-size, var(--text-base));
+    }
+
+    &::placeholder {
+      color: var(--textarea-placeholder, var(--color-muted-foreground));
+      opacity: 1;
+    }
+
+    &:hover:not(:disabled, :focus-visible, [aria-invalid="true"], :user-invalid) {
+      border-color: color-mix(in oklch, var(--color-border-strong) 80%, var(--color-foreground));
+    }
+
+    &:focus-visible {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-ring) 25%, transparent);
+    }
+
+    &[aria-invalid="true"],
+    &:user-invalid {
+      border-color: var(--color-danger);
+    }
+    &[aria-invalid="true"]:focus-visible,
+    &:user-invalid:focus-visible {
+      border-color: var(--color-danger);
+      box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-danger) 25%, transparent);
+    }
+
+    &:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    &[readonly]:not(:disabled) {
+      background: var(--color-surface-2);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  /* === Sizes (base = md) — mirror .input so a textarea sits in a form row without breaking rhythm === */
+  .textarea--sm {
+    --textarea-radius: var(--radius-sm);
+    --textarea-height: --spacing(7);
+    --textarea-padding-inline: --spacing(2);
+    --textarea-font-size: var(--text-xs);
+    @media (pointer: coarse) {
+      --textarea-font-size: var(--text-base);
+    }
+  }
+
+  .textarea--lg {
+    --textarea-radius: var(--radius-lg);
+    --textarea-height: --spacing(11);
+    --textarea-padding-inline: --spacing(3.5);
+    --textarea-font-size: var(--text-base);
+  }
+}

@@ -1,0 +1,21 @@
+/* ── Sticky action bar ────────────────────────────────────────────────────── */
+/* A bar pinned to the bottom of the content surface, bleeding to the page-padding edges over a
+ * translucent blurred backdrop. Holds trailing actions (use .me-auto on a leading child to split
+ * status/total from buttons). The bottom offset cancels the content's own padding so it hugs the
+ * surface edge while staying sticky as the page scrolls. */
+.sticky-bar {
+  --sticky-bar-padding-block: 0.875rem;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: --spacing(3);
+  padding: var(--sticky-bar-padding-block) var(--page-padding-inline);
+  margin-inline: calc(var(--page-padding-inline) * -1);
+  margin-block-start: var(--page-padding-block);
+  margin-block-end: calc(var(--page-padding-block) * -1);
+  background: --alpha(var(--color-surface) / 88%);
+  backdrop-filter: blur(8px);
+  border-top: var(--st-border-width) solid var(--color-border);
+}

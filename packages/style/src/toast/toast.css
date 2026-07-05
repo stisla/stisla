@@ -1,0 +1,267 @@
+/* @stisla/style — Toast. Ported from src/scss/components/_toast.scss. A status message: a fixed
+ * .toast-region stack at one of six viewport corners holds .toast cards laid out as a 3-column grid
+ * [icon | content | close]. Shown via [data-state="open|closed"] on each toast (base renders open, so
+ * static markup-first toasts show without JS). References the @theme tokens: colors var(--color-*),
+ * sizes/spacing --spacing(n), type var(--text-*) / var(--leading-*) / var(--font-weight-*), radius
+ * var(--radius-*), shadow var(--shadow-*); only no-namespace customs use --st-* (border-width,
+ * duration, z-index). z-index routes through the z-index scale (--z-index-toast, above modal so a toast
+ * can confirm a dialog action). Knobs are --toast-*. Enqueue/dismiss/timers ship with the JS layer; the entrance
+ * fade uses @starting-style + allow-discrete so region-mounted toasts animate with no JS paint.
+ * @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  /* === Region === fixed stack at a viewport corner; pointer-events: none so the page stays
+     interactive in the gaps, each toast re-enabling events on itself. Default placement is top-end. */
+  .toast-region {
+    position: fixed;
+    z-index: var(--toast-region-z-index, var(--z-index-toast));
+    display: flex;
+    flex-direction: column;
+    gap: var(--toast-region-gap, --spacing(4));
+    max-width: var(--toast-region-max-width, --spacing(96));
+    width: calc(100% - 2 * var(--toast-region-inset, --spacing(4)));
+    pointer-events: none;
+
+    inset-block-start: var(--toast-region-inset, --spacing(4));
+    inset-inline-end: var(--toast-region-inset, --spacing(4));
+  }
+
+  .toast-region--top-start {
+    inset-block-start: var(--toast-region-inset, --spacing(4));
+    inset-block-end: auto;
+    inset-inline-start: var(--toast-region-inset, --spacing(4));
+    inset-inline-end: auto;
+  }
+
+  .toast-region--top-center {
+    inset-block-start: var(--toast-region-inset, --spacing(4));
+    inset-block-end: auto;
+    inset-inline: 0;
+    margin-inline: auto;
+  }
+
+  .toast-region--top-end {
+    inset-block-start: var(--toast-region-inset, --spacing(4));
+    inset-block-end: auto;
+    inset-inline-start: auto;
+    inset-inline-end: var(--toast-region-inset, --spacing(4));
+    align-items: end;
+  }
+
+  /* Bottom variants reverse so the newest toast sits at the corner and older ones push up. */
+  .toast-region--bottom-start {
+    inset-block-start: auto;
+    inset-block-end: var(--toast-region-inset, --spacing(4));
+    inset-inline-start: var(--toast-region-inset, --spacing(4));
+    inset-inline-end: auto;
+    flex-direction: column-reverse;
+  }
+
+  .toast-region--bottom-center {
+    inset-block-start: auto;
+    inset-block-end: var(--toast-region-inset, --spacing(4));
+    inset-inline: 0;
+    margin-inline: auto;
+    flex-direction: column-reverse;
+  }
+
+  .toast-region--bottom-end {
+    inset-block-start: auto;
+    inset-block-end: var(--toast-region-inset, --spacing(4));
+    inset-inline-start: auto;
+    inset-inline-end: var(--toast-region-inset, --spacing(4));
+    flex-direction: column-reverse;
+    align-items: end;
+  }
+
+  /* === Toast === base = displayed (a bare .toast or one inline in docs renders without a fade). The
+     allow-discrete on display holds the grid value through the close fade so the transition plays
+     before layout collapses. */
+  .toast {
+    z-index: var(--toast-z-index, var(--z-index-toast));
+    pointer-events: auto;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: start;
+    column-gap: var(--toast-column-gap, --spacing(3));
+    width: 100%;
+    min-width: var(--toast-min-width, --spacing(72));
+    max-width: var(--toast-max-width, --spacing(87.5));
+    padding: var(--toast-padding-block, --spacing(4))
+      var(--toast-padding-inline, --spacing(4));
+    background-color: var(--toast-bg, var(--color-surface));
+    color: var(--toast-color, var(--color-foreground));
+    line-height: var(--leading-none);
+    border: var(--toast-border-width, var(--st-border-width)) solid
+      var(--toast-border-color, var(--color-border));
+    border-radius: var(--toast-radius, var(--radius-lg));
+    box-shadow: var(--toast-shadow, var(--shadow-md));
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity var(--toast-transition-duration, var(--transition-duration-normal)) ease,
+      transform var(--toast-transition-duration, var(--transition-duration-normal)) ease,
+      display var(--toast-transition-duration, var(--transition-duration-normal)) ease
+        allow-discrete;
+  }
+
+  /* Bottom-region toasts slide in from below so the motion matches the stack growth direction. */
+  .toast-region--bottom-start > .toast,
+  .toast-region--bottom-center > .toast,
+  .toast-region--bottom-end > .toast {
+    --toast-enter-transform: translateY(--spacing(2));
+  }
+
+  /* Single-line toasts (title only) center vertically — the start-aligned optical nudge that keeps a
+     multi-line title lined up with the icon reads off-balance with one line. */
+  .toast:not(:has(.toast__body)):not(:has(.toast__action)) {
+    align-items: center;
+  }
+  .toast:not(:has(.toast__body)):not(:has(.toast__action)) .toast__icon {
+    margin-block-start: 0;
+  }
+
+  .toast[data-state="closed"] {
+    display: none;
+    opacity: 0;
+    transform: var(
+      --toast-enter-transform,
+      translateY(calc(--spacing(2) * -1))
+    );
+  }
+
+  /* Region-mounted open toasts get an entrance fade via @starting-style (the "from" values as the
+     element leaves display: none). Static inline toasts don't match, so they render flat. */
+  .toast-region > .toast[data-state="open"] {
+    @starting-style {
+      opacity: 0;
+      transform: var(
+        --toast-enter-transform,
+        translateY(calc(--spacing(2) * -1))
+      );
+    }
+  }
+
+  /* === Parts === col 1, leading visual (required). The small optical nudge lands the icon's center
+     on the title's cap line; grid align-items: start anchors every column to the row top. */
+  .toast__icon {
+    grid-column: 1;
+    margin-block-start: --spacing(0.5);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--toast-icon-size, --spacing(4.5));
+    height: var(--toast-icon-size, --spacing(4.5));
+    color: var(--toast-icon-color, var(--color-muted-foreground));
+    line-height: var(--leading-none);
+    flex-shrink: 0;
+  }
+  .toast__icon > svg,
+  .toast__icon > i {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Col 2 — content stack; its own vertical flex gap, independent of the grid row gap. */
+  .toast__content {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    gap: var(--toast-content-gap, --spacing(1.5));
+    min-width: 0;
+  }
+
+  .toast__header {
+    display: flex;
+    align-items: center;
+    gap: --spacing(2);
+    font-size: var(--toast-header-font-size, var(--text-sm));
+    font-weight: var(--toast-header-font-weight, var(--font-weight-semibold));
+    line-height: var(--leading-none);
+    color: var(--toast-color, var(--color-foreground));
+    min-width: 0;
+  }
+
+  /* Optional timestamp slot — "10 mins ago"; reads muted next to the title. */
+  .toast__timestamp {
+    font-weight: var(--font-weight-normal);
+    font-size: var(--text-xs);
+    color: var(--color-muted-foreground);
+  }
+
+  .toast__body {
+    font-size: var(--toast-body-font-size, var(--text-sm));
+    line-height: var(--leading-normal);
+    color: var(--toast-body-color, var(--color-muted-foreground));
+    min-width: 0;
+  }
+
+  .toast__action {
+    display: flex;
+    align-items: center;
+    gap: var(--toast-action-gap, --spacing(1));
+    margin-block-start: --spacing(1.5);
+  }
+
+  /* Col 3 — close chip; anchored top-right, never inflates row height beyond the content stack. */
+  .toast__close {
+    grid-column: 3;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--toast-close-size, --spacing(6));
+    height: var(--toast-close-size, --spacing(6));
+    padding: 0;
+    color: var(--toast-close-color, var(--color-muted-foreground));
+    background-color: transparent;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    transition:
+      background-color var(--transition-duration-fast) ease,
+      color var(--transition-duration-fast) ease;
+  }
+
+  .toast__close:hover {
+    color: var(--toast-close-color-hover, var(--color-foreground));
+    background-color: var(--toast-close-bg-hover, var(--color-accent));
+  }
+
+  .toast__close:focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+    color: var(--toast-close-color-hover, var(--color-foreground));
+    background-color: var(--toast-close-bg-hover, var(--color-accent));
+  }
+
+  .toast__close > svg,
+  .toast__close > i {
+    width: --spacing(3.5);
+    height: --spacing(3.5);
+  }
+
+  /* === Intent modifiers === each shifts ONLY the icon color; the surface stays neutral so stacked
+     toasts of mixed intent still read as one family. */
+  .toast--primary {
+    --toast-icon-color: var(--color-primary-emphasis);
+  }
+  .toast--success {
+    --toast-icon-color: var(--color-success-emphasis);
+  }
+  .toast--warning {
+    --toast-icon-color: var(--color-warning-emphasis);
+  }
+  .toast--danger {
+    --toast-icon-color: var(--color-danger-emphasis);
+  }
+  .toast--info {
+    --toast-icon-color: var(--color-info-emphasis);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .toast {
+      transition: none;
+    }
+  }
+}

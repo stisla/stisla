@@ -1,0 +1,134 @@
+/* @stisla/style — Empty state. Ported from src/scss/components/_empty-state.scss. A centred block
+ * shown in place of absent content (an empty list, no results, a fresh account, a 404, an error).
+ * Pure layout + media chrome, no JS. BEM: .empty-state + __media / __title / __text / __action; tone
+ * modifiers colour the media, --sm shrinks it for a card/table, --bordered draws a dashed region. The
+ * media slot is a tinted circle holding one glyph by default; drop in an .illustration / <img> /
+ * .icon-box / .avatar / .spinner and the :has() sheds below strip the circle so richer art isn't
+ * double-framed. References the @theme tokens: colors var(--color-*), sizes/spacing --spacing(n), type
+ * var(--text-*) / var(--leading-*) / var(--font-weight-*), radius var(--radius-*); only no-namespace
+ * customs use --st-* (border-width). Knobs are --empty-state-*. @layer components.
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    /* A measure so the text wraps to a comfortable line; margin-inline auto centres horizontally,
+       vertical fill is the consumer's (wrap it in a flex/grid cell). */
+    max-width: var(--empty-state-max-width, --spacing(96));
+    margin-inline: auto;
+    padding-block: var(--empty-state-padding-block, --spacing(10));
+    padding-inline: var(--empty-state-padding-inline, --spacing(4));
+    color: var(--color-foreground);
+  }
+
+  /* === Media === default: a soft-tinted circle holding one glyph, accent from the tone knob. The
+     tint mixes in oklab toward the surface so a saturated tone stays on-hue. */
+  .empty-state__media {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    width: var(--empty-state-media-size, --spacing(16));
+    height: var(--empty-state-media-size, --spacing(16));
+    margin-block-end: var(--empty-state-media-gap, --spacing(5));
+    color: var(--empty-state-tone-emphasis, var(--color-muted-foreground));
+    background: color-mix(in oklab, var(--empty-state-tone, var(--color-muted-foreground)) 12%, var(--color-surface));
+    border-radius: 9999px;
+  }
+
+  /* Bare glyph pins to a sensible size so the media reads the same across icon packs; :only-child
+     leaves a composed media (icon + badge) to size itself. */
+  .empty-state__media > :is(svg, i):only-child {
+    width: var(--empty-state-icon-size, --spacing(7));
+    height: var(--empty-state-icon-size, --spacing(7));
+    flex-shrink: 0;
+  }
+
+  /* Richer media brings its own shape, so the slot sheds the circle + tint and becomes a plain
+     centring box (illustration spot art, raw <img>, or the borrowed icon-box / avatar / spinner). */
+  .empty-state__media:is(
+    :has(> .illustration),
+    :has(> img),
+    :has(> .icon-box),
+    :has(> .avatar),
+    :has(> .spinner)
+  ) {
+    width: auto;
+    height: auto;
+    background: none;
+    border-radius: 0;
+  }
+
+  /* Spot art and bitmaps fill the slot up to a cap so a tall illustration never dominates. */
+  .empty-state__media > .illustration,
+  .empty-state__media > img {
+    width: 100%;
+    max-width: var(--empty-state-art-size, --spacing(40));
+    height: auto;
+  }
+
+  /* === Parts === */
+  .empty-state__title {
+    margin: 0;
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--leading-snug);
+    color: var(--color-foreground);
+  }
+
+  /* Tight rhythm under the title; the larger gaps are the media's bottom margin and the action's top
+     margin, so title and text always sit together. */
+  .empty-state__text {
+    margin-block: var(--empty-state-gap, --spacing(1.5)) 0;
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+    color: var(--color-muted-foreground);
+  }
+
+  /* Trailing controls — centred and wrapping so a primary + secondary pair stacks on a narrow region. */
+  .empty-state__action {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: --spacing(2);
+    margin-block-start: var(--empty-state-action-gap, --spacing(5));
+  }
+
+  /* === Tone modifiers === --empty-state-tone tints the media fill (12%); --empty-state-tone-emphasis is
+     the darker accessible glyph colour on that tint. Title and text stay foreground / muted. */
+  .empty-state--primary {
+    --empty-state-tone: var(--color-primary);
+    --empty-state-tone-emphasis: var(--color-primary-emphasis);
+  }
+  .empty-state--success {
+    --empty-state-tone: var(--color-success);
+    --empty-state-tone-emphasis: var(--color-success-emphasis);
+  }
+  .empty-state--warning {
+    --empty-state-tone: var(--color-warning);
+    --empty-state-tone-emphasis: var(--color-warning-emphasis);
+  }
+  .empty-state--danger {
+    --empty-state-tone: var(--color-danger);
+    --empty-state-tone-emphasis: var(--color-danger-emphasis);
+  }
+  .empty-state--info {
+    --empty-state-tone: var(--color-info);
+    --empty-state-tone-emphasis: var(--color-info-emphasis);
+  }
+
+  /* === Small === for an empty region inside a card, a panel, or an empty table body: smaller media
+     and tighter padding so it doesn't dominate a confined space. */
+  .empty-state--sm {
+    --empty-state-media-size: --spacing(11);
+    --empty-state-icon-size: --spacing(5);
+    --empty-state-media-gap: --spacing(3);
+    --empty-state-action-gap: --spacing(3);
+    --empty-state-padding-block: --spacing(6);
+  }
+}

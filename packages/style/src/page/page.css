@@ -1,0 +1,95 @@
+/* @stisla/style — Page. Ported from src/scss/components/_page.scss. A pure-CSS layout primitive for
+ * what sits inside <main>: a flex-column flow whose row-gap owns the rhythm, so header / sections /
+ * section-headers are siblings with zero outer margin (the reboot already zeroes h1–h6 + p). Opinionated
+ * heading cadences (--title h3-ish, --section-title h5-ish) let consumers drop the recurring heading
+ * utility. References the @theme tokens: colors var(--color-*), spacing --spacing(n), type
+ * var(--text-*) / var(--leading-*) / var(--font-weight-*). Knobs are --page-* (fallback-default, so a
+ * scope retunes any gap and it cascades — custom props inherit). @layer components.
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  /* The frame is the flow when used without a container; .page__body re-establishes the section
+     rhythm for the container-nested case. */
+  .page,
+  .page__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--page-section-gap, --spacing(6));
+  }
+
+  /* Header — flex row, heading leading, optional actions trailing; wraps actions to a new line on
+     narrow viewports. space-between is the fallback for the two-bare-children case; with a headline
+     group present its flex: 1 1 auto pushes actions to the end. */
+  .page__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--page-header-gap, --spacing(4));
+  }
+
+  /* Heading group — title + description stack with a small gap; flex: 1 1 auto grows it into the row,
+     min-width: 0 keeps a long title wrapping instead of forcing actions off-screen. */
+  .page__headline {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: var(--page-heading-gap, --spacing(1));
+    min-width: 0;
+  }
+
+  /* Title — opinionated h3-ish cadence. */
+  .page__title {
+    font-size: var(--page-title-font-size, var(--text-xl));
+    font-weight: var(--page-title-font-weight, var(--font-weight-semibold));
+    line-height: var(--leading-tight);
+  }
+
+  /* Description — optional muted helper copy under the title (muted baked in, like other __description
+     slots). */
+  .page__description {
+    font-size: var(--page-description-font-size, var(--text-sm));
+    font-weight: var(--page-description-font-weight, var(--font-weight-normal));
+    line-height: var(--leading-normal);
+    color: var(--page-description-color, var(--color-muted-foreground));
+  }
+
+  /* Actions slot — shared by .page__header and .page__section-header; flex-shrink: 0 keeps a
+     multi-button row from squishing (the header's wrap drops it to the next line instead). */
+  .page__action {
+    display: flex;
+    flex-shrink: 0;
+    gap: var(--page-action-gap, --spacing(2));
+  }
+
+  /* Section — mini-layout per block; the .page parent owns the inter-section rhythm. */
+  .page__section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--page-section-inner-gap, --spacing(4));
+  }
+
+  /* Section header — the header recipe at a tighter scale; shares .page__action. */
+  .page__section-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--page-section-header-gap, --spacing(3));
+  }
+
+  /* Section title — opinionated h5-ish cadence. */
+  .page__section-title {
+    font-size: var(--page-section-title-font-size, var(--text-lg));
+    font-weight: var(--page-section-title-font-weight, var(--font-weight-semibold));
+    line-height: var(--leading-snug);
+  }
+
+  /* Section description — the section-scale counterpart to .page__description. */
+  .page__section-description {
+    font-size: var(--page-section-description-font-size, var(--text-sm));
+    font-weight: var(--page-section-description-font-weight, var(--font-weight-normal));
+    line-height: var(--leading-normal);
+    color: var(--page-section-description-color, var(--color-muted-foreground));
+  }
+}

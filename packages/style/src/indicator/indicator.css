@@ -1,0 +1,84 @@
+/* @stisla/style — Indicator. Ported from src/scss/components/_indicator.scss. A contentless status dot
+ * (presence, liveness, unread) — distinct from .badge, which labels with a count or word. The dot is
+ * the ::after; an opt-in pulse halo is the ::before. Pin it over an avatar/icon corner with absolute
+ * positioning on a relative host. References the @theme tokens (colors var(--color-*), spacing/sizes
+ * --spacing(n)). Knobs are --indicator-*. Sizes compact/roomy → sm/lg. @layer components.
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  .indicator {
+    position: relative;
+    display: inline-block;
+    flex-shrink: 0;
+    width: var(--indicator-size, --spacing(2.5));
+    height: var(--indicator-size, --spacing(2.5));
+    vertical-align: middle;
+  }
+
+  /* The dot — ::after so it paints above the ::before pulse without a z-index. The ring is an opt-in
+     separator halo (0-width by default) for sitting the dot over a busy surface. */
+  .indicator::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--indicator-color, var(--color-muted-foreground));
+    border-radius: 50%;
+    box-shadow: 0 0 0 var(--indicator-ring-width, 0px) var(--indicator-ring-color, var(--color-background));
+  }
+
+  /* === Intent modifiers === */
+  .indicator--primary {
+    --indicator-color: var(--color-primary);
+  }
+  .indicator--success {
+    --indicator-color: var(--color-success);
+  }
+  .indicator--warning {
+    --indicator-color: var(--color-warning);
+  }
+  .indicator--danger {
+    --indicator-color: var(--color-danger);
+  }
+  .indicator--info {
+    --indicator-color: var(--color-info);
+  }
+
+  /* === Sizes (base = md) === */
+  .indicator--sm {
+    --indicator-size: --spacing(2);
+  }
+  .indicator--lg {
+    --indicator-size: --spacing(3.5);
+  }
+
+  /* === Pulse (ping halo) === an expanding, fading ring in the dot's color for "live" signals. The
+     ::before paints behind the ::after dot and emanates outward. */
+  .indicator--pulse::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--indicator-color, var(--color-muted-foreground));
+    border-radius: 50%;
+    opacity: 0;
+    animation: st-indicator-pulse var(--indicator-pulse-duration, 1.2s) cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  /* A still dot reads as a valid status (unlike a frozen spinner), so drop the ping rather than slow it. */
+  @media (prefers-reduced-motion: reduce) {
+    .indicator--pulse::before {
+      animation: none;
+    }
+  }
+}
+
+@keyframes st-indicator-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  75%,
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}

@@ -1,0 +1,194 @@
+/* @stisla/style — Accordion. Ported from src/scss/components/_accordion.scss. A stack of collapsible
+ * panels: closed items sit transparent on the frame, opening an item raises it as a soft chip
+ * (--color-surface-2 fill + --color-border rim) with a divider between heading and body. State lives
+ * in [data-state="open|closed"] on the item + [aria-expanded] on the trigger. References the @theme
+ * tokens: colors var(--color-*), sizes/spacing --spacing(n), type var(--font-weight-*) /
+ * var(--leading-*), radius var(--radius-*), shadow var(--shadow-*); only no-namespace customs use
+ * --st-* (border-width, duration). Knobs are --accordion-*. The height-transition on open ships with
+ * the JS layer; CSS here shows the resting open/closed states. @layer components.
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  /* Geometry — large frame, so radius-lg. With the --spacing(1) wrapper inset the inner item lands
+     at a smaller concentric radius, so the open chip reads like a normal rounded element framed by a
+     softer outer rim. The radius + padding knobs are re-read in the concentric item-radius calc, so
+     their defaults repeat. */
+  .accordion {
+    display: flex;
+    flex-direction: column;
+    gap: var(--accordion-gap, --spacing(1));
+    width: 100%;
+    padding: var(--accordion-padding-block, --spacing(1))
+      var(--accordion-padding-inline, --spacing(1));
+    background-color: var(--accordion-bg, var(--color-surface));
+    border: var(--accordion-border-width, var(--st-border-width)) solid
+      var(--accordion-border-color, var(--color-border));
+    border-radius: var(--accordion-radius, var(--radius-lg));
+    box-shadow: var(--accordion-shadow, var(--shadow-md));
+  }
+
+  /* Item carries a transparent border at rest so the chip-out on open doesn't reflow the row
+     (border-width stays constant in both states). overflow: hidden lets the header background fill
+     the chip without bleeding past the rounded edge while the body is hidden. */
+  .accordion__item {
+    border: var(--st-border-width) solid transparent;
+    border-radius: calc(
+      var(--accordion-radius, var(--radius-lg)) -
+        var(--accordion-padding-inline, --spacing(1))
+    );
+    overflow: hidden;
+    transition:
+      background-color var(--transition-duration-fast) ease,
+      border-color var(--transition-duration-fast) ease;
+  }
+
+  .accordion__item[data-state="open"] {
+    background-color: var(--accordion-item-open-bg, var(--color-surface-2));
+    border-color: var(--accordion-item-open-border-color, var(--color-border));
+  }
+
+  /* The <h3> (or h2/h4…) wrapping the trigger — the section sub-header, present for screen-reader
+     navigation. Pure structural wrapper; the trigger inside owns all the visual treatment. */
+  .accordion__heading {
+    margin: 0;
+  }
+
+  .accordion__trigger {
+    display: flex;
+    align-items: center;
+    gap: --spacing(3);
+    width: 100%;
+    padding-block: var(--accordion-trigger-padding-block, --spacing(3));
+    padding-inline: var(--accordion-trigger-padding-inline, --spacing(4));
+    font: inherit;
+    font-size: var(--accordion-trigger-font-size, inherit);
+    font-weight: var(
+      --accordion-trigger-font-weight,
+      var(--font-weight-medium)
+    );
+    text-align: start;
+    color: var(--accordion-trigger-color, var(--color-foreground));
+    background-color: var(--accordion-trigger-bg, transparent);
+    border: 0;
+    border-bottom: var(--st-border-width) solid transparent;
+    /* Round the top corners to the item radius so the inset focus ring follows the curve instead of
+       being clipped square by the item's overflow: hidden. (Bottom corners round only when the item
+       is closed — see below.) */
+    border-start-start-radius: calc(
+      var(--accordion-radius, var(--radius-lg)) -
+        var(--accordion-padding-inline, --spacing(1))
+    );
+    border-start-end-radius: calc(
+      var(--accordion-radius, var(--radius-lg)) -
+        var(--accordion-padding-inline, --spacing(1))
+    );
+    cursor: pointer;
+    transition:
+      background-color var(--transition-duration-fast) ease,
+      border-color var(--transition-duration-fast) ease;
+  }
+
+  .accordion__trigger :is(svg, i) {
+    width: --spacing(4.5);
+    height: --spacing(4.5);
+    flex-shrink: 0;
+    color: var(--alert-icon-color, var(--color-muted-foreground));
+  }
+
+  .accordion__trigger:focus-visible {
+    outline: 2px solid var(--accordion-ring, var(--color-ring));
+    outline-offset: -2px;
+  }
+
+  .accordion__trigger:disabled {
+    color: var(--color-muted-foreground);
+    cursor: not-allowed;
+  }
+
+  /* Hover paint applies only to closed items — the open chip already signals state via surface-2 +
+     rim + divider, so the open header is removed from the hover cascade entirely. The
+     `> .accordion__heading >` step matches the ARIA heading wrapper and fences scope: a nested
+     accordion inside an open item's body sits deeper, under its own heading, so it won't inherit. */
+  .accordion__item[data-state="closed"]
+    > .accordion__heading
+    > .accordion__trigger:hover:not(:disabled) {
+    background-color: var(--accordion-trigger-bg-hover, var(--color-accent));
+  }
+
+  /* Closed item: the header is the whole chip, so round its bottom corners too (the open header
+     keeps square bottoms where it meets the body) — keeps the focus ring fully rounded. */
+  .accordion__item[data-state="closed"]
+    > .accordion__heading
+    > .accordion__trigger {
+    border-end-start-radius: calc(
+      var(--accordion-radius, var(--radius-lg)) -
+        var(--accordion-padding-inline, --spacing(1))
+    );
+    border-end-end-radius: calc(
+      var(--accordion-radius, var(--radius-lg)) -
+        var(--accordion-padding-inline, --spacing(1))
+    );
+  }
+
+  /* Open item: divider line between the trigger and the body emerges. */
+  .accordion__item[data-state="open"]
+    > .accordion__heading
+    > .accordion__trigger {
+    border-bottom-color: var(
+      --accordion-trigger-divider-color,
+      var(--color-border)
+    );
+  }
+
+  .accordion__icon {
+    flex-shrink: 0;
+    /* Pushed to the end of the trigger row; the title text packs to the start. Auto margin rather
+       than justify-content: space-between, so anything else added groups at the start. */
+    margin-inline-start: auto;
+    width: var(--accordion-icon-size, --spacing(4));
+    height: var(--accordion-icon-size, --spacing(4));
+    color: var(--accordion-icon-color, currentColor);
+    transition: transform
+      var(--accordion-icon-transition-duration, var(--transition-duration-fast)) ease;
+  }
+
+  .accordion__item[data-state="open"]
+    > .accordion__heading
+    > .accordion__trigger
+    > .accordion__icon {
+    transform: rotate(180deg);
+  }
+
+  /* The body is a pure container with no padding — the JS height-transition animates this element,
+     and padding on the animating element causes content reflow during the transition. Padding sits
+     on the inner element so it stays at its natural size while the body clips it via overflow. */
+  .accordion__body {
+    color: var(--accordion-body-color, var(--color-foreground));
+  }
+
+  .accordion__body-inner {
+    padding-block: var(--accordion-body-padding-block, --spacing(3));
+    padding-inline: var(--accordion-body-padding-inline, --spacing(4));
+  }
+
+  /* CSS-only collapse; the JS layer swaps in a measured height transition. */
+  .accordion__item[data-state="closed"] > .accordion__body {
+    display: none;
+  }
+
+  /* === Flush === drop the frame border + shadow so the accordion fades into its parent surface
+     (a card or page section). Root padding stays — items still chip out concentrically when opened;
+     the parent owns inter-block spacing in flush contexts. */
+  .accordion--seamless {
+    border: 0;
+    box-shadow: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .accordion__item,
+    .accordion__trigger,
+    .accordion__icon {
+      transition: none;
+    }
+  }
+}

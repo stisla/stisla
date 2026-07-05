@@ -1,0 +1,332 @@
+.lp-unit {
+  position: relative;
+  background:
+    radial-gradient(
+      140% 90% at 50% -10%,
+      oklch(0.27 0.003 260),
+      transparent 55%
+    ),
+    linear-gradient(180deg, oklch(0.235 0.003 260), oklch(0.19 0.003 260));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(0, 0, 0, 0.5),
+    0 40px 70px -30px rgba(0, 0, 0, 0.7),
+    0 12px 30px -20px rgba(0, 0, 0, 0.55);
+}
+
+.lp-unit::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  padding: 2.5px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.24),
+    rgba(255, 255, 255, 0.02) 30%,
+    rgba(0, 0, 0, 0) 60%,
+    rgba(0, 0, 0, 0.4)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.lp-display {
+  background:
+    radial-gradient(130% 130% at 50% 145%, oklch(0.215 0 0), transparent 52%),
+    linear-gradient(180deg, oklch(0.14 0 0), oklch(0.2 0 0));
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.07),
+    inset 0 15px 26px -6px rgba(0, 0, 0, 0.8),
+    inset 0 5px 9px rgba(0, 0, 0, 0.6),
+    inset 0 0 18px -2px rgba(0, 0, 0, 0.55),
+    inset 0 -3px 4px rgba(255, 255, 255, 0.06),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.5);
+}
+
+.lp-panel {
+  background: oklch(0.17 0 0);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 9px 18px -6px rgba(0, 0, 0, 0.5),
+    inset 0 2px 4px rgba(0, 0, 0, 0.38),
+    inset 0 -2px 3px rgba(255, 255, 255, 0.05),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.4);
+}
+
+.lp-knob {
+  touch-action: none;
+  cursor: grab;
+  border-radius: 50%;
+  outline: none;
+}
+.lp-knob:active {
+  cursor: grabbing;
+}
+.lp-knob:focus-visible {
+  box-shadow: 0 0 0 3px
+    color-mix(in oklch, var(--lp-accent, var(--color-primary)) 60%, transparent);
+}
+
+.lp-knob__anim {
+  transition: transform 260ms cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+.lp-knob[data-dragging="true"] .lp-knob__anim {
+  transition: none;
+}
+.lp-knob__arc {
+  transition: stroke-dashoffset 260ms cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+.lp-knob[data-dragging="true"] .lp-knob__arc {
+  transition: none;
+}
+
+.lp-knob__cap {
+  transform-origin: 50px 50px;
+  transition: transform 120ms ease;
+}
+.lp-knob[data-dragging="true"] .lp-knob__cap {
+  transform: scale(0.96);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-knob__anim,
+  .lp-knob__arc,
+  .lp-knob__cap {
+    transition: none;
+  }
+}
+
+.lp-h1 {
+  font-weight: 300;
+  letter-spacing: -0.045em;
+  line-height: 0.9;
+  font-size: clamp(2.75rem, 6vw, 4.25rem);
+  color: var(--color-foreground);
+}
+.lp-h2 {
+  font-weight: 300;
+  letter-spacing: -0.05em;
+  line-height: 1.07;
+  font-size: clamp(2rem, 4.2vw, 2.9rem);
+  color: var(--color-foreground);
+}
+.lp-lead {
+  max-width: 40rem;
+  color: var(--color-muted-foreground);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+
+.lp-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+}
+.lp-slab .lp-eyebrow {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.lp-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-2xl);
+}
+
+.lp-slab {
+  position: relative;
+  color: var(--color-overlay-foreground);
+  background:
+    radial-gradient(
+      120% 80% at 50% -10%,
+      oklch(0.24 0.004 260),
+      transparent 60%
+    ),
+    linear-gradient(180deg, oklch(0.19 0.004 260), oklch(0.152 0.004 260));
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-2xl);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 24px 48px -30px rgba(0, 0, 0, 0.6);
+}
+
+.lp-card__title {
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  font-size: 1.125rem;
+  color: var(--color-foreground);
+}
+.lp-slab .lp-card__title {
+  color: var(--color-overlay-foreground);
+}
+.lp-card__body {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--color-muted-foreground);
+}
+.lp-slab .lp-card__body {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.lp-type__glyph {
+  font-size: 3.25rem;
+  line-height: 0.85;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  margin-top: -28px;
+  color: var(--color-foreground);
+}
+.lp-type__name {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-foreground);
+}
+.lp-type__role {
+  font-size: 0.8125rem;
+  color: var(--color-muted-foreground);
+}
+.lp-type__weights {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  color: var(--color-muted-foreground);
+}
+
+.lp-token {
+  width: 1rem;
+  height: 1rem;
+  border-radius: var(--radius-sm);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+}
+
+.lp-dial__arc {
+  filter: drop-shadow(
+    0 0 3px color-mix(in oklch, var(--color-primary) 60%, transparent)
+  );
+}
+
+.lp-bar {
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: color-mix(in oklch, var(--color-primary) 22%, transparent);
+}
+.lp-bar > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-primary);
+}
+
+.lp-bento {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 40rem) {
+  .lp-bento {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 64rem) {
+  .lp-bento {
+    grid-template-columns: repeat(12, 1fr);
+  }
+  .lp-bento > :nth-child(1) {
+    grid-column: 1 / 5;
+  }
+  .lp-bento > :nth-child(2) {
+    grid-column: 5 / 10;
+  }
+  .lp-bento > :nth-child(3) {
+    grid-column: 10 / 13;
+  }
+  .lp-bento > :nth-child(4) {
+    grid-column: 1 / 6;
+  }
+  .lp-bento > :nth-child(5) {
+    grid-column: 6 / 13;
+  }
+}
+
+.lp-feature {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+}
+
+.lp-feature__stage {
+  position: relative;
+  flex: 1;
+  min-height: 14rem;
+  padding: 1.75rem;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  color: var(--color-foreground);
+}
+.lp-feature__stage--flush {
+  flex: none;
+  height: 15rem;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 1.4rem 1.4rem 0;
+}
+.lp-feature__stage--flush::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 3.5rem;
+  background: linear-gradient(to top, oklch(0.17 0.004 260), transparent);
+  pointer-events: none;
+}
+
+.lp-feature__foot {
+  display: flex;
+  align-items: center;
+  padding: 0.9rem 1.25rem;
+}
+.lp-feature__name {
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  font-size: 0.9375rem;
+  color: var(--color-overlay-foreground);
+}
+
+/* Light theme: the bento feature cards follow the light surface instead of the
+   fixed dark slab, so they read the theme like the components inside them. The
+   philosophy .lp-slab cards above stay dark by intent, so this is scoped to
+   .lp-feature. */
+:root:not(.dark):not([data-theme="dark"]) .lp-feature.lp-slab {
+  color: var(--color-foreground);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 24px 48px -30px rgba(0, 0, 0, 0.15);
+}
+:root:not(.dark):not([data-theme="dark"]) .lp-feature .lp-feature__stage {
+  border-bottom-color: var(--color-border);
+}
+:root:not(.dark):not([data-theme="dark"]) .lp-feature .lp-feature__stage--flush::after {
+  background: linear-gradient(to top, var(--color-surface), transparent);
+}
+:root:not(.dark):not([data-theme="dark"]) .lp-feature .lp-feature__name {
+  color: var(--color-foreground);
+}

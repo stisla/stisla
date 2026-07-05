@@ -1,0 +1,138 @@
+/* @stisla/style — Alert. Ported from src/scss/components/_alert.scss. References the Tailwind
+ * @theme tokens (var(--color-*), --spacing(n), var(--text-*) / var(--font-weight-*) /
+ * var(--leading-*), var(--radius-*), --alpha() for tints). Only no-namespace customs use
+ * --st-* (border-width). Tone is REQUIRED for visible chrome. Knobs are --alert-*. @layer components. */
+
+@layer components {
+  .alert {
+    display: flex;
+    align-items: center;
+    gap: --spacing(2.5);
+    width: 100%;
+    min-height: --spacing(11);
+    padding-block: var(--alert-padding-block, --spacing(2.5));
+    padding-inline: var(--alert-padding-inline, --spacing(4));
+    line-height: var(--leading-tight);
+    color: var(--alert-color, var(--color-foreground));
+    background: var(--alert-bg, transparent);
+    border: var(--alert-border-width, var(--st-border-width)) solid
+      var(--alert-border-color, transparent);
+    border-radius: var(--alert-radius, var(--radius-md));
+  }
+
+  /* Leading icon: any direct <svg>/<i> child (same convention as .button). */
+  .alert > :is(svg, i) {
+    width: --spacing(4.5);
+    height: --spacing(4.5);
+    flex-shrink: 0;
+    color: var(--alert-icon-color, var(--color-muted-foreground));
+  }
+
+  /* === Parts === */
+  .alert__title {
+    margin: 0;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--leading-normal);
+    color: var(--color-foreground);
+  }
+  .alert__description {
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+    color: var(--color-muted-foreground);
+  }
+  .alert__action {
+    display: flex;
+    align-items: center;
+    gap: --spacing(1.5);
+    margin-inline-start: auto;
+  }
+  .alert__link {
+    color: var(--alert-link-color, var(--color-primary-emphasis));
+    font-weight: var(--font-weight-medium);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* === Layout switch — heading + description === */
+  .alert:has(.alert__description) {
+    --alert-padding-block: --spacing(4);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    column-gap: --spacing(2.5);
+    row-gap: 0;
+    align-items: start;
+    min-height: 0;
+
+    > :is(svg, i) {
+      grid-column: 1;
+      grid-row: 1;
+      align-self: center;
+    }
+    .alert__title {
+      grid-column: 2;
+      grid-row: 1;
+      line-height: var(--leading-none);
+    }
+    .alert__description {
+      grid-column: 2;
+      grid-row: 2;
+    }
+    .alert__action {
+      grid-column: 3;
+      grid-row: 1 / span 2;
+      align-self: center;
+      margin-inline-start: 0;
+    }
+
+    &:not(:has(> :is(svg, i))) {
+      grid-template-columns: 1fr auto;
+      .alert__title,
+      .alert__description {
+        grid-column: 1;
+      }
+      .alert__action {
+        grid-column: 2;
+      }
+    }
+  }
+
+  /* === Tone modifiers ===
+   * Neutral wears the surface look; intents tint bg 7% + border 40% (via --alpha) and color
+   * the icon + link with the intent. Body text stays --color-foreground. */
+  .alert--neutral {
+    --alert-bg: var(--color-surface);
+    --alert-border-color: var(--color-border);
+  }
+  .alert--primary {
+    --alert-bg: --alpha(var(--color-primary) / 7%);
+    --alert-border-color: --alpha(var(--color-primary) / 40%);
+    --alert-icon-color: var(--color-primary-emphasis);
+    --alert-link-color: var(--color-primary-emphasis);
+  }
+  .alert--success {
+    --alert-bg: --alpha(var(--color-success) / 7%);
+    --alert-border-color: --alpha(var(--color-success) / 40%);
+    --alert-icon-color: var(--color-success-emphasis);
+    --alert-link-color: var(--color-success-emphasis);
+  }
+  .alert--warning {
+    --alert-bg: --alpha(var(--color-warning) / 7%);
+    --alert-border-color: --alpha(var(--color-warning) / 40%);
+    --alert-icon-color: var(--color-warning-emphasis);
+    --alert-link-color: var(--color-warning-emphasis);
+  }
+  .alert--danger {
+    --alert-bg: --alpha(var(--color-danger) / 7%);
+    --alert-border-color: --alpha(var(--color-danger) / 40%);
+    --alert-icon-color: var(--color-danger-emphasis);
+    --alert-link-color: var(--color-danger-emphasis);
+  }
+  .alert--info {
+    --alert-bg: --alpha(var(--color-info) / 7%);
+    --alert-border-color: --alpha(var(--color-info) / 40%);
+    --alert-icon-color: var(--color-info-emphasis);
+    --alert-link-color: var(--color-info-emphasis);
+  }
+}

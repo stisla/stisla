@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — popover</title>
+  <!-- BUILT bundles, same-origin (see scripts/serve-fixtures.mjs). Prereq: pnpm build:packages. -->
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- A neutral control before the trigger, so focus-return has a distinct wrong answer to fail on. -->
+  <button type="button" class="button button--neutral" id="before">a button before the popover</button>
+
+  <!-- Component under test: a click-trigger popover with focusable content. Markup mirrors the
+       documented recommended usage (docs/src/routes/docs/vanilla/popover.tsx). The trigger is a
+       native button (Enter/Space → click → open); the surface links by element id. JS auto-adds
+       role="dialog", data-state, and the arrow. Behavior comes from stisla.js auto-init. -->
+  <button
+    class="button button--primary"
+    data-stisla-popover-trigger="pop-test"
+    aria-haspopup="dialog"
+    aria-controls="pop-test"
+  >Invite teammate</button>
+
+  <div class="popover" id="pop-test" data-stisla-popover aria-labelledby="pop-title" style="min-width: 17rem;">
+    <h3 class="popover__title" id="pop-title">Invite by email</h3>
+    <div class="popover__body text-foreground">
+      <div class="flex flex-col gap-2">
+        <input type="email" class="input" id="pop-email" placeholder="name@example.com" aria-label="Email address" />
+        <div class="flex flex-wrap items-center gap-2 justify-end">
+          <button class="button button--sm button--ghost button--neutral" data-stisla-popover-dismiss>Cancel</button>
+          <button class="button button--sm button--primary">Send invite</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Auto-initing IIFE: attaches window.Stisla and wires [data-stisla-*] on DOMContentLoaded. -->
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

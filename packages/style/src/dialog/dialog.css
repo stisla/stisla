@@ -1,0 +1,258 @@
+/* @stisla/style — Dialog. Ported from src/scss/components/_dialog.scss. A centered modal: a frosted
+ * backdrop dims the page, a height-bounded panel holds the visible card (header / body / footer +
+ * floating close chip). Shown via [data-state="open"] on the root. References the @theme tokens:
+ * colors var(--color-*), sizes/spacing --spacing(n), type var(--text-*) / var(--leading-*) /
+ * var(--font-weight-*), radius var(--radius-*), shadow var(--shadow-*); only no-namespace customs use
+ * --st-* (border-width, duration, z-index); z-index routes through the z-index scale (--z-index-modal). The backdrop scrim and
+ * the frosted close chip use bespoke oklch alphas (no scrim token), and blur radii stay literal
+ * (filter geometry, not spacing). Knobs are --dialog-*. State + scroll-lock hooks ([data-shaking],
+ * html[data-dialog-open]) are attributes, recast from the legacy is-* classes per the no-is-*
+ * convention. Open/close + focus-trap behavior ships with the JS layer. @layer components.
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  .dialog {
+    position: fixed;
+    inset: 0;
+    z-index: var(--dialog-z-index, var(--z-index-modal));
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: var(--dialog-margin-block, --spacing(4)) var(--dialog-margin-inline, --spacing(4));
+    overflow: hidden;
+
+    /* Light mode runs a solid dark close chip for contrast over the white surface; dark mode flips
+       to a subtle light chip so it doesn't dominate the deep surface. Same affordance, inverted
+       luminance. @variant dark uses the registered custom-variant ([data-theme="dark"] / .dark). */
+    @variant dark {
+      --dialog-close-bg: oklch(1 0 0 / 0.1);
+      --dialog-close-bg-hover: oklch(1 0 0 / 0.18);
+      --dialog-close-color: oklch(1 0 0 / 0.85);
+      --dialog-close-color-hover: oklch(1 0 0);
+    }
+  }
+
+  .dialog[data-state="open"] {
+    display: flex;
+  }
+
+  .dialog__backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: var(--dialog-backdrop-bg, oklch(0 0 0 / 0.55));
+    backdrop-filter: blur(var(--dialog-backdrop-blur, 12px));
+    -webkit-backdrop-filter: blur(var(--dialog-backdrop-blur, 12px));
+    opacity: 0;
+    transition: opacity var(--dialog-transition-duration, var(--transition-duration-normal)) ease;
+    cursor: pointer;
+  }
+
+  .dialog[data-state="open"] .dialog__backdrop {
+    opacity: 1;
+  }
+
+  .dialog__panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: var(--dialog-width, --spacing(112));
+    max-height: calc(100dvh - 2 * var(--dialog-margin-block, --spacing(4)));
+    margin: auto;
+    opacity: 0;
+    transform: scale(0.9);
+    transition:
+      opacity var(--dialog-transition-duration, var(--transition-duration-normal)) ease,
+      transform var(--dialog-transition-duration, var(--transition-duration-normal)) ease;
+  }
+
+  .dialog[data-state="open"] .dialog__panel {
+    opacity: 1;
+    transform: none;
+  }
+
+  .dialog__content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: 100%;
+    background-color: var(--dialog-bg, var(--color-surface));
+    color: var(--dialog-color, var(--color-foreground));
+    border: var(--dialog-border-width, var(--st-border-width)) solid
+      var(--dialog-border-color, var(--color-border));
+    border-radius: var(--dialog-radius, var(--radius-lg));
+    box-shadow: var(--dialog-shadow, var(--shadow-lg));
+    overflow: hidden;
+    outline: none;
+  }
+
+  .dialog__header {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    padding: var(--dialog-padding-block, --spacing(5)) var(--dialog-padding-inline, --spacing(5));
+    padding-block-end: 0;
+  }
+
+  .dialog__title {
+    margin: 0;
+    font-size: var(--dialog-title-font-size, var(--text-lg));
+    font-weight: var(--dialog-title-font-weight, var(--font-weight-semibold));
+    line-height: var(--leading-tight);
+    color: var(--dialog-color, var(--color-foreground));
+  }
+
+  .dialog__body {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: var(--dialog-padding-block, --spacing(5)) var(--dialog-padding-inline, --spacing(5));
+    color: var(--dialog-color, var(--color-foreground));
+  }
+
+  .dialog__footer {
+    display: flex;
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: --spacing(2);
+    padding: var(--dialog-footer-padding-block, --spacing(3.5))
+      var(--dialog-padding-inline, --spacing(5));
+    background-color: var(--dialog-footer-bg, var(--color-surface-2));
+    border-top: var(--st-border-width) solid var(--dialog-footer-border-color, var(--color-border));
+  }
+
+  /* Floating dismiss chip — a frosted glass disc that reads on a light surface, a dark surface, and
+     over imagery. The semi-transparent oklch fills are bespoke (no scrim token); the dark @variant
+     on .dialog above swaps them for the inverted-luminance pair. */
+  .dialog__close {
+    position: absolute;
+    top: --spacing(3);
+    inset-inline-end: --spacing(3);
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--dialog-close-size, --spacing(7));
+    height: var(--dialog-close-size, --spacing(7));
+    padding: 0;
+    color: var(--dialog-close-color, oklch(1 0 0 / 0.92));
+    background-color: var(--dialog-close-bg, oklch(0 0 0 / 0.35));
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    transition:
+      background-color var(--transition-duration-fast) ease,
+      color var(--transition-duration-fast) ease;
+  }
+
+  .dialog__close:hover {
+    color: var(--dialog-close-color-hover, oklch(1 0 0));
+    background-color: var(--dialog-close-bg-hover, oklch(0 0 0 / 0.55));
+  }
+
+  .dialog__close:focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  .dialog__close > svg,
+  .dialog__close > i {
+    width: --spacing(3.5);
+    height: --spacing(3.5);
+  }
+
+  /* === Size modifiers === retune the panel width cap only. */
+  .dialog--sm {
+    --dialog-width: --spacing(80);
+  }
+  .dialog--lg {
+    --dialog-width: --spacing(160);
+  }
+  .dialog--xl {
+    --dialog-width: --spacing(240);
+  }
+
+  .dialog--fullscreen {
+    --dialog-margin-inline: 0;
+    --dialog-margin-block: 0;
+  }
+  .dialog--fullscreen .dialog__panel {
+    max-width: 100vw;
+    max-height: 100dvh;
+    height: 100dvh;
+  }
+  .dialog--fullscreen .dialog__content {
+    height: 100%;
+    border: 0;
+    border-radius: 0;
+  }
+
+  /* Almost-fullscreen — keeps a breathing strip around the dialog so the page hints through, but the
+     dialog takes the rest of the viewport. For immersive editors, onboarding, lightbox-adjacent UIs. */
+  .dialog--almost-fullscreen {
+    --dialog-margin-inline: --spacing(10);
+    --dialog-margin-block: --spacing(10);
+    --dialog-width: calc(100vw - 2 * var(--dialog-margin-inline, --spacing(4)));
+  }
+  .dialog--almost-fullscreen .dialog__panel {
+    height: calc(100dvh - 2 * var(--dialog-margin-block, --spacing(4)));
+  }
+  .dialog--almost-fullscreen .dialog__content {
+    height: 100%;
+  }
+
+  /* === Position modifiers === default is centered; --top / --bottom override via auto margins. */
+  .dialog__panel--top {
+    margin-block-start: 0;
+    margin-block-end: auto;
+  }
+  .dialog__panel--bottom {
+    margin-block-start: auto;
+    margin-block-end: 0;
+  }
+
+  /* === Scrollable body === */
+  .dialog__panel--scrollable .dialog__body {
+    overflow-y: auto;
+  }
+
+  /* === Static backdrop shake === the behavior layer sets [data-shaking] on the panel when a click
+     hits the backdrop while the backdrop is static. */
+  .dialog__panel[data-shaking] {
+    animation: st-dialog-shake var(--transition-duration-normal) ease-in-out;
+  }
+}
+
+/* === Scroll lock === applied to <html> while any dialog is open; scrollbar-gutter keeps the page
+   width stable so opening a dialog doesn't reflow content behind it. */
+html[data-dialog-open] {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}
+
+@keyframes st-dialog-shake {
+  0%,
+  100% {
+    transform: none;
+  }
+  25% {
+    transform: translateX(calc(--spacing(1) * -1));
+  }
+  75% {
+    transform: translateX(--spacing(1));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog__backdrop,
+  .dialog__panel {
+    transition: none;
+  }
+  .dialog__panel[data-shaking] {
+    animation: none;
+  }
+}

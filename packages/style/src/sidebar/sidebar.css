@@ -1,0 +1,493 @@
+/* @stisla/style — Sidebar. Ported from src/scss/components/_sidebar.scss. Stisla-original
+ * app-shell navigation panel. References the @theme tokens: colors var(--color-*), spacing
+ * --spacing(n), type var(--text-*) / var(--font-weight-*), radius var(--radius-*). Only
+ * no-namespace customs use --st-* (border-width). Knobs are --sidebar-* (fallback-default).
+ * @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11
+ *
+ * State hooks (attributes, never is-*):
+ *   .sidebar[data-collapsed]                       rail / mini mode (root)
+ *   .sidebar__button[aria-current="page"]          current page (nav links)
+ *   .sidebar__button[data-state="active"]          current state (non-link, Radix-aligned)
+ *   .sidebar__item[data-state="open|closed"]       submenu visibility
+ *   .sidebar__button[aria-expanded="true|false"]   submenu trigger
+ *
+ * Animation timings are kept as literal durations: they are hand-tuned choreography (e.g. the
+ * 0.075s opacity vs 0.25s transform on the item-action fade), not design-scale values, and our
+ * duration customs don't match them. The one tunable timing is --sidebar-transition-duration. */
+
+@layer components {
+  /* Fallback-default knobs: nothing on the base, so a scope / inline retunes any of them; every
+     child reads var(--sidebar-x, <default>) with the default repeated at each site. Width vars are
+     opt-in (default 16rem; set --sidebar-width / -width-collapsed to let the panel own + animate
+     its width through [data-collapsed]). Padding lives on the child slots, not the root, so
+     .sidebar__content stays flush with the panel edge and focus rings aren't clipped. */
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sidebar-gap, --spacing(4));
+    width: var(--sidebar-width, 16rem);
+    background-color: var(--sidebar-bg, transparent);
+    color: var(--sidebar-color, var(--color-foreground));
+    transition: width var(--sidebar-transition-duration, 0.3s) ease;
+  }
+
+  /* === Header / footer === */
+  .sidebar__header {
+    display: flex;
+    align-items: center;
+    /* Outer inset = panel gutter + button inner padding, so brand content sits on the same x-grid
+       as menu icons below. Re-derived in rail mode to center the brand icon on the icon column. */
+    padding-block-start: var(--sidebar-padding-block, --spacing(4));
+    padding-inline: calc(
+      var(--sidebar-padding-inline, --spacing(4)) +
+        var(--sidebar-button-padding-inline, --spacing(2.5))
+    );
+    transition: padding var(--sidebar-transition-duration, 0.3s) ease;
+  }
+
+  .sidebar__footer {
+    margin-block-start: auto;
+    padding-block-end: var(--sidebar-padding-block, --spacing(4));
+    padding-inline: var(--sidebar-padding-inline, --spacing(4));
+    transition: padding var(--sidebar-transition-duration, 0.3s) ease;
+  }
+
+  /* === Content (scroll slot) === */
+  .sidebar__content {
+    flex: 1 1 auto;
+    /* Canonical flexbox-overflow combo: without min-height: 0 the child can't shrink below content
+       height in Chrome/Firefox. */
+    min-height: 0;
+    padding-inline: var(--sidebar-padding-inline, --spacing(4));
+    transition: padding var(--sidebar-transition-duration, 0.3s) ease;
+    /* Explicit x: hidden + y: auto — plain overflow-y: auto pops a horizontal scrollbar mid-collapse
+       when a label's intrinsic min-width briefly exceeds the rail interior. */
+    overflow: hidden auto;
+  }
+
+  /* Header-less / footer-less panels: content absorbs the missing edge's padding so the first/last
+     row doesn't butt against the panel edge. */
+  .sidebar:not(:has(> .sidebar__header)) > .sidebar__content {
+    padding-block-start: var(--sidebar-padding-block, --spacing(4));
+  }
+  .sidebar:not(:has(> .sidebar__footer)) > .sidebar__content {
+    padding-block-end: var(--sidebar-padding-block, --spacing(4));
+  }
+
+  /* === Brand === */
+  .sidebar__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sidebar-brand-gap, --spacing(2.5));
+    color: var(--sidebar-brand-color, var(--sidebar-color, var(--color-foreground)));
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  .sidebar__brand :is(svg, i, img) {
+    flex-shrink: 0;
+    width: var(--sidebar-brand-icon-size, --spacing(6));
+    height: var(--sidebar-brand-icon-size, --spacing(6));
+  }
+
+  /* === Menu === */
+  .sidebar__menu {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sidebar-group-gap, --spacing(4));
+  }
+
+  /* === Group ===
+   * Default: title + list stacked. With a group-action present, switch to a 2-col grid
+   * (title 1fr | action auto) and span the list across both columns below. */
+  .sidebar__group {
+    display: flex;
+    flex-direction: column;
+    gap: --spacing(1);
+  }
+
+  .sidebar__group:has(> .sidebar__group-action) {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    column-gap: --spacing(2);
+  }
+
+  .sidebar__group:has(> .sidebar__group-action) > .sidebar__list {
+    grid-column: 1 / -1;
+  }
+
+  .sidebar__group-title {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(1.5);
+    padding: 0 var(--sidebar-button-padding-inline, --spacing(2.5));
+    color: var(--sidebar-group-title-color, var(--color-muted-foreground));
+    font-size: var(--sidebar-group-title-font-size, var(--text-xs));
+    font-weight: var(--sidebar-group-title-font-weight, var(--font-weight-normal));
+  }
+
+  .sidebar__group-action {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(1);
+    padding-inline-end: calc(
+      var(--sidebar-button-padding-inline, --spacing(2.5)) - --spacing(1)
+    );
+    color: var(--sidebar-group-title-color, var(--color-muted-foreground));
+  }
+
+  /* === List & item === */
+  .sidebar__list {
+    /* Preflight already zeroes ul margin/padding + list-style; only the flex layout is set here. */
+    display: flex;
+    flex-direction: column;
+    gap: --spacing(0.5);
+  }
+
+  .sidebar__item {
+    position: relative;
+    display: flex;
+    width: 100%;
+  }
+
+  /* Items with a submenu stack their button + submenu vertically. */
+  .sidebar__item:has(> .sidebar__submenu) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* === Button (item) ===
+   * Hard-height contract: height: var(--height), padding-block: 0, line-height: 1. Single-line;
+   * truncates rather than wraps if forced narrow. */
+  .sidebar__button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sidebar-button-gap, --spacing(4));
+    width: 100%;
+    height: var(--sidebar-button-height, --spacing(9));
+    padding-block: var(--sidebar-button-padding-block, 0);
+    padding-inline: var(--sidebar-button-padding-inline, --spacing(2.5));
+    border: 0;
+    border-radius: var(--sidebar-button-radius, var(--radius-sm));
+    background-color: transparent;
+    color: var(--sidebar-button-color, var(--sidebar-color, var(--color-foreground)));
+    font-weight: var(--sidebar-button-font-weight, var(--font-weight-normal));
+    line-height: var(--leading-none);
+    white-space: nowrap;
+    text-align: start;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      width 0.2s ease,
+      background-color 0.1s ease,
+      color 0.1s ease;
+
+    /* Excluding active + disabled from hover keeps the active row reading steady (no transient
+       hover repaint over an already-tinted chip). */
+    &:hover:not(:disabled):not([aria-disabled="true"]):not([aria-current="page"]):not(
+        [data-state="active"]
+      ) {
+      background-color: var(--sidebar-button-bg-hover, var(--color-accent));
+      color: var(--sidebar-button-color-hover, var(--color-accent-foreground));
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-ring);
+      outline-offset: 2px;
+    }
+
+    &:disabled,
+    &[aria-disabled="true"] {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+  }
+
+  .sidebar__button :is(svg, i) {
+    flex-shrink: 0;
+    width: var(--sidebar-button-icon-size, --spacing(4));
+    height: var(--sidebar-button-icon-size, --spacing(4));
+    color: var(--sidebar-button-icon-color, var(--color-muted-foreground));
+  }
+
+  /* Active state — aria-current="page" for nav links, data-state="active" for non-link rows
+     (Radix-aligned). The icon flips with the label so the active row reads as one block; hover
+     stays icon-quiet by design. */
+  .sidebar__button[aria-current="page"],
+  .sidebar__button[data-state="active"] {
+    background-color: var(--sidebar-button-bg-active, var(--color-highlight));
+    color: var(--sidebar-button-color-active, var(--color-highlight-foreground));
+  }
+
+  .sidebar__button[aria-current="page"] :is(svg, i),
+  .sidebar__button[data-state="active"] :is(svg, i) {
+    color: var(--sidebar-button-color-active, var(--color-highlight-foreground));
+  }
+
+  /* === Item action ===
+   * Absolute-positioned right-edge slot. The button stays the large hit target; the action overlays
+   * its right edge, with a padding-right carve-out triggered only when an action is present. */
+  .sidebar__item:has(> .sidebar__item-action) > .sidebar__button {
+    padding-inline-end: calc(var(--sidebar-item-action-size, --spacing(9)) + --spacing(1));
+  }
+
+  .sidebar__item-action {
+    position: absolute;
+    top: 50%;
+    inset-inline-end: var(--sidebar-button-padding-inline, --spacing(2.5));
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--sidebar-item-action-size, --spacing(9));
+    z-index: 1;
+    transition:
+      opacity 0.075s ease,
+      transform 0.25s ease;
+  }
+
+  .sidebar__item-action :is(svg, i) {
+    width: var(--sidebar-button-icon-size, --spacing(4));
+    height: var(--sidebar-button-icon-size, --spacing(4));
+  }
+
+  /* Submenu-toggle variant — when a link-parent row needs a disclosure, the action slot becomes the
+     toggle <button> beside the navigable <a>: a self-contained square with the caret centered. */
+  button.sidebar__item-action {
+    width: --spacing(7);
+    height: --spacing(7);
+    inset-inline-end: --spacing(1.5);
+    border: 0;
+    border-radius: var(--sidebar-button-radius, var(--radius-sm));
+    background-color: transparent;
+    color: inherit;
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+  }
+
+  button.sidebar__item-action:hover {
+    background-color: var(--sidebar-button-bg-hover, var(--color-accent));
+  }
+
+  button.sidebar__item-action:focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  /* Center the caret in the square — drop the base inline-start auto margin it carries when inline. */
+  button.sidebar__item-action > .sidebar__caret {
+    margin-inline-start: 0;
+  }
+
+  /* On a submenu parent the item is a flex column (button + submenu), so the action's default 50%
+     offset would track the whole open block. Pin it to the button row's center instead. */
+  .sidebar__item:has(> .sidebar__submenu) > .sidebar__item-action {
+    top: calc(var(--sidebar-button-height, --spacing(9)) / 2);
+  }
+
+  /* Reveal-on-hover modifier — action fades in on row hover / keyboard focus. */
+  .sidebar__item-action--reveal {
+    opacity: 0;
+    transition: opacity 0.1s ease;
+  }
+  .sidebar__item:hover .sidebar__item-action--reveal,
+  .sidebar__item:focus-within .sidebar__item-action--reveal {
+    opacity: 1;
+  }
+
+  /* Buttons inside an action slot collapse to a compact square regardless of the modifiers the
+     consumer passes. The descendant selector's specificity (not source order) lands the override;
+     the consumer just picks a tone via .button--ghost.button--neutral. */
+  .sidebar__item-action .button,
+  .sidebar__group-action .button {
+    --button-height: --spacing(6);
+    --button-padding-inline: 0;
+    --button-radius: var(--radius-sm);
+    width: --spacing(6);
+    gap: 0;
+  }
+
+  /* === Submenu ===
+   * CSS-only collapse — closed submenus disappear via display: none. A guide line (left border)
+   * anchored at the brand-icon column so child rows visually descend from the parent's icon. */
+  .sidebar__submenu {
+    margin-inline-start: var(--sidebar-submenu-margin-inline-start, --spacing(4.5));
+    padding-inline-start: var(--sidebar-submenu-padding-inline-start, --spacing(3.25));
+    border-inline-start: var(--st-border-width) solid
+      var(--sidebar-submenu-border-color, var(--color-border));
+  }
+
+  .sidebar__item[data-state="closed"] > .sidebar__submenu {
+    display: none;
+  }
+
+  /* Breathing room between a parent toggle button and its submenu. Lives on the button (outside the
+     submenu) so a future height-measuring animation isn't thrown off by inner padding. */
+  .sidebar__item:has(> .sidebar__submenu) > .sidebar__button {
+    margin-block-end: --spacing(0.5);
+  }
+
+  /* Submenu caret — opt-in <span class="sidebar__caret"></span> inside a toggle. CSS draws the
+     chevron via a mask so it follows --sidebar-button-icon-color and stays crisp at any size.
+     Defaults to the inline-end edge via margin-inline-start: auto; rotates 180° when the parent
+     reports aria-expanded="true". */
+  .sidebar__caret {
+    display: inline-block;
+    flex-shrink: 0;
+    width: var(--sidebar-button-icon-size, --spacing(4));
+    height: var(--sidebar-button-icon-size, --spacing(4));
+    margin-inline-start: auto;
+    background-color: var(--sidebar-button-icon-color, var(--color-muted-foreground));
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")
+      no-repeat center / contain;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")
+      no-repeat center / contain;
+    transition: transform 0.15s ease;
+  }
+
+  .sidebar__button[aria-expanded="true"] > .sidebar__caret,
+  .sidebar__item-action[aria-expanded="true"] > .sidebar__caret {
+    transform: rotate(180deg);
+  }
+
+  /* === Size modifiers (base = md) ===
+   * Override button-level vars + group gap only. Outer panel padding stays at the default scale so
+   * header / content / footer have visually identical gutters at any size. */
+  .sidebar--sm {
+    --sidebar-button-height: --spacing(8);
+    --sidebar-button-padding-inline: --spacing(2);
+    --sidebar-group-gap: --spacing(3.5);
+  }
+
+  .sidebar--lg {
+    --sidebar-button-height: --spacing(10);
+    --sidebar-button-padding-inline: --spacing(3);
+    --sidebar-group-gap: --spacing(4.5);
+  }
+
+  /* === Rail / mini-collapsed ([data-collapsed]) ===
+   * Labels, group titles, chevrons, and item actions fade out instead of snapping, so the width
+   * animation reads as a single coordinated motion. Rail-width recipe (square icon cell, centered
+   * icon): width = button-height + 2 × panel-padding-inline. Collapsed mode trims
+   * --sidebar-padding-inline so the rail hugs the square cell. */
+
+  /* Soft-hide targets — always primed for an opacity + translate fade so the rail toggle doesn't
+     blink. Lives in the base rule (not under [data-collapsed]) so transitions run both directions. */
+  .sidebar__button > span,
+  .sidebar__brand > :not(svg):not(i):not(img) {
+    transition:
+      opacity var(--sidebar-transition-duration, 0.3s) ease,
+      transform var(--sidebar-transition-duration, 0.3s) ease;
+  }
+
+  /* Group title + action soft-collapse — height transitions need a numeric target (auto → 0 doesn't
+     interpolate), so max-height anchors expanded at a value tall enough to never clip the title's
+     natural box but small enough to transition cleanly to 0. */
+  .sidebar__group-title,
+  .sidebar__group-action {
+    max-height: 3rem;
+    overflow: hidden;
+    transition:
+      max-height var(--sidebar-transition-duration, 0.3s) ease,
+      margin var(--sidebar-transition-duration, 0.3s) ease,
+      padding var(--sidebar-transition-duration, 0.3s) ease,
+      opacity 0.15s ease,
+      transform var(--sidebar-transition-duration, 0.3s) ease;
+  }
+
+  .sidebar[data-collapsed] {
+    /* Panel-level clip — catches anything wider than the rail without per-leaf display: none. */
+    overflow: hidden;
+
+    /* Collapsed width derives from the content: the square icon cell plus its symmetric padding.
+       A real length (not fit-content) so the collapse animates against the expanded width out of
+       the box. The +border-width keeps the cell square when the panel carries a border. */
+    width: var(
+      --sidebar-width-collapsed,
+      calc(
+        var(--sidebar-button-height, --spacing(9)) + 2 *
+          var(--sidebar-padding-inline, --spacing(2.5)) + var(--st-border-width)
+      )
+    );
+
+    /* Trim the panel gutter so the rail hugs the square icon cell. The header re-center calc and
+       content padding both read this var, and the content's padding transition animates the trim. */
+    --sidebar-padding-inline: --spacing(2.5);
+
+    /* Brand-column re-center: trim the header's inline padding by half the delta between brand-icon
+       and button-icon so the larger brand icon shares the menu-icon column's center axis. */
+    .sidebar__header {
+      padding-inline: calc(
+        var(--sidebar-padding-inline, --spacing(4)) +
+          var(--sidebar-button-padding-inline, --spacing(2.5)) -
+          (
+            var(--sidebar-brand-icon-size, --spacing(6)) -
+              var(--sidebar-button-icon-size, --spacing(4))
+          ) / 2
+      );
+      overflow: hidden;
+    }
+
+    /* Hard clip each button — even a bare-text-node label stays clipped to the rail. flex-shrink: 0
+       so the rail button holds its square width against a sub-pixel border trim. */
+    .sidebar__button {
+      overflow: hidden;
+      flex-shrink: 0;
+      width: var(--sidebar-button-height, --spacing(9));
+    }
+
+    /* Soft-hide: fade label spans, brand wordmark, chevron suffix, and trailing item-action.
+       pointer-events: none keeps a faded action from intercepting clicks while invisible. */
+    .sidebar__button > span,
+    .sidebar__brand > :not(svg):not(i):not(img) {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .sidebar__item-action {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .sidebar__item:has(> .sidebar__item-action) > .sidebar__button {
+      padding: var(--sidebar-button-padding-inline, --spacing(2.5));
+    }
+
+    /* Group title + action collapse smoothly: max-height + margin + padding to 0, fade + slide-out. */
+    .sidebar__group-title,
+    .sidebar__group-action {
+      max-height: 0;
+      margin-block: 0;
+      padding-block: 0;
+      opacity: 0;
+      transform: translateY(-100%);
+      pointer-events: none;
+    }
+
+    /* Submenu stays hidden in rail mode — a vertical strip of labels reads broken at rail width.
+       data-state on the parent still tracks open/closed for when the rail expands. The
+       :not([data-collapsing]) carve-out lets a mid-close height animation run to completion
+       alongside the width transition (the JS behavior layer sets [data-collapsing]); it clears at
+       transitionend, by which point display: none snaps in invisibly. */
+    .sidebar__submenu:not([data-collapsing]) {
+      display: none;
+    }
+  }
+
+  /* === Reduced motion === */
+  @media (prefers-reduced-motion: reduce) {
+    .sidebar__header,
+    .sidebar__content,
+    .sidebar__footer,
+    .sidebar__brand > :not(svg):not(i):not(img),
+    .sidebar__button > span,
+    .sidebar__caret,
+    .sidebar__item-action,
+    .sidebar__group-title,
+    .sidebar__group-action {
+      transition-duration: 0.01ms;
+    }
+  }
+}

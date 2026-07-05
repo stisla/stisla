@@ -1,0 +1,16 @@
+/* @stisla/css — the precompiled, zero-build bundle. One Tailwind pass over the theme + every
+ * component, compiled to a plain stylesheet a consumer can <link> with no build step and no
+ * Tailwind. Built with: tailwindcss -i stisla.css -o dist/stisla.css --minify
+ *
+ * The utilities layer is declared (so cascade order is correct) but NOT imported, so no utilities
+ * are generated — this ships tokens + component CSS only. Components reference theme vars via raw
+ * var(), which keeps each referenced token in the output (single compile, like an app's own build).
+ *
+ * Want a subset instead of everything? Don't use this file — compile from source: pull
+ * @stisla/style/theme.css + only the @stisla/style/<name>/<name>.css you need through your own
+ * Tailwind build. */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "../style/src/theme.css";
+@import "../style/src/components.css";

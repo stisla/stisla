@@ -1,0 +1,170 @@
+/* @stisla/style — Carousel. Ported from src/scss/components/_carousel.scss. A slide region whose
+ * motion is driven by Embla (the JS layer writes transform on .carousel__track); this CSS owns the
+ * chrome only — rounded viewport, control chips, indicator dots, caption gradient. Embla reads our
+ * own .carousel__* elements (it imposes no class vocabulary), so this is NOT lib-coupled — one file.
+ * Overlay chrome reads the theme-independent --color-overlay / --color-overlay-foreground pair so it
+ * stays consistent over arbitrary slide imagery in light + dark. References the @theme tokens: colors
+ * var(--color-*), sizes/spacing --spacing(n), radius var(--radius-*); only no-namespace customs use
+ * --st-* (duration). Knobs are --carousel-*. State via [data-state] / [aria-disabled], never is-*.
+ * Slide motion ships with the JS layer. @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  .carousel {
+    position: relative;
+    width: 100%;
+  }
+
+  .carousel:focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 4px;
+  }
+
+  /* === Viewport + track + slide === */
+  .carousel__viewport {
+    overflow: hidden;
+    border-radius: var(--carousel-radius, var(--radius-lg));
+    aspect-ratio: var(--carousel-aspect-ratio, 16 / 9);
+  }
+
+  /* Embla writes the translate transform; this just hosts the slides. */
+  .carousel__track {
+    display: flex;
+    height: 100%;
+  }
+
+  .carousel__slide {
+    flex: 0 0 100%;
+    min-width: 0;
+    position: relative;
+    padding-inline-start: var(--carousel-slide-gap, 0);
+  }
+
+  .carousel__slide > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* .carousel--no-aspect lets the viewport size to slide content (e.g. text cards) instead of locking
+     to 16:9; the slide itself sets the height. */
+  .carousel--no-aspect .carousel__viewport {
+    aspect-ratio: auto;
+  }
+
+  /* === Controls (prev/next) === */
+  .carousel__control {
+    position: absolute;
+    inset-block-start: 50%;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--carousel-control-size, --spacing(9));
+    height: var(--carousel-control-size, --spacing(9));
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--carousel-control-bg, color-mix(in oklch, var(--color-overlay) 70%, transparent));
+    color: var(--carousel-control-color, var(--color-overlay-foreground));
+    box-shadow: var(--carousel-control-shadow, 0 1px 2px color-mix(in oklch, var(--color-overlay) 30%, transparent));
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: background-color var(--carousel-transition-duration, var(--transition-duration-normal)) ease;
+  }
+
+  .carousel__control:hover {
+    background: var(--carousel-control-bg-hover, var(--color-overlay));
+  }
+
+  .carousel__control:focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  .carousel__control[aria-disabled="true"],
+  .carousel__control:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .carousel__control > svg,
+  .carousel__control > i,
+  .carousel__control > [data-lucide] {
+    width: --spacing(4.5);
+    height: --spacing(4.5);
+  }
+
+  .carousel__control--prev {
+    inset-inline-start: var(--carousel-control-inset, --spacing(3));
+  }
+
+  .carousel__control--next {
+    inset-inline-end: var(--carousel-control-inset, --spacing(3));
+  }
+
+  /* === Indicators === */
+  .carousel__indicators {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: var(--carousel-indicators-inset, --spacing(3.5));
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    gap: var(--carousel-indicator-gap, --spacing(1.5));
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    pointer-events: none;
+  }
+
+  .carousel__indicator {
+    width: var(--carousel-indicator-size, --spacing(1.5));
+    height: var(--carousel-indicator-size, --spacing(1.5));
+    padding: 0;
+    border: 0;
+    border-radius: 9999px;
+    background: var(--carousel-indicator-bg, color-mix(in oklch, var(--color-overlay-foreground) 50%, transparent));
+    cursor: pointer;
+    pointer-events: auto;
+    transition:
+      width var(--carousel-transition-duration, var(--transition-duration-normal)) ease,
+      background-color var(--carousel-transition-duration, var(--transition-duration-normal)) ease;
+  }
+
+  .carousel__indicator:focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  .carousel__indicator[data-state="active"] {
+    width: var(--carousel-indicator-width-active, --spacing(5));
+    background: var(--carousel-indicator-bg-active, var(--color-overlay-foreground));
+  }
+
+  /* === Caption === the slide owns the rounded clip, so the caption can run edge-to-edge. */
+  .carousel__caption {
+    position: absolute;
+    inset-block: auto 0;
+    inset-inline: 0;
+    padding: var(--carousel-caption-padding-block, --spacing(5))
+      var(--carousel-caption-padding-inline, --spacing(5));
+    background: var(
+      --carousel-caption-bg,
+      linear-gradient(to bottom, transparent, color-mix(in oklch, var(--color-overlay) 70%, transparent))
+    );
+    color: var(--carousel-caption-color, var(--color-overlay-foreground));
+    pointer-events: none;
+  }
+
+  .carousel__caption > * {
+    pointer-events: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .carousel__control,
+    .carousel__indicator {
+      transition: none;
+    }
+  }
+}

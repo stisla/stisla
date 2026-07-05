@@ -1,0 +1,87 @@
+/* @stisla/style — Toggle group. Ported from src/scss/components/_toggle-group.scss. A pill container
+ * hosting a row (or column) of .toggle children. The container owns the frame (rim + radius + bg);
+ * members go ghost-rest (no individual rims) so the cluster reads as one segmented control. Members
+ * get a concentric inner radius (outer − padding). References the @theme tokens (colors var(--color-*),
+ * spacing/sizes --spacing(n), radius var(--radius-*)); only no-namespace customs use --st-*
+ * (border-width). Knobs are --toggle-group-*; sizes compact/roomy → sm/lg. @layer components.
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  /* === Shared base === container chrome + member overrides (horizontal + vertical). */
+  .toggle-group,
+  .toggle-group--vertical {
+    position: relative;
+    display: inline-flex;
+    align-items: stretch;
+    vertical-align: middle;
+    padding: var(--toggle-group-padding-block, --spacing(0.5))
+      var(--toggle-group-padding-inline, --spacing(0.5));
+    gap: var(--toggle-group-gap, --spacing(0.5));
+    background: var(--toggle-group-bg, transparent);
+    border: var(--toggle-group-border-width, var(--st-border-width)) solid
+      var(--toggle-group-border-color, var(--color-border));
+    border-radius: var(--toggle-group-radius, var(--radius-md));
+
+    /* Member toggles — concentric inner radius + ghost rest (the parent rim owns the frame). */
+    > .toggle {
+      --toggle-radius: calc(
+        var(--toggle-group-radius, var(--radius-md)) -
+          var(--toggle-group-padding-inline, --spacing(0.5))
+      );
+      --toggle-bg: transparent;
+      --toggle-border-color: transparent;
+    }
+  }
+
+  /* === Horizontal === outer height locked; children fill via flex stretch + height: 100% (box model
+     handles the inner-area math). Scoped via :not(--vertical) so it doesn't leak into vertical mode. */
+  .toggle-group:not(.toggle-group--vertical) {
+    height: var(--toggle-group-height, --spacing(9));
+
+    /* Overflow → scroll, not squish: cap at the container and scroll horizontally (hidden scrollbar;
+       the half-clipped trailing segment is the "more this way" cue). */
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    > .toggle {
+      height: 100%;
+      flex-shrink: 0;
+    }
+
+    /* Icon-only inside the group: width follows the stretched cross-axis so the chip stays square. */
+    > .toggle--icon-only {
+      width: auto;
+      aspect-ratio: 1;
+    }
+  }
+
+  /* === Vertical === stacked column reading as a menu list; block-level so it fills its parent width.
+     Members keep a compact menu-list height, full-width, start-aligned. */
+  .toggle-group--vertical {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+
+    > .toggle {
+      --toggle-height: --spacing(8);
+      width: 100%;
+      justify-content: flex-start;
+      text-align: start;
+    }
+  }
+
+  /* === Sizes (base = md) === outer container scales; padding + gap stay so the inner area tracks it. */
+  .toggle-group--sm {
+    --toggle-group-radius: var(--radius-sm);
+    --toggle-group-height: --spacing(7);
+  }
+  .toggle-group--lg {
+    --toggle-group-radius: var(--radius-lg);
+    --toggle-group-height: --spacing(11);
+  }
+}

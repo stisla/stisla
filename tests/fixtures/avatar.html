@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — avatar</title>
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- Component under test: an avatar with image + fallback. Markup mirrors the documented
+       "Image with fallback" usage (docs/src/routes/docs/vanilla/avatar.tsx). The reveal-on-load
+       behavior comes from stisla.js auto-init reading data-stisla-avatar. The image carries a
+       meaningful alt (the person's name); the fallback initials paint underneath until load. -->
+  <span class="avatar" data-stisla-avatar>
+    <img class="avatar__image" src="https://i.pravatar.cc/96?img=12" alt="Rafiq">
+    <span class="avatar__fallback">RF</span>
+  </span>
+
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

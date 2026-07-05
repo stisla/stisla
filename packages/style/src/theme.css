@@ -1,0 +1,176 @@
+/* @stisla/style — THE theme/foundation layer. Tailwind v4 @theme: one definition emits the CSS
+ * variables (referenced in our component CSS) AND generates the utilities. There is no parallel
+ * token system — components read these theme vars directly:
+ *   colors → var(--color-*)   type → var(--text-*) / var(--leading-*) / var(--font-weight-*)
+ *   radius → var(--radius-*)  shadow → var(--shadow-*)   spacing → --spacing(n)
+ *   tint   → --alpha(var(--color-x) / N%)
+ * z-index + duration ride Tailwind's namespaces (--z-index-*, --transition-duration-*), declared
+ * inline below with everything else; components reference them via raw var(), which keeps each
+ * referenced token in the output. Only border-width has no namespace slot, so it stays --st-*.
+ * Dark mode overrides --color-* in a scope.
+ *
+ * This file is a PURE @theme — it does NOT import Tailwind. Tailwind is pulled in once by the
+ * consumer (or by the @stisla/css build), then this file is imported after it:
+ *   @import "tailwindcss";
+ *   @import "@stisla/style/theme.css"; */
+
+@theme {
+  /* Drop Tailwind's default palette; ship only semantic colors. */
+  --color-*: initial;
+
+  /* Intent — each is a FILL (solid bg, worn with its -foreground text) PLUS a darker -text for the
+   * color used AS text: links, soft chips, alert links, menu-danger, field errors. One color can't be
+   * both a vivid fill and readable text on a tint, so the two jobs get two tokens (WCAG AA 4.5:1; see
+   * RELEASE-READINESS.md §6.5). Fills are theme-independent; -text flips lighter in dark (below). */
+  --color-primary: oklch(0.573 0.1844 257.69);
+  --color-primary-foreground: oklch(1 0 0);
+  --color-primary-emphasis: oklch(0.521 0.1844 257.69);
+  --color-success: oklch(0.536 0.1853 149.54);
+  --color-success-foreground: oklch(1 0 0);
+  --color-success-emphasis: oklch(0.484 0.1853 149.54);
+  --color-warning: oklch(0.7697 0.1645 70.61);
+  --color-warning-foreground: oklch(0.27 0 0);
+  --color-warning-emphasis: oklch(0.543 0.1645 70.61);
+  --color-danger: oklch(0.594 0.2229 26.82);
+  --color-danger-foreground: oklch(1 0 0);
+  --color-danger-emphasis: oklch(0.529 0.2229 26.82);
+  --color-info: oklch(0.55 0.148143 238.1044);
+  --color-info-foreground: oklch(1 0 0);
+  --color-info-emphasis: oklch(0.501 0.148143 238.1044);
+
+  /* Surface (8) */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.27 0 0);
+  --color-surface: oklch(1 0 0);
+  --color-surface-2: oklch(0.98 0 0);
+  --color-surface-3: oklch(0.97 0 0);
+  --color-border: oklch(0.95 0 0);
+  --color-border-strong: oklch(0.93 0 0);
+  --color-muted-foreground: oklch(0.52 0 0);
+
+  /* Overlay (theme-independent chrome) */
+  --color-overlay: oklch(0.155 0 0);
+  --color-overlay-foreground: oklch(0.98 0 0);
+
+  /* Neutral fill — a rest fill for neutral component chips (kbd, badge, avatar, progress/slider/meter
+   * tracks, table striping, neutral button). A surface, not an interaction state. */
+  --color-neutral: oklch(0.91 0 0);
+  --color-neutral-foreground: oklch(0.27 0 0); /* = foreground (light) */
+
+  /* Interactional — states, not fills: accent paints hover, highlight paints active/selected. */
+  --color-accent: oklch(0.96 0 0);
+  --color-accent-foreground: oklch(0.27 0 0);
+  --color-highlight: color-mix(in oklch, var(--color-primary) 12%, transparent);
+  --color-highlight-foreground: var(--color-primary-emphasis);
+
+  /* Focus */
+  --color-ring: var(--color-primary);
+
+  /* Geometry — our tuned radius + shadow (override Tailwind's defaults; spacing/type stay) */
+  /* --radius is the single knob: a theme generator scales the whole ramp by rewriting it.
+     The steps keep our tuned curve as multipliers, so sm/md/lg stay pixel-identical to the
+     old literals (1rem * 0.65 = 0.65rem, etc.). We override Tailwind's full scale — not just
+     sm/md/lg — so the knob governs every tier and the ramp stays monotonic above lg.
+     Pills stay at 50%/9999px, off this knob. */
+  --radius: 1rem;
+  --radius-xs: calc(var(--radius) * 0.4);
+  --radius-sm: calc(var(--radius) * 0.65);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.5);
+  --radius-2xl: calc(var(--radius) * 2);
+  --radius-3xl: calc(var(--radius) * 3);
+  --radius-4xl: calc(var(--radius) * 4);
+  --shadow-sm:
+    0 1px 2px 0 color-mix(in oklch, black 5%, transparent),
+    0 1px 3px 0 color-mix(in oklch, black 4%, transparent);
+  --shadow-md:
+    0 2px 6px -1px color-mix(in oklch, black 5%, transparent),
+    0 8px 16px -4px color-mix(in oklch, black 6%, transparent);
+  --shadow-lg:
+    0 4px 12px -2px color-mix(in oklch, black 6%, transparent),
+    0 16px 36px -8px color-mix(in oklch, black 9%, transparent);
+  --shadow-xl:
+    0 8px 24px -4px color-mix(in oklch, black 7%, transparent),
+    0 24px 56px -12px color-mix(in oklch, black 12%, transparent);
+
+  /* Type families */
+  --font-sans:
+    "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+
+  /* Line-height scale (Tailwind's default values, declared so the scale is ours to tune). */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+
+  /* z-index + duration scales — Tailwind owns these namespaces, so naming them --z-index-* /
+     --transition-duration-* generates the matching utilities; components also reference them via
+     raw var(). Unused steps simply don't appear in the precompiled bundle (they stay in source for
+     build-from-source consumers). */
+  --z-index-base: 0;
+  --z-index-dropdown: 1000;
+  --z-index-sticky: 1020;
+  --z-index-overlay: 1030;
+  --z-index-modal: 1040;
+  --z-index-popover: 1050;
+  --z-index-toast: 1060;
+  --z-index-tooltip: 1070;
+
+  --transition-duration-fast: 120ms;
+  --transition-duration-normal: 200ms;
+  --transition-duration-slow: 320ms;
+}
+
+:root {
+  @variant dark {
+    --color-background: oklch(0.155 0 0);
+    --color-foreground: oklch(0.97 0 0);
+    --color-surface: oklch(0.18 0 0);
+    --color-surface-2: oklch(0.21 0 0);
+    --color-surface-3: oklch(0.23 0 0);
+    --color-border: oklch(0.25 0 0);
+    --color-border-strong: oklch(0.32 0 0);
+    --color-muted-foreground: oklch(0.72 0 0);
+    --color-neutral: oklch(0.27 0 0);
+    --color-neutral-foreground: oklch(0.97 0 0);
+    --color-accent: oklch(0.26 0 0);
+    --color-accent-foreground: oklch(0.97 0 0);
+    /* Intent FILLS stay theme-independent (solid + white/dark text works on any bg). Only -text
+     * flips: on dark surfaces the readable text shade is LIGHTER, not darker. */
+    --color-primary-emphasis: oklch(0.625 0.1844 257.69);
+    --color-success-emphasis: oklch(0.594 0.1853 149.54);
+    --color-warning-emphasis: oklch(0.663 0.1645 70.61);
+    --color-danger-emphasis: oklch(0.641 0.2229 26.82);
+    --color-info-emphasis: oklch(0.609 0.148143 238.1044);
+  }
+}
+
+/* Single global default border thickness — NOT a scale, so no Tailwind namespace fits
+ * (--border-width-* needs named steps; a bare --border-width generates nothing). Stays --st-*. */
+:root {
+  --st-border-width: 1px;
+}
+
+/* Base — default body copy is 14px (Stisla's long-standing default), set on <body> so the
+ * root stays at the browser default and 1rem = 16px: the spacing scale and every rem-based
+ * token remain anchored to 16px. Components set their own font-size (var(--text-sm) etc.);
+ * this governs only bare/inherited text and demo content. (Reboot concern — may move to a
+ * dedicated reboot layer later; theme.css is the one file every consumer imports, so it lives
+ * here for now.) */
+@layer base {
+  body {
+    font-size: var(--text-sm);
+    font-family: var(--font-sans);
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
+}
+
+/* Class-based dark mode for utilities (both hooks Stisla supports). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *, .dark, .dark *));

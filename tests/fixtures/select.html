@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — select</title>
+  <!-- BUILT bundles, same-origin (see scripts/serve-fixtures.mjs). Prereq: pnpm build:packages. -->
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- A neutral control before the component, so focus has a distinct wrong answer to fail on. -->
+  <button type="button" class="button button--neutral" id="before">a button before the select</button>
+
+  <!-- Component under test: the custom select. You author ONLY the native <select> — the vanilla JS
+       hides it and generates the .select__trigger button + <ul role="listbox"> popup from the
+       <option> children (docs/src/routes/docs/vanilla/select.tsx). The empty-value first option is
+       the placeholder (not rendered as a row). Behavior comes from stisla.js auto-init. -->
+  <div class="field max-w-sm">
+    <label for="customSelect" class="field__label">Country</label>
+    <select class="select" id="customSelect" name="country" data-stisla-select data-placeholder="Pick one">
+      <option value=""></option>
+      <option value="id">Indonesia</option>
+      <option value="my">Malaysia</option>
+      <option value="sg">Singapore</option>
+      <option value="ph">Philippines</option>
+      <option value="th">Thailand</option>
+      <option value="vn">Vietnam</option>
+    </select>
+  </div>
+
+  <!-- Auto-initing IIFE: attaches window.Stisla and wires [data-stisla-*] on DOMContentLoaded. -->
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+/* @stisla/style — Card. Ported from src/scss/components/_card.scss. References the @theme
+ * tokens: colors var(--color-*), spacing --spacing(n), type var(--text-*) / var(--leading-*) /
+ * var(--font-weight-*), radius var(--radius-*), shadow var(--shadow-*). Only no-namespace customs
+ * use --st-* (border-width). Knobs are --card-* (fallback-default). @layer components.
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  /* Fallback-default knobs: nothing set on the base, so a scope / inline retunes any of them.
+     --card-radius + --card-padding-inline are read by the parts (header / body / footer /
+     image / overlay), so their defaults repeat at those read sites. */
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    color: var(--card-color, var(--color-foreground));
+    background: var(--card-bg, var(--color-surface));
+    border: var(--card-border-width, var(--st-border-width)) solid
+      var(--card-border-color, var(--color-border));
+    border-radius: var(--card-radius, var(--radius-lg));
+    box-shadow: var(--card-shadow, var(--shadow-md));
+  }
+
+  /* === Parts ============================================================
+   * Body is flex column + gap so .card__title / __subtitle / __text don't need
+   * component-level margins. Parent owns the rhythm; children stay margin-zero (same model
+   * as .alert). */
+  .card__body {
+    display: flex;
+    flex-direction: column;
+    gap: --spacing(2);
+    padding: var(--card-padding-block, --spacing(5))
+      var(--card-padding-inline, --spacing(5));
+  }
+
+  .card__header {
+    min-height: var(--card-header-height, --spacing(15));
+    padding: 0 var(--card-padding-inline, --spacing(5));
+    border-bottom: var(--st-border-width) solid var(--color-border);
+  }
+
+  .card__header,
+  .card__heading {
+    display: flex;
+    align-items: center;
+    gap: --spacing(2);
+  }
+
+  /* Trailing action slot in the header (holds a link, a button, a menu trigger). The auto
+     margin is on the slot itself, so leading content packs to the start and only the action
+     moves to the end. Matches .alert__action / .page__action. */
+  .card__action {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(2);
+    margin-inline-start: auto;
+  }
+
+  /* Round the top corners when the header is the card's first child, so a filled (--alt)
+     header fills the card's rounded top instead of showing square corners (the card carries
+     no overflow: hidden). Inner radius (outer − border) keeps it concentric with the border,
+     matching the image + footer. */
+  .card__header:first-child {
+    border-start-start-radius: calc(
+      var(--card-radius, var(--radius-lg)) -
+        var(--card-border-width, var(--st-border-width))
+    );
+    border-start-end-radius: calc(
+      var(--card-radius, var(--radius-lg)) -
+        var(--card-border-width, var(--st-border-width))
+    );
+  }
+
+  /* Opt the header onto the alt surface to mirror the footer's contrast. Composes with
+     .card__header: <div class="card__header card__header--alt">. */
+  .card__header--alt {
+    background: var(--color-surface-2);
+  }
+
+  .card__header--sm {
+    --card-header-height: --spacing(11.5);
+  }
+
+  /* Flex breaks the inline strut leak: inline children get a fresh formatting context as flex
+     items, so their own line-height takes effect instead of the body's dictating the line-box.
+     Aligns gap behavior with .card__header too. */
+  .card__footer {
+    display: flex;
+    align-items: center;
+    gap: --spacing(2);
+    padding: --spacing(3) var(--card-padding-inline, --spacing(5));
+    background: var(--color-surface-2);
+    border-top: var(--st-border-width) solid var(--color-border);
+    border-radius: 0 0
+      calc(
+        var(--card-radius, var(--radius-lg)) -
+          var(--card-border-width, var(--st-border-width))
+      )
+      calc(
+        var(--card-radius, var(--radius-lg)) -
+          var(--card-border-width, var(--st-border-width))
+      );
+  }
+
+  .card__title {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--leading-tight);
+  }
+
+  .card__subtitle {
+    font-size: var(--text-sm);
+    color: var(--color-muted-foreground);
+    font-weight: var(--font-weight-medium);
+  }
+
+  /* .card__text — no per-element rules. Sibling rhythm comes from .card__body's gap;
+     .card__overlay's color: inherit (below) still applies. */
+
+  .card__link {
+    color: var(--color-primary-emphasis);
+    text-decoration: none;
+
+    & + .card__link {
+      margin-inline-start: --spacing(4);
+    }
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  /* Image position-aware. .card carries no overflow: hidden (focus rings, sticky headers, and
+     overflowing menus must escape), so the image rounds its own corners at whichever edge it
+     meets the card. It rounds to the card's INNER radius (outer − border width) so the curve
+     sits concentric with the border, matching table-in-card / toggle-group / tabs. */
+  .card__image {
+    display: block;
+    width: 100%;
+    height: auto;
+
+    &:first-child {
+      border-radius: calc(
+          var(--card-radius, var(--radius-lg)) -
+            var(--card-border-width, var(--st-border-width))
+        )
+        calc(
+          var(--card-radius, var(--radius-lg)) -
+            var(--card-border-width, var(--st-border-width))
+        )
+        0 0;
+    }
+    &:last-child {
+      border-radius: 0 0
+        calc(
+          var(--card-radius, var(--radius-lg)) -
+            var(--card-border-width, var(--st-border-width))
+        )
+        calc(
+          var(--card-radius, var(--radius-lg)) -
+            var(--card-border-width, var(--st-border-width))
+        );
+    }
+    &:only-child {
+      border-radius: calc(
+        var(--card-radius, var(--radius-lg)) -
+          var(--card-border-width, var(--st-border-width))
+      );
+    }
+  }
+
+  /* Overlay card: the image is the full-bleed background under .card__overlay, not an
+     image-above-body, so it rounds ALL four corners (overriding the top-only :first-child rule
+     above) to fill the card's whole rounded frame. */
+  .card:has(> .card__overlay) > .card__image {
+    border-radius: calc(
+      var(--card-radius, var(--radius-lg)) -
+        var(--card-border-width, var(--st-border-width))
+    );
+  }
+
+  /* Overlay sits over a .card__image (or any background sibling). Positions absolute over the
+     image; default text color is the theme-independent overlay foreground because overlays
+     land on photos. */
+  .card__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    padding: var(--card-padding-block, --spacing(5))
+      var(--card-padding-inline, --spacing(5));
+    color: var(--color-overlay-foreground);
+
+    .card__title,
+    .card__subtitle,
+    .card__text {
+      color: inherit;
+    }
+  }
+
+  /* Block — fills its container width per SPEC §9 escape ramp. */
+  .card--block {
+    width: 100%;
+  }
+
+  /* A flushed .media row inside a card reads as a continuous row of the card's surface: pick up the
+     card gutter so the row's inline edges align with the header/footer, and drop the radius (the card
+     already owns rounded corners). */
+  .card > .media--seamless {
+    --media-padding-inline: var(--card-padding-inline, --spacing(5));
+    --media-padding-block: var(--card-padding-block, --spacing(5));
+    border-radius: 0;
+  }
+}

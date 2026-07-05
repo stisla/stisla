@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — alert</title>
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- Intent alert with heading + description (docs "With heading and description").
+       Dark body text on a 7% intent tint via the -emphasis tokens holds AA contrast.
+       The leading <i> is a decorative icon slot; the text carries the meaning. -->
+  <div class="alert alert--info">
+    <i data-lucide="info"></i>
+    <div class="alert__title">Heads up</div>
+    <div class="alert__description">A new version is available. Refresh to load it.</div>
+  </div>
+
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

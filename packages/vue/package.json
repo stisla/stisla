@@ -1,0 +1,8 @@
+{
+  "name": "@stisla/vue",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Stisla Vue components — LATER (see ROADMAP Phase 8). Reka/Radix-Vue + the shared @stisla/style composer. Placeholder so the workspace slot exists.",
+  "license": "MIT",
+  "type": "module"
+}

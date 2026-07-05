@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — combobox</title>
+  <!-- BUILT bundles, same-origin (see scripts/serve-fixtures.mjs). Prereq: pnpm build:packages.
+       Tom Select is INLINED into stisla.js (esbuild bundle: true, deps inlined) — no separate
+       library <script> or CDN needed. The compiled stisla.css carries the .ts-* adapter rules. -->
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- A neutral control before the trigger, so focus-return has a distinct wrong answer to fail on. -->
+  <a href="#" class="fixture-before" id="before">a link before the combobox</a>
+
+  <!-- Component under test: the single searchable combobox. Markup mirrors the documented
+       recommended usage (docs/src/routes/docs/vanilla/combobox.tsx). The behavior comes from
+       stisla.js auto-init: Tom Select hydrates the native <select> into .ts-wrapper.combobox. -->
+  <div class="field">
+    <label for="combobox-framework" class="field__label">Framework</label>
+    <select class="combobox" id="combobox-framework" name="framework" data-stisla-combobox data-placeholder="Choose a framework">
+      <option value=""></option>
+      <option value="react">React</option>
+      <option value="vue">Vue</option>
+      <option value="svelte">Svelte</option>
+      <option value="solid">Solid</option>
+    </select>
+  </div>
+
+  <!-- Auto-initing IIFE (Tom Select inlined): attaches window.Stisla and wires [data-stisla-*] on DOMContentLoaded. -->
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

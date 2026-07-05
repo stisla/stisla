@@ -1,0 +1,98 @@
+/* @stisla/style — Checkbox. Ported from src/scss/components/_checkbox.scss + the form-check-base
+ * mixin. Native <input type="checkbox"> styled as a small square box. References the @theme tokens
+ * (colors var(--color-*), spacing --spacing(n)); only no-namespace customs use --st-* (border-width).
+ * Knobs are --checkbox-* (fallback-default). @layer components.
+ *
+ * The shared check base (size, border, focus halo, validation, disabled) is DUPLICATED here with the
+ * --checkbox-* namespace — plain CSS has no parameterized mixin. Keep in sync with radio.css.
+ * NOTE: the box radius default is --spacing(1) (4px) — the radius scale is sm/md/lg only (no xs tier),
+ * and the box is intentionally tighter than --radius-sm. Override via --checkbox-radius. State is native
+ * (:checked / :indeterminate / :disabled / :focus-visible / [aria-invalid] / :user-invalid), no is-*.
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  .checkbox {
+    flex-shrink: 0;
+    width: var(--checkbox-size, --spacing(4));
+    height: var(--checkbox-size, --spacing(4));
+    margin: 0;
+    vertical-align: middle;
+    background-color: var(--checkbox-bg, var(--color-surface));
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    border: var(--checkbox-border-width, var(--st-border-width)) solid
+      var(--checkbox-border-color, var(--color-border-strong));
+    border-radius: var(--checkbox-radius, --spacing(1));
+    appearance: none;
+    cursor: pointer;
+    transition:
+      background-color var(--transition-duration-fast) ease,
+      background-position 0.15s ease,
+      border-color var(--transition-duration-fast) ease,
+      box-shadow var(--transition-duration-fast) ease;
+    print-color-adjust: exact;
+
+    &:focus-visible {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px
+        color-mix(in oklch, var(--color-ring) 25%, transparent);
+    }
+
+    /* Hover — only when idle. Skip focus / invalid / checked / indeterminate / disabled (each owns
+       its own border color, and hovering a checked box shouldn't dim its primary border to gray). */
+    &:hover:not(
+        :disabled,
+        :focus-visible,
+        :checked,
+        :indeterminate,
+        [aria-invalid="true"],
+        :user-invalid
+      ) {
+      border-color: color-mix(
+        in oklch,
+        var(--color-border-strong) 80%,
+        var(--color-foreground)
+      );
+    }
+
+    /* Validation — touches the border only; the fill (transparent unchecked, primary checked) stays
+       independent so the "selected" signal stays readable. */
+    &[aria-invalid="true"],
+    &:user-invalid {
+      border-color: var(--color-danger);
+    }
+    &[aria-invalid="true"]:focus-visible,
+    &:user-invalid:focus-visible {
+      border-color: var(--color-danger);
+      box-shadow: 0 0 0 3px
+        color-mix(in oklch, var(--color-danger) 25%, transparent);
+    }
+
+    &:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    /* Checked / indeterminate — solid primary fill, indicator painted via background-image. The SVG
+       glyph is literal white because data: URLs can't read CSS vars; white = --color-primary-foreground
+       in both default themes. Override --checkbox-indicator with a custom SVG to recolor. */
+    &:checked,
+    &:indeterminate {
+      background-color: var(--checkbox-bg-checked, var(--color-primary));
+      border-color: var(--checkbox-bg-checked, var(--color-primary));
+      background-image: var(--checkbox-indicator);
+    }
+    &:checked {
+      --checkbox-indicator: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpolyline points='3 8.5 6.5 12 13 5' stroke='white' stroke-width='2.25' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    }
+    &:indeterminate {
+      --checkbox-indicator: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cline x1='3' y1='8' x2='13' y2='8' stroke='white' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+}

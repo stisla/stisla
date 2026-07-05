@@ -1,0 +1,282 @@
+/* @stisla/style — Select. Ported from src/scss/components/_select.scss + the form-field-base mixin.
+ * THIS PORT COVERS THE NATIVE <select class="select"> (the no-JS baseline): the field shape + the
+ * chevron in the inline-end padding well, plus the [multiple]/[size] multi-line opt-out. References
+ * the @theme tokens (colors var(--color-*), spacing --spacing(n), type var(--text-*), radius
+ * var(--radius-*)); only no-namespace customs use --st-* (border-width, duration). Knobs --select-*.
+ *
+ * DEFERRED: the JS-hydrated custom trigger + popup (.select__trigger / __value / __popup / __item /
+ * __indicator / __group-label) builds on the shared menu-surface recipe and Stisla.Select behavior —
+ * both land in a later pass (menu + @stisla/vanilla). Native select needs none of it.
+ *
+ * The field base is DUPLICATED here with --select-* (plain CSS has no parameterized mixin); keep in
+ * sync with input.css + textarea.css. Uses background-color (not the `background` shorthand) so the
+ * chevron background-image survives. State is native, no is-*. @layer components.
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  .select {
+    display: block;
+    width: 100%;
+    height: var(--select-height, --spacing(9));
+    padding-block: var(--select-padding-block, 0);
+    padding-inline: var(--select-padding-inline, --spacing(2.5));
+    /* Chevron well on the inline-end edge. */
+    padding-inline-end: --spacing(9);
+    font-family: inherit;
+    font-size: var(--select-font-size, var(--text-sm));
+    font-weight: var(--font-weight-normal);
+    line-height: var(--leading-tight);
+    color: var(--select-color, var(--color-foreground));
+    background-color: var(--select-bg, var(--color-surface));
+    /* Chevron — fallback-default custom prop so a scope can swap the SVG. The stroke must be a literal
+       (CSS vars don't resolve in url()); the dark scope below swaps to a lighter chevron. */
+    background-image: var(
+      --select-indicator,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 6 8 10 12 6'/%3E%3C/svg%3E")
+    );
+    background-position: right --spacing(3) center;
+    background-repeat: no-repeat;
+    background-size: --spacing(3) --spacing(3);
+    border: var(--select-border-width, var(--st-border-width)) solid
+      var(--select-border-color, var(--color-border-strong));
+    border-radius: var(--select-radius, var(--radius-md));
+    appearance: none;
+    cursor: pointer;
+    transition:
+      border-color var(--transition-duration-fast) ease,
+      box-shadow var(--transition-duration-fast) ease,
+      background-color var(--transition-duration-fast) ease;
+
+    /* iOS Safari zooms when a focused field's font-size < 16px and never zooms back. */
+    @media (pointer: coarse) {
+      font-size: var(--select-font-size, var(--text-base));
+    }
+
+    &:hover:not(:disabled, :focus-visible, [aria-invalid="true"], :user-invalid) {
+      border-color: color-mix(in oklch, var(--color-border-strong) 80%, var(--color-foreground));
+    }
+
+    &:focus-visible {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-ring) 25%, transparent);
+    }
+
+    &[aria-invalid="true"],
+    &:user-invalid {
+      border-color: var(--color-danger);
+    }
+    &[aria-invalid="true"]:focus-visible,
+    &:user-invalid:focus-visible {
+      border-color: var(--color-danger);
+      box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-danger) 25%, transparent);
+    }
+
+    &:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    &[readonly]:not(:disabled) {
+      background-color: var(--color-surface-2);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+
+    /* Dark — every token-driven property flips via theme.css; only the chevron can't (data: URLs are
+       static), so swap to the same geometry with a lighter stroke. @variant dark uses the registered
+       custom-variant ([data-theme="dark"] / .dark). */
+    @variant dark {
+      --select-indicator: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 6 8 10 12 6'/%3E%3C/svg%3E");
+    }
+  }
+
+  /* Multi-line native selects (<select multiple> or <select size> > 1) render as inline lists: drop
+     the chevron, restore native rendering, opt out of the hard-height contract (same shape as
+     textarea). Scoped to <select> so it never hits a future JS trigger button. */
+  select.select[multiple],
+  select.select[size]:not([size="1"]) {
+    height: auto;
+    min-height: var(--select-height, --spacing(9));
+    padding-block: --spacing(1.5);
+    padding-inline: var(--select-padding-inline, --spacing(2.5));
+    appearance: auto;
+    background-image: none;
+  }
+
+  /* === Sizes (base = md) === */
+  .select--sm {
+    --select-radius: var(--radius-sm);
+    --select-height: --spacing(7);
+    --select-padding-inline: --spacing(2);
+    --select-font-size: var(--text-xs);
+    @media (pointer: coarse) {
+      --select-font-size: var(--text-base);
+    }
+  }
+
+  .select--lg {
+    --select-radius: var(--radius-lg);
+    --select-height: --spacing(11);
+    --select-padding-inline: --spacing(3.5);
+    --select-font-size: var(--text-base);
+  }
+}
+
+/* === Custom select (JS-hydrated) === Stisla.Select hides the native <select class="select"
+ * data-stisla-select> and inserts a sibling <button class="select select__trigger"> + <ul
+ * class="select__popup" role="listbox">. The button reuses the .select field shape, so it inherits the
+ * shape/border/chevron/sizes/validation; the popup expands the shared menu-surface recipe inline with
+ * --select-* knobs so it matches .menu / combobox / autocomplete. Highlight is [data-highlighted]
+ * (keyboard cursor) and selected is [aria-selected="true"] — both recast from the legacy is-* classes
+ * per the no-is-* convention. Positioning (Floating UI) ships with the JS layer. @layer components. */
+@layer components {
+  /* Hide the hydrated source <select> as belt-and-braces (JS also sets the [hidden] attribute). */
+  select.select[data-stisla-select][hidden] {
+    display: none !important;
+  }
+
+  /* === Trigger === same .select shell + internal flex for the value text + optional "+N more" chip. */
+  .select__trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(2);
+    text-align: start;
+  }
+
+  .select__value {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  /* Empty value → placeholder via attr() (declarative; the JS never writes the placeholder string). */
+  .select__value:empty::before {
+    content: attr(data-placeholder);
+    color: var(--select-placeholder, var(--color-muted-foreground));
+  }
+
+  .select__more {
+    flex-shrink: 0;
+    font-size: var(--select-more-font-size, var(--text-xs));
+    color: var(--select-placeholder, var(--color-muted-foreground));
+  }
+
+  /* === Popup === the menu-surface recipe; the JS (Floating UI) sets position/left/top inline. */
+  .select__popup {
+    padding: var(--select-popup-padding-block, --spacing(1))
+      var(--select-popup-padding-inline, --spacing(1));
+    font-size: var(--select-font-size, var(--text-sm));
+    line-height: var(--leading-normal);
+    color: var(--select-color, var(--color-foreground));
+    background-color: var(--select-bg, var(--color-surface));
+    border: var(--select-border-width, var(--st-border-width)) solid
+      var(--select-popup-border-color, var(--color-border));
+    border-radius: var(--select-radius, var(--radius-md));
+    box-shadow: var(--select-shadow, var(--shadow-md));
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: var(--select-z-index, var(--z-index-dropdown));
+    display: flex;
+    flex-direction: column;
+    gap: var(--select-item-gap, --spacing(0.5));
+    margin: 0;
+    list-style: none;
+    overflow-y: auto;
+  }
+  .select__popup[hidden] {
+    display: none;
+  }
+
+  /* === Item === the menu-item recipe. Concentric inner radius = popup radius − inline gutter. */
+  .select__item {
+    display: flex;
+    align-items: center;
+    gap: var(--select-item-gap-inner, --spacing(2));
+    width: 100%;
+    min-height: var(--select-item-min-height, --spacing(8));
+    padding: var(--select-item-padding-block, --spacing(0.5))
+      var(--select-item-padding-inline, --spacing(3));
+    font: inherit;
+    color: var(--select-color, var(--color-foreground));
+    text-align: start;
+    background-color: transparent;
+    border: 0;
+    border-radius: var(
+      --select-item-radius,
+      calc(var(--select-radius, var(--radius-md)) - var(--select-popup-padding-inline, --spacing(1)))
+    );
+    cursor: pointer;
+    user-select: none;
+    transition:
+      background-color var(--transition-duration-fast) ease,
+      color var(--transition-duration-fast) ease;
+  }
+
+  /* Hover (mouse) + [data-highlighted] (keyboard nav) paint the same accent chip. */
+  .select__item:hover,
+  .select__item[data-highlighted] {
+    color: var(--select-item-color-hover, var(--color-accent-foreground));
+    background-color: var(--select-item-bg-hover, var(--color-accent));
+  }
+
+  /* Selected — persists past hover/highlight so the chosen value stays visible. */
+  .select__item[aria-selected="true"],
+  .select__item[aria-selected="true"]:hover,
+  .select__item[aria-selected="true"][data-highlighted] {
+    color: var(--select-item-color-active, var(--color-highlight-foreground));
+    background-color: var(--select-item-bg-active, var(--color-highlight));
+  }
+
+  .select__item[aria-disabled="true"] {
+    color: var(--select-item-color-disabled, var(--color-muted-foreground));
+    background-color: transparent;
+    pointer-events: none;
+  }
+
+  /* Selected-option check — the slot footprint is always reserved (visibility, not display) so rows stay
+     column-aligned; order:1 + auto margin push it to the trailing edge. The JS renders the slot + glyph
+     in every row; it shows only on the selected row. */
+  .select__indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--select-item-icon-size, --spacing(4));
+    height: var(--select-item-icon-size, --spacing(4));
+    flex-shrink: 0;
+    order: 1;
+    margin-inline-start: auto;
+    color: inherit;
+    visibility: hidden;
+  }
+  .select__item[aria-selected="true"] .select__indicator {
+    visibility: visible;
+  }
+
+  /* === Group label === */
+  .select__group-label {
+    display: flex;
+    align-items: center;
+    padding: var(--select-group-label-padding-block, --spacing(1))
+      var(--select-group-label-padding-inline, --spacing(3));
+    margin: 0;
+    font-size: var(--select-group-label-font-size, var(--text-xs));
+    font-weight: var(--select-group-label-font-weight, var(--font-weight-semibold));
+    color: var(--select-group-label-color, var(--color-muted-foreground));
+    white-space: nowrap;
+  }
+  /* Subsequent group headers get top space so the section break reads as a divider. */
+  .select__item + .select__group-label {
+    margin-block-start: --spacing(2);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .select__item {
+      transition: none;
+    }
+  }
+}

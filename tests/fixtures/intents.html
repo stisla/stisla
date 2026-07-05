@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — intent contrast (real components)</title>
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+  <style> section { margin-bottom: 1.5rem; } h3 { margin: 0 0 .5rem; font-size:.8rem; color: var(--color-muted-foreground) } .row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center} </style>
+</head>
+<body>
+  <!-- Intent color usage as it ACTUALLY ships. axe measures each real rendered text pair (compositing
+       the semi-transparent soft tints over the page bg — which a hand hex-calculator cannot do). -->
+
+  <section>
+    <h3>Solid buttons — white/dark text on solid intent</h3>
+    <div class="row">
+      <button class="button button--primary" style="--button-tone:var(--color-primary);--button-color:var(--color-primary-foreground)">Primary</button>
+      <button class="button" style="--button-tone:var(--color-success);--button-color:var(--color-success-foreground)">Success</button>
+      <button class="button" style="--button-tone:var(--color-warning);--button-color:var(--color-warning-foreground)">Warning</button>
+      <button class="button button--danger" style="--button-tone:var(--color-danger);--button-color:var(--color-danger-foreground)">Danger</button>
+      <button class="button" style="--button-tone:var(--color-info);--button-color:var(--color-info-foreground)">Info</button>
+    </div>
+  </section>
+
+  <section>
+    <h3>Soft / ghost / outline buttons — intent text on transparent/tint (uses -text)</h3>
+    <div class="row">
+      <button class="button button--primary button--soft">Soft</button>
+      <button class="button button--primary button--ghost">Ghost</button>
+      <button class="button button--primary button--outline">Outline</button>
+      <button class="button button--danger button--soft">Soft</button>
+      <button class="button button--danger button--ghost">Ghost</button>
+      <button class="button button--danger button--outline">Outline</button>
+    </div>
+  </section>
+
+  <section>
+    <h3>Solid badges — same solid pair</h3>
+    <div class="row">
+      <span class="badge badge--primary">Primary</span>
+      <span class="badge badge--success">Success</span>
+      <span class="badge badge--warning">Warning</span>
+      <span class="badge badge--danger">Danger</span>
+      <span class="badge badge--info">Info</span>
+    </div>
+  </section>
+
+  <section>
+    <h3>Soft badges — intent text on 15% intent tint</h3>
+    <div class="row">
+      <span class="badge badge--soft badge--primary">Primary</span>
+      <span class="badge badge--soft badge--success">Success</span>
+      <span class="badge badge--soft badge--warning">Warning</span>
+      <span class="badge badge--soft badge--danger">Danger</span>
+      <span class="badge badge--soft badge--info">Info</span>
+    </div>
+  </section>
+
+  <section>
+    <h3>Alerts — dark body text + intent link on 7% intent tint</h3>
+    <div class="alert alert--primary"><div class="alert__title">Primary title</div><div class="alert__description">Body text here. <a class="alert__link" href="#">A link</a>.</div></div>
+    <div class="alert alert--success"><div class="alert__title">Success title</div><div class="alert__description">Body text here. <a class="alert__link" href="#">A link</a>.</div></div>
+    <div class="alert alert--warning"><div class="alert__title">Warning title</div><div class="alert__description">Body text here. <a class="alert__link" href="#">A link</a>.</div></div>
+    <div class="alert alert--danger"><div class="alert__title">Danger title</div><div class="alert__description">Body text here. <a class="alert__link" href="#">A link</a>.</div></div>
+    <div class="alert alert--info"><div class="alert__title">Info title</div><div class="alert__description">Body text here. <a class="alert__link" href="#">A link</a>.</div></div>
+  </section>
+
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+/* @stisla/style — Separator. Ported from src/scss/components/_separator.scss. Hairline divider:
+ * horizontal sits in flow as a full-width rule (<hr class="separator">); vertical works inside a flex
+ * row, where align-self: stretch sizes it to the cross axis. References the @theme tokens (colors
+ * var(--color-*), spacing --spacing(n)); the hairline thickness defaults to the --st-border-width
+ * custom. Knobs are --separator-*. @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  .separator {
+    display: block;
+    flex-shrink: 0;
+    width: 100%;
+    height: var(--separator-thickness, var(--st-border-width));
+    margin: 0;
+    background: var(--separator-color, var(--color-border));
+    border: 0;
+  }
+
+  /* Vertical — inside a flex row align-self: stretch fills the cross axis; the min-height floor keeps
+     the rule visible when the parent is not a flex container. */
+  .separator--vertical {
+    width: var(--separator-thickness, var(--st-border-width));
+    height: auto;
+    min-height: var(--separator-min-height, --spacing(5));
+    align-self: stretch;
+  }
+}

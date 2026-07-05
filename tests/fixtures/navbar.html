@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — navbar</title>
+  <!-- BUILT bundles, same-origin (see scripts/serve-fixtures.mjs). Prereq: pnpm build:packages. -->
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- A neutral control before the navbar, so focus tests have a distinct wrong answer to fail on. -->
+  <a href="#" class="fixture-before" id="before">a link before the navbar</a>
+
+  <!-- Component under test: the responsive-fold navbar. Markup mirrors the documented recommended
+       usage (docs/src/routes/docs/vanilla/navbar.tsx, "Responsive fold"). Plain .navbar folds below
+       lg (64rem), so the toggle is visible in a narrow viewport. The toggle carries aria-controls +
+       a stable menu id (per navbar.js anatomy). Behavior comes from stisla.js auto-init. -->
+  <nav class="navbar navbar--block" data-stisla-navbar aria-label="Main">
+    <a class="navbar__brand" href="#">Stisla</a>
+    <button class="navbar__toggle" id="navbar-toggle" data-stisla-navbar-toggle
+            aria-controls="navbar-menu" aria-label="Toggle menu" aria-expanded="false">≡</button>
+    <div class="navbar__menu" id="navbar-menu" data-state="closed">
+      <ul class="navbar__nav">
+        <li><a class="navbar__button" href="#" data-state="active">Dashboard</a></li>
+        <li><a class="navbar__button" href="#">Reports</a></li>
+        <li><a class="navbar__button" href="#">Settings</a></li>
+      </ul>
+      <button class="button button--primary button--sm">New report</button>
+    </div>
+  </nav>
+
+  <!-- Auto-initing IIFE: attaches window.Stisla and wires [data-stisla-*] on DOMContentLoaded. -->
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

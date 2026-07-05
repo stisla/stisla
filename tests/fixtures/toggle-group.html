@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — toggle-group</title>
+  <!-- BUILT bundles, same-origin (see scripts/serve-fixtures.mjs). Prereq: pnpm build:packages. -->
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- A neutral control before the group, so focus-move/roving has a distinct wrong answer to fail on. -->
+  <a href="#" class="fixture-before" id="before">before</a>
+
+  <!-- Component under test: single-select (segmented) toggle group. Markup mirrors the documented
+       recommended usage (docs/src/routes/docs/vanilla/toggle-group.tsx). role="radiogroup" +
+       role="radio"/aria-checked autodetects type="single". Text labels supply accessible names;
+       the group carries aria-label. Behavior comes from stisla.js auto-init. -->
+  <div class="toggle-group" data-stisla-toggle-group role="radiogroup" aria-label="Calendar view" id="tg">
+    <button type="button" class="toggle" role="radio" data-state="active" aria-checked="true" data-value="day" id="tg-day">Day</button>
+    <button type="button" class="toggle" role="radio" aria-checked="false" data-value="week" id="tg-week">Week</button>
+    <button type="button" class="toggle" role="radio" aria-checked="false" data-value="month" id="tg-month">Month</button>
+  </div>
+
+  <!-- Auto-initing IIFE: attaches window.Stisla and wires [data-stisla-*] on DOMContentLoaded. -->
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

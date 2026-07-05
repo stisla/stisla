@@ -1,11 +1,33 @@
-# Folders to ignore
-/node_modules/
-/dist/node_modules/
-/pages
+# Deps
+node_modules/
 
-# OS or Editor folders
+# Build output
+dist/
+templates/dist-site/
+templates/screenshots/
+*.tgz
+.vite/
+.tmp/
+
+# TanStack Start (docs) generated + build output
+docs/src/routeTree.gen.ts
+docs/src/demo/iframe.css
+docs/.output
+docs/.nitro
+docs/.tanstack
+
+# Logs
+*.log
+npm-debug.log*
+
+# Playwright (release-readiness test harness — see RELEASE-READINESS.md)
+playwright-report/
+test-results/
+blob-report/
+
+# OS / editor
+.DS_Store
 ._*
 .cache
-.DS_Store
 .idea
 .vscode

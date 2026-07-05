@@ -1,0 +1,251 @@
+/* @stisla/style — Popover. Ported from src/scss/components/_popover.scss. A surface-tier overlay
+ * panel (bg = surface, solid border) positioned by the JS layer (Floating UI), shown via
+ * [data-state="open"] + [data-placement]. Two shapes share the block: a plain popover (title + body
+ * in the root's padding) and a panel popover (a __header drops the root padding so header/footer
+ * dividers span edge-to-edge, each part owning its padding). References the @theme tokens: colors
+ * var(--color-*), sizes/spacing --spacing(n), type var(--text-*) / var(--leading-*) /
+ * var(--font-weight-*), radius var(--radius-*), shadow var(--shadow-*); only no-namespace customs
+ * use --st-* (border-width, duration, z-index); z-index routes through the z-index scale (--z-index-popover). Knobs are
+ * --popover-*. Positioning + focus-trap + dismiss ship with the JS layer. @layer components.
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  /* position: absolute (not fixed) so the popover scrolls with the page alongside its trigger; the
+     JS layer portals it to <body> on open so ancestor overflow: hidden can't crop it. */
+  .popover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: var(--popover-z-index, var(--z-index-popover));
+    display: none;
+    min-width: var(--popover-min-width, --spacing(52));
+    max-width: var(--popover-max-width, --spacing(69));
+    padding: var(--popover-padding-block, --spacing(4))
+      var(--popover-padding-inline, --spacing(4));
+    margin: 0;
+    color: var(--popover-color, var(--color-foreground));
+    background-color: var(--popover-bg, var(--color-surface));
+    border: var(--popover-border-width, var(--st-border-width)) solid
+      var(--popover-border-color, var(--color-border));
+    border-radius: var(--popover-radius, var(--radius-lg));
+    box-shadow: var(--popover-shadow, var(--shadow-md));
+    opacity: 0;
+    /* Resting transform = "above the trigger, easing up from below"; the per-placement overrides
+       below flip the direction so the entrance always reads as moving away from the anchored edge. */
+    transform: translateY(--spacing(1));
+    transition:
+      opacity var(--popover-transition-duration, var(--transition-duration-normal)) ease,
+      transform var(--popover-transition-duration, var(--transition-duration-normal)) ease;
+  }
+
+  .popover[data-state="open"] {
+    display: block;
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Per-placement resting transform — Floating UI's resolved placement (which may differ from the
+     requested side after flip()) sets [data-placement], so the entrance tracks the anchored edge. */
+  .popover[data-placement^="bottom"] {
+    transform: translateY(calc(--spacing(1) * -1));
+  }
+  .popover[data-placement^="left"] {
+    transform: translateX(--spacing(1));
+  }
+  .popover[data-placement^="right"] {
+    transform: translateX(calc(--spacing(1) * -1));
+  }
+  .popover[data-placement^="bottom"][data-state="open"],
+  .popover[data-placement^="left"][data-state="open"],
+  .popover[data-placement^="right"][data-state="open"] {
+    transform: none;
+  }
+
+  /* === Title === */
+  .popover__title {
+    margin-block-end: var(--popover-title-margin-block-end, --spacing(2));
+    color: var(--popover-title-color, var(--color-foreground));
+    font-size: var(--popover-title-font-size, var(--text-base));
+    font-weight: var(--popover-title-font-weight, var(--font-weight-semibold));
+    line-height: var(--leading-tight);
+  }
+
+  /* Clear the close chip when both title and close are present. :has() is baseline (Safari 16.4+). */
+  .popover:has(.popover__close) .popover__title {
+    padding-inline-end: calc(var(--popover-close-size, --spacing(6)) + --spacing(2));
+  }
+
+  /* === Body === */
+  .popover__body {
+    margin: 0;
+    color: var(--popover-body-color, var(--color-muted-foreground));
+    font-size: var(--popover-body-font-size, var(--text-sm));
+    line-height: var(--popover-body-line-height, var(--leading-normal));
+    padding-block: var(--popover-body-padding-block, 0);
+    padding-inline: var(--popover-body-padding-inline, 0);
+  }
+  /* A body holding interactive children opts back into --color-foreground via a class or inline
+     override at the consumer; the default muted color keeps text-only popovers reading as context. */
+
+  /* === Panel parts (header / footer) === opt-in structure for panel-shaped popovers. A __header
+     present means "this is a panel": the root drops its padding so the dividers run edge-to-edge,
+     and header / body / footer each own their padding. :has() is baseline (Safari 16.4+). */
+  .popover:has(.popover__header) {
+    padding: 0;
+  }
+
+  .popover__header {
+    display: flex;
+    align-items: center;
+    gap: var(--popover-header-gap, --spacing(2));
+    padding: var(--popover-header-padding-block, --spacing(3))
+      var(--popover-header-padding-inline, --spacing(4));
+    border-block-end: var(--popover-border-width, var(--st-border-width)) solid
+      var(--popover-border-color, var(--color-border));
+  }
+
+  /* Title inside a header is the row's leading child — drop its standalone bottom margin; the header
+     padding owns the rhythm now. */
+  .popover__header .popover__title {
+    margin-block-end: 0;
+  }
+
+  /* Trailing action in the header (e.g. "mark all as read"). The auto margin is on the action, so
+     leading content packs to the start and only the action moves to the end. */
+  .popover__action {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(2);
+    margin-inline-start: auto;
+  }
+
+  /* In a panel the body sits between the dividers and owns its padding, since the root no longer
+     supplies any. A list component dropped straight in brings its own padding instead of __body. */
+  .popover:not(.popover--menu):has(.popover__header),
+  .popover:not(.popover--menu):has(.popover__footer) {
+    --popover-body-padding-block: --spacing(2);
+    --popover-body-padding-inline: --spacing(4);
+  }
+
+  .popover__footer {
+    padding: var(--popover-footer-padding-block, --spacing(3))
+      var(--popover-footer-padding-inline, --spacing(4));
+    border-block-start: var(--popover-border-width, var(--st-border-width)) solid
+      var(--popover-border-color, var(--color-border));
+  }
+
+  /* === Close chip === optional dismiss; positioned absolutely so it doesn't disturb the title/body
+     flow. A 1.5rem ghost chip with --color-accent hover. The pill radius is a stand-alone corner
+     affordance, not concentric math against the frame. */
+  .popover__close {
+    position: absolute;
+    top: var(--popover-padding-block, --spacing(4));
+    inset-inline-end: var(--popover-padding-inline, --spacing(4));
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--popover-close-size, --spacing(6));
+    height: var(--popover-close-size, --spacing(6));
+    padding: 0;
+    color: var(--popover-close-color, var(--color-muted-foreground));
+    background: transparent;
+    border: 0;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition:
+      color var(--popover-transition-duration, var(--transition-duration-normal)) ease,
+      background-color var(--popover-transition-duration, var(--transition-duration-normal)) ease;
+  }
+
+  .popover__close:hover {
+    color: var(--popover-close-color-hover, var(--color-foreground));
+    background-color: var(--popover-close-bg-hover, var(--color-accent));
+  }
+
+  .popover__close:focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  .popover__close > svg,
+  .popover__close > i {
+    width: 1em;
+    height: 1em;
+    font-size: var(--text-base);
+  }
+
+  /* === Arrow === a square rotated 45°. The JS arrow() middleware sets the cross-axis offset; the
+     per-placement rules below pin the placement-axis offset so half the diamond sits inside the
+     surface (covered by --popover-bg) and the other half sticks out as the point. The two
+     outward-facing diagonals carry the border so the arrow continues the frame seamlessly. */
+  .popover__arrow {
+    position: absolute;
+    width: var(--popover-arrow-size, --spacing(3));
+    height: var(--popover-arrow-size, --spacing(3));
+    background-color: var(--popover-bg, var(--color-surface));
+    transform: rotate(45deg);
+  }
+
+  /* CSS rotates clockwise; after rotate(45deg) each original edge maps to a diamond diagonal. For
+     each placement the two outward-facing diagonals get border; the inner two stay borderless. */
+
+  /* Top placement → arrow at the popover's bottom, pointing down (original right + bottom edges). */
+  .popover[data-placement^="top"] .popover__arrow {
+    bottom: calc(var(--popover-arrow-size, --spacing(3)) * -0.5);
+    border-right: var(--popover-border-width, var(--st-border-width)) solid
+      var(--popover-border-color, var(--color-border));
+    border-bottom: var(--popover-border-width, var(--st-border-width)) solid
+      var(--popover-border-color, var(--color-border));
+  }
+
+  /* Bottom placement → arrow at the popover's top, pointing up (original left + top edges). */
+  .popover[data-placement^="bottom"] .popover__arrow {
+    top: calc(var(--popover-arrow-size, --spacing(3)) * -0.5);
+    border-top: var(--popover-border-width, var(--st-border-width)) solid
+      var(--popover-border-color, var(--color-border));
+    border-left: var(--popover-border-width, var(--st-border-width)) solid
+      var(--popover-border-color, var(--color-border));
+  }
+
+  /* Left placement → arrow at the popover's right, pointing right (original top + right edges). */
+  .popover[data-placement^="left"] .popover__arrow {
+    right: calc(var(--popover-arrow-size, --spacing(3)) * -0.5);
+    border-top: var(--popover-border-width, var(--st-border-width)) solid
+      var(--popover-border-color, var(--color-border));
+    border-right: var(--popover-border-width, var(--st-border-width)) solid
+      var(--popover-border-color, var(--color-border));
+  }
+
+  /* Right placement → arrow at the popover's left, pointing left (original left + bottom edges). */
+  .popover[data-placement^="right"] .popover__arrow {
+    left: calc(var(--popover-arrow-size, --spacing(3)) * -0.5);
+    border-bottom: var(--popover-border-width, var(--st-border-width)) solid
+      var(--popover-border-color, var(--color-border));
+    border-left: var(--popover-border-width, var(--st-border-width)) solid
+      var(--popover-border-color, var(--color-border));
+  }
+
+  /* === Menu-style popover === a popover hosting a .menu/.media list; tightens the body padding and
+     hands the borrowed row primitive its surface vars (read by .media). */
+  .popover--menu {
+    --popover-body-padding-block: --spacing(1);
+    --popover-body-padding-inline: --spacing(1);
+
+    --media-padding-inline: --spacing(3);
+    --media-padding-block: --spacing(2);
+    --media-border-color: transparent;
+  }
+
+  .popover--menu .popover__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--popover-body-gap, --spacing(1));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .popover,
+    .popover__close {
+      transition: none;
+    }
+  }
+}

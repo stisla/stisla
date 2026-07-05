@@ -1,0 +1,54 @@
+.content {
+  --page-padding-inline: --spacing(4);
+  --page-padding-block: --spacing(6);
+  --toggle-group-bg: var(--color-surface-2);
+  --toggle-bg-active: var(--color-surface);
+
+  --card-shadow: none;
+  --page-title-font-size: var(--text-2xl);
+  --page-title-font-weight: 300;
+
+  overflow: clip;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-2xl) var(--radius-2xl);
+  padding: var(--page-padding-block) var(--page-padding-inline);
+  flex: 1;
+  box-shadow:
+    0 8px 24px -4px --alpha(var(--color-primary) / 4%),
+    0 24px 56px -12px --alpha(var(--color-primary) / 9%);
+
+  @variant md {
+    --page-padding-inline: --spacing(8);
+    --page-padding-block: --spacing(8);
+    --page-title-font-size: var(--text-3xl);
+    border-radius: var(--radius-2xl) 0 0 var(--radius-2xl);
+  }
+}
+
+.content__container {
+  width: 100%;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--page-section-gap, --spacing(6));
+}
+.app-shell.is-sidebar-collapsed .content__container {
+  max-width: 87rem;
+}
+@media (min-width: 1800px) {
+  .content__container {
+    max-width: 87rem;
+  }
+}
+
+.content .card:not(:has(.table)) .card__header {
+  border-color: transparent;
+}
+.content .card:not(:has(.table)) .card__header + .card__body {
+  padding-block-start: 0;
+}
+.content .toggle[aria-pressed="true"],
+.content .toggle[data-state="active"],
+.content .toggle-input:checked + .toggle {
+  box-shadow: var(--shadow-md);
+}

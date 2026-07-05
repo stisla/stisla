@@ -1,0 +1,42 @@
+/* @stisla/style — Scroll area / OverlayScrollbars adapter (vanilla-JS binding). The scroll-area's
+ * vanilla implementation is backed by OverlayScrollbars; this file forwards the --scroll-area-* knobs
+ * (defined by scroll-area.css) onto the plugin's --os-* var surface on its .os-scrollbar DOM. It is a
+ * lib-coupled stylesheet; a different scrollbar lib (or a React/Vue impl) would provide its own
+ * adapter and reuse the same --scroll-area-* tokens.
+ *
+ * Load AFTER scroll-area.css. The plugin's bundled CSS resets every --os-* var to 0 / `none` on
+ * .os-scrollbar (blocking inheritance from the host), and the JS injects that stylesheet inside
+ * `@layer foundation`, so this rule in @layer components outranks the reset and specificity resolves
+ * cleanly. The fallback-defaults live here (not on the .scroll-area root) so a consumer override of
+ * --scroll-area-* on the root inherits down to this descendant and wins. These .os-* selectors are a
+ * third-party lib's vocabulary, not Stisla state.
+ *
+ * References the @theme tokens (colors var(--color-*), sizes/spacing --spacing(n), radius
+ * var(--radius-*)). Knobs are --scroll-area-*. @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  .scroll-area .os-scrollbar {
+    --os-size: var(--scroll-area-bar-size, --spacing(2.5));
+    /* Two padding axes (OverlayScrollbars' own vocabulary): `perpendicular` is the gap across the
+       bar's short side, `axis` the gap along its length. They aren't fixed inline/block — which
+       physical axis each maps to flips with the bar's orientation — so they keep the lib's names.
+       Each per-axis knob falls back to the --scroll-area-bar-padding shorthand for uniform tuning. */
+    --os-padding-perpendicular: var(--scroll-area-bar-padding-perpendicular, var(--scroll-area-bar-padding, --spacing(0.5)));
+    --os-padding-axis: var(--scroll-area-bar-padding-axis, var(--scroll-area-bar-padding, --spacing(0.5)));
+    --os-track-bg: var(--scroll-area-track-bg, transparent);
+    --os-handle-bg: var(--scroll-area-handle-bg, color-mix(in oklch, var(--color-foreground) 25%, transparent));
+    --os-handle-bg-hover: var(--scroll-area-handle-bg-hover, color-mix(in oklch, var(--color-foreground) 45%, transparent));
+    --os-handle-bg-active: var(--scroll-area-handle-bg-active, color-mix(in oklch, var(--color-foreground) 65%, transparent));
+    --os-handle-border-radius: var(--scroll-area-bar-radius, 9999px);
+    --os-handle-min-size: var(--scroll-area-handle-min-size, --spacing(6));
+  }
+
+  /* The plugin transitions the handle itself but doesn't gate it behind prefers-reduced-motion; zero
+     it so the cross-system reduced-motion commitment holds. */
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-area .os-scrollbar-handle,
+    .scroll-area .os-scrollbar {
+      transition: none;
+    }
+  }
+}

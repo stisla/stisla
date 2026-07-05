@@ -1,0 +1,28 @@
+/* @stisla/style — Link. Ported from src/scss/components/_link.scss. Reboot strips <a> color +
+ * underline globally; .link is the opt-back-in for inline links in app UI (helper text, explainers,
+ * cross-references) — the visual twin of .prose a. References the @theme tokens (colors var(--color-*),
+ * spacing/sizes --spacing(n)). Knobs are --link-*; --link-color-hover derives from --link-color so
+ * moving the color moves the hover. @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  .link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--link-gap, --spacing(1));
+    color: var(--link-color, var(--color-primary-emphasis));
+    text-decoration: underline;
+    text-underline-offset: var(--link-decoration-offset, 2px);
+    text-decoration-thickness: var(--link-decoration-thickness, 1px);
+  }
+
+  .link svg {
+    width: --spacing(4.5);
+  }
+
+  .link:hover {
+    color: var(
+      --link-color-hover,
+      color-mix(in oklch, var(--link-color, var(--color-primary-emphasis)) 80%, black)
+    );
+  }
+}

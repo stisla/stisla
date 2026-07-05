@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — list-group</title>
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- Component under test: the basic list group. Markup mirrors the documented basic example
+       (docs/src/routes/docs/vanilla/list-group.tsx). A <ul> of rows; leading icon is decorative,
+       text carries the label. -->
+  <ul class="list-group max-w-sm w-full">
+    <li class="list-group__item">
+      <i data-lucide="phone"></i>
+      <span>Phone</span>
+      <span class="ms-auto text-muted-foreground">+62 812 3456 789</span>
+    </li>
+    <li class="list-group__item">
+      <i data-lucide="mail"></i>
+      <span>Email</span>
+      <span class="ms-auto text-muted-foreground">steven@meridian.com</span>
+    </li>
+    <li class="list-group__item">
+      <i data-lucide="map-pin"></i>
+      <span>Location</span>
+      <span class="ms-auto text-muted-foreground">San Diego, US</span>
+    </li>
+  </ul>
+
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

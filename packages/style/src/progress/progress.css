@@ -1,0 +1,139 @@
+/* @stisla/style — Progress. Ported from src/scss/components/_progress.scss. A thin bar that fills as
+ * work completes, with optional label + value caption. The wrapper is a 2-col grid (label | value)
+ * with the track spanning both. References the @theme tokens (colors var(--color-*), spacing/sizes
+ * --spacing(n), type var(--text-*) / var(--font-weight-*) / var(--leading-*)). Knobs are --progress-*.
+ * Sizes compact/roomy → sm/lg; pill radius literal 9999px. Indeterminate state via the
+ * [data-indeterminate] attribute (the legacy used a state class; dropped per §11). @layer components.
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  .progress {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: --spacing(4);
+    row-gap: var(--progress-header-gap, --spacing(1));
+  }
+
+  /* === Caption === label left, value right; either may be omitted (track spans both columns). */
+  .progress__label {
+    grid-column: 1;
+    font-size: var(--progress-label-font-size, var(--text-sm));
+    font-weight: var(--progress-label-font-weight, var(--font-weight-medium));
+    color: var(--progress-label-color, var(--color-foreground));
+    line-height: var(--leading-snug);
+  }
+  .progress__value {
+    grid-column: 2;
+    font-size: var(--progress-label-font-size, var(--text-sm));
+    color: var(--progress-value-color, var(--color-muted-foreground));
+    line-height: var(--leading-snug);
+  }
+
+  /* === Track === the recessed pill; owns height, neutral bg, and the overflow clip. */
+  .progress__track {
+    grid-column: 1 / -1;
+    display: block;
+    height: var(--progress-height, --spacing(2));
+    background-color: var(--progress-bg, var(--color-neutral));
+    border-radius: var(--progress-radius, 9999px);
+    overflow: hidden;
+  }
+
+  /* === Bar === sized by inline width %; default 0 so an unsized bar sits invisible. */
+  .progress__bar {
+    position: relative;
+    display: block;
+    width: 0;
+    height: 100%;
+    background-color: var(--progress-bar-bg, var(--color-primary));
+    overflow: hidden;
+    transition: width var(--progress-bar-transition-duration, 0.6s) ease;
+  }
+
+  /* === Intent modifiers === the bar carries the color, not the track. */
+  .progress__bar--primary {
+    --progress-bar-bg: var(--color-primary);
+  }
+  .progress__bar--success {
+    --progress-bar-bg: var(--color-success);
+  }
+  .progress__bar--warning {
+    --progress-bar-bg: var(--color-warning);
+  }
+  .progress__bar--danger {
+    --progress-bar-bg: var(--color-danger);
+  }
+  .progress__bar--info {
+    --progress-bar-bg: var(--color-info);
+  }
+
+  /* === Animated shimmer === a narrow gradient band sweeps across in the first ~third of the cycle,
+     then sits off-screen the rest (so the loop reads as an occasional sheen, not a treadmill). */
+  .progress__bar--animated::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--progress-shimmer-color, color-mix(in oklch, white 30%, transparent)) 50%,
+      transparent 100%
+    );
+    transform: translateX(-100%);
+    animation: st-progress-shimmer var(--progress-shimmer-duration, 3s) linear infinite;
+  }
+
+  /* === Indeterminate === fixed-width bar sweeps across; the shimmer is suppressed (the moving bar is
+     the indicator). */
+  .progress[data-indeterminate] .progress__bar {
+    width: 50%;
+    animation: st-progress-indeterminate var(--progress-indeterminate-duration, 1.5s) ease-in-out infinite;
+  }
+  .progress[data-indeterminate] .progress__bar::after {
+    display: none;
+  }
+
+  /* === Size modifiers (base = md) === */
+  .progress--sm {
+    --progress-height: --spacing(1);
+  }
+  .progress--lg {
+    --progress-height: --spacing(4);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .progress__bar {
+      transition: none;
+    }
+    .progress__bar--animated::after,
+    .progress[data-indeterminate] .progress__bar {
+      animation: none;
+    }
+  }
+
+  /* Block — fills its container width per SPEC §9 escape ramp. */
+  .progress--block {
+    width: 100%;
+  }
+}
+
+@keyframes st-progress-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  33% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes st-progress-indeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}

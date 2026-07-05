@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — checkbox</title>
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- Component under test: the basic checkbox, each input + label pair in a field item.
+       Markup mirrors the documented recommended usage (docs/src/routes/docs/vanilla/checkbox.tsx). -->
+  <div class="field w-auto max-w-96">
+    <div class="field__item">
+      <input class="checkbox" type="checkbox" id="defaultCheck" />
+      <label class="field__label" for="defaultCheck">Default checkbox</label>
+    </div>
+    <div class="field__item">
+      <input class="checkbox" type="checkbox" id="checkedCheck" checked />
+      <label class="field__label" for="checkedCheck">Checked by default</label>
+    </div>
+  </div>
+
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

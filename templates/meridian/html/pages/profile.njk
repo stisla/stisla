@@ -1,0 +1,117 @@
+{% extends "layouts/app.njk" %}
+{% set nav_active = "profile" %}
+
+{% block title %}Profile · Meridian{% endblock %}
+
+{% block page %}
+<div class="page content">
+  <div class="content__container">
+    <div class="page__body">
+      {# Header — cover image with the avatar overlapping its bottom edge. #}
+      <section class="page__section">
+        <div class="card">
+          <img class="card__image aspect-[4/1] object-cover" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&h=400&q=80" alt=""
+               loading="lazy" />
+          <div class="card__body">
+            <div class="flex flex-wrap items-end gap-3 -mt-14">
+              <span class="avatar avatar--circle" data-stisla-avatar
+                    style="--avatar-size: 6rem; box-shadow: 0 0 0 4px var(--color-surface);">
+                <img class="avatar__image" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=facearea&facepad=2.5&w=192&h=192&q=80" alt="" />
+                <span class="avatar__fallback">SG</span>
+              </span>
+              <div class="flex-auto min-w-0">
+                <h1 class="text-xl font-bold">Steven Gerrard</h1>
+                <div class="text-muted-foreground">Store Owner · Meridian</div>
+              </div>
+              <div class="flex gap-2">
+                <button type="button" class="button button--outline button--neutral">{{ "solar:chat-round-linear" | icon }} Message</button>
+                <a href="/meridian/settings.html" class="button button--neutral">{{ "solar:pen-linear" | icon }} Edit profile</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {# Body #}
+      <section class="page__section">
+        <div class="grid grid-cols-12 gap-4">
+          <div class="col-span-12 lg:col-span-4">
+            <div class="flex flex-col gap-3">
+              <div class="card">
+                <div class="card__header"><span class="card__title">About</span></div>
+                <div class="card__body">
+                  <p>Coffee obsessive running Meridian since 2024 — sourcing single-origin beans and the gear to brew them well.</p>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card__header"><span class="card__title">Details</span></div>
+                <ul class="list-group">
+                  <li class="list-group__item">
+                    {{ "solar:letter-linear" | icon }}
+                    <span>Email</span>
+                    <span class="ms-auto text-muted-foreground">steven@meridian.com</span>
+                  </li>
+                  <li class="list-group__item">
+                    {{ "solar:phone-linear" | icon }}
+                    <span>Phone</span>
+                    <span class="ms-auto text-muted-foreground">+1 555 0123</span>
+                  </li>
+                  <li class="list-group__item">
+                    {{ "solar:map-point-linear" | icon }}
+                    <span>Location</span>
+                    <span class="ms-auto text-muted-foreground">San Diego, US</span>
+                  </li>
+                  <li class="list-group__item">
+                    {{ "solar:calendar-linear" | icon }}
+                    <span>Joined</span>
+                    <span class="ms-auto text-muted-foreground">Jan 2024</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-span-12 lg:col-span-8">
+            <div class="card h-full">
+              <div class="card__header"><span class="card__title">Recent activity</span></div>
+              <div class="card__body">
+                <ol class="timeline">
+                  <li class="timeline__item">
+                    <span class="timeline__marker">{{ "solar:cart-large-2-linear" | icon }}</span>
+                    <div class="timeline__body">
+                      <div class="timeline__title">Placed order <a href="/meridian/order-detail.html" class="link">#10428</a></div>
+                      <div class="timeline__time">2 hours ago</div>
+                    </div>
+                  </li>
+                  <li class="timeline__item">
+                    <span class="timeline__marker">{{ "solar:star-linear" | icon }}</span>
+                    <div class="timeline__body">
+                      <div class="timeline__title">Left a 5-star review on Espresso Beans 2kg</div>
+                      <div class="timeline__time">Yesterday</div>
+                    </div>
+                  </li>
+                  <li class="timeline__item">
+                    <span class="timeline__marker">{{ "solar:box-linear" | icon }}</span>
+                    <div class="timeline__body">
+                      <div class="timeline__title">Added 3 products to the catalog</div>
+                      <div class="timeline__time">Jun 14, 2026</div>
+                    </div>
+                  </li>
+                  <li class="timeline__item" data-state="pending">
+                    <span class="timeline__marker">{{ "solar:user-linear" | icon }}</span>
+                    <div class="timeline__body">
+                      <div class="timeline__title">Updated profile details</div>
+                      <div class="timeline__time">Jun 10, 2026</div>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+{% endblock %}

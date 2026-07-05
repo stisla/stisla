@@ -1,0 +1,80 @@
+/* @stisla/style — Badge. Ported from src/scss/components/_badge.scss. References the Tailwind
+ * @theme tokens: colors var(--color-*), spacing --spacing(n), type var(--text-*) /
+ * var(--font-weight-*), radius literal pill. Knobs are --badge-* (fallback-default). Intent
+ * modifiers publish --badge-tone + set the filled --badge-bg / --badge-color; .badge--soft reads
+ * --badge-tone for a tinted variant. Pill by default; set --badge-radius to flatten. @layer components. */
+
+@layer components {
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(1);
+    min-height: var(--badge-min-height, --spacing(5.5));
+    padding-block: var(--badge-padding-block, --spacing(0.5));
+    padding-inline: var(--badge-padding-inline, --spacing(2));
+    font-family: inherit;
+    font-size: var(--badge-font-size, var(--text-xs));
+    font-weight: var(--badge-font-weight, var(--font-weight-medium));
+    line-height: var(--leading-none);
+    color: var(--badge-color, var(--color-neutral-foreground));
+    background: var(--badge-bg, var(--color-neutral));
+    border-radius: var(--badge-radius, 9999px);
+    white-space: nowrap;
+  }
+
+  /* Inline icons scale to the badge's font size (same convention as .button). */
+  .badge :is(svg, i, .badge__icon) {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+  }
+
+  /* === Intent modifiers — filled defaults ===
+   * Each intent publishes --badge-tone (the fill, which .badge--soft tints for its bg) and
+   * --badge-tone-emphasis (the darker accessible text .badge--soft wears on that tint), and sets the
+   * filled --badge-bg / --badge-color (-foreground) for the solid default. */
+  .badge--primary {
+    --badge-tone: var(--color-primary);
+    --badge-tone-emphasis: var(--color-primary-emphasis);
+    --badge-bg: var(--color-primary);
+    --badge-color: var(--color-primary-foreground);
+  }
+  .badge--success {
+    --badge-tone: var(--color-success);
+    --badge-tone-emphasis: var(--color-success-emphasis);
+    --badge-bg: var(--color-success);
+    --badge-color: var(--color-success-foreground);
+  }
+  .badge--warning {
+    --badge-tone: var(--color-warning);
+    --badge-tone-emphasis: var(--color-warning-emphasis);
+    --badge-bg: var(--color-warning);
+    --badge-color: var(--color-warning-foreground);
+  }
+  .badge--danger {
+    --badge-tone: var(--color-danger);
+    --badge-tone-emphasis: var(--color-danger-emphasis);
+    --badge-bg: var(--color-danger);
+    --badge-color: var(--color-danger-foreground);
+  }
+  .badge--info {
+    --badge-tone: var(--color-info);
+    --badge-tone-emphasis: var(--color-info-emphasis);
+    --badge-bg: var(--color-info);
+    --badge-color: var(--color-info-foreground);
+  }
+
+  /* === Soft modifier ===
+   * Tinted bg (15%) + solid tone text. Reads --badge-tone (set by an intent modifier, or the
+   * muted-foreground default for a bare .badge--soft). Does NOT redefine --badge-tone — that
+   * would clobber the intent and break .badge--soft.badge--primary. The tone is a runtime var,
+   * so tint with color-mix (same precedent as .button--soft), not the compile-time --alpha(). */
+  .badge--soft {
+    --badge-bg: color-mix(
+      in oklch,
+      var(--badge-tone, var(--color-muted-foreground)) 15%,
+      transparent
+    );
+    --badge-color: var(--badge-tone-emphasis, var(--color-muted-foreground));
+  }
+}

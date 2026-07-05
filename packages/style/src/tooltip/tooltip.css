@@ -1,0 +1,95 @@
+/* @stisla/style — Tooltip. Ported from src/scss/components/_tooltip.scss. An inverse-surface chip
+ * (bg = foreground, text = background) positioned by the JS layer (Floating UI), shown via
+ * [data-state="open"] + [data-placement]. References the @theme tokens: colors var(--color-*),
+ * sizes/spacing --spacing(n), type var(--text-*) / var(--leading-*), radius var(--radius-*),
+ * shadow var(--shadow-*). Only no-namespace customs use --st-* (duration, z-index); z-index routes
+ * through the z-index scale (--z-index-tooltip, the top tier). Knobs are --tooltip-*. State via
+ * data-* attributes, never is-*. Positioning behavior ships with the JS layer. @layer components.
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  .tooltip {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: var(--tooltip-z-index, var(--z-index-tooltip));
+    display: none;
+    max-width: var(--tooltip-max-width, --spacing(60));
+    margin: 0;
+    pointer-events: none;
+    opacity: 0;
+    /* Resting transform = "above the trigger, easing up from below"; the per-side rules below flip
+       the direction so the entrance always reads as moving away from the anchored edge. */
+    transform: translateY(--spacing(1));
+    transition:
+      opacity var(--tooltip-transition-duration, var(--transition-duration-fast)) ease,
+      transform var(--tooltip-transition-duration, var(--transition-duration-fast)) ease;
+  }
+
+  .tooltip[data-state="open"] {
+    display: block;
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Per-placement resting transform — Floating UI's resolved placement (which may differ from the
+     requested side after flip()) sets [data-placement], so the entrance tracks the anchored edge. */
+  .tooltip[data-placement^="bottom"] {
+    transform: translateY(calc(--spacing(1) * -1));
+  }
+  .tooltip[data-placement^="left"] {
+    transform: translateX(--spacing(1));
+  }
+  .tooltip[data-placement^="right"] {
+    transform: translateX(calc(--spacing(1) * -1));
+  }
+  .tooltip[data-placement^="bottom"][data-state="open"],
+  .tooltip[data-placement^="left"][data-state="open"],
+  .tooltip[data-placement^="right"][data-state="open"] {
+    transform: none;
+  }
+
+  /* === Inner === the visible chip; holds the bg / padding / radius so the arrow can overlap its
+     edge cleanly while .tooltip itself stays a positioning shell. */
+  .tooltip__inner {
+    padding: var(--tooltip-padding-block, --spacing(1.5))
+      var(--tooltip-padding-inline, --spacing(2.5));
+    font-size: var(--tooltip-font-size, var(--text-xs));
+    line-height: var(--tooltip-line-height, var(--leading-snug));
+    color: var(--tooltip-color, var(--color-background));
+    text-align: center;
+    background-color: var(--tooltip-bg, var(--color-foreground));
+    border-radius: var(--tooltip-radius, var(--radius-sm));
+    box-shadow: var(--tooltip-shadow, var(--shadow-sm));
+    word-wrap: break-word;
+  }
+
+  /* === Arrow === a small square rotated 45°; JS sets the along-axis offset, these rules pin the
+     cross-axis so half the diamond sits inside the chip and half sticks out as the point. */
+  .tooltip__arrow {
+    position: absolute;
+    width: var(--tooltip-arrow-size, --spacing(2));
+    height: var(--tooltip-arrow-size, --spacing(2));
+    background-color: var(--tooltip-bg, var(--color-foreground));
+    transform: rotate(45deg);
+  }
+
+  .tooltip[data-placement^="top"] .tooltip__arrow {
+    bottom: calc(var(--tooltip-arrow-size, --spacing(2)) * -0.5);
+  }
+  .tooltip[data-placement^="bottom"] .tooltip__arrow {
+    top: calc(var(--tooltip-arrow-size, --spacing(2)) * -0.5);
+  }
+  .tooltip[data-placement^="left"] .tooltip__arrow {
+    right: calc(var(--tooltip-arrow-size, --spacing(2)) * -0.5);
+  }
+  .tooltip[data-placement^="right"] .tooltip__arrow {
+    left: calc(var(--tooltip-arrow-size, --spacing(2)) * -0.5);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tooltip {
+      transition: none;
+    }
+  }
+}

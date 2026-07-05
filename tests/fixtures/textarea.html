@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — textarea</title>
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- Component under test: the basic textarea, labelled via for/id.
+       Markup mirrors the documented recommended usage (docs/src/routes/docs/vanilla/textarea.tsx). -->
+  <div class="field max-w-96">
+    <label for="basicTextarea" class="field__label">Notes</label>
+    <textarea class="textarea" id="basicTextarea" rows="3" placeholder="Anything else we should know?"></textarea>
+  </div>
+
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

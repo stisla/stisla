@@ -1,0 +1,55 @@
+/* === Site footer ===
+ * Full-width footer below every layout. Its inner track mirrors the navbar
+ * (.site-navbar__inner): capped at --shell-max, centered, same inline gutter,
+ * so the footer content lines up with the bar above it. */
+
+.site-footer {
+  border-top: 1px solid var(--color-border);
+  background: var(--color-background);
+}
+.site-footer__inner {
+  max-width: var(--shell-max);
+  margin-inline: auto;
+  padding-block: 2.25rem;
+  padding-inline: calc(1rem - 8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  @variant sm {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: start;
+  }
+  @variant md {
+    padding-inline: 3rem;
+  }
+}
+
+.site-footer__credit {
+  font-size: 0.875rem;
+  color: var(--color-muted-foreground);
+}
+.site-footer__credit a {
+  color: var(--color-foreground);
+  font-weight: 500;
+  text-decoration: none;
+}
+.site-footer__credit a:hover {
+  text-decoration: underline;
+}
+
+.site-footer__links {
+  display: flex;
+  gap: 1.5rem;
+}
+.site-footer__links a {
+  font-size: 0.875rem;
+  color: var(--color-muted-foreground);
+  text-decoration: none;
+  transition: color var(--transition-duration-fast) ease;
+}
+.site-footer__links a:hover {
+  color: var(--color-foreground);
+}

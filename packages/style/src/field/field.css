@@ -1,0 +1,70 @@
+/* @stisla/style — Field. Ported from src/scss/components/_field.scss. Wrapper that groups a label +
+ * control + helper text, plus an item element for inline input + label rows. Pairs with any form
+ * control (.input, .select, .textarea, .checkbox, .radio, .switch, .slider) and owns the layout
+ * contract. References the @theme tokens: colors var(--color-*), spacing --spacing(n), type
+ * var(--text-*) / var(--font-weight-*). Knobs are --field-* (fallback-default). @layer components.
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  /* Root — vertical stack (label / control / helper). Fills its column by default: the controls
+     inside carry width: 100%, so without a width a shrink-to-fit parent would collapse them. */
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--field-gap, --spacing(1.5));
+    width: 100%;
+  }
+
+  /* Wrapping flex row — for groups of .field__item on one line (radio sets, inline checkbox lists). */
+  .field--inline {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    --field-gap: --spacing(4);
+  }
+
+  .field__label {
+    font-size: var(--field-label-font-size, var(--text-sm));
+    font-weight: var(--field-label-font-weight, var(--font-weight-medium));
+    color: var(--field-label-color, var(--color-foreground));
+  }
+
+  .field__description {
+    font-size: var(--field-helper-font-size, var(--text-sm));
+    color: var(--field-helper-color, var(--color-muted-foreground));
+  }
+
+  /* Error-tone helper; pair with [aria-invalid="true"] on the control via aria-describedby. */
+  .field__error {
+    font-size: var(--field-helper-font-size, var(--text-sm));
+    color: var(--field-error-color, var(--color-danger-emphasis));
+  }
+
+  /* Inline input + label row (checkbox, radio, settings row). Lives inside .field. */
+  .field__item {
+    display: flex;
+    align-items: center;
+    gap: var(--field-item-gap, --spacing(2));
+    padding-block: var(--field-item-padding-block, --spacing(0.5));
+  }
+
+  /* Label-first, input-last — justify-content pins the input to the row end (settings rows). */
+  .field__item--reverse {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+  }
+
+  /* Inside an item, the label flips to the row-typography contract: regular weight, clickable. */
+  .field__item > .field__label {
+    font-weight: var(--field-item-label-font-weight, var(--font-weight-normal));
+    cursor: pointer;
+    line-height: var(--leading-snug);
+    user-select: none;
+  }
+
+  /* A disabled control inside an item dims its label. Covers checkbox / radio / switch. */
+  .field__item:has(> :is(.checkbox, .radio, .switch):disabled) > .field__label {
+    cursor: not-allowed;
+    opacity: var(--field-item-disabled-opacity, 0.55);
+  }
+}

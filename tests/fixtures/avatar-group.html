@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — avatar-group</title>
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- Component under test: the basic stacked avatar cluster. Markup mirrors the documented
+       "Basic" usage (docs/src/routes/docs/vanilla/avatar-group.tsx). Members are pinned to
+       data-status="loaded" so no JS is needed to reveal the images. Each image is decorative
+       (empty alt) with a fallback initial; the overflow tail carries its own "+2" text. -->
+  <div class="avatar-group">
+    <span class="avatar avatar--circle" data-status="loaded"><img class="avatar__image" src="https://i.pravatar.cc/96?img=1" alt=""><span class="avatar__fallback">A</span></span>
+    <span class="avatar avatar--circle" data-status="loaded"><img class="avatar__image" src="https://i.pravatar.cc/96?img=2" alt=""><span class="avatar__fallback">B</span></span>
+    <span class="avatar avatar--circle" data-status="loaded"><img class="avatar__image" src="https://i.pravatar.cc/96?img=3" alt=""><span class="avatar__fallback">C</span></span>
+    <span class="avatar avatar--circle avatar-group__more">+2</span>
+  </div>
+
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

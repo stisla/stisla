@@ -1,0 +1,237 @@
+/* @stisla/style — Menu. Ported from src/scss/components/_menu.scss (Base UI anatomy: root / trigger /
+ * popup / item). A floating surface of rows; the trigger is just a .button (no own class). The shared
+ * Sass menu-* mixins are expanded inline here with the --menu-* prefix (no shared base file — each
+ * surface owns its knobs). State lives in [data-state]/[data-highlighted]/[aria-*] attributes.
+ * References the @theme tokens: colors var(--color-*), sizes/spacing --spacing(n), type var(--text-*)
+ * / var(--leading-*) / var(--font-weight-*), radius var(--radius-*), shadow var(--shadow-*); only
+ * no-namespace customs use --st-* (border-width, duration, z-index); z-index routes through the z-index scale (--z-index-dropdown).
+ * The scroll-lock hook html[data-menu-open] is an attribute, recast from the legacy is-* class per
+ * the no-is-* convention. Positioning + keyboard nav (Floating UI) ship with the JS layer. @layer
+ * components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  .menu {
+    position: relative;
+    /* inline-flex (not inline-block) so the wrapper isn't pulled into inline-baseline alignment
+       inside a flex parent. The single trigger child drives the wrapper height; the absolutely
+       positioned popup adds no contribution. */
+    display: inline-flex;
+    vertical-align: middle;
+  }
+
+  /* position: fixed (not absolute) so the popup escapes any ancestor with overflow: hidden; the JS
+     layer computes top/left in viewport coordinates to match. The surface (padding / type / fill /
+     rim / radius / shadow) is the expanded menu-surface mixin. */
+  .menu__popup {
+    padding: var(--menu-padding-block, --spacing(1)) var(--menu-padding-inline, --spacing(1));
+    font-size: var(--menu-font-size, var(--text-sm));
+    line-height: var(--leading-normal);
+    color: var(--menu-color, var(--color-foreground));
+    background-color: var(--menu-bg, var(--color-surface));
+    border: var(--menu-border-width, var(--st-border-width)) solid
+      var(--menu-border-color, var(--color-border));
+    border-radius: var(--menu-radius, var(--radius-md));
+    box-shadow: var(--menu-shadow, var(--shadow-md));
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: var(--menu-z-index, var(--z-index-dropdown));
+    display: none;
+    flex-direction: column;
+    gap: var(--menu-gap, --spacing(0.5));
+    min-width: var(--menu-min-width, --spacing(40));
+    max-width: max-content;
+    margin: 0;
+    list-style: none;
+    opacity: 0;
+    transform: translateY(calc(--spacing(1) * -1));
+    transition:
+      opacity var(--menu-transition-duration, var(--transition-duration-fast)) ease,
+      transform var(--menu-transition-duration, var(--transition-duration-fast)) ease;
+    outline: none;
+  }
+
+  .menu__popup[data-state="open"] {
+    display: flex;
+    opacity: 1;
+    transform: none;
+  }
+
+  /* The JS layer caps the popup max-height to the viewport; with column flex, flex-shrink would
+     squish children, so pin them at natural size and let overflow-y scroll instead. */
+  .menu__popup > * {
+    flex-shrink: 0;
+  }
+
+  /* === Item === (expanded menu-item mixin). Concentric inner radius = popup radius − inline gutter. */
+  .menu__item {
+    display: flex;
+    align-items: center;
+    gap: var(--menu-item-gap, --spacing(2));
+    width: 100%;
+    min-height: var(--menu-item-min-height, --spacing(8));
+    padding: var(--menu-item-padding-block, --spacing(0.5)) var(--menu-item-padding-inline, --spacing(3));
+    font: inherit;
+    color: var(--menu-color, var(--color-foreground));
+    text-align: start;
+    text-decoration: none;
+    background-color: transparent;
+    border: 0;
+    border-radius: var(
+      --menu-item-radius,
+      calc(var(--menu-radius, var(--radius-md)) - var(--menu-padding-inline, --spacing(1)))
+    );
+    cursor: pointer;
+    user-select: none;
+    transition:
+      background-color var(--transition-duration-fast) ease,
+      color var(--transition-duration-fast) ease;
+  }
+
+  /* Hover (mouse) + [data-highlighted] (keyboard nav) both paint accent; native :focus is excluded
+     so two highlight indicators don't compete. */
+  .menu__item:hover,
+  .menu__item[data-highlighted] {
+    color: var(--menu-item-color-hover, var(--color-accent-foreground));
+    background-color: var(--menu-item-bg-hover, var(--color-accent));
+  }
+
+  .menu__item:focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: -2px;
+  }
+
+  /* Persistent selected — the currently-applied choice. Hover does not override it, so the active row
+     stays highlighted even on hover. */
+  .menu__item[aria-current="true"],
+  .menu__item[data-state="active"],
+  .menu__item[aria-current="true"]:hover,
+  .menu__item[aria-current="true"][data-highlighted],
+  .menu__item[data-state="active"]:hover,
+  .menu__item[data-state="active"][data-highlighted] {
+    color: var(--menu-item-color-active, var(--color-highlight-foreground));
+    background-color: var(--menu-item-bg-active, var(--color-highlight));
+  }
+
+  /* Disabled — :disabled covers <button>, [aria-disabled] covers <a>; pointer-events kills hover. */
+  .menu__item:disabled,
+  .menu__item[aria-disabled="true"] {
+    color: var(--menu-item-color-disabled, var(--color-muted-foreground));
+    background-color: transparent;
+    pointer-events: none;
+  }
+
+  /* Destructive — color flips to danger; hover uses a soft danger tint so it never matches the
+     standard accent fill. */
+  .menu__item--danger {
+    color: var(--menu-item-color-danger, var(--color-danger-emphasis));
+  }
+
+  .menu__item--danger:hover,
+  .menu__item--danger[data-highlighted] {
+    color: var(--menu-item-color-danger, var(--color-danger-emphasis));
+    background-color: var(
+      --menu-item-bg-danger-hover,
+      color-mix(in oklch, var(--color-danger) 12%, transparent)
+    );
+  }
+
+  /* === Slots === leading icon, pinned size, color tracks the row text (inherit) so it follows every
+     state automatically. */
+  .menu__item > :is(svg, i),
+  .menu__icon {
+    width: var(--menu-item-icon-size, --spacing(4));
+    height: var(--menu-item-icon-size, --spacing(4));
+    flex-shrink: 0;
+    color: var(--menu-item-icon-color, inherit);
+  }
+
+  /* Indicator slot — leading check for checkbox/radio items; footprint always reserved (visibility,
+     not display) so mixed checked/unchecked menus stay column-aligned. */
+  .menu__indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--menu-item-icon-size, --spacing(4));
+    height: var(--menu-item-icon-size, --spacing(4));
+    flex-shrink: 0;
+    color: inherit;
+    visibility: hidden;
+  }
+
+  .menu__item[data-state="checked"] .menu__indicator,
+  .menu__item[aria-checked="true"] .menu__indicator {
+    visibility: visible;
+  }
+
+  /* Trailing keyboard-shortcut chip — auto-margin pins it to the row end; inheritance keeps it
+     readable under hover/active paint. */
+  .menu__shortcut {
+    margin-inline-start: auto;
+    font-size: var(--menu-shortcut-font-size, var(--text-xs));
+    color: var(--menu-shortcut-color, var(--color-muted-foreground));
+    letter-spacing: 0.02em;
+  }
+
+  .menu__item:hover .menu__shortcut,
+  .menu__item[data-highlighted] .menu__shortcut,
+  .menu__item[aria-current="true"] .menu__shortcut,
+  .menu__item[data-state="active"] .menu__shortcut {
+    color: inherit;
+  }
+
+  /* === Group label === */
+  .menu__group-label {
+    display: flex;
+    align-items: center;
+    padding: var(--menu-group-label-padding-block, --spacing(1))
+      var(--menu-group-label-padding-inline, --spacing(3));
+    margin: 0;
+    font-size: var(--menu-group-label-font-size, var(--text-xs));
+    font-weight: var(--menu-group-label-font-weight, var(--font-weight-semibold));
+    color: var(--menu-group-label-color, var(--color-muted-foreground));
+    text-transform: none;
+    white-space: nowrap;
+  }
+
+  /* === Group === optional role="group" wrapper; tightens rhythm so its label sits flush against its
+     items without an extra row of menu gap. */
+  .menu__group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--menu-gap, --spacing(0.5));
+  }
+
+  /* === Separator === */
+  .menu__separator {
+    height: 0;
+    margin: var(--menu-separator-margin-block, --spacing(2)) 0;
+    border: 0;
+    border-top: var(--st-border-width) solid var(--menu-separator-color, var(--color-border));
+    opacity: 1;
+  }
+
+  /* === Media integration === a borrowed .media row (role="menuitem") is flush, so it zeroed its own
+     radius; re-round it to the same concentric token .menu__item uses so its hover wash clips to the
+     matching curve. Both read the same token, so a --menu-radius / padding retune flows to both. */
+  .menu__popup .media--seamless {
+    --media-radius: var(
+      --menu-item-radius,
+      calc(var(--menu-radius, var(--radius-md)) - var(--menu-padding-inline, --spacing(1)))
+    );
+  }
+}
+
+/* === Scroll lock === applied to <html> while any menu is open; the popup is position: fixed, so
+   without this the page would scroll under it and the JS would reposition every frame. */
+html[data-menu-open] {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu__popup,
+  .menu__item {
+    transition: none;
+  }
+}

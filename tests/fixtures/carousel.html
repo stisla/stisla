@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — carousel</title>
+  <!-- BUILT bundles, same-origin (see scripts/serve-fixtures.mjs). Prereq: pnpm build:packages. -->
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- A neutral control before the carousel, so tab/focus order has a distinct wrong answer to fail on. -->
+  <a href="#" class="fixture-before" id="before">a link before the carousel</a>
+
+  <!-- Component under test: carousel with 3 slides, prev/next controls, and indicator dots.
+       Markup mirrors the documented "With indicators" usage (docs/src/routes/docs/vanilla/carousel.tsx).
+       Autoplay is OFF by default (Carousel.defaults.autoplay === false) — we add no
+       data-stisla-carousel-autoplay attribute, so slide changes are test-driven and deterministic.
+       The behavior comes from stisla.js auto-init. -->
+  <div class="carousel" id="carousel-basic" data-stisla-carousel tabindex="0" role="region" aria-roledescription="carousel" aria-label="Travel destinations">
+    <div class="carousel__viewport">
+      <div class="carousel__track">
+        <div class="carousel__slide" id="carousel-slide-1" role="group" aria-roledescription="slide" aria-label="1 of 3">
+          <div class="h-full w-full bg-[#0ea5e9] flex items-center justify-center text-[#fff] text-2xl font-semibold">Slide 1</div>
+        </div>
+        <div class="carousel__slide" id="carousel-slide-2" role="group" aria-roledescription="slide" aria-label="2 of 3">
+          <div class="h-full w-full bg-[#8b5cf6] flex items-center justify-center text-[#fff] text-2xl font-semibold">Slide 2</div>
+        </div>
+        <div class="carousel__slide" id="carousel-slide-3" role="group" aria-roledescription="slide" aria-label="3 of 3">
+          <div class="h-full w-full bg-[#10b981] flex items-center justify-center text-[#fff] text-2xl font-semibold">Slide 3</div>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="carousel__control carousel__control--prev" id="carousel-prev" aria-label="Previous slide"><i data-lucide="chevron-left"></i></button>
+    <button type="button" class="carousel__control carousel__control--next" id="carousel-next" aria-label="Next slide"><i data-lucide="chevron-right"></i></button>
+    <div class="carousel__indicators" role="group" aria-label="Slides">
+      <button type="button" class="carousel__indicator" id="carousel-dot-1" data-state="active" aria-current="true" aria-label="Go to slide 1"></button>
+      <button type="button" class="carousel__indicator" id="carousel-dot-2" aria-label="Go to slide 2"></button>
+      <button type="button" class="carousel__indicator" id="carousel-dot-3" aria-label="Go to slide 3"></button>
+    </div>
+  </div>
+
+  <!-- A neutral control after the carousel, to assert forward tab order past the widget. -->
+  <a href="#" class="fixture-after" id="after">a link after the carousel</a>
+
+  <!-- Auto-initing IIFE: attaches window.Stisla and wires [data-stisla-*] on DOMContentLoaded. -->
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

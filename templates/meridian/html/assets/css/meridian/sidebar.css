@@ -1,0 +1,48 @@
+.sidebar--app {
+  --sidebar-padding-block: --spacing(7);
+  --sidebar-button-bg-active: var(--color-surface);
+  --sidebar-submenu-border-color: --alpha(var(--color-foreground) / 10%);
+  --sidebar-bg: var(--color-background);
+
+  @variant lg {
+    --sidebar-bg: transparent;
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+  }
+
+  @media (max-width: 63.99rem) {
+    position: fixed;
+    inset-block: 0;
+    inset-inline-start: 0;
+    z-index: 1001;
+    height: 100dvh;
+    transform: translateX(-100%);
+    transition: transform var(--sidebar-transition-duration, 0.3s) ease;
+  }
+}
+.sidebar--app .sidebar__content {
+  @variant lg {
+    margin-top: --spacing(4);
+  }
+}
+.sidebar--app .sidebar__button[aria-current="page"],
+.sidebar--app .sidebar__button[data-state="active"] {
+  box-shadow: var(--shadow-sm);
+}
+.sidebar--app .sidebar__search {
+  width: 100%;
+  padding-inline: var(--sidebar-padding-inline, --spacing(4));
+
+  @variant lg {
+    display: none;
+  }
+}
+
+.sidebar--setting {
+  position: sticky;
+  top: --spacing(4);
+  width: 100%;
+  --sidebar-padding-inline: 0;
+  --sidebar-padding-block: 0;
+}

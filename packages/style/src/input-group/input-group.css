@@ -1,0 +1,141 @@
+/* @stisla/style — Input group. Ported from src/scss/components/_input-group.scss. Wrapper-owns-chrome:
+ * the .input-group carries the border, bg, radius, and focus halo; field children go transparent so
+ * the addon + input pair shares one continuous surface with one focus state. References the @theme
+ * tokens (colors var(--color-*), spacing --spacing(n), radius var(--radius-*)); only no-namespace
+ * customs use --st-* (border-width, duration). Knobs are --input-group-*. State via attributes
+ * (:focus-visible / [aria-invalid] / :user-invalid / :disabled forwarded through :has()), no is-*.
+ * @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  .input-group {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    /* Border-inclusive height (border-box): the wrapper owns the control height; its border eats INTO
+       this value. Inner fields drop their own height and stretch to fill. */
+    height: var(--input-group-height, --spacing(9));
+    background: var(--input-group-bg, var(--color-surface));
+    border: var(--input-group-border-width, var(--st-border-width)) solid
+      var(--input-group-border-color, var(--color-border-strong));
+    border-radius: var(--input-group-radius, var(--radius-md));
+    transition:
+      border-color var(--transition-duration-fast) ease,
+      box-shadow var(--transition-duration-fast) ease;
+
+    /* Focus the whole group when an editable child is focused. */
+    &:has(> :is(.input, .select, .textarea):focus-visible) {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-ring) 25%, transparent);
+    }
+
+    /* Validation forwarding — an invalid child paints the wrapper red so the message reads on one row. */
+    &:has(> [aria-invalid="true"]),
+    &:has(> :user-invalid) {
+      border-color: var(--color-danger);
+    }
+    &:has(> [aria-invalid="true"]:focus-visible),
+    &:has(> :user-invalid:focus-visible) {
+      box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-danger) 25%, transparent);
+    }
+
+    /* Strip chrome from field children — wrapper owns it. Zero only background-color (not the
+       `background` shorthand) so a <select>'s chevron image survives. Reset hover + focus too so the
+       field's own halo doesn't fight the group focus. */
+    > :is(.input, .select, .textarea) {
+      background-color: transparent;
+      border-color: transparent;
+      box-shadow: none;
+      height: auto;
+
+      &:hover,
+      &:focus-visible {
+        background-color: transparent;
+        border-color: transparent;
+        box-shadow: none;
+      }
+    }
+
+    /* Textarea groups grow with content — release the fixed wrapper height. */
+    &:has(> .textarea) {
+      height: auto;
+    }
+
+    > :is(.input, .select, .textarea)[readonly] {
+      background-color: transparent;
+    }
+
+    /* Inset buttons — a chip floating inside the field, not a slab welded to its edge. Height
+       re-derives from the wrapper (minus its border and 2× inset) so the chip centers with even
+       gaps; inner radius stays concentric with the wrapper. */
+    > .button {
+      height: calc(
+        var(--input-group-height, --spacing(9)) - 2 * var(--st-border-width) - 2 *
+          var(--input-group-inset, --spacing(1))
+      );
+      margin: var(--input-group-inset, --spacing(1));
+      border-radius: calc(
+        var(--input-group-radius, var(--radius-md)) - var(--input-group-inset, --spacing(1))
+      );
+    }
+
+    /* Drop the addon's inner padding where it meets a sibling field (no seam → matching padding would
+       double into a too-wide gap). Keep the outside padding so the addon hugs the wrapper edge. */
+    > .input-group__text:first-child {
+      padding-inline-end: 0;
+    }
+    > .input-group__text:last-child {
+      padding-inline-start: 0;
+    }
+
+    /* Textareas grow past the height floor; anchor addons to the first line. */
+    &:has(> .textarea) > .input-group__text {
+      align-self: flex-start;
+      height: var(--input-group-height, --spacing(9));
+    }
+
+    /* Disabled forwarding — the transparent inner field can't show its own dim, so move it to the
+       wrapper and reset the child's opacity so the dim doesn't compound. */
+    &:has(> :disabled) {
+      opacity: 0.55;
+      > :is(.input, .select, .textarea):disabled {
+        opacity: 1;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  /* === Sizes (base = md) — pair with the field child's own size modifier (.input--sm, etc.). === */
+  .input-group--sm {
+    --input-group-radius: var(--radius-sm);
+    --input-group-height: --spacing(7);
+    --input-group-padding-inline: --spacing(2);
+  }
+
+  .input-group--lg {
+    --input-group-radius: var(--radius-lg);
+    --input-group-height: --spacing(11);
+    --input-group-padding-inline: --spacing(3.5);
+  }
+
+  /* === Addon === no bg, no border, muted color; inline-flex centers icon + label across the height. */
+  .input-group__text {
+    display: inline-flex;
+    align-items: center;
+    padding-inline: var(--input-group-padding-inline, --spacing(2.5));
+    background: transparent;
+    border: 0;
+    color: var(--input-group-addon-color, var(--color-muted-foreground));
+    font-size: inherit;
+    line-height: 1.2;
+    white-space: nowrap;
+
+    > :is(svg, i) {
+      width: --spacing(4);
+      height: --spacing(4);
+      flex-shrink: 0;
+    }
+  }
+}

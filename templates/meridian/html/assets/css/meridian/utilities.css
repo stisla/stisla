@@ -1,0 +1,11 @@
+/* Shared typographic utilities. */
+
+/* Eyebrow label — small uppercase tracked caption. Compose with a component's own
+ * label class (e.g. .stat__label.text-eyebrow) for the icon-gap layout part. */
+@utility text-eyebrow {
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+}

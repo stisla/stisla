@@ -1,0 +1,57 @@
+{
+  "name": "@stisla/react",
+  "version": "3.0.0-rc.2",
+  "private": true,
+  "description": "Stisla React components — thin Base UI wrappers over the @stisla/style composer. NOT published: example-only (button + sidebar) until the real React sweep lands (ROADMAP Phase 8). Kept in the workspace so docs build; excluded from `pnpm release` via private, mirroring @stisla/vue.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./button": {
+      "types": "./dist/button/index.d.ts",
+      "import": "./dist/button/index.js"
+    },
+    "./sidebar": {
+      "types": "./dist/sidebar/index.d.ts",
+      "import": "./dist/sidebar/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@base-ui/react": "^1.6.0",
+    "@stisla/style": "workspace:*",
+    "clsx": "^2.1.0"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stisla/stisla.git",
+    "directory": "packages/react"
+  },
+  "homepage": "https://github.com/stisla/stisla#readme",
+  "publishConfig": {
+    "access": "public"
+  }
+}

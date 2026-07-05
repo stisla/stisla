@@ -1,0 +1,142 @@
+/* @stisla/style — Avatar. Ported from src/scss/components/_avatar.scss. Initials / image / icon in a
+ * rounded-square (or circle) tile, with an optional corner indicator. References the @theme tokens
+ * (colors var(--color-*), spacing/sizes --spacing(n), type var(--text-*) / var(--font-weight-*) /
+ * var(--leading-*), radius var(--radius-*)); only no-namespace customs use --st-* (duration). Knobs
+ * are --avatar-*. Sizes compact/roomy/spacious → sm/lg/xl.
+ *
+ * Image loading: the optional avatar.js preloader writes data-status on the root and CSS reveals the
+ * image only on "loaded". DEFERRED (vanilla-JS pass) — for a known-good static <img>, set
+ * data-status="loaded" inline to reveal it without JS. The pill radius is a literal 9999px (the radius
+ * scale is sm/md/lg only; same precedent as .button--pill). @layer components.
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  .avatar {
+    position: relative;
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: var(--avatar-size, --spacing(10));
+    height: var(--avatar-size, --spacing(10));
+    font-family: inherit;
+    font-size: var(--avatar-font-size, var(--text-sm));
+    font-weight: var(--avatar-font-weight, var(--font-weight-semibold));
+    line-height: var(--leading-none);
+    color: var(--avatar-color, var(--color-neutral-foreground));
+    background: var(--avatar-bg, var(--color-neutral));
+    border-radius: var(--avatar-radius, var(--radius-md));
+    vertical-align: middle;
+    user-select: none;
+    /* No overflow: hidden on the root — the image clips itself via border-radius + object-fit, so the
+       indicator can translate past the corner without being chopped. Ring is off by default (width 0;
+       .avatar-group turns it on). */
+    box-shadow: 0 0 0 var(--avatar-ring-width, 0) var(--avatar-ring-color, var(--color-background));
+  }
+
+  /* === Image === absolutely positioned over the fallback; hidden until data-status flips to
+   * "loaded" so the fallback paints during idle / loading / error. */
+  .avatar__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity var(--transition-duration-fast) ease-out;
+  }
+
+  .avatar[data-status="loaded"] .avatar__image {
+    opacity: 1;
+  }
+
+  /* === Fallback === sized to the root via the flex parent so it fills cleanly in document flow. */
+  .avatar__fallback {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+  }
+
+  /* Inline icons in the fallback scale to its font-size (em-relative, same as .button / .badge). */
+  .avatar__fallback :is(svg, i) {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+  }
+
+  /* === Size modifiers (base = md) === */
+  .avatar--sm {
+    --avatar-size: --spacing(8);
+    --avatar-font-size: var(--text-xs);
+  }
+  .avatar--lg {
+    --avatar-size: --spacing(12);
+    --avatar-font-size: var(--text-base);
+  }
+  .avatar--xl {
+    --avatar-size: --spacing(16);
+    --avatar-font-size: var(--text-xl);
+  }
+
+  /* === Shape === default is rounded square; circle is the modifier. */
+  .avatar--circle {
+    --avatar-radius: 9999px;
+  }
+
+  /* === Indicator === a small pip pinned to a corner (status dot, counter, verified mark). Ring
+   * punches it out of the avatar surface so it reads as a separate object. Default position bottom-end;
+   * the 25% translate lifts it half-out so the ring reads as a clean separator. */
+  .avatar__indicator {
+    position: absolute;
+    bottom: 0;
+    inset-inline-end: 0;
+    transform: translate(25%, 25%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--avatar-indicator-size, --spacing(2.5));
+    height: var(--avatar-indicator-size, --spacing(2.5));
+    padding: 0 0.25em;
+    font-size: var(--avatar-indicator-font-size, 0.625rem);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--leading-none);
+    color: var(--avatar-indicator-color, var(--color-success-foreground));
+    background: var(--avatar-indicator-bg, var(--color-success));
+    border-radius: 9999px;
+    box-shadow: 0 0 0 var(--avatar-indicator-ring-width, 2px)
+      var(--avatar-indicator-ring-color, var(--color-background));
+    z-index: 1;
+  }
+
+  .avatar__indicator :is(svg, i) {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+  }
+
+  /* Position modifier — flip to top-end. (--bottom is the base default, available as explicit markup.) */
+  .avatar__indicator--top {
+    top: 0;
+    bottom: auto;
+    transform: translate(25%, -25%);
+  }
+
+  /* Indicator sizes — pip diameter + font-size retune together so a digit or icon stays legible. The
+     font sizes are a deliberate sub-type-scale micro-progression (kept literal). */
+  .avatar__indicator--sm {
+    --avatar-indicator-size: --spacing(2);
+    --avatar-indicator-font-size: 0.5rem;
+  }
+  .avatar__indicator--lg {
+    --avatar-indicator-size: --spacing(3.5);
+    --avatar-indicator-font-size: 0.625rem;
+  }
+  .avatar__indicator--xl {
+    --avatar-indicator-size: --spacing(4.5);
+    --avatar-indicator-font-size: var(--text-xs); /* 12px — the one pip size with a type token */
+  }
+}

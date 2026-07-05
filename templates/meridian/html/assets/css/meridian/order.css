@@ -1,0 +1,117 @@
+/* ── Order form ───────────────────────────────────────────────────────────── */
+.order-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--page-section-gap);
+}
+.order-form__totals {
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: --spacing(2);
+
+  @variant md {
+    margin-inline-start: auto;
+    max-width: 20rem;
+  }
+}
+.order-form__total-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: --spacing(4);
+}
+.order-form__total-row dt,
+.order-form__total-row dd {
+  margin: 0;
+}
+.order-form__total-row dt {
+  color: var(--color-muted-foreground);
+}
+.order-form__total-row--grand {
+  padding-block-start: --spacing(2);
+  border-top: var(--st-border-width) solid var(--color-border);
+  font-weight: 700;
+}
+.order-form__total-row--grand dt {
+  color: var(--color-foreground);
+}
+
+/* ── Line items editor ────────────────────────────────────────────────────── */
+.line-items {
+  padding-inline: var(--card-padding-inline, --spacing(5));
+}
+.line-items__head,
+.line-items__row {
+  display: grid;
+  gap: --spacing(3);
+  grid-template-columns: 1fr;
+
+  @variant md {
+    grid-template-columns: minmax(0, 1fr) 4.5rem 8rem 5.5rem auto;
+    align-items: center;
+    gap: --spacing(4);
+  }
+}
+.line-items__head {
+  display: none;
+
+  @variant md {
+    display: grid;
+    padding-block-end: --spacing(3);
+    color: var(--color-muted-foreground);
+    font-size: var(--text-sm);
+  }
+}
+.line-items__row {
+  padding-block: --spacing(4);
+
+  @variant md {
+    padding-block: --spacing(2);
+  }
+}
+.line-items__row + .line-items__row {
+  border-top: var(--st-border-width) solid var(--color-border);
+
+  @variant md {
+    border-top: 0;
+  }
+}
+.line-items__field {
+  display: flex;
+  flex-direction: column;
+  gap: --spacing(1.5);
+  min-width: 0;
+}
+.line-items__field .input,
+.line-items__field .input-group {
+  width: 100%;
+}
+.line-items__label {
+  color: var(--color-muted-foreground);
+  font-size: var(--text-sm);
+
+  @variant md {
+    display: none;
+  }
+}
+.line-items__total {
+  font-weight: 500;
+
+  @variant md {
+    text-align: end;
+  }
+}
+.line-items__remove .button {
+  width: 100%;
+
+  @variant md {
+    width: auto;
+  }
+}
+.line-items__remove-text {
+  @variant md {
+    display: none;
+  }
+}

@@ -1,0 +1,22 @@
+.media--unread {
+  background: --alpha(var(--color-primary) / 6%);
+}
+
+.media--unread::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: --spacing(3);
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--color-primary);
+  transform: translateY(-50%);
+}
+
+.media-list {
+  --media-padding-block: --spacing(2.5);
+}
+.card__body .media-list {
+  margin-inline: calc(--spacing(4) * -1);
+}

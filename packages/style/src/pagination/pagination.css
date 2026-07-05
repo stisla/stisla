@@ -1,0 +1,125 @@
+/* @stisla/style — Pagination. Ported from src/scss/components/_pagination.scss. A row of standalone
+ * page chips. Rest transparent; hover paints accent; current page (data-state="active" /
+ * aria-current="page") paints highlight. Heights match the .button cadence. References the @theme
+ * tokens (colors var(--color-*), spacing/sizes --spacing(n), type var(--text-*) / var(--leading-*),
+ * radius var(--radius-*)); only no-namespace customs use --st-* (border-width, duration). Knobs are
+ * --pagination-*; sizes compact/roomy → sm/lg. State via attributes / native :disabled, no is-*.
+ * @layer components. Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  .pagination {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--pagination-gap, --spacing(1));
+    font-size: var(--pagination-font-size, var(--text-sm));
+    /* Strip default list chrome — works whether root is <ul>/<ol>/<div>. */
+    padding-inline-start: 0;
+    list-style: none;
+  }
+
+  /* === Chip === hard height + min-width === height so a single glyph lands square. */
+  .pagination__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--pagination-button-inner-gap, --spacing(1.5));
+    height: var(--pagination-button-height, --spacing(9));
+    min-width: var(--pagination-button-height, --spacing(9));
+    padding-block: var(--pagination-button-padding-block, 0);
+    padding-inline: var(--pagination-button-padding-inline, --spacing(3));
+    background-color: var(--pagination-button-bg, transparent);
+    color: var(--pagination-button-color, var(--color-foreground));
+    border: var(--pagination-button-border-width, var(--st-border-width)) solid
+      var(--pagination-button-border-color, transparent);
+    border-radius: var(--pagination-button-radius, var(--radius-md));
+    text-decoration: none;
+    font: inherit;
+    font-size: inherit;
+    line-height: var(--leading-none);
+    cursor: default;
+    transition:
+      background-color var(--pagination-transition-duration, var(--transition-duration-fast)) ease,
+      color var(--pagination-transition-duration, var(--transition-duration-fast)) ease;
+
+    /* Icon — 1em scales with font-size so --sm shrinks icons proportionally (no per-size override). */
+    > :is(svg, i) {
+      width: 1em;
+      height: 1em;
+      flex-shrink: 0;
+    }
+  }
+
+  /* Interactive chips opt in via element selector; <span> edge markers stay quiet. */
+  a.pagination__button,
+  button.pagination__button {
+    cursor: pointer;
+  }
+
+  a.pagination__button:focus-visible,
+  button.pagination__button:focus-visible {
+    outline: 2px solid var(--pagination-button-ring, var(--color-ring));
+    outline-offset: 2px;
+  }
+
+  /* Hover only on a quiet chip — an active or disabled chip must not flash the accent surface. */
+  a.pagination__button:hover:not([data-state="active"], [aria-current="page"], [aria-disabled="true"]),
+  button.pagination__button:hover:not([data-state="active"], [aria-current="page"], [aria-disabled="true"]):not(:disabled) {
+    background-color: var(--pagination-button-bg-hover, var(--color-accent));
+    color: var(--pagination-button-color-hover, var(--color-accent-foreground));
+  }
+
+  /* === Current page === */
+  .pagination__button[data-state="active"],
+  .pagination__button[aria-current="page"] {
+    background-color: var(--pagination-button-bg-active, var(--color-highlight));
+    color: var(--pagination-button-color-active, var(--color-highlight-foreground));
+    border-color: var(--pagination-button-bg-active, var(--color-highlight));
+  }
+
+  /* === Disabled === */
+  .pagination__button[aria-disabled="true"],
+  .pagination__button:disabled {
+    color: var(--pagination-button-color-disabled, var(--color-muted-foreground));
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
+  /* === Ellipsis === non-interactive truncation marker; same footprint, no hover/focus/border. */
+  .pagination__ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--pagination-button-height, --spacing(9));
+    min-width: var(--pagination-button-height, --spacing(9));
+    color: var(--pagination-button-color-disabled, var(--color-muted-foreground));
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* === Size modifiers (base = md) === */
+  .pagination--sm {
+    --pagination-button-height: --spacing(7);
+    --pagination-button-padding-inline: --spacing(2);
+    --pagination-font-size: var(--text-xs);
+  }
+  .pagination--lg {
+    --pagination-button-height: --spacing(11);
+    --pagination-button-padding-inline: --spacing(4);
+    --pagination-font-size: var(--text-base);
+  }
+
+  /* === Alignment === */
+  .pagination--center {
+    justify-content: center;
+  }
+  .pagination--end {
+    justify-content: flex-end;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pagination__button {
+      transition: none;
+    }
+  }
+}

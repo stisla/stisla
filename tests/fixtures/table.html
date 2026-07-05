@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — table</title>
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- Component under test: the basic table. Markup mirrors the documented basic example
+       (docs/src/routes/docs/vanilla/table.tsx). Proper thead/th[scope=col] + tbody/th[scope=row]/td. -->
+  <table class="table">
+    <thead>
+      <tr><th scope="col">Plan</th><th scope="col">Seats</th><th scope="col">Storage</th><th scope="col" class="text-end">Price</th></tr>
+    </thead>
+    <tbody>
+      <tr><th scope="row">Starter</th><td>3</td><td>10 GB</td><td class="text-end">$0/mo</td></tr>
+      <tr><th scope="row">Team</th><td>15</td><td>100 GB</td><td class="text-end">$29/mo</td></tr>
+      <tr><th scope="row">Business</th><td>50</td><td>1 TB</td><td class="text-end">$99/mo</td></tr>
+    </tbody>
+  </table>
+
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

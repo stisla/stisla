@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — drawer</title>
+  <!-- BUILT bundles, same-origin (see scripts/serve-fixtures.mjs). Prereq: pnpm build:packages. -->
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- A neutral control before the trigger, so focus-return has a distinct wrong answer to fail on. -->
+  <a href="#" class="fixture-before" id="before">a link before the drawer</a>
+
+  <!-- Component under test: the basic (modal) drawer. Markup mirrors the documented recommended
+       usage (docs/src/routes/docs/vanilla/drawer.tsx). Behavior comes from stisla.js auto-init.
+       Default placement is end (right). The trigger links to the root by element id. -->
+  <button type="button" class="button button--primary" data-stisla-drawer-trigger="drawerBasic">Open drawer</button>
+
+  <div class="drawer drawer--end" id="drawerBasic" data-stisla-drawer aria-labelledby="drawerBasicLabel">
+    <div class="drawer__backdrop" data-stisla-drawer-dismiss></div>
+    <div class="drawer__content">
+      <div class="drawer__header">
+        <h2 class="drawer__title" id="drawerBasicLabel">New task</h2>
+        <button type="button" class="drawer__close" data-stisla-drawer-dismiss aria-label="Close">×</button>
+      </div>
+      <div class="drawer__body">
+        <div class="field">
+          <label for="taskTitle" class="field__label">Title</label>
+          <input type="text" class="input" id="taskTitle" autofocus />
+        </div>
+      </div>
+      <div class="drawer__footer">
+        <button type="button" class="button button--ghost button--neutral" data-stisla-drawer-dismiss>Cancel</button>
+        <button type="button" class="button button--primary" data-stisla-drawer-dismiss>Create task</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Auto-initing IIFE: attaches window.Stisla and wires [data-stisla-*] on DOMContentLoaded. -->
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

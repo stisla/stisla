@@ -1,0 +1,108 @@
+/* @stisla/style — Button group. Ported from src/scss/components/_button-group.scss. A row (or column)
+ * of .button members that shares chrome so the cluster reads as one control: outer corners round,
+ * inner corners square, adjacent borders dedupe into a single seam. .button-group owns layout; member
+ * .button keeps its own paint. Purely visual grouping — no state hooks, no JS. (For press toggles /
+ * segmented control, see toggle / toggle-group.)
+ *
+ * Renamed from the legacy .btn-group → .button-group, members .btn → .button, and child knobs
+ * --btn-* → --button-* (full-word BEM, ARCHITECTURE §11). References the @theme tokens; only
+ * no-namespace customs use --st-* (border-width). @layer components.
+ * Authoring rules: ../../../../ARCHITECTURE.md §11 */
+
+@layer components {
+  .button-group,
+  .button-group--vertical {
+    position: relative;
+    display: inline-flex;
+    vertical-align: middle;
+
+    /* Members participate in stacking so the seam-dedupe negative margin doesn't bury hover / focus /
+       active borders under the next sibling. Inner corners square; outer edges re-rounded below. */
+    > .button {
+      position: relative;
+      flex: 0 1 auto;
+      border-radius: 0;
+      /* Soften the rim mix on filled tones so an internal seam (two adjacent rims overlapping at the
+         -1px margin) reads as a quiet divider, not a hard frame. Outline/ghost/soft bypass this. */
+      --button-rim-mix: 92%;
+    }
+
+    /* Lift the interactive member above its neighbors so its border + ring clear the seam dedupe:
+       focus on top, then active, then transient hover. */
+    > .button:hover {
+      z-index: 1;
+    }
+    > .button[aria-pressed="true"],
+    > .button[data-state="active"] {
+      z-index: 2;
+    }
+    > .button:focus-visible {
+      z-index: 3;
+    }
+  }
+
+  /* === Horizontal seams === negative inline margin collapses adjacent borders into one seam. */
+  .button-group {
+    > .button + .button {
+      margin-inline-start: calc(-1 * var(--st-border-width));
+    }
+    > .button:first-child {
+      border-start-start-radius: var(--button-group-radius, var(--radius-md));
+      border-end-start-radius: var(--button-group-radius, var(--radius-md));
+    }
+    > .button:last-child {
+      border-start-end-radius: var(--button-group-radius, var(--radius-md));
+      border-end-end-radius: var(--button-group-radius, var(--radius-md));
+    }
+  }
+
+  /* === Vertical seams === same dedupe rotated 90°. */
+  .button-group--vertical {
+    flex-direction: column;
+    align-items: stretch;
+
+    > .button + .button {
+      margin-block-start: calc(-1 * var(--st-border-width));
+    }
+    > .button:first-child {
+      border-start-start-radius: var(--button-group-radius, var(--radius-md));
+      border-start-end-radius: var(--button-group-radius, var(--radius-md));
+    }
+    > .button:last-child {
+      border-end-start-radius: var(--button-group-radius, var(--radius-md));
+      border-end-end-radius: var(--button-group-radius, var(--radius-md));
+    }
+  }
+
+  /* === Sizes (base = md) — retune the child .button's vars in modifier scope; no per-size vars on
+   * the group itself, so members stay consistent with standalone .button--sm / .button--lg. */
+  .button-group--sm {
+    --button-group-radius: var(--radius-sm);
+
+    > .button {
+      --button-height: --spacing(7);
+      --button-padding-inline: --spacing(2.5);
+      --button-font-size: var(--text-xs);
+      --button-radius: var(--radius-sm);
+    }
+  }
+
+  .button-group--lg {
+    --button-group-radius: var(--radius-lg);
+
+    > .button {
+      --button-height: --spacing(11);
+      --button-padding-inline: --spacing(4);
+      --button-font-size: var(--text-base);
+      --button-radius: var(--radius-lg);
+    }
+  }
+
+  /* === Toolbar === a separate block: gaps multiple .button-group children apart without inline flex
+   * utilities at each call site. */
+  .button-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--button-toolbar-gap, --spacing(2));
+  }
+}

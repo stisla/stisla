@@ -1,0 +1,12 @@
+.input-group--search {
+  --input-group-height: 2.75rem;
+  --input-group-padding-inline: --spacing(4);
+  --input-height: var(--input-group-height);
+  box-shadow: var(--shadow-sm);
+  border-radius: 9999px;
+  max-width: 14rem;
+
+  @variant xl {
+    max-width: 22rem;
+  }
+}

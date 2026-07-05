@@ -1,0 +1,83 @@
+/* ── Stat cards ───────────────────────────────────────────────────────────── */
+/* The eyebrow typography lives in .text-eyebrow (utilities.css); compose it in the markup
+ * (.stat__label.text-eyebrow). This rule owns only the icon-gap layout. */
+.stat__label,
+.stat-detail__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.card--stat {
+  height: 100%;
+  gap: --spacing(1);
+}
+.card--stat .card__body {
+  flex: 1 1 auto;
+  gap: --spacing(4);
+}
+.card--stat .sparkline--hero {
+  margin-block-start: auto;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.stat__value {
+  font-size: var(--text-5xl);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.stat__unit {
+  margin-inline-end: 0.05em;
+  font-size: 0.55em;
+  font-weight: 400;
+  vertical-align: 0.6em;
+  color: var(--color-muted-foreground);
+}
+.stat__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: --spacing(3);
+}
+
+.stat-detail {
+  display: flex;
+  margin-inline: calc(--spacing(4) * -1);
+  --indicator-size: --spacing(2);
+}
+.stat-detail__col {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: --spacing(2);
+  padding-inline: --spacing(4);
+}
+.stat-detail__col + .stat-detail__col {
+  border-inline-start: var(--st-border-width) solid var(--color-border);
+}
+.stat-detail__value {
+  font-size: 1.75rem;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--color-foreground);
+}
+.stat-detail__pct {
+  margin-block-start: --spacing(0.5);
+  font-size: var(--text-xs);
+  color: var(--color-muted-foreground);
+}
+
+/* ── Meter (stat variant) ─────────────────────────────────────────────────── */
+.meter--stat {
+  --meter-bg: transparent;
+  --meter-segment-gap: --spacing(2);
+  --meter-radius: var(--radius-xs);
+}
+.meter--stat .meter__bar {
+  border-radius: var(--meter-radius);
+}

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — menu</title>
+  <!-- BUILT bundles, same-origin (see scripts/serve-fixtures.mjs). Prereq: pnpm build:packages. -->
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- A neutral control before the trigger, so focus-return has a distinct wrong answer to fail on. -->
+  <a href="#" class="fixture-before" id="before">a link before the menu</a>
+
+  <!-- Component under test: a dropdown menu. Markup mirrors the documented recommended usage
+       (docs/src/routes/docs/vanilla/menu.tsx). Items are matched by role, not class. The trigger
+       links to the popup by element id. Behavior comes from stisla.js auto-init. -->
+  <div class="menu">
+    <button
+      class="button button--neutral"
+      data-stisla-menu-trigger="menu-basic"
+      aria-haspopup="menu"
+      aria-expanded="false"
+      aria-controls="menu-basic"
+    >Actions</button>
+    <div class="menu__popup" id="menu-basic" data-stisla-menu role="menu" data-state="closed">
+      <button class="menu__item" role="menuitem">Edit</button>
+      <button class="menu__item" role="menuitem">Duplicate</button>
+      <button class="menu__item" role="menuitem">Share</button>
+      <hr class="menu__separator" role="separator" />
+      <button class="menu__item menu__item--danger" role="menuitem">Delete</button>
+    </div>
+  </div>
+
+  <!-- Auto-initing IIFE: attaches window.Stisla and wires [data-stisla-*] on DOMContentLoaded. -->
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

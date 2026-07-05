@@ -1,0 +1,72 @@
+/* === Sidebar ===
+ * Desktop: bare sticky column on the page bg (no card chrome).
+ * Mobile: fixed off-canvas drawer. The framework .sidebar component lives
+ * inside this site-chrome wrapper. Rendered by routes/docs/route.tsx. */
+
+.site-sidebar {
+  /* Mobile: off-canvas */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: min(18rem, calc(100vw - 3rem));
+  height: 100vh;
+  transform: translateX(-100%);
+  transition: transform 0.25s ease;
+  background: var(--color-background);
+  border-right: 1px solid var(--color-border);
+  overflow-y: auto;
+}
+
+.site-sidebar[data-state="open"] {
+  transform: translateX(0);
+}
+
+/* Desktop: in-flow sticky column on the page bg. */
+@variant md {
+  .site-sidebar {
+    position: sticky;
+    top: var(--navbar-height);
+    transform: none;
+    width: auto;
+    height: calc(100vh - var(--navbar-height));
+    z-index: auto;
+    border-right: 0;
+    background: transparent;
+  }
+}
+
+/* Wider group rhythm for the docs nav (the legacy --compact spacing). */
+.site-sidebar .sidebar {
+  --sidebar-group-gap: 1.75rem;
+  --sidebar-width: 100%;
+}
+.site-sidebar .sidebar__button {
+  width: auto;
+}
+
+/* Backdrop dims content while the mobile sidebar is open. Click closes it. */
+.site-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1035;
+  background: oklch(0 0 0 / 0.4);
+  backdrop-filter: blur(2px);
+}
+
+@variant md {
+  .site-backdrop {
+    display: none;
+  }
+}
+
+/* Lock background scroll when the mobile sidebar is open. */
+body:has(.site-sidebar[data-state="open"]) {
+  overflow: hidden;
+}
+
+@variant md {
+  body:has(.site-sidebar[data-state="open"]) {
+    overflow: visible;
+  }
+}

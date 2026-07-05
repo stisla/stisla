@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixture — scroll-area</title>
+  <!-- BUILT bundles, same-origin (see scripts/serve-fixtures.mjs). Prereq: pnpm build:packages. -->
+  <link rel="stylesheet" href="/packages/css/dist/stisla.css" />
+  <link rel="stylesheet" href="/tests/fixtures/_fixture.css" />
+</head>
+<body>
+  <!-- A neutral control before the region, so a focus/tab test has a distinct wrong answer to fail on. -->
+  <a href="#" class="fixture-before" id="before">a link before the scroll area</a>
+
+  <!-- Component under test: the basic scroll area. Markup mirrors the documented recommended usage
+       (docs/src/routes/docs/vanilla/scroll-area.tsx "Basic"). OverlayScrollbars is wired by
+       stisla.js auto-init on [data-stisla-scroll-area]; it wraps this content in its own
+       [data-overlayscrollbars-viewport] child, which becomes the real scrollable element.
+       The .scroll-area root itself stays overflow:hidden (see scroll-area.css). -->
+  <!-- Height is set inline (not via the h-48 utility): the component bundle ships component CSS, not
+       Tailwind sizing utilities, so the box needs an explicit height to actually overflow + scroll. -->
+  <div class="scroll-area border border-border p-4" id="scroll-basic" data-stisla-scroll-area style="height: 12rem; max-width: 28rem;">
+    <div class="flex flex-col gap-3">
+      <div class="font-semibold">Release notes</div>
+      <div class="text-muted-foreground">3.0.0 — the framework-agnostic rewrite lands: every component reads design tokens, no Bootstrap underneath.</div>
+      <div class="text-muted-foreground">2.4.0 — new illustration system with recolorable empty states.</div>
+      <div class="text-muted-foreground">2.3.0 — data-grid primitive powers every dashboard table.</div>
+      <div class="text-muted-foreground">2.2.0 — drawer gains a floating modifier and four placements.</div>
+      <div class="text-muted-foreground">2.1.0 — toast region with six corner placements.</div>
+      <div class="text-muted-foreground">2.0.0 — tokens move to the runtime namespace.</div>
+      <div class="text-muted-foreground">1.9.0 — accordion, popover, and tooltip join the catalog.</div>
+      <div class="text-muted-foreground">1.8.0 — slider, meter, and progress get token knobs.</div>
+      <div class="text-muted-foreground">1.7.0 — combobox built on the table-core primitive.</div>
+      <div class="text-muted-foreground">1.6.0 — avatar, avatar-group, and indicator land.</div>
+      <div class="text-muted-foreground">1.5.0 — tabs gain a lazy-mount panel and roving focus.</div>
+      <div class="text-muted-foreground">1.4.0 — timeline component with intent-tinted markers.</div>
+      <div class="text-muted-foreground">1.3.0 — list-group and media rows share a hover primitive.</div>
+      <div class="text-muted-foreground">1.2.0 — pagination, breadcrumb, and separator ship.</div>
+      <div class="text-muted-foreground">1.1.0 — form field, input-group, and validation states.</div>
+      <div class="text-muted-foreground">1.0.0 — first public release of the token-driven catalog.</div>
+    </div>
+  </div>
+
+  <!-- Auto-initing IIFE: attaches window.Stisla and wires [data-stisla-*] on DOMContentLoaded. -->
+  <script src="/packages/vanilla/dist/stisla.js"></script>
+</body>
+</html>

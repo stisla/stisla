@@ -1,0 +1,443 @@
+/* ==========================================================================
+ * Template detail page (`/templates/$name`) — the download page for a template.
+ * The signature is the hero's live, recolorable preview; everything else stays
+ * quiet. Namespaced `tpl-`; reuses the landing type primitives (lp-eyebrow,
+ * lp-h2, lp-lead). All color reads from theme tokens so the page tracks dark
+ * mode like the rest of the site.
+ * ======================================================================== */
+
+.tpl {
+  max-width: var(--shell-max);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  padding-bottom: 7rem;
+  overflow-x: clip;
+  /* Aspect ratio of the captured screenshots (see templates/screenshot.mjs
+     defaults, 1440×1030). The filmstrip and lightbox frame to this so nothing is
+     cropped; update it if the capture viewport changes. */
+  --shot-ratio: 1440 / 1030;
+}
+@media (min-width: 640px) {
+  .tpl {
+    padding-inline: 2.5rem;
+  }
+}
+@media (min-width: 1024px) {
+  .tpl {
+    padding-inline: 5rem;
+  }
+}
+
+/* ── Hero ──────────────────────────────────────────────────────────────── */
+.tpl-hero {
+  display: grid;
+  gap: 3rem;
+  align-items: center;
+  padding-top: 3.5rem;
+}
+@media (min-width: 1024px) {
+  .tpl-hero {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr);
+    gap: 4.5rem;
+    padding-top: 5rem;
+  }
+}
+
+.tpl-title {
+  margin-top: 1.25rem;
+  font-weight: 300;
+  letter-spacing: -0.045em;
+  line-height: 0.92;
+  font-size: clamp(2.75rem, 6vw, 4rem);
+  color: var(--color-foreground);
+}
+.tpl-hero .lp-lead {
+  margin-top: 1.25rem;
+}
+
+/* Built-with chips: quiet mono pills. */
+.tpl-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.75rem;
+  list-style: none;
+  padding: 0;
+}
+.tpl-tech li {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: var(--color-muted-foreground);
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface-2);
+}
+
+/* Spec plate: mono key/value rows, hairline-divided. */
+.tpl-spec {
+  margin-top: 1.75rem;
+  border-top: 1px solid var(--color-border);
+}
+.tpl-spec__row {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.tpl-spec__row dt {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+}
+.tpl-spec__row dd {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--color-foreground);
+}
+
+.tpl-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+/* ── Live preview (the signature) ──────────────────────────────────────── */
+.tpl-preview__frame {
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  overflow: hidden;
+  box-shadow: 0 30px 60px -40px rgba(0, 0, 0, 0.5);
+}
+.tpl-preview__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+}
+.tpl-preview__dots {
+  display: inline-flex;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+.tpl-preview__dots i {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 999px;
+  background: var(--color-border-strong);
+}
+.tpl-preview__url {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-muted-foreground);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tpl-preview__pop {
+  flex-shrink: 0;
+  display: inline-flex;
+  color: var(--color-muted-foreground);
+}
+.tpl-preview__pop:hover {
+  color: var(--color-foreground);
+}
+.tpl-preview__pop svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.tpl-preview__stage {
+  display: block;
+  aspect-ratio: var(--shot-ratio);
+  overflow: hidden;
+  background: var(--color-surface-2);
+}
+.tpl-preview__shot {
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--shot-ratio);
+  object-fit: cover;
+  object-position: top;
+}
+
+/* ── Sections ──────────────────────────────────────────────────────────── */
+.tpl-section {
+  padding-top: 5rem;
+}
+@media (min-width: 1024px) {
+  .tpl-section {
+    padding-top: 8rem;
+  }
+}
+.tpl-section__head {
+  max-width: 42rem;
+}
+.tpl-section__head .lp-h2 {
+  margin-top: 1rem;
+}
+.tpl-section__head .lp-lead {
+  margin-top: 1rem;
+}
+
+/* ── What's included ───────────────────────────────────────────────────── */
+.tpl-inc-grid {
+  margin-top: 2.5rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) {
+  .tpl-inc-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .tpl-inc-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.tpl-inc {
+  padding: 1.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+}
+.tpl-inc__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-lg);
+  background: var(--color-highlight);
+  color: var(--color-highlight-foreground);
+}
+.tpl-inc__icon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.tpl-inc__title {
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-foreground);
+}
+.tpl-inc__desc {
+  margin-top: 0.4rem;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--color-muted-foreground);
+}
+
+/* ── Filmstrip ─────────────────────────────────────────────────────────── */
+.tpl-strip {
+  margin-top: 2.5rem;
+}
+.tpl-strip__inner {
+  /* The gutter mirrors .tpl's padding-inline at each breakpoint. The track bleeds
+     out by it, then pads back by the same amount, so it scrolls edge to edge while
+     the first and last cards always keep their inset — never flush on mobile. */
+  --strip-gutter: 1.5rem;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 17rem;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--strip-gutter);
+  padding-block-end: 1rem;
+  margin-inline: calc(-1 * var(--strip-gutter));
+  padding-inline: var(--strip-gutter);
+}
+@media (min-width: 640px) {
+  .tpl-strip__inner {
+    --strip-gutter: 2.5rem;
+  }
+}
+@media (min-width: 1024px) {
+  .tpl-strip__inner {
+    --strip-gutter: 5rem;
+  }
+}
+.tpl-shot {
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.tpl-shot__num {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  color: var(--color-muted-foreground);
+  margin-bottom: 0.5rem;
+}
+.tpl-shot__art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: var(--shot-ratio);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-2);
+  transition:
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+.tpl-shot:hover .tpl-shot__art {
+  border-color: var(--color-border-strong);
+  transform: translateY(-2px);
+}
+.tpl-shot__art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+.tpl-shot__ph {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 500;
+  color: color-mix(in oklch, var(--color-muted-foreground) 40%, transparent);
+}
+.tpl-shot__label {
+  margin-top: 0.6rem;
+  font-size: 0.8125rem;
+  color: var(--color-foreground);
+}
+
+/* ── Lightbox ──────────────────────────────────────────────────────────── */
+.tpl-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  background: color-mix(in oklch, var(--color-overlay) 82%, transparent);
+  backdrop-filter: blur(4px);
+  animation: tpl-fade 0.15s ease;
+}
+@keyframes tpl-fade {
+  from {
+    opacity: 0;
+  }
+}
+.tpl-lightbox__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--color-overlay-foreground);
+  margin-bottom: 1rem;
+}
+.tpl-lightbox__count {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+}
+.tpl-lightbox__close {
+  display: inline-flex;
+  padding: 0.4rem;
+  color: var(--color-overlay-foreground);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.tpl-lightbox__close:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.tpl-lightbox__stage {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  display: grid;
+  place-items: center;
+}
+.tpl-lightbox__stage .tpl-shot__art {
+  width: min(100%, 72rem);
+  max-height: 100%;
+  aspect-ratio: var(--shot-ratio);
+  background: var(--color-surface);
+}
+/* Show the whole screen in the lightbox — never crop, even if the capture ratio
+   drifts from --shot-ratio. */
+.tpl-lightbox__stage .tpl-shot__art img {
+  object-fit: contain;
+}
+.tpl-lightbox__stage .tpl-shot__ph {
+  font-size: 4rem;
+}
+
+/* ── Run / adopt guide ─────────────────────────────────────────────────── */
+.tpl-guide {
+  margin-top: 2.5rem;
+  display: grid;
+  gap: 2.5rem;
+}
+.tpl-guide__step {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 768px) {
+  .tpl-guide__step {
+    grid-template-columns: 3rem 1fr;
+    gap: 1.5rem;
+  }
+}
+.tpl-guide__num {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-muted-foreground);
+  padding-top: 0.4rem;
+}
+.tpl-guide__title {
+  font-size: 1.35rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--color-foreground);
+  margin-bottom: 0.75rem;
+}
+/* Grid items default to min-width:auto, so a wide code block would blow the
+ * column past the viewport and clip the prose. Let the column shrink and the
+ * `<pre>` scroll on its own instead. */
+.tpl-guide__body {
+  min-width: 0;
+}
+.tpl-guide__body .prose {
+  max-width: 44rem;
+}
+
+/* ── Not-found fallback ────────────────────────────────────────────────── */
+.tpl-missing {
+  padding-top: 6rem;
+  text-align: center;
+}
+.tpl-missing .lp-lead {
+  margin: 1rem auto 2rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tpl-lightbox,
+  .tpl-shot__art {
+    animation: none;
+    transition: none;
+  }
+}

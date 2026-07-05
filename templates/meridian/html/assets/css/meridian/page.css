@@ -1,0 +1,10 @@
+/* ── Page ─────────────────────────────────────────────────────────────────── */
+.page__title span {
+  font-weight: 500;
+}
+.page__header .breadcrumb {
+  margin-bottom: --spacing(4);
+}
+.page__action .select {
+  width: 11rem;
+}
