@@ -21,6 +21,7 @@ import { promises as fs } from "node:fs";
 import { execFileSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import prettier from "prettier";
 import { createEnv } from "./nunjucks.mjs";
 
 const root = fileURLToPath(new URL(".", import.meta.url));
@@ -36,14 +37,20 @@ await fs.rm(DIST, { recursive: true, force: true });
 await fs.mkdir(out("assets/css"), { recursive: true });
 await fs.mkdir(out("assets/js"), { recursive: true });
 
-// 1. Render every page to static HTML (dev: false → prod layout branch).
+// 1. Render every page to static HTML (dev: false → prod layout branch), then
+//    run it through Prettier. The Nunjucks control blocks and comments leave
+//    stray blank lines and ragged indentation in the raw render; Prettier's
+//    html parser collapses that into clean, editable markup (whitespace-safe:
+//    the default "css" sensitivity preserves significant whitespace in inline
+//    elements, <pre>, <textarea>, so rendering is unchanged).
 const env = createEnv({ root, dev: false });
 const pages = (await fs.readdir(rel("pages"))).filter(
   (f) => f.endsWith(".njk") && !f.startsWith("_"),
 );
 for (const file of pages) {
   const html = env.render(`pages/${file}`);
-  await fs.writeFile(out(file.replace(/\.njk$/, ".html")), html);
+  const pretty = await prettier.format(html, { parser: "html", printWidth: 100 });
+  await fs.writeFile(out(file.replace(/\.njk$/, ".html")), pretty);
 }
 console.log(`render  ${pages.length} pages`);
 
