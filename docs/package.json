@@ -6,7 +6,9 @@
   "description": "Stisla documentation site — TanStack Start. Consumes the workspace @stisla/* source. Not published.",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build"
+    "build": "vite build",
+    "preview": "wrangler dev",
+    "deploy": "vite build && wrangler deploy"
   },
   "dependencies": {
     "@tanstack/react-router": "^1.170.16",
@@ -25,6 +27,7 @@
     "@vitejs/plugin-react": "^6.0.0",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.7.0",
-    "vite": "^8.0.0"
+    "vite": "^8.0.0",
+    "wrangler": "^4.107.0"
   }
 }

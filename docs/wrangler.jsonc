@@ -1,0 +1,18 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "stisla-docs",
+  // TanStack Start emits a Web `fetch` handler here (export default { fetch }).
+  "main": "dist/server/server.js",
+  "compatibility_date": "2026-07-05",
+  // The SSR bundle uses node:async_hooks (AsyncLocalStorage). Workers supports it under this flag.
+  "compatibility_flags": ["nodejs_compat"],
+  // dist/client is pure static JS/CSS (no prerendered HTML). Assets are served first; any route
+  // without a matching file (every page, and later /api/checkout etc.) falls through to `main`.
+  "assets": {
+    "directory": "./dist/client"
+  },
+  // Binds the worker to the apex domain. The stisla.dev zone is already in this Cloudflare account,
+  // so `wrangler deploy` provisions the custom domain automatically — no manual dashboard step.
+  "routes": [{ "pattern": "stisla.dev", "custom_domain": true }],
+  "observability": { "enabled": true }
+}

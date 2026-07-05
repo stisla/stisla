@@ -1,0 +1,43 @@
+name: Deploy docs
+
+# Auto-deploys the docs site (SSR Worker at stisla.dev) on every push to master.
+# The docs consume @stisla/* workspace source directly (vite aliases), so a package
+# build is not needed first — just install and build docs.
+on:
+  push:
+    branches: [master]
+    paths:
+      - "docs/**"
+      - "packages/**"
+      - "pnpm-lock.yaml"
+      - ".github/workflows/deploy-docs.yml"
+  workflow_dispatch: # allow manual runs from the Actions tab
+
+concurrency:
+  group: deploy-docs
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.30.3
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm --filter docs build
+
+      - name: Deploy to Cloudflare Workers
+        run: pnpm --filter docs exec wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
