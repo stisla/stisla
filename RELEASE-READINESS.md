@@ -157,8 +157,7 @@ Add to root `package.json` scripts:
 "test": "playwright test",
 "test:a11y": "playwright test a11y",
 "test:kbd": "playwright test keyboard",
-"test:rc": "playwright test --project=chromium",
-"test:stable": "playwright test"
+"test:rc": "playwright test --project=chromium"
 ```
 
 ### 4.2 `playwright.config.ts` (repo root) — DONE, already committed

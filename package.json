@@ -11,6 +11,7 @@
     "build:packages": "pnpm -r --if-present --filter \"./packages/*\" build",
     "dev": "pnpm --filter docs dev",
     "scaffold": "node scripts/scaffold-component.mjs",
+    "brand": "node scripts/generate-brand.mjs",
     "check": "node scripts/check-tokens.mjs",
     "smoke": "node scripts/smoke-packages.mjs",
     "test": "playwright test",
@@ -18,16 +19,23 @@
     "test:kbd": "playwright test --grep keyboard --project=chromium",
     "test:a11y": "playwright test --grep a11y --project=chromium",
     "test:ui": "playwright test --ui",
-    "test:stable": "playwright test",
     "pretest": "pnpm build:packages",
-    "release": "pnpm build:packages && pnpm smoke && pnpm -r --filter \"./packages/*\" publish --access public --tag rc --no-git-checks"
+    "changeset": "changeset",
+    "release": "pnpm build:packages && pnpm smoke && changeset publish"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
+    "@changesets/changelog-github": "^0.7.0",
+    "@changesets/cli": "^2.31.0",
     "@playwright/test": "^1.61.1",
     "playwright": "^1.61.1"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild", "workerd", "@parcel/watcher", "sharp"]
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "workerd",
+      "@parcel/watcher",
+      "sharp"
+    ]
   }
 }

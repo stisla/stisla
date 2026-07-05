@@ -47,23 +47,21 @@ docs/src/              TanStack Start docs site
 
       <section>
         <h2>Running locally</h2>
-        <p>Node 20 or newer, pnpm 9 or newer.</p>
+        <p>Node 24 or newer, and pnpm 10.30.3. The pnpm version is pinned via the <code>packageManager</code> field, so run <code>corepack enable</code> and it matches automatically.</p>
         <Code lang="bash" code={`git clone https://github.com/stisla/stisla.git
 cd stisla
 pnpm install
 pnpm dev`} />
         <p>The dev server starts Vite at <code>localhost:5173</code>. CSS rebuilds on save via Tailwind v4&rsquo;s HMR. The vanilla IIFE bundle is built inline by a Vite plugin and hot-reloads into demo iframes automatically.</p>
         <p>To run the token checker across all component files:</p>
-        <Code lang="bash" code={`cd next
-pnpm check`} />
+        <Code lang="bash" code={`pnpm check`} />
         <p>This catches undeclared token references, missing <code>--component-*</code> fallbacks, and literal values that should be token refs. Run it before opening a PR.</p>
       </section>
 
       <section>
         <h2>Adding a component</h2>
         <p>Each component is one CSS file, one optional JS file, and one docs page. The scaffold command sets up the files and wires the nav entry.</p>
-        <Code lang="bash" code={`cd next
-pnpm scaffold <name>`} />
+        <Code lang="bash" code={`pnpm scaffold <name>`} />
 
         <h3>1. Write the CSS</h3>
         <p>The scaffold creates <code>packages/style/src/&lt;name&gt;/&lt;name&gt;.css</code>. BEM names follow <code>.block</code>, <code>.block__element</code>, <code>.block--modifier</code>. Lowercase, hyphen-separated. Multiple modifiers stack flat on the root and never nest.</p>
@@ -102,8 +100,7 @@ import { Code } from '~/demo/Code';
         <p>Page structure: a <code>&lt;header&gt;</code> with <code>&lt;h1&gt;</code> and a short lead, then one <code>&lt;section&gt;</code> per topic. End with a Customization section. The <Link to="/docs/vanilla/slider" className="link">Slider</Link> page is the reference shape.</p>
 
         <h3>4. Verify</h3>
-        <Code lang="bash" code={`cd next
-pnpm check     # token linter
+        <Code lang="bash" code={`pnpm check     # token linter
 pnpm build     # confirm the docs site builds clean`} />
         <p>Check the demo page at 320, 768, and 1280 px under both light and dark.</p>
       </section>
@@ -132,6 +129,8 @@ pnpm build     # confirm the docs site builds clean`} />
           <li>Run <code>pnpm check</code> from the repo root and confirm it passes clean.</li>
           <li>Run <code>pnpm build</code> from <code>docs/</code> and confirm the site builds without error.</li>
           <li>Open the demo page and walk every state under light and dark at 320, 768, and 1280 px.</li>
+          <li>If you changed a component&rsquo;s CSS or behavior, run the tests: <code>pnpm test</code> (or <code>pnpm test:rc</code> for Chromium only). See <a href="https://github.com/stisla/stisla/blob/master/TESTING.md" className="link">TESTING.md</a>.</li>
+          <li>Run <code>pnpm changeset</code> if you touched a published package (<code>@stisla/style</code>, <code>@stisla/css</code>, <code>@stisla/vanilla</code>), and commit the generated file. Docs-only changes skip this.</li>
         </ul>
         <p>One component per PR keeps reviews scoped. A new customization knob can ride along with the component that introduces it.</p>
       </section>
