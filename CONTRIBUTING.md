@@ -38,24 +38,48 @@ into the demo iframes automatically.
 Architecture and rationale live in `ARCHITECTURE.md`; the cross-impl contract is
 `SPEC.md`.
 
-## Useful scripts
+## Commands
 
-| Command                | What it does                                              |
-| ---------------------- | -------------------------------------------------------- |
-| `pnpm dev`             | docs dev server (Vite, port 5173)                        |
-| `pnpm build`           | build every workspace                                    |
-| `pnpm build:packages`  | build just the publishable packages                      |
-| `pnpm check`           | token guardrail linter — run before every PR             |
-| `pnpm test`            | Playwright a11y + keyboard suite (builds packages first) |
-| `pnpm scaffold <name>` | create the files for a new component                     |
+Every script lives in the root `package.json`. Run them from the repo root.
+
+**Everyday**
+
+| Command                | What it does / when you need it                                                                 |
+| ---------------------- | ---------------------------------------------------------------------------------------------- |
+| `pnpm dev`             | Docs dev server (Vite, port 5173). Your main loop; CSS and the behavior bundle hot-reload.      |
+| `pnpm scaffold <name>` | Creates the files for a new component (CSS skeleton, docs page, nav entry). Start a port with it.|
+| `pnpm build`           | Builds every workspace (packages + docs). Full local build.                                     |
+| `pnpm build:packages`  | Builds just the publishable packages into `dist/`. Needed before tests and before publishing.   |
+
+**Quality and tests**
+
+| Command       | What it does / when you need it                                                                      |
+| ------------- | --------------------------------------------------------------------------------------------------- |
+| `pnpm check`  | Token guardrail linter (no `--bs-*`, no stray `--st-*`, no `is-*` classes, etc.). Run before every PR.|
+| `pnpm test`   | Full Playwright a11y + keyboard suite across all 3 browsers. Rebuilds packages first.                |
+| `pnpm test:rc`| Same suite, Chromium only — the fast loop. See [`TESTING.md`](TESTING.md) for all the test commands.  |
+
+Testing is covered in depth in [`TESTING.md`](TESTING.md): what is tested, every
+`test:*` command, and how to add a test for a component.
+
+**Maintainer**
+
+| Command          | What it does / when you need it                                                                          |
+| ---------------- | ------------------------------------------------------------------------------------------------------- |
+| `pnpm changeset` | Records a version-bump intent for a change (see [Changesets](#changesets)). Contributors run this too.   |
+| `pnpm smoke`     | Dry-run `npm pack` for each package; asserts every `exports` target is actually in the tarball.          |
+| `pnpm brand`     | Regenerates the logo assets in `brand/` from the logomark. Run only when the mark changes.               |
+| `pnpm release`   | Local publish fallback: `build:packages && smoke && changeset publish`. Normally CI publishes, not you.  |
 
 ## Making a change
 
 1. Branch off `master`.
 2. Make your change. Keep it to one component per PR where you can.
 3. Run `pnpm check`, and `pnpm build` from `docs/`, and confirm both are clean.
-4. Add a changeset if you touched a published package (see below).
-5. Open a PR into `master`. CI builds the docs as a required check.
+4. If you changed a component's CSS or behavior, run `pnpm test` (or `pnpm test:rc`
+   for a fast Chromium-only loop). See [`TESTING.md`](TESTING.md).
+5. Add a changeset if you touched a published package (see below).
+6. Open a PR into `master`. CI builds the docs as a required check.
 
 ## Changesets
 

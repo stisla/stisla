@@ -129,6 +129,7 @@ pnpm build     # confirm the docs site builds clean`} />
           <li>Run <code>pnpm check</code> from the repo root and confirm it passes clean.</li>
           <li>Run <code>pnpm build</code> from <code>docs/</code> and confirm the site builds without error.</li>
           <li>Open the demo page and walk every state under light and dark at 320, 768, and 1280 px.</li>
+          <li>If you changed a component&rsquo;s CSS or behavior, run the tests: <code>pnpm test</code> (or <code>pnpm test:rc</code> for Chromium only). See <a href="https://github.com/stisla/stisla/blob/master/TESTING.md" className="link">TESTING.md</a>.</li>
           <li>Run <code>pnpm changeset</code> if you touched a published package (<code>@stisla/style</code>, <code>@stisla/css</code>, <code>@stisla/vanilla</code>), and commit the generated file. Docs-only changes skip this.</li>
         </ul>
         <p>One component per PR keeps reviews scoped. A new customization knob can ride along with the component that introduces it.</p>

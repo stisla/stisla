@@ -19,7 +19,6 @@
     "test:kbd": "playwright test --grep keyboard --project=chromium",
     "test:a11y": "playwright test --grep a11y --project=chromium",
     "test:ui": "playwright test --ui",
-    "test:stable": "playwright test",
     "pretest": "pnpm build:packages",
     "changeset": "changeset",
     "release": "pnpm build:packages && pnpm smoke && changeset publish"
