@@ -161,8 +161,8 @@ function TuneDemo() {
 
 function WhatsNew() {
   return (
-    <main className="max-w-(--shell-max) mx-auto px-6 sm:px-10">
-      <article className="main-container prose dark:prose-invert prose-sm">
+    <main className="max-w-(--shell-max) mx-auto px-2 sm:px-10">
+      <article className="prose dark:prose-invert prose-sm max-w-none lg:w-200 mx-auto py-10 md:py-20">
         <h1>Stisla 3</h1>
         <p className="lead">
           Stisla started life as a Bootstrap admin theme. Stisla 3 is a full

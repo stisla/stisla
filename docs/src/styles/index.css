@@ -22,6 +22,18 @@
 @import "../../../packages/style/src/menu/menu.css";
 @import "../../../packages/style/src/table/table.css";
 @import "../../../packages/style/src/link/link.css";
+/* Additional components composed into the /showcase collage. */
+/* @import "../../../packages/style/src/list-group/list-group.css";
+@import "../../../packages/style/src/timeline/timeline.css";
+@import "../../../packages/style/src/breadcrumb/breadcrumb.css";
+@import "../../../packages/style/src/pagination/pagination.css";
+@import "../../../packages/style/src/kbd/kbd.css";
+@import "../../../packages/style/src/spinner/spinner.css";
+@import "../../../packages/style/src/indicator/indicator.css";
+@import "../../../packages/style/src/icon-box/icon-box.css";
+@import "../../../packages/style/src/toast/toast.css";
+@import "../../../packages/style/src/empty-state/empty-state.css";
+@import "../../../packages/style/src/textarea/textarea.css"; */
 
 @plugin "@tailwindcss/typography";
 
