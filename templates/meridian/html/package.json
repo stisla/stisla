@@ -20,6 +20,6 @@
     "nunjucks": "^3.2.4",
     "prettier": "^3.8.0",
     "tailwindcss": "^4.0.0",
-    "vite": "^8.0.0"
+    "vite": "^8.1.6"
   }
 }
